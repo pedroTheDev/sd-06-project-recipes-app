@@ -5,14 +5,12 @@ const Login = () => {
   const { setEmail } = useContext(ContextAPI);
 
   const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
 
   const [isEmailValid, setEmailValid] = useState(false);
   const [isPasswordValid, setPasswordValid] = useState(false);
 
   const handleInput = (value) => {
     const regex = /[A-Z0-9]{1,}@[A-Z0-9]{2,}.[A-Z0-9]{2,}/i;
-
     if (regex.test(value.toLowerCase())) {
       setEmailValid(true);
       setUsername(value);
@@ -22,11 +20,9 @@ const Login = () => {
   };
 
   const handlePassword = (value) => {
-    setPassword(value);
 
     if (value.length > 6) {
       setPasswordValid(true);
-      setPassword(value);
     } else {
       setPasswordValid(false);
     }
