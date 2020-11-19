@@ -1,11 +1,7 @@
-import React from 'react'
+import React from 'react';
 
-const Perfil = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+const Perfil = () => (
+  <div />
+);
 
-export default Perfil
+export default Perfil;

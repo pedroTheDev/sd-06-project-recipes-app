@@ -1,11 +1,7 @@
-import React from 'react'
+import React from 'react';
 
-const ReceitasFavoritas = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+const ReceitasFavoritas = () => (
+  <div />
+);
 
-export default ReceitasFavoritas
+export default ReceitasFavoritas;

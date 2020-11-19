@@ -1,11 +1,9 @@
-import React from 'react'
+import React from 'react';
 
 function Bebidas() {
   return (
-    <div>
-      
-    </div>
-  )
+    <div />
+  );
 }
 
-export default Bebidas
+export default Bebidas;

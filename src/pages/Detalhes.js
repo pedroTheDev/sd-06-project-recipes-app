@@ -1,9 +1,7 @@
-import React from 'react'
+import React from 'react';
 
-export const Detalhes = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+const Detalhes = () => (
+  <div />
+);
+
+export default Detalhes;

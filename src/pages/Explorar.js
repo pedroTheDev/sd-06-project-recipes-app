@@ -1,11 +1,7 @@
-import React from 'react'
+import React from 'react';
 
-const Explorar = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+const Explorar = () => (
+  <div />
+);
 
-export default Explorar
+export default Explorar;
