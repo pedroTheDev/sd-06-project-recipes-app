@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from "react-router-dom";
 
 function Login() {
+  const history = useHistory();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
@@ -21,7 +23,10 @@ function Login() {
 
   const handleSignUp = (event) => {
     event.preventDefault();
-    localStorage.setItem('user', `{ email: ${email}}`);
+    localStorage.user = JSON.stringify({ email });
+    localStorage.mealsToken = JSON.stringify(1);
+    localStorage.cocktailsToken = JSON.stringify(1);
+    //history.push('/comidas');
   };
 
   return (
