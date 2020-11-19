@@ -1,6 +1,7 @@
 import React, {
   createContext, useCallback, useContext, useState,
 } from 'react';
+import PropTypes from 'prop-types';
 
 const recipesContext = createContext();
 
@@ -37,3 +38,10 @@ function useRecipes() {
 }
 
 export { RecipeProvider, useRecipes };
+
+RecipeProvider.propTypes = {
+  children: PropTypes.oneOf([
+    PropTypes.object,
+    PropTypes.func,
+  ]).isRequired,
+};

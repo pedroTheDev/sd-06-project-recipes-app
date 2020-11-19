@@ -1,6 +1,7 @@
 import React, {
   createContext, useCallback, useContext, useState,
 } from 'react';
+import PropTypes from 'prop-types';
 
 import { useRecipes } from './recipes';
 
@@ -74,3 +75,10 @@ function useSearch() {
 }
 
 export { SearchProvider, useSearch };
+
+SearchProvider.propTypes = {
+  children: PropTypes.oneOf([
+    PropTypes.object,
+    PropTypes.func,
+  ]).isRequired,
+};

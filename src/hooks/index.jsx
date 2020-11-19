@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { AuthProvider } from './auth';
 import { SearchProvider } from './search';
@@ -15,5 +16,12 @@ function AppProvider({ children }) {
     </AuthProvider>
   );
 }
+
+AppProvider.propTypes = {
+  children: PropTypes.oneOf([
+    PropTypes.object,
+    PropTypes.func,
+  ]).isRequired,
+};
 
 export default AppProvider;

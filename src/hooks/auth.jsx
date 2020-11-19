@@ -1,6 +1,7 @@
 import React, {
-  createContext, useCallback, useContext, useMemo, useState,
+  createContext, useCallback, useContext, useState,
 } from 'react';
+import PropTypes from 'prop-types';
 
 const authContext = createContext();
 
@@ -64,3 +65,10 @@ function useAuth() {
 }
 
 export { AuthProvider, useAuth };
+
+AuthProvider.propTypes = {
+  children: PropTypes.oneOf([
+    PropTypes.object,
+    PropTypes.func,
+  ]).isRequired,
+};
