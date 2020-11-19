@@ -8,7 +8,7 @@ const listCategoriesEndpoint = 'list.php?c=list';
 const requestRecipeEndpoint = 'lookup.php?i=';
 const randomRequestEndpoint = 'random.php';
 
-export default async function mealAPI(type, key) {
+export default async function mealAPI(type, key = '') {
   let url = '';
   switch (type) {
     case 'ingredient':
@@ -19,6 +19,15 @@ export default async function mealAPI(type, key) {
       break;
     case 'firstLetter':
       url = `${MEAL_API}${searchByFirstLetterEndpoint}${key}`;
+      break;
+    case 'listCategories':
+      url = `${MEAL_API}${searchByFirstLetterEndpoint}`;
+      break;
+    case 'recipe':
+      url = `${MEAL_API}${searchByFirstLetterEndpoint}${key}`;
+      break;
+    case 'random':
+      url = `${MEAL_API}${searchByFirstLetterEndpoint}`;
       break;
     default:
       return null;
