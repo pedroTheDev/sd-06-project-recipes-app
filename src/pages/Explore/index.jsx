@@ -6,7 +6,7 @@ import Navbar from '../../components/Navbar';
 function Explore() {
   return (
     <div className="explore-page">
-      <Header pageName="Bebidas" showSearch />
+      <Header pageName="Explorar" showSearch />
       <Navbar />
     </div>
   );
