@@ -13,10 +13,23 @@ const getID = {
   Bebidas: 'idDrink',
 };
 
+const initialSearchValues = {
+  Comidas: {
+    option: 'name',
+    value: 'Chicken',
+    token: '1',
+  },
+  Bebidas: {
+    option: 'name',
+    value: 'Martini',
+    token: '1',
+  },
+};
+
 const searchContext = createContext();
 
 function SearchProvider({ children }) {
-  const [infoSearched, setInfoSearched] = useState({});
+  const [infoSearched, setInfoSearched] = useState(initialSearchValues);
 
   const { updateRecipes } = useRecipes();
 
@@ -24,7 +37,11 @@ function SearchProvider({ children }) {
     let recipesSearched;
 
     const userSearch = { option, value, token };
-    setInfoSearched(userSearch);
+
+    setInfoSearched((oldInfo) => ({
+      ...oldInfo,
+      [type]: userSearch,
+    }));
 
     try {
       if (type === 'Comidas') {
@@ -46,11 +63,13 @@ function SearchProvider({ children }) {
 
       console.log(recipesSearched);
 
-      updateRecipes(recipesSearched);
+      updateRecipes(type, recipesSearched);
 
       return (recipesSearched.length === 1) ? firstItemID : null;
     } catch (err) {
       console.log(err);
+
+      return null;
     }
   }, [updateRecipes]);
 

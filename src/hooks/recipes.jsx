@@ -1,24 +1,56 @@
 import React, {
-  createContext, useCallback, useContext, useState,
+  createContext, useCallback, useContext, useEffect, useState,
 } from 'react';
 import PropTypes from 'prop-types';
+
+import { fetchDrinksCategories } from '../services/drinksApi';
+import { fetchFoodsCategories } from '../services/foodApi';
+import { useAuth } from './auth';
+
+const recipesStructure = {
+  Comidas: [],
+  Bebidas: [],
+};
 
 const recipesContext = createContext();
 
 function RecipeProvider({ children }) {
-  const [currentRecipes, setCurrentRecipes] = useState([]);
+  const [currentRecipes, setCurrentRecipes] = useState(recipesStructure);
+  const [currentFilters, setCurrentFilters] = useState(recipesStructure);
 
-  const updateRecipes = useCallback((newRecipes) => {
+  const { userToken } = useAuth();
+
+  useEffect(() => {
+    async function getCategories() {
+      const foodCategories = await fetchFoodsCategories(userToken);
+      const drinkCategories = await fetchDrinksCategories(userToken);
+
+      const categories = {
+        Comidas: foodCategories,
+        Bebidas: drinkCategories,
+      };
+
+      setCurrentFilters(categories);
+    }
+
+    getCategories();
+  }, []);
+
+  const updateRecipes = useCallback((type, newRecipes) => {
     const RECIPES_LIMIT = 12;
 
     const recipesToShow = newRecipes.filter((_, index) => index < RECIPES_LIMIT);
 
-    setCurrentRecipes(recipesToShow);
+    setCurrentRecipes((oldRecipes) => ({
+      ...oldRecipes,
+      [type]: recipesToShow,
+    }));
   }, []);
 
   return (
     <recipesContext.Provider value={{
       currentRecipes,
+      currentFilters,
       updateRecipes,
     }}
     >
