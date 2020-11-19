@@ -28,7 +28,7 @@ export default function Login() {
     localStorage.setItem('user', JSON.stringify({ email }));
     localStorage.setItem('mealsToken', 1);
     localStorage.setItem('cocktailsToken', 1);
-  }
+  };
 
   return (
     <form>
@@ -39,7 +39,7 @@ export default function Login() {
           name="email"
           type="email"
           data-testid="email-input"
-          onChange={ (e) => handleChange(e) }
+          onChange={(e) => handleChange(e)}
         />
       </label>
       <label htmlFor="password">
@@ -49,7 +49,7 @@ export default function Login() {
           name="password"
           type="password"
           data-testid="password-input"
-          onChange={ (e) => handleChange(e) }
+          onChange={(e) => handleChange(e)}
         />
       </label>
       <Link to="/comidas">
@@ -57,7 +57,7 @@ export default function Login() {
           data-testid="login-submit-btn"
           disabled={disable}
           type="button"
-          onClick={ setLocalStorage }
+          onClick={setLocalStorage}
         >
           Entrar
         </button>

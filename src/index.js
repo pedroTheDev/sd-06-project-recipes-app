@@ -7,7 +7,7 @@ import * as serviceWorker from './serviceWorker';
 import Provider from './context/Provider';
 
 ReactDOM.render(
-  <Provider>  
+  <Provider>
     <BrowserRouter>
       <App />
     </BrowserRouter>
