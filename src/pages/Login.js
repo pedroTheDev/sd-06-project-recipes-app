@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function Login() {
   const [isValid, setIsValid] = useState(false);
@@ -43,12 +43,14 @@ function Login() {
         data-testid="password-input"
         onChange={handleChangePassword}
       />
-      <input
-        type="submit"
-        data-testid="login-submit-btn"
-        disabled={!isValid}
-        onClick={setLocalStorage}
-      />
+      <Link to="/comidas">
+        <input
+          type="submit"
+          data-testid="login-submit-btn"
+          disabled={!isValid}
+          onClick={setLocalStorage}
+        />
+      </Link>
     </>
   );
 }
