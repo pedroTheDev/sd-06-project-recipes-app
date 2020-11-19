@@ -8,31 +8,38 @@ const listCategoriesEndpoint = 'list.php?c=list';
 const requestRecipeEndpoint = 'lookup.php?i=';
 const randomRequestEndpoint = 'random.php';
 
-export default async function mealAPI(type, key = '') {
-  let url = '';
-  switch (type) {
-    case 'ingredient':
-      url = `${MEAL_API}${filterByIngredientEndpoint}${key}`;
-      break;
-    case 'search':
-      url = `${MEAL_API}${searchByNameEndpoint}${key}`;
-      break;
-    case 'firstLetter':
-      url = `${MEAL_API}${searchByFirstLetterEndpoint}${key}`;
-      break;
-    case 'listCategories':
-      url = `${MEAL_API}${listCategoriesEndpoint}`;
-      break;
-    case 'recipe':
-      url = `${MEAL_API}${requestRecipeEndpoint}${key}`;
-      break;
-    case 'random':
-      url = `${MEAL_API}${randomRequestEndpoint}`;
-      break;
-    default:
-      return null;
-  }
+export async function filterByIngredient(key) {
+  const url = `${MEAL_API}${filterByIngredientEndpoint}${key}`;
+  const data = await fetch(url);
+  return data;
+}
 
+export async function searchByName(key) {
+  const url = `${MEAL_API}${searchByNameEndpoint}${key}`;
+  const data = await fetch(url);
+  return data;
+}
+
+export async function searchByFirstLetter(key) {
+  const url = `${MEAL_API}${searchByFirstLetterEndpoint}${key}`;
+  const data = await fetch(url);
+  return data;
+}
+
+export async function listCategories() {
+  const url = `${MEAL_API}${listCategoriesEndpoint}`;
+  const data = await fetch(url);
+  return data;
+}
+
+export async function requestRecipe(key) {
+  const url = `${MEAL_API}${requestRecipeEndpoint}${key}`;
+  const data = await fetch(url);
+  return data;
+}
+
+export async function randomRequest() {
+  const url = `${MEAL_API}${randomRequestEndpoint}`;
   const data = await fetch(url);
   return data;
 }
