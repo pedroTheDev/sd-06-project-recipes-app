@@ -20,7 +20,6 @@ const Login = () => {
   };
 
   const handlePassword = (value) => {
-
     if (value.length > 6) {
       setPasswordValid(true);
     } else {
