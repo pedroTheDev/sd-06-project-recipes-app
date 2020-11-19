@@ -9,7 +9,7 @@ class DoneRecipes extends React.Component {
     return (
       <div>
         <h1 data-testid="DoneRecipes-title">
-          <Header history={histor} />
+          <Header history={history} />
           <Footer history={history} />
         </h1>
       </div>
