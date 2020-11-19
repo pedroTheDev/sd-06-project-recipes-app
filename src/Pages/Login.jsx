@@ -11,13 +11,13 @@ function Login({ history }) {
     const regex = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
     setButtonDisable(inputPassword.length > 6 && regex.test(inputEmail));
     setUserEmail(inputEmail);
-    console.log(userEmail);
   };
 
   const handleButton = () => {
     localStorage.setItem('mealsToken', 1);
     localStorage.setItem('cocktailsToken', 1);
     localStorage.setItem('user', JSON.stringify({ email: userEmail }));
+    console.log(history);
     history.push('/comidas');
   };
 
