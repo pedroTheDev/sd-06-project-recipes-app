@@ -1,9 +1,5 @@
 import React from 'react';
 
-const Comidas = () => {
-  return (
-    <section>COMIDA</section>
-  );
-}
+const Comidas = () => <section>COMIDA</section>;
 
 export default Comidas;

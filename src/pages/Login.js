@@ -8,30 +8,26 @@ const Login = () => {
     password: 0,
   });
 
+  const inputValues = () => {
+    const { email, password } = user;
+    const regexp = /^[a-zA-Z0-9.!#$%&_-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    let disabledBtn = true;
+    const six = 6;
+
+    if (regexp.test(email) && password.length >= six) disabledBtn = false;
+
+    setDisabled(disabledBtn);
+  };
+
   const handleChange = ({ target }) => {
     const { name, value } = target;
 
     setUser({
       ...user,
-      [name]: value
+      [name]: value,
     });
 
     inputValues();
-  };
-
-  const inputValues = () => {
-    const { email, password } = user;
-    const regexp = /^[a-zA-Z0-9.!#$%&_-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    let disabled = true;
-    const six = 6;
-
-    if (regexp.test(email) && password.length >= six) disabled = false;
-
-    setDisabled(disabled);
-  };
-
-  const handleClick = () => {
-    setUserOnLocalStorage();
   };
 
   const setUserOnLocalStorage = () => {
@@ -42,16 +38,20 @@ const Login = () => {
     localStorage.setItem('user', JSON.stringify({ email }));
   }
 
+  const handleClick = () => {
+    setUserOnLocalStorage();
+  };
+
   return (
     <section>
       <form>
-        <label htmlfor="email-input">Email</label>
+        <label htmlFor="email-input">Email</label>
         <input id="email-input" name="email" type="text" data-testid="email-input" onChange={ handleChange } />
-        <label htmlfor="password-input">Senha</label>
+        <label htmlFor="password-input">Senha</label>
         <input id="password-input" name="password" type="password" data-testid="password-input" onChange={ handleChange } />
         <Link to="/comidas">
           <button
-            disabled={disabled}
+            disabled={ disabled }
             type="button"
             data-testid="login-submit-btn"
             onClick={ handleClick }
@@ -62,6 +62,6 @@ const Login = () => {
       </form>
     </section>
   );
-}
+};
 
 export default Login;
