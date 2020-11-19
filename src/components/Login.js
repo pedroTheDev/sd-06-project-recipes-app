@@ -14,7 +14,7 @@ export default function Login() {
     emailValid = document.getElementById('login-email').value;
     const validation = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
     const six = 6;
-    if (validation.test(emailValid) === true && passwordValid.length <= six) {
+    if (validation.test(emailValid) === true && passwordValid.length < six) {
       setEnableButton(false);
     } else {
       setEnableButton(true);
