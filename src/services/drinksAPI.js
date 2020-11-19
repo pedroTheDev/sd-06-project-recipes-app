@@ -1,10 +1,10 @@
-// const URL_BASE = 'https://www.themealdb.com/api/json/v1/1/';
+const URL_BASE = 'https://www.thecocktaildb.com/api/json/v1/1/';
 
-// // type { a=areas , c=categories, i=ingredients }
-// export async function getAllRecipeTypesApi(type) {
-//   const response = await fetch(`${URL_BASE}list.php?${type}=list`);
-//   const result = await response.json();
-//   return result.meals;
-// }
+// // type { g=glasses , c=categories, i=ingredients a=alcoholic}
+export async function getAllDrinkTypesApi(type) {
+  const response = await fetch(`${URL_BASE}list.php?${type}=list`);
+  const result = await response.json();
+  return result.drinks;
+}
 
-// export default { getAllRecipeTypesApi };
+export default { getAllDrinkTypesApi };
