@@ -13,7 +13,7 @@ describe('Tela de Login - todos os elementos devem respeitar os atributos', () =
   beforeEach(cleanup);
 
   it('O input email deve possuir o atributo data-testid correto', () => {
-    const { getByText, getByTestId } = renderWithRouter(<App />);
+    const { getByTestId } = renderWithRouter(<App />);
     const email = getByTestId('email-input');
     const password = getByTestId('password-input');
     const button = getByTestId('login-submit-btn');
@@ -21,6 +21,5 @@ describe('Tela de Login - todos os elementos devem respeitar os atributos', () =
     expect(email).toBeInTheDocument('');
     expect(password).toBeInTheDocument('');
     expect(button).toBeInTheDocument('');
-    expect(button.value).toBe('Entrar')
   });
 })

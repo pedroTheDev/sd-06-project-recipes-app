@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  // const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  // const isValid = /^.{6,}$/.test(password); 
+  const handleChange = ({target}) => {
+    
+  }
+
   return (
     <form>
+      <h1>Login</h1>
       <label htmlFor="email">
         Email:
-        <input type="email" data-testid="email-input" id="email" />
+        <input type="email" data-testid="email-input" id="email" onChange={handleChange} />
       </label>
       <label htmlFor="password">
         Senha:
