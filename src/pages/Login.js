@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 function Login() {
   const [isValid, setIsValid] = useState(false);
@@ -21,6 +21,11 @@ function Login() {
     if (handleValidateFields()) setIsValid(true);
   };
 
+  const setLocalStorage = () => {
+    localStorage.setItem('mealsToken', JSON.stringify(1));
+    localStorage.setItem('cocktailsToken', JSON.stringify(1));
+  };
+
   return (
     <>
       <input
@@ -39,6 +44,7 @@ function Login() {
         type="submit"
         data-testid="login-submit-btn"
         disabled={!isValid}
+        onClick={setLocalStorage}
       />
     </>
   );
