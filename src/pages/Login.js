@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
   const [disabled, setDisabled] = useState(true);
@@ -30,7 +31,6 @@ const Login = () => {
   };
 
   const handleClick = () => {
-
     setUserOnLocalStorage();
   };
 
@@ -49,14 +49,16 @@ const Login = () => {
         <input id="email-input" name="email" type="text" data-testid="email-input" onChange={ handleChange } />
         <label htmlfor="password-input">Senha</label>
         <input id="password-input" name="password" type="password" data-testid="password-input" onChange={ handleChange } />
-        <button
-          disabled={disabled}
-          type="button"
-          data-testid="login-submit-btn"
-          onClick={ handleClick }
-        >
-          Login
-        </button>
+        <Link to="/comidas">
+          <button
+            disabled={disabled}
+            type="button"
+            data-testid="login-submit-btn"
+            onClick={ handleClick }
+          >
+            Login
+          </button>
+        </Link>
       </form>
     </section>
   );
