@@ -2,13 +2,19 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
+import FoodRecipesPage from './pages/FoodRecipesPage';
+import ProfilePage from './pages/ProfilePage';
+import DrinksRecipesPage from './pages/DrinksRecipesPage';
 
 function App() {
   return (
     <main>
       <BrowserRouter>
         <Switch>
-          <Route path="/" component={LoginPage} />
+          <Route exact path="/" component={LoginPage} />
+          <Route path="/comidas" component={FoodRecipesPage} />
+          <Route path="/perfil" component={ProfilePage} />
+          <Route path="/bebidas" component={DrinksRecipesPage} />
         </Switch>
       </BrowserRouter>
       <div id="meals">
