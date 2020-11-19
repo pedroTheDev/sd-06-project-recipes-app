@@ -3,7 +3,6 @@ import userEvent from '@testing-library/user-event';
 import renderWithRouter from './renderWithRouter';
 import Login from '../Pages/Login';
 
-
 describe('Teste página de Login', () => {
   it('Crie os elementos que devem respeitar os atributos descritos no protótipo', () => {
     const { getByTestId } = renderWithRouter(<Login />);
