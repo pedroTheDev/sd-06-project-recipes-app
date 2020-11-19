@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import ContextAPI from './ContextAPI';
 
 const RecipesProvider = ({ children }) => {
-  const [stateRecipes, setRecipes] = useState(ContextAPI);
+  const [email, setEmail] = useState([]);
   const contextState = {
-    stateRecipes,
-    setRecipes,
+    email,
+    setEmail,
   };
   return (
     <ContextAPI.Provider value={contextState}>
