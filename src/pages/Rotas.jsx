@@ -8,7 +8,7 @@ export default function Rotas() {
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={Login} />
-        <Route path="/comidas" component={Comidas}/>
+        <Route path="/comidas" component={Comidas} />
         {/* <Route path="/bebidas" component={}/>
         <Route path="/comidas/:id" component={}/>
         <Route path="/bebidas/:id" component={}/>

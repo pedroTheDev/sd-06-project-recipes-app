@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import PropTypes from 'prop-types';
 import Context from '../context/Context';
 
 export default function Login({ history }) {
@@ -16,8 +17,8 @@ export default function Login({ history }) {
     } else {
       setValid(true);
     }
-  }
-  
+  };
+
   const handleEmail = ({ target }) => {
     setEmail(target.value);
     validadeLogin();
@@ -34,8 +35,8 @@ export default function Login({ history }) {
     // const item = { mealsToken: 1, cocktailsToken: 1, user: { email }};
     localStorage.setItem('mealsToken', 1);
     localStorage.setItem('cocktailsToken', 1);
-    localStorage.setItem('user', JSON.stringify({ email: email }));
-  }
+    localStorage.setItem('user', JSON.stringify({ email }));
+  };
 
   return (
     <div>
@@ -44,8 +45,8 @@ export default function Login({ history }) {
           type="email"
           id="input-email"
           data-testid="email-input"
-          onChange={ handleEmail }
-          value={ email }
+          onChange={handleEmail}
+          value={email}
         />
       </label>
       <label htmlFor="input-password">
@@ -53,18 +54,24 @@ export default function Login({ history }) {
           type="password"
           id="input-password"
           data-testid="password-input"
-          onChange={ handlePass }
-          value={ pass }
+          onChange={handlePass}
+          value={pass}
         />
       </label>
-      <button 
-        disabled={ valid } 
-        type="submit" 
+      <button
+        disabled={valid}
+        type="submit"
         data-testid="login-submit-btn"
-        onClick={ handleClick }
+        onClick={handleClick}
       >
         Entrar
       </button>
     </div>
   );
 }
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
