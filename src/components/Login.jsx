@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import RecipesAppContext from '../hooks/RecipesAppContext';
+import { saveState } from '../services/localStorage';
 
 function Login() {
   const { contextValue: { setEmail, setPassword, email, password } } = useContext(RecipesAppContext);
@@ -23,6 +24,11 @@ function Login() {
     }
   }
 
+  const saveToken = () => {
+    saveState('mealsToken', 1);
+    saveState('cocktailsToken', 1);
+  }
+
   return (
     <form>
       <h2>Login</h2>
@@ -32,6 +38,7 @@ function Login() {
         type="button"
         data-testid="login-submit-btn"
         disabled={!email || !password}
+        onClick={saveToken}
       >
         Entrar
       </button>
