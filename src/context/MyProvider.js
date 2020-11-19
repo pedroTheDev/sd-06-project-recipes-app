@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import mealsContext from './MealsContext';
-import { getAllDrinkTypesApi} from '../services/drinksAPI';
+import { getAllDrinkTypesApi } from '../services/drinksAPI';
 import { getAllRecipeTypesApi } from '../services/mealsAPI';
 
 function MyProvider({ children }) {
