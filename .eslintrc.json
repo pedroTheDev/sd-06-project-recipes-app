@@ -4,9 +4,8 @@
     "no-console": "off",
     "no-alert": "off",
     "no-underscore-dangle": ["error", {
-      "allow": [
+      "allow":
         "__REDUX_DEV_TOOLS_EXTENSION_COMPOSE__"
-      ]
     }],
     "prefer-arrow-callback": "off",
     "func-names": "off",
