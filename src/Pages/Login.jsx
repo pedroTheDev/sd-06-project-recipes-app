@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import ContextAPI from '../Context/ContextAPI';
 
 const Login = () => {
@@ -8,6 +9,7 @@ const Login = () => {
 
   const [isEmailValid, setEmailValid] = useState(false);
   const [isPasswordValid, setPasswordValid] = useState(false);
+  const [redirect, setRedirect] = useState(false);
 
   const handleInput = (value) => {
     const regex = /[A-Z0-9]{1,}@[A-Z0-9]{2,}.[A-Z0-9]{2,}/i;
@@ -27,7 +29,18 @@ const Login = () => {
     }
   };
 
-  return (
+  const buttonClick = () => {
+    setEmail(username);
+
+    localStorage.setItem('mealsToken', 1);
+    localStorage.setItem('cocktailsToken', 1);
+    localStorage.setItem('user', JSON.stringify({ email: username }));
+    setRedirect(true);
+  };
+
+  return redirect ? (
+    <Redirect to="comidas" />
+  ) : (
     <div>
       <label htmlFor="email">
         <input
@@ -47,7 +60,7 @@ const Login = () => {
           onChange={(e) => handlePassword(e.target.value)}
         />
       </label>
-      <button data-testid="login-submit-btn" disabled={!(isEmailValid && isPasswordValid)} onClick={() => setEmail(username)} type="button">Entrar</button>
+      <button data-testid="login-submit-btn" disabled={!(isEmailValid && isPasswordValid)} onClick={() => buttonClick()} type="button">Entrar</button>
     </div>
   );
 };
