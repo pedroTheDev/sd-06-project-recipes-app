@@ -26,12 +26,12 @@ function Login() {
       </label>
       <label htmlFor="password-input">
         Password:
-      <input
-        type="password"
-        data-testid="password-input"
-        id="password-input"
-        onChange={checkButton}
-      />
+        <input
+          type="password"
+          data-testid="password-input"
+          id="password-input"
+          onChange={checkButton}
+        />
       </label>
       <button
         type="submit"

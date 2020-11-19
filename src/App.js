@@ -6,7 +6,8 @@ function App() {
   return (
     <Switch>
       <Route exact path="/" component={Login} />
-      {/* <Route path="/bebidas" component={} />
+      {/*
+      <Route path="/bebidas" component={} />
       <Route path="/comidas/{id-da-receita}" component={} />
       <Route path="/bebidas/{id-da-receita}" component={} />
       <Route path="/comidas/{id-da-receita}/in-progress" component={} />
