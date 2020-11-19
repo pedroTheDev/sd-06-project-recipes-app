@@ -13,7 +13,6 @@ function App() {
         <Route exact path="/" component={Login} />
         <Route exact path="/comidas" component={MainFood} />
         <Route exact path="/bebidas" component={MainDrink} />
-        
       </Switch>
     </BrowserRouter>
   );
