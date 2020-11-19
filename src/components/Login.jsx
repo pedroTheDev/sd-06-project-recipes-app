@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import RecipesAppContext from '../hooks/RecipesAppContext';
 import { saveState } from '../services/localStorage';
 
@@ -27,6 +28,7 @@ function Login() {
   const saveToken = () => {
     saveState('mealsToken', 1);
     saveState('cocktailsToken', 1);
+    saveState('user', { email })
   }
 
   return (
@@ -34,14 +36,16 @@ function Login() {
       <h2>Login</h2>
       <input type="email" data-testid="email-input" onChange={isEmail} />
       <input type="password" data-testid="password-input" onChange={isPassword} />
-      <button
-        type="button"
-        data-testid="login-submit-btn"
-        disabled={!email || !password}
-        onClick={saveToken}
-      >
-        Entrar
-      </button>
+      <Link to="/comidas">
+        <button
+          type="button"
+          data-testid="login-submit-btn"
+          disabled={!email || !password}
+          onClick={saveToken}
+        >
+          Entrar
+        </button>
+      </Link>
     </form>
   );
 }
