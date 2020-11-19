@@ -4,6 +4,7 @@ import ContextRecipes from './ContextRecipes';
 
 function Provider({ children }) {
   const [btnDisable, setBtnDisable] = useState(true);
+  const [showSearchBar, setSearchBar] = useState(false);
   const [user, setUser] = useState({ email: '' });
 
   const contextValue = {
@@ -11,6 +12,8 @@ function Provider({ children }) {
     setBtnDisable,
     user,
     setUser,
+    showSearchBar,
+    setSearchBar,
   };
 
   return (
