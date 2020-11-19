@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import propTypes from 'prop-types';
 
-function Login() {
+function Login({ history }) {
   const [buttonDisable, setButtonDisable] = useState(false);
   const [userEmail, setUserEmail] = useState('');
 
@@ -11,6 +12,13 @@ function Login() {
     setButtonDisable(inputPassword.length > 6 && regex.test(inputEmail));
     setUserEmail(inputEmail);
     console.log(userEmail);
+  };
+
+  const handleButton = () => {
+    localStorage.setItem('mealsToken', 1);
+    localStorage.setItem('cocktailsToken', 1);
+    localStorage.setItem('user', JSON.stringify({ email: userEmail }));
+    history.push('/comidas');
   };
 
   return (
@@ -37,11 +45,16 @@ function Login() {
         type="submit"
         data-testid="login-submit-btn"
         disabled={!buttonDisable}
+        onClick={handleButton}
       >
         Entrar
       </button>
     </div>
   );
 }
+
+Login.propTypes = {
+  history: propTypes.arrayOf(Object).isRequired,
+};
 
 export default Login;
