@@ -21,13 +21,13 @@ export default async function mealAPI(type, key = '') {
       url = `${MEAL_API}${searchByFirstLetterEndpoint}${key}`;
       break;
     case 'listCategories':
-      url = `${MEAL_API}${searchByFirstLetterEndpoint}`;
+      url = `${MEAL_API}${listCategoriesEndpoint}`;
       break;
     case 'recipe':
-      url = `${MEAL_API}${searchByFirstLetterEndpoint}${key}`;
+      url = `${MEAL_API}${requestRecipeEndpoint}${key}`;
       break;
     case 'random':
-      url = `${MEAL_API}${searchByFirstLetterEndpoint}`;
+      url = `${MEAL_API}${randomRequestEndpoint}`;
       break;
     default:
       return null;
