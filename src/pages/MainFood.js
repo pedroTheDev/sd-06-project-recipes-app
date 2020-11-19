@@ -1,10 +1,10 @@
 import React from 'react';
-import HeaderFood from '../components/HeaderFood';
+import Header from '../components/Header';
 
 function MainFood() {
   return (
     <div>
-      <HeaderFood />
+      <Header />
     </div>
   );
 }
