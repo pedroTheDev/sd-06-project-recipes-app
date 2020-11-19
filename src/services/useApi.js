@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 function useApi(url) {
   const [data, setData] = useState();
   const [error, setError] = useState(false);
-  const [loading, setLoading ] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -18,7 +18,7 @@ function useApi(url) {
       } finally {
         setLoading(false);
       }
-    }
+    };
 
     fetchData();
   }, [url]);
@@ -27,7 +27,7 @@ function useApi(url) {
     data,
     error,
     loading,
-  }
+  };
 }
 
 export default useApi;

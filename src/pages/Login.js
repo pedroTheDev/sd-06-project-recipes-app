@@ -5,11 +5,11 @@ function Login() {
   const [isDisabled, setIsDisabled] = useState(true);
   const [inputValues, setInputValues] = useState({ email: '', password: '' });
   const { email, password } = inputValues;
-  
+
   useEffect(() => {
     const checkEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$/.test(email);
     const checkPassword = 6;
-    if (password.length >= checkPassword && checkEmail) {
+    if (password.length > checkPassword && checkEmail) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
@@ -20,8 +20,8 @@ function Login() {
     localStorage.user = JSON.stringify({ email });
     localStorage.mealsToken = JSON.stringify(1);
     localStorage.cocktailsToken = JSON.stringify(1);
-  }
-  
+  };
+
   return (
     <div>
       <form>
@@ -32,7 +32,7 @@ function Login() {
           name="email"
           placeholder="Digite seu e-mail"
           required
-          value={ email }
+          value={email}
           onChange={({ target }) => setInputValues({ ...inputValues, email: target.value })}
         />
         <br />
@@ -42,7 +42,7 @@ function Login() {
           name="password"
           placeholder="Digite sua senha"
           required
-          value={ password }
+          value={password}
           onChange={({ target }) => setInputValues({ ...inputValues, password: target.value })}
         />
         <br />
@@ -50,15 +50,15 @@ function Login() {
           <button
             data-testid="login-submit-btn"
             type="submit"
-            disabled={ isDisabled }
-            onClick={ saveEmail }
+            disabled={isDisabled}
+            onClick={saveEmail}
           >
-              Entrar
+            Entrar
           </button>
         </Link>
       </form>
     </div>
-  )
-};
+  );
+}
 
 export default Login;
