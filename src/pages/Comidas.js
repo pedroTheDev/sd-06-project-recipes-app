@@ -1,5 +1,8 @@
 import React from 'react';
+import Header from '../components/Header'
 
-const Comidas = () => <section>COMIDA</section>;
+const Comidas = () => (
+  <Header />
+  );
 
 export default Comidas;

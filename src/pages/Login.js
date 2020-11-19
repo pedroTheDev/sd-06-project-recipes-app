@@ -44,6 +44,7 @@ const Login = () => {
 
   return (
     <section>
+      <h1>TRYBE</h1>
       <form>
         <label htmlFor="email-input">Email</label>
         <input id="email-input" name="email" type="text" data-testid="email-input" onChange={handleChange} />
