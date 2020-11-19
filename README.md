@@ -1,4 +1,4 @@
-Ao iniciar este projeto, você concorda com as diretrizes do Código de Ética e Conduta e do Manual da Pessoa Estudante da Trybe.
+sableAo iniciar este projeto, você concorda com as diretrizes do Código de Ética e Conduta e do Manual da Pessoa Estudante da Trybe.
 
 # Boas vindas ao repositório do projeto de Receitas!
 
@@ -18,7 +18,7 @@ Nesse projeto você será capaz de:
   - Utilizar o React Hook useEffect
   - Criar Hooks customizados
 
----
+--- 
 
 ## SUMÁRIO
 
