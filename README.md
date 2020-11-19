@@ -248,7 +248,7 @@ Projeto em grupo.
 
 Serão dez dias de projeto.
 
-O projeto tem até a seguinte data: dd/mm/yyyy - 14:00h para ter entregue a avaliação final.
+O projeto tem até a seguinte data: 09/12/2020 - 14:00h para ter entregue a avaliação final.
 
 ---
 
