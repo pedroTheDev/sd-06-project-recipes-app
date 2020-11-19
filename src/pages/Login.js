@@ -36,7 +36,7 @@ const Login = () => {
     localStorage.setItem('mealsToken', 1);
     localStorage.setItem('cocktailsToken', 1);
     localStorage.setItem('user', JSON.stringify({ email }));
-  }
+  };
 
   const handleClick = () => {
     setUserOnLocalStorage();
@@ -46,15 +46,15 @@ const Login = () => {
     <section>
       <form>
         <label htmlFor="email-input">Email</label>
-        <input id="email-input" name="email" type="text" data-testid="email-input" onChange={ handleChange } />
+        <input id="email-input" name="email" type="text" data-testid="email-input" onChange={handleChange} />
         <label htmlFor="password-input">Senha</label>
-        <input id="password-input" name="password" type="password" data-testid="password-input" onChange={ handleChange } />
+        <input id="password-input" name="password" type="password" data-testid="password-input" onChange={handleChange} />
         <Link to="/comidas">
           <button
-            disabled={ disabled }
+            disabled={disabled}
             type="button"
             data-testid="login-submit-btn"
-            onClick={ handleClick }
+            onClick={handleClick}
           >
             Login
           </button>
