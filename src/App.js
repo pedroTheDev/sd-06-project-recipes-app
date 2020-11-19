@@ -3,8 +3,9 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.css';
 import { Provider } from 'react-redux';
 import {
-  Login, Bebidas, Comidas, Explorar, Perfil, ReceitasFavoritas, ReceitasFeitas,
+  Login, Bebidas, Comidas, Explorar, Perfil, ReceitasFavoritas, ReceitasFeitas
 } from './pages';
+import Footer from './components/Footer';
 import store from './redux/store';
 
 function App() {
@@ -12,7 +13,7 @@ function App() {
     <Provider store={store}>
       <BrowserRouter>
         <Switch>
-          <Route exact path="/" component={Login} />
+          <Route exact path="/" component={Footer} />
           <Route exact path="/bebidas" component={Bebidas} />
           <Route exact path="/bebidas/:id" component={Bebidas} />
           <Route exact path="/bebidas/:id/in-progress" component={Bebidas} />
