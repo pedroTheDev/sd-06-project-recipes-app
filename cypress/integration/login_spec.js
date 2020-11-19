@@ -119,7 +119,7 @@ describe('7 - Salve o e-mail da pessoa usuária no localStorage na chave user ap
   });
 });
 
-describe.only('8 - Redirecione a pessoa usuária para a tela principal de receitas de comidas após a submissão e validação com sucesso do login', () => {
+describe('8 - Redirecione a pessoa usuária para a tela principal de receitas de comidas após a submissão e validação com sucesso do login', () => {
   it('A rota muda para a tela principal de receitas de comidas', () => {
     cy.visit('http://localhost:3000/', {
       onBeforeLoad(win) {
