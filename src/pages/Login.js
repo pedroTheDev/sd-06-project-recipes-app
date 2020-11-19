@@ -7,6 +7,8 @@ class Login extends Component {
     super(props);
 
     this.handleChanges = this.handleChanges.bind(this);
+    this.validateInputs = this.validateInputs.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
 
     this.state = {
       email: '',
@@ -23,17 +25,26 @@ class Login extends Component {
     });
   }
 
-  handleClick() {
-    localStorage.setItem('mealsToken', 1);
-  }
-
+  
   validateInputs() {
     const { email, password } = this.state;
-    const EMAIL_REGEX = RegExp(/^[\w-.]+@(([\w-]+.)+[\w-]{2,4})$/g).test(email);
-    const PASS_VALIDATION = 6;
+    const EMAIL_REGEX = RegExp(/^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/).test(email);
+    const PASS_VALIDATION = 7;
     this.setState({
       isValid: EMAIL_REGEX && password.length >= PASS_VALIDATION,
     });
+  }
+  
+  handleSubmit() {
+    const { email } = this.state;
+    const { history } = this.props;
+    const user = {
+      email
+    }
+    localStorage.setItem('mealsToken', 1);
+    localStorage.setItem('cocktailsToken', 1);
+    localStorage.setItem('user', JSON.stringify(user));
+    history.push('/comidas');
   }
 
   render() {
@@ -48,7 +59,7 @@ class Login extends Component {
         <button
           type="button"
           data-testid="login-submit-btn"
-          onClick={console.log('oi')}
+          onClick={this.handleSubmit}
           disabled={!isValid}
         >
           Entrar
