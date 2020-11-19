@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import LoginContext from '../context/LoginContext';
 
 const Login = () => {
@@ -15,6 +16,12 @@ const Login = () => {
     }
     return true;
   };
+  const handleClick = () => {
+    localStorage.setItem('mealsToken', 1);
+    localStorage.setItem('cocktailsToken', 1);
+    localStorage.setItem('user', JSON.stringify({ email }));
+  };
+
   return (
     <form>
       <input
@@ -33,13 +40,16 @@ const Login = () => {
         onChange={({ target: { value } }) => setPassword(value)}
         required
       />
-      <button
-        type="submit"
-        data-testid="login-submit-btn"
-        disabled={infoVerifier()}
-      >
-        Entrar
-      </button>
+      <Link to="/comidas">
+        <button
+          type="submit"
+          data-testid="login-submit-btn"
+          onClick={handleClick}
+          disabled={infoVerifier()}
+        >
+          Entrar
+        </button>
+      </Link>
     </form>
   );
 };
