@@ -1,7 +1,7 @@
 import React from 'react';
-import Footer from '../components/footer';
+import Footer from '../components/Footer';
 
-export default function ExploreDrinkByIngre() {
+export default function ExploreFoodByIngre() {
   return (
     <div>
       hello world
