@@ -7,4 +7,11 @@ export async function getAllRecipeTypesApi(type) {
   return result.meals;
 }
 
+// Lista de receitas de comidas
+export async function getAllRecipesMealsApi() {
+  const response = await fetch(`${URL_BASE}search.php?s=`);
+  const result = await response.json();
+  return result.meals;
+}
+
 export default { getAllRecipeTypesApi };
