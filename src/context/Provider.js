@@ -10,7 +10,7 @@ export default function Provider({ children }) {
     email,
     setEmail,
     titulo,
-    setTitulo
+    setTitulo,
   };
 
   return (
