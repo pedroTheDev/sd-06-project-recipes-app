@@ -1,6 +1,5 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { createStore } from 'redux';
@@ -21,8 +20,8 @@ export const renderWithRouterAndStore = (component, routeConfigs = {}, initialSt
 
   return {
     ...render(
-      <Provider store={store}>
-        <Router history={history}>{component}</Router>
+      <Provider store={ store }>
+        <Router history={ history }>{component}</Router>
       </Provider>,
     ),
     history,
