@@ -38,7 +38,7 @@ class Login extends React.Component {
 
   handleValidator() {
     const { email, password } = this.state;
-    const validator = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
+    const validator = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
     const isValid = validator.test(String(email).toLowerCase());
     if (password.length > 5) {
       this.setState({ validPassword: true });
