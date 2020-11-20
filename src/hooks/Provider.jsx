@@ -22,11 +22,16 @@ function Provider({ children }) {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  // context to set param (false is default) to show or not search bar
+  const [searchBar, setSearchBar] = useState(false);
+
   const contextValue = {
     email,
     setEmail,
     password,
     setPassword,
+    searchBar,
+    setSearchBar,
   };
 
   return (
