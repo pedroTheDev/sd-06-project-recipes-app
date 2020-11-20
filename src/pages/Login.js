@@ -1,9 +1,11 @@
+/* eslint-disable react/jsx-curly-spacing */
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 
 const checkLogin = (email, passwordInput) => {
   const validEmail = email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{3})$/i);
-  const validPassword = passwordInput.length > 6;
+  const PASSWORD_MIN_LENGTH = 6;
+  const validPassword = passwordInput.length > PASSWORD_MIN_LENGTH;
   if (validEmail && validPassword) return false;
   return true;
 };
@@ -41,24 +43,24 @@ function Login() {
         <input
           type="email"
           name="email"
-          value={email}
+          value={ email }
           placeholder="Email"
           data-testid="email-input"
-          onChange={(event) => handleInput(event)}
+          onChange={ (event) => handleInput(event) }
         />
         <input
           type="password"
           name="password"
-          value={passwordInput}
+          value={ passwordInput }
           placeholder="Senha"
           data-testid="password-input"
-          onChange={(event) => handleInput(event)}
+          onChange={ (event) => handleInput(event) }
         />
         <button
           type="button"
           data-testid="login-submit-btn"
-          onClick={handleLoginClick}
-          disabled={isDisabled}
+          onClick={ handleLoginClick }
+          disabled={ isDisabled }
         >
           Entrar
         </button>
