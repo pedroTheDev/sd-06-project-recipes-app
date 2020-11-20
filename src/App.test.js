@@ -10,7 +10,7 @@ const getLocalStorageData = (key) => JSON.parse(localStorage.getItem(key));
 
 describe('test LoginPage', () => {
   test('test emailInput and PasswordInput', () => {
-    const { history } = renderWithRouterAndStore(<App />)
+    const { history, queryByTestId } = renderWithRouterAndStore(<App />)
     history.push('/');
     expect(history.location.pathname).toBe('/');
     const emailInput = queryByTestId('email-input');
