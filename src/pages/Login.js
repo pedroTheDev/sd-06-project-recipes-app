@@ -44,5 +44,5 @@ export default function Login(props) {
 }
 
 Login.propTypes = {
-  history: PropTypes.Shape({}).isRequired,
+  history: PropTypes.arrayOf.isRequired,
 };
