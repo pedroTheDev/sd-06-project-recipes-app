@@ -8,9 +8,7 @@ import './Header.css';
 const Header = ({ title, searchBtn = false }) => {
   const { searchBox, setSearchBox } = useContext(ReceitasContext);
 
-  const showSearchBar = () => {
-    setSearchBox(!searchBox);
-  };
+  const showSearchBar = () => setSearchBox(!searchBox);
 
   return (
     <section className="header">
@@ -20,7 +18,7 @@ const Header = ({ title, searchBtn = false }) => {
       <h1 data-testid="page-title">{title}</h1>
       {searchBtn
         ? (
-          <button data-testid="search-top-btn" className="image" onClick={ showSearchBar }>
+          <button type="button" data-testid="search-top-btn" className="image" onClick={ showSearchBar }>
             <img src={searchIcon} alt="show-hide-sbr" />
           </button>
         )
