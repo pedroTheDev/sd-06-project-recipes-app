@@ -17,9 +17,10 @@ function Login() {
   }, [inputValues]);
 
   const saveEmail = () => {
-    localStorage.user = JSON.stringify({ email });
-    localStorage.mealsToken = JSON.stringify(1);
-    localStorage.cocktailsToken = JSON.stringify(1);
+    // localStorage.user = JSON.stringify({ email });
+    // localStorage.mealsToken = JSON.stringify(1);
+    // localStorage.cocktailsToken = JSON.stringify(1);
+    console.log('teste');
   };
 
   return (
