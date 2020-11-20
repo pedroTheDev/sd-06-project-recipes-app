@@ -19,18 +19,24 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/" component={Login} />
-        <Route exact path="/comidas" component={MainFood} />
-        <Route exact path="/bebidas" component={MainDrink} />
-        <Route exact path="/perfil" component={Profile} />
-        <Route exact path="/explorar" component={Explore} />
-        <Route exact path="/explorar/comidas" component={ExploreFood} />
-        <Route exact path="/explorar/bebidas" component={ExploreDrink} />
-        <Route exact path="/explorar/comidas/ingredientes" component={ExploreFoodIngredients} />
-        <Route exact path="/explorar/bebidas/ingredientes" component={ExploreDrinkIngredients} />
-        <Route exact path="/explorar/comidas/area" component={ExploreFoodOrigin} />
-        <Route exact path="/receitas-feitas" component={MadeRecipes} />
-        <Route exact path="/receitas-favoritas" component={FavoritesRecipes} />
+        <Route exact path="/" component={ Login } />
+        <Route exact path="/comidas" component={ MainFood } />
+        <Route exact path="/bebidas" component={ MainDrink } />
+        <Route exact path="/perfil" component={ Profile } />
+        <Route exact path="/explorar" component={ Explore } />
+        <Route exact path="/explorar/comidas" component={ ExploreFood } />
+        <Route exact path="/explorar/bebidas" component={ ExploreDrink } />
+        <Route
+          path="/explorar/comidas/ingredientes"
+          component={ ExploreFoodIngredients }
+        />
+        <Route
+          path="/explorar/bebidas/ingredientes"
+          component={ ExploreDrinkIngredients }
+        />
+        <Route exact path="/explorar/comidas/area" component={ ExploreFoodOrigin } />
+        <Route exact path="/receitas-feitas" component={ MadeRecipes } />
+        <Route exact path="/receitas-favoritas" component={ FavoritesRecipes } />
       </Switch>
     </BrowserRouter>
   );

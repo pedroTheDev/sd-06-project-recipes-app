@@ -33,9 +33,12 @@ function HeaderFood() {
 
   return (
     <div>
-      <Link to="/perfil"><img data-testid="profile-top-btn" src={profileIcon} alt="profile" /></Link>
+      <Link to="/perfil">
+        <img data-testid="profile-top-btn" src={ profileIcon } alt="profile" />
+      </Link>
       <h1 data-testid="page-title">{title}</h1>
-      { searchIconShow ? <img data-testid="search-top-btn" src={searchIcon} alt="search" /> : null}
+      { searchIconShow
+        ? <img data-testid="search-top-btn" src={ searchIcon } alt="search" /> : null}
     </div>
   );
 }
