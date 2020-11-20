@@ -1,15 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import { useHistory } from "react-router";
+import SearchBar from './SearchBar';
 
 export default function Header({ pageName, renderSearch }) {
-  const teste = 'teste';
+  const history = useHistory();
+  const [showSearchBar, setShowSearchBar] = useState(false);
+
+  const renderSearchIcon = () => {
+    return (
+      <img
+        className="header-icon"
+        src={searchIcon}
+        alt="searchIcon"
+        data-testid="search-top-btn"
+        onClick={() => setShowSearchBar(!showSearchBar)}
+      />
+    );
+  };
   return (
     <header>
-      <img src={profileIcon} alt="profileIcon" data-testid="profile-top-btn" />
+      <img
+        className="header-icon"
+        src={profileIcon}
+        alt="profileIcon"
+        data-testid="profile-top-btn"
+        onClick={() => history.push('/perfil')}
+      />
       <h2 data-testid="page-title">{ pageName }</h2>
-      { renderSearch ? <img src={searchIcon} alt="searchIcon" data-testid="search-top-btn" /> : null}
+      { renderSearch ? renderSearchIcon() : null}
+      { showSearchBar && <SearchBar />}
     </header>
   );
 }
