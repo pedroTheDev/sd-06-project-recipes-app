@@ -1,10 +1,10 @@
 import React from 'react';
-import Header from '../components/Header'
+import Header from '../components/Header';
 
 function ExplorarBebidas() {
   return (
     <main>
-      <Header pageName="Explorar Bebidas" renderSearch={false}/>
+      <Header pageName="Explorar Bebidas" renderSearch={ false } />
       ExplorarBebidas Page
     </main>
   );

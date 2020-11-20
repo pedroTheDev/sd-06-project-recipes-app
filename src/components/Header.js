@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
-import { Link } from 'react-router-dom';
 
 export default function Header({ pageName, renderSearch }) {
   const [showSearchBar, setShowSearchBar] = useState(false);
 
   const renderSearchIcon = () => (
-    <button 
+    <button
+      type="button"
       data-testid="search-top-btn"
       onClick={ () => setShowSearchBar(!showSearchBar) }
     >
@@ -31,7 +32,7 @@ export default function Header({ pageName, renderSearch }) {
           data-testid="profile-top-btn"
         />
       </Link>
-      
+
       <h2 data-testid="page-title">{ pageName }</h2>
       { renderSearch ? renderSearchIcon() : null }
       { showSearchBar && <SearchBar /> }

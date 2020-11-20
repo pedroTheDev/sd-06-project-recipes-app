@@ -1,10 +1,10 @@
 import React from 'react';
-import Header from '../components/Header'
+import Header from '../components/Header';
 
 function ComidasArea() {
   return (
     <main>
-      <Header pageName="Explorar Origem" renderSearch={true}/>
+      <Header pageName="Explorar Origem" renderSearch />
       ComidasIngredientes Page
     </main>
   );
