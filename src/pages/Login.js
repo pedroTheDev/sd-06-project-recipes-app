@@ -1,5 +1,4 @@
 import React from 'react';
-import SearchBar from '../components/SearchBar';
 
 function Login() {
   return (
@@ -9,7 +8,6 @@ function Login() {
       <button type="button" data-testid="login-submit-btn">
         Login
       </button>
-      <SearchBar />
     </div>
   );
 }
