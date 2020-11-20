@@ -2,7 +2,7 @@ import React from 'react';
 import Footer from '../components/Footer';
 
 function Recipes() {
-  const localEmail = JSON.parse(localStorage.getItem('user'));
+  // const localEmail = JSON.parse(localStorage.getItem('user'));
   return (
     <div>
       <h1>Receitas</h1>
