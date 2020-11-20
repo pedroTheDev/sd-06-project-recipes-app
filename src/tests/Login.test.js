@@ -1,7 +1,7 @@
 import React from 'react';
 import App from '../App';
 import renderWithRouter from './RenderWithRouter';
-import { screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent, userEvent } from '@testing-library/react';
 
 describe('Login test', () => {
   it('test about a pathname is /', () => {
@@ -18,4 +18,4 @@ describe('Login test', () => {
     expect(login).toBeInTheDocument();
   })
 
-})
+});
