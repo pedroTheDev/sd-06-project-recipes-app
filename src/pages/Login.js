@@ -72,9 +72,9 @@ function Login(props) {
               type="text"
               placeholder="email"
               name="email"
-              value={email}
+              value={ email }
               data-testid="email-input"
-              onChange={(e) => handleChange(e)}
+              onChange={ (e) => handleChange(e) }
             />
           </label>
           <label htmlFor="input-player-name">
@@ -82,16 +82,16 @@ function Login(props) {
               type="text"
               placeholder="Senha"
               name="password"
-              value={password}
+              value={ password }
               data-testid="password-input"
-              onChange={(e) => handleChange(e)}
+              onChange={ (e) => handleChange(e) }
             />
           </label>
           <button
             type="button"
             data-testid="login-submit-btn"
-            disabled={isDisable}
-            onClick={() => handleSubmit()}
+            disabled={ isDisable }
+            onClick={ () => handleSubmit() }
           >
             Entrar
           </button>
