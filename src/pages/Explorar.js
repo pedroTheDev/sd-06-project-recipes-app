@@ -1,7 +1,8 @@
 import React from 'react';
+import Footer from '../components/Footer';
 
 const Explorar = () => (
-  <div />
+  <Footer />
 );
 
 export default Explorar;
