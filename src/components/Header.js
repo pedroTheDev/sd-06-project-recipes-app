@@ -82,7 +82,7 @@ class Header extends React.Component {
               />}
           </div>
         </div>
-        { searchInput && <SearchInput /> }
+        { searchInput && <SearchInput history={ history } /> }
       </header>
     );
   }

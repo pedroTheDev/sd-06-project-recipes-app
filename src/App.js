@@ -4,6 +4,7 @@ import {
   Login, Foods, Drinks, Explore, Profile, DoneRecipes, FavoriteRecipes,
 } from './pages';
 import './App.css';
+import FoodsDetails from './pages/FoodsDetails';
 
 function App() {
   return (

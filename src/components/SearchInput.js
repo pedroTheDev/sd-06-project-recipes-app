@@ -1,5 +1,5 @@
 import React from 'react';
-import fetchMeal from '../services/FetchAPI';
+import { fetchDrinks, fetchMeal } from '../services/index';
 
 class SearchInput extends React.Component {
   constructor() {
@@ -7,25 +7,51 @@ class SearchInput extends React.Component {
     this.state = {
       search: '',
       radio: '',
+      meals: [],
+      drinks: [],
     };
     this.searchHandleChange = this.searchHandleChange.bind(this);
-    this.getMeals = this.getMeals.bind(this);
     this.clickApi = this.clickApi.bind(this);
+    this.redirectFromState = this.redirectFromState.bind(this);
   }
 
-  getMeals(meals) {
-    this.setState({
-      meals,
-    });
+  componentDidUpdate() {
+    this.redirectFromState();
+  }
+
+  redirectFromState() {
+    const { meals, drinks } = this.state;
+    const { history } = this.props;
+    if (meals.length === 1) {
+      history.push(`/comidas/${meals.idMeal}`);
+    }
+    else if (drinks.length === 1) {
+      history.push(`/comidas/${drinks.idDrink}`);
+    }
   }
 
   async clickApi() {
+    const { history: { location: { pathname } } } = this.props;
     const { search, radio } = this.state;
-    if (radio === 'primeira-letra' && search.length > 1) {
-      window.alert('Sua busca deve conter somente 1 (um) caracter');
-    } else {
-      const responseApi = await fetchMeal(search, radio);
-      this.getMeals(responseApi);
+    if (pathname === '/comidas') {
+      if (radio === 'primeira-letra' && search.length > 1) {
+        window.alert('Sua busca deve conter somente 1 (um) caracter');
+      } else {
+        const responseApi = await fetchMeal(search, radio);
+        this.setState({
+          meals: responseApi,
+        });
+      }
+    }
+    if (pathname === '/bebidas') {
+      if (radio === 'primeira-letra' && search.length > 1) {
+        window.alert('Sua busca deve conter somente 1 (um) caracter');
+      } else {
+        const responseApi = await fetchDrinks(search, radio);
+        this.setState({
+          drinks: responseApi,
+        });
+      }
     }
   }
 
@@ -60,6 +86,7 @@ class SearchInput extends React.Component {
               type="radio"
               name="search-filter"
               value="nome"
+              data-testid="name-search-radio"
               onChange={ (event) => this.searchHandleChange(event, 'radio') }
             />
             Nome
@@ -75,7 +102,13 @@ class SearchInput extends React.Component {
             />
             Primeira Letra
           </label>
-          <button type="button" onClick={ this.clickApi }>Buscar</button>
+          <button
+            type="button"
+            onClick={ this.clickApi }
+            data-testid="exec-search-btn"
+          >
+            Buscar
+          </button>
         </div>
       </div>
     );
