@@ -6,6 +6,11 @@ function Provider({ children }) {
   const [btnDisable, setBtnDisable] = useState(true);
   const [showSearchBar, setSearchBar] = useState(false);
   const [user, setUser] = useState({ email: '' });
+  const [searchText, setSearchText] = useState('');
+  const [selectedRadio, setSelectedRadio] = useState('');
+  const [recipes, setRecipes] = useState([]);
+  const [drinks, setDrinks] = useState('');
+  const [idRecipe, setIdRecipe] = useState('');
 
   const contextValue = {
     btnDisable,
@@ -14,6 +19,16 @@ function Provider({ children }) {
     setUser,
     showSearchBar,
     setSearchBar,
+    searchText,
+    setSearchText,
+    selectedRadio,
+    setSelectedRadio,
+    recipes,
+    setRecipes,
+    drinks,
+    setDrinks,
+    idRecipe,
+    setIdRecipe,
   };
 
   return (
