@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import perfil from '../images/profileIcon.svg';
 import busca from '../images/searchIcon.svg';
+import SearchBar from './SearchBar';
 
 export default function Header() {
   const [search, setSearch] = useState(false);
@@ -32,7 +33,7 @@ export default function Header() {
           />
         </button>
       </div>
-      {search ? <span> Teste </span> : ''}
+      {(search) ? <SearchBar /> : '' }
     </div>
   );
 }

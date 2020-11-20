@@ -65,9 +65,6 @@ export default function Login() {
       >
         Entrar
       </button>
-      <div>
-        <SearchBar />
-      </div>
     </div>
   );
 }
