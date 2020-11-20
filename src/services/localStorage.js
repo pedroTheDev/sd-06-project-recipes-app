@@ -10,12 +10,20 @@ export function cocktailsToken(token) {
   return temp;
 }
 
-export function user(email) {
-  const obj = { email };
-  const temp = JSON.parse(localStorage.getItem('email'));
-  localStorage.setItem('email', JSON.stringify(obj));
-  return temp;
+export function getValue(key) {
+  return JSON.parse(localStorage.getItem(key));
 }
+
+export function setValue(value) {
+  return localStorage.setItem(JSON.stringify({ user: { email: value } }));
+}
+
+// export function user(email) {
+//   const obj = { email };
+//   const temp = JSON.parse(localStorage.getItem('email'));
+//   localStorage.setItem('email', JSON.stringify(obj));
+//   return temp;
+// }
 
 export function doneRecipes(object) {
   const obj = {

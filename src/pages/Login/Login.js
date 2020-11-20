@@ -22,39 +22,40 @@ function Login() {
 
   return (
     <div>
+      <h1>Bem-vindo chef!</h1>
       <form>
         <div className="form-group">
           <label
             htmlFor="email"
           >
             Email
-      </label>
-          <input
-            className="form-control"
-            type="email"
-            data-testid="email-input"
-            placeholder="Digite seu email"
-            id="password"
-            onChange={ ({ target }) => verifyAndSetEmail(target.value) }
-            required="required"
-            value={ user }
-          />
+            <input
+              className="form-control"
+              type="email"
+              data-testid="email-input"
+              placeholder="Digite seu email"
+              id="password"
+              onChange={ ({ target }) => verifyAndSetEmail(target.value) }
+              required="required"
+              value={ user }
+            />
+          </label>
         </div>
         <div className="form-group">
           <label
             htmlFor="senha"
           >
             Senha
-      </label>
-          <input
-            className="form-control"
-            type="password"
-            data-testid="password-input"
-            placeholder="Digite sua senha"
-            id="senha"
-            onChange={ ({ target }) => verifyAndSetPassword(target.value) }
-            required="required"
-          />
+            <input
+              className="form-control"
+              type="password"
+              data-testid="password-input"
+              placeholder="Digite sua senha"
+              id="senha"
+              onChange={ ({ target }) => verifyAndSetPassword(target.value) }
+              required="required"
+            />
+          </label>
         </div>
         <button
           type="button"
@@ -64,9 +65,9 @@ function Login() {
         >
           Entrar
         </button>
-      </form >
+      </form>
     </div>
-  )
+  );
 }
 
 export default Login;
