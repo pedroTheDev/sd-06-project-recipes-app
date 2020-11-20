@@ -17,13 +17,14 @@ const Header = ({ title, searchBtn = false }) => {
         <img data-testid="profile-top-btn" src={profileIcon} alt="Profile button" />
       </Link>
       <h1 data-testid="page-title">{title}</h1>
-      {searchBtn
-        ? (
-          <button type="button" data-testid="search-top-btn" className="image" onClick={showSearchBar}>
-            <img src={searchIcon} alt="show-hide-sbr" />
-          </button>
-        )
-        : <div className="image"></div>
+      {
+        searchBtn
+          ? (
+            <button type="button" data-testid="search-top-btn" className="image" onClick={showSearchBar}>
+              <img src={searchIcon} alt="show-hide-sbr" />
+            </button>
+          )
+          : <div className="image"></div>
       }
     </section>
   );
