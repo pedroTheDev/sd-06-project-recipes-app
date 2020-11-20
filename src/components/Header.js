@@ -10,21 +10,44 @@ function Header() {
   return (
     <div>
       <div className="header">
-        <Link to="/perfil"><img data-testid="profile-top-btn" alt="profile" src={profileIcon} /></Link>
+        <Link to="/perfil">
+          <img data-testid="profile-top-btn" alt="profile" src={ profileIcon } />
+        </Link>
         <div data-testid="page-title">{page}</div>
-        {search ? <button className="search-button" type="button" onClick={() => setSearchBar(!searchBar)}><img data-testid="search-top-btn" alt="profile" src={searchIcon} /></button> : <div />}
+        {search ? <button className="search-button" type="button" onClick={ () => setSearchBar(!searchBar) }><img data-testid="search-top-btn" alt="profile" src={ searchIcon } /></button> : <div />}
       </div>
       { searchBar
         ? (
           <div className="search-bar">
             <input type="text" data-testid="search-input" />
             <div>
-              <input type="radio" id="ingredient" name="type-search" data-testid="ingredient-search-radio" />
-              <label htmlFor="ingredient">Ingrediente</label>
-              <input type="radio" id="name" name="type-search" data-testid="name-search-radio" />
-              <label htmlFor="name">Nome</label>
-              <input type="radio" id="first-letter" name="type-search" data-testid="first-letter-search-radio" />
-              <label htmlFor="first-letter">Primeira letra</label>
+              <label htmlFor="ingredient">
+                <input
+                  type="radio"
+                  id="ingredient"
+                  name="type-search"
+                  data-testid="ingredient-search-radio"
+                />
+                Ingrediente
+              </label>
+              <label htmlFor="name">
+                <input
+                  type="radio"
+                  id="name"
+                  name="type-search"
+                  data-testid="name-search-radio" 
+                />
+                  Nome
+              </label>
+              <label htmlFor="first-letter">
+                <input
+                  type="radio"
+                  id="first-letter"
+                  name="type-search"
+                  data-testid="first-letter-search-radio" 
+                />
+                Primeira letra
+              </label>
             </div>
             <button type="button" data-testid="exec-search-btn">Buscar</button>
           </div>

@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import LoginContext from '../context/LoginContext';
 
 function LoginProvider({ children }) {
-  const contextValue = {};
+  const [user, setUser] = useState({ email: '' });
+  const contextValue = {
+    user,
+    setUser,
+  };
 
   return (
-    <LoginContext.Provider value={{ contextValue }}>
+    <LoginContext.Provider value={ { contextValue } }>
       {children}
     </LoginContext.Provider>
   );
