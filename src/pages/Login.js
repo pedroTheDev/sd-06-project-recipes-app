@@ -14,7 +14,7 @@ function Login() {
     } else {
       setIsDisabled(true);
     }
-  }, [inputValues]);
+  }, [email, password]);
 
   const saveEmail = () => {
     localStorage.user = JSON.stringify({ email });
