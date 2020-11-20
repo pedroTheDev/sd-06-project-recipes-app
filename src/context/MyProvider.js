@@ -14,7 +14,7 @@ function MyProvider({ children }) {
   const [glasses, setGlasses] = useState([]);
   const [disable, setDisable] = useState(true);
   const [user, setUser] = useState({ email: '' });
-  const [showSearchBar, setShowSearchBar] = useState(false);
+  const [showSearchBar, setSearchBar] = useState(false);
 
   useEffect(() => {
     async function fetchALL() {
@@ -50,7 +50,7 @@ function MyProvider({ children }) {
     user,
     setUser,
     showSearchBar,
-    setShowSearchBar,
+    setSearchBar,
   };
 
   return (
