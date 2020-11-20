@@ -1,5 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import drinkIcon from '../images/drinkIcon.svg';
+import exploreIcon from '../images/exploreIcon.svg';
+import mealIcon from '../images/mealIcon.svg';
 
 import '../Css/Footer.css';
 
@@ -9,17 +12,17 @@ function Footer() {
       <form className="Footer">
         <Link to="/bebidas">
           <button type="button" data-testid="drinks-bottom-btn">
-            <img src="./src/imagens/drinkIcon.svg" alt="DRINKS" />
+            <img src={drinkIcon} alt="DRINKS" />
           </button>
         </Link>
         <Link to="/explore">
           <button type="button" data-testid="explore-bottom-btn">
-            <img src="./src/imagens/exploreIcon.svg" alt="EXPLORE" />
+            <img src={exploreIcon} alt="EXPLORE" />
           </button>
         </Link>
         <Link to="/comidas">
           <button type="button" data-testid="food-bottom-btn">
-            <img src="./src/imagens/mealIcon.svg" alt="FOOD" />
+            <img src={mealIcon} alt="FOOD" />
           </button>
         </Link>
       </form>
