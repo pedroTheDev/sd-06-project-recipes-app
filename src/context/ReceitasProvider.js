@@ -4,10 +4,13 @@ import ReceitasContext from './ReceitasContext';
 
 const ReceitasProvider = ({ children }) => {
   const [data, setData] = useState([]);
+  const [filtersData, setFiltersData] = useState([]);
 
   const state = {
     data,
     setData,
+    filtersData,
+    setFiltersData,
   };
 
   return (
