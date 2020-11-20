@@ -32,6 +32,7 @@ function App() {
           <Route exact path="/perfil" component={Perfil} />
 
         </Switch>
+
       </BrowserRouter>
     </Provider>
   );
