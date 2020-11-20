@@ -1,6 +1,9 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
+// Provider
+import RecipesProvider from './provider/RecipesProvider';
+
 // Pages
 import Login from './pages/Login';
 import MainFood from './pages/MainFood';
@@ -19,6 +22,7 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
+        <RecipesProvider>
         <Route exact path="/" component={ Login } />
         <Route exact path="/comidas" component={ MainFood } />
         <Route exact path="/bebidas" component={ MainDrink } />
@@ -37,6 +41,7 @@ function App() {
         <Route exact path="/explorar/comidas/area" component={ ExploreFoodOrigin } />
         <Route exact path="/receitas-feitas" component={ MadeRecipes } />
         <Route exact path="/receitas-favoritas" component={ FavoritesRecipes } />
+        </RecipesProvider>
       </Switch>
     </BrowserRouter>
   );
