@@ -16,14 +16,14 @@ export default function Rotas() {
         <Route path="/bebidas/:id" component={}/>
         <Route path="/comidas/:id/in-progress" component={}/>
         <Route path="/bebidas/:id/in-progress" component={}/> */}
-        <Route path="/explorar" component={Explorar}/>
+        <Route path="/explorar" component={Explorar} />
         {/* <Route path="/explorar/comidas" component={}/>
         <Route path="/explorar/bebidas" component={}/>
         <Route path="/explorar/comidas/ingredientes" component={}/>
         <Route path="/explorar/bebidas/ingredientes" component={}/>
         <Route path="//explorar/comidas/area" component={} /> */}
         <Route path="/perfil" component={Perfil} />
-        {/* Receitas aqui abaixo ja linkadas na pagina de perfil 
+        {/* Receitas aqui abaixo ja linkadas na pagina de perfil
         mas ainda nao feito os componentes
         <Route path="/receitas-feitas" component={} />
         <Route path="/receitas-favoritas" component={} /> */}
