@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Comidas from './pages/Comidas';
 import Bebidas from './pages/Bebidas';
 import Explore from './pages/Explore';
+import Perfil from './pages/Perfil';
 
 function App() {
   return (
@@ -15,6 +16,8 @@ function App() {
           <Route exact path="/comidas" component={ Comidas } />
           <Route exact path="/bebidas" component={ Bebidas } />
           <Route exact path="/explore" component={ Explore } />
+          <Route exact path="/perfil" component={Perfil} />
+
         </Switch>
       </BrowserRouter>
     </MyProvider>
