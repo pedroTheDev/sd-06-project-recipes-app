@@ -34,7 +34,7 @@ const checkFirstTwelveRecipes = (recipes, meal = true) => {
   cy.get('[data-testid="12-card-name"]').should('not.exist');
 };
 
-describe('25 - Implemente os elementos da tela principal de receitas respeitando os atributos descritos no protótipo', () => {
+describe.skip('25 - Implemente os elementos da tela principal de receitas respeitando os atributos descritos no protótipo', () => {
   it('A tela tem os data-testids de todos os 12 cards da tela de comidas', () => {
     cy.visit('http://localhost:3000/comidas', {
       onBeforeLoad(win) {
@@ -73,7 +73,7 @@ describe('25 - Implemente os elementos da tela principal de receitas respeitando
   });
 });
 
-describe('26 - Carregue as 12 primeiras receitas de comidas ou bebidas, uma em cada card', () => {
+describe.skip('26 - Carregue as 12 primeiras receitas de comidas ou bebidas, uma em cada card', () => {
   it('Caso as receitas sejam de comida, deve-se carregar as 12 primeiras receitas', () => {
     cy.visit('http://localhost:3000/comidas', {
       onBeforeLoad(win) {
@@ -95,7 +95,7 @@ describe('26 - Carregue as 12 primeiras receitas de comidas ou bebidas, uma em c
   });
 });
 
-describe('27 - Implemente os botões de categoria para serem utilizados como filtro', () => {
+describe.skip('27 - Implemente os botões de categoria para serem utilizados como filtro', () => {
   it('Caso as receitas sejam de comida, deve-se exibir as 5 primeiras categorias de comida', () => {
     cy.visit('http://localhost:3000/comidas', {
       onBeforeLoad(win) {
@@ -129,7 +129,7 @@ describe('27 - Implemente os botões de categoria para serem utilizados como fil
   });
 });
 
-describe('28 - Implemente o filtro das receitas através da API ao clicar no filtro de categoria', () => {
+describe.skip('28 - Implemente o filtro das receitas através da API ao clicar no filtro de categoria', () => {
   it('Caso as receitas sejam de comida e a categoria seja "Beef", deve-se carregar as 12 primeiras receitas de "Beef"', () => {
     cy.visit('http://localhost:3000/comidas', {
       onBeforeLoad(win) {
@@ -251,7 +251,7 @@ describe('28 - Implemente o filtro das receitas através da API ao clicar no fil
   });
 });
 
-describe('29 - Implemente o filtro como um toggle, que se for selecionado de novo, o app deve retornar as receitas sem nenhum filtro', () => {
+describe.skip('29 - Implemente o filtro como um toggle, que se for selecionado de novo, o app deve retornar as receitas sem nenhum filtro', () => {
   it('Caso as receitas sejam de comida e o filtro tenha sido selecionado novamente, deve-se retornar as 12 primeiras receitas sem filtro', () => {
     cy.visit('http://localhost:3000/comidas', {
       onBeforeLoad(win) {
@@ -279,7 +279,7 @@ describe('29 - Implemente o filtro como um toggle, que se for selecionado de nov
   });
 });
 
-describe('30 - Implemente o filtro de categoria para que apenas um seja selecionado por vez', () => {
+describe.skip('30 - Implemente o filtro de categoria para que apenas um seja selecionado por vez', () => {
   it('Caso as receitas sejam de comida apenas um filtro de categoria deve poder ser selecionado por vez', () => {
     cy.visit('http://localhost:3000/comidas', {
       onBeforeLoad(win) {
@@ -309,7 +309,7 @@ describe('30 - Implemente o filtro de categoria para que apenas um seja selecion
   });
 });
 
-describe('31 - Desenvolva o filtro de categorias com a opção de filtrar por todas as categorias', () => {
+describe.skip('31 - Desenvolva o filtro de categorias com a opção de filtrar por todas as categorias', () => {
   it('Caso as receitas sejam de comida deve existir a opção de filtrar por todas as categorias', () => {
     cy.visit('http://localhost:3000/comidas', {
       onBeforeLoad(win) {
@@ -339,7 +339,7 @@ describe('31 - Desenvolva o filtro de categorias com a opção de filtrar por to
   });
 });
 
-describe('32 - Redirecione a pessoa usuária, ao clicar no card, para a tela de detalhes, que deve mudar a rota e conter o id da receita na URL', () => {
+describe.skip('32 - Redirecione a pessoa usuária, ao clicar no card, para a tela de detalhes, que deve mudar a rota e conter o id da receita na URL', () => {
   it('Caso as receitas sejam de comida a rota deve mudar para a tela de detalhes da receita', () => {
     cy.visit('http://localhost:3000/comidas', {
       onBeforeLoad(win) {
