@@ -3,10 +3,6 @@
   "rules": {
     "no-console": "off",
     "no-alert": "off",
-    "no-underscore-dangle": ["error", {
-      "allow":
-        "__REDUX_DEV_TOOLS_EXTENSION_COMPOSE__"
-    }],
     "prefer-arrow-callback": "off",
     "func-names": "off",
     "react/jsx-filename-extension": [
@@ -16,6 +12,12 @@
           ".js",
           ".jsx"
         ]
+      }
+    ],
+    "no-underscore-dangle": [
+      "error", 
+      {
+        "allow": "__REDUX_DEV_TOOLS_EXTENSION_COMPOSE__"
       }
     ],
     "react/prefer-stateless-function": 0,
