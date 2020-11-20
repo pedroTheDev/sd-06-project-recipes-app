@@ -34,9 +34,24 @@ export default function Login(props) {
 
   return (
     <div>
-      <input type="email" name="email" data-testid="email-input" onChange={handleInput} />
-      <input type="password" name="password" data-testid="password-input" onChange={handleInput} />
-      <button type="button" data-testid="login-submit-btn" disabled={isValid} onClick={handleClick}>
+      <input
+        type="email"
+        name="email"
+        data-testid="email-input"
+        onChange={ handleInput }
+      />
+      <input
+        type="password"
+        name="password"
+        data-testid="password-input"
+        onChange={ handleInput }
+      />
+      <button
+        type="button"
+        data-testid="login-submit-btn"
+        disabled={ isValid }
+        onClick={ handleClick }
+      >
         Login
       </button>
     </div>
