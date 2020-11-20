@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '../components/Header';
 
 function FoodRecipesPage() {
-  return(
+  return (
     <div>
       <Header />
     </div>
