@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import './Drink.css';
 
 function Drink() {
   const [drinks, setDrinks] = useState([]);
@@ -13,7 +14,6 @@ function Drink() {
       const APIResponse = await APIRequest.json();
       if (APIResponse !== null) {
         setDrinks(APIResponse.drinks);
-        setIsFecthing(false);
       }
     };
     fecthDrinks();
@@ -23,22 +23,23 @@ function Drink() {
   const limitDrink = 12;
 
   return (
-    <>
+    <div className="drink-container">
       <Header title="Bebidas" />
       {
         drinks.slice(firstMeal, limitDrink).map((drink, id) => (
-          <div key={ id } data-testid={ `${id}-recipe-card` }>
+          <div className="recipe-card" key={ id } data-testid={ `${id}-recipe-card` }>
             <img
+              className="card-img"
               src={ drink.strDrinkThumb }
               alt={ drink.strDrink }
               data-testid={ `${id}-card-img` }
             />
-            <h1 data-testid={ `${id}-card-name` }>{drink.strDrink}</h1>
+            <h3 data-testid={ `${id}-card-name` }>{drink.strDrink}</h3>
           </div>
         ))
       }
       <Footer />
-    </>
+    </div>
   );
 }
 

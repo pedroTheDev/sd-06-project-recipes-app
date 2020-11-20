@@ -14,7 +14,6 @@ function Food() {
       const APIResponse = await APIRequest.json();
       if (APIResponse !== null) {
         setMeals(APIResponse.meals);
-        setIsFecthing(false);
       }
     };
     fecthMeals();
@@ -23,22 +22,23 @@ function Food() {
   const limitMeal = 12;
 
   return (
-    <>
+    <div className="food-container">
       <Header title="Comidas" />
       {
         meals.slice(firstMeal, limitMeal).map((meal, id) => (
           <div key={ id } className="recipe-card" data-testid={ `${id}-recipe-card` }>
             <img
+              className="card-img"
               src={ meal.strMealThumb }
               alt={ meal.strMeal }
               data-testid={ `${id}-card-img` }
             />
-            <h1 data-testid={ `${id}-card-name` }>{meal.strMeal}</h1>
+            <h3 data-testid={ `${id}-card-name` }>{meal.strMeal}</h3>
           </div>
         ))
       }
       <Footer />
-    </>
+    </div>
   );
 }
 
