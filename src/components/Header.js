@@ -21,12 +21,18 @@ function Header(props) {
   return (
     <div>
       <Link to="/perfil">
-        <img src={profileIcon} alt="Profile" data-testid="profile-top-btn" />
+        <img src={ profileIcon } alt="Profile" data-testid="profile-top-btn" />
       </Link>
       <h2 data-testid="page-title">{title}</h2>
       <div>
-        <img src={searchIcon} alt="Search" data-testid="search-top-btn" onClick={toggleSearchBar} aria-hidden="true" />
-        {showSearchBar ? <SearchBar fetchApi={fetchApi} /> : null}
+        <img
+          src={ searchIcon }
+          alt="Search"
+          data-testid="search-top-btn"
+          onClick={ toggleSearchBar }
+          aria-hidden="true"
+        />
+        {showSearchBar ? <SearchBar fetchApi={ fetchApi } /> : null}
       </div>
     </div>
   );

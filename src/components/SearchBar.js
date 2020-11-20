@@ -6,7 +6,6 @@ import ContextRecipes from '../context/ContextRecipes';
 
 function SearchBar(props) {
   const [renderRecipes, setRenderRecipes] = useState(false);
-  // let renderRecipes = false;
   const { fetchApi } = props;
   const {
     setSelectedRadio, setSearchText, setIdRecipe, recipes, setRecipes,
@@ -27,7 +26,6 @@ function SearchBar(props) {
         history.push(`/bebidas/${recipeApi[0].idDrink}`);
       }
     } else {
-      console.log('TRUEEEEE');
       setRenderRecipes(true);
     }
   };
@@ -46,9 +44,13 @@ function SearchBar(props) {
   return (
     <div>
       {renderRecipes ? recipes.map((recipe, index) => (
-        <div data-testid={`${index}-recipe-card`}>
-          <p data-testid={`${index}-card-name`}>{recipe.strMeal}</p>
-          <img data-testid={`${index}-card-img`} src={recipe.strMealThumb} alt="meal" />
+        <div data-testid={ `${index}-recipe-card` } key={ index }>
+          <p data-testid={ `${index}-card-name` }>{recipe.strMeal}</p>
+          <img
+            data-testid={ `${index}-card-img` }
+            src={ recipe.strMealThumb }
+            alt="meal"
+          />
         </div>
       )) : null}
       <input type="text" data-testid="search-input" id="search-input" />
@@ -82,7 +84,13 @@ function SearchBar(props) {
           id="first-letter"
         />
       </label>
-      <button type="button" data-testid="exec-search-btn" onClick={handleClick}>Buscar</button>
+      <button
+        type="button"
+        data-testid="exec-search-btn"
+        onClick={ handleClick }
+      >
+        Buscar
+      </button>
     </div>
   );
 }

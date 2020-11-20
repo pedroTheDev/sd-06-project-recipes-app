@@ -10,10 +10,10 @@ function App() {
   return (
     <Provider>
       <Switch>
-        <Route exact path="/" component={Login} />
-        <Route path="/comidas" component={Foods} />
-        <Route path="/perfil" component={Perfil} />
-        <Route path="/bebidas" component={Drinks} />
+        <Route exact path="/" component={ Login } />
+        <Route path="/comidas" component={ Foods } />
+        <Route path="/perfil" component={ Perfil } />
+        <Route path="/bebidas" component={ Drinks } />
       </Switch>
     </Provider>
   );

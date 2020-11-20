@@ -5,7 +5,7 @@ import { fetchAPIDrinks } from '../services';
 function Drinks() {
   return (
     <div>
-      <Header title="Bebidas" fetchApi={fetchAPIDrinks} />
+      <Header title="Bebidas" fetchApi={ fetchAPIDrinks } />
     </div>
   );
 }

@@ -33,30 +33,30 @@ function Login() {
     <div>
       <label htmlFor="email-input">
         Email:
+        <input
+          type="email"
+          data-testid="email-input"
+          name="email-input"
+          id="email-input"
+          onChange={ validateInputs }
+        />
       </label>
-      <input
-        type="email"
-        data-testid="email-input"
-        name="email-input"
-        id="email-input"
-        onChange={validateInputs}
-      />
       <label htmlFor="password-input">
         Password:
+        <input
+          type="password"
+          data-testid="password-input"
+          name="password-input"
+          id="password-input"
+          onChange={ validateInputs }
+        />
       </label>
-      <input
-        type="password"
-        data-testid="password-input"
-        name="password-input"
-        id="password-input"
-        onChange={validateInputs}
-      />
       <Link to="/comidas">
         <button
           type="button"
           data-testid="login-submit-btn"
-          disabled={btnDisable}
-          onClick={handleClick}
+          disabled={ btnDisable }
+          onClick={ handleClick }
         >
           Entrar
         </button>
