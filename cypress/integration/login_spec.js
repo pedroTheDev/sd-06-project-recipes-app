@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-describe.only('2 - Crie todos os elementos que devem respeitar os atributos descritos no protótipo para a tela de login', () => {
+describe('2 - Crie todos os elementos que devem respeitar os atributos descritos no protótipo para a tela de login', () => {
   it('Tem os data-testids email-input, password-input e login-submit-btn', () => {
     cy.visit('http://localhost:3000/');
 
@@ -10,7 +10,7 @@ describe.only('2 - Crie todos os elementos que devem respeitar os atributos desc
   });
 });
 
-describe.only('3 - Desenvolva a tela de maneira que a pessoa deve conseguir escrever seu email no input de email', () => {
+describe('3 - Desenvolva a tela de maneira que a pessoa deve conseguir escrever seu email no input de email', () => {
   it('É possível escrever o email', () => {
     cy.visit('http://localhost:3000/');
 

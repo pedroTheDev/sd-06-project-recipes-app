@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import LoginForm from '../components/LoginForm';
 
 class Login extends Component {
@@ -25,7 +25,16 @@ class Login extends Component {
     });
   }
 
-  
+  handleSubmit() {
+    const { email } = this.state;
+    const { history } = this.props;
+
+    localStorage.setItem('mealsToken', 1);
+    localStorage.setItem('cocktailsToken', 1);
+    localStorage.setItem('user', JSON.stringify({ email }));
+    history.push('/comidas');
+  }
+
   validateInputs() {
     const { email, password } = this.state;
     const EMAIL_REGEX = RegExp(/^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/).test(email);
@@ -33,18 +42,6 @@ class Login extends Component {
     this.setState({
       isValid: EMAIL_REGEX && password.length >= PASS_VALIDATION,
     });
-  }
-  
-  handleSubmit() {
-    const { email } = this.state;
-    const { history } = this.props;
-    const user = {
-      email
-    }
-    localStorage.setItem('mealsToken', 1);
-    localStorage.setItem('cocktailsToken', 1);
-    localStorage.setItem('user', JSON.stringify(user));
-    history.push('/comidas');
   }
 
   render() {
@@ -68,5 +65,9 @@ class Login extends Component {
     );
   }
 }
+
+Login.propTypes = {
+  history: PropTypes.objectOf(PropTypes.object).isRequired,
+};
 
 export default Login;

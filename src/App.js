@@ -1,14 +1,13 @@
 import React from 'react';
-import Login from './pages/Login';
-// import Comidas from './pages/Comidas';
+import { BrowserRouter } from 'react-router-dom';
+import Routes from './routes/index';
 import './App.css';
-// import { BrowserRouter, Route } from 'react-router-dom';
 
 function App() {
   return (
-    <div>
-      <Login />
-    </div>
+    <BrowserRouter>
+      <Routes />
+    </BrowserRouter>
   );
 }
 
