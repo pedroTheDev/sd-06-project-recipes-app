@@ -1,10 +1,10 @@
 import React, { useEffect, useContext } from 'react';
 import HeaderContext from '../context/HeaderContext';
 
-const Foods = () => {
+const Profile = () => {
   const { setTitle } = useContext(HeaderContext);
   useEffect(() => {
-    setTitle('Comidas');
+    setTitle('Perfil');
   }, []);
   return (
     <div>
@@ -13,4 +13,4 @@ const Foods = () => {
   );
 };
 
-export default Foods;
+export default Profile;
