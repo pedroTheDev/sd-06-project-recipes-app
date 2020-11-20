@@ -13,7 +13,7 @@ import store from './redux/store';
 
 function App() {
   return (
-    <Provider store={store}>
+    <Provider store={ store }>
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={ Login } />
