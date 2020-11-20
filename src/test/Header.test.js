@@ -1,26 +1,26 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
 import renderWithRouter from './renderWithRouter';
-import Login from './pages/Login';
-import Explore from './pages/Explore';
-import ExploreByArea from './pages/ExploreByArea';
-import ExploreDrinks from './pages/ExploreDrinks';
-import ExploreFoods from './pages/ExploreFoods';
-import ExploreDrinkIngredients from './pages/ExploreDrinkIngredients';
-import ExploreFoodIngredients from './pages/ExploreFoodIngredients';
-import FavoritesRecipes from './pages/FavoritesRecipes';
-import FinishedRecipes from './pages/FinishedRecipes';
-import Profile from './pages/Profile';
-import Food from './pages/Food';
-import Drink from './pages/Drink';
-import DrinkDetails from './pages/DrinkDetails';
-import FoodDetails from './pages/FoodDetails';
-import FoodInProgress from './pages/FoodInProgress';
-import DrinkInProgress from './pages/DrinkInProgress';
-import AppProvider from './provider/AppProvider';
+import Login from '../pages/Login';
+import Explore from '../pages/Explore';
+import ExploreByArea from '../pages/ExploreByArea';
+import ExploreDrinks from '../pages/ExploreDrinks';
+import ExploreFoods from '../pages/ExploreFoods';
+import ExploreDrinkIngredients from '../pages/ExploreDrinkIngredients';
+import ExploreFoodIngredients from '../pages/ExploreFoodIngredients';
+import FavoritesRecipes from '../pages/FavoritesRecipes';
+import FinishedRecipes from '../pages/FinishedRecipes';
+import Profile from '../pages/Profile';
+import Food from '../pages/Food';
+import Drink from '../pages/Drink';
+import DrinkDetails from '../pages/DrinkDetails';
+import FoodDetails from '../pages/FoodDetails';
+import FoodInProgress from '../pages/FoodInProgress';
+import DrinkInProgress from '../pages/DrinkInProgress';
+import AppProvider from '../provider/AppProvider';
 
 describe('testando os elementos do header na tela principal de receitas', () => {
-  it('O header tem os ícones corretos na tela de principal de receitas de comidas', () => {
+  it('O header tem os ícones corretos na tela de principal de receitas de comida', () => {
     const { getByTestId } = renderWithRouter(
       <AppProvider>
         <Food />
@@ -36,7 +36,7 @@ describe('testando os elementos do header na tela principal de receitas', () => 
   });
 });
 
-describe('testando um ícone para a tela de perfil, um título e um ícone para a busca', () => {
+describe('testando um ícone para a tela de perfil', () => {
   it('Não tem header na tela de login;', () => {
     const { queryByTestId } = renderWithRouter(
       <AppProvider>
@@ -51,7 +51,7 @@ describe('testando um ícone para a tela de perfil, um título e um ícone para 
     expect(page).not.toBeInTheDocument();
   });
 
-  it('O header tem os ícones corretos na tela de principal de receitas de bebidas;', () => {
+  it('O header tem os ícones corretos na tela;', () => {
     const { queryByTestId } = renderWithRouter(
       <AppProvider>
         <Drink />
@@ -167,7 +167,7 @@ describe('testando um ícone para a tela de perfil, um título e um ícone para 
     expect(page).toHaveTextContent('Explorar Bebidas');
   });
 
-  it('O header tem os ícones corretos na tela de explorar comidas por ingrediente;', () => {
+  it('O header tem os ícones corretos na tela;', () => {
     const { queryByTestId } = renderWithRouter(
       <AppProvider>
         <ExploreFoodIngredients />
@@ -182,7 +182,7 @@ describe('testando um ícone para a tela de perfil, um título e um ícone para 
     expect(page).toHaveTextContent('Explorar Ingredientes');
   });
 
-  it('O header tem os ícones corretos na tela de explorar bebidas por ingrediente;', () => {
+  it('O header tem os ícones corretos na tela;', () => {
     const { queryByTestId } = renderWithRouter(
       <AppProvider>
         <ExploreDrinkIngredients />
@@ -197,7 +197,7 @@ describe('testando um ícone para a tela de perfil, um título e um ícone para 
     expect(page).toHaveTextContent('Explorar Ingredientes');
   });
 
-  it('O header tem os ícones corretos na tela de explorar comidas por local de origem;', () => {
+  it('O header tem os ícones corretos na tela;', () => {
     const { queryByTestId } = renderWithRouter(
       <AppProvider>
         <ExploreByArea />
@@ -258,22 +258,8 @@ describe('testando um ícone para a tela de perfil, um título e um ícone para 
   });
 });
 
-// describe('testando redirecionamento da pessoa usuária para a tela de perfil ao clicar no botão de perfil', () => {
-//   it('O header tem os ícones corretos na tela de principal de receitas de comidas', () => {
-//     const { queryByTestId } = renderWithRouter(
-//       <AppProvider>
-//         <Food />
-//       </AppProvider>,
-//     );
-//     const profile = queryByTestId('search-top-btn');
-//     fireEvent.click(profile);
-//     const pageTitle = queryByTestId('search-input');
-//     expect(pageTitle).toBeInTheDocument();
-//   });
-// });
-
 describe('testando o botão de busca', () => {
-  it('ao ser clicado, a barra de busca deve aparecer e ao clicar novamente, desaparecer', () => {
+  it('ao ser clicado, a barra de busca deve aparecer', () => {
     const { queryByTestId } = renderWithRouter(
       <AppProvider>
         <Food />

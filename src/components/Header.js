@@ -14,7 +14,13 @@ function Header() {
           <img data-testid="profile-top-btn" alt="profile" src={ profileIcon } />
         </Link>
         <div data-testid="page-title">{page}</div>
-        {search ? <button className="search-button" type="button" onClick={ () => setSearchBar(!searchBar) }><img data-testid="search-top-btn" alt="profile" src={ searchIcon } /></button> : <div />}
+        { search ? <button
+          className="search-button"
+          type="button"
+          onClick={ () => setSearchBar(!searchBar) }
+        >
+          <img data-testid="search-top-btn" alt="profile" src={ searchIcon } />
+        </button> : <div />}
       </div>
       { searchBar
         ? (
@@ -35,16 +41,16 @@ function Header() {
                   type="radio"
                   id="name"
                   name="type-search"
-                  data-testid="name-search-radio" 
+                  data-testid="name-search-radio"
                 />
-                  Nome
+                Nome
               </label>
               <label htmlFor="first-letter">
                 <input
                   type="radio"
                   id="first-letter"
                   name="type-search"
-                  data-testid="first-letter-search-radio" 
+                  data-testid="first-letter-search-radio"
                 />
                 Primeira letra
               </label>

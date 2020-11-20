@@ -6,7 +6,7 @@ function AppProvider({ children }) {
   const [header, setHeader] = useState({ page: '', search: true });
 
   return (
-    <AppContext.Provider value={{ header, setHeader }}>
+    <AppContext.Provider value={ { header, setHeader } }>
       {children}
     </AppContext.Provider>
   );
