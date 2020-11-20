@@ -2,7 +2,6 @@ import React, { useContext, useEffect } from 'react';
 import foodApi from '../service/foodApi';
 import ReceitasContext from '../context/ReceitasContext';
 import Header from '../components/Header';
-import Footer from '../components/Footer';
 import ComidaCard from '../components/ComidaCard';
 
 const Comidas = () => {
@@ -28,9 +27,6 @@ const Comidas = () => {
           ))}
         </div>
       </div>
-      <footer>
-        <Footer />
-      </footer>
     </div>
   );
 };
