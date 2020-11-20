@@ -51,14 +51,14 @@ const Header = () => {
     <header className="header">
       <Link to="/perfil">
         <img
-          date-testid="profile-top-btn"
+          data-testid="profile-top-btn"
           src={profileIcon}
           alt="profileIcon"
         />
       </Link>
       <div>
         {
-          !state ? <h2>Não existe</h2> : <h2>{state.namePage}</h2>
+          !state ? <h2>Title</h2> : <h2 data-testid="page-title">{state.namePage}</h2>
         }
       </div>
       {!state.search ? <div />
