@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import RecipesAppContext from '../hooks/RecipesAppContext';
 import { saveState } from '../services/localStorage';
-
 function Login() {
   const { contextValue: { setEmail, setPassword, email, password } } = useContext(RecipesAppContext);
 
@@ -15,7 +14,7 @@ function Login() {
       setEmail('');
     }
   };
-
+  
   const isPassword = (e) => {
     const { value } = e.target;
     if (value.length > 6) {
