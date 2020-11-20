@@ -35,15 +35,15 @@ describe('Tela de Login - Formulario só será valido se ambos email e senha sej
     const button = getByTestId('login-submit-btn');
 
     userEvent.type(email, 'email@com@');
-    userEvent.type(password, 'dhs3u8');
+    userEvent.type(password, 'dhs3u8d');
     expect(button).toBeDisabled();
 
     userEvent.type(email, 'alguem@email.com');
-    userEvent.type(password, 'jdu46c');
+    userEvent.type(password, 'jdu46cs');
     expect(button).toBeEnabled();
   });
 
-  it('O botão deve estar desativado se a senha não tiver pelo menos 6 caracteres', () => {
+  it('O botão deve estar desativado se a senha tiver 6 ou menos caracteres', () => {
     const { getByTestId } = renderWithRouter(<App />);
     const email = getByTestId('email-input');
     const password = getByTestId('password-input');
@@ -54,7 +54,7 @@ describe('Tela de Login - Formulario só será valido se ambos email e senha sej
     expect(button).toBeDisabled();
 
     userEvent.type(email, 'alguem@email.com');
-    userEvent.type(password, 'jdu46c');
+    userEvent.type(password, 'jdu46cd');
     expect(button).toBeEnabled();
   });
 
@@ -69,7 +69,7 @@ describe('Tela de Login - Formulario só será valido se ambos email e senha sej
     expect(button).toBeDisabled();
 
     userEvent.type(email, 'alguem@email.com');
-    userEvent.type(password, 'jdu46c');
+    userEvent.type(password, 'jdu46ac');
     expect(button).toBeEnabled();
   });
 })

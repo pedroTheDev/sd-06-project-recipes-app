@@ -5,7 +5,13 @@ function Login() {
   const [password, setPassword] = useState('');
 
   const emailIsValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  const passIsValid = /^.{6,}$/.test(password);
+  const passIsValid = /^.{7,}$/.test(password);
+
+  const handleClick = () => {
+    localStorage.setItem('mealToken', email);
+    localStorage.setItem('cocktailsToken', password);
+  }
+
   return (
     <form>
       <h1>Login</h1>
@@ -32,6 +38,7 @@ function Login() {
         type="button"
         disabled={!emailIsValid || !passIsValid}
         data-testid="login-submit-btn"
+        onClick={handleClick}
       >
         Entrar
       </button>
