@@ -1,21 +1,30 @@
 export function mealsToken(token) {
-  const temp = localStorage.getItem('meals_token');
-  localStorage.setItem('meals_token', token);
+  const temp = localStorage.getItem('mealsToken');
+  localStorage.setItem('mealsToken', token);
   return temp;
 }
 
 export function cocktailsToken(token) {
-  const temp = localStorage.getItem('cocktails_token');
-  localStorage.setItem('cocktails_token', token);
+  const temp = localStorage.getItem('cocktailsToken');
+  localStorage.setItem('cocktailsToken', token);
   return temp;
 }
 
-export function user(email) {
-  const obj = { email };
-  const temp = JSON.parse(localStorage.getItem('email'));
-  localStorage.setItem('email', JSON.stringify(obj));
-  return temp;
+// export function getValue(key) {
+//   return JSON.parse(localStorage.getItem(key));
+// }
+  
+export function setValueUser(key, value) {
+  return localStorage.setItem(key, JSON.stringify({ email: value }));
 }
+
+// export function user(email) {
+//   const obj = { email };
+//   const temp = JSON.parse(localStorage.getItem('user'));
+//   localStorage.setItem('user', { email: JSON.stringify(obj) });
+//   console.log(JSON.parse(localStorage.getItem('user')))
+//   return temp;
+// }
 
 export function doneRecipes(object) {
   const obj = {
