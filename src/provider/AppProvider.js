@@ -4,9 +4,10 @@ import AppContext from '../context/AppContext';
 
 function AppProvider({ children }) {
   const [header, setHeader] = useState({ page: '', search: true });
+  const [filter, setFilter] = useState({ text: '', option: '' });
 
   return (
-    <AppContext.Provider value={ { header, setHeader } }>
+    <AppContext.Provider value={ { header, setHeader, filter, setFilter } }>
       {children}
     </AppContext.Provider>
   );

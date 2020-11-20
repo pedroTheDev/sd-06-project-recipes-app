@@ -5,8 +5,15 @@ import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 
 function Header() {
-  const { header: { page, search } } = useContext(AppContext);
+  const { header: { page, search, setFilter } } = useContext(AppContext);
   const [searchBar, setSearchBar] = useState(false);
+  const [inputs, setInputs] = useState({ text: '', option: '' });
+  const handleChange = (event) => {
+    setInputs({ ...inputs, [event.target.id]: event.target.value });
+  };
+  const handleFilter = () => {
+    setFilter({ ...inputs });
+  };
   return (
     <div>
       <div className="header">
@@ -27,37 +34,49 @@ function Header() {
       { searchBar
         ? (
           <div className="search-bar">
-            <input type="text" data-testid="search-input" />
+            <input
+              type="text"
+              id="text"
+              data-testid="search-input"
+              value={ inputs.text }
+              onChange={ handleChange }
+            />
             <div>
-              <label htmlFor="ingredient">
-                <input
-                  type="radio"
-                  id="ingredient"
-                  name="type-search"
-                  data-testid="ingredient-search-radio"
-                />
-                Ingrediente
-              </label>
-              <label htmlFor="name">
-                <input
-                  type="radio"
-                  id="name"
-                  name="type-search"
-                  data-testid="name-search-radio"
-                />
-                Nome
-              </label>
-              <label htmlFor="first-letter">
-                <input
-                  type="radio"
-                  id="first-letter"
-                  name="type-search"
-                  data-testid="first-letter-search-radio"
-                />
-                Primeira letra
-              </label>
+              <input
+                type="radio"
+                id="option"
+                name="type-search"
+                data-testid="ingredient-search-radio"
+                value="Ingrediente"
+                onClick={ handleChange }
+              />
+              Ingrediente
+              <input
+                type="radio"
+                id="option"
+                name="type-search"
+                data-testid="name-search-radio"
+                value="Nome"
+                onClick={ handleChange }
+              />
+              Nome
+              <input
+                type="radio"
+                id="option"
+                name="type-search"
+                data-testid="first-letter-search-radio"
+                value="Primeira letra"
+                onClick={ handleChange }
+              />
+              Primeira letra
             </div>
-            <button type="button" data-testid="exec-search-btn">Buscar</button>
+            <button
+              type="button"
+              data-testid="exec-search-btn"
+              onClick={ handleFilter }
+            >
+              Buscar
+            </button>
           </div>
         ) : ''}
     </div>
