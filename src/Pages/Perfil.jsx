@@ -1,12 +1,13 @@
 import React from 'react';
 import Footer from '../Components/Footer';
 
-function Comidas() {
+function Perfil() {
   return (
     <div>
-      <h1>COmidas</h1>
+      <h1>Perfil</h1>
       <Footer />
     </div>
   );
 }
-export default Comidas;
+
+export default Perfil;
