@@ -3,10 +3,13 @@ import React, { useState } from 'react';
 import ReceitasContext from './ReceitasContext';
 
 const ReceitasProvider = ({ children }) => {
+  const [searchBox, setSearchBox] = useState(false);
   const [data, setData] = useState([]);
   const [filtersData, setFiltersData] = useState([]);
 
   const state = {
+    searchBox,
+    setSearchBox,
     data,
     setData,
     filtersData,
@@ -14,7 +17,7 @@ const ReceitasProvider = ({ children }) => {
   };
 
   return (
-    <ReceitasContext.Provider value={state}>
+    <ReceitasContext.Provider value={ state }>
       {children}
     </ReceitasContext.Provider>
   );

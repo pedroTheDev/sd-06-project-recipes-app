@@ -1,11 +1,15 @@
 import React, { useContext, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { dataApi } from '../service/foodApi';
-import ReceitasContext from '../context/ReceitasContext';
+import Footer from '../components/Footer';
 import Header from '../components/Header';
+import SearchBar from '../components/SearchBar';
+import ReceitasContext from '../context/ReceitasContext';
 import ComidaCard from '../components/ComidaCard';
-// import BotoesFiltrar from '../components/BotoesFiltrar';
 
 const Comidas = () => {
+  const { searchBox } = useContext(ReceitasContext);
+  const location = useLocation();
   const { data, setData } = useContext(ReceitasContext);
 
   useEffect(() => {
@@ -16,20 +20,18 @@ const Comidas = () => {
 
   if (!data.meals) return <div>Carregando...</div>;
 
+  const doze = 12;
   return (
-    <div>
-      <header>
-        <Header />
-      </header>
+    <section>
+      <Header title="Comidas" searchBtn />
+      {searchBox && <SearchBar />}
+      {location.pathname === '/comidas' ? <Footer /> : null}
       <div>
-        {/* <BotoesFiltrar /> */}
-        <div>
-          {data.meals.filter((x, index) => index < 12).map((food, i) => (
-            <ComidaCard food={food} index={i} />
+        {data.meals.filter((x, index) => index < doze)
+          .map((food, i) => (<ComidaCard key={ food } food={ food } index={ i } />
           ))}
-        </div>
       </div>
-    </div>
+    </section>
   );
 };
 
