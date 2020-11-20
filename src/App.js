@@ -3,11 +3,12 @@ import { BrowserRouter } from 'react-router-dom';
 import Provider from './context/Provider';
 import './App.css';
 import Router from './components/Router';
+import history from './helpers/History';
 
 function App() {
   return (
     <Provider>
-      <BrowserRouter>
+      <BrowserRouter history={ history }>
         <Router />
       </BrowserRouter>
     </Provider>
