@@ -5,13 +5,13 @@ function Login() {
   const [password, setPassword] = useState(false);
   const [user, setUser] = useState('');
 
-  function verifyAndSetEmail(param) {
+  const verifyAndSetEmail = (param) => {
     const emailFormat = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$/.test(param);
     setUser(param);
     return setEmail(emailFormat);
   }
 
-  function verifyAndSetPassword(param) {
+  const verifyAndSetPassword = (param) => {
     const minPasswordLength = 6;
     let verify = false;
     if (param.length >= minPasswordLength) {
