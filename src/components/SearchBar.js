@@ -19,11 +19,13 @@ function SearchBar(props) {
       alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
     } else if (recipeApi.length === 1) {
       if (location === '/comidas') {
-        setIdRecipe(recipeApi[0].idMeal);
-        history.push(`/comidas/${recipeApi[0].idMeal}`);
+        const idRecipe = recipeApi[0].idMeal;
+        setIdRecipe(idRecipe);
+        history.push(`/comidas/${idRecipe}`);
       } else {
-        setIdRecipe(recipeApi[0].idDrink);
-        history.push(`/bebidas/${recipeApi[0].idDrink}`);
+        const idRecipe = recipeApi[0].idDrink;
+        setIdRecipe(idRecipe);
+        history.push(`/bebidas/${idRecipe}`);
       }
     } else {
       setRenderRecipes(true);
