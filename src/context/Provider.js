@@ -4,10 +4,16 @@ import RecipesContext from './Context';
 
 function Provider({ children }) {
   const [stateA, setStateA] = useState('estado-inicial');
+  const [login, setLogin] = useState({ email: '', password: '' });
+  const [disabled, setDisabled] = useState(true);
 
   const contextValue = {
     stateA,
     setStateA,
+    login,
+    setLogin,
+    disabled,
+    setDisabled,
   };
 
   return (
