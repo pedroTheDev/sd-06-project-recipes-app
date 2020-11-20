@@ -19,242 +19,242 @@ import FoodInProgress from '../pages/FoodInProgress';
 import DrinkInProgress from '../pages/DrinkInProgress';
 import AppProvider from '../provider/AppProvider';
 
-describe('testando os elementos do header na tela principal de receitas', () => {
-  it('O header tem os ícones corretos na tela de principal de receitas de comida', () => {
+describe('testando os elementos do footer na tela principal de receitas', () => {
+  it('O footer tem os ícones corretos na tela de principal de receitas de comida', () => {
     const { getByTestId } = renderWithRouter(
       <AppProvider>
         <Food />
       </AppProvider>,
     );
-    const profile = getByTestId('profile-top-btn');
-    const page = getByTestId('page-title');
-    const search = getByTestId('search-top-btn');
-    expect(profile).toBeInTheDocument();
-    expect(page).toHaveTextContent('Comidas');
-    expect(search).toBeInTheDocument();
-    expect(page).toBeInTheDocument();
+    const drinks = getByTestId('drinks-bottom-btn');
+    const explore = getByTestId('explore-bottom-btn');
+    const food = getByTestId('food-bottom-btn');
+    expect(drinks).toBeInTheDocument();
+    expect(explore).toHaveTextContent('Comidas');
+    expect(food).toBeInTheDocument();
+    expect(explore).toBeInTheDocument();
   });
 });
 
 describe('testando um ícone para a tela de perfil', () => {
-  it('Não tem header na tela de login;', () => {
+  it('Não tem footer na tela de login;', () => {
     const { queryByTestId } = renderWithRouter(
       <AppProvider>
         <Login />
       </AppProvider>,
     );
-    const profile = queryByTestId('profile-top-btn');
-    const page = queryByTestId('page-title');
-    const search = queryByTestId('search-top-btn');
-    expect(profile).not.toBeInTheDocument();
-    expect(search).not.toBeInTheDocument();
-    expect(page).not.toBeInTheDocument();
+    const drinks = queryByTestId('drinks-bottom-btn');
+    const explore = queryByTestId('explore-bottom-btn');
+    const food = queryByTestId('food-bottom-btn');
+    expect(drinks).not.toBeInTheDocument();
+    expect(food).not.toBeInTheDocument();
+    expect(explore).not.toBeInTheDocument();
   });
 
-  it('O header tem os ícones corretos na tela;', () => {
+  it('O footer tem os ícones corretos na tela;', () => {
     const { queryByTestId } = renderWithRouter(
       <AppProvider>
         <Drink />
       </AppProvider>,
     );
-    const profile = queryByTestId('profile-top-btn');
-    const page = queryByTestId('page-title');
-    const search = queryByTestId('search-top-btn');
-    expect(profile).toBeInTheDocument();
-    expect(search).toBeInTheDocument();
-    expect(page).toBeInTheDocument();
-    expect(page).toHaveTextContent('Bebidas');
+    const drinks = queryByTestId('drinks-bottom-btn');
+    const explore = queryByTestId('explore-bottom-btn');
+    const food = queryByTestId('food-bottom-btn');
+    expect(drinks).toBeInTheDocument();
+    expect(food).toBeInTheDocument();
+    expect(explore).toBeInTheDocument();
+    expect(explore).toHaveTextContent('Bebidas');
   });
 
-  it('Não tem header na tela de detalhes de uma receita de comida;', () => {
+  it('Não tem footer na tela de detalhes de uma receita de comida;', () => {
     const { queryByTestId } = renderWithRouter(
       <AppProvider>
         <FoodDetails />
       </AppProvider>,
     );
-    const profile = queryByTestId('profile-top-btn');
-    const page = queryByTestId('page-title');
-    const search = queryByTestId('search-top-btn');
-    expect(profile).not.toBeInTheDocument();
-    expect(search).not.toBeInTheDocument();
-    expect(page).not.toBeInTheDocument();
+    const drinks = queryByTestId('drinks-bottom-btn');
+    const explore = queryByTestId('explore-bottom-btn');
+    const food = queryByTestId('food-bottom-btn');
+    expect(drinks).not.toBeInTheDocument();
+    expect(food).not.toBeInTheDocument();
+    expect(explore).not.toBeInTheDocument();
   });
 
-  it('Não tem header na tela de detalhes de uma receita de bebida;', () => {
+  it('Não tem footer na tela de detalhes de uma receita de bebida;', () => {
     const { queryByTestId } = renderWithRouter(
       <AppProvider>
         <DrinkDetails />
       </AppProvider>,
     );
-    const profile = queryByTestId('profile-top-btn');
-    const page = queryByTestId('page-title');
-    const search = queryByTestId('search-top-btn');
-    expect(profile).not.toBeInTheDocument();
-    expect(search).not.toBeInTheDocument();
-    expect(page).not.toBeInTheDocument();
+    const drinks = queryByTestId('drinks-bottom-btn');
+    const explore = queryByTestId('explore-bottom-btn');
+    const food = queryByTestId('food-bottom-btn');
+    expect(drinks).not.toBeInTheDocument();
+    expect(food).not.toBeInTheDocument();
+    expect(explore).not.toBeInTheDocument();
   });
 
-  it('Não tem header na tela de receita em processo de comida', () => {
+  it('Não tem footer na tela de receita em processo de comida', () => {
     const { queryByTestId } = renderWithRouter(
       <AppProvider>
         <FoodInProgress />
       </AppProvider>,
     );
-    const profile = queryByTestId('profile-top-btn');
-    const page = queryByTestId('page-title');
-    const search = queryByTestId('search-top-btn');
-    expect(profile).not.toBeInTheDocument();
-    expect(search).not.toBeInTheDocument();
-    expect(page).not.toBeInTheDocument();
+    const drinks = queryByTestId('drinks-bottom-btn');
+    const explore = queryByTestId('explore-bottom-btn');
+    const food = queryByTestId('food-bottom-btn');
+    expect(drinks).not.toBeInTheDocument();
+    expect(food).not.toBeInTheDocument();
+    expect(explore).not.toBeInTheDocument();
   });
 
-  it('Não tem header na tela de receita em processo de bebida;', () => {
+  it('Não tem footer na tela de receita em processo de bebida;', () => {
     const { queryByTestId } = renderWithRouter(
       <AppProvider>
         <DrinkInProgress />
       </AppProvider>,
     );
-    const profile = queryByTestId('profile-top-btn');
-    const page = queryByTestId('page-title');
-    const search = queryByTestId('search-top-btn');
-    expect(profile).not.toBeInTheDocument();
-    expect(search).not.toBeInTheDocument();
-    expect(page).not.toBeInTheDocument();
+    const drinks = queryByTestId('drinks-bottom-btn');
+    const explore = queryByTestId('explore-bottom-btn');
+    const food = queryByTestId('food-bottom-btn');
+    expect(drinks).not.toBeInTheDocument();
+    expect(food).not.toBeInTheDocument();
+    expect(explore).not.toBeInTheDocument();
   });
 
-  it('O header tem os ícones corretos na tela de explorar;', () => {
+  it('O footer tem os ícones corretos na tela de explorar;', () => {
     const { queryByTestId } = renderWithRouter(
       <AppProvider>
         <Explore />
       </AppProvider>,
     );
-    const profile = queryByTestId('profile-top-btn');
-    const page = queryByTestId('page-title');
-    const search = queryByTestId('search-top-btn');
-    expect(profile).toBeInTheDocument();
-    expect(search).not.toBeInTheDocument();
-    expect(page).toBeInTheDocument();
-    expect(page).toHaveTextContent('Explorar');
+    const drinks = queryByTestId('drinks-bottom-btn');
+    const explore = queryByTestId('explore-bottom-btn');
+    const food = queryByTestId('food-bottom-btn');
+    expect(drinks).toBeInTheDocument();
+    expect(food).not.toBeInTheDocument();
+    expect(explore).toBeInTheDocument();
+    expect(explore).toHaveTextContent('Explorar');
   });
 
-  it('O header tem os ícones corretos na tela de explorar comidas;', () => {
+  it('O footer tem os ícones corretos na tela de explorar comidas;', () => {
     const { queryByTestId } = renderWithRouter(
       <AppProvider>
         <ExploreFoods />
       </AppProvider>,
     );
-    const profile = queryByTestId('profile-top-btn');
-    const page = queryByTestId('page-title');
-    const search = queryByTestId('search-top-btn');
-    expect(profile).toBeInTheDocument();
-    expect(search).not.toBeInTheDocument();
-    expect(page).toBeInTheDocument();
-    expect(page).toHaveTextContent('Explorar Comidas');
+    const drinks = queryByTestId('drinks-bottom-btn');
+    const explore = queryByTestId('explore-bottom-btn');
+    const food = queryByTestId('food-bottom-btn');
+    expect(drinks).toBeInTheDocument();
+    expect(food).not.toBeInTheDocument();
+    expect(explore).toBeInTheDocument();
+    expect(explore).toHaveTextContent('Explorar Comidas');
   });
 
-  it('O header tem os ícones corretos na tela de explorar bebidas;', () => {
+  it('O footer tem os ícones corretos na tela de explorar bebidas;', () => {
     const { queryByTestId } = renderWithRouter(
       <AppProvider>
         <ExploreDrinks />
       </AppProvider>,
     );
-    const profile = queryByTestId('profile-top-btn');
-    const page = queryByTestId('page-title');
-    const search = queryByTestId('search-top-btn');
-    expect(profile).toBeInTheDocument();
-    expect(search).not.toBeInTheDocument();
-    expect(page).toBeInTheDocument();
-    expect(page).toHaveTextContent('Explorar Bebidas');
+    const drinks = queryByTestId('drinks-bottom-btn');
+    const explore = queryByTestId('explore-bottom-btn');
+    const food = queryByTestId('food-bottom-btn');
+    expect(drinks).toBeInTheDocument();
+    expect(food).not.toBeInTheDocument();
+    expect(explore).toBeInTheDocument();
+    expect(explore).toHaveTextContent('Explorar Bebidas');
   });
 
-  it('O header tem os ícones corretos na tela;', () => {
+  it('O footer tem os ícones corretos na tela;', () => {
     const { queryByTestId } = renderWithRouter(
       <AppProvider>
         <ExploreFoodIngredients />
       </AppProvider>,
     );
-    const profile = queryByTestId('profile-top-btn');
-    const page = queryByTestId('page-title');
-    const search = queryByTestId('search-top-btn');
-    expect(profile).toBeInTheDocument();
-    expect(search).not.toBeInTheDocument();
-    expect(page).toBeInTheDocument();
-    expect(page).toHaveTextContent('Explorar Ingredientes');
+    const drinks = queryByTestId('drinks-bottom-btn');
+    const explore = queryByTestId('explore-bottom-btn');
+    const food = queryByTestId('food-bottom-btn');
+    expect(drinks).toBeInTheDocument();
+    expect(food).not.toBeInTheDocument();
+    expect(explore).toBeInTheDocument();
+    expect(explore).toHaveTextContent('Explorar Ingredientes');
   });
 
-  it('O header tem os ícones corretos na tela;', () => {
+  it('O footer tem os ícones corretos na tela;', () => {
     const { queryByTestId } = renderWithRouter(
       <AppProvider>
         <ExploreDrinkIngredients />
       </AppProvider>,
     );
-    const profile = queryByTestId('profile-top-btn');
-    const page = queryByTestId('page-title');
-    const search = queryByTestId('search-top-btn');
-    expect(profile).toBeInTheDocument();
-    expect(search).not.toBeInTheDocument();
-    expect(page).toBeInTheDocument();
-    expect(page).toHaveTextContent('Explorar Ingredientes');
+    const drinks = queryByTestId('drinks-bottom-btn');
+    const explore = queryByTestId('explore-bottom-btn');
+    const food = queryByTestId('food-bottom-btn');
+    expect(drinks).toBeInTheDocument();
+    expect(food).not.toBeInTheDocument();
+    expect(explore).toBeInTheDocument();
+    expect(explore).toHaveTextContent('Explorar Ingredientes');
   });
 
-  it('O header tem os ícones corretos na tela;', () => {
+  it('O footer tem os ícones corretos na tela;', () => {
     const { queryByTestId } = renderWithRouter(
       <AppProvider>
         <ExploreByArea />
       </AppProvider>,
     );
-    const profile = queryByTestId('profile-top-btn');
-    const page = queryByTestId('page-title');
-    const search = queryByTestId('search-top-btn');
-    expect(profile).toBeInTheDocument();
-    expect(search).toBeInTheDocument();
-    expect(page).toBeInTheDocument();
-    expect(page).toHaveTextContent('Explorar Origem');
+    const drinks = queryByTestId('drinks-bottom-btn');
+    const explore = queryByTestId('explore-bottom-btn');
+    const food = queryByTestId('food-bottom-btn');
+    expect(drinks).toBeInTheDocument();
+    expect(food).toBeInTheDocument();
+    expect(explore).toBeInTheDocument();
+    expect(explore).toHaveTextContent('Explorar Origem');
   });
 
-  it('O header tem os ícones corretos na tela de perfil;', () => {
+  it('O footer tem os ícones corretos na tela de perfil;', () => {
     const { queryByTestId } = renderWithRouter(
       <AppProvider>
-        <Profile />
+        <drinks />
       </AppProvider>,
     );
-    const profile = queryByTestId('profile-top-btn');
-    const page = queryByTestId('page-title');
-    const search = queryByTestId('search-top-btn');
-    expect(profile).toBeInTheDocument();
-    expect(search).not.toBeInTheDocument();
-    expect(page).toBeInTheDocument();
-    expect(page).toHaveTextContent('Perfil');
+    const drinks = queryByTestId('drinks-bottom-btn');
+    const explore = queryByTestId('explore-bottom-btn');
+    const food = queryByTestId('food-bottom-btn');
+    expect(drinks).toBeInTheDocument();
+    expect(food).not.toBeInTheDocument();
+    expect(explore).toBeInTheDocument();
+    expect(explore).toHaveTextContent('Perfil');
   });
 
-  it('O header tem os ícones corretos na tela de receitas feitas;', () => {
+  it('O footer tem os ícones corretos na tela de receitas feitas;', () => {
     const { queryByTestId } = renderWithRouter(
       <AppProvider>
         <FinishedRecipes />
       </AppProvider>,
     );
-    const profile = queryByTestId('profile-top-btn');
-    const page = queryByTestId('page-title');
-    const search = queryByTestId('search-top-btn');
-    expect(profile).toBeInTheDocument();
-    expect(search).not.toBeInTheDocument();
-    expect(page).toBeInTheDocument();
-    expect(page).toHaveTextContent('Receitas Feitas');
+    const drinks = queryByTestId('drinks-bottom-btn');
+    const explore = queryByTestId('explore-bottom-btn');
+    const food = queryByTestId('food-bottom-btn');
+    expect(drinks).toBeInTheDocument();
+    expect(food).not.toBeInTheDocument();
+    expect(explore).toBeInTheDocument();
+    expect(explore).toHaveTextContent('Receitas Feitas');
   });
 
-  it('O header tem os ícones corretos na tela de receitas favoritas;', () => {
+  it('O footer tem os ícones corretos na tela de receitas favoritas;', () => {
     const { queryByTestId } = renderWithRouter(
       <AppProvider>
         <FavoritesRecipes />
       </AppProvider>,
     );
-    const profile = queryByTestId('profile-top-btn');
-    const page = queryByTestId('page-title');
-    const search = queryByTestId('search-top-btn');
-    expect(profile).toBeInTheDocument();
-    expect(search).not.toBeInTheDocument();
-    expect(page).toBeInTheDocument();
-    expect(page).toHaveTextContent('Receitas Favoritas');
+    const drinks = queryByTestId('drinks-bottom-btn');
+    const explore = queryByTestId('explore-bottom-btn');
+    const food = queryByTestId('food-bottom-btn');
+    expect(drinks).toBeInTheDocument();
+    expect(food).not.toBeInTheDocument();
+    expect(explore).toBeInTheDocument();
+    expect(explore).toHaveTextContent('Receitas Favoritas');
   });
 });
 
@@ -265,11 +265,11 @@ describe('testando o botão de busca', () => {
         <Food />
       </AppProvider>,
     );
-    const searchButton = queryByTestId('search-top-btn');
-    fireEvent.click(searchButton);
-    const input = queryByTestId('search-input');
+    const foodButton = queryByTestId('food-bottom-btn');
+    fireEvent.click(foodButton);
+    const input = queryByTestId('food-input');
     expect(input).toBeInTheDocument();
-    fireEvent.click(searchButton);
+    fireEvent.click(foodButton);
     expect(input).not.toBeInTheDocument();
   });
 });
