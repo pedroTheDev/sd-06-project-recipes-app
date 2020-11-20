@@ -12,7 +12,7 @@ function RecipesAppProvider({ children }) {
 }
 
 RecipesAppProvider.propTypes = {
-  children: propTypes.func.isRequired, 
+  children: propTypes.func.isRequired,
 };
 
 export default RecipesAppProvider;
