@@ -8,7 +8,7 @@ function RecipesProvider({ children }) {
   };
 
   return (
-    <RecipesContext.Provider value={contextState}>
+    <RecipesContext.Provider value={ contextState }>
       { children }
     </RecipesContext.Provider>
   );

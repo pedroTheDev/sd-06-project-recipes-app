@@ -32,8 +32,10 @@ function Login() {
           name="email"
           placeholder="Digite seu e-mail"
           required
-          value={email}
-          onChange={({ target }) => setInputValues({ ...inputValues, email: target.value })}
+          value={ email }
+          onChange={ ({ target }) => setInputValues(
+            { ...inputValues, email: target.value },
+          ) }
         />
         <br />
         <input
@@ -42,16 +44,18 @@ function Login() {
           name="password"
           placeholder="Digite sua senha"
           required
-          value={password}
-          onChange={({ target }) => setInputValues({ ...inputValues, password: target.value })}
+          value={ password }
+          onChange={ ({ target }) => setInputValues(
+            { ...inputValues, password: target.value },
+          ) }
         />
         <br />
         <Link to="/comidas">
           <button
             data-testid="login-submit-btn"
             type="submit"
-            disabled={isDisabled}
-            onClick={saveEmail}
+            disabled={ isDisabled }
+            onClick={ saveEmail }
           >
             Entrar
           </button>
