@@ -14,9 +14,9 @@ function Login({ history }) {
   };
 
   const handleButton = () => {
-    localStorage.setItem('mealsToken', 1);
-    localStorage.setItem('cocktailsToken', 1);
-    localStorage.setItem('user', JSON.stringify({ email: userEmail }));
+    localStorage.mealsToken = JSON.stringify(1);
+    localStorage.cocktailsToken = JSON.stringify(1);
+    localStorage.user = JSON.stringify({ email: userEmail });
     console.log(history);
     history.push('/comidas');
   };
