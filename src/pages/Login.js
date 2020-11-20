@@ -64,9 +64,12 @@ class Login extends React.Component {
     } = this.state;
 
     return (
-      <div>
+      <div className="login-container">
+        <header>
+          <h1>Login</h1>
+        </header>
         <form>
-          <div>
+          <div className="login-div">
             <label htmlFor="email">
               <input
                 data-testid="email-input"
@@ -95,7 +98,7 @@ class Login extends React.Component {
               onClick={ this.handleSubmit }
               disabled={ !validEmail || !validPassword }
             >
-              ACESSAR!
+              Login
             </button>
           </div>
         </form>
