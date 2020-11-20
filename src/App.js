@@ -7,7 +7,7 @@ import Header from './components/Header';
 function App() {
   return (
     <BrowserRouter>
-      <Header />
+      <Header title="Comidas" />
       <Routes />
     </BrowserRouter>
   );

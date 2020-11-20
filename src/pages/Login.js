@@ -37,7 +37,8 @@ class Login extends Component {
 
   validateInputs() {
     const { email, password } = this.state;
-    const EMAIL_REGEX = RegExp(/^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/).test(email);
+    const EMAIL_REGEX = RegExp(/^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/)
+      .test(email);
     const PASS_VALIDATION = 7;
     this.setState({
       isValid: EMAIL_REGEX && password.length >= PASS_VALIDATION,
@@ -51,13 +52,13 @@ class Login extends Component {
       <section>
         <h1>Login</h1>
         <LoginForm
-          handleChanges={this.handleChanges}
+          handleChanges={ this.handleChanges }
         />
         <button
           type="button"
           data-testid="login-submit-btn"
-          onClick={this.handleSubmit}
-          disabled={!isValid}
+          onClick={ this.handleSubmit }
+          disabled={ !isValid }
         >
           Entrar
         </button>

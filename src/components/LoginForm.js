@@ -11,7 +11,7 @@ function LoginForm({ handleChanges }) {
           type="email"
           data-testid="email-input"
           name="email"
-          onChange={(e) => handleChanges(e)}
+          onChange={ (e) => handleChanges(e) }
         />
       </label>
       <label htmlFor="password-input">
@@ -21,7 +21,7 @@ function LoginForm({ handleChanges }) {
           type="password"
           data-testid="password-input"
           name="password"
-          onChange={(e) => handleChanges(e)}
+          onChange={ (e) => handleChanges(e) }
         />
       </label>
     </form>
