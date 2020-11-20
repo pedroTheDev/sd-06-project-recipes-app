@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import Login from '../pages/Login';
-import RecipeFood from '../pages/RecipeFood';
+import Home from '../pages/Home';
 import RecipeDrink from '../pages/RecipeDrink';
 import RecipeFoodDetails from '../pages/RecipeFoodDetails';
 import RecipeDrinkDetails from '../pages/RecipeDrinkDetails';
@@ -22,7 +22,7 @@ function Routes() {
   return (
     <Switch>
       <Route path="/" exact component={ Login } />
-      <Route path="/comidas" exact component={ RecipeFood } />
+      <Route path="/comidas" exact render={ () => <Home /> } />
       <Route path="/bebidas" exact component={ RecipeDrink } />
       <Route path="/comidas/:id" exact component={ RecipeFoodDetails } />
       <Route path="/bebidas/:id" exact component={ RecipeDrinkDetails } />
