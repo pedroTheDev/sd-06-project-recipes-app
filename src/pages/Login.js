@@ -28,8 +28,6 @@ export default function Login(props) {
     validadeInputs();
   };
 
-  // user { email: email da pessoa}
-
   const handleClick = () => {
     localStorage.setItem('mealsToken', 1);
     localStorage.setItem('cocktailsToken', 1);
