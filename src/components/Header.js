@@ -14,13 +14,15 @@ function Header() {
           <img data-testid="profile-top-btn" alt="profile" src={ profileIcon } />
         </Link>
         <div data-testid="page-title">{page}</div>
-        { search ? <button
-          className="search-button"
-          type="button"
-          onClick={ () => setSearchBar(!searchBar) }
-        >
-          <img data-testid="search-top-btn" alt="profile" src={ searchIcon } />
-        </button> : <div />}
+        { search
+          ? (
+            <button
+              className="search-button"
+              type="button"
+              onClick={ () => setSearchBar(!searchBar) }
+            >
+              <img data-testid="search-top-btn" alt="profile" src={ searchIcon } />
+            </button>) : <div />}
       </div>
       { searchBar
         ? (
