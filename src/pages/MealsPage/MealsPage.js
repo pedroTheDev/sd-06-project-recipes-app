@@ -5,7 +5,7 @@ function MealsPage() {
     <div>
       <h1> Página principal de comidas</h1>
     </div>
-  )
+  );
 }
 
 export default MealsPage;
