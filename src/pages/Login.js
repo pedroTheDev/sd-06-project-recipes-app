@@ -35,20 +35,20 @@ function Login() {
         type="email"
         name="email"
         data-testid="email-input"
-        onChange={handleChangeEmail}
+        onChange={ handleChangeEmail }
       />
       <input
         type="password"
         name="password"
         data-testid="password-input"
-        onChange={handleChangePassword}
+        onChange={ handleChangePassword }
       />
       <Link to="/comidas">
         <input
           type="submit"
           data-testid="login-submit-btn"
-          disabled={!isValid}
-          onClick={setLocalStorage}
+          disabled={ !isValid }
+          onClick={ setLocalStorage }
         />
       </Link>
     </>

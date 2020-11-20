@@ -14,7 +14,13 @@ export default function Perfil() {
       </div>
 
       <div>
-        <button data-testid="profile-favorite-btn" type="button">Receitas Favoritas</button>
+        <button
+          data-testid="profile-favorite-btn"
+          type="button"
+        >
+          Receitas Favoritas
+
+        </button>
       </div>
 
       <div>
