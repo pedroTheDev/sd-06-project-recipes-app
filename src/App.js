@@ -9,7 +9,7 @@ import Bebidas from './Pages/Bebidas';
 import Perfil from './Pages/Perfil';
 import DetalhesComidas from './Pages/DetalhesComidas';
 import DetalhesBebidas from './Pages/DetalhesBebidas';
-import ReceitaProcessoComida from './Pages/ReceitaProcessoComida';
+import ProcessoComida from './Pages/ProcessoComida';
 
 function App() {
   return (
@@ -22,7 +22,7 @@ function App() {
           <Route path="/perfil" component={Perfil} />
           <Route path="/detalhes-comidas" component={DetalhesComidas} />
           <Route path="/detalhes-bebidas" component={DetalhesBebidas} />
-          <Route path="/receita-processo-comida" component={ReceitaProcessoComida} />
+          <Route path="/processo-comida" component={ProcessoComida} />
         </Switch>
       </BrowserRouter>
     </Provider>
