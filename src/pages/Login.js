@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { addEmail } from '../redux/actions/LoginActions';
 
@@ -11,7 +11,6 @@ function Login(props) {
     email: '',
     isDisable: true,
   });
-  console.log('isDisable', state.isDisable, 'password', state.password, 'email', state.email);
   const { password, email } = state;
 
   // const mealEndPoint = 'https://www.themealdb.com/api.php';
@@ -30,25 +29,23 @@ function Login(props) {
   //   fetchApi();
   // },
   // []);
+
   const validateLogin = () => {
     const NUM_PASSWORD = 6;
 
-    // setState({
-    //   ...state,
-    //   isDisable:
-    //   !((/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-    //     .test(email))
-    //   && password.length > NUM_PASSWORD),
-    // });
-    const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    console.log('emailTest', validEmail);
-    console.log('passwordTest', password.length > NUM_PASSWORD);
-    setState({ isDisabled: !(password.length > NUM_PASSWORD && validEmail) });
+    setState({
+      ...state,
+      isDisable:
+      !((/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+        .test(email))
+      && password.length > NUM_PASSWORD),
+    });
   };
 
+  useEffect(() => validateLogin(), [state.email, state.password]);
+
   const handleChange = ({ target }) => {
-    setState({ ...state, [state[target.name]]: target.value });
-    validateLogin();
+    setState({ ...state, [target.name]: target.value });
   };
 
   const sendEmail = () => {
@@ -66,31 +63,31 @@ function Login(props) {
         <form>
           <label htmlFor="input-gravatar-email">
             <input
-              type="email"
+              type="text"
               placeholder="email"
               name="email"
               value={email}
               data-testid="email-input"
-              onChange={handleChange}
+              onChange={(e) => handleChange(e)}
             />
           </label>
           <label htmlFor="input-player-name">
             <input
-              type="password"
+              type="text"
               placeholder="Senha"
               name="password"
               value={password}
               data-testid="password-input"
-              onChange={handleChange}
+              onChange={(e) => handleChange(e)}
             />
           </label>
           <button
             type="button"
             data-testid="login-submit-btn"
             disabled={isDisable}
-            onClick={sendEmail}
+            onClick={() => sendEmail()}
           >
-            Jogar
+            Entrar
           </button>
           {/* <Link to="/configuracoes">
             <button
