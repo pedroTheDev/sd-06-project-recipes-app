@@ -3,7 +3,7 @@ import Header from '../components/Header';
 
 function Comidas() {
   return (
-    <Header />
+    <Header name='Comidas' button={true} />
   );
 }
 
