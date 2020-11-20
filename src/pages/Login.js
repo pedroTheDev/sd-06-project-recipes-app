@@ -43,14 +43,14 @@ function Login() {
       />
       <label htmlFor="password-input">
         Password:
+        <input
+          type="password"
+          data-testid="password-input"
+          name="password-input"
+          id="password-input"
+          onChange={validateInputs}
+        />
       </label>
-      <input
-        type="password"
-        data-testid="password-input"
-        name="password-input"
-        id="password-input"
-        onChange={validateInputs}
-      />
       <Link to="/comidas">
         <button
           type="button"
