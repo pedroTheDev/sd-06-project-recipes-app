@@ -1,27 +1,37 @@
 const urlFood = 'https://www.themealdb.com/api/json/v1/1/';
 
-async function randomRequestApiFood(urlParameter) {
+async function randomRequestApiFood(urlParameter = '') {
   const url = `${urlFood}${urlParameter}`;
-  const objFilter = await fetch(url).then((apiFood) => apiFood.json());
-  const arrayFilterFoods = objFilter.meals;
-  console.log('arrayFilterFoods', arrayFilterFoods);
-  return arrayFilterFoods;
+  const objFood = await fetch(url).then((apiFood) => apiFood.json());
+  const arrayFood = objFood.meals;
+  // console.log('arrayFood', arrayFood);
+  return arrayFood;
 }
 
-export async function requestApiFoodIngredient(ingredient) {
+export async function requestApiFoodFilterIngredient(ingredient) {
   return randomRequestApiFood(`filter.php?i=${ingredient}`);
 }
-// https://www.themealdb.com/api/json/v1/1/filter.php?i=chicken_breast
 
-export async function requestApiFoodName(name) {
+export async function requestApiFoodFilterName(name) {
   return randomRequestApiFood(`search.php?s=${name}`);
 }
-// https://www.themealdb.com/api/json/v1/1/search.php?s=Arrabiata
 
-export async function requestApiFoodFirstLetter(firstLetter) {
+export async function requestApiFoodFilterFirstLetter(firstLetter) {
   return randomRequestApiFood(`search.php?f=${firstLetter}`);
+}
+
+export async function requestApiFoodFilterArea(area) {
+  return randomRequestApiFood(`filter.php?a=${area}`);
 }
 
 export async function requestApiFoodDetails(id) {
   return randomRequestApiFood(`lookup.php?i=${id}`);
+}
+
+export async function requestApiFoodListIngredients() {
+  return randomRequestApiFood('list.php?i=list');
+}
+
+export async function requestApiFoodListArea() {
+  return randomRequestApiFood('list.php?a=list');
 }
