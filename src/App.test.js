@@ -39,7 +39,7 @@ describe('4 - Desenvolva a tela de maneira que a pessoa deve conseguir escrever 
 
 describe('5 - Desenvolva a tela de maneira que o formulário só seja válido após um email válido e uma senha de mais de 6 caracteres serem preenchidos', () => {
   it('O botão deve estar desativado se o email for inválido', () => {
-    const { getByTestId, getByText } = render(<Login/>);
+    const { getByTestId } = render(<Login/>);
     const emailInput = getByTestId('email-input');
     const passwordInput = getByTestId('password-input');
     const button = getByTestId('login-submit-btn');
@@ -53,7 +53,7 @@ describe('5 - Desenvolva a tela de maneira que o formulário só seja válido ap
   });
 
   it('O botão deve estar desativado se a senha deve tiver 6 caracteres ou menos', () => {
-    const { getByTestId, getByText } = render(<Login/>);
+    const { getByTestId } = render(<Login/>);
     const emailInput = getByTestId('email-input');
     const passwordInput = getByTestId('password-input');
     const button = getByTestId('login-submit-btn');
@@ -65,7 +65,7 @@ describe('5 - Desenvolva a tela de maneira que o formulário só seja válido ap
   });
 
   it('O botão deve estar ativado se o email e a senha forem válidos', () => {
-    const { getByTestId, getByText } = render(<Login/>);
+    const { getByTestId } = render(<Login/>);
     const emailInput = getByTestId('email-input');
     const passwordInput = getByTestId('password-input');
     const button = getByTestId('login-submit-btn');
@@ -79,7 +79,7 @@ describe('5 - Desenvolva a tela de maneira que o formulário só seja válido ap
 
 describe('6 - Salve 2 tokens no localStorage após a submissão, identificados pelas chaves mealsToken e cocktailsToken', () => {
   afterEach(() => { 
-    
+    cleanup()
     localStorage.clear()
   });
   it('Após a submissão mealsToken e cocktailsToken devem estar salvos em localStorage', () => {
@@ -95,13 +95,15 @@ describe('6 - Salve 2 tokens no localStorage após a submissão, identificados p
 
     expect(localStorage.getItem('mealsToken')).toBe("1");
     expect(localStorage.getItem('cocktailsToken')).toBe("1");
-    cleanup()
   });
 
 });
 
 describe('7 - Salve o e-mail da pessoa usuária no localStorage na chave user após a submissão', () => {
-  afterEach(() => { 
+  afterEach(() => {
+    cleanup()
+    localStorage.clear()
+  });
 
   it('Após a submissão a chave user deve estar salva em localStorage', () => {
     const { getByTestId } = render(<App/>);
@@ -116,10 +118,8 @@ describe('7 - Salve o e-mail da pessoa usuária no localStorage na chave user ap
     const user = JSON.parse(localStorage.getItem('user'))
 
     expect(user.email).toBe(emailInput.value);
-    });
   });
-
-// });
+});
 
 // describe('8 - Redirecione a pessoa usuária para a tela principal de receitas de comidas após a submissão e validação com sucesso do login', () => {
 //   it('A rota muda para a tela principal de receitas de comidas', () => {
