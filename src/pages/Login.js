@@ -46,16 +46,35 @@ const Login = () => {
     <section>
       <h1>TRYBE</h1>
       <form>
-        <label htmlFor="email-input">Email</label>
-        <input id="email-input" name="email" type="text" data-testid="email-input" onChange={handleChange} />
-        <label htmlFor="password-input">Senha</label>
-        <input id="password-input" name="password" type="password" data-testid="password-input" onChange={handleChange} />
+        <label
+          htmlFor="email-input"
+        >
+          Email
+          <input
+            id="email-input"
+            name="email"
+            type="text"
+            data-testid="email-input"
+            onChange={ handleChange }
+          />
+        </label>
+        <label htmlFor="password-input">
+          Senha
+          <input
+            id="password-input"
+            name="password"
+            type="password"
+            data-testid="password-input"
+            onChange={ handleChange }
+          />
+
+        </label>
         <Link to="/comidas">
           <button
-            disabled={disabled}
+            disabled={ disabled }
             type="button"
             data-testid="login-submit-btn"
-            onClick={handleClick}
+            onClick={ handleClick }
           >
             Login
           </button>

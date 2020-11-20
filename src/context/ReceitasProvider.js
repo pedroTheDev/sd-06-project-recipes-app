@@ -11,7 +11,7 @@ const ReceitasProvider = ({ children }) => {
   };
 
   return (
-    <ReceitasContext.Provider value={state}>
+    <ReceitasContext.Provider value={ state }>
       {children}
     </ReceitasContext.Provider>
   );

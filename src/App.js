@@ -16,16 +16,16 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/" component={Login} />
-        <Route path="/comidas" component={Comidas} />
-        <Route path="/bebidas" component={Bebidas} />
-        <Route path="/detalhes" component={Detalhes} />
-        <Route exact path="/explorar" component={Explorar} />
-        <Route path="/explorar/comidas" component={ExplorarComidas} />
-        <Route path="/explorar/bebidas" component={ExplorarBebidas} />
-        <Route path="/receitas-feitas" component={ReceitasFeitas} />
-        <Route path="/receitas-favoritas" component={ReceitasFavoritas} />
-        <Route path="/perfil" component={Perfil} />
+        <Route exact path="/" component={ Login } />
+        <Route path="/comidas" component={ Comidas } />
+        <Route path="/bebidas" component={ Bebidas } />
+        <Route path="/detalhes" component={ Detalhes } />
+        <Route exact path="/explorar" component={ Explorar } />
+        <Route path="/explorar/comidas" component={ ExplorarComidas } />
+        <Route path="/explorar/bebidas" component={ ExplorarBebidas } />
+        <Route path="/receitas-feitas" component={ ReceitasFeitas } />
+        <Route path="/receitas-favoritas" component={ ReceitasFavoritas } />
+        <Route path="/perfil" component={ Perfil } />
       </Switch>
     </BrowserRouter>
   );

@@ -19,7 +19,7 @@ describe('Testes de login', () => {
     expect(getByTestId('password-input')).toBeInTheDocument();
   });
 
-  it('o botão de envio está desativado quando o email e a senha não foram validados', () => {
+  it('botão de envio desativado quando o email e a senha não foram validados', () => {
     const { getByTestId } = render(
       <App />,
     );
