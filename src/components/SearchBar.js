@@ -5,7 +5,9 @@ export default function SearchBar() {
   const [searchOptions, setSearchOptions] = useState({
     searchText: '',
     searchType: '',
+    category: 'food',
   });
+  const [alert, setAlert] = useState(false);
   const [, setFilters] = useSearch();
 
   function handleSearch({ target }) {
@@ -16,8 +18,9 @@ export default function SearchBar() {
     const { searchText, searchType } = searchOptions;
     const singleChar = 1;
     if (searchType === 'first-letter' && searchText.length > singleChar) {
-      alert('Sua busca deve conter somente 1 (um) caracter');
+      setAlert(true);
     } else if (searchText !== '' && searchType !== '') {
+      setAlert(false);
       console.log('pesquisar!');
       setFilters({ ...searchOptions });
     } else {
@@ -26,56 +29,59 @@ export default function SearchBar() {
   }
 
   return (
-    <form>
-      <label htmlFor="search-input">
-        <input
-          type="text"
-          id="search-input"
-          name="searchText"
-          onChange={ handleSearch }
-          data-testid="search-input"
-        />
-      </label>
-      <label htmlFor="ingredient-search-radio">
-        <input
-          type="radio"
-          id="ingredient-search-radio"
-          onChange={ handleSearch }
-          name="searchType"
-          value="ingredient"
-          data-testid="ingredient-search-radio"
-        />
-        Ingrediente
-      </label>
-      <label htmlFor="name-search-radio">
-        <input
-          type="radio"
-          name="searchType"
-          onChange={ handleSearch }
-          id="name-search-radio"
-          value="name"
-          data-testid="name-search-radio"
-        />
-        Nome
-      </label>
-      <label htmlFor="first-letter-search-radio">
-        <input
-          type="radio"
-          name="searchType"
-          onChange={ handleSearch }
-          value="first-letter"
-          id="first-letter-search-radio"
-          data-testid="first-letter-search-radio"
-        />
-        Primeira letra
-      </label>
-      <button
-        type="button"
-        onClick={ submitSearch }
-        data-testid="exec-search-btn"
-      >
-        Buscar
-      </button>
-    </form>
+    <section>
+      <form>
+        <label htmlFor="search-input">
+          <input
+            type="text"
+            id="search-input"
+            name="searchText"
+            onChange={ handleSearch }
+            data-testid="search-input"
+          />
+        </label>
+        <label htmlFor="ingredient-search-radio">
+          <input
+            type="radio"
+            id="ingredient-search-radio"
+            onChange={ handleSearch }
+            name="searchType"
+            value="ingredient"
+            data-testid="ingredient-search-radio"
+          />
+          Ingrediente
+        </label>
+        <label htmlFor="name-search-radio">
+          <input
+            type="radio"
+            name="searchType"
+            onChange={ handleSearch }
+            id="name-search-radio"
+            value="name"
+            data-testid="name-search-radio"
+          />
+          Nome
+        </label>
+        <label htmlFor="first-letter-search-radio">
+          <input
+            type="radio"
+            name="searchType"
+            onChange={ handleSearch }
+            value="first-letter"
+            id="first-letter-search-radio"
+            data-testid="first-letter-search-radio"
+          />
+          Primeira letra
+        </label>
+        <button
+          type="button"
+          onClick={ submitSearch }
+          data-testid="exec-search-btn"
+        >
+          Buscar
+        </button>
+      </form>
+      { (alert) && <h3 role="alert">Sua busca deve conter somente 1 (um) caracter</h3> }
+    </section>
   );
 }

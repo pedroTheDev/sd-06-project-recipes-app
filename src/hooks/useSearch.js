@@ -4,12 +4,15 @@ export default function useSearch() {
   const [filters, setFilters] = useState({
     searchText: '',
     searchType: '',
+    category: 'food',
   });
   const [results, setResults] = useState();
 
   useEffect(() => {
-    const { searchText, searchType } = filters;
-    const api = ('https://www.themealdb.com/api/json/v1/1/');
+    const { searchText, searchType, category } = filters;
+    const api = (category === 'food')
+      ? 'https://www.themealdb.com/api/json/v1/1/'
+      : 'https://www.thecocktaildb.com/api/json/v1/1/';
 
     let endpoint = '';
 
