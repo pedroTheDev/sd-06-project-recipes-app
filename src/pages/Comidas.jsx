@@ -6,12 +6,12 @@ export default function Comidas() {
   const { titulo, setTitulo } = useContext(Context);
 
   useEffect(() => {
-    setTitulo('Comidas')
+    setTitulo('Comidas');
   }, []);
 
   return (
     <div>
-      <Header titulo={ titulo } />
+      <Header titulo={titulo} />
       <h1>{ titulo }</h1>
     </div>
   );
