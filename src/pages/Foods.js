@@ -8,10 +8,8 @@ class Foods extends React.Component {
     const { history } = this.props;
     return (
       <div>
-        <h1 data-testid="Foods-title">
-          <Header history={history} />
-          <Footer history={history} />
-        </h1>
+        <Header history={ history } />
+        <Footer history={ history } />
       </div>
     );
   }

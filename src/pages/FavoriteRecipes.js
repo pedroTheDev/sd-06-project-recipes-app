@@ -8,10 +8,8 @@ class FavoriteRecipes extends React.Component {
     const { history } = this.props;
     return (
       <div>
-        <h1 data-testid="FavoriteRecipes-title">
-          <Header history={history} />
-          <Footer history={history} />
-        </h1>
+        <Header history={ history } />
+        <Footer history={ history } />
       </div>
     );
   }
