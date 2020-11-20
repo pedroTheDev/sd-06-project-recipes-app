@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchInput from './SearchInput';
@@ -7,7 +8,10 @@ import SearchInput from './SearchInput';
 function Header(props) {
   const [hiddenInput, setHiddenInput] = useState(false);
 
+  const { pageName } = props;
+
   return (
+
     <div>
       <header>
         <Link to="/perfil">
@@ -20,7 +24,7 @@ function Header(props) {
         </Link>
         <div>
           <h2 data-testid="page-title">
-            {props.pageName}
+            {pageName}
           </h2>
         </div>
         <button
@@ -35,5 +39,9 @@ function Header(props) {
     </div>
   );
 }
+
+Header.propTypes = {
+  pageName: PropTypes.string.isRequired,
+};
 
 export default Header;

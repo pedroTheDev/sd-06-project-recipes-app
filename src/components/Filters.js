@@ -5,7 +5,7 @@ import { requestIngredients, requestName, requestFirstLetter } from '../services
 function Filters() {
   const [radioValue, setRadioValue] = useState('');
 
-  const { valueInput, setValueInput } = useContext(RecipesContext);
+  const { valueInput } = useContext(RecipesContext);
 
   function handleRadio({ target }) {
     const targetValue = target.value;
