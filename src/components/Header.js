@@ -5,7 +5,7 @@ import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 
 function Header() {
-  const { header: { page, search, setFilter } } = useContext(AppContext);
+  const { header: { page, search }, setFilter } = useContext(AppContext);
   const [searchBar, setSearchBar] = useState(false);
   const [inputs, setInputs] = useState({ text: '', option: '' });
   const handleChange = (event) => {
@@ -13,6 +13,10 @@ function Header() {
   };
   const handleFilter = () => {
     setFilter({ ...inputs });
+  };
+  const alertFunction = () => {
+    // const alert = myCustomLib.customAlert;
+    alert('Sua busca deve conter somente 1 (um) caracter');
   };
   return (
     <div>
@@ -73,7 +77,9 @@ function Header() {
             <button
               type="button"
               data-testid="exec-search-btn"
-              onClick={ handleFilter }
+              onClick={ inputs.text.length > 1 && inputs.option === 'Primeira letra'
+                ? alertFunction
+                : handleFilter }
             >
               Buscar
             </button>
