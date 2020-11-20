@@ -21,21 +21,21 @@ describe('test LoginPage', () => {
     expect(loginButton).toBeInTheDocument();
     expect(loginButton.innerText).toBe('Entrar');
     expect(loginButton.disabled).toBe(true);
-    fireEvent.change(emailInput, { target: {value: 'p$'}})
+    fireEvent.change(emailInput, { target: {value: 'p$'}});
     expect(loginButton.disabled).toBe(true);
-    fireEvent.change(emailInput, { target: {value: 'paulo.'}})
+    fireEvent.change(emailInput, { target: {value: 'paulo.'}});
     expect(loginButton.disabled).toBe(true);
-    fireEvent.change(emailInput, { target: {value: 'paulo@'}})
+    fireEvent.change(emailInput, { target: {value: 'paulo@'}});
     expect(loginButton.disabled).toBe(true);
-    fireEvent.change(emailInput, { target: {value: 'paulo@email'}})
+    fireEvent.change(emailInput, { target: {value: 'paulo@email'}});
     expect(loginButton.disabled).toBe(true);
-    fireEvent.change(emailInput, { target: {value: 'paulo@email.com'}})
+    fireEvent.change(emailInput, { target: {value: 'paulo@email.com'}});
     expect(loginButton.disabled).toBe(true);
-    fireEvent.change(password, { target: {value: '123'}})
+    fireEvent.change(password, { target: {value: '123'}});
     expect(loginButton.disabled).toBe(true);
-    fireEvent.change(password, { target: {value: '123456'}})
+    fireEvent.change(password, { target: {value: '123456'}});
     expect(loginButton.disabled).toBe(true);
-    fireEvent.change(password, { target: {value: '1234567'}})
+    fireEvent.change(password, { target: {value: '1234567'}});
     expect(loginButton.disabled).toBe(false);
   });
 
