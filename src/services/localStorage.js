@@ -49,11 +49,43 @@ export function favoriteRecipes(object) {
   return temp;
 }
 
-export function addCocktailIngredient(cocktailID, ingredientID) {
-  let obj = {
+export function createRecipesProgress() {
+  const obj = {
     cocktails: {},
     meals: {},
   };
-  obj = JSON.parse(localStorage.getItem(''));
+  localStorage.setItem('in_progress_recipes', JSON.stringify(obj));
+}
 
+export function getInProgressRecipes() {
+  const temp = JSON.parse(localStorage.getItem('in_progress_recipes'));
+  return temp;
+}
+
+export function addCocktailIngredient(cocktailID, ingredientID) {
+  let obj = JSON.parse(localStorage.getItem('in_progress_recipes'));
+  if (!obj.cocktails[cocktailID]) {
+    const temp = { [cocktailID]: [ingredientID] };
+    obj = {
+      cocktails: { ...obj.cocktails, ...temp },
+      meals: { ...obj.meals },
+    };
+  } else {
+    obj.cocktails[cocktailID].push(ingredientID);
+  }
+  localStorage.setItem('in_progress_recipes', JSON.stringify(obj));
+}
+
+export function addMealIngredient(mealID, ingredientID) {
+  let obj = JSON.parse(localStorage.getItem('in_progress_recipes'));
+  if (!obj.meals[mealID]) {
+    const temp = { [mealID]: [ingredientID] };
+    obj = {
+      cocktails: { ...obj.cocktails },
+      meals: { ...obj.meals, ...temp },
+    };
+  } else {
+    obj.meals[mealID].push(ingredientID);
+  }
+  localStorage.setItem('in_progress_recipes', JSON.stringify(obj));
 }
