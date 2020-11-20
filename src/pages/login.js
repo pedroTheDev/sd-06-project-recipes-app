@@ -19,17 +19,17 @@ class Login extends Component {
   }
 
   handleInput({ target: { name, value } }) {
-    const { history } = this.props;
     this.setState(({
       [name]: value,
     }), () => {
       const { email, password } = this.state;
-      const emailIsValid = /^((?!.)[\w-_.]*[^.])(@\w+)(.\w+(.\w+)?[^.\W])$/.test(email);
+      const TWO = 2;
+      const SIX = 6;
+      const verifyStr = email.split('@');
+      const emailIsValid = verifyStr.length === TWO && verifyStr[1].endsWith('.com');
 
-      if (emailIsValid && password.length >= 6) {
-        console.log(emailIsValid);
+      if (emailIsValid && password.length > SIX) {
         this.setState({ isValid: false });
-        history.push('/comidas');
       } else {
         this.setState({ isValid: true });
       }
@@ -39,15 +39,17 @@ class Login extends Component {
   sendToLocalStorage() {
     const { email } = this.state;
     localStorage.setItem('user', JSON.stringify({ email }));
+    localStorage.setItem('mealsToken', JSON.stringify(1));
+    localStorage.setItem('cocktailsToken', JSON.stringify(1));
   }
 
   sendToRedux() {
-    const { sendLogin } = this.props;
+    const { sendLogin, history } = this.props;
     const { email } = this.state;
     sendLogin(email);
+    this.sendToLocalStorage();
+    history.push('/comidas');
   }
-
-  // /^((?!.)[\w-_.]*[^.])(@\w+)(.\w+(.\w+)?[^.\W])$/
 
   render() {
     const { email, password, isValid } = this.state;
@@ -55,7 +57,7 @@ class Login extends Component {
       <div>
         <input
           name="email"
-          data-test-id="email-input"
+          data-testid="email-input"
           type="email"
           placeholder="Email"
           value={ email }
@@ -63,14 +65,14 @@ class Login extends Component {
         />
         <input
           name="password"
-          data-test-id="password-input"
+          data-testid="password-input"
           type="password"
           placeholder="Password"
           value={ password }
           onChange={ this.handleInput }
         />
         <button
-          data-test-id="login-submit-btn"
+          data-testid="login-submit-btn"
           type="button"
           disabled={ isValid }
           onClick={ this.sendToRedux }
