@@ -23,7 +23,9 @@ export default function Rotas() {
         <Route path="/explorar/bebidas/ingredientes" component={}/>
         <Route path="//explorar/comidas/area" component={} /> */}
         <Route path="/perfil" component={Perfil} />
-        {/* <Route path="/receitas-feitas" component={} />
+        {/* Receitas aqui abaixo ja linkadas na pagina de perfil 
+        mas ainda nao feito os componentes
+        <Route path="/receitas-feitas" component={} />
         <Route path="/receitas-favoritas" component={} /> */}
       </Switch>
     </BrowserRouter>

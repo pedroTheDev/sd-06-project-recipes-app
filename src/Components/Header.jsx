@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import profilePicture from '../images/profileIcon.svg';
-import searchImage from '../images/searchIcon.svg';
+import Context from '../context/Context';
+import Lupa from './Lupa';
+import profileImage from '../images/profileIcon.svg';
 
 export default function Header() {
+  const { titulo, setTitulo } = useContext(Context);
 
   return (
     <header className="header">
       <div>
-        <Link to="/perfil"><img data-testid="profile-top-btn" src={profilePicture} alt="profile" /></Link>
-			   <h1 data-testid="page-title">Comidas</h1>
-        <Link to="/explorar"><img data-testid="search-top-btn" src={searchImage} alt="search" /></Link>
+        <Link to="/perfil"><button type="button" data-testid="profile-top-btn" src="../images/profileIcon.svg" alt="profile"><img src={profileImage} alt="profile" /></button></Link>
+			   <h1 data-testid="page-title">{ titulo }</h1>
+         <Lupa />
       </div>
     </header>
-  )
+  );
 }
