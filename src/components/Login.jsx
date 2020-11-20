@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import RecipesAppContext from '../hooks/RecipesAppContext';
-
+import { saveState } from '../services/localStorage';
 function Login() {
-  const { contextValue: { setEmail } } = useContext(RecipesAppContext);
+  const { contextValue: { setEmail, setPassword, email, password } } = useContext(RecipesAppContext);
 
   const isEmail = (e) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -13,12 +14,37 @@ function Login() {
       setEmail('');
     }
   };
+  
+  const isPassword = (e) => {
+    const { value } = e.target;
+    if (value.length > 6) {
+      setPassword(value)
+    } else {
+      setPassword('');
+    }
+  }
+
+  const saveToken = () => {
+    saveState('mealsToken', 1);
+    saveState('cocktailsToken', 1);
+    saveState('user', { email })
+  }
 
   return (
     <form>
-      <input type="email" data-testid="email-input" onChange={ isEmail } />
-      <input type="password" data-testid="password-input" />
-      <button type="button" data-testid="login-submit-btn">Entrar</button>
+      <h2>Login</h2>
+      <input type="email" data-testid="email-input" onChange={isEmail} />
+      <input type="password" data-testid="password-input" onChange={isPassword} />
+      <Link to="/comidas">
+        <button
+          type="button"
+          data-testid="login-submit-btn"
+          disabled={!email || !password}
+          onClick={saveToken}
+        >
+          Entrar
+        </button>
+      </Link>
     </form>
   );
 }
