@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import RecipeContext from '../context/RecipeContext';
 
 export default function Login() {
@@ -19,22 +20,50 @@ export default function Login() {
     } else {
       setEnableButton(true);
     }
-    // this.setState({ email: loginEmail });
   }
+
+  const history = useHistory();
+
+  function setLocalStorage() {
+    localStorage.setItem('mealsToken', 1);
+    localStorage.setItem('cocktailsToken', 1);
+    emailValid = document.getElementById('login-email').value;
+    const jsonEmail = JSON.stringify({ email: emailValid });
+    localStorage.setItem('user', jsonEmail);
+  }
+
   function handleClick(e) {
     e.preventDefault();
+    passwordValid = document.getElementById('login-password').value;
+    emailValid = document.getElementById('login-email').value;
     setLoginEmail(emailValid);
     setLoginPassword(passwordValid);
-    // const { userSave, history } = this.props;
-    // const { email } = this.state;
-    // userSave(email);
-    // history.push('/');
+    setLocalStorage();
+    history.push('/comidas');
   }
+
   return (
     <div>
-      <input type="email" data-testid="email-input" id="login-email" onChange={handleChange} />
-      <input type="password" data-testid="password-input" id="login-password" onChange={handleChange} />
-      <button type="button" data-testid="login-submit-btn" disabled={enableButton} onClick={handleClick}>Entrar</button>
+      <input
+        type="email"
+        data-testid="email-input"
+        id="login-email"
+        onChange={ handleChange }
+      />
+      <input
+        type="password"
+        data-testid="password-input"
+        id="login-password"
+        onChange={ handleChange }
+      />
+      <button
+        type="button"
+        data-testid="login-submit-btn"
+        disabled={ enableButton }
+        onClick={ handleClick }
+      >
+        Entrar
+      </button>
     </div>
   );
 }
