@@ -28,7 +28,11 @@ function App() {
           <Route exact path="/comidas" component={ Comidas } />
           <Route exact path="/comidas/:id" component={ ComidasDetalhes } />
           <Route exact path="/comidas/:id/in-progress" component={ ComidasProgresso } />
-          <Route exact path="/explorar/comidas/ingredientes" component={ ComidasIngredientes } />
+          <Route
+            exact
+            path="/explorar/comidas/ingredientes"
+            component={ ComidasIngredientes }
+          />
           <Route exact path="/explorar/comidas/area" component={ ComidasArea } />
           <Route exact path="/explorar" component={Explorar} />
           <Route exact path="/explorar/comidas" component={ ExplorarComidas } />
