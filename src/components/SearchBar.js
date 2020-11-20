@@ -19,7 +19,6 @@ export default function SearchBar() {
     const singleChar = 1;
     if (searchType === 'first-letter' && searchText.length > singleChar) {
       setAlert(true);
-      alert('Sua busca deve conter somente 1 (um) caracter');
     } else if (searchText !== '' && searchType !== '') {
       setAlert(false);
       console.log('pesquisar!');
