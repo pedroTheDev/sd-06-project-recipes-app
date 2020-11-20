@@ -28,14 +28,39 @@ const Header = () => {
           namePage: 'Bebidas',
           search: true,
         });
-      case '':
+      case '/explorar':
         return setState({
-          namePage: '',
+          namePage: 'Explorar',
           search: true,
         });
-      case '':
+      case '/explorar/comidas':
         return setState({
-          namePage: '',
+          namePage: 'Explorar Comidas',
+          search: true,
+        });
+      case '/explorar/bebidas':
+        return setState({
+          namePage: 'Explorar Bebidas',
+          search: true,
+        });
+      case '/explorar/comidas/ingredientes':
+      return setState({
+        namePage: 'Explorar Ingrediente ',
+        search: true,
+      });
+      case '/explorar/comidas/area':
+      return setState({
+        namePage: 'Explorar Origem',
+        search: true,
+      });
+      case '/receitas-feitas':
+      return setState({
+        namePage: 'Receitas Feitas',
+        search: true,
+      });
+      case '/receitas-favoritas':
+        return setState({
+          namePage: 'Receitas Favoritas',
           search: true,
         });
       default:
