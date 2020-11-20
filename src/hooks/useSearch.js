@@ -9,7 +9,7 @@ export default function useSearch() {
 
   useEffect(() => {
     const { searchText, searchType } = filters;
-    const api = ('https://www.themealdb.com/api/json/v1/1/';
+    const api = ('https://www.themealdb.com/api/json/v1/1/');
 
     let endpoint = '';
 
