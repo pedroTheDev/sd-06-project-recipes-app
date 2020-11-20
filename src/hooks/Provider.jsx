@@ -28,9 +28,9 @@ function Provider({ children }) {
 
   return (
     <RecipesAppContext.Provider
-      value={{
+      value={ {
         contextValue,
-      }}
+      } }
     >
       {children}
     </RecipesAppContext.Provider>

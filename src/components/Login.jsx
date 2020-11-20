@@ -16,7 +16,7 @@ function Login() {
 
   return (
     <form>
-      <input type="email" data-testid="email-input" onChange={isEmail} />
+      <input type="email" data-testid="email-input" onChange={ isEmail } />
       <input type="password" data-testid="password-input" />
       <button type="button" data-testid="login-submit-btn">Entrar</button>
     </form>
