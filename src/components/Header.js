@@ -4,6 +4,7 @@ import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 
 function HeaderFood() {
+  console.log(window.location.pathname);
   return (
     <div>
       <Link to="/perfil"><img data-testid="profile-top-btn" src={profileIcon} alt="profile" /></Link>
