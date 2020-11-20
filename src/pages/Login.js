@@ -35,29 +35,29 @@ export default function Login() {
       <label htmlFor="email">
         E-mail:
         <input
-          value={email}
+          value={ email }
           name="email"
           type="email"
           data-testid="email-input"
-          onChange={(e) => handleChange(e)}
+          onChange={ (e) => handleChange(e) }
         />
       </label>
       <label htmlFor="password">
         Password:
         <input
-          value={password}
+          value={ password }
           name="password"
           type="password"
           data-testid="password-input"
-          onChange={(e) => handleChange(e)}
+          onChange={ (e) => handleChange(e) }
         />
       </label>
       <Link to="/comidas">
         <button
           data-testid="login-submit-btn"
-          disabled={disable}
+          disabled={ disable }
           type="button"
-          onClick={setLocalStorage}
+          onClick={ setLocalStorage }
         >
           Entrar
         </button>

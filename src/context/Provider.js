@@ -10,7 +10,7 @@ const Provider = ({ children }) => {
     email, password, setEmail, setPassword,
   };
   return (
-    <RevenueContext.Provider value={context}>
+    <RevenueContext.Provider value={ context }>
       {children}
     </RevenueContext.Provider>
   );
