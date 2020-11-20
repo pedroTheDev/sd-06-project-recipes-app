@@ -8,9 +8,9 @@ function Login() {
   const passIsValid = /^.{7,}$/.test(password);
 
   const handleClick = () => {
-    localStorage.setItem('mealToken', email);
-    localStorage.setItem('cocktailsToken', password);
-  }
+    localStorage.setItem('mealToken', 1);
+    localStorage.setItem('cocktailsToken', 1);
+  };
 
   return (
     <form>
