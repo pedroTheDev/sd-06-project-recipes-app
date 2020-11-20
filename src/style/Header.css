@@ -1,0 +1,16 @@
+nav {
+  display: flex;
+  justify-content: space-between;
+  background-color: grey;
+  padding: 0 15px;
+}
+
+.profile {
+  align-self: center;
+}
+
+.searchButton {
+  background-color: grey;
+  border: none;
+  cursor: pointer;
+}

@@ -2,12 +2,12 @@ import React from 'react';
 // import { Header } from '../components/';
 import Header from '../components/Header';
 
-function Comidas() {
+function Perfil() {
   return (
     <div>
-      <Header title="Comidas" />
+      <Header title="Perfil" />
     </div>
   );
 }
 
-export default Comidas;
+export default Perfil;
