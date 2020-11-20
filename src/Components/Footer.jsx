@@ -8,24 +8,36 @@ import mealIcon from '../images/mealIcon.svg';
 function Footer() {
   return (
     <div data-testid="footer" className="footer">
-      <button type="button" data-testid="drinks-bottom-btn" src={ drinkIcon }>
-        <Link to="/bebidas">
-          <img src={ drinkIcon } alt="drink-icon" />
+      <Link to="/bebidas">
+        <button type="button">
+          <img
+            data-testid="drinks-bottom-btn"
+            src={ drinkIcon }
+            alt="drink-icon"
+          />
           Drinks
-        </Link>
-      </button>
-      <button type="button" data-testid="explore-bottom-btn" src={ exploreIcon }>
-        <Link to="/explorar">
-          <img src={ exploreIcon } alt="explore-icon" />
+        </button>
+      </Link>
+      <Link to="/explorar">
+        <button type="button">
+          <img
+            data-testid="explore-bottom-btn"
+            src={ exploreIcon }
+            alt="explore-icon"
+          />
           Explore
-        </Link>
-      </button>
-      <button type="button" data-testid="food-bottom-btn" src={ mealIcon }>
-        <Link to="/comidas">
-          <img src={ mealIcon } alt="meal-icon" />
+        </button>
+      </Link>
+      <Link to="/comidas">
+        <button type="button">
+          <img
+            data-testid="food-bottom-btn"
+            src={ mealIcon }
+            alt="meal-icon"
+          />
           Foods
-        </Link>
-      </button>
+        </button>
+      </Link>
     </div>
   );
 }
