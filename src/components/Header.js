@@ -24,7 +24,7 @@ const Header = ({ title, searchBtn = false }) => {
               <img src={searchIcon} alt="show-hide-sbr" />
             </button>
           )
-          : <div className="image"></div>
+          : <div className="image" />
       }
     </section>
   );
