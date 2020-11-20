@@ -10,36 +10,42 @@ const randomRequestEndpoint = 'random.php';
 
 export async function filterByIngredient(key) {
   const url = `${MEAL_API}${filterByIngredientEndpoint}${key}`;
-  const data = await fetch(url);
+  const result = await fetch(url);
+  const data = await result.json();
   return data;
 }
 
 export async function searchByName(key) {
   const url = `${MEAL_API}${searchByNameEndpoint}${key}`;
-  const data = await fetch(url);
+  const result = await fetch(url);
+  const data = await result.json();
   return data;
 }
 
 export async function searchByFirstLetter(key) {
   const url = `${MEAL_API}${searchByFirstLetterEndpoint}${key}`;
-  const data = await fetch(url);
+  const result = await fetch(url);
+  const data = await result.json();
   return data;
 }
 
 export async function listCategories() {
   const url = `${MEAL_API}${listCategoriesEndpoint}`;
-  const data = await fetch(url);
+  const result = await fetch(url);
+  const data = await result.json();
   return data;
 }
 
 export async function requestRecipe(key) {
   const url = `${MEAL_API}${requestRecipeEndpoint}${key}`;
-  const data = await fetch(url);
+  const result = await fetch(url);
+  const data = await result.json();
   return data;
 }
 
 export async function randomRequest() {
   const url = `${MEAL_API}${randomRequestEndpoint}`;
-  const data = await fetch(url);
+  const result = await fetch(url);
+  const data = await result.json();
   return data;
 }

@@ -10,36 +10,42 @@ const randomRequestEndpoint = 'random.php';
 
 export async function filterByIngredient(key) {
   const url = `${COCKTAIL_API}${filterByIngredientEndpoint}${key}`;
-  const data = await fetch(url);
+  const result = await fetch(url);
+  const data = await result.json();
   return data;
 }
 
 export async function searchByName(key) {
   const url = `${COCKTAIL_API}${searchByNameEndpoint}${key}`;
-  const data = await fetch(url);
+  const result = await fetch(url);
+  const data = await result.json();
   return data;
 }
 
 export async function searchByFirstLetter(key) {
   const url = `${COCKTAIL_API}${searchByFirstLetterEndpoint}${key}`;
-  const data = await fetch(url);
+  const result = await fetch(url);
+  const data = await result.json();
   return data;
 }
 
 export async function listCategories() {
   const url = `${COCKTAIL_API}${listCategoriesEndpoint}`;
-  const data = await fetch(url);
+  const result = await fetch(url);
+  const data = await result.json();
   return data;
 }
 
 export async function requestRecipe(key) {
   const url = `${COCKTAIL_API}${requestRecipeEndpoint}${key}`;
-  const data = await fetch(url);
+  const result = await fetch(url);
+  const data = await result.json();
   return data;
 }
 
 export async function randomRequest() {
   const url = `${COCKTAIL_API}${randomRequestEndpoint}`;
-  const data = await fetch(url);
+  const result = await fetch(url);
+  const data = await result.json();
   return data;
 }
