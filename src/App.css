@@ -10,6 +10,14 @@
   color: #464646;
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  background-color: rgb(204, 203, 203);
+  padding: 10px;
+  font-size: 1.8em;
+}
+
 #rocksGlass {
   max-height: 80vh;
   animation: shake 1s infinite ease;

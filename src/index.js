@@ -1,14 +1,20 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 import LoginProvider from './provider/LoginProvider';
+import HeaderProvider from './provider/HeaderProvider';
 
 ReactDOM.render(
   <LoginProvider>
-    <App />
+    <HeaderProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </HeaderProvider>
   </LoginProvider>,
   document.getElementById('root'),
 );
