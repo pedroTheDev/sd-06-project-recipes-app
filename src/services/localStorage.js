@@ -17,7 +17,7 @@ export function user(email) {
   return temp;
 }
 
-export function doneRecipes(object) {
+export function addDoneRecipe(object) {
   const obj = {
     id: object.id,
     type: object.type,
@@ -30,11 +30,16 @@ export function doneRecipes(object) {
     tags: object.tags,
   };
   const temp = JSON.parse(localStorage.getItem('done_recipes'));
-  localStorage.setItem('done_recipes', JSON.stringify(obj));
+  temp.push(obj);
+  localStorage.setItem('done_recipes', JSON.stringify(temp));
+}
+
+export function getDoneRecipes() {
+  const temp = JSON.parse(localStorage.getItem('done_recipes'));
   return temp;
 }
 
-export function favoriteRecipes(object) {
+export function addFavoriteRecipe(object) {
   const obj = {
     id: object.id,
     type: object.type,
@@ -45,7 +50,12 @@ export function favoriteRecipes(object) {
     image: object.image,
   };
   const temp = JSON.parse(localStorage.getItem('favorite_recipes'));
-  localStorage.setItem('favorite_recipes', JSON.stringify(obj));
+  temp.push(obj);
+  localStorage.setItem('favorite_recipes', JSON.stringify(temp));
+}
+
+export function getFavoriteRecipes() {
+  const temp = JSON.parse(localStorage.getItem('favorite_recipes'));
   return temp;
 }
 
