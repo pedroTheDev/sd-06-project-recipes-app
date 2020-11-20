@@ -8,16 +8,16 @@ function Header({ title, setSearch, isSearching }) {
   return (
     <header>
       <button
-        data-testid="profile-top-btn"
         type="button"
+        data-testid="search-top-btn"
         onClick={ () => setSearch(!isSearching) }
-      >
+        >
         <img src={ searchIcon } alt="Search" />
       </button>
       <h2 data-testid="page-title">{ title }</h2>
       <Link
         to="/perfil"
-        data-testid="search-top-btn"
+        data-testid="profile-top-btn"
         type="button"
       >
         <img
