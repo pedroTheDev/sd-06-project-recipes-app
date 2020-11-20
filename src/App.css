@@ -1,4 +1,4 @@
-#meals {
+/* #meals {
   height: 100vh;
   width: 100%;
   background: #0fa36b;
@@ -15,20 +15,20 @@
   animation: shake 1s infinite ease;
 }
 
-#iceLeft {
+#iceLeft { */
   /* transform-origin set in px for firefox compatibility */
-  opacity: 0.6;
+  /* opacity: 0.6;
   transform-origin: 36px 66px;
   animation: clink .8s infinite ease;
 }
 
-#iceRight {
+#iceRight { */
   /* transform-origin set in px for firefox compatibility */
-  opacity: 0.6;
+  /* opacity: 0.6;
   transform-origin: 60px 78px;
   animation: clink .8s .2s infinite ease;
-}
-
+} */
+/* 
 #meals > span {
   color: aliceblue;
   font-weight: 900;
@@ -234,7 +234,7 @@ body {
 .global-footer input {
   margin: 0 35px;
   width: 60px;
-}
+} */
 
 
 
