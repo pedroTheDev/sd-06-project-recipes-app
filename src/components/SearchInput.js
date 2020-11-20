@@ -6,10 +6,11 @@ class SearchInput extends React.Component {
     super();
     this.state = {
       search: '',
+      radio: '',
     };
-    this.searchHandleClick = this.searchHandleClick.bind(this);
     this.searchHandleChange = this.searchHandleChange.bind(this);
     this.getMeals = this.getMeals.bind(this);
+    this.clickApi = this.clickApi.bind(this);
   }
 
   getMeals(meals) {
@@ -18,25 +19,29 @@ class SearchInput extends React.Component {
     });
   }
 
-  async searchHandleClick({ target }) {
-    const { id } = target;
-    const { search } = this.state;
-    const responseApi = await fetchMeal(search, id);
-    this.getMeals(responseApi);
+  async clickApi() {
+    const { search, radio } = this.state;
+    if (radio === 'primeira-letra' && search.length > 1) {
+      window.alert('Sua busca deve conter somente 1 (um) caracter');
+    } else {
+      const responseApi = await fetchMeal(search, radio);
+      this.getMeals(responseApi);
+    }
   }
 
-  searchHandleChange({ target }) {
+  searchHandleChange(event, name) {
     this.setState({
-      search: target.value,
+      [name]: event.target.value,
     });
   }
 
   render() {
-    const { meals } = this.state;
-    console.log(meals);
     return (
       <div className="toogle-search-input">
-        <input data-testid="search-input" onChange={ this.searchHandleChange } />
+        <input
+          data-testid="search-input"
+          onChange={ (event) => this.searchHandleChange(event, 'search') }
+        />
         <div className="radio-input-div">
           <label htmlFor="ingrediente">
             <input
@@ -44,7 +49,8 @@ class SearchInput extends React.Component {
               id="ingrediente"
               type="radio"
               name="search-filter"
-              onClick={ this.searchHandleClick }
+              value="ingrediente"
+              onChange={ (event) => this.searchHandleChange(event, 'radio') }
             />
             Ingrediente
           </label>
@@ -53,7 +59,8 @@ class SearchInput extends React.Component {
               id="nome"
               type="radio"
               name="search-filter"
-              onClick={ this.searchHandleClick }
+              value="nome"
+              onChange={ (event) => this.searchHandleChange(event, 'radio') }
             />
             Nome
           </label>
@@ -63,10 +70,12 @@ class SearchInput extends React.Component {
               id="primeira-letra"
               type="radio"
               name="search-filter"
-              onClick={ this.searchHandleClick }
+              value="primeira-letra"
+              onChange={ (event) => this.searchHandleChange(event, 'radio') }
             />
             Primeira Letra
           </label>
+          <button type="button" onClick={ this.clickApi }>Buscar</button>
         </div>
       </div>
     );
