@@ -24,8 +24,8 @@ function Login() {
           type="email"
           data-testid="email-input"
           id="email"
-          value={email}
-          onChange={({ target }) => setEmail(target.value)}
+          value={ email }
+          onChange={ ({ target }) => setEmail(target.value) }
         />
       </label>
       <label htmlFor="password">
@@ -34,15 +34,15 @@ function Login() {
           type="password"
           data-testid="password-input"
           id="password"
-          onChange={({ target }) => setPassword(target.value)}
+          onChange={ ({ target }) => setPassword(target.value) }
         />
       </label>
       <Link to="/comidas">
         <button
           type="submit"
-          disabled={!emailIsValid || !passIsValid}
+          disabled={ !emailIsValid || !passIsValid }
           data-testid="login-submit-btn"
-          onClick={handleClick}
+          onClick={ handleClick }
         >
           Entrar
         </button>
