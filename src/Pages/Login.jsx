@@ -9,7 +9,8 @@ function Login({ history }) {
     const inputPassword = document.getElementById('password-input').value;
     const inputEmail = document.getElementById('email-input').value;
     const regex = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-    setButtonDisable(inputPassword.length > 6 && regex.test(inputEmail));
+    const six = 6;
+    setButtonDisable(inputPassword.length > six && regex.test(inputEmail));
     setUserEmail(inputEmail);
   };
 
@@ -29,7 +30,7 @@ function Login({ history }) {
           type="text"
           data-testid="email-input"
           id="email-input"
-          onChange={checkButton}
+          onChange={ checkButton }
         />
       </label>
       <label htmlFor="password-input">
@@ -38,14 +39,14 @@ function Login({ history }) {
           type="password"
           data-testid="password-input"
           id="password-input"
-          onChange={checkButton}
+          onChange={ checkButton }
         />
       </label>
       <button
         type="submit"
         data-testid="login-submit-btn"
-        disabled={!buttonDisable}
-        onClick={handleButton}
+        disabled={ !buttonDisable }
+        onClick={ handleButton }
       >
         Entrar
       </button>

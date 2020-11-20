@@ -6,8 +6,8 @@ import Comidas from './Pages/Comidas';
 function App() {
   return (
     <Switch>
-      <Route exact path="/" component={Login} />
-      <Route path="/comidas" component={Comidas} />
+      <Route exact path="/" component={ Login } />
+      <Route path="/comidas" component={ Comidas } />
       {/*
       <Route path="/bebidas" component={} />
       <Route path="/comidas/{id-da-receita}" component={} />

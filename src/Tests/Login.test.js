@@ -16,7 +16,7 @@ describe('Teste página de Login', () => {
     expect(buttonLoginTest).toBeInTheDocument();
   });
 
-  it('o formulário só seja válido após um email válido e uma senha de mais de 6 caracteres serem preenchidos', () => {
+  it('o formulário abilitado só após a validação de email e senha', () => {
     const { getByTestId } = renderWithRouter(<Login />);
     const button = getByTestId('login-submit-btn');
     expect(button).toBeDisabled();
@@ -36,12 +36,7 @@ describe('Teste página de Login', () => {
     expect(button).toBeEnabled();
   });
 
-  /*
-  it('Salve 2 tokens no localStorage após a submissão, pelas chaves', () => {
-    const {  }
-  });
-  */
-  it(' Redirecione a pessoa usuária para a tela principal de receitas de comidas após a submissão com sucesso do login', () => {
+  it(' Redirecione para a tela principal de receitas após a submissão do login', () => {
     const { getByTestId, history } = renderWithRouter(<App />);
     const email = getByTestId('email-input');
     const senha = getByTestId('password-input');
