@@ -22,14 +22,16 @@ function App() {
           <Route exact path="/bebidas/:id" component={ BebidasDetalhes } />
           <Route exact path="/bebidas/:id/in-progress" component={ BebidasProgresso } />
           <Route
-            exact path="/explorar/bebidas/ingredientes"
+            exact
+            path="/explorar/bebidas/ingredientes"
             component={ BebidasIngredientes }
           />
           <Route exact path="/comidas" component={ Comidas } />
           <Route exact path="/comidas/:id" component={ ComidasDetalhes } />
           <Route exact path="/comidas/:id/in-progress" component={ ComidasProgresso } />
           <Route
-            exact path="/explorar/comidas/ingredientes"
+            exact
+            path="/explorar/comidas/ingredientes"
             component={ ComidasIngredientes }
           />
           <Route exact path="/explorar/comidas/area" component={ ComidasArea } />
