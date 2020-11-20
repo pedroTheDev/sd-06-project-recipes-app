@@ -15,7 +15,7 @@ export default function Footer() {
       <Link to="/explorar" data-testid="explore-bottom-btn" src={exploreIcon}>
         <img src={exploreIcon} alt="exploreIcon" />
       </Link>
-      <Link to="/comida" data-testid="food-bottom-btn" src={mealIcon}>
+      <Link to="/comidas" data-testid="food-bottom-btn" src={mealIcon}>
         <img src={mealIcon} alt="mealIcon" />
       </Link>
     </div>
