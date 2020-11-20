@@ -11,7 +11,7 @@ function Header({ title, setSearch, isSearching }) {
         type="button"
         data-testid="search-top-btn"
         onClick={ () => setSearch(!isSearching) }
-        >
+      >
         <img src={ searchIcon } alt="Search" />
       </button>
       <h2 data-testid="page-title">{ title }</h2>
