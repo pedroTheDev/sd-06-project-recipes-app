@@ -10,7 +10,6 @@ function App() {
       <Route exact path="/" component={Login} />
       <Route exact path="/comidas" component={Foods} />
     </Switch>
-
   );
 }
 export default App;
