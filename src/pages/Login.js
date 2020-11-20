@@ -5,7 +5,7 @@ function Login() {
   const [password, setPassword] = useState('');
 
   const emailIsValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  const passIsValid = /^.{6,}$/.test(password); 
+  const passIsValid = /^.{6,}$/.test(password);
   return (
     <form>
       <h1>Login</h1>
@@ -14,8 +14,9 @@ function Login() {
         <input
           type="email"
           data-testid="email-input"
-          id="email" value={email}
-          onChange={({target}) => setEmail(target.value)}
+          id="email"
+          value={email}
+          onChange={({ target }) => setEmail(target.value)}
         />
       </label>
       <label htmlFor="password">
@@ -23,7 +24,8 @@ function Login() {
         <input
           type="password"
           data-testid="password-input"
-          id="password" onChange={({target}) => setPassword(target.value)}
+          id="password"
+          onChange={({ target }) => setPassword(target.value)}
         />
       </label>
       <button
