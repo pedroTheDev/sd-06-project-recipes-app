@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import Footer from '../components/Footer';
 
 describe('Menu inferior', () => {
-  it('Os botões de drinks, explorar e comida são renderizados', () => {
+  it('19 - Os botões de drinks, explorar e comida são renderizados', () => {
     const { getByTestId } = render(<Footer />);
 
     const drinksButton = getByTestId('drinks-bottom-btn');
