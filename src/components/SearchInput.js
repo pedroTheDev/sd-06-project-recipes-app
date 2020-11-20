@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 class SearchInput extends React.Component {
   render() {
     return (
-      <div>
+      <div className="toogle-search-input">
         <input data-testid="search-input" />
       </div>
     );

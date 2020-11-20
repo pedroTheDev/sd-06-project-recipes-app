@@ -38,7 +38,7 @@ class Login extends React.Component {
 
   handleValidator() {
     const { email, password } = this.state;
-    const validator = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+    const validator = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
     const isValid = validator.test(String(email).toLowerCase());
     if (password.length > 5) {
       this.setState({ validPassword: true });
@@ -63,9 +63,12 @@ class Login extends React.Component {
     } = this.state;
 
     return (
-      <div>
+      <div className="login-container">
+        <header>
+          <h1>Login</h1>
+        </header>
         <form>
-          <div>
+          <div className="login-div">
             <label htmlFor="email">
               <input
                 data-testid="email-input"
@@ -94,7 +97,7 @@ class Login extends React.Component {
               onClick={this.handleSubmit}
               disabled={!validEmail || !validPassword}
             >
-              ACESSAR!
+              Login
             </button>
           </div>
         </form>
