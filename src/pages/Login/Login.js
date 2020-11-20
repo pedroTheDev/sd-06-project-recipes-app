@@ -1,32 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { setValueUser, cocktailsToken, mealsToken } from '../../services/localStorage';
 
 function Login() {
-  const [email, setEmail] = useState(false);
-  const [password, setPassword] = useState(false);
-  const [user1, setUser] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isDisabled, setIsDisabled] = useState(true);
 
-  const verifyAndSetEmail = (param) => {
-    const emailFormat = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$/.test(param);
-    setUser(param);
-    return setEmail(emailFormat);
-  };
-
-  const verifyAndSetPassword = (param) => {
-    const minPasswordLength = 6;
-    let verify = false;
-    if (param.length >= minPasswordLength) {
-      verify = true;
+  useEffect(() => {
+    const emailFormat = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$/.test(email);
+    const six = 6;
+    const minPasswordLength = password.length > six;
+    if (emailFormat && minPasswordLength) {
+      setIsDisabled(false);
     }
-    return setPassword(verify);
-  };
+  }, [email, password]);
 
   const handlePath = () => {
     window.location.replace('http://localhost:3000/comidas');
   };
 
   const handleRedirect = () => {
-    setValueUser('user', user1);
+    setValueUser('user', email);
     mealsToken(1);
     cocktailsToken(1);
     handlePath();
@@ -47,9 +41,9 @@ function Login() {
               data-testid="email-input"
               placeholder="Digite seu email"
               id="password"
-              onChange={ ({ target }) => verifyAndSetEmail(target.value) }
+              onChange={ ({ target }) => setEmail(target.value) }
               required="required"
-              value={ user1 }
+              value={ email }
             />
           </label>
         </div>
@@ -64,7 +58,8 @@ function Login() {
               data-testid="password-input"
               placeholder="Digite sua senha"
               id="senha"
-              onChange={ ({ target }) => verifyAndSetPassword(target.value) }
+              value={ password }
+              onChange={ ({ target }) => setPassword(target.value) }
               required="required"
             />
           </label>
@@ -73,7 +68,7 @@ function Login() {
           type="button"
           data-testid="login-submit-btn"
           className="btn btn-primary"
-          disabled={ !email + !password }
+          disabled={ isDisabled }
           onClick={ () => handleRedirect() }
         >
           Entrar
