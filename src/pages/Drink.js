@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Footer from '../components/Footer';
+import Header from '../components/Header';
 
 function Drink() {
   const [drinks, setDrinks] = useState([]);
-  const [isFecthing, setIsFecthing] = useState(true);
 
   const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
 
@@ -19,20 +19,14 @@ function Drink() {
     fecthDrinks();
   }, []);
 
+  const firstMeal = 0;
   const limitDrink = 12;
-
-  const loading = () => {
-    if (isFecthing === true) {
-      return 'loading...';
-    }
-  };
 
   return (
     <>
-      <h1>Drink</h1>
-      <p>{loading()}</p>
+      <Header title="Bebidas" />
       {
-        drinks.splice(1, limitDrink).map((drink, id) => (
+        drinks.slice(firstMeal, limitDrink).map((drink, id) => (
           <div key={ id } data-testid={ `${id}-recipe-card` }>
             <img
               src={ drink.strDrinkThumb }

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Footer from '../components/Footer';
+import Header from '../components/Header';
+import './Food.css';
 
 function Food() {
   const [meals, setMeals] = useState([]);
-  const [isFecthing, setIsFecthing] = useState(true);
 
   const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
 
@@ -18,22 +19,15 @@ function Food() {
     };
     fecthMeals();
   }, []);
-
+  const firstMeal = 0;
   const limitMeal = 12;
-
-  const loading = () => {
-    if (isFecthing === true) {
-      return 'loading...';
-    }
-  };
 
   return (
     <>
-      <h1>Food</h1>
-      <p>{loading()}</p>
+      <Header title="Comidas" />
       {
-        meals.splice(1, limitMeal).map((meal, id) => (
-          <div key={ id } data-testid={ `${id}-recipe-card` }>
+        meals.slice(firstMeal, limitMeal).map((meal, id) => (
+          <div key={ id } className="recipe-card" data-testid={ `${id}-recipe-card` }>
             <img
               src={ meal.strMealThumb }
               alt={ meal.strMeal }
