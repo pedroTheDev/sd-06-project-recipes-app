@@ -11,7 +11,7 @@ function Header() {
       setSearchBar(false);
     } else {
       setSearchBar(true);
-    }
+    }// oi
   };
 
   return (
