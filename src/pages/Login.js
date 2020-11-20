@@ -39,7 +39,7 @@ function Login() {
             name="email-input"
             id="email-input"
             data-testid="email-input"
-            onChange={ handleChangeWithValidation }
+            onChange={handleChangeWithValidation}
           />
         </label>
         <label htmlFor="password-input">
@@ -49,15 +49,15 @@ function Login() {
             name="password-input"
             id="password-input"
             data-testid="password-input"
-            onChange={ handleChangeWithValidation }
+            onChange={handleChangeWithValidation}
           />
         </label>
         <Link to="/comidas">
           <button
             type="button"
             data-testid="login-submit-btn"
-            disabled={ disable }
-            onClick={ handleClick }
+            disabled={disable}
+            onClick={handleClick}
           >
             ENTRAR
           </button>
