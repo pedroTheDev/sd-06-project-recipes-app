@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '../components/Header';
 
 const Perfil = () => (
-  <Header />
+  <Header title="Perfil" />
 );
 
 export default Perfil;
