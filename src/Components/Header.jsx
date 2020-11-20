@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Context from '../context/Context';
-import Lupa from './Lupa';
 import profileImage from '../images/profileIcon.svg';
 
 export default function Header() {
@@ -16,7 +15,6 @@ export default function Header() {
           </button>
         </Link>
         <h1 data-testid="page-title">{ titulo }</h1>
-        <Lupa />
       </div>
     </header>
   );
