@@ -33,6 +33,11 @@ const Header = () => {
           namePage: '',
           search: true,
         });
+      case '':
+        return setState({
+          namePage: '',
+          search: true,
+        });
       default:
         return '';
     }
@@ -44,7 +49,6 @@ const Header = () => {
 
   return (
     <header className="header">
-      {console.log(state)}
       <Link to="/perfil">
         <img
           date-testid="profile-top-btn"
