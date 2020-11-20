@@ -4,8 +4,7 @@ import Header from '../components/Header';
 function DrinksRecipesPage() {
   return (
     <div>
-      Pagina Drinks
-      <Header />
+      <Header pageName="Bebidas" />
     </div>
   );
 }

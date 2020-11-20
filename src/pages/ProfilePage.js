@@ -4,8 +4,7 @@ import Header from '../components/Header';
 function ProfilePage() {
   return (
     <div>
-      Profile
-      <Header />
+      <Header pageName="Perfil" />
     </div>
   );
 }

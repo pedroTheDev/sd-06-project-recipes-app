@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import SearchInput from './SearchInput';
 
-function Header() {
+function Header(props) {
+  const [hiddenInput, setHiddenInput] = useState(false);
+
   return (
     <div>
       <header>
         <Link to="/perfil">
           <button
-           // aria-label evita aparecer o erro:
-           // A control must be associated with a text label
             aria-label="profile-btn"
             type="button"
             src={profileIcon}
@@ -18,14 +19,18 @@ function Header() {
           />
         </Link>
         <div>
-          {window.location.pathname === '/comidas' ? <h2 data-testid="page-title">Comidas</h2> : <h2 data-testid="page-title">Bebidas</h2>}
+          <h2 data-testid="page-title">
+            {props.pageName}
+          </h2>
         </div>
         <button
           aria-label="search-btn"
           type="button"
           src={searchIcon}
           data-testid="search-top-btn"
+          onClick={() => setHiddenInput(!hiddenInput)}
         />
+        { hiddenInput ? <SearchInput /> : null }
       </header>
     </div>
   );
