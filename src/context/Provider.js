@@ -13,7 +13,7 @@ function Provider({ children }) {
     setLoginPassword,
   };
   return (
-    <RecipeContext.Provider value={contextValue}>
+    <RecipeContext.Provider value={ contextValue }>
       {children}
     </RecipeContext.Provider>
   );
