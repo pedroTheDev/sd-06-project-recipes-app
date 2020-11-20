@@ -4,6 +4,7 @@ import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 
 export default function Header({ pageName, renderSearch }) {
+  const teste = 'teste';
   return (
     <header>
       <img src={profileIcon} alt="profileIcon" data-testid="profile-top-btn" />

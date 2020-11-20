@@ -15,6 +15,7 @@
       }
     ],
     "react/prefer-stateless-function": 0,
+    "react/jsx-curly-spacing": [2, {"when": "always", "allowMultiline": false}],
     "arrow-parens": [2, "always"],
     "class-methods-use-this": ["off"],
     "no-param-reassign": ["off"],
