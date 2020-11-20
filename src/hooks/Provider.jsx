@@ -3,22 +3,22 @@ import PropTypes from 'prop-types';
 import RecipesAppContext from './RecipesAppContext';
 
 function Provider({ children }) {
-  const INITIAL_STATE = {
-    user: {
-      email: '',
-    },
-    doneRecipes: [{
-      id: '',
-      type: '',
-      area: '',
-      category: '',
-      alcoholicOrNot: '',
-      name: '',
-      image: '',
-      doneDate: '',
-      tags: '',
-    }],
-  };
+  // const INITIAL_STATE = {
+  //   user: {
+  //     email: '',
+  //   },
+  //   doneRecipes: [{
+  //     id: '',
+  //     type: '',
+  //     area: '',
+  //     category: '',
+  //     alcoholicOrNot: '',
+  //     name: '',
+  //     image: '',
+  //     doneDate: '',
+  //     tags: '',
+  //   }],
+  // };
 
   const [email, setEmail] = useState('');
   const contextValue = {
