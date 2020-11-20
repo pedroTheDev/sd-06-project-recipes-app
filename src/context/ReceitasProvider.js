@@ -1,10 +1,13 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import ReceitasContext from './ReceitasContext';
 
 const ReceitasProvider = ({ children }) => {
-  const state = {
+  const [searchBox, setSearchBox] = useState(false);
 
+  const state = {
+    searchBox,
+    setSearchBox,
   };
 
   return (
