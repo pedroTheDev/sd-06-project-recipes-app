@@ -35,6 +35,31 @@ function Header({ title }) {
       >
         <img src={ searchButton } alt="search-btn" />
       </button>
+      <br />
+      <label htmlFor="ingrediente">
+        <input
+          data-testid="ingredient-search-radio"
+          type="radio"
+          id="ingrediente"
+          name="busca"
+        />
+        Ingrediente
+      </label>
+      <label htmlFor="nome">
+        <input data-testid="name-search-radio" type="radio" id="nome" name="busca" />
+        Nome
+      </label>
+      <label htmlFor="primeira-letra">
+        <input
+          data-testid="first-letter-search-radio"
+          type="radio"
+          id="primeira-letra"
+          name="busca"
+        />
+        Primeira Letra
+      </label>
+      <br />
+      <button data-testid="exec-search-btn" type="button">Buscar</button>
     </header>
   );
 }
