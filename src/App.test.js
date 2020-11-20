@@ -11,6 +11,7 @@ import App from './App';
 // });
 
 afterEach(cleanup);
+beforeEach(cleanup);
 
 describe('Tela de Login - todos os elementos devem respeitar os atributos', () => {
 
@@ -74,22 +75,36 @@ describe('Tela de Login - Formulario só será valido se ambos email e senha sej
   });
 });
 
-describe('Tela de Login - Salvar o email no LocalStorage', () => {
-  afterEach(cleanup);
+describe('Tela de Login - Salvar os Tokens no localStorage após o click', () => {
+  beforeEach(cleanup);
 
-  it('Após a click, o email deve ser salvo na chave user no formato { email: email-da-pessoa }', () => {
+  it('Os tokens mealsToken e cocktailsToken devem ser 1', () => {
     const { getByTestId } = renderWithRouter(<App />);
     const email = getByTestId('email-input');
     const password = getByTestId('password-input');
     const button = getByTestId('login-submit-btn');
 
-    userEvent.type(email, 'requisito7@semcriatividade.com');
-    userEvent.type(password, 'Piadas2k20');
+    userEvent.type(email, 'requisito6@brabo.com');
+    userEvent.type(password, 'CriatividadeEmFalta');
     fireEvent.click(button);
+
+    const meal = localStorage.getItem('mealsToken');
+    const cocktail = localStorage.getItem('cocktailsToken');
+
+    expect(meal).toBe('1');
+    expect(cocktail).toBe('1');
+  });
+});
+
+describe('Tela de Login - Salvar o email no LocalStorage', () => {
+  beforeEach(cleanup);
+
+  it('Após a click, o email deve ser salvo na chave user no formato { email: email-da-pessoa }', () => {
+    const a = renderWithRouter(<App />);
 
     const local = localStorage.getItem('user');
 
-    expect(JSON.parse(local)).toMatchObject({email: 'requisito7@semcriatividade.com'});
+    expect(JSON.parse(local)).toMatchObject({email: 'requisito6@brabo.com'});
   });
 });
 
