@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { addEmail } from '../redux/actions/LoginActions';
 
@@ -11,6 +12,7 @@ function Login(props) {
     email: '',
     isDisable: true,
   });
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { password, email } = state;
 
   // const mealEndPoint = 'https://www.themealdb.com/api.php';
@@ -55,12 +57,14 @@ function Login(props) {
 
   const handleSubmit = () => {
     const {
-      dispatchEmail, history,
+      dispatchEmail,
     } = props;
     dispatchEmail(email);
     setLocalStorageData();
-    history.push('/jogo');
+    setIsLoggedIn(true);
   };
+
+  const renderRedirect = () => <Redirect to="/comidas" />;
 
   const render = () => {
     const { isDisable } = state;
@@ -95,6 +99,7 @@ function Login(props) {
           >
             Entrar
           </button>
+          {}
           {/* <Link to="/configuracoes">
             <button
               type="button"
@@ -108,7 +113,7 @@ function Login(props) {
     );
   };
 
-  return render();
+  return isLoggedIn ? renderRedirect() : render();
 }
 
 const mapDispatchToProps = (dispatch) => ({
