@@ -60,3 +60,9 @@
     transform: rotate(-10deg);
   }
 }
+
+.width360 {
+  border: 1px solid black;
+  width: 360px;
+  margin: 0 auto;
+}
