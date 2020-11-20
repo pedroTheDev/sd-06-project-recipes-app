@@ -51,7 +51,7 @@ function MyProvider({ children }) {
   };
 
   return (
-    <mealsContext.Provider value={ contextValue }>
+    <mealsContext.Provider value={contextValue}>
       {children}
     </mealsContext.Provider>
   );
