@@ -2,6 +2,7 @@ import React, {
   useCallback, useEffect, useMemo, useState,
 } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import { useSearch } from '../../hooks/search';
 import { useRecipes } from '../../hooks/recipes';
@@ -9,8 +10,7 @@ import { useRecipes } from '../../hooks/recipes';
 import Header from '../../components/Header';
 import Navbar from '../../components/Navbar';
 
-function Drinks() {
-  const pageType = 'Bebidas';
+function Drinks({ pageType }) {
   const [filterSelected, setFilterSelected] = useState('all');
 
   const { infoSearched, appSearch } = useSearch();
@@ -106,5 +106,9 @@ function Drinks() {
     </div>
   );
 }
+
+Drinks.propTypes = {
+  pageType: PropTypes.string.isRequired,
+};
 
 export default Drinks;

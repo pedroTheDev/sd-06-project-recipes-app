@@ -23,8 +23,17 @@ function RecipeProvider({ children }) {
   const [currentRecipes, setCurrentRecipes] = useState(recipesStructure);
   const [currentFilteredRecipes, setCurrentFilteredRecipes] = useState(recipesStructure);
   const [currentFilters, setCurrentFilters] = useState(recipesStructure);
+  const [favoriteRecipes, setFavoriteRecipes] = useState(() => {
+    const favorites = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+
+    return favorites;
+  });
 
   const { userToken } = useAuth();
+
+  useEffect(() => {
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+  }, [favoriteRecipes]);
 
   useEffect(() => {
     async function getCategories() {
@@ -68,13 +77,41 @@ function RecipeProvider({ children }) {
     }));
   }, [userToken]);
 
+  const updateFavoriteRecipes = useCallback(({
+    id, type, area, category, alcoholicOrNot, name, image,
+  }, isFavorite) => {
+    if (isFavorite) {
+      setFavoriteRecipes((oldFavorites) => {
+        const newFavorites = oldFavorites.filter((recipe) => recipe.id !== id);
+
+        return newFavorites;
+      });
+
+      return;
+    }
+
+    const newFavorite = {
+      id,
+      type,
+      area,
+      category,
+      alcoholicOrNot,
+      name,
+      image,
+    };
+
+    setFavoriteRecipes((oldFavorites) => [...oldFavorites, newFavorite]);
+  }, []);
+
   return (
     <recipesContext.Provider value={{
       currentRecipes,
       currentFilters,
+      favoriteRecipes,
       currentFilteredRecipes,
       updateRecipes,
       updateFilteredRecipes,
+      updateFavoriteRecipes,
     }}
     >
       {children}

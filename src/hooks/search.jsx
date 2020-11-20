@@ -26,6 +26,11 @@ const initialSearchValues = {
   },
 };
 
+const fetchSearchOptions = {
+  Comidas: fetchMealsSearch,
+  Bebidas: fetchDrinksSearch,
+};
+
 const searchContext = createContext();
 
 function SearchProvider({ children }) {
@@ -34,8 +39,6 @@ function SearchProvider({ children }) {
   const { updateRecipes } = useRecipes();
 
   const appSearch = useCallback(async (type, { option, value, token }) => {
-    let recipesSearched;
-
     const userSearch = { option, value, token };
 
     setInfoSearched((oldInfo) => ({
@@ -44,11 +47,8 @@ function SearchProvider({ children }) {
     }));
 
     try {
-      if (type === 'Comidas') {
-        recipesSearched = await fetchMealsSearch(userSearch);
-      } else {
-        recipesSearched = await fetchDrinksSearch(userSearch);
-      }
+      const fetchRecipes = fetchSearchOptions[type];
+      const recipesSearched = await fetchRecipes(userSearch);
 
       const firstItem = recipesSearched[0];
 
@@ -61,15 +61,13 @@ function SearchProvider({ children }) {
       const correctIDAccess = getID[type];
       const firstItemID = firstItem[correctIDAccess];
 
-      console.log(recipesSearched);
-
       updateRecipes(type, recipesSearched);
 
       return (recipesSearched.length === 1) ? firstItemID : null;
     } catch (err) {
       console.log(err);
 
-      return null;
+      return alert('Sinto muito, houve um erro ao buscar. Tente novamente.');
     }
   }, [updateRecipes]);
 

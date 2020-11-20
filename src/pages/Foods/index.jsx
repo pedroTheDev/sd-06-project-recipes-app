@@ -2,6 +2,7 @@ import React, {
   useEffect, useMemo, useState, useCallback,
 } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import { useSearch } from '../../hooks/search';
 import { useRecipes } from '../../hooks/recipes';
@@ -9,8 +10,7 @@ import { useRecipes } from '../../hooks/recipes';
 import Header from '../../components/Header';
 import Navbar from '../../components/Navbar';
 
-function Foods() {
-  const pageType = 'Comidas';
+function Foods({ pageType }) {
   const [filterSelected, setFilterSelected] = useState('all');
 
   const { infoSearched, appSearch } = useSearch();
@@ -104,5 +104,9 @@ function Foods() {
     </div>
   );
 }
+
+Foods.propTypes = {
+  pageType: PropTypes.string.isRequired,
+};
 
 export default Foods;

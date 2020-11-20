@@ -53,3 +53,29 @@ button {
   border-radius: 5px 5px 0 0;
   margin-bottom: 10px;
 }
+
+/* single recipe */
+
+.recipe-details-page > img {
+  height: 10vh;
+}
+
+.recommendations-container {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  row-gap: 20px;
+  column-gap: 10px;
+  overflow-x: auto;
+}
+
+.recommendations-container a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.recommendations-container a img {
+  height: 10vh;
+  width: 40vw;
+  object-fit: cover;
+}

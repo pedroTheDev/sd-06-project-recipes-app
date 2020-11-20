@@ -4,14 +4,20 @@ import PropTypes from 'prop-types';
 import { AuthProvider } from './auth';
 import { SearchProvider } from './search';
 import { RecipeProvider } from './recipes';
+import { SingleRecipeProvider } from './singleRecipe';
+import { CookProvider } from './cook';
 
 function AppProvider({ children }) {
   return (
     <AuthProvider>
       <RecipeProvider>
-        <SearchProvider>
-          {children}
-        </SearchProvider>
+        <SingleRecipeProvider>
+          <SearchProvider>
+            <CookProvider>
+              {children}
+            </CookProvider>
+          </SearchProvider>
+        </SingleRecipeProvider>
       </RecipeProvider>
     </AuthProvider>
   );

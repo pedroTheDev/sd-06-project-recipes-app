@@ -5,7 +5,7 @@ const FIRST_LETTER_KEY = 'search.php?f'; // search bar
 const FILTER_INGREDIENTS_KEY = 'filter.php?i'; // search bar
 const FILTER_CATEGORIES_KEY = 'filter.php?c';
 
-// const ID_KEY = 'lookup.php?i';
+const ID_KEY = 'lookup.php?i';
 // const INGREDIENTS_KEY = 'i';
 // const AREA_KEY = 'f';
 
@@ -50,4 +50,15 @@ export async function fetchDrinksByCategory(category, token) {
   const { drinks } = await data.json();
 
   return drinks;
+}
+
+export async function fetchDrinkDetails(drinkID, token) {
+  const urlToFetch = `${baseURL}/${token}/${ID_KEY}=${drinkID}`;
+
+  const data = await fetch(urlToFetch);
+  const { drinks } = await data.json();
+
+  const drinkDetails = drinks[0];
+
+  return drinkDetails;
 }
