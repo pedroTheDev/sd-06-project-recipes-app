@@ -1,7 +1,8 @@
 import React from 'react';
+import Header from '../components/Header';
 
 const Perfil = () => (
-  <div />
+  <Header />
 );
 
 export default Perfil;
