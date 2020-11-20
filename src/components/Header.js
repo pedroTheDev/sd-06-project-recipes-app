@@ -6,7 +6,6 @@ import searchIcon from '../images/searchIcon.svg';
 
 function Header() {
   const { showSearchBar, setSearchBar } = useContext(MealsContext);
-  
   const showOrHideSearchBar = () => {
     if (showSearchBar) {
       setSearchBar(false);
