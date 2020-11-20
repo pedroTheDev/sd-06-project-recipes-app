@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import RevenueContext from '../context/RevenueContext';
 
-export default function Foods(props) {
+export default function Drinks(props) {
   const { title } = props;
   const { setSearchButton, setSearch } = useContext(RevenueContext);
   useEffect(() => {
@@ -18,6 +18,6 @@ export default function Foods(props) {
   );
 }
 
-Foods.propTypes = {
+Drinks.propTypes = {
   title: PropTypes.string.isRequired,
 };

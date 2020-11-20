@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import RevenueContext from '../context/RevenueContext';
 
-export default function Foods(props) {
+export default function Explore(props) {
   const { title } = props;
   const { setSearchButton, setSearch } = useContext(RevenueContext);
   useEffect(() => {
-    setSearchButton(false);
+    if (title === 'Explorar Origem') setSearchButton(false);
     return () => {
       setSearchButton(true);
       setSearch(false);
@@ -18,6 +18,6 @@ export default function Foods(props) {
   );
 }
 
-Foods.propTypes = {
+Explore.propTypes = {
   title: PropTypes.string.isRequired,
 };
