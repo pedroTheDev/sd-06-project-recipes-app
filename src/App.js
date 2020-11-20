@@ -6,6 +6,10 @@ import Provider from './Context/Provider';
 import Login from './Pages/Login';
 import Comidas from './Pages/Comidas';
 import Bebidas from './Pages/Bebidas';
+import Perfil from './Pages/Perfil';
+import DetalhesComidas from './Pages/DetalhesComidas';
+import DetalhesBebidas from './Pages/DetalhesBebidas';
+import ReceitaProcessoComida from './Pages/ReceitaProcessoComida';
 
 function App() {
   return (
@@ -15,6 +19,10 @@ function App() {
           <Route exact path="/" component={Login} />
           <Route path="/comidas" component={Comidas} />
           <Route path="/bebidas" component={Bebidas} />
+          <Route path="/perfil" component={Perfil} />
+          <Route path="/detalhes-comidas" component={DetalhesComidas} />
+          <Route path="/detalhes-bebidas" component={DetalhesBebidas} />
+          <Route path="/receita-processo-comida" component={ReceitaProcessoComida} />
         </Switch>
       </BrowserRouter>
     </Provider>
