@@ -248,7 +248,7 @@ Projeto em grupo.
 
 Serão dez dias de projeto.
 
-O projeto tem até a seguinte data: dd/mm/yyyy - 14:00h para ter entregue a avaliação final.
+O projeto tem até a seguinte data: 09/12/2020 - 14:00h para ter entregue a avaliação final.
 
 ---
 
@@ -270,9 +270,9 @@ Este repositório **já conta com uma `main-group` para cada grupo**, identifica
 ### Antes de começar a desenvolver:
 
 1. Clone o repositório
-  * `git clone git@github.com:tryber/sd-0x-recipes-app-N.git`.
+  * `git clone git@github.com:tryber/sd-06-project-recipes-app.git`.
   * Entre na pasta do repositório que você acabou de clonar:
-    * `cd sd-0x-recipes-app-N`
+    * `cd sd-06-project-recipes-app`
   * Vá para a branch do seu grupo, com `git checkout main-group-XX && git pull`, onde `XX` é o número do seu grupo. Exemplos: `main-group-1`, `main-group-22`.
 
 2. Instale as dependências e inicialize o projeto
@@ -306,7 +306,7 @@ Este repositório **já conta com uma `main-group` para cada grupo**, identifica
   * Usando o exemplo anterior: `git push -u origin main-group-XX-cria-campo-de-input`
 
 6. Crie um novo `Pull Request` _(PR)_
-  * Vá até a página de _Pull Requests_ do [repositório no GitHub](https://github.com/tryber/sd-0x-recipes-app-N/pulls)
+  * Vá até a página de _Pull Requests_ do [repositório no GitHub](https://github.com/tryber/sd-06-project-recipes-app/pulls)
   * Clique no botão verde _"New pull request"_
   * Clique na caixa de seleção _"Compare"_ e escolha a branch do grupo, `main-group-XX`, e a sua branch **com atenção**
   * Coloque um título para a sua _Pull Request_
@@ -314,7 +314,7 @@ Este repositório **já conta com uma `main-group` para cada grupo**, identifica
   * Clique no botão verde _"Create pull request"_
   * Adicione uma descrição para o _Pull Request_ e clique no botão verde _"Create pull request"_
   * **Não se preocupe em preencher mais nada por enquanto!**
-  * Volte até a [página de _Pull Requests_ do repositório](https://github.com/tryber/sd-0x-recipes-app-N/pulls) e confira que o seu _Pull Request_ está criado
+  * Volte até a [página de _Pull Requests_ do repositório](https://github.com/tryber/sd-06-project-recipes-app/pulls) e confira que o seu _Pull Request_ está criado
 
 7. Assim que aprovado por pelo menos duas pessoas do seu grupo e o _Linter_ estiver adereçado, acesse **SEU** _Pull Request_ e clique no botão _"Merge pull request"_
 
