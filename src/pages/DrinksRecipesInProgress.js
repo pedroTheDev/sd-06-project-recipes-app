@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Header } from '../components';
 
-class DrinksDetails extends React.Component {
+class DrinksRecipesInProgress extends React.Component {
   render() {
     const { history } = this.props;
     return (
@@ -14,8 +14,8 @@ class DrinksDetails extends React.Component {
   }
 }
 
-DrinksDetails.propTypes = {
+DrinksRecipesInProgress.propTypes = {
   history: PropTypes.shape().isRequired,
 };
 
-export default connect(null, null)(DrinksDetails);
+export default connect(null, null)(DrinksRecipesInProgress);

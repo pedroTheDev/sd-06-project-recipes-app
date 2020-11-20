@@ -5,3 +5,7 @@ export { default as Explore } from './Explore';
 export { default as Profile } from './Profile';
 export { default as DoneRecipes } from './DoneRecipes';
 export { default as FavoriteRecipes } from './FavoriteRecipes';
+export { default as FoodsDetails } from './FoodsDetails';
+export { default as DrinksDetails } from './DrinksDetails';
+export { default as FoodsRecipesInProgress } from './FoodsRecipesInProgress';
+export { default as DrinksRecipesInProgress } from './DrinksRecipesInProgress';

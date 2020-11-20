@@ -1,5 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { fetchDrinks, fetchMeal } from '../services/index';
+import { bebida, comida } from '../actions';
 
 class SearchInput extends React.Component {
   constructor() {
@@ -22,16 +25,23 @@ class SearchInput extends React.Component {
   redirectFromState() {
     const { meals, drinks } = this.state;
     const { history } = this.props;
-    if (meals.length === 1) {
-      history.push(`/comidas/${meals.idMeal}`);
+    // if (meals !== null || drinks !== null) {
+    //   if (meals.length === 1) {
+    //     history.push(`/comidas/${meals[0].idMeal}`);
+    //   }
+    if (meals !== null && meals.length === 1) {
+      history.push(`/comidas/${meals[0].idMeal}`);
     }
-    else if (drinks.length === 1) {
-      history.push(`/comidas/${drinks.idDrink}`);
+    if (drinks !== null && drinks.length === 1) {
+      history.push(`/bebidas/${drinks[0].idDrink}`);
     }
   }
 
   async clickApi() {
-    const { history: { location: { pathname } } } = this.props;
+    const {
+      history: { location: { pathname } },
+      dispatchDrinks,
+      dispatchMeals } = this.props;
     const { search, radio } = this.state;
     if (pathname === '/comidas') {
       if (radio === 'primeira-letra' && search.length > 1) {
@@ -41,9 +51,14 @@ class SearchInput extends React.Component {
         this.setState({
           meals: responseApi,
         });
+        if (responseApi !== null) dispatchMeals(responseApi);
+        if (responseApi === null) {
+          window.alert(
+            'Sinto muito, não encontramos nenhuma receita para esses filtros.',
+          );
+        }
       }
-    }
-    if (pathname === '/bebidas') {
+    } else if (pathname === '/bebidas') {
       if (radio === 'primeira-letra' && search.length > 1) {
         window.alert('Sua busca deve conter somente 1 (um) caracter');
       } else {
@@ -51,6 +66,12 @@ class SearchInput extends React.Component {
         this.setState({
           drinks: responseApi,
         });
+        if (responseApi !== null) dispatchDrinks(responseApi);
+        if (responseApi === null) {
+          window.alert(
+            'Sinto muito, não encontramos nenhuma receita para esses filtros.',
+          );
+        }
       }
     }
   }
@@ -115,4 +136,15 @@ class SearchInput extends React.Component {
   }
 }
 
-export default SearchInput;
+const mapDispatchToProps = (dispatch) => ({
+  dispatchMeals: (meals) => dispatch(comida(meals)),
+  dispatchDrinks: (drinks) => dispatch(bebida(drinks)),
+});
+
+SearchInput.propTypes = {
+  history: PropTypes.shape().isRequired,
+  dispatchMeals: PropTypes.func.isRequired,
+  dispatchDrinks: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(SearchInput);
