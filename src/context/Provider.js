@@ -17,7 +17,7 @@ function Provider({ children }) {
   };
 
   return (
-    <RecipesContext.Provider value={contextValue}>
+    <RecipesContext.Provider value={ contextValue }>
       { children }
     </RecipesContext.Provider>
   );

@@ -9,10 +9,9 @@ export default function Login() {
 
   const inputValidate = () => {
     const validEmail = (/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/).test(login.email);
-    // const validPassword = login.senha > 6 ? ;
-    console.log(login.password.length);
-    if (validEmail && login.password.length > 5) {
-      console.log('aqui');
+    const min = 5;
+
+    if (validEmail && login.password.length > min) {
       return setDisabled(false);
     }
     return setDisabled(true);
@@ -28,7 +27,7 @@ export default function Login() {
     const user = {
       email: login.email,
     };
-    console.log('aaaaaa');
+
     localStorage.setItem('mealsToken', 1);
     localStorage.setItem('cocktailsToken', 1);
     localStorage.setItem('user', JSON.stringify(user));
@@ -37,29 +36,31 @@ export default function Login() {
   return (
     <div>
       {login.redirect ? <Redirect to="/comidas" /> : null}
-      <label>
+      <label htmlFor="email">
         E-mail
         <input
           type="email"
           name="email"
+          id="email"
           data-testid="email-input"
-          onChange={(e) => handleChange(e)}
+          onChange={ (e) => handleChange(e) }
         />
       </label>
-      <label>
+      <label htmlFor="senha">
         Senha
         <input
           type="password"
           name="password"
+          id="senha"
           data-testid="password-input"
-          onChange={(e) => handleChange(e)}
+          onChange={ (e) => handleChange(e) }
         />
       </label>
       <button
         type="button"
-        disabled={disabled}
+        disabled={ disabled }
         data-testid="login-submit-btn"
-        onClick={() => handleSubmit()}
+        onClick={ () => handleSubmit() }
       >
         Entrar
       </button>
