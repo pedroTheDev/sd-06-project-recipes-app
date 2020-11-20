@@ -9,7 +9,6 @@ class DrinksDetails extends React.Component {
     return (
       <div>
         <Header history={ history } />
-        <div>oi oi oi</div>
       </div>
     );
   }

@@ -12,14 +12,14 @@ function App() {
     <div className="master-container">
       <Switch>
         <Route exact path="/" component={ Login } />
-        <Route exact path="/comidas/52771" component={ FoodsDetails } />
+        <Route exact path="/comidas/:id" component={ FoodsDetails } />
         <Route
           exact
           path="/comidas/52771/in-progress"
           component={ FoodsRecipesInProgress }
         />
         <Route path="/comidas" component={ Foods } />
-        <Route exact path="/bebidas/178319" component={ DrinksDetails } />
+        <Route exact path="/bebidas/:id" component={ DrinksDetails } />
         <Route
           exact
           path="/bebidas/178319/in-progress"
