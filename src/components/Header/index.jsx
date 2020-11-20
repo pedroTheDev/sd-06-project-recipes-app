@@ -98,6 +98,7 @@ function Header({ pageName, showSearch = false }) {
                 name="searchOption"
                 id="name"
                 value="name"
+                data-testid="name-search-radio"
               />
             </div>
             <div className="radio-container">
@@ -112,7 +113,13 @@ function Header({ pageName, showSearch = false }) {
               />
             </div>
 
-            <button type="submit">Buscar</button>
+            <button
+              type="submit"
+              data-testid="exec-search-btn"
+            >
+              Buscar
+
+            </button>
           </div>
         </form>
       </div>

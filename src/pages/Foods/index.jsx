@@ -1,4 +1,6 @@
-import React, { useEffect, useMemo } from 'react';
+import React, {
+  useEffect, useMemo, useState, useCallback,
+} from 'react';
 import { Link } from 'react-router-dom';
 
 import { useSearch } from '../../hooks/search';
@@ -9,9 +11,12 @@ import Navbar from '../../components/Navbar';
 
 function Foods() {
   const pageType = 'Comidas';
+  const [filterSelected, setFilterSelected] = useState('all');
 
   const { infoSearched, appSearch } = useSearch();
-  const { currentRecipes } = useRecipes();
+  const {
+    currentRecipes, currentFilters, currentFilteredRecipes, updateFilteredRecipes,
+  } = useRecipes();
 
   useEffect(() => {
     const foodsToSearch = infoSearched[pageType];
@@ -19,21 +24,83 @@ function Foods() {
     appSearch(pageType, foodsToSearch);
   }, []);
 
-  const currentFoodRecipes = useMemo(() => currentRecipes[pageType], [currentRecipes]);
+  const handleFilterChange = useCallback(({ target }) => {
+    const { value: category } = target;
+
+    if (category === filterSelected) {
+      const categoryToLoad = 'all';
+      const foodsToSearch = infoSearched[pageType];
+
+      appSearch(pageType, foodsToSearch);
+
+      setFilterSelected(categoryToLoad);
+      return;
+    }
+
+    updateFilteredRecipes(pageType, category);
+    setFilterSelected(category);
+  }, [updateFilteredRecipes, pageType, appSearch, filterSelected]);
+
+  const currentFoodRecipes = useMemo(() => {
+    if (filterSelected === 'all') {
+      return currentRecipes[pageType];
+    }
+
+    return currentFilteredRecipes[pageType];
+  }, [currentRecipes, currentFilteredRecipes, filterSelected]);
+  const currentFoodFilters = useMemo(() => currentFilters[pageType], [currentFilters]);
 
   return (
     <div className="foods-page">
       <Header pageName={pageType} showSearch />
-      <Navbar />
+
+      <div className="filters-container">
+        <label htmlFor="all">Todos</label>
+        <input
+          type="checkbox"
+          name="filter"
+          id="all"
+          checked={filterSelected === 'all'}
+          onChange={handleFilterChange}
+        />
+
+        {currentFoodFilters.map((filter) => (
+          <React.Fragment key={filter}>
+            <label
+              data-testid={`${filter}-category-filter`}
+              htmlFor={filter}
+              key={filter}
+            >
+              {filter}
+
+            </label>
+            <input
+              type="checkbox"
+              name="filter"
+              id={filter}
+              value={filter}
+              checked={filterSelected === filter}
+              onChange={handleFilterChange}
+            />
+          </React.Fragment>
+        ))}
+      </div>
 
       <div className="foods-container">
-        {currentFoodRecipes.map((meal) => (
-          <Link to={`/${pageType}/${meal.idMeal}`} className="recipe-card" key={meal.idMeal}>
+        {currentFoodRecipes.map((meal, index) => (
+          <Link
+            to={`/${pageType}/${meal.idMeal}`}
+            className="recipe-card"
+            data-testid={`${index}-recipe-card`}
+            key={meal.idMeal}
+          >
             <img src={meal.strMealThumb} alt={meal.strMeal} />
             <strong>{meal.strMeal}</strong>
           </Link>
         ))}
       </div>
+
+      <Navbar />
     </div>
   );
 }

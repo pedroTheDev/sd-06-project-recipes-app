@@ -1,4 +1,6 @@
-import React, { useEffect, useMemo } from 'react';
+import React, {
+  useCallback, useEffect, useMemo, useState,
+} from 'react';
 import { Link } from 'react-router-dom';
 
 import { useSearch } from '../../hooks/search';
@@ -9,9 +11,12 @@ import Navbar from '../../components/Navbar';
 
 function Drinks() {
   const pageType = 'Bebidas';
+  const [filterSelected, setFilterSelected] = useState('all');
 
   const { infoSearched, appSearch } = useSearch();
-  const { currentRecipes, currentFilters } = useRecipes();
+  const {
+    currentRecipes, currentFilters, currentFilteredRecipes, updateFilteredRecipes,
+  } = useRecipes();
 
   useEffect(() => {
     const drinksToSearch = infoSearched[pageType];
@@ -19,7 +24,31 @@ function Drinks() {
     appSearch(pageType, drinksToSearch);
   }, []);
 
-  const currentDrinkRecipes = useMemo(() => currentRecipes[pageType], [currentRecipes]);
+  const handleFilterChange = useCallback(({ target }) => {
+    const { value: category } = target;
+
+    if (category === filterSelected) {
+      const categoryToLoad = 'all';
+      const foodsToSearch = infoSearched[pageType];
+
+      appSearch(pageType, foodsToSearch);
+
+      setFilterSelected(categoryToLoad);
+      return;
+    }
+
+    updateFilteredRecipes(pageType, category);
+    setFilterSelected(category);
+  }, [updateFilteredRecipes, pageType, filterSelected, appSearch]);
+
+  const currentDrinkRecipes = useMemo(() => {
+    if (filterSelected === 'all') {
+      return currentRecipes[pageType];
+    }
+
+    return currentFilteredRecipes[pageType];
+  }, [currentRecipes, currentFilteredRecipes, filterSelected]);
+
   const currentDrinkFilters = useMemo(() => currentFilters[pageType], [currentFilters]);
 
   return (
@@ -29,10 +58,18 @@ function Drinks() {
 
       <div className="filters-container">
         <label htmlFor="all">Todos</label>
-        <input type="radio" name="filter" id="all" />
+        <input
+          type="checkbox"
+          name="filter"
+          id="all"
+          value="all"
+          checked={filterSelected === 'all'}
+          onChange={handleFilterChange}
+
+        />
 
         {currentDrinkFilters.map((filter) => (
-          <>
+          <React.Fragment key={filter}>
             <label
               data-testid={`${filter}-category-filter`}
               htmlFor={filter}
@@ -41,14 +78,26 @@ function Drinks() {
               {filter}
 
             </label>
-            <input type="radio" name="filter" id={filter} />
-          </>
+            <input
+              type="checkbox"
+              name="filter"
+              id={filter}
+              value={filter}
+              checked={filterSelected === filter}
+              onChange={handleFilterChange}
+            />
+          </React.Fragment>
         ))}
       </div>
 
       <div className="drinks-container">
-        {currentDrinkRecipes.map((drink) => (
-          <Link to={`/${pageType}/${drink.idDrink}`} className="recipe-card" key={drink.idDrink}>
+        {currentDrinkRecipes.map((drink, index) => (
+          <Link
+            to={`/${pageType}/${drink.idDrink}`}
+            className="recipe-card"
+            data-testid={`${index}-recipe-card`}
+            key={drink.idDrink}
+          >
             <img src={drink.strDrinkThumb} alt={drink.strDrink} />
             <strong>{drink.strDrink}</strong>
           </Link>
