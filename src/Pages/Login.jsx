@@ -5,7 +5,7 @@ const Login = () => {
   const { setEmail } = useContext(ContextAPI);
 
   const [username, setUsername] = useState('');
-  const [setPassword] = useState('');
+  const [password, setPassword] = useState('');
 
   const [isEmailValid, setEmailValid] = useState(false);
   const [isPasswordValid, setPasswordValid] = useState(false);
