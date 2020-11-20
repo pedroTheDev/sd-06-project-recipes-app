@@ -1,8 +1,13 @@
 import React from 'react';
+import { Footer } from '../components';
+import '../style/Comidas.css';
 
 function Comidas() {
   return (
-    <div>Aqui vão estar as comidas...</div>
+    <div className="food">
+      <span>Aqui vão estar as comidas...</span>
+      <Footer />
+    </div>
   );
 }
 
