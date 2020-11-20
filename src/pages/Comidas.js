@@ -16,5 +16,6 @@ const Comidas = () => {
       {location.pathname === '/comidas' ? <Footer /> : null}
     </section>
   );
+};
 
 export default Comidas;
