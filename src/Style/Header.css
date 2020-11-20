@@ -1,0 +1,14 @@
+.header {
+  align-items: center;
+  background-color: gray;
+  display: flex;
+  justify-content: space-between;
+}
+
+.button-search {
+  background-color: gray;
+  border:none;
+}
+
+.show {display:block}
+.hide {display:none}

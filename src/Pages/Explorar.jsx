@@ -1,13 +1,14 @@
 import React from 'react';
 import { Header, Footer } from '../Components';
 
-function Comidas() {
+function Explorar() {
   return (
     <div>
-      <Header pageName="Comidas" />
-      <h1>COmidas</h1>
+      <Header pageName="Explorar" />
+      <h1>Explorar</h1>
       <Footer />
     </div>
   );
 }
-export default Comidas;
+
+export default Explorar;
