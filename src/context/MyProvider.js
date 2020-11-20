@@ -12,6 +12,8 @@ function MyProvider({ children }) {
   const [alcoholic, setAlcoholic] = useState([]);
   const [drinkIngredients, setDrinkIngredients] = useState([]);
   const [glasses, setGlasses] = useState([]);
+  const [disable, setDisable] = useState(true);
+  const [user, setUser] = useState({ email: '' });
 
   useEffect(() => {
     async function fetchALL() {
@@ -42,6 +44,10 @@ function MyProvider({ children }) {
     alcoholic,
     drinkIngredients,
     glasses,
+    disable,
+    setDisable,
+    user,
+    setUser,
   };
 
   return (
