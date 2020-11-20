@@ -9,7 +9,6 @@ import {
   ComidasArea, ComidasDetalhes, ComidasIngredientes, ComidasProgresso,
   ExplorarBebidas, ExplorarComidas,
 } from './pages';
-import Footer from './components/Footer';
 import store from './redux/store';
 
 function App() {
