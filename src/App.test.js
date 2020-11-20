@@ -1,6 +1,8 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { cleanup, fireEvent, render } from '@testing-library/react';
+import renderWithRouter from './helpers/renderWithRouter'
 import Login from './Pages/Login'
+import App from './App'
 
 describe('2 - Crie todos os elementos que devem respeitar os atributos descritos no protótipo para a tela de login', () => {
   it('Tem os data-testids email-input, password-input e login-submit-btn', () => {
@@ -44,93 +46,79 @@ describe('5 - Desenvolva a tela de maneira que o formulário só seja válido ap
 
     expect(button).toBeDisabled();
 
-    fireEvent.change(emailInput, { target: { value: 'email@email' } })
+    fireEvent.change(emailInput, { target: { value: 'emailemail.com' } })
     fireEvent.change(passwordInput, { target: { value: '1234567' } })
 
-    expect(button).not.toBeDisabled();
-
-    // fireEvent.change(emailInput, { target: { value: 'email@email' } })
-    // fireEvent.change(passwordInput, { target: { value: '1234567' } })
-    
-
-    // cy.get('[data-testid="email-input"]').clear().type('email.com');
-
-    // cy.get('[data-testid="login-submit-btn"]').should('be.disabled');
+    expect(button).toBeDisabled();
   });
 
   it('O botão deve estar desativado se a senha deve tiver 6 caracteres ou menos', () => {
-    cy.visit('http://localhost:3000/');
+    const { getByTestId, getByText } = render(<Login/>);
+    const emailInput = getByTestId('email-input');
+    const passwordInput = getByTestId('password-input');
+    const button = getByTestId('login-submit-btn');
 
-    cy.get('[data-testid="login-submit-btn"]').should('be.disabled');
+    fireEvent.change(emailInput, { target: { value: 'email@email.com' } })
+    fireEvent.change(passwordInput, { target: { value: '1234' } })
 
-    cy.get('[data-testid="email-input"]').type('email@mail.com');
-    cy.get('[data-testid="password-input"]').type('123456');
-
-    cy.get('[data-testid="login-submit-btn"]').should('be.disabled');
+    expect(button).toBeDisabled();
   });
 
   it('O botão deve estar ativado se o email e a senha forem válidos', () => {
-    cy.visit('http://localhost:3000/');
+    const { getByTestId, getByText } = render(<Login/>);
+    const emailInput = getByTestId('email-input');
+    const passwordInput = getByTestId('password-input');
+    const button = getByTestId('login-submit-btn');
 
-    cy.get('[data-testid="login-submit-btn"]').should('be.disabled');
+    fireEvent.change(emailInput, { target: { value: 'email@email.com' } })
+    fireEvent.change(passwordInput, { target: { value: '12345678' } })
 
-    cy.get('[data-testid="email-input"]').type('email@mail.com');
-    cy.get('[data-testid="password-input"]').type('1234567');
-
-    cy.get('[data-testid="login-submit-btn"]').should('not.be.disabled');
+    expect(button).not.toBeDisabled();
   });
 });
 
-// describe('6 - Salve 2 tokens no localStorage após a submissão, identificados pelas chaves mealsToken e cocktailsToken', () => {
-//   it('Após a submissão mealsToken e cocktailsToken devem estar salvos em localStorage', () => {
-//     cy.visit('http://localhost:3000/', {
-//       onBeforeLoad(win) {
-//         win.localStorage.clear();
-//       },
-//     });
+describe('6 - Salve 2 tokens no localStorage após a submissão, identificados pelas chaves mealsToken e cocktailsToken', () => {
+  afterEach(() => { 
+    
+    localStorage.clear()
+  });
+  it('Após a submissão mealsToken e cocktailsToken devem estar salvos em localStorage', () => {
+    
+    const { getByTestId } = render(<App/>);
+    const emailInput = getByTestId('email-input');
+    const passwordInput = getByTestId('password-input');
+    const button = getByTestId('login-submit-btn');
 
-//     cy.get('[data-testid="login-submit-btn"]').should('be.disabled');
-//     cy.window().then((win) => {
-//       expect(win.localStorage.getItem('mealsToken')).to.be.null;
-//       expect(win.localStorage.getItem('cocktailsToken')).to.be.null;
-//     });
+    fireEvent.change(emailInput, { target: { value: 'email@email.com' } })
+    fireEvent.change(passwordInput, { target: { value: '12345678' } })
+    fireEvent.click(button)
 
+    expect(localStorage.getItem('mealsToken')).toBe("1");
+    expect(localStorage.getItem('cocktailsToken')).toBe("1");
+    cleanup()
+  });
 
-//     cy.get('[data-testid="email-input"]').type('email@mail.com');
-//     cy.get('[data-testid="password-input"]').type('1234567');
-//     cy.get('[data-testid="login-submit-btn"]').click();
+});
 
-//     cy.window().then((win) => {
-//       expect(win.localStorage.getItem('mealsToken')).to.eq('1');
-//       expect(win.localStorage.getItem('cocktailsToken')).to.eq('1');
-//       win.localStorage.clear();
-//     });
-//   });
-// });
+describe('7 - Salve o e-mail da pessoa usuária no localStorage na chave user após a submissão', () => {
+  afterEach(() => { 
 
-// describe('7 - Salve o e-mail da pessoa usuária no localStorage na chave user após a submissão', () => {
-//   it('Após a submissão a chave user deve estar salva em localStorage', () => {
-//     cy.visit('http://localhost:3000/', {
-//       onBeforeLoad(win) {
-//         win.localStorage.clear();
-//       },
-//     });
+  it('Após a submissão a chave user deve estar salva em localStorage', () => {
+    const { getByTestId } = render(<App/>);
+    const emailInput = getByTestId('email-input');
+    const passwordInput = getByTestId('password-input');
+    const button = getByTestId('login-submit-btn');
 
-//     cy.get('[data-testid="login-submit-btn"]').should('be.disabled');
-//     cy.window().then((win) => {
-//       expect(win.localStorage.getItem('user')).to.be.null;
-//     });
+    fireEvent.change(emailInput, { target: { value: 'email@email.com' } })
+    fireEvent.change(passwordInput, { target: { value: '12345678' } })
+    fireEvent.click(button)
 
+    const user = JSON.parse(localStorage.getItem('user'))
 
-//     cy.get('[data-testid="email-input"]').type('email@mail.com');
-//     cy.get('[data-testid="password-input"]').type('1234567');
-//     cy.get('[data-testid="login-submit-btn"]').click();
+    expect(user.email).toBe(emailInput.value);
+    });
+  });
 
-//     cy.window().then((win) => {
-//       expect(JSON.parse(win.localStorage.getItem('user'))).to.deep.eq({ email: 'email@mail.com' });
-//       win.localStorage.clear();
-//     });
-//   });
 // });
 
 // describe('8 - Redirecione a pessoa usuária para a tela principal de receitas de comidas após a submissão e validação com sucesso do login', () => {
