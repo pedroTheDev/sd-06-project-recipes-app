@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { Redirect } from 'react-router-dom';
-import SearchBar from '../components/SearchBar';
 import Context from '../context/Context';
 
 export default function Login() {
