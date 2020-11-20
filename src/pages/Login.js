@@ -29,6 +29,9 @@ export default function Login(props) {
   };
 
   const handleClick = () => {
+    localStorage.setItem('mealsToken', 1);
+    localStorage.setItem('cocktailsToken', 1);
+    localStorage.setItem('user', JSON.stringify({ email: login.email }));
     props.history.push('/comidas');
   };
 
@@ -59,5 +62,5 @@ export default function Login(props) {
 }
 
 Login.propTypes = {
-  history: PropTypes.arrayOf.isRequired,
+  history: PropTypes.func.isRequired,
 };
