@@ -1,6 +1,7 @@
 import React from 'react';
 import { Header, Footer } from '../Components';
 
+
 function ExplorarComidasArea() {
   return (
     <div>

@@ -19,6 +19,7 @@ import {
   ReceitasFavoritas,
 } from './Pages';
 
+
 function App() {
   return (
     <Switch>
