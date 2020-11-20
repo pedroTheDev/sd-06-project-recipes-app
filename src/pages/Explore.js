@@ -3,7 +3,7 @@ import Footer from '../components/Footer';
 
 function Explore() {
   return (
-    <div>
+    <div >
       <h1>Explore</h1>
       <Footer />
     </div>
