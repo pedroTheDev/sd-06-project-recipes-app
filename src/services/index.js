@@ -23,7 +23,8 @@ export const getDrinkAPIByName = async (name) => {
 };
 
 export const getDrinkAPIByFirstLetter = async (firstLetter) => {
-  const response = await fetch(`${baseAPIDrinks}${endPointDrinkFirstLetter}${firstLetter}`);
+  const response = await
+  fetch(`${baseAPIDrinks}${endPointDrinkFirstLetter}${firstLetter}`);
   const fetchDrinkByFirstLetter = await response.json();
   return fetchDrinkByFirstLetter;
 };
