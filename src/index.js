@@ -6,15 +6,15 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 import LoginProvider from './provider/LoginProvider';
-import HeaderProvider from './provider/HeaderProvider';
+import AppProvider from './provider/AppProvider';
 
 ReactDOM.render(
   <LoginProvider>
-    <HeaderProvider>
+    <AppProvider>
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </HeaderProvider>
+    </AppProvider>
   </LoginProvider>,
   document.getElementById('root'),
 );

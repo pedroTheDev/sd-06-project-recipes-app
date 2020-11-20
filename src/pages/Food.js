@@ -1,11 +1,11 @@
 import React, { useContext, useEffect } from 'react';
 import Header from '../components/Header';
-import HeaderContext from '../context/HeaderContext';
+import AppContext from '../context/AppContext';
 
 function Food() {
-  const { setHeader } = useContext(HeaderContext);
+  const { setHeader } = useContext(AppContext);
   useEffect(() => {
-    setHeader([true, 'Comidas', true]);
+    setHeader({ page: 'Comidas', search: true });
   }, []);
 
   return (

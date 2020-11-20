@@ -9,6 +9,20 @@
   font-family: sans-serif;
   color: #464646;
 }
+.search-bar {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.search-button {
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;
+  outline:none;
+}
 
 .header {
   display: flex;

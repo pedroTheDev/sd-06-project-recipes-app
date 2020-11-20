@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
+import Header from '../components/Header';
+import AppContext from '../context/AppContext';
 
 function ExploreByArea() {
+  const { setHeader } = useContext(AppContext);
+  useEffect(() => {
+    setHeader({ page: 'Explorar Origem', search: true });
+  }, []);
+
   return (
-    <div>ExploreByArea</div>
+    <div>
+      <Header />
+    </div>
   );
 }
 
