@@ -1,17 +1,18 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ContextRecipes from '../context/ContextRecipes';
-// import fetchAPIRecipes from '../services';
+import Card from './Card';
 
 function SearchBar(props) {
   const [renderRecipes, setRenderRecipes] = useState(false);
   const { fetchApi } = props;
   const {
-    setSelectedRadio, setSearchText, setIdRecipe, recipes, setRecipes,
+    setSelectedRadio, setSearchText, setIdRecipe, setRecipes, setTypeRecipe,
   } = useContext(ContextRecipes);
 
   const location = useLocation().pathname;
+
   const history = useHistory();
 
   const renderCards = (recipeApi) => {
@@ -30,6 +31,14 @@ function SearchBar(props) {
     }
   };
 
+  useEffect(() => {
+    if (location === '/comidas') {
+      setTypeRecipe('food');
+    } else {
+      setTypeRecipe('drink');
+    }
+  }, []);
+
   const handleClick = async () => {
     const selectedRadio = document.querySelector('input[name="search"]:checked').value;
     const inputSearch = document.querySelector('#search-input').value;
@@ -38,21 +47,11 @@ function SearchBar(props) {
     setSelectedRadio(selectedRadio);
     setRecipes(recipesApi);
     renderCards(recipesApi);
-    console.log('receitas:', recipesApi);
   };
 
   return (
     <div>
-      {renderRecipes ? recipes.map((recipe, index) => (
-        <div data-testid={ `${index}-recipe-card` } key={ index }>
-          <p data-testid={ `${index}-card-name` }>{recipe.strMeal}</p>
-          <img
-            data-testid={ `${index}-card-img` }
-            src={ recipe.strMealThumb }
-            alt="meal"
-          />
-        </div>
-      )) : null}
+      {renderRecipes ? <Card /> : null}
       <input type="text" data-testid="search-input" id="search-input" />
       <label htmlFor="ingredient">
         Ingrediente
