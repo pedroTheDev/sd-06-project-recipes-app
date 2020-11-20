@@ -21,22 +21,25 @@ import DrinkInProgress from './pages/DrinkInProgress';
 function App() {
   return (
     <Switch>
-      <Route path="/bebidas/:id/in-progress" component={DrinkInProgress} />
-      <Route path="/comidas/:id/in-progress" component={FoodInProgress} />
-      <Route path="/bebidas/:id" component={DrinkDetails} />
-      <Route path="/comidas/:id" component={FoodDetails} />
-      <Route path="/bebidas" component={Drink} />
-      <Route path="/comidas" component={Food} />
-      <Route path="/explorar/comidas/ingredientes" component={ExploreFoodIngredients} />
-      <Route path="/explorar/bebidas/ingredientes" component={ExploreDrinkIngredients} />
-      <Route path="/explorar/comidas/area" component={ExploreByArea} />
-      <Route path="/explorar/bebidas" component={ExploreDrinks} />
-      <Route path="/explorar/comidas" component={ExploreFoods} />
-      <Route path="/receitas-favoritas" component={FavoritesRecipes} />
-      <Route path="/receitas-feitas" component={FinishedRecipes} />
-      <Route path="/perfil" component={Profile} />
-      <Route path="/explorar" component={Explore} />
-      <Route path="/" component={Login} />
+      <Route path="/bebidas/:id/in-progress" component={ DrinkInProgress } />
+      <Route path="/comidas/:id/in-progress" component={ FoodInProgress } />
+      <Route path="/bebidas/:id" component={ DrinkDetails } />
+      <Route path="/comidas/:id" component={ FoodDetails } />
+      <Route path="/bebidas" component={ Drink } />
+      <Route path="/comidas" component={ Food } />
+      <Route path="/explorar/comidas/ingredientes" component={ ExploreFoodIngredients } />
+      <Route
+        path="/explorar/bebidas/ingredientes"
+        component={ ExploreDrinkIngredients }
+      />
+      <Route path="/explorar/comidas/area" component={ ExploreByArea } />
+      <Route path="/explorar/bebidas" component={ ExploreDrinks } />
+      <Route path="/explorar/comidas" component={ ExploreFoods } />
+      <Route path="/receitas-favoritas" component={ FavoritesRecipes } />
+      <Route path="/receitas-feitas" component={ FinishedRecipes } />
+      <Route path="/perfil" component={ Profile } />
+      <Route path="/explorar" component={ Explore } />
+      <Route path="/" component={ Login } />
     </Switch>
   );
 }

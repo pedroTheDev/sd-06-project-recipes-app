@@ -10,7 +10,7 @@ function LoginProvider({ children }) {
   };
 
   return (
-    <LoginContext.Provider value={{ contextValue }}>
+    <LoginContext.Provider value={ { contextValue } }>
       {children}
     </LoginContext.Provider>
   );

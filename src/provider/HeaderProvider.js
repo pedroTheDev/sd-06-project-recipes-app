@@ -6,7 +6,7 @@ function HeaderProvider({ children }) {
   const [header, setHeader] = useState([true, '', true]);
 
   return (
-    <HeaderContext.Provider value={{ header, setHeader }}>
+    <HeaderContext.Provider value={ { header, setHeader } }>
       {children}
     </HeaderContext.Provider>
   );
