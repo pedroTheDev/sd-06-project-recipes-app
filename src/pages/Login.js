@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -8,7 +9,9 @@ function Login() {
   const passIsValid = /^.{7,}$/.test(password);
 
   const handleClick = () => {
-    localStorage.setItem('mealToken', 1);
+    const objEmail = { email };
+    localStorage.setItem('user', JSON.stringify(objEmail));
+    localStorage.setItem('mealsToken', 1);
     localStorage.setItem('cocktailsToken', 1);
   };
 
@@ -34,14 +37,16 @@ function Login() {
           onChange={({ target }) => setPassword(target.value)}
         />
       </label>
-      <button
-        type="button"
-        disabled={!emailIsValid || !passIsValid}
-        data-testid="login-submit-btn"
-        onClick={handleClick}
-      >
-        Entrar
-      </button>
+      <Link to="/comidas">
+        <button
+          type="submit"
+          disabled={!emailIsValid || !passIsValid}
+          data-testid="login-submit-btn"
+          onClick={handleClick}
+        >
+          Entrar
+        </button>
+      </Link>
     </form>
   );
 }

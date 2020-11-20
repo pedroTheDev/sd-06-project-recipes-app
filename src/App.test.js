@@ -10,8 +10,9 @@ import App from './App';
 //   expect(linkElement).toBeInTheDocument();
 // });
 
+afterEach(cleanup);
+
 describe('Tela de Login - todos os elementos devem respeitar os atributos', () => {
-  beforeEach(cleanup);
 
   it('O input email deve possuir o atributo data-testid correto', () => {
     const { getByTestId } = renderWithRouter(<App />);
@@ -26,7 +27,6 @@ describe('Tela de Login - todos os elementos devem respeitar os atributos', () =
 });
 
 describe('Tela de Login - Formulario só será valido se ambos email e senha sejam validos', () => {
-  beforeEach(cleanup);
 
   it('O botão deve estar desativado se o email for invalido', () => {
     const { getByTestId } = renderWithRouter(<App />);
@@ -72,4 +72,40 @@ describe('Tela de Login - Formulario só será valido se ambos email e senha sej
     userEvent.type(password, 'jdu46ac');
     expect(button).toBeEnabled();
   });
-})
+});
+
+describe('Tela de Login - Salvar o email no LocalStorage', () => {
+  afterEach(cleanup);
+
+  it('Após a click, o email deve ser salvo na chave user no formato { email: email-da-pessoa }', () => {
+    const { getByTestId } = renderWithRouter(<App />);
+    const email = getByTestId('email-input');
+    const password = getByTestId('password-input');
+    const button = getByTestId('login-submit-btn');
+
+    userEvent.type(email, 'requisito7@semcriatividade.com');
+    userEvent.type(password, 'Piadas2k20');
+    fireEvent.click(button);
+
+    const local = localStorage.getItem('user');
+
+    expect(JSON.parse(local)).toMatchObject({email: 'requisito7@semcriatividade.com'});
+  });
+});
+
+// describe('Tela de Login - Após a validaçao do login, redirecione o usuario para a pagina de receitas', () => {
+  
+//   it('A rota deve mudar quando clickar no botão, e o caminho deve ser /comidas', () => {
+//     const { getByTestId, history } = renderWithRouter(<App />);
+
+//     const email = getByTestId('email-input');
+//     const password = getByTestId('password-input');
+//     const button = getByTestId('login-submit-btn');
+
+//     userEvent.type(email, 'requisito8@brabo.com');
+//     userEvent.type(password, 'CriatividadeEmFalta');
+//     fireEvent.click(button);
+
+//     expect(history.location.pathname).toBe('/comidas');
+//   });
+// });
