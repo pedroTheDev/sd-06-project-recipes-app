@@ -40,7 +40,8 @@ class Login extends React.Component {
     const { email, password } = this.state;
     const validator = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
     const isValid = validator.test(String(email).toLowerCase());
-    if (password.length > 5) {
+    const five = 5;
+    if (password.length > five) {
       this.setState({ validPassword: true });
     } else {
       this.setState({ validPassword: false });
@@ -73,8 +74,8 @@ class Login extends React.Component {
                 type="text"
                 required
                 name="email"
-                value={email}
-                onChange={this.changeHandler}
+                value={ email }
+                onChange={ this.changeHandler }
               />
             </label>
             <label htmlFor="password">
@@ -84,15 +85,15 @@ class Login extends React.Component {
                 type="password"
                 required
                 name="password"
-                value={password}
-                onChange={this.changeHandler}
+                value={ password }
+                onChange={ this.changeHandler }
               />
             </label>
             <button
               type="submit"
               data-testid="login-submit-btn"
-              onClick={this.handleSubmit}
-              disabled={!validEmail || !validPassword}
+              onClick={ this.handleSubmit }
+              disabled={ !validEmail || !validPassword }
             >
               ACESSAR!
             </button>

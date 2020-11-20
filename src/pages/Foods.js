@@ -9,8 +9,8 @@ class Foods extends React.Component {
     return (
       <div>
         <h1 data-testid="Foods-title">
-          <Header history={history} />
-          <Footer history={history} />
+          <Header history={ history } />
+          <Footer history={ history } />
         </h1>
       </div>
     );

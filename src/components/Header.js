@@ -12,9 +12,14 @@ class Header extends React.Component {
       h1: 'Comidas',
       searchInput: false,
     };
+    this.ajustingStatesWithH1 = this.ajustingStatesWithH1.bind(this);
   }
 
   componentDidMount() {
+    this.ajustingStatesWithH1();
+  }
+
+  ajustingStatesWithH1() {
     const { history: { location: { pathname } } } = this.props;
     if (pathname === '/bebidas') {
       this.setState({
@@ -54,13 +59,25 @@ class Header extends React.Component {
     const { history: { location: { pathname } } } = this.props;
     return (
       <header>
-        <input src={profileIcon} type="image" alt="bla" data-testid="profile-top-btn" onClick={() => history.push('/perfil')} />
+        <input
+          src={ profileIcon }
+          type="image"
+          alt="bla"
+          data-testid="profile-top-btn"
+          onClick={ () => history.push('/perfil') }
+        />
         <h1 data-testid="page-title">{h1}</h1>
         {(pathname !== ('/explorar')
           && pathname !== ('/perfil')
           && pathname !== ('/receitas-feitas')
           && pathname !== ('/receitas-favoritas'))
-          && <input src={searchIcon} type="image" alt="bla" data-testid="search-top-btn" onClick={() => this.setState({ searchInput: !searchInput })} />}
+          && <input
+            src={ searchIcon }
+            type="image"
+            alt="bla"
+            data-testid="search-top-btn"
+            onClick={ () => this.setState({ searchInput: !searchInput }) }
+          />}
         { searchInput && <SearchInput /> }
       </header>
     );

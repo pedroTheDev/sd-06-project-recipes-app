@@ -7,13 +7,13 @@ import {
 function App() {
   return (
     <Switch>
-      <Route exact path="/" component={Login} />
-      <Route path="/comidas" component={Foods} />
-      <Route path="/bebidas" component={Drinks} />
-      <Route path="/explorar" component={Explore} />
-      <Route path="/perfil" component={Profile} />
-      <Route path="/receitas-feitas" component={DoneRecipes} />
-      <Route path="/receitas-favoritas" component={FavoriteRecipes} />
+      <Route exact path="/" component={ Login } />
+      <Route path="/comidas" component={ Foods } />
+      <Route path="/bebidas" component={ Drinks } />
+      <Route path="/explorar" component={ Explore } />
+      <Route path="/perfil" component={ Profile } />
+      <Route path="/receitas-feitas" component={ DoneRecipes } />
+      <Route path="/receitas-favoritas" component={ FavoriteRecipes } />
     </Switch>
   );
 }
