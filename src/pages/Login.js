@@ -14,18 +14,17 @@ function Login(props) {
   const { password, email } = state;
 
   // const mealEndPoint = 'https://www.themealdb.com/api.php';
-  // const cocktailsEndPoint = 'https://www.thecocktaildb.com/api.php';
 
   // const fetch = async (endPoint) => {
   //   const APIdata = await fetch(endPoint);
   //   const response = await APIdata.json();
-  //   console.log(response);
+  //   console.log('response', response);
   // };
 
   // useEffect(() => {
-  //   const fetchApi = async () => {
-  //     await fetch(mealEndPoint);
-  //   };
+  //   async function fetchApi() {
+  //     fetch(mealEndPoint);
+  //   }
   //   fetchApi();
   // },
   // []);
@@ -48,11 +47,18 @@ function Login(props) {
     setState({ ...state, [target.name]: target.value });
   };
 
-  const sendEmail = () => {
+  const setLocalStorageData = () => {
+    localStorage.setItem('mealToken', '1');
+    localStorage.setItem('cocktailsToken', '1');
+    localStorage.setItem('user', JSON.stringify({ email: state.email }));
+  };
+
+  const handleSubmit = () => {
     const {
       dispatchEmail, history,
     } = props;
     dispatchEmail(email);
+    setLocalStorageData();
     history.push('/jogo');
   };
 
@@ -85,7 +91,7 @@ function Login(props) {
             type="button"
             data-testid="login-submit-btn"
             disabled={isDisable}
-            onClick={() => sendEmail()}
+            onClick={() => handleSubmit()}
           >
             Entrar
           </button>
