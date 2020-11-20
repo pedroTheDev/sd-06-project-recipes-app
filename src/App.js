@@ -9,8 +9,8 @@ function App() {
     <MyProvider>
       <BrowserRouter>
         <Switch>
-          <Route exact path="/" component={Login} />
-          <Route exact path="/comidas" component={Comidas} />
+          <Route exact path="/" component={ Login } />
+          <Route exact path="/comidas" component={ Comidas } />
         </Switch>
       </BrowserRouter>
     </MyProvider>
