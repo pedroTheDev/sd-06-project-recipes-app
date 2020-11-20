@@ -20,7 +20,7 @@ describe('test LoginPage', () => {
     expect(password).toBeInTheDocument();
     expect(loginButton).toBeInTheDocument();
     expect(loginButton.innerText).toBe('Entrar');
-    expect(loginButton.disabled).toBe(true);
+    expect(loginButton.disabled).toBe(true)
     fireEvent.change(emailInput, { target: {value: 'p$'}});
     expect(loginButton.disabled).toBe(true);
     fireEvent.change(emailInput, { target: {value: 'paulo.'}});
