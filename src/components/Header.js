@@ -8,7 +8,7 @@ class Header extends React.Component {
   constructor() {
     super();
     this.state = {
-      h1: 'Comidas',
+      h1: '',
       searchInput: false,
     };
     this.ajustingStatesWithH1 = this.ajustingStatesWithH1.bind(this);
