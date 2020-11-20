@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Redirect } from 'react-router-dom';
 import Context from '../context/Context';
 
 export default function Login() {
@@ -23,8 +24,19 @@ export default function Login() {
     inputValidate();
   };
 
+  const handleSubmit = () => {
+    const user = {
+      email: login.email,
+    };
+    console.log('aaaaaa');
+    localStorage.setItem('mealsToken', 1);
+    localStorage.setItem('cocktailsToken', 1);
+    localStorage.setItem('user', JSON.stringify(user));
+    setLogin({ ...login, redirect: true });
+  };
   return (
     <div>
+      {login.redirect ? <Redirect to="/comidas" /> : null}
       <label>
         E-mail
         <input
@@ -47,6 +59,7 @@ export default function Login() {
         type="button"
         disabled={disabled}
         data-testid="login-submit-btn"
+        onClick={() => handleSubmit()}
       >
         Entrar
       </button>
