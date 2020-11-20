@@ -1,12 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import SearchBar from '../components/SearchBar';
+import Header from '../components/Header';
 
-function RecipeFood() {
+function Home({ title }) {
+  const [isSearching, setSearch] = useState(false);
+
   return (
     <div>
-      <SearchBar />
+      <div>
+        <Header
+          setSearch={ setSearch }
+          isSearching={ isSearching }
+          title={ title }
+        />
+      </div>
+      { isSearching && <SearchBar /> }
     </div>
   );
 }
 
-export default RecipeFood;
+Home.propTypes = {
+  title: PropTypes.string.isRequired,
+};
+
+export default Home;

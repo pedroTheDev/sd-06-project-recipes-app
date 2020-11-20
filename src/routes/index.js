@@ -22,7 +22,7 @@ function Routes() {
   return (
     <Switch>
       <Route path="/" exact component={ Login } />
-      <Route path="/comidas" exact render={ () => <Home /> } />
+      <Route path="/comidas" exact render={ () => <Home title="Comidas" /> } />
       <Route path="/bebidas" exact component={ RecipeDrink } />
       <Route path="/comidas/:id" exact component={ RecipeFoodDetails } />
       <Route path="/bebidas/:id" exact component={ RecipeDrinkDetails } />
