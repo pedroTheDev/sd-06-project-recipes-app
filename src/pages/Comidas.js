@@ -8,7 +8,7 @@ const Comidas = () => {
 
   return (
     <section>
-      <Header title="Comidas" searchBtn={ true } />
+      <Header title="Comidas" searchBtn />
       {searchBox && <SearchBar />}
     </section>
   );
