@@ -23,13 +23,13 @@ export default function SearchBar() {
           <input type="radio" value="nome" data-testid="name-search-radio" />
         </label>
         <label htmlFor="primeira letra">
+          Primeira Letra
           <input
             id="nome"
             type="radio"
             value="primeira letra"
             data-testid="first-letter-search-radio"
           />
-          Primeira Letra
         </label>
       </form>
       <button type="button" data-testid="exec-search-btn">Executa Busca</button>
