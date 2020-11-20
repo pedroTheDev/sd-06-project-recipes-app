@@ -35,7 +35,7 @@ function App() {
           <Route exact path="/explorar/bebidas" component={ ExplorarBebidas } />
           <Route exact path="/receitas-feitas" component={ ReceitasFeitas } />
           <Route exact path="/receitas-favoritas" component={ ReceitasFavoritas } />
-          <Route exact path="/perfil" component={Perfil} />
+          <Route exact path="/perfil" component={ Perfil } />
 
         </Switch>
       </BrowserRouter>
