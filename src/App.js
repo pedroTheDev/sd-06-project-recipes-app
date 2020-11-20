@@ -27,12 +27,10 @@ function App() {
         <Route exact path="/explorar/comidas" component={ ExploreFood } />
         <Route exact path="/explorar/bebidas" component={ ExploreDrink } />
         <Route
-          exact
           path="/explorar/comidas/ingredientes"
           component={ ExploreFoodIngredients }
         />
         <Route
-          exact
           path="/explorar/bebidas/ingredientes"
           component={ ExploreDrinkIngredients }
         />
