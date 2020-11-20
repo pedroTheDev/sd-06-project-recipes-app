@@ -1,4 +1,5 @@
 import React from 'react';
+import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
 
 const Explorar = () => (
@@ -9,6 +10,7 @@ const Explorar = () => (
     <Link to="/explorar/bebidas" data-testid="explore-drinks">
       <span>Explorar Bebidas</span>
     </Link>
+    <Footer />
   </div>
 );
 
