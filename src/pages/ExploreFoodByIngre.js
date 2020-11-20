@@ -1,14 +1,11 @@
 import React from 'react';
-import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-function Explore() {
+export default function ExploreFoodByIngre() {
   return (
     <div>
-      <Header />
+      hello world
       <Footer />
     </div>
   );
 }
-
-export default Explore;

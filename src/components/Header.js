@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import SearchBar from './SearchBar';
 
 function HeaderFood() {
   const path = window.location.pathname;
@@ -33,9 +34,13 @@ function HeaderFood() {
 
   return (
     <div>
-      <Link to="/perfil"><img data-testid="profile-top-btn" src={profileIcon} alt="profile" /></Link>
+      <Link to="/perfil">
+        <img data-testid="profile-top-btn" src={ profileIcon } alt="profile" />
+      </Link>
       <h1 data-testid="page-title">{title}</h1>
-      { searchIconShow ? <img data-testid="search-top-btn" src={searchIcon} alt="search" /> : null}
+      { searchIconShow
+        ? <img data-testid="search-top-btn" src={ searchIcon } alt="search" /> : null}
+      <SearchBar />
     </div>
   );
 }
