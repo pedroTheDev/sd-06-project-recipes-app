@@ -12,12 +12,24 @@ export default function RecipesProvider({ children }) {
     password: '',
   });
   const [isValid, setValid] = useState(true);
+  const [radioValue, setRadioValue] = useState('');
+  const [searchBar, setSearchBar] = useState('');
+  const [returnFoodApi, setReturnFoodAPi] = useState([]);
+  const [returnDrinkApi, setReturnDrinkAPi] = useState([]);
 
   const context = {
     login,
     setLogin,
     isValid,
     setValid,
+    radioValue,
+    setRadioValue,
+    searchBar,
+    setSearchBar,
+    returnFoodApi,
+    setReturnFoodAPi,
+    returnDrinkApi,
+    setReturnDrinkAPi,
   };
 
   return (
