@@ -5,4 +5,15 @@
   top: 0px;
   border-radius: 0px;
   background: #C4C4C4;
+  display: flex;
+}
+
+.perfil-icon {
+  margin-top: 12px;
+  margin-left: 12px;
+}
+
+.header-title {
+  margin-left: 100px;
+  margin-top: 10px;
 }
