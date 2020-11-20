@@ -5,8 +5,10 @@ import './Drink.css';
 
 function Drink() {
   const [drinks, setDrinks] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+  const urlCategories = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
 
   useEffect(() => {
     const fecthDrinks = async () => {
@@ -17,16 +19,36 @@ function Drink() {
       }
     };
     fecthDrinks();
+
+    const fecthCategory = async () => {
+      const APIRequestCategory = await fetch(urlCategories);
+      const APIResponseCategory = await APIRequestCategory.json();
+      if (APIResponseCategory !== null) {
+        setCategories(APIResponseCategory.drinks);
+      }
+    };
+    fecthCategory();
   }, []);
 
-  const firstMeal = 0;
+  const firstDrink = 0;
   const limitDrink = 12;
+  const limitCategory = 5;
 
   return (
     <div className="drink-container">
       <Header title="Bebidas" />
       {
-        drinks.slice(firstMeal, limitDrink).map((drink, id) => (
+        categories.slice(firstDrink, limitCategory).map((category, id) => (
+          <button
+            data-testid={ `${category.strCategory}-category-filter` }
+            key={ id }
+            type="button"
+          >
+            {category.strCategory}
+          </button>))
+      }
+      {
+        drinks.slice(firstDrink, limitDrink).map((drink, id) => (
           <div className="recipe-card" key={ id } data-testid={ `${id}-recipe-card` }>
             <img
               className="card-img"
