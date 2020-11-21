@@ -23,11 +23,11 @@ export default class Router extends React.Component {
           path="/bebidas"
           component={ Drinks }
         />
-        {/* <Route
+        <Route
           exact
           path="/comidas/:id-da-receita"
           component={ Foods }
-        /> */}
+        />
         {/* <Route
           exact
           path="/bebidas/:id-da-receita"

@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 
-export default function useSearch(props) {
+export default function useSearch() {
   const [filters, setFilters] = useState({
     searchText: '',
     searchType: '',
-    category: '',
+    category: 'food',
   });
   const [results, setResults] = useState();
 
@@ -33,7 +33,6 @@ export default function useSearch(props) {
     async function initSearch() {
       const dataJson = await fetch(`${api + endpoint}`);
       const data = await dataJson.json();
-      console.log(data);
       setResults(data);
     }
 

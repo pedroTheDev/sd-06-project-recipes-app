@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import useSearch from '../hooks/useSearch';
 
 export default function SearchBar(props) {
+  const { id } = props;
   const [searchOptions, setSearchOptions] = useState({
     searchText: '',
     searchType: '',
-    category: props.id,
+    category: id,
   });
 
   const [, setFilters] = useSearch();
@@ -80,3 +82,7 @@ export default function SearchBar(props) {
     </form>
   );
 }
+
+SearchBar.propTypes = {
+  id: PropTypes.string.isRequired,
+};
