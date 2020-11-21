@@ -5,6 +5,7 @@ import profileImage from '../images/profileIcon.svg';
 import searchButton from '../images/searchIcon.svg';
 import FetchApiBebidas from '../services/FetchApiBebidas';
 import FetchApiComidas from '../services/FetchApiComidas';
+import RecipesContext from '../context/RecipeContext';
 
 function Header({ title }) {
   const [enableSearch, setEnableSearch] = useState(false);
@@ -22,7 +23,7 @@ function Header({ title }) {
   const handleRadioClick = ({ target }) => {
     setValueRadioButton(target.value);
   };
-  const searchPrimeiraLetra = async () => {
+  const searchRadioButton = async () => {
     if (valueRadioButton === 'primeira-letra' && searchBar.length > 1) {
       alert('Sua busca deve conter somente 1 (um) caracter');
     }
@@ -65,7 +66,7 @@ function Header({ title }) {
           data-testid="ingredient-search-radio"
           type="radio"
           id="ingrediente"
-          value="ingrediente"
+          value="1"
           name="busca"
         />
         Ingrediente
@@ -76,7 +77,7 @@ function Header({ title }) {
           data-testid="name-search-radio"
           type="radio"
           id="nome"
-          value="nome"
+          value="2"
           name="busca"
         />
         Nome
@@ -87,14 +88,14 @@ function Header({ title }) {
           data-testid="first-letter-search-radio"
           type="radio"
           id="primeira-letra"
-          value="primeira-letra"
+          value="3"
           name="busca"
         />
         Primeira Letra
       </label>
       <br />
       <button
-        onClick={ searchPrimeiraLetra }
+        onClick={ searchRadioButton }
         data-testid="exec-search-btn"
         type="button"
       >
