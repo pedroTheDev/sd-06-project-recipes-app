@@ -54,7 +54,7 @@ function DrinkInProgress({ pageType }) {
     };
 
     updateFavoriteRecipes(favoriteMeal, recipeIsFavorited);
-  }, [id, currentlyCooking, updateFavoriteRecipes, recipeIsFavorited]);
+  }, [id, currentlyCooking, pageType, updateFavoriteRecipes, recipeIsFavorited]);
 
   const drinkIngredients = useMemo(() => {
     const ingredients = (
@@ -96,7 +96,7 @@ function DrinkInProgress({ pageType }) {
     const itemIndex = target.value;
 
     updateRecipeProgress(pageType, id, itemIndex);
-  }, [updateRecipeProgress, id]);
+  }, [updateRecipeProgress, id, pageType]);
 
   const currentProgress = useMemo(() => {
     const accessKey = 'cocktails';
@@ -124,7 +124,7 @@ function DrinkInProgress({ pageType }) {
     finalizeRecipe(pageType, id);
 
     push('/receitas-feitas');
-  }, [id, finalizeRecipe]);
+  }, [id, finalizeRecipe, pageType]);
 
   return (
     <div className="recipe-details-page">

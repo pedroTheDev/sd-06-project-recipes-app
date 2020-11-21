@@ -94,7 +94,7 @@ function useSearch() {
 export { SearchProvider, useSearch };
 
 SearchProvider.propTypes = {
-  children: PropTypes.oneOf([
+  children: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.func,
   ]).isRequired,

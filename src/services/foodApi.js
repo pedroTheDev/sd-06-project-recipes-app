@@ -5,6 +5,7 @@ const NAME_KEY = 'search.php?s'; // search bar
 const FIRST_LETTER_KEY = 'search.php?f'; // search bar
 const FILTER_INGREDIENTS_KEY = 'filter.php?i'; // search bar
 const FILTER_CATEGORIES_KEY = 'filter.php?c';
+const RANDOM = 'random.php';
 
 const ID_KEY = 'lookup.php?i';
 // const INGREDIENTS_KEY = 'i';
@@ -62,4 +63,16 @@ export async function fetchMealDetails(mealID, token) {
   const mealDetails = meals[0];
 
   return mealDetails;
+}
+
+export async function fetchRandomMeal(token) {
+  const urlToFetch = `${baseURL}/${token}/${RANDOM}`;
+
+  const data = await fetch(urlToFetch);
+  const { meals } = await data.json();
+
+  const randomMeal = meals[0];
+  const { idMeal } = randomMeal;
+
+  return [idMeal, randomMeal];
 }

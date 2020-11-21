@@ -24,7 +24,7 @@ function AppProvider({ children }) {
 }
 
 AppProvider.propTypes = {
-  children: PropTypes.oneOf([
+  children: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.func,
   ]).isRequired,

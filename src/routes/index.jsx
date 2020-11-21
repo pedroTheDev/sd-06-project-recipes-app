@@ -12,6 +12,7 @@ import Profile from '../pages/Profile';
 import DoneRecipes from '../pages/DoneRecipes';
 import Explore from '../pages/Explore';
 import Favorites from '../pages/Favorites';
+import ExploreRecipes from '../pages/ExploreRecipes';
 
 function Routes() {
   return (
@@ -26,7 +27,9 @@ function Routes() {
       <Route path="/receitas-feitas" component={DoneRecipes} />
       <Route path="/perfil" component={Profile} />
       <Route path="/receitas-favoritas" component={Favorites} />
-      <Route path="/explorar" component={Explore} />
+      <Route path="/explorar" exact component={Explore} />
+      <Route path="/explorar/bebidas" render={() => <ExploreRecipes pageType="Bebidas" />} />
+      <Route path="/explorar/comidas" render={() => <ExploreRecipes pageType="Comidas" />} />
     </Switch>
   );
 }

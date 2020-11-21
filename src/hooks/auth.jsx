@@ -72,7 +72,7 @@ function useAuth() {
 export { AuthProvider, useAuth };
 
 AuthProvider.propTypes = {
-  children: PropTypes.oneOf([
+  children: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.func,
   ]).isRequired,

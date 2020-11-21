@@ -39,7 +39,7 @@ function Drinks({ pageType }) {
 
     updateFilteredRecipes(pageType, category);
     setFilterSelected(category);
-  }, [updateFilteredRecipes, pageType, filterSelected, appSearch]);
+  }, [updateFilteredRecipes, infoSearched, pageType, filterSelected, appSearch]);
 
   const currentDrinkRecipes = useMemo(() => {
     if (filterSelected === 'all') {
@@ -47,9 +47,12 @@ function Drinks({ pageType }) {
     }
 
     return currentFilteredRecipes[pageType];
-  }, [currentRecipes, currentFilteredRecipes, filterSelected]);
+  }, [currentRecipes, currentFilteredRecipes, filterSelected, pageType]);
 
-  const currentDrinkFilters = useMemo(() => currentFilters[pageType], [currentFilters]);
+  const currentDrinkFilters = useMemo(
+    () => currentFilters[pageType],
+    [currentFilters, pageType],
+  );
 
   return (
     <div className="drinks-page">

@@ -39,7 +39,7 @@ function Foods({ pageType }) {
 
     updateFilteredRecipes(pageType, category);
     setFilterSelected(category);
-  }, [updateFilteredRecipes, pageType, appSearch, filterSelected]);
+  }, [updateFilteredRecipes, pageType, infoSearched, appSearch, filterSelected]);
 
   const currentFoodRecipes = useMemo(() => {
     if (filterSelected === 'all') {
@@ -47,8 +47,12 @@ function Foods({ pageType }) {
     }
 
     return currentFilteredRecipes[pageType];
-  }, [currentRecipes, currentFilteredRecipes, filterSelected]);
-  const currentFoodFilters = useMemo(() => currentFilters[pageType], [currentFilters]);
+  }, [currentRecipes, currentFilteredRecipes, filterSelected, pageType]);
+
+  const currentFoodFilters = useMemo(
+    () => currentFilters[pageType],
+    [currentFilters, pageType],
+  );
 
   return (
     <div className="foods-page">

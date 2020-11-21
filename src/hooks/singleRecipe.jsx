@@ -3,8 +3,8 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 
-import { fetchDrinkDetails, fetchDrinksSearch } from '../services/drinksApi';
-import { fetchMealDetails, fetchMealsSearch } from '../services/foodApi';
+import { fetchDrinkDetails, fetchDrinksSearch, fetchRandomDrink } from '../services/drinksApi';
+import { fetchMealDetails, fetchMealsSearch, fetchRandomMeal } from '../services/foodApi';
 import { useAuth } from './auth';
 
 const singleRecipeStructure = {
@@ -26,6 +26,11 @@ const fetchSinglesOptions = {
 const fetchRecommendationsOptions = {
   Comidas: fetchMealsSearch,
   Bebidas: fetchDrinksSearch,
+};
+
+const fetchRandomOptions = {
+  Comidas: fetchRandomMeal,
+  Bebidas: fetchRandomDrink,
 };
 
 function invertType(type) {
@@ -53,10 +58,13 @@ const singleRecipeContext = createContext();
 function SingleRecipeProvider({ children }) {
   const [currentFocusedRecipes, setCurrentFocusedRecipes] = useState(singleRecipeStructure);
   const [loadingSingleRecipe, setLoadingSingleRecipe] = useState(true);
+  const [randomRedirect, setRandomRedirect] = useState(false);
 
   const { userToken } = useAuth();
 
   const loadSingleRecipe = useCallback(async (type, recipeID) => {
+    if (randomRedirect) return;
+
     const loadRecipe = fetchSinglesOptions[type];
     const invertedType = invertType(type);
     const loadRecommendations = fetchRecommendationsOptions[invertedType];
@@ -81,13 +89,55 @@ function SingleRecipeProvider({ children }) {
     } finally {
       setLoadingSingleRecipe(false);
     }
+  }, [userToken, randomRedirect]);
+
+  const loadRandomRecipe = useCallback(async (type) => {
+    setLoadingSingleRecipe(true);
+
+    const leadRandomRecipe = fetchRandomOptions[type];
+    const invertedType = invertType(type);
+    const loadRecommendations = fetchRecommendationsOptions[invertedType];
+
+    let randomID;
+    let recipe;
+
+    try {
+      [randomID, recipe] = await leadRandomRecipe(userToken);
+
+      let recommendations = await loadRecommendations(recommendationsDefault[invertedType]);
+
+      const REC_LIMIT = 6;
+      recommendations = recommendations.filter((_, index) => index < REC_LIMIT);
+
+      setRandomRedirect(true);
+
+      setCurrentFocusedRecipes((oldFocused) => ({
+        ...oldFocused,
+        [type]: {
+          recipe,
+          recommendations,
+        },
+      }));
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoadingSingleRecipe(false);
+    }
+
+    return randomID;
   }, [userToken]);
+
+  const unloadRandom = useCallback(() => {
+    setRandomRedirect(false);
+  }, []);
 
   return (
     <singleRecipeContext.Provider value={{
       currentFocusedRecipes,
       loadingSingleRecipe,
       loadSingleRecipe,
+      loadRandomRecipe,
+      unloadRandom,
     }}
     >
       {children}
@@ -108,7 +158,7 @@ function useSingleRecipe() {
 export { SingleRecipeProvider, useSingleRecipe };
 
 SingleRecipeProvider.propTypes = {
-  children: PropTypes.oneOf([
+  children: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.func,
   ]).isRequired,

@@ -15,7 +15,7 @@ function Profile() {
     signOut();
 
     push('/');
-  }, [signOut]);
+  }, [signOut, push]);
 
   return (
     <div className="profile-page">

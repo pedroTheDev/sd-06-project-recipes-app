@@ -150,7 +150,7 @@ function useCook() {
 export { CookProvider, useCook };
 
 CookProvider.propTypes = {
-  children: PropTypes.oneOf([
+  children: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.func,
   ]).isRequired,

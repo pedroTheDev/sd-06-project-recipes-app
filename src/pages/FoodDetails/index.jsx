@@ -16,7 +16,7 @@ function FoodDetails({ pageType }) {
   const [copiedLink, setCopiedLink] = useState(false);
 
   const {
-    currentFocusedRecipes, loadSingleRecipe, loadingSingleRecipe,
+    currentFocusedRecipes, loadSingleRecipe, loadingSingleRecipe, unloadRandom,
   } = useSingleRecipe();
 
   const { id } = useParams();
@@ -29,7 +29,9 @@ function FoodDetails({ pageType }) {
 
   useEffect(() => {
     loadSingleRecipe(pageType, id);
-  }, [id]);
+
+    return unloadRandom;
+  }, [id, loadSingleRecipe]);
 
   const handleShareClick = useCallback(() => {
     document.execCommand('copy', false, id);
@@ -39,12 +41,12 @@ function FoodDetails({ pageType }) {
 
   const foodDetails = useMemo(
     () => currentFocusedRecipes[pageType].recipe,
-    [currentFocusedRecipes],
+    [currentFocusedRecipes, pageType],
   );
 
   const foodRecommendations = useMemo(
     () => currentFocusedRecipes[pageType].recommendations,
-    [currentFocusedRecipes],
+    [currentFocusedRecipes, pageType],
   );
 
   const foodIngredients = useMemo(() => {
@@ -89,7 +91,7 @@ function FoodDetails({ pageType }) {
     const recipeStarted = recipesProgress[accessKey][id];
 
     return recipeStarted;
-  }, [cookedRecipes, id]);
+  }, [cookedRecipes, id, recipesProgress]);
 
   const recipeHasBeenFinished = useMemo(() => {
     const recipeHasFinished = doneRecipes.find((recipe) => recipe.id === id);
@@ -99,7 +101,7 @@ function FoodDetails({ pageType }) {
 
   const handleStartCooking = useCallback(() => {
     startCooking(pageType, foodDetails);
-  }, [startCooking, foodDetails]);
+  }, [startCooking, foodDetails, pageType]);
 
   const recipeIsFavorited = useMemo(() => {
     const recipeInFavorites = favoriteRecipes.find((recipe) => recipe.id === id);
@@ -119,7 +121,7 @@ function FoodDetails({ pageType }) {
     };
 
     updateFavoriteRecipes(favoriteMeal, recipeIsFavorited);
-  }, [id, foodDetails, updateFavoriteRecipes, recipeIsFavorited]);
+  }, [id, pageType, foodDetails, updateFavoriteRecipes, recipeIsFavorited]);
 
   if (loadingSingleRecipe) {
     return (

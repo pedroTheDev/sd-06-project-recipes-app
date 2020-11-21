@@ -132,7 +132,7 @@ function useRecipes() {
 export { RecipeProvider, useRecipes };
 
 RecipeProvider.propTypes = {
-  children: PropTypes.oneOf([
+  children: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.func,
   ]).isRequired,

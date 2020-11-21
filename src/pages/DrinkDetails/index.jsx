@@ -15,7 +15,9 @@ import whiteHeart from '../../images/whiteHeartIcon.svg';
 function DrinkDetails({ pageType }) {
   const [copiedLink, setCopiedLink] = useState(false);
 
-  const { currentFocusedRecipes, loadSingleRecipe, loadingSingleRecipe } = useSingleRecipe();
+  const {
+    currentFocusedRecipes, loadSingleRecipe, loadingSingleRecipe, unloadRandom,
+  } = useSingleRecipe();
 
   const { id } = useParams();
 
@@ -27,7 +29,9 @@ function DrinkDetails({ pageType }) {
 
   useEffect(() => {
     loadSingleRecipe(pageType, id);
-  }, [id]);
+
+    return unloadRandom;
+  }, [id, loadSingleRecipe]);
 
   const handleShareClick = useCallback(() => {
     document.execCommand('copy');
@@ -37,12 +41,12 @@ function DrinkDetails({ pageType }) {
 
   const drinkDetails = useMemo(
     () => currentFocusedRecipes[pageType].recipe,
-    [currentFocusedRecipes],
+    [currentFocusedRecipes, pageType],
   );
 
   const drinkRecommendations = useMemo(
     () => currentFocusedRecipes[pageType].recommendations,
-    [currentFocusedRecipes],
+    [currentFocusedRecipes, pageType],
   );
 
   const drinkIngredients = useMemo(() => {
@@ -87,7 +91,7 @@ function DrinkDetails({ pageType }) {
     const recipeStarted = recipesProgress[accessKey][id];
 
     return recipeStarted;
-  }, [cookedRecipes, id]);
+  }, [cookedRecipes, id, recipesProgress]);
 
   const recipeHasBeenFinished = useMemo(() => {
     const recipeHasFinished = doneRecipes.find((recipe) => recipe.id === id);
@@ -97,7 +101,7 @@ function DrinkDetails({ pageType }) {
 
   const handleStartCooking = useCallback(() => {
     startCooking(pageType, drinkDetails);
-  }, [startCooking, drinkDetails]);
+  }, [startCooking, drinkDetails, pageType]);
 
   const recipeIsFavorited = useMemo(() => {
     const recipeInFavorites = favoriteRecipes.find((recipe) => recipe.id === id);
@@ -117,7 +121,7 @@ function DrinkDetails({ pageType }) {
     };
 
     updateFavoriteRecipes(favoriteMeal, recipeIsFavorited);
-  }, [id, drinkDetails, updateFavoriteRecipes, recipeIsFavorited]);
+  }, [id, pageType, drinkDetails, updateFavoriteRecipes, recipeIsFavorited]);
 
   if (loadingSingleRecipe) {
     return (

@@ -54,7 +54,7 @@ function FoodInProgress({ pageType }) {
     };
 
     updateFavoriteRecipes(favoriteMeal, recipeIsFavorited);
-  }, [id, currentlyCooking, updateFavoriteRecipes, recipeIsFavorited]);
+  }, [id, pageType, currentlyCooking, updateFavoriteRecipes, recipeIsFavorited]);
 
   const foodIngredients = useMemo(() => {
     const ingredients = (
@@ -96,7 +96,7 @@ function FoodInProgress({ pageType }) {
     const itemIndex = target.value;
 
     updateRecipeProgress(pageType, id, itemIndex);
-  }, [updateRecipeProgress, id]);
+  }, [updateRecipeProgress, id, pageType]);
 
   const currentProgress = useMemo(() => {
     const accessKey = 'meals';
@@ -124,7 +124,7 @@ function FoodInProgress({ pageType }) {
     finalizeRecipe(pageType, id);
 
     push('/receitas-feitas');
-  }, [id, finalizeRecipe]);
+  }, [id, finalizeRecipe, pageType]);
 
   return (
     <div className="recipe-details-page">
