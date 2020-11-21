@@ -1,6 +1,6 @@
-const INITAL_STATE = { email: '' };
+const INITIAL_STATE = { email: '' };
 
-function userLogin(state = INITAL_STATE, { type, email }) {
+function userLogin(state = INITIAL_STATE, { type, email }) {
   switch (type) {
   case 'ADD_LOGIN':
     return { ...state, email };
