@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import './Drink.css';
@@ -54,26 +55,8 @@ function Drink() {
   const renderDrinks = () => {
     if (currentCategories === '') {
       return drinks.slice(firstDrink, limitDrink).map((drink, id) => (
-        <div
-          key={ id }
-          className="recipe-card"
-          data-testid={ `${id}-recipe-card` }
-          value={ drink.strCategory }
-        >
-          <img
-            className="card-img"
-            src={ drink.strDrinkThumb }
-            alt={ drink.strDrink }
-            data-testid={ `${id}-card-img` }
-          />
-          <h3 data-testid={ `${id}-card-name` }>{drink.strDrink}</h3>
-        </div>
-      ));
-    } if (currentDrinks) {
-      return currentDrinks
-        .slice(firstDrink, limitDrink).map((drink, id) => (
+        <Link to={ `/bebidas/${drink.idDrink}` } key={ id }>
           <div
-            key={ id }
             className="recipe-card"
             data-testid={ `${id}-recipe-card` }
             value={ drink.strCategory }
@@ -84,8 +67,29 @@ function Drink() {
               alt={ drink.strDrink }
               data-testid={ `${id}-card-img` }
             />
-            <p data-testid={ `${id}-card-name` }>{drink.strDrink}</p>
+            <h3 data-testid={ `${id}-card-name` }>{drink.strDrink}</h3>
           </div>
+        </Link>
+      ));
+    } if (currentDrinks) {
+      return currentDrinks
+        .slice(firstDrink, limitDrink).map((drink, id) => (
+          <Link to={ `/bebidas/${drink.idDrink}` } key={ id }>
+            <div
+              key={ id }
+              className="recipe-card"
+              data-testid={ `${id}-recipe-card` }
+              value={ drink.strCategory }
+            >
+              <img
+                className="card-img"
+                src={ drink.strDrinkThumb }
+                alt={ drink.strDrink }
+                data-testid={ `${id}-card-img` }
+              />
+              <p data-testid={ `${id}-card-name` }>{drink.strDrink}</p>
+            </div>
+          </Link>
         ));
     }
   };

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import './Food.css';
@@ -51,24 +52,7 @@ function Food() {
   const renderMeals = () => {
     if (currentCategories === '') {
       return meals.slice(firstMeal, limitMeal).map((meal, id) => (
-        <div
-          key={ id }
-          className="recipe-card"
-          data-testid={ `${id}-recipe-card` }
-          value={ meal.strCategory }
-        >
-          <img
-            className="card-img"
-            src={ meal.strMealThumb }
-            alt={ meal.strMeal }
-            data-testid={ `${id}-card-img` }
-          />
-          <h3 data-testid={ `${id}-card-name` }>{meal.strMeal}</h3>
-        </div>
-      ));
-    } if (currentMeals) {
-      return currentMeals
-        .slice(firstMeal, limitMeal).map((meal, id) => (
+        <Link to={ `/comidas/${meal.idMeal}` } key={ id }>
           <div
             key={ id }
             className="recipe-card"
@@ -81,8 +65,29 @@ function Food() {
               alt={ meal.strMeal }
               data-testid={ `${id}-card-img` }
             />
-            <p data-testid={ `${id}-card-name` }>{meal.strMeal}</p>
+            <h3 data-testid={ `${id}-card-name` }>{meal.strMeal}</h3>
           </div>
+        </Link>
+      ));
+    } if (currentMeals) {
+      return currentMeals
+        .slice(firstMeal, limitMeal).map((meal, id) => (
+          <Link to={ `/comidas/${meal.idMeal}` } key={ id }>
+            <div
+              key={ id }
+              className="recipe-card"
+              data-testid={ `${id}-recipe-card` }
+              value={ meal.strCategory }
+            >
+              <img
+                className="card-img"
+                src={ meal.strMealThumb }
+                alt={ meal.strMeal }
+                data-testid={ `${id}-card-img` }
+              />
+              <p data-testid={ `${id}-card-name` }>{meal.strMeal}</p>
+            </div>
+          </Link>
         ));
     }
   };
