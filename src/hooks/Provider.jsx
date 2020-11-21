@@ -3,19 +3,21 @@ import PropTypes from 'prop-types';
 import RecipesAppContext from './RecipesAppContext';
 
 function Provider({ children }) {
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [searchHeader, setSearchHeader] = useState(false);
-  
+
   const contextValue = {
-    email, setEmail,
-    password, setPassword,
-    searchHeader, setSearchHeader,
+    email,
+    setEmail,
+    password,
+    setPassword,
+    searchHeader,
+    setSearchHeader,
   };
 
   return (
-    <RecipesAppContext.Provider value={ { contextValue, } }>
+    <RecipesAppContext.Provider value={ { contextValue } }>
       {children}
     </RecipesAppContext.Provider>
   );
