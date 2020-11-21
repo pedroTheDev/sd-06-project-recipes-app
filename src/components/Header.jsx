@@ -18,8 +18,8 @@ function Header({name}) {
   return (
     <div>
       <header>
-        <button className="logo-profile" data-testid="profile-top-btn" >
-          <img src={profileIcon} alt="profile icon" />
+        <button className="logo-profile" data-testid="profile-top-btn">
+          <img src={profileIcon} alt="profile icon" data-testid="profile-top-btn" />
         </button>
         <h1 data-testid="page-title">{name}</h1>
         <button className="logo-search" data-testid="search-top-btn" onClick={isClick}>
