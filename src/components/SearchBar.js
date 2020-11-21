@@ -1,13 +1,25 @@
 import React, { useState } from 'react';
-import fetchMealAPI from '../services/foodAPI';
+import { fetchMealAPI, fetchDrinkAPI } from '../services/foodAPI';
 
-function SearchBar() {
+function SearchBar({ page }) {
   const [searchInput, setSearchInput] = useState('');
   const [option, setOption] = useState('');
 
   async function handleButtonClick() {
-    const apiResponse = await fetchMealAPI(option, searchInput);
-    console.log(apiResponse);
+    if (!searchInput || !option) {
+      return alert('Please select an option or input some search parameter');
+    } if (option === 'first-letter' && searchInput.length > 1) {
+      return alert('Sua busca deve conter somente 1 (um) caracter');
+    }
+    const apiResponse = await pageCheckSwitch(page);
+    return null;
+  }
+
+  function pageCheckSwitch(page) {
+    if (page === 'Bebidas') {
+      return fetchDrinkAPI(option, searchInput);
+    }
+    return fetchMealAPI(option, searchInput);
   }
 
   return (

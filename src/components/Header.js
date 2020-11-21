@@ -35,7 +35,7 @@ export default function Header({ pageName, renderSearch }) {
 
       <h2 data-testid="page-title">{ pageName }</h2>
       { renderSearch ? renderSearchIcon() : null }
-      { showSearchBar && <SearchBar /> }
+      { showSearchBar && <SearchBar page={ pageName } /> }
     </header>
   );
 }
