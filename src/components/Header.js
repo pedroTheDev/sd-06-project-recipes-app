@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import perfil from '../images/profileIcon.svg';
 import busca from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
 
-export default function Header() {
+export default function Header(props) {
   const [search, setSearch] = useState(false);
-
+  const { id } = props;
   return (
     <div>
       <div>
@@ -33,7 +34,10 @@ export default function Header() {
           />
         </button>
       </div>
-      {(search) ? <SearchBar /> : '' }
+      {(search) ? <SearchBar id={ id } /> : '' }
     </div>
   );
 }
+Header.propTypes = {
+  id: PropTypes.string.isRequired,
+};

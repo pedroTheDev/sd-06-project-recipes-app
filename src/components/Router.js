@@ -2,6 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Login from '../pages/Login';
 import Foods from '../pages/Foods';
+import Drinks from '../pages/Drinks';
 
 export default class Router extends React.Component {
   render() {
@@ -17,21 +18,21 @@ export default class Router extends React.Component {
           path="/comidas"
           component={ Foods }
         />
-        {/* <Route
+        <Route
           exact
           path="/bebidas"
           component={ Drinks }
-        /> */}
-        {/* <Route
+        />
+        <Route
           exact
           path="/comidas/:id-da-receita"
           component={ Foods }
-        /> */}
-        {/* <Route
+        />
+        <Route
           exact
           path="/bebidas/:id-da-receita"
           component={ Drinks }
-        /> */}
+        />
         {/* <Route
           exact
           path="/comidas/:id-da-receita/in-progress"

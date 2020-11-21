@@ -10,7 +10,7 @@ export default function useSearch() {
 
   useEffect(() => {
     const { searchText, searchType, category } = filters;
-    const api = (category === 'food')
+    const api = (category === 'comidas')
       ? 'https://www.themealdb.com/api/json/v1/1/'
       : 'https://www.thecocktaildb.com/api/json/v1/1/';
 
@@ -31,10 +31,13 @@ export default function useSearch() {
     }
 
     async function initSearch() {
-      const dataJson = await fetch(`${api + endpoint}`);
-      const data = await dataJson.json();
-      console.log(data);
-      setResults(data);
+      try {
+        const dataJson = await fetch(`${api + endpoint}`);
+        const data = await dataJson.json();
+        setResults(data);
+      } catch (error) {
+        alert(error.message);
+      }
     }
 
     if (searchText !== '' && searchType !== '') initSearch();
