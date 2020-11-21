@@ -95,7 +95,7 @@ body {
   justify-content: space-between;
   font-size: 40px;
   width: 100%;
-  height: 125px;
+  height: 100px;
   background-color: #8d4613;
   text-shadow: 0 0 3px #000;
   -moz-text-shadow: 0 0 3px #000;
@@ -161,7 +161,7 @@ body {
   left: 0;
   bottom: 0;
   width: 100%;
-  height: 125px;
+  height: 100px;
   color: white;
   text-align: center;
   text-shadow: 0 0 3px #000;
@@ -183,7 +183,10 @@ body {
 }
 
 .card {
-  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 300px;
   margin: 30px;
   background-color: #ebe6e1;
   border: 1px solid rgba(0, 0, 0, 0.350);
@@ -213,10 +216,19 @@ body {
     background: url(https://ak.picdn.net/shutterstock/videos/14891857/thumb/1.jpg);
   }
 
+  .food-drink-container {
+    margin-top: 200px;
+    margin-bottom: 100px;
+  }
+
   .card {
     width: 250px;
     border: 1px solid rgba(0, 0, 0, 0.350);
     border-radius: 5px;
+  }
+
+  .card p{
+    max-width: 80%;
   }
 
   .global-header h1 {
@@ -309,6 +321,22 @@ body {
   .login-container input {
     width: 220px;
   }
+
+  .global-footer {
+    height: 80px;
+    height: 80px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.225);
+    border-left: 1px solid rgba(0, 0, 0, 0.225);
+    border-right: 1px solid rgba(0, 0, 0, 0.225);
+  }
+
+  .global-header {
+    height: 80px;
+    border-top: 1px solid rgba(0, 0, 0, 0.225);
+    border-left: 1px solid rgba(0, 0, 0, 0.225);
+    border-right: 1px solid rgba(0, 0, 0, 0.225);
+  }
+
 }
  
 /*
