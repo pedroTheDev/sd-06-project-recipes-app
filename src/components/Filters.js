@@ -31,9 +31,12 @@ function Filters() {
       console.log(resultName);
       return resultName;
     }
-    if (radioValue === 'firstLetter') {
+    if (radioValue === 'firstLetter' && valueInput.length === 1) {
       const resultFirstLetter = await requestFirstLetter(valueInput);
       return resultFirstLetter;
+    }
+    if (radioValue === 'firstLetter' && valueInput.length > 1) {
+      alert('Sua busca deve conter somente 1 (um) caracter');
     }
     return null;
   }
