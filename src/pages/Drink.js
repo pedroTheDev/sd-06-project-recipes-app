@@ -114,6 +114,13 @@ function Drink() {
             {category.strCategory}
           </button>))
       }
+      <button
+        type="button"
+        data-testid="All-category-filter"
+        onClick={ () => setCurrentCategories('') }
+      >
+        Todas
+      </button>
       {
         renderDrinks()
       }

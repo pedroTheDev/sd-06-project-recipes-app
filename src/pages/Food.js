@@ -113,6 +113,13 @@ function Food() {
             {category.strCategory}
           </button>))
       }
+      <button
+        type="button"
+        data-testid="All-category-filter"
+        onClick={ () => setCurrentCategories('') }
+      >
+        Todas
+      </button>
       {
         renderMeals()
       }
