@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
-import useSearch from '../hooks/useSearch';
 import { Redirect } from 'react-router-dom';
+import useSearch from '../hooks/useSearch';
+import Context from '../context/Context';
 
 export default function SearchBar(props) {
   const { id } = props;
@@ -10,6 +11,8 @@ export default function SearchBar(props) {
     searchType: '',
     category: id,
   });
+
+  const { setItems } = useContext(Context);
 
   const [redirect, setRedirect] = useState(false);
   const [itemId, setItemId] = useState('');
@@ -35,6 +38,7 @@ export default function SearchBar(props) {
   function handleRedirect() {
     if (!redirect) {
       if (results) {
+        setItems(results);
         if (results.meals) {
           if (results.meals.length === 1) {
             setItemId(results.meals[0].idMeal);
@@ -42,7 +46,6 @@ export default function SearchBar(props) {
           }
         }
         if (results.drinks) {
-          console.log(results.drinks);
           if (results.drinks.length === 1) {
             setItemId(results.drinks[0].idDrink);
             setRedirect(true);

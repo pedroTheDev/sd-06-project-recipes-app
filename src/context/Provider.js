@@ -5,12 +5,15 @@ import RecipesContext from './Context';
 function Provider({ children }) {
   const [login, setLogin] = useState({ email: '', password: '', redirect: false });
   const [disabled, setDisabled] = useState(true);
+  const [items, setItems] = useState();
 
   const contextValue = {
     login,
     setLogin,
     disabled,
     setDisabled,
+    items,
+    setItems,
   };
 
   return (

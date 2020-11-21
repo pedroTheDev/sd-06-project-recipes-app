@@ -28,11 +28,11 @@ export default class Router extends React.Component {
           path="/comidas/:id-da-receita"
           component={ Foods }
         />
-        {/* <Route
+        <Route
           exact
           path="/bebidas/:id-da-receita"
           component={ Drinks }
-        /> */}
+        />
         {/* <Route
           exact
           path="/comidas/:id-da-receita/in-progress"
