@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
+import Footer from '../components/Footer';
 import Header from '../components/Header';
 import AppContext from '../context/AppContext';
 import useRequest from '../hooks/useRequest';
@@ -31,6 +32,7 @@ function Food() {
             />
           </div>
         ))}
+      <Footer />
     </div>
   );
 }

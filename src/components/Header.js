@@ -20,7 +20,7 @@ function Header() {
   };
   return (
     <div>
-      <div className="header">
+      <header className="header">
         <Link to="/perfil">
           <img data-testid="profile-top-btn" alt="profile" src={ profileIcon } />
         </Link>
@@ -34,7 +34,7 @@ function Header() {
             >
               <img data-testid="search-top-btn" alt="profile" src={ searchIcon } />
             </button>) : <div />}
-      </div>
+      </header>
       { searchBar
         ? (
           <div className="search-bar">
