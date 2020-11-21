@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import RevenueContext from '../context/RevenueContext';
+import Footer from '../components/Footer';
 
 export default function Foods(props) {
   const { title } = props;
@@ -14,7 +15,10 @@ export default function Foods(props) {
     };
   }, []);
   return (
-    <Header title={ title } />
+    <div>
+      <Header title={ title } />
+      <Footer />
+    </div>
   );
 }
 

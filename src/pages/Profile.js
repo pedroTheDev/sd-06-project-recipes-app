@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import RevenueContext from '../context/RevenueContext';
+import Footer from '../components/Footer';
 
 export default function Profile(props) {
   const { title } = props;
@@ -39,6 +40,7 @@ export default function Profile(props) {
           </button>
         </Link>
       </div>
+      <Footer />
     </div>
   );
 }

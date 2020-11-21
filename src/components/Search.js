@@ -19,16 +19,18 @@ export default function SearchBar() {
             data-testid="ingredient-search-radio"
             type="radio"
             id="ingredient"
-            name="ingredient"
+            value="ingredient"
+            name="radio-selection"
           />
-          Ingedientes
+          Ingediente
         </label>
         <label htmlFor="name">
           <input
             data-testid="name-search-radio"
             type="radio"
             id="name"
-            name="name"
+            value="name"
+            name="radio-selection"
           />
           Nome
         </label>
@@ -37,7 +39,8 @@ export default function SearchBar() {
             data-testid="first-letter-search-radio"
             type="radio"
             id="first-letter"
-            name="first-letter"
+            value="first-letter"
+            name="radio-selection"
           />
           Primeira Letra
         </label>

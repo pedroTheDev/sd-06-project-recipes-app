@@ -10,24 +10,31 @@ export default function Header(props) {
   const { title } = props;
   const { search, setSearch, searchButton } = useContext(RevenueContext);
   const searchButtonHidden = () => (
-    <button
-      type="button"
-      onClick={ () => setSearch(!search) }
-    >
+    <a href onClick={ () => setSearch(!search) }>
       <img src={ SearchIcon } alt="Profile" data-testid="search-top-btn" />
-    </button>
+    </a>
   );
   return (
-    <header>
-      <div className="d-flex p-2">
-        <Link to="/perfil">
-          <img src={ ProfileIcon } alt="Profile" data-testid="profile-top-btn" />
-        </Link>
-        <h1 data-testid="page-title">{title}</h1>
-        {!searchButton && searchButtonHidden()}
-      </div>
+    <div>
+      <header>
+        <div className="container">
+          <div className="row">
+            <div className="col">
+              <Link to="/perfil">
+                <img src={ ProfileIcon } alt="Profile" data-testid="profile-top-btn" />
+              </Link>
+            </div>
+            <div className="col-6">
+              <h1 data-testid="page-title">{title}</h1>
+            </div>
+            <div className="col">
+              {!searchButton && searchButtonHidden()}
+            </div>
+          </div>
+        </div>
+      </header>
       {search && <SearchBar />}
-    </header>
+    </div>
   );
 }
 

@@ -5,8 +5,10 @@ import Login from './pages/Login';
 import Foods from './pages/Foods';
 import Profile from './pages/Profile';
 import Explore from './pages/Explore';
+import ExploreFoods from './pages/ExploreFoods';
 import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
+import ExploreDrinks from './pages/ExploreDrinks';
 
 function App() {
   return (
@@ -28,12 +30,12 @@ function App() {
         <Route
           exact
           path="/explorar/comidas"
-          component={ () => <Explore title="Explorar Comidas" /> }
+          component={ () => <ExploreFoods title="Explorar Comidas" /> }
         />
         <Route
           exact
           path="/explorar/bebidas"
-          component={ () => <Explore title="Explorar Bebidas" /> }
+          component={ () => <ExploreDrinks title="Explorar Bebidas" /> }
         />
         <Route
           exact
