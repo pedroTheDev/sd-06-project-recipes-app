@@ -5,7 +5,7 @@ import { Login, NotFound, Comidas } from '../pages';
 export default function Routers() {
   return (
     <Switch>
-      <Route path="/comidas" component={Comidas} />
+      <Route path="/comidas" component={ Comidas } />
       {/* <Route path="/bebidas" component={ } />
       <Route path="/comidas/:id" component={ } />
       <Route path="/bebidas/:id" component={ } />
@@ -20,8 +20,8 @@ export default function Routers() {
       <Route path="/perfil" component={ } />
       <Route path="/receitas-feitas" component={ } />
       <Route path="/receitas-favoritas" component={ } /> */}
-      <Route exact path="/" component={Login} />
-      <Route component={NotFound} />
+      <Route exact path="/" component={ Login } />
+      <Route component={ NotFound } />
     </Switch>
   );
 }
