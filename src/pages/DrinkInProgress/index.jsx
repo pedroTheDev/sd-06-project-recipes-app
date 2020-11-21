@@ -9,7 +9,7 @@ import shareIcon from '../../images/shareIcon.svg';
 import blackHeart from '../../images/blackHeartIcon.svg';
 import whiteHeart from '../../images/whiteHeartIcon.svg';
 
-function FoodInProgress({ pageType }) {
+function DrinkInProgress({ pageType }) {
   const [copiedLink, setCopiedLink] = useState(false);
 
   const {
@@ -30,7 +30,7 @@ function FoodInProgress({ pageType }) {
 
   const currentlyCooking = useMemo(() => {
     const recipeToCook = cookedRecipes[pageType].find(({ recipe }) => (
-      recipe.idMeal === id
+      recipe.idDrink === id
     ));
 
     return recipeToCook.recipe;
@@ -48,15 +48,15 @@ function FoodInProgress({ pageType }) {
       type: pageType,
       area: currentlyCooking.strArea || '',
       category: currentlyCooking.strCategory,
-      alcoholicOrNot: false,
-      name: currentlyCooking.strMeal,
-      image: currentlyCooking.strMealThumb,
+      alcoholicOrNot: currentlyCooking.strAlcoholic,
+      name: currentlyCooking.strDrink,
+      image: currentlyCooking.strDrinkThumb,
     };
 
     updateFavoriteRecipes(favoriteMeal, recipeIsFavorited);
   }, [id, currentlyCooking, updateFavoriteRecipes, recipeIsFavorited]);
 
-  const foodIngredients = useMemo(() => {
+  const drinkIngredients = useMemo(() => {
     const ingredients = (
       Object
         .keys(currentlyCooking)
@@ -99,7 +99,7 @@ function FoodInProgress({ pageType }) {
   }, [updateRecipeProgress, id]);
 
   const currentProgress = useMemo(() => {
-    const accessKey = 'meals';
+    const accessKey = 'cocktails';
 
     const progressArray = recipesProgress[accessKey][id];
 
@@ -113,12 +113,12 @@ function FoodInProgress({ pageType }) {
   }, [recipesProgress, id]);
 
   const canFinalizeRecipe = useMemo(() => {
-    const everyIngredientChecked = foodIngredients.every(
-      (_, index) => currentProgress.includes(`${index}`),
-    );
+    const everythingChecked = drinkIngredients.every((_, index) => (
+      currentProgress.includes(`${index}`)
+    ));
 
-    return everyIngredientChecked;
-  }, [foodIngredients, currentProgress]);
+    return everythingChecked;
+  }, [currentProgress, drinkIngredients]);
 
   const handleFinalizeRecipe = useCallback(() => {
     finalizeRecipe(pageType, id);
@@ -130,13 +130,13 @@ function FoodInProgress({ pageType }) {
     <div className="recipe-details-page">
       <img
         data-testid="recipe-photo"
-        src={currentlyCooking.strMealThumb}
-        alt={currentlyCooking.strMeal}
+        src={currentlyCooking.strDrinkThumb}
+        alt={currentlyCooking.strDrink}
       />
 
-      <h2 data-testid="recipe-title">{currentlyCooking.strMeal}</h2>
+      <h2 data-testid="recipe-title">{currentlyCooking.strDrink}</h2>
       <p data-testid="recipe-category">{currentlyCooking.strCategory}</p>
-      <p>{currentlyCooking.strArea}</p>
+      <p>{currentlyCooking.strAlcoholic}</p>
 
       <div className="share-btn-container">
         <button
@@ -148,7 +148,7 @@ function FoodInProgress({ pageType }) {
         </button>
 
         {copiedLink && (
-          <span>Link copiado!</span>
+          <span className="copied-item">Link copiado!</span>
         )}
       </div>
 
@@ -159,10 +159,10 @@ function FoodInProgress({ pageType }) {
       </div>
 
       <div className="recipe-ingredients in-progress-ingredients">
-        {foodIngredients.map((ingredient, index) => (
+        {drinkIngredients.map((ingredient, index) => (
           <div
+            key={ingredient}
             className="ingredients-checkbox-container"
-            key={`${ingredient}`}
           >
             <input
               type="checkbox"
@@ -205,8 +205,8 @@ function FoodInProgress({ pageType }) {
   );
 }
 
-FoodInProgress.propTypes = {
+DrinkInProgress.propTypes = {
   pageType: PropTypes.string.isRequired,
 };
 
-export default FoodInProgress;
+export default DrinkInProgress;

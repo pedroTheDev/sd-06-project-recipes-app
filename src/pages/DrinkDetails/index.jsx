@@ -17,7 +17,9 @@ function DrinkDetails({ pageType }) {
 
   const { currentFocusedRecipes, loadSingleRecipe, loadingSingleRecipe } = useSingleRecipe();
   const { id } = useParams();
-  const { cookedRecipes, startCooking } = useCook();
+  const {
+    cookedRecipes, startCooking, doneRecipes, recipesProgress,
+  } = useCook();
   const { favoriteRecipes, updateFavoriteRecipes } = useRecipes();
 
   useEffect(() => {
@@ -77,20 +79,18 @@ function DrinkDetails({ pageType }) {
   }, [drinkDetails]);
 
   const recipeHasBeenStarted = useMemo(() => {
-    const recipeStarted = cookedRecipes[pageType].find((recipe) => (
-      recipe.recipe.idDrink === id
-    ));
+    const accessKey = 'cocktails';
+
+    const recipeStarted = recipesProgress[accessKey][id];
 
     return recipeStarted;
   }, [cookedRecipes, id]);
 
   const recipeHasBeenFinished = useMemo(() => {
-    if (recipeHasBeenStarted) {
-      return recipeHasBeenStarted.finished;
-    }
+    const recipeHasFinished = doneRecipes.find((recipe) => recipe.id === id);
 
-    return null;
-  }, [recipeHasBeenStarted]);
+    return recipeHasFinished;
+  }, [doneRecipes, id]);
 
   const handleStartCooking = useCallback(() => {
     startCooking(pageType, drinkDetails);
@@ -132,6 +132,7 @@ function DrinkDetails({ pageType }) {
 
       <h2 data-testid="recipe-title">{drinkDetails.strDrink}</h2>
       <p data-testid="recipe-category">{drinkDetails.strCategory}</p>
+      <p data-testid="recipe-alcoholic">{drinkDetails.strAlcoholic}</p>
 
       <div className="share-btn-container">
         <button

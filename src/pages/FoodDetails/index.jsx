@@ -15,9 +15,11 @@ import whiteHeart from '../../images/whiteHeartIcon.svg';
 function FoodDetails({ pageType }) {
   const [copiedLink, setCopiedLink] = useState(false);
 
-  const { currentFocusedRecipes, loadSingleRecipe, loadingSingleRecipe } = useSingleRecipe();
+  const {
+    currentFocusedRecipes, loadSingleRecipe, loadingSingleRecipe,
+  } = useSingleRecipe();
   const { id } = useParams();
-  const { cookedRecipes, startCooking } = useCook();
+  const { cookedRecipes, startCooking, doneRecipes, recipesProgress } = useCook();
   const { favoriteRecipes, updateFavoriteRecipes } = useRecipes();
 
   useEffect(() => {
@@ -25,10 +27,10 @@ function FoodDetails({ pageType }) {
   }, [id]);
 
   const handleShareClick = useCallback(() => {
-    document.execCommand('copy');
+    document.execCommand('copy', false, id);
 
     setCopiedLink(true);
-  }, []);
+  }, [id]);
 
   const foodDetails = useMemo(
     () => currentFocusedRecipes[pageType].recipe,
@@ -77,20 +79,18 @@ function FoodDetails({ pageType }) {
   }, [foodDetails]);
 
   const recipeHasBeenStarted = useMemo(() => {
-    const recipeStarted = cookedRecipes[pageType].find((recipe) => (
-      recipe.recipe.idMeal === id
-    ));
+    const accessKey = 'meals';
+
+    const recipeStarted = recipesProgress[accessKey][id];
 
     return recipeStarted;
   }, [cookedRecipes, id]);
 
   const recipeHasBeenFinished = useMemo(() => {
-    if (recipeHasBeenStarted) {
-      return recipeHasBeenStarted.finished;
-    }
+    const recipeHasFinished = doneRecipes.find((recipe) => recipe.id === id);
 
-    return null;
-  }, [recipeHasBeenStarted]);
+    return recipeHasFinished;
+  }, [doneRecipes, id]);
 
   const handleStartCooking = useCallback(() => {
     startCooking(pageType, foodDetails);
@@ -217,14 +217,3 @@ FoodDetails.propTypes = {
 };
 
 export default FoodDetails;
-
-// foto
-// titulo
-// share btn
-// favorite btn
-// category
-// ingredients
-// instruções
-// video nas comidas
-// receitas recomendadas
-// btn iniciar receita

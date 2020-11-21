@@ -79,3 +79,11 @@ button {
   width: 40vw;
   object-fit: cover;
 }
+
+.ingredients-checkbox-container .item-checked {
+  text-decoration: line-through;
+}
+
+.done-recipe-card img {
+  height: 10vh;
+}
