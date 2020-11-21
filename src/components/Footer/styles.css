@@ -1,8 +1,10 @@
-.header {
-  background-color: burlywood;
+.footer {
   width: 100%;
+  background-color: burlywood;
   height: 70px;
-  border-bottom: 7px solid black;
+  position: fixed;
+  bottom: 0;
+  border-top: 7px solid black;
 
   display: flex;
   align-items: center;
