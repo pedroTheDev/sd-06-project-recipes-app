@@ -35,7 +35,7 @@ const useRequest = () => {
     if (filter.option !== '') {
       const response = await fetchRecipes(URL);
       if (response[type] === null) {
-        customAlert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+        alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
       } else {
         setApiResponse(response[type]);
       }
