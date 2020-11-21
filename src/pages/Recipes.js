@@ -1,12 +1,12 @@
 import React from 'react';
+import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 function Recipes() {
-  // const localEmail = JSON.parse(localStorage.getItem('user'));
+  const TRUE = true;
   return (
     <div>
-      <h1>Receitas</h1>
-      <h3>{/* `Email: ${localEmail.email}` */}</h3>
+      <Header title="Comidas" search={ TRUE } />
       <Footer />
     </div>
   );

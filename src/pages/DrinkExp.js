@@ -2,14 +2,14 @@ import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-function Drinks() {
-  const TRUE = true;
+function DrinkExp() {
+  const FALSE = false;
   return (
     <div>
-      <Header title="Bebidas" search={ TRUE } />
+      <Header title="Explorar Bebidas" search={ FALSE } />
       <Footer />
     </div>
   );
 }
 
-export default Drinks;
+export default DrinkExp;

@@ -1,10 +1,12 @@
 import React from 'react';
+import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 function Explore() {
+  const FALSE = false;
   return (
     <div>
-      <h1>Página de Explorar</h1>
+      <Header title="Explorar" search={ FALSE } />
       <Footer />
     </div>
   );
