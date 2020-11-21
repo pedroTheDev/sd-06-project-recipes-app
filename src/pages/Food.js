@@ -3,7 +3,7 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import './Food.css';
 
-function FoodTest() {
+function Food() {
   const [meals, setMeals] = useState([]);
   const [categories, setCategories] = useState([]);
   const [currentCategories, setCurrentCategories] = useState('');
@@ -88,8 +88,15 @@ function FoodTest() {
   };
 
   const handleClickCategory = ({ target: { value } }) => {
-    setCurrentCategories(value);
+    if (currentCategories !== value) {
+      setCurrentCategories(value);
+    }
+    if (currentCategories === value) {
+      setCurrentCategories('');
+    }
   };
+
+  console.log(currentCategories);
 
   return (
     <div className="food-container">
@@ -114,4 +121,4 @@ function FoodTest() {
   );
 }
 
-export default FoodTest;
+export default Food;

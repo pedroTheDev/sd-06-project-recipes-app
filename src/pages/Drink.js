@@ -34,14 +34,17 @@ function Drink() {
   }, []);
 
   useEffect(() => {
-    const fecthMealsCategory = async () => {
-      const APIRequestDrinksCategory = await fetch(urlDrinksCategories);
-      const APIResponseDrinksCategory = await APIRequestDrinksCategory.json();
-      if (APIResponseDrinksCategory !== null) {
-        setCurrentDrinks(APIResponseDrinksCategory.drinks);
+    const fecthDrinksCategory = async () => {
+      if (currentCategories !== '') {
+        const APIRequestDrinksCategory = await fetch(urlDrinksCategories);
+        const APIResponseDrinksCategory = await APIRequestDrinksCategory.json();
+        console.log(APIResponseDrinksCategory);
+        if (APIResponseDrinksCategory !== null) {
+          setCurrentDrinks(APIResponseDrinksCategory.drinks);
+        }
       }
     };
-    fecthMealsCategory();
+    fecthDrinksCategory();
   }, [currentCategories]);
 
   const firstDrink = 0;
@@ -50,8 +53,13 @@ function Drink() {
 
   const renderDrinks = () => {
     if (currentCategories === '') {
-      drinks.slice(firstDrink, limitDrink).map((drink, id) => (
-        <div className="recipe-card" key={ id } data-testid={ `${id}-recipe-card` }>
+      return drinks.slice(firstDrink, limitDrink).map((drink, id) => (
+        <div
+          key={ id }
+          className="recipe-card"
+          data-testid={ `${id}-recipe-card` }
+          value={ drink.strCategory }
+        >
           <img
             className="card-img"
             src={ drink.strDrinkThumb }
@@ -62,22 +70,33 @@ function Drink() {
         </div>
       ));
     } if (currentDrinks) {
-      return currentDrinks.slice(firstDrink, limitDrink).map((drink, id) => (
-        <div className="recipe-card" key={ id } data-testid={ `${id}-recipe-card` }>
-          <img
-            className="card-img"
-            src={ drink.strDrinkThumb }
-            alt={ drink.strDrink }
-            data-testid={ `${id}-card-img` }
-          />
-          <h3 data-testid={ `${id}-card-name` }>{drink.strDrink}</h3>
-        </div>
-      ));
+      return currentDrinks
+        .slice(firstDrink, limitDrink).map((drink, id) => (
+          <div
+            key={ id }
+            className="recipe-card"
+            data-testid={ `${id}-recipe-card` }
+            value={ drink.strCategory }
+          >
+            <img
+              className="card-img"
+              src={ drink.strDrinkThumb }
+              alt={ drink.strDrink }
+              data-testid={ `${id}-card-img` }
+            />
+            <p data-testid={ `${id}-card-name` }>{drink.strDrink}</p>
+          </div>
+        ));
     }
   };
 
-  const handleClickCategory = ({ target: { value } }) => {
-    setCurrentCategories(value);
+  const handleClickCategory = async ({ target: { value } }) => {
+    if (currentCategories !== value) {
+      setCurrentCategories(value);
+    }
+    if (currentCategories === value) {
+      setCurrentCategories('');
+    }
   };
 
   return (
