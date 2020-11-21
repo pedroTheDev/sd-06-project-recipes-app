@@ -5,7 +5,7 @@ import profileImage from '../images/profileIcon.svg';
 import searchButton from '../images/searchIcon.svg';
 import FetchApiBebidas from '../services/FetchApiBebidas';
 import FetchApiComidas from '../services/FetchApiComidas';
-import RecipesContext from '../context/RecipeContext';
+import RecipeContext from '../context/RecipeContext';
 
 function Header({ title }) {
   const [enableSearch, setEnableSearch] = useState(false);
@@ -15,7 +15,7 @@ function Header({ title }) {
     setRetornoApiBebidas,
     valueRadioButton,
     searchBar,
-  } = useContext(RecipesContext);
+  } = useContext(RecipeContext);
   const history = useHistory();
   function redirectProfile() {
     history.push('/perfil');
