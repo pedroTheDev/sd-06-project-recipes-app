@@ -9,7 +9,7 @@ class SearchInput extends React.Component {
     super();
     this.state = {
       search: '',
-      radio: '',
+      radio: 'ingrediente',
       meals: [],
       drinks: [],
     };
@@ -90,46 +90,51 @@ class SearchInput extends React.Component {
           onChange={ (event) => this.searchHandleChange(event, 'search') }
         />
         <div className="radio-input-div">
-          <label htmlFor="ingrediente">
-            <input
-              data-testid="ingredient-search-radio"
-              id="ingrediente"
-              type="radio"
-              name="search-filter"
-              value="ingrediente"
-              onChange={ (event) => this.searchHandleChange(event, 'radio') }
-            />
-            Ingrediente
-          </label>
-          <label htmlFor="nome">
-            <input
-              id="nome"
-              type="radio"
-              name="search-filter"
-              value="nome"
-              data-testid="name-search-radio"
-              onChange={ (event) => this.searchHandleChange(event, 'radio') }
-            />
-            Nome
-          </label>
-          <label htmlFor="primeira-letra">
-            <input
-              data-testid="first-letter-search-radio"
-              id="primeira-letra"
-              type="radio"
-              name="search-filter"
-              value="primeira-letra"
-              onChange={ (event) => this.searchHandleChange(event, 'radio') }
-            />
-            Primeira Letra
-          </label>
-          <button
-            type="button"
-            onClick={ this.clickApi }
-            data-testid="exec-search-btn"
-          >
-            Buscar
-          </button>
+          <div className="radio-input-second-div">
+            <label htmlFor="ingrediente">
+              <input
+                data-testid="ingredient-search-radio"
+                id="ingrediente"
+                type="radio"
+                name="search-filter"
+                value="ingrediente"
+                checked
+                onChange={ (event) => this.searchHandleChange(event, 'radio') }
+              />
+              Ingrediente
+            </label>
+            <label htmlFor="nome">
+              <input
+                id="nome"
+                type="radio"
+                name="search-filter"
+                value="nome"
+                data-testid="name-search-radio"
+                onChange={ (event) => this.searchHandleChange(event, 'radio') }
+              />
+              Nome
+            </label>
+            <label htmlFor="primeira-letra">
+              <input
+                data-testid="first-letter-search-radio"
+                id="primeira-letra"
+                type="radio"
+                name="search-filter"
+                value="primeira-letra"
+                onChange={ (event) => this.searchHandleChange(event, 'radio') }
+              />
+              Primeira Letra
+            </label>
+          </div>
+          <div className="search-button-div">
+            <button
+              type="button"
+              onClick={ this.clickApi }
+              data-testid="exec-search-btn"
+            >
+              Buscar
+            </button>
+          </div>
         </div>
       </div>
     );
