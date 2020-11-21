@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import profileImage from '../images/profileIcon.svg';
 import searchButton from '../images/searchIcon.svg';
+import './Header.css';
 import FetchApiBebidas from '../services/FetchApiBebidas';
 import FetchApiComidas from '../services/FetchApiComidas';
 import RecipeContext from '../context/RecipeContext';
@@ -12,24 +13,32 @@ function Header({ title }) {
   const {
     setValueRadioButton,
     setRetornoApiComidas,
+    // retornoApiComidas,
     setRetornoApiBebidas,
     valueRadioButton,
     searchBar,
+    setSearchBar,
   } = useContext(RecipeContext);
   const history = useHistory();
+
   function redirectProfile() {
     history.push('/perfil');
   }
+
   const handleRadioClick = ({ target }) => {
     setValueRadioButton(target.value);
   };
+
   const searchRadioButton = async () => {
-    if (valueRadioButton === 'primeira-letra' && searchBar.length > 1) {
+    if (valueRadioButton === '3' && searchBar.length > 1) {
       alert('Sua busca deve conter somente 1 (um) caracter');
     }
+
     const urlPath = window.location.pathname;
+
     if (urlPath.includes('comidas')) {
       await FetchApiComidas(valueRadioButton, searchBar, setRetornoApiComidas);
+      // console.log(retornoApiComidas);
     } else {
       await FetchApiBebidas(valueRadioButton, searchBar, setRetornoApiBebidas);
     }
@@ -39,26 +48,13 @@ function Header({ title }) {
     setEnableSearch(!enableSearch);
   }
 
-  return (
-    <header>
-      <button
-        type="button"
-        data-testid="profile-top-btn"
-        src={ profileImage }
-        onClick={ redirectProfile }
-      >
-        <img src={ profileImage } alt="profile-img" />
-      </button>
-      <h1 data-testid="page-title">{title}</h1>
-      { (enableSearch) ? <input type="text" data-testid="search-input" /> : undefined }
-      <button
-        type="button"
-        data-testid="search-top-btn"
-        src={ searchButton }
-        onClick={ renderSearch }
-      >
-        <img src={ searchButton } alt="search-btn" />
-      </button>
+  const searchSection = (
+    <div>
+      <input
+        onChange={ (e) => setSearchBar(e.target.value) }
+        type="text"
+        data-testid="search-input"
+      />
       <br />
       <label htmlFor="ingrediente">
         <input
@@ -101,7 +97,37 @@ function Header({ title }) {
       >
         Buscar
       </button>
-    </header>
+    </div>
+  );
+
+  return (
+    <div className="flex-container">
+      <header>
+        <button
+          type="button"
+          data-testid="profile-top-btn"
+          src={ profileImage }
+          onClick={ redirectProfile }
+        >
+          <img src={ profileImage } alt="profile-img" />
+        </button>
+
+        <h1 data-testid="page-title">{title}</h1>
+
+        <button
+          type="button"
+          data-testid="search-top-btn"
+          src={ searchButton }
+          onClick={ renderSearch }
+        >
+          <img src={ searchButton } alt="search-btn" />
+        </button>
+        <br />
+      </header>
+      <section>
+        {enableSearch && searchSection}
+      </section>
+    </div>
   );
 }
 
