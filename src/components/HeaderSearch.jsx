@@ -4,8 +4,12 @@ import {
   requestApiFoodFilterIngredient,
   requestApiFoodFilterName,
   requestApiFoodFilterFirstLetter } from '../services/requestFood';
+import {
+  requestApiDrinkFilterIngredient,
+  requestApiDrinkFilterName,
+  requestApiDrinkFilterFirstLetter } from '../services/requestDrink';
 
-function HeaderSearch() {
+function HeaderSearch({name}) {
   const { contextValue: { searchHeader } } = useContext(RecipesAppContext);
   const [radioValue, setRadioValue] = useState('');
   const [textSearch, setTextSearch] = useState('');
@@ -21,6 +25,26 @@ function HeaderSearch() {
       alert('Sua busca deve conter somente 1 (um) caracter');
     }
   };
+
+  const searchDrink = () => {
+    if (radioValue === 'ingredientes') {
+      requestApiDrinkFilterIngredient(textSearch);
+    } else if (radioValue === 'nome') {
+      requestApiDrinkFilterName(textSearch);
+    } else if (radioValue === 'primeira-letra' && textSearch.length === 1) {
+      requestApiDrinkFilterFirstLetter(textSearch);
+    } else {
+      alert('Sua busca deve conter somente 1 (um) caracter');
+    }
+  };
+
+  const searchOnClick = () => {
+    if(name === "Comidas") {
+      searchFood();
+    } else {
+      searchDrink();
+    }
+  }
 
   const captureValue = (e) => {
     setRadioValue(e.target.value);
@@ -74,7 +98,7 @@ function HeaderSearch() {
       <button
         type="button"
         data-testid="exec-search-btn"
-        onClick={ searchFood }
+        onClick={ searchOnClick }
       >
         Buscar
       </button>
