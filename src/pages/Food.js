@@ -5,7 +5,7 @@ import AppContext from '../context/AppContext';
 import useRequest from '../hooks/useRequest';
 
 function Food() {
-  const { setHeader, filter } = useContext(AppContext);
+  const { setHeader } = useContext(AppContext);
   const apiResponse = useRequest();
   const changeHeader = async () => {
     await setHeader({ page: 'Comidas', search: true });
