@@ -1,6 +1,12 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { Login, NotFound, Comidas, Profile } from '../pages';
+import {
+  Login,
+  NotFound,
+  Comidas,
+  Profile,
+  DoneRecipes,
+  FavoriteRecipes } from '../pages';
 
 export default function Routers() {
   return (
@@ -16,9 +22,9 @@ export default function Routers() {
       <Route path="/explorar/bebidas" component={ } />
       <Route path="/explorar/comidas/ingredientes" component={ } />
       <Route path="/explorar/bebidas/ingredientes" component={ } />
-      <Route path="/explorar/comidas/area" component={ } />
-      <Route path="/receitas-feitas" component={ } />
-      <Route path="/receitas-favoritas" component={ } /> */}
+      <Route path="/explorar/comidas/area" component={ } /> */}
+      <Route path="/receitas-feitas" component={ DoneRecipes } />
+      <Route path="/receitas-favoritas" component={ FavoriteRecipes } />
       <Route path="/perfil" component={ Profile } />
       <Route exact path="/" component={ Login } />
       <Route component={ NotFound } />
