@@ -15,6 +15,8 @@ function Header(props) {
     if (hide === false) setHide(true);
   };
 
+  const space = '';
+
   return (
     <header className="header">
       <Link to="/perfil">
@@ -27,7 +29,7 @@ function Header(props) {
       </Link>
       <h1 data-testid="page-title">{title}</h1>
       {
-        (!search) ? '' : <input
+        (!search) ? <p>{ space }</p> : <input
           type="image"
           src={ searchIcon }
           alt="icone de pesquisa"
