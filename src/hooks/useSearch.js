@@ -31,9 +31,13 @@ export default function useSearch() {
     }
 
     async function initSearch() {
-      const dataJson = await fetch(`${api + endpoint}`);
-      const data = await dataJson.json();
-      setResults(data);
+      try {
+        const dataJson = await fetch(`${api + endpoint}`);
+        const data = await dataJson.json();
+        setResults(data);
+      } catch (error) {
+        alert(error.message);
+      }
     }
 
     if (searchText !== '' && searchType !== '') initSearch();
