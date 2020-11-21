@@ -6,9 +6,12 @@ import './Drink.css';
 function Drink() {
   const [drinks, setDrinks] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [currentCategories, setCurrentCategories] = useState('');
+  const [currentDrinks, setCurrentDrinks] = useState([]);
 
   const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
   const urlCategories = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
+  const urlDrinksCategories = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${currentCategories}`;
 
   useEffect(() => {
     const fecthDrinks = async () => {
@@ -30,9 +33,52 @@ function Drink() {
     fecthCategory();
   }, []);
 
+  useEffect(() => {
+    const fecthMealsCategory = async () => {
+      const APIRequestDrinksCategory = await fetch(urlDrinksCategories);
+      const APIResponseDrinksCategory = await APIRequestDrinksCategory.json();
+      if (APIResponseDrinksCategory !== null) {
+        setCurrentDrinks(APIResponseDrinksCategory.drinks);
+      }
+    };
+    fecthMealsCategory();
+  }, [currentCategories]);
+
   const firstDrink = 0;
   const limitDrink = 12;
   const limitCategory = 5;
+
+  const renderDrinks = () => {
+    if (currentCategories === '') {
+      drinks.slice(firstDrink, limitDrink).map((drink, id) => (
+        <div className="recipe-card" key={ id } data-testid={ `${id}-recipe-card` }>
+          <img
+            className="card-img"
+            src={ drink.strDrinkThumb }
+            alt={ drink.strDrink }
+            data-testid={ `${id}-card-img` }
+          />
+          <h3 data-testid={ `${id}-card-name` }>{drink.strDrink}</h3>
+        </div>
+      ));
+    } if (currentDrinks) {
+      return currentDrinks.slice(firstDrink, limitDrink).map((drink, id) => (
+        <div className="recipe-card" key={ id } data-testid={ `${id}-recipe-card` }>
+          <img
+            className="card-img"
+            src={ drink.strDrinkThumb }
+            alt={ drink.strDrink }
+            data-testid={ `${id}-card-img` }
+          />
+          <h3 data-testid={ `${id}-card-name` }>{drink.strDrink}</h3>
+        </div>
+      ));
+    }
+  };
+
+  const handleClickCategory = ({ target: { value } }) => {
+    setCurrentCategories(value);
+  };
 
   return (
     <div className="drink-container">
@@ -43,22 +89,14 @@ function Drink() {
             data-testid={ `${category.strCategory}-category-filter` }
             key={ id }
             type="button"
+            value={ category.strCategory }
+            onClick={ handleClickCategory }
           >
             {category.strCategory}
           </button>))
       }
       {
-        drinks.slice(firstDrink, limitDrink).map((drink, id) => (
-          <div className="recipe-card" key={ id } data-testid={ `${id}-recipe-card` }>
-            <img
-              className="card-img"
-              src={ drink.strDrinkThumb }
-              alt={ drink.strDrink }
-              data-testid={ `${id}-card-img` }
-            />
-            <h3 data-testid={ `${id}-card-name` }>{drink.strDrink}</h3>
-          </div>
-        ))
+        renderDrinks()
       }
       <Footer />
     </div>
