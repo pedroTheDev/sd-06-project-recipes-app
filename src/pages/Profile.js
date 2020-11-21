@@ -2,12 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 function Profile() {
+  const { email } = JSON.parse(localStorage.user);
   return (
     <div>
       <div
         data-testid="profile-email"
       >
-        Email
+        { email }
       </div>
       <Link to="/receitas-feitas">
         <button
@@ -29,6 +30,7 @@ function Profile() {
         <button
           type="button"
           data-testid="profile-logout-btn"
+          onClick={ () => localStorage.clear() }
         >
           Sair
         </button>
