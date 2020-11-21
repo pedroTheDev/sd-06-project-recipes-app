@@ -1,7 +1,8 @@
 import React from 'react';
+import Header from '../components/Header';
 
 const ComidasLocalOrigem = () => (
-  <p>Comidas Por Local Origem</p>
+  <Header />
 );
 
 export default ComidasLocalOrigem;

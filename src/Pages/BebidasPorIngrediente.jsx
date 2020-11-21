@@ -1,7 +1,8 @@
 import React from 'react';
+import Header from '../components/Header';
 
 const BebidasPorIngrediente = () => (
-  <p>Bebidas Por Ingrediente</p>
+  <Header />
 );
 
 export default BebidasPorIngrediente;
