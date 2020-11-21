@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { fetchMealAPI, fetchDrinkAPI } from '../services/foodAPI';
 
 function SearchBar({ page }) {
   const [searchInput, setSearchInput] = useState('');
   const [option, setOption] = useState('');
 
+  function pageCheckSwitch(pageName) {
+    if (pageName === 'Bebidas') {
+      return fetchDrinkAPI(option, searchInput);
+    }
+    return fetchMealAPI(option, searchInput);
+  }
   async function handleButtonClick() {
     if (!searchInput || !option) {
       return alert('Please select an option or input some search parameter');
@@ -13,13 +20,6 @@ function SearchBar({ page }) {
     }
     const apiResponse = await pageCheckSwitch(page);
     return null;
-  }
-
-  function pageCheckSwitch(page) {
-    if (page === 'Bebidas') {
-      return fetchDrinkAPI(option, searchInput);
-    }
-    return fetchMealAPI(option, searchInput);
   }
 
   return (
@@ -70,5 +70,9 @@ function SearchBar({ page }) {
     </div>
   );
 }
+
+SearchBar.propTypes = {
+  page: PropTypes.string.isRequired,
+};
 
 export default SearchBar;
