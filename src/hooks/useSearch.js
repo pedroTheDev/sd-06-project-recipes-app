@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 
-export default function useSearch() {
+export default function useSearch(props) {
   const [filters, setFilters] = useState({
     searchText: '',
     searchType: '',
-    category: 'food',
+    category: '',
   });
   const [results, setResults] = useState();
 

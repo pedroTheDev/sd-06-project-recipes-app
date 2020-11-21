@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import useSearch from '../hooks/useSearch';
 
-export default function SearchBar() {
+export default function SearchBar(props) {
   const [searchOptions, setSearchOptions] = useState({
     searchText: '',
     searchType: '',
-    category: 'food',
+    category: props.id,
   });
 
   const [, setFilters] = useSearch();

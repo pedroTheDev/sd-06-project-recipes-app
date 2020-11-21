@@ -4,7 +4,7 @@ import perfil from '../images/profileIcon.svg';
 import busca from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
 
-export default function Header() {
+export default function Header(props) {
   const [search, setSearch] = useState(false);
 
   return (
@@ -33,7 +33,7 @@ export default function Header() {
           />
         </button>
       </div>
-      {(search) ? <SearchBar /> : '' }
+      {(search) ? <SearchBar id={props.id} /> : '' }
     </div>
   );
 }
