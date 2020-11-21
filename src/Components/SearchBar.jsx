@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import propTypes from 'prop-types';
 import recipeRequest from '../services/recipeRequest';
 
-const SearchBar = ({ history }) => {
+const SearchBar = ({ className }) => {
+  const history = useHistory();
   const { pathname } = history.location;
   const [text, setText] = useState('');
   const [defaultUrl, setDefaultUrl] = useState('');
@@ -63,10 +65,7 @@ const SearchBar = ({ history }) => {
   };
 
   return (
-    <div>
-      <button type="button" data-testid="search-top-btn">
-        Lupa
-      </button>
+    <div className={ className } id="shearBar">
       <input
         value={ text }
         onChange={ handleSearch }
@@ -115,7 +114,7 @@ const SearchBar = ({ history }) => {
 };
 
 SearchBar.propTypes = {
-  history: propTypes.arrayOf(propTypes.object).isRequired,
+  className: propTypes.string.isRequired,
 };
 
 export default SearchBar;

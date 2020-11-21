@@ -4,25 +4,16 @@ import PropTypes from 'prop-types';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import '../Style/Header.css';
+import SearchBar from './SearchBar';
 
 function Header({ pageName }) {
   const [divShow, setDivShow] = useState('hide');
 
   function handleClick() {
-    const divShearBar = document.querySelector('#shearBar');
-
-    if (divShearBar.className === 'hide') {
+    if (divShow === 'hide') {
       setDivShow('show');
-      const creatInput = document.createElement('input');
-      creatInput.className = 'search-input';
-      const attributes = document.createAttribute('data-testid');
-      attributes.value = 'search-input';
-      creatInput.setAttributeNode(attributes);
-      divShearBar.appendChild(creatInput);
     } else {
       setDivShow('hide');
-      const removeInput = document.querySelector('.search-input');
-      divShearBar.removeChild(removeInput);
     }
   }
 
@@ -41,7 +32,7 @@ function Header({ pageName }) {
         && pageName !== 'Explorar' && pageName !== 'Explorar Comidas'
         && pageName !== 'Explorar Bebidas' && pageName !== 'Explorar Ingredientes'
         && pageName !== 'Perfil')
-          ? (
+          && (
             <button className="button-search" type="button" onClick={ handleClick }>
               <img
                 src={ searchIcon }
@@ -49,10 +40,9 @@ function Header({ pageName }) {
                 alt="Search Icon Button"
               />
             </button>
-          ) : null}
+          )}
       </div>
-      <div id="shearBar" className={ divShow } />
-
+      {divShow !== 'hide' && <SearchBar className={ divShow } />}
     </div>
   );
 }

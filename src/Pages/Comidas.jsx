@@ -10,4 +10,8 @@ function Comidas() {
     </div>
   );
 }
+
+Comidas.propTypes = {
+};
+
 export default Comidas;
