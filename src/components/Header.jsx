@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
+import propTypes from 'prop-types';
 import RecipesAppContext from '../hooks/RecipesAppContext';
 import profileIcon from '../styles/images/profileIcon.svg';
 import searchIcon from '../styles/images/searchIcon.svg';
 import HeaderSearch from './HeaderSearch';
-import propTypes from 'prop-types';
 
 function Header({ name }) {
   const {
