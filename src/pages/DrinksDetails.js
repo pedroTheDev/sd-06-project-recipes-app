@@ -80,6 +80,7 @@ class DrinksDetails extends React.Component {
               <p data-testid={ `${index}-card-name` }>{recipe.strMeal}</p>
               <h2>Recomendadas</h2>
               {RecommendedDrinks.map((recomend, i) => {
+                console.log('bla');
                 return (
                   <div key={ i }>
                     <img
