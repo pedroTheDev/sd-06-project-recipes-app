@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import propTypes from 'prop-types';
 import RecipesAppContext from '../hooks/RecipesAppContext';
 import {
   requestApiFoodFilterIngredient,
@@ -9,7 +10,7 @@ import {
   requestApiDrinkFilterName,
   requestApiDrinkFilterFirstLetter } from '../services/requestDrink';
 
-function HeaderSearch({name}) {
+function HeaderSearch({ name }) {
   const { contextValue: { searchHeader } } = useContext(RecipesAppContext);
   const [radioValue, setRadioValue] = useState('');
   const [textSearch, setTextSearch] = useState('');
@@ -39,12 +40,12 @@ function HeaderSearch({name}) {
   };
 
   const searchOnClick = () => {
-    if(name === "Comidas") {
+    if (name === 'Comidas') {
       searchFood();
     } else {
       searchDrink();
     }
-  }
+  };
 
   const captureValue = (e) => {
     setRadioValue(e.target.value);
@@ -105,5 +106,9 @@ function HeaderSearch({name}) {
     </div>
   );
 }
+
+HeaderSearch.propTypes = {
+  name: propTypes.string.isRequired,
+};
 
 export default HeaderSearch;

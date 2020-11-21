@@ -33,7 +33,7 @@ function Header({ name }) {
           <img src={ searchIcon } alt="search icon" />
         </button>
       </header>
-      <HeaderSearch enable={ searchHeader } name={name} />
+      <HeaderSearch enable={ searchHeader } name={ name } />
     </div>
   );
 }
