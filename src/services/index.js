@@ -41,3 +41,17 @@ export function fetchDrinks(endPoint, value) {
   }
   return variavel;
 }
+
+export function fetchDrinksById(endPoint) {
+  const variavel = fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${endPoint}`)
+    .then((response) => response.json())
+    .then((response) => response.drinks);
+  return variavel;
+}
+
+export function fetchRecommendedDrinks() {
+  const variavel = fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=')
+    .then((response) => response.json())
+    .then((response) => response.drinks);
+  return variavel;
+}

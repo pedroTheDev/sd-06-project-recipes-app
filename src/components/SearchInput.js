@@ -98,7 +98,6 @@ class SearchInput extends React.Component {
                 type="radio"
                 name="search-filter"
                 value="ingrediente"
-                checked
                 onChange={ (event) => this.searchHandleChange(event, 'radio') }
               />
               Ingrediente
