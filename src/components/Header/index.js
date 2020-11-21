@@ -31,37 +31,42 @@ const Header = () => {
       case '/explorar':
         return setState({
           namePage: 'Explorar',
-          search: true,
+          search: false,
         });
       case '/explorar/comidas':
         return setState({
           namePage: 'Explorar Comidas',
-          search: true,
+          search: false,
         });
       case '/explorar/bebidas':
         return setState({
           namePage: 'Explorar Bebidas',
-          search: true,
+          search: false,
         });
       case '/explorar/comidas/ingredientes':
-      return setState({
-        namePage: 'Explorar Ingrediente ',
-        search: true,
-      });
+        return setState({
+          namePage: 'Explorar Ingredientes',
+          search: false,
+        });
+      case '/explorar/bebidas/ingredientes':
+        return setState({
+          namePage: 'Explorar Ingredientes',
+          search: false,
+        });
       case '/explorar/comidas/area':
-      return setState({
-        namePage: 'Explorar Origem',
-        search: true,
-      });
+        return setState({
+          namePage: 'Explorar Origem',
+          search: true,
+        });
       case '/receitas-feitas':
-      return setState({
-        namePage: 'Receitas Feitas',
-        search: true,
-      });
+        return setState({
+          namePage: 'Receitas Feitas',
+          search: false,
+        });
       case '/receitas-favoritas':
         return setState({
           namePage: 'Receitas Favoritas',
-          search: true,
+          search: false,
         });
       default:
         return '';
@@ -90,7 +95,7 @@ const Header = () => {
         : (
           <Link to="/">
             <img
-              date-testid="search-top-btn"
+              data-testid="search-top-btn"
               src={searchIcon}
               alt="searchIcon"
             />
