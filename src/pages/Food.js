@@ -3,12 +3,15 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import './Food.css';
 
-function Food() {
+function FoodTest() {
   const [meals, setMeals] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [currentCategories, setCurrentCategories] = useState('');
+  const [currentMeals, setCurrentMeals] = useState([]);
 
   const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
   const urlCategories = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
+  const urlMealsCategories = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${currentCategories}`;
 
   useEffect(() => {
     const fecthMeals = async () => {
@@ -30,9 +33,63 @@ function Food() {
     fecthCategory();
   }, []);
 
+  useEffect(() => {
+    const fecthMealsCategory = async () => {
+      const APIRequestMealsCategory = await fetch(urlMealsCategories);
+      const APIResponseMealsCategory = await APIRequestMealsCategory.json();
+      if (APIResponseMealsCategory !== null) {
+        setCurrentMeals(APIResponseMealsCategory.meals);
+      }
+    };
+    fecthMealsCategory();
+  }, [currentCategories]);
+
   const firstMeal = 0;
   const limitMeal = 12;
   const limitCategory = 5;
+
+  const renderMeals = () => {
+    if (currentCategories === '') {
+      return meals.slice(firstMeal, limitMeal).map((meal, id) => (
+        <div
+          key={ id }
+          className="recipe-card"
+          data-testid={ `${id}-recipe-card` }
+          value={ meal.strCategory }
+        >
+          <img
+            className="card-img"
+            src={ meal.strMealThumb }
+            alt={ meal.strMeal }
+            data-testid={ `${id}-card-img` }
+          />
+          <h3 data-testid={ `${id}-card-name` }>{meal.strMeal}</h3>
+        </div>
+      ));
+    } if (currentMeals) {
+      return currentMeals
+        .slice(firstMeal, limitMeal).map((meal, id) => (
+          <div
+            key={ id }
+            className="recipe-card"
+            data-testid={ `${id}-recipe-card` }
+            value={ meal.strCategory }
+          >
+            <img
+              className="card-img"
+              src={ meal.strMealThumb }
+              alt={ meal.strMeal }
+              data-testid={ `${id}-card-img` }
+            />
+            <p data-testid={ `${id}-card-name` }>{meal.strMeal}</p>
+          </div>
+        ));
+    }
+  };
+
+  const handleClickCategory = ({ target: { value } }) => {
+    setCurrentCategories(value);
+  };
 
   return (
     <div className="food-container">
@@ -43,26 +100,18 @@ function Food() {
             data-testid={ `${category.strCategory}-category-filter` }
             key={ id }
             type="button"
+            value={ category.strCategory }
+            onClick={ handleClickCategory }
           >
             {category.strCategory}
           </button>))
       }
       {
-        meals.slice(firstMeal, limitMeal).map((meal, id) => (
-          <div key={ id } className="recipe-card" data-testid={ `${id}-recipe-card` }>
-            <img
-              className="card-img"
-              src={ meal.strMealThumb }
-              alt={ meal.strMeal }
-              data-testid={ `${id}-card-img` }
-            />
-            <h3 data-testid={ `${id}-card-name` }>{meal.strMeal}</h3>
-          </div>
-        ))
+        renderMeals()
       }
       <Footer />
     </div>
   );
 }
 
-export default Food;
+export default FoodTest;
