@@ -7,16 +7,18 @@ class Foods extends React.Component {
   render() {
     const { history, stateMeals } = this.props;
     return (
-      <div>
+      <div className="food-drink-container">
         <Header history={ history } />
         {stateMeals ? stateMeals.map((recipe, index) => (
-          <div key={ index } data-testid={ `${index}-recipe-card` }>
+          <div className="card" key={ index } data-testid={ `${index}-recipe-card` }>
             <img
               src={ recipe.strMealThumb }
               data-testid={ `${index}-card-img` }
               alt="recipe"
             />
+            <hr className="card-hr" />
             <p data-testid={ `${index}-card-name` }>{recipe.strMeal}</p>
+            <hr className="card-hr" />
           </div>
         )) : null}
         <Footer history={ history } />
