@@ -20,7 +20,7 @@ function Drink() {
   return (
     <div>
       <Header />
-       { apiResponse.length === 1
+      { apiResponse.length === 1
         ? <Redirect to={ `/bebidas/${apiResponse[0].idDrink}` } />
         : apiResponse.filter((e, index) => e && index < maxShow).map((drink, index) => (
           <div data-testid={ `${index}-recipe-card` } key={ drink.idDrink }>
