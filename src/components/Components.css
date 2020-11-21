@@ -7,6 +7,20 @@
   align-items: center;
 }
 
+.search {
+  display: flex;
+  justify-content: center;
+}
+
+.searchInput {
+  width: 95%;
+}
+
+.searchForm {
+  display: flex;
+  justify-content: space-around;
+}
+
 .footer {
   background-color: lightgray;
   width: 100%;

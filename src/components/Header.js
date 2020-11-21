@@ -18,25 +18,27 @@ function Header(props) {
   const space = '';
 
   return (
-    <header className="header">
-      <Link to="/perfil">
-        <input
-          type="image"
-          src={ profileIcon }
-          alt="icone do perfil"
-          data-testid="profile-top-btn"
-        />
-      </Link>
-      <h1 data-testid="page-title">{title}</h1>
-      {
-        (!search) ? <p>{ space }</p> : <input
-          type="image"
-          src={ searchIcon }
-          alt="icone de pesquisa"
-          data-testid="search-top-btn"
-          onClick={ handleClick }
-        />
-      }
+    <header>
+      <div className="header">
+        <Link to="/perfil">
+          <input
+            type="image"
+            src={ profileIcon }
+            alt="icone do perfil"
+            data-testid="profile-top-btn"
+          />
+        </Link>
+        <h1 data-testid="page-title">{title}</h1>
+        {
+          (!search) ? <p>{ space }</p> : <input
+            type="image"
+            src={ searchIcon }
+            alt="icone de pesquisa"
+            data-testid="search-top-btn"
+            onClick={ handleClick }
+          />
+        }
+      </div>
       {(hide === true) ? '' : <SearchBar />}
     </header>
   );
