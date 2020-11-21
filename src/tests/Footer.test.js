@@ -15,7 +15,7 @@ describe('Menu inferior', () => {
     expect(foodButton).toBeInTheDocument();
   });
 
-  it('20 - O menu apresenta os 3 botões corretamente: um para comidas, um para bebidas e outro para exploração ', () => {
+  it('O menu apresenta os 3 botões: comidas, bebidas e exploração ', () => {
     const { getByTestId } = render(<Footer />);
 
     const drinkIcon = getByTestId('drink-icon-svg');
@@ -25,21 +25,5 @@ describe('Menu inferior', () => {
     expect(drinkIcon).toBeInTheDocument();
     expect(exploreIcon).toBeInTheDocument();
     expect(foodIcon).toBeInTheDocument();
-  });
-
-  it.skip('21 - Exiba o menu inferior apenas nas telas indicadas pelo protótipo', () => {
-
-  });
-
-  it('22 - Redirecione a pessoa usuária para uma lista de cocktails ao clicar no ícone de bebidas', () => {
-
-  });
-
-  it('23 - Redirecione a pessoa usuária para a tela de explorar ao clicar no ícone de exploração', () => {
-
-  });
-
-  it('24 - Redirecione a pessoa usuárua para uma lista de comidas ao clicar no ícone de comidas', () => {
-
   });
 });
