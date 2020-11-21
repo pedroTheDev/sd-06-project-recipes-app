@@ -8,18 +8,21 @@ function Header({ title }) {
   return (
     <header>
       <button
-        data-testid="profile-top-btn"
         type="button"
       >
-        <img src={ searchIcon } alt="Search" />
+        <img
+          data-testid="search-top-btn"
+          src={ searchIcon }
+          alt="Search"
+        />
       </button>
       <h2 data-testid="page-title">{ title }</h2>
       <Link
         to="/perfil"
-        data-testid="search-top-btn"
         type="button"
       >
         <img
+          data-testid="profile-top-btn"
           src={ profileIcon }
           alt="Profile"
         />
