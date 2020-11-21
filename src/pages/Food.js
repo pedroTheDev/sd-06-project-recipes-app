@@ -1,34 +1,38 @@
 import React, { useContext, useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
 import Header from '../components/Header';
 import AppContext from '../context/AppContext';
+import useRequest from '../hooks/useRequest';
 
 function Food() {
-  const { setHeader, apiResponse } = useContext(AppContext);
+  const { setHeader, filter } = useContext(AppContext);
+  const apiResponse = useRequest();
+  const changeHeader = async () => {
+    await setHeader({ page: 'Comidas', search: true });
+  };
+  const maxShow = 12;
+
   useEffect(() => {
-    setHeader({ page: 'Comidas', search: true });
+    changeHeader();
   }, []);
 
   return (
     <div>
       <Header />
-      {apiResponse.map((food) => (
-        <div key={ food.idMeal }>
-          <h4>{food.strMeal}</h4>
-          <img src={ food.strMealThumb } alt={ food.strMeal } />
-        </div>
-      ))}
+      {apiResponse.length === 1
+        ? <Redirect to={ `/comidas/${apiResponse[0].idMeal}` } />
+        : apiResponse.filter((e, index) => e && index < maxShow).map((meal, index) => (
+          <div data-testid={ `${index}-recipe-card` } key={ meal.idMeal }>
+            <h4 data-testid={ `${index}-card-name` }>{meal.strMeal}</h4>
+            <img
+              data-testid={ `${index}-card-img` }
+              src={ meal.strMealThumb }
+              alt={ meal.strMeal }
+            />
+          </div>
+        ))}
     </div>
   );
 }
-
-// strMeal
-// :
-// "Brown Stew Chicken"
-// strMealThumb
-// :
-// "https://www.themealdb.com/images/media/meals/sypxpx1515365095.jpg"
-// idMeal
-// :
-// "52940"
 
 export default Food;
