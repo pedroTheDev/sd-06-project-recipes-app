@@ -7,4 +7,11 @@ export async function getAllDrinkTypesApi(type) {
   return result.drinks;
 }
 
-export default { getAllDrinkTypesApi };
+// Lista de receitas de Bebidas
+export async function getRecipeDrinksMealsApi() {
+  const response = await fetch(`${URL_BASE}search.php?s=`);
+  const result = await response.json();
+  return result.drinks;
+}
+
+export default { getAllDrinkTypesApi, getRecipeDrinksMealsApi };
