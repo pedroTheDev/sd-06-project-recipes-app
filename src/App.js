@@ -5,7 +5,7 @@ import Login from './pages/Login';
 import Recipes from './pages/Recipes';
 import Drinks from './pages/Drinks';
 import Explore from './pages/Explore';
-import MealExp from './pages/MealExp';
+import FoodExp from './pages/FoodExp';
 import DrinkExp from './pages/DrinkExp';
 import IngredientsMeal from './pages/IngredientsMeal';
 import IngredientsDrink from './pages/IngredientsDrink';
@@ -29,7 +29,7 @@ function App() {
           path="/explorar/bebidas/ingredientes"
           component={ IngredientsDrink }
         />
-        <Route exact path="/explorar/comidas" component={ MealExp } />
+        <Route exact path="/explorar/comidas" component={ FoodExp } />
         <Route exact path="/explorar/bebidas" component={ DrinkExp } />
         <Route exact path="/comidas" component={ Recipes } />
         <Route exact path="/bebidas" component={ Drinks } />

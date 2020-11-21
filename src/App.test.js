@@ -3,6 +3,7 @@ import { render, fireEvent, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import renderWithRouter from './tests/renderWithRouter';
 import App from './App';
+import Login from './pages/Login';
 
 // test('Farewell, front-end', () => {
 //   const { getByText } = render(<App />);
@@ -11,12 +12,11 @@ import App from './App';
 // });
 
 afterEach(cleanup);
-beforeEach(cleanup);
 
 describe('Tela de Login - todos os elementos devem respeitar os atributos', () => {
 
   it('O input email deve possuir o atributo data-testid correto', () => {
-    const { getByTestId } = renderWithRouter(<App />);
+    const { getByTestId } = render(<App />);
     const email = getByTestId('email-input');
     const password = getByTestId('password-input');
     const button = getByTestId('login-submit-btn');
@@ -30,7 +30,7 @@ describe('Tela de Login - todos os elementos devem respeitar os atributos', () =
 describe('Tela de Login - Formulario só será valido se ambos email e senha sejam validos', () => {
 
   it('O botão deve estar desativado se o email for invalido', () => {
-    const { getByTestId } = renderWithRouter(<App />);
+    const { getByTestId } = render(<App />);
     const email = getByTestId('email-input');
     const password = getByTestId('password-input');
     const button = getByTestId('login-submit-btn');
@@ -45,7 +45,7 @@ describe('Tela de Login - Formulario só será valido se ambos email e senha sej
   });
 
   it('O botão deve estar desativado se a senha tiver 6 ou menos caracteres', () => {
-    const { getByTestId } = renderWithRouter(<App />);
+    const { getByTestId } = render(<App />);
     const email = getByTestId('email-input');
     const password = getByTestId('password-input');
     const button = getByTestId('login-submit-btn');
@@ -60,7 +60,7 @@ describe('Tela de Login - Formulario só será valido se ambos email e senha sej
   });
 
   it('O botão deve estar desativado se o email for invalido', () => {
-    const { getByTestId } = renderWithRouter(<App />);
+    const { getByTestId } = render(<App />);
     const email = getByTestId('email-input');
     const password = getByTestId('password-input');
     const button = getByTestId('login-submit-btn');
@@ -76,17 +76,16 @@ describe('Tela de Login - Formulario só será valido se ambos email e senha sej
 });
 
 describe('Tela de Login - Salvar os Tokens no localStorage após o click', () => {
-  beforeEach(cleanup);
 
   it('Os tokens mealsToken e cocktailsToken devem ser 1', () => {
-    const { getByTestId } = renderWithRouter(<App />);
+    const { getByTestId } = render(<App />);
     const email = getByTestId('email-input');
     const password = getByTestId('password-input');
     const button = getByTestId('login-submit-btn');
 
     userEvent.type(email, 'requisito6@brabo.com');
     userEvent.type(password, 'CriatividadeEmFalta');
-    fireEvent.click(button);
+    userEvent.click(button);
 
     const meal = localStorage.getItem('mealsToken');
     const cocktail = localStorage.getItem('cocktailsToken');
@@ -97,10 +96,9 @@ describe('Tela de Login - Salvar os Tokens no localStorage após o click', () =>
 });
 
 describe('Tela de Login - Salvar o email no LocalStorage', () => {
-  beforeEach(cleanup);
 
   it('Após a click, o email deve ser salvo na chave user no formato { email: email-da-pessoa }', () => {
-    const a = renderWithRouter(<App />);
+    renderWithRouter(<App />);
 
     const local = localStorage.getItem('user');
 
@@ -109,7 +107,6 @@ describe('Tela de Login - Salvar o email no LocalStorage', () => {
 });
 
 // describe('Tela de Login - Após a validaçao do login, redirecione o usuario para a pagina de receitas', () => {
-  
 //   it('A rota deve mudar quando clickar no botão, e o caminho deve ser /comidas', () => {
 //     const { getByTestId, history } = renderWithRouter(<App />);
 
@@ -117,10 +114,10 @@ describe('Tela de Login - Salvar o email no LocalStorage', () => {
 //     const password = getByTestId('password-input');
 //     const button = getByTestId('login-submit-btn');
 
-//     userEvent.type(email, 'requisito8@brabo.com');
-//     userEvent.type(password, 'CriatividadeEmFalta');
-//     fireEvent.click(button);
+//     // userEvent.type(email, 'requisito6@brabo.com');
+//     // userEvent.type(password, 'CriatividadeEmFalta');
+//     userEvent.click(button);
 
-//     expect(history.location.pathname).toBe('/comidas');
+//     expect(history.location.pathname).toBe('/comidas')
 //   });
 // });

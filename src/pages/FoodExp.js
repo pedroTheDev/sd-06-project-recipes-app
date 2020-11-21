@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-function MealExp() {
+function FoodExp() {
   const FALSE = false;
   return (
     <div>
@@ -12,4 +12,4 @@ function MealExp() {
   );
 }
 
-export default MealExp;
+export default FoodExp;
