@@ -64,5 +64,18 @@
 .width360 {
   border: 1px solid black;
   width: 360px;
+  height: 640px;
   margin: 0 auto;
+}
+
+header, footer {
+  background-color: darkgray;
+  width: 360px;
+  display: flex;
+  justify-content: space-around;
+}
+
+footer {
+  position: fixed;
+  bottom: 0px;
 }
