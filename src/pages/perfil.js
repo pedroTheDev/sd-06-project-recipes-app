@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import Header from '../components/Header';
 
-class ReceitasComidas extends Component {
+class Perfil extends Component {
   render() {
     return (
       <div>
-        <Header title="Comidas" />
+        <Header title="Perfil" />
       </div>
     );
   }
 }
 
-export default ReceitasComidas;
+export default Perfil;
