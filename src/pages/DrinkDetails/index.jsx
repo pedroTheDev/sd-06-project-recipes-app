@@ -16,10 +16,13 @@ function DrinkDetails({ pageType }) {
   const [copiedLink, setCopiedLink] = useState(false);
 
   const { currentFocusedRecipes, loadSingleRecipe, loadingSingleRecipe } = useSingleRecipe();
+
   const { id } = useParams();
+
   const {
     cookedRecipes, startCooking, doneRecipes, recipesProgress,
   } = useCook();
+
   const { favoriteRecipes, updateFavoriteRecipes } = useRecipes();
 
   useEffect(() => {

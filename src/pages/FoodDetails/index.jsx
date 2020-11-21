@@ -18,8 +18,13 @@ function FoodDetails({ pageType }) {
   const {
     currentFocusedRecipes, loadSingleRecipe, loadingSingleRecipe,
   } = useSingleRecipe();
+
   const { id } = useParams();
-  const { cookedRecipes, startCooking, doneRecipes, recipesProgress } = useCook();
+
+  const {
+    cookedRecipes, startCooking, doneRecipes, recipesProgress,
+  } = useCook();
+
   const { favoriteRecipes, updateFavoriteRecipes } = useRecipes();
 
   useEffect(() => {

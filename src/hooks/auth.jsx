@@ -42,6 +42,11 @@ function AuthProvider({ children }) {
     setUserData({});
 
     localStorage.removeItem('user');
+    localStorage.removeItem('mealsToken');
+    localStorage.removeItem('cocktailsToken');
+    localStorage.removeItem('doneRecipes');
+    localStorage.removeItem('favoriteRecipes');
+    localStorage.removeItem('inProgressRecipes');
   }, []);
 
   return (

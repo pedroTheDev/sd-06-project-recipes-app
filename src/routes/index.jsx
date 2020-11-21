@@ -11,6 +11,7 @@ import DrinkInProgress from '../pages/DrinkInProgress';
 import Profile from '../pages/Profile';
 import DoneRecipes from '../pages/DoneRecipes';
 import Explore from '../pages/Explore';
+import Favorites from '../pages/Favorites';
 
 function Routes() {
   return (
@@ -24,6 +25,7 @@ function Routes() {
       <Route path="/bebidas/:id/in-progress" render={() => <DrinkInProgress pageType="Bebidas" />} />
       <Route path="/receitas-feitas" component={DoneRecipes} />
       <Route path="/perfil" component={Profile} />
+      <Route path="/receitas-favoritas" component={Favorites} />
       <Route path="/explorar" component={Explore} />
     </Switch>
   );
