@@ -1,15 +1,38 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import profileImage from '../images/profileIcon.svg';
 import searchButton from '../images/searchIcon.svg';
+import FetchApiBebidas from '../services/FetchApiBebidas';
+import FetchApiComidas from '../services/FetchApiComidas';
 
 function Header({ title }) {
   const [enableSearch, setEnableSearch] = useState(false);
+  const {
+    setValueRadioButton,
+    setRetornoApiComidas,
+    setRetornoApiBebidas,
+    valueRadioButton,
+    searchBar,
+  } = useContext(RecipesContext);
   const history = useHistory();
   function redirectProfile() {
     history.push('/perfil');
   }
+  const handleRadioClick = ({ target }) => {
+    setValueRadioButton(target.value);
+  };
+  const searchPrimeiraLetra = async () => {
+    if (valueRadioButton === 'primeira-letra' && searchBar.length > 1) {
+      alert('Sua busca deve conter somente 1 (um) caracter');
+    }
+    const urlPath = window.location.pathname;
+    if (urlPath.includes('comidas')) {
+      await FetchApiComidas(valueRadioButton, searchBar, setRetornoApiComidas);
+    } else {
+      await FetchApiBebidas(valueRadioButton, searchBar, setRetornoApiBebidas);
+    }
+  };
 
   function renderSearch() {
     setEnableSearch(!enableSearch);
@@ -38,28 +61,45 @@ function Header({ title }) {
       <br />
       <label htmlFor="ingrediente">
         <input
+          onClick={ handleRadioClick }
           data-testid="ingredient-search-radio"
           type="radio"
           id="ingrediente"
+          value="ingrediente"
           name="busca"
         />
         Ingrediente
       </label>
       <label htmlFor="nome">
-        <input data-testid="name-search-radio" type="radio" id="nome" name="busca" />
+        <input
+          onClick={ handleRadioClick }
+          data-testid="name-search-radio"
+          type="radio"
+          id="nome"
+          value="nome"
+          name="busca"
+        />
         Nome
       </label>
       <label htmlFor="primeira-letra">
         <input
+          onClick={ handleRadioClick }
           data-testid="first-letter-search-radio"
           type="radio"
           id="primeira-letra"
+          value="primeira-letra"
           name="busca"
         />
         Primeira Letra
       </label>
       <br />
-      <button data-testid="exec-search-btn" type="button">Buscar</button>
+      <button
+        onClick={ searchPrimeiraLetra }
+        data-testid="exec-search-btn"
+        type="button"
+      >
+        Buscar
+      </button>
     </header>
   );
 }
