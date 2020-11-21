@@ -9,43 +9,42 @@ function SearchBar() {
           data-testid="search-input"
           placeholder="Buscar Receita"
           className="searchInput"
-          data-testid="search-input"
         />
       </div>
       <form className="searchForm">
-      <label htmlFor="ingredient">
-        <input
-          type="radio"
-          name="search"
-          id="ingredient"
-          data-testid="ingredient-search-radio"
-        />
-        Ingrediente
-      </label>
-      <label htmlFor="name">
-        <input
-          type="radio"
-          name="search"
-          id="name"
-          data-testid="name-search-radio"
-        />
-        Nome
-      </label>
-      <label htmlFor="firstLetter">
-        <input
-          type="radio"
-          name="search"
-          id="firstLetter"
-          data-testid="first-letter-search-radio"
-        />
-        Primeira letra
-      </label>
-      <button
-        type="button"
-        data-testid="exec-search-btn"
-      >
-        Buscar
-      </button>
+        <label htmlFor="ingredient">
+          <input
+            type="radio"
+            name="search"
+            id="ingredient"
+            data-testid="ingredient-search-radio"
+          />
+          Ingrediente
+        </label>
+        <label htmlFor="name">
+          <input
+            type="radio"
+            name="search"
+            id="name"
+            data-testid="name-search-radio"
+          />
+          Nome
+        </label>
+        <label htmlFor="firstLetter">
+          <input
+            type="radio"
+            name="search"
+            id="firstLetter"
+            data-testid="first-letter-search-radio"
+          />
+          Primeira letra
+        </label>
+        <button
+          type="button"
+          data-testid="exec-search-btn"
+        >
+          Buscar
+        </button>
       </form>
     </div>
   );
