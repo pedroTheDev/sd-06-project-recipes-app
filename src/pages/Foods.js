@@ -6,7 +6,7 @@ export default function Foods() {
 
   return (
     <div>
-      <Header id="food" />
+      <Header id="comidas" />
     </div>
   );
 }

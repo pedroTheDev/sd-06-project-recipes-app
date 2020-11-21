@@ -10,7 +10,7 @@ export default function useSearch() {
 
   useEffect(() => {
     const { searchText, searchType, category } = filters;
-    const api = (category === 'food')
+    const api = (category === 'comidas')
       ? 'https://www.themealdb.com/api/json/v1/1/'
       : 'https://www.thecocktaildb.com/api/json/v1/1/';
 
