@@ -54,6 +54,6 @@ export default function Cards() {
     }
   }
   return (
-    <div>Oiiii</div>
+    <div>Faça uma busca</div>
   );
 }
