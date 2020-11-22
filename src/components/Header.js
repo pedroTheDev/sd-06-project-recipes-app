@@ -15,9 +15,9 @@ function Header() {
     setFilter({ ...inputs });
   };
   const alertFunction = () => {
-    // const alert = myCustomLib.customAlert;
     alert('Sua busca deve conter somente 1 (um) caracter');
   };
+
   return (
     <div>
       <header className="header">

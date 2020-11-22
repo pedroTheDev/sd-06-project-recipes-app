@@ -6,32 +6,45 @@ import AppContext from '../context/AppContext';
 import useRequest from '../hooks/useRequest';
 
 function Food() {
-  const { setHeader } = useContext(AppContext);
+  const { setHeader, filter, setFilter } = useContext(AppContext);
   const apiResponse = useRequest();
-  const changeHeader = async () => {
-    await setHeader({ page: 'Comidas', search: true });
-  };
   const maxShow = 12;
 
   useEffect(() => {
-    changeHeader();
+    setFilter({ text: '', option: '' });
+    setHeader({ page: 'Comidas', search: true });
   }, []);
 
   return (
     <div>
       <Header />
-      {apiResponse.length === 1
-        ? <Redirect to={ `/comidas/${apiResponse[0].idMeal}` } />
-        : apiResponse.filter((e, index) => e && index < maxShow).map((meal, index) => (
-          <div data-testid={ `${index}-recipe-card` } key={ meal.idMeal }>
-            <h4 data-testid={ `${index}-card-name` }>{meal.strMeal}</h4>
-            <img
-              data-testid={ `${index}-card-img` }
-              src={ meal.strMealThumb }
-              alt={ meal.strMeal }
-            />
-          </div>
-        ))}
+      <div
+        className="bodier"
+        style={ { display: filter.option === '' ? 'none' : 'flex' } }
+      >
+        {apiResponse.length === 1
+          ? <Redirect to={ `/comidas/${apiResponse[0].idMeal}` } />
+          : apiResponse.filter((e, index) => e && index < maxShow).map((meal, index) => (
+            <div
+              className="card"
+              data-testid={ `${index}-recipe-card` }
+              key={ meal.idMeal }
+            >
+              <h4
+                className="text"
+                data-testid={ `${index}-card-name` }
+              >
+                {meal.strMeal}
+              </h4>
+              <img
+                className="picture"
+                data-testid={ `${index}-card-img` }
+                src={ meal.strMealThumb }
+                alt={ meal.strMeal }
+              />
+            </div>
+          ))}
+      </div>
       <Footer />
     </div>
   );
