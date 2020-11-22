@@ -107,13 +107,13 @@ function Favorites() {
               {recipe.name}
             </Link>
 
-            {recipe.type === 'comida' && (
-              <p data-testid={`${index}-horizontal-top-text`}>{`${recipe.category} - ${recipe.area}`}</p>
-            )}
+            <p data-testid={`${index}-horizontal-top-text`}>
+              {recipe.type === 'comida' ? `${recipe.category} - ${recipe.area}` : `${recipe.category}`}
+            </p>
 
-            {recipe.type === 'comida' && (
-              // <p data-testid={`${index}-horizontal-area`}>{recipe.area}</p>
-            )}
+            {/* {recipe.type === 'comida' && (
+              <p data-testid={`${index}-horizontal-area`}>{recipe.area}</p>
+            )} */}
 
             {recipe.type === 'bebida' && (
               <p data-testid={`${index}-horizontal-alcoholic`}>{recipe.alcoholicOrNot}</p>
