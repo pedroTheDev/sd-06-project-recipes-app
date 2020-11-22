@@ -56,22 +56,26 @@ class FoodsDetails extends React.Component {
         {Meal ? Meal.map((recipe, index) => {
           console.log(Meal);
           return (
-            <div className="card detail-card" key={ index }>
+            <div className="detail-card" key={ index }>
               <img
                 src={ recipe.strMealThumb }
                 data-testid="recipe-photo"
                 alt="recipe-img"
               />
-              <div className="details-recipe-title-div">
-                <h1 data-testid="recipe-title">{recipe.strMeal}</h1>
-                <p data-testid="recipe-category">{recipe.strAlcoholic}</p>
-                <input type="image" src={ shareIcon } alt="shareIcon" />
-                <input type="image" src={ whiteHeartIcon } alt="whiteHeartIcon" />
+              <div className="details-title-div">
+                <div className="recipe-title">
+                  <h1 data-testid="recipe-title">{recipe.strMeal}</h1>
+                  <p data-testid="recipe-category">{recipe.strCategory}</p>
+                </div>
+                <div className="recipe-buttons">
+                  <input type="image" src={ shareIcon } alt="shareIcon" />
+                  <input type="image" src={ whiteHeartIcon } alt="whiteHeartIcon" />
+                </div>
               </div>
               <hr className="card-hr" />
               <h2>Ingredients</h2>
-              <div>
-                <ul>
+              <div className="ingredients">
+                <ul className="detail-ingredients">
                   {recipe.strIngredient1 || recipe.strMeasure1
                     ? <li>{`${recipe.strIngredient1} - ${recipe.strMeasure1}`}</li> : '' }
                   {recipe.strIngredient2 || recipe.strMeasure2

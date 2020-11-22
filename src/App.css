@@ -198,6 +198,7 @@ body {
   width: 100%;
   height: 70%;
   margin-bottom: 15px;
+  border-radius: 2px;
 }
 
 .card p {
@@ -213,19 +214,63 @@ body {
   display: flex;
 }
 
-.food-drink-detail-container {
+.detail-card {
+  margin: 50px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 300px;
+  max-width: 400px;
+  background-color: #ebe6e1;
+  border: 1px solid rgba(0, 0, 0, 0.350);
+  border-radius: 3px;
 }
 
-.detail-card {
-  margin: 150px auto 70px auto;
+.detail-card img {
+  width: 100%;
 }
 
 .detail-instructions {
+  width: 350px;
+  text-align: center;
+}
 
+.detail-ingredients {
+  width: 350px;
 }
 
 .profile-container {
   margin: 300px auto;
+}
+
+.details-title-div {
+  display: flex;
+  justify-content: space-between;
+  width: 370px;
+  font-weight: 100;
+  margin-top: 10px;
+}
+
+.details-title-div h1 {
+  margin: 0;
+  padding: 0;
+}
+
+.recipe-title {
+  position: relative;
+  width: 300px;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.recipe-buttons {
+  width: 70px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-around;
 }
 
 @media (max-width:600px) {
@@ -357,4 +402,37 @@ body {
     border-right: 1px solid rgba(0, 0, 0, 0.225);
   }
   
+  .detail-card {
+    width: 85%;
+  }
+
+  .details-title-div {
+    width: 95%;
+  }
+
+  .details-title-div h1 {
+    font-size: 25px;
+  }
+
+  .details-title-div p {
+    margin: 0;
+    padding: 0;
+  }
+
+  .recipe-buttons {
+    width: 70px;
+    margin-top: 10px;
+  }
+
+  .ingredients {
+    width: 90%;
+  }
+
+  .detail-ingredients {
+    width: 100%;
+  }
+
+  .detail-instructions {
+    width: 90%;
+  }
 }

@@ -56,22 +56,26 @@ class DrinksDetails extends React.Component {
         {Drink ? Drink.map((recipe, index) => {
           console.log(Drink);
           return (
-            <div className="card detail-card" key={ index }>
+            <div className="detail-card" key={ index }>
               <img
                 src={ recipe.strDrinkThumb }
                 data-testid="recipe-photo"
                 alt="recipe-img"
               />
-              <div className="details-recipe-title-div">
-                <h1 data-testid="recipe-title">{recipe.strDrink}</h1>
-                <p data-testid="recipe-category">{recipe.strAlcoholic}</p>
-                <input type="image" src={ shareIcon } alt="shareIcon" />
-                <input type="image" src={ whiteHeartIcon } alt="whiteHeartIcon" />
+              <div className="details-title-div">
+                <div className="recipe-title">
+                  <h1 data-testid="recipe-title">{recipe.strDrink}</h1>
+                  <p data-testid="recipe-category">{recipe.strAlcoholic}</p>
+                </div>
+                <div className="recipe-buttons">
+                  <input type="image" src={ shareIcon } alt="shareIcon" />
+                  <input type="image" src={ whiteHeartIcon } alt="whiteHeartIcon" />
+                </div>
               </div>
               <hr className="card-hr" />
               <h2>Ingredients</h2>
               <div>
-                <ul>
+                <ul className="detail-ingredients">
                   {recipe.strIngredient1 || recipe.strMeasure1
                     ? <li>{`${recipe.strIngredient1} - ${recipe.strMeasure1}`}</li> : '' }
                   {recipe.strIngredient2 || recipe.strMeasure2
@@ -93,7 +97,7 @@ class DrinksDetails extends React.Component {
                 </ul>
               </div>
               <h2 data-testid="instructions">Instructions</h2>
-              <div>{recipe.strInstructions}</div>
+              <div className="detail-instructions">{recipe.strInstructions}</div>
               <p data-testid={ `${index}-card-name` }>{recipe.strMeal}</p>
               <h2>Recomendadas</h2>
               <div className="slider">

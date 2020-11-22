@@ -73,3 +73,48 @@
   justify-content: center;
   width: 90%;
 }
+
+@media (min-width: 300px) {
+  .slider {
+    width: 95%;
+  }
+
+  .slide {
+    width: 50%;
+    height: 180px;
+  }
+
+  .slide img{
+    width: 125px;
+    height: 120px;
+  }
+}
+
+@media (min-width:350px) {
+  .slider {
+    width: 95%;
+  }
+
+  .slide {
+    width: 50%;
+    height: 180px;
+  }
+
+  .slide img{
+    width: 130px;
+    height: 120px;
+  }
+}
+
+@media (min-width: 400px) {
+
+  .slide {
+    width: 50%;
+    height: 200px;
+  }
+
+  .slide img{
+    width: 150px;
+    height: 145px;
+  }
+}
