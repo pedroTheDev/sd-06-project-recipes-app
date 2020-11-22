@@ -17,14 +17,16 @@ class Profile extends React.Component {
   }
 
   render() {
-    const { history } = this.props;
+    const { history, userEmail } = this.props;
+
     return (
-      <div>
+      <div className="profile-container">
         <Header history={ history } />
         <span
           data-testid="profile-email"
         >
           {JSON.parse(localStorage.getItem('user')).email}
+          {userEmail}
         </span>
         <button
           type="button"
@@ -35,6 +37,7 @@ class Profile extends React.Component {
         </button>
         <button
           type="button"
+          className=""
           data-testid="profile-favorite-btn"
           onClick={ () => history.push('/receitas-favoritas') }
         >
@@ -55,6 +58,11 @@ class Profile extends React.Component {
 
 Profile.propTypes = {
   history: PropTypes.shape().isRequired,
+  userEmail: PropTypes.string.isRequired,
 };
 
-export default connect(null, null)(Profile);
+const mapStateToProps = (state) => ({
+  userEmail: state.user.email,
+});
+
+export default connect(mapStateToProps, null)(Profile);

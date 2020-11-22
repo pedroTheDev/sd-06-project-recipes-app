@@ -79,6 +79,7 @@ class SearchInput extends React.Component {
   }
 
   render() {
+    // const { history: { location: { pathname } } } = this.props;
     return (
       <div className="toogle-search-input">
         <input

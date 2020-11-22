@@ -35,6 +35,36 @@ class Header extends React.Component {
         h1: 'Explorar',
       });
     }
+    if (pathname === '/explorar/comidas') {
+      this.setState({
+        h1: 'Explorar Comidas',
+      });
+    }
+    if (pathname === '/explorar/bebidas') {
+      this.setState({
+        h1: 'Explorar Bebidas',
+      });
+    }
+    if (pathname === '/explorar/comidas/ingredientes') {
+      this.setState({
+        h1: 'Explorar Ingredientes',
+      });
+    }
+    if (pathname === '/explorar/bebidas/ingredientes') {
+      this.setState({
+        h1: 'Explorar Ingredientes',
+      });
+    }
+    if (pathname === '/explorar/comidas/area') {
+      this.setState({
+        h1: 'Explorar Origem',
+      });
+    }
+    if (pathname === '/explorar/bebidas/area') {
+      this.setState({
+        h1: 'Explorar Origem',
+      });
+    }
     if (pathname === '/perfil') {
       this.setState({
         h1: 'Perfil',
@@ -72,6 +102,10 @@ class Header extends React.Component {
           <h1 id="header-h1" data-testid="page-title">{h1}</h1>
           <div className="search-input-div">
             {(pathname !== ('/explorar')
+              && pathname !== ('/explorar/comidas')
+              && pathname !== ('/explorar/bebidas')
+              && pathname !== ('/explorar/comidas/ingredientes')
+              && pathname !== ('/explorar/bebidas/ingredientes')
               && pathname !== ('/perfil')
               && pathname !== ('/receitas-feitas')
               && pathname !== ('/receitas-favoritas'))

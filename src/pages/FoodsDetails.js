@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Header } from '../components';
 import { fetchMealsById, fetchRecommendedMeals } from '../services';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
@@ -51,11 +50,9 @@ class FoodsDetails extends React.Component {
   }
 
   render() {
-    const { history } = this.props;
     const { Meal, RecommendedMeals, x } = this.state;
     return (
       <div className="food-drink-detail-container">
-        <Header history={ history } />
         {Meal ? Meal.map((recipe, index) => {
           console.log(Meal);
           return (
@@ -100,21 +97,23 @@ class FoodsDetails extends React.Component {
               <p data-testid={ `${index}-card-name` }>{recipe.strMeal}</p>
               <h2>Recomendadas</h2>
               <div className="slider">
-                {RecommendedMeals.map((recomend, i) => {
-                  return (
-                    <div key={ i } className="slide" style={ { transform: `translateX(${x}%)` } }>
-                      <img
-                        src={ recomend.strMealThumb }
-                        data-testid="recipe-photo"
-                        alt="recipe-img"
-                      />
-                      <div className="text-slider-div">
-                        <p>{recomend.strAlcoholic}</p>
-                        <h3>{recomend.strMeal}</h3>
-                      </div>
+                {RecommendedMeals.map((recomend, i) => (
+                  <div
+                    key={ i }
+                    className="slide"
+                    style={ { transform: `translateX(${x}%)` } }
+                  >
+                    <img
+                      src={ recomend.strMealThumb }
+                      data-testid="recipe-photo"
+                      alt="recipe-img"
+                    />
+                    <div className="text-slider-div">
+                      <p>{recomend.strAlcoholic}</p>
+                      <h3>{recomend.strMeal}</h3>
                     </div>
-                  );
-                })}
+                  </div>
+                ))}
               </div>
               <div className="slider-controls">
                 <button type="button" id="goLeft" onClick={ this.goLeft }>

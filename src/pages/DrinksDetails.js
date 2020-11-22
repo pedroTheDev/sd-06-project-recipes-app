@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Header } from '../components';
 import { fetchDrinksById, fetchRecommendedDrinks } from '../services';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
@@ -51,11 +50,9 @@ class DrinksDetails extends React.Component {
   }
 
   render() {
-    const { history } = this.props;
     const { Drink, RecommendedDrinks, x } = this.state;
     return (
       <div>
-        <Header history={ history } />
         {Drink ? Drink.map((recipe, index) => {
           console.log(Drink);
           return (
@@ -101,8 +98,13 @@ class DrinksDetails extends React.Component {
               <h2>Recomendadas</h2>
               <div className="slider">
                 {RecommendedDrinks.map((recomend, i) => {
+                  console.log('bla');
                   return (
-                    <div key={ i } className="slide" style={ { transform: `translateX(${x}%)` } }>
+                    <div
+                      key={ i }
+                      className="slide"
+                      style={ { transform: `translateX(${x}%)` } }
+                    >
                       <img
                         src={ recomend.strDrinkThumb }
                         data-testid="recipe-photo"
