@@ -25,10 +25,6 @@ class SearchInput extends React.Component {
   redirectFromState() {
     const { meals, drinks } = this.state;
     const { history } = this.props;
-    // if (meals !== null || drinks !== null) {
-    //   if (meals.length === 1) {
-    //     history.push(`/comidas/${meals[0].idMeal}`);
-    //   }
     if (meals !== null && meals.length === 1) {
       history.push(`/comidas/${meals[0].idMeal}`);
     }
@@ -83,6 +79,7 @@ class SearchInput extends React.Component {
   }
 
   render() {
+    // const { history: { location: { pathname } } } = this.props;
     return (
       <div className="toogle-search-input">
         <input
@@ -98,7 +95,6 @@ class SearchInput extends React.Component {
                 type="radio"
                 name="search-filter"
                 value="ingrediente"
-                checked
                 onChange={ (event) => this.searchHandleChange(event, 'radio') }
               />
               Ingrediente

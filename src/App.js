@@ -6,6 +6,7 @@ import {
   FoodsRecipesInProgress, DrinksRecipesInProgress,
 } from './pages';
 import './App.css';
+import './Slider.scss';
 
 function App() {
   return (
