@@ -50,14 +50,13 @@ function SearchProvider({ children }) {
       const fetchRecipes = fetchSearchOptions[type];
       const recipesSearched = await fetchRecipes(userSearch);
 
-      const firstItem = recipesSearched[0];
-
-      if (!firstItem) {
+      if (!recipesSearched) {
         alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
 
         return null;
       }
 
+      const firstItem = recipesSearched[0];
       const correctIDAccess = getID[type];
       const firstItemID = firstItem[correctIDAccess];
 

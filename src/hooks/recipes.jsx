@@ -41,8 +41,8 @@ function RecipeProvider({ children }) {
       const drinkCategories = await fetchDrinksCategories(userToken);
 
       const categories = {
-        Comidas: foodCategories,
-        Bebidas: drinkCategories,
+        comidas: foodCategories,
+        bebidas: drinkCategories,
       };
 
       setCurrentFilters(categories);
