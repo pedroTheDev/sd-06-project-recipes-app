@@ -1,33 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import fetchRecipes from '../helpers/APIRequests';
 
-function SearchInput() {
+function SearchInput({ pathname }) {
   const [inputText, setInputText] = useState('');
-  const [radionSearchType, setRadioSearchType] = useState('');
+  const [radioSearchType, setRadioSearchType] = useState('');
+  const [isFetchin, setIsFetchin] = useState(false);
+  const [recipes, setRecipes] = useState('');
 
-  const fetchAPI = async (endpoint) => {
-    const apiResponse = await (await fetch(endpoint)).json();
-    return apiResponse;
-  };
+  useEffect(() => {
+    async function fetchData() {
+      const recipesAPI = await fetchRecipes(pathname, inputText, radioSearchType);
+      setRecipes(recipesAPI);
+      setIsFetchin(false);
+    }
+    if (isFetchin) {
+      fetchData();
+    }
+  }, [isFetchin]);
 
-  const checkInputlength = (fetchApi, firstLetter) => (inputText.length > 1
-    ? alert('Sua busca deve conter somente 1 (um) caracter') : fetchApi(firstLetter));
-
-  const fetchData = () => {
-    const ingredients = `https://www.themealdb.com/api/json/v1/1/search.php?i=${inputText}`;
-    const name = `https://www.themealdb.com/api/json/v1/1/search.php?s=${inputText}`;
-    const firstLetter = `https://www.themealdb.com/api/json/v1/1/search.php?f=${inputText}`;
-
-    const ingredientTypes = {
-      ingredients: () => fetchAPI(ingredients),
-      name: () => fetchAPI(name),
-      firstLetter: () => checkInputlength(fetchAPI, firstLetter),
-    };
-
-    return ingredientTypes[radionSearchType];
-  };
+  useEffect(() => {
+  }, [recipes]);
 
   const handleSubmitSearch = () => {
-    fetchData();
+    setIsFetchin(true);
   };
 
   const renderSearchInput = () => (
@@ -35,7 +31,7 @@ function SearchInput() {
       onChange={ (event) => setInputText(event.target.value) }
       value={ inputText }
       placeholder="buscar receita"
-      data-testId="search-input"
+      data-testid="search-input"
       type="text"
     />
   );
@@ -72,7 +68,7 @@ function SearchInput() {
     <label htmlFor="first-letter">
       <input
         type="radio"
-        value="first-letter"
+        value="firstLetter"
         name="radio-search-button"
         id="first-letter"
         data-testid="first-letter-search-radio"
@@ -110,3 +106,7 @@ function SearchInput() {
 }
 
 export default SearchInput;
+
+SearchInput.propTypes = {
+  pathname: PropTypes.string.isRequired,
+};

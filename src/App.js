@@ -3,16 +3,17 @@ import './App.css';
 import { Switch, Route } from 'react-router-dom';
 import Login from './pages/Login';
 import Food from './pages/Food';
+import Cocktail from './pages/CockTail';
 
 function App() {
   return (
     <div className="App">
       <Switch>
         <Route path="/comidas" component={ Food } />
+        <Route path="/bebidas" component={ Cocktail } />
         <Route exact path="/" component={ Login } />
         {
         /*
-        <Route path="/bebidas" component={definir} />
         <Route path="/comidas/{id-da-receita}" component={definir} />
         <Route path="/comidas/{id-da-receita}/in-progress" component={definir} />
         <Route path="/bebidas/{id-da-receita}/in-progress" component={definir} />

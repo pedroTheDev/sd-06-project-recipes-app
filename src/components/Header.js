@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchInput from './SearchInput';
 
-function Header() {
+function Header({ pathname }) {
   const [toggleSearch, setToogleSearch] = useState(false);
 
   const renderProfileButton = () => (
@@ -27,11 +28,15 @@ function Header() {
   const renderSearchButton = () => (
     <button
       type="button"
-      data-testId="search-top-btn"
+      data-testid="search-top-btn"
       onClick={ () => setToogleSearch(!toggleSearch) }
     >
       <img src={ searchIcon } alt="search-icon" />
     </button>
+  );
+
+  const renderSearchInputComponent = () => (
+    toggleSearch ? <SearchInput pathname={ pathname } /> : null
   );
 
   return (
@@ -39,8 +44,12 @@ function Header() {
       {renderProfileButton()}
       {renderTitle()}
       {renderSearchButton()}
-      {toggleSearch ? <SearchInput /> : null }
+      {renderSearchInputComponent()}
     </div>);
 }
 
 export default Header;
+
+Header.propTypes = {
+  pathname: PropTypes.string.isRequired,
+};
