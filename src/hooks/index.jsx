@@ -6,6 +6,7 @@ import { SearchProvider } from './search';
 import { RecipeProvider } from './recipes';
 import { SingleRecipeProvider } from './singleRecipe';
 import { CookProvider } from './cook';
+import { ExploreProvider } from './explore';
 
 function AppProvider({ children }) {
   return (
@@ -14,7 +15,9 @@ function AppProvider({ children }) {
         <SingleRecipeProvider>
           <SearchProvider>
             <CookProvider>
-              {children}
+              <ExploreProvider>
+                {children}
+              </ExploreProvider>
             </CookProvider>
           </SearchProvider>
         </SingleRecipeProvider>

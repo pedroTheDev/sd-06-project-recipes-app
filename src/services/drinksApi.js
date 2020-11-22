@@ -12,7 +12,7 @@ const ID_KEY = 'lookup.php?i';
 
 const CATEGORIES_KEY_VALUE = 'list.php?c=list';
 // const AREA_KEY_VALUE = 'list.php?a=list';
-// const INGREDIENTS_KEY_VALUE = 'list.php?i=list';
+const INGREDIENTS_KEY_VALUE = 'list.php?i=list';
 
 export const searchOptions = {
   name: NAME_KEY,
@@ -74,4 +74,13 @@ export async function fetchRandomDrink(token) {
   const { idDrink } = randomDrink;
 
   return [idDrink, randomDrink];
+}
+
+export async function fetchDrinkIngredients(token) {
+  const urlToFetch = `${baseURL}/${token}/${INGREDIENTS_KEY_VALUE}`;
+
+  const data = await fetch(urlToFetch);
+  const { drinks: ingredients } = await data.json();
+
+  return ingredients;
 }

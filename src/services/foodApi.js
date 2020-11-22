@@ -5,15 +5,14 @@ const NAME_KEY = 'search.php?s'; // search bar
 const FIRST_LETTER_KEY = 'search.php?f'; // search bar
 const FILTER_INGREDIENTS_KEY = 'filter.php?i'; // search bar
 const FILTER_CATEGORIES_KEY = 'filter.php?c';
+const FILTER_AREA_KEY = 'filter.php?a';
 const RANDOM = 'random.php';
 
 const ID_KEY = 'lookup.php?i';
-// const INGREDIENTS_KEY = 'i';
-// const AREA_KEY = 'f';
 
 const CATEGORIES_KEY_VALUE = 'list.php?c=list';
-// const AREA_KEY_VALUE = 'list.php?a=list';
-// const INGREDIENTS_KEY_VALUE = 'list.php?i=list';
+const AREA_KEY_VALUE = 'list.php?a=list';
+const INGREDIENTS_KEY_VALUE = 'list.php?i=list';
 
 export const searchOptions = {
   name: NAME_KEY,
@@ -75,4 +74,31 @@ export async function fetchRandomMeal(token) {
   const { idMeal } = randomMeal;
 
   return [idMeal, randomMeal];
+}
+
+export async function fetchMealIngredients(token) {
+  const urlToFetch = `${baseURL}/${token}/${INGREDIENTS_KEY_VALUE}`;
+
+  const data = await fetch(urlToFetch);
+  const { meals: ingredients } = await data.json();
+
+  return ingredients;
+}
+
+export async function fetchFoodAreas(token) {
+  const urlToFetch = `${baseURL}/${token}/${AREA_KEY_VALUE}`;
+
+  const data = await fetch(urlToFetch);
+  const { meals: areas } = await data.json();
+
+  return areas;
+}
+
+export async function fetchFoodsByArea(area, token) {
+  const urlToFetch = `${baseURL}/${token}/${FILTER_AREA_KEY}=${area}`;
+
+  const data = await fetch(urlToFetch);
+  const { meals } = await data.json();
+
+  return meals;
 }

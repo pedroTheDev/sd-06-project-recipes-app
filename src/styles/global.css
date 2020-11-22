@@ -26,7 +26,8 @@ button {
 }
 
 .foods-container,
-.drinks-container {
+.drinks-container,
+.ingredients-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   row-gap: 20px;
@@ -36,7 +37,8 @@ button {
   padding: 0 40px;
 }
 
-.recipe-card {
+.recipe-card,
+.ingredient-card {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -46,7 +48,8 @@ button {
   padding-bottom: 15px;
 }
 
-.recipe-card img {
+.recipe-card img,
+.ingredient-card img {
   width: 100%;
   height: 30vh;
   object-fit: cover;

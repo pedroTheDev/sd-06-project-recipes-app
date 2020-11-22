@@ -7,6 +7,7 @@ import { useRecipes } from './recipes';
 
 import { fetchMealsSearch } from '../services/foodApi';
 import { fetchDrinksSearch } from '../services/drinksApi';
+import { useAuth } from './auth';
 
 const getID = {
   comidas: 'idMeal',
@@ -37,6 +38,7 @@ function SearchProvider({ children }) {
   const [infoSearched, setInfoSearched] = useState(initialSearchValues);
 
   const { updateRecipes } = useRecipes();
+  const { userToken } = useAuth();
 
   const appSearch = useCallback(async (type, { option, value, token }) => {
     const userSearch = { option, value, token };
@@ -70,9 +72,18 @@ function SearchProvider({ children }) {
     }
   }, [updateRecipes]);
 
+  const updateSearch = useCallback((type, { option, value }) => {
+    const userSearch = { option, value, token: userToken };
+
+    setInfoSearched((oldInfo) => ({
+      ...oldInfo,
+      [type]: userSearch,
+    }));
+  }, [userToken]);
+
   return (
     <searchContext.Provider value={{
-      appSearch, infoSearched,
+      appSearch, infoSearched, updateSearch,
     }}
     >
       {children}
