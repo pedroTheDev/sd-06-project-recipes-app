@@ -3,25 +3,26 @@ import { Redirect } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import AppContext from '../context/AppContext';
-import useRequest from '../hooks/useRequest';
+import useRequestFood from '../hooks/useRequestFood';
 
 function Food() {
-  const { setHeader, filter, setFilter } = useContext(AppContext);
-  const apiResponse = useRequest();
+  const { setHeader, options, setOptions } = useContext(AppContext);
+  const [apiResponse, setFilter] = useRequestFood();
   const maxShow = 12;
 
   useEffect(() => {
-    setFilter({ text: '', option: '' });
     setHeader({ page: 'Comidas', search: true });
+    return () => setOptions({ text: '', option: '' });
   }, []);
+
+  useEffect(() => {
+    setFilter(options);
+  }, [options]);
 
   return (
     <div>
       <Header />
-      <div
-        className="bodier"
-        style={ { display: filter.option === '' ? 'none' : 'flex' } }
-      >
+      <div className="bodier">
         {apiResponse.length === 1
           ? <Redirect to={ `/comidas/${apiResponse[0].idMeal}` } />
           : apiResponse.filter((e, index) => e && index < maxShow).map((meal, index) => (

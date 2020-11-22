@@ -4,13 +4,13 @@ import AppContext from '../context/AppContext';
 
 function AppProvider({ children }) {
   const [header, setHeader] = useState({ page: '', search: true });
-  const [filter, setFilter] = useState({ text: '', option: '' });
+  const [options, setOptions] = useState({ text: '', option: '' });
 
   const contextValue = {
     header,
     setHeader,
-    filter,
-    setFilter,
+    options,
+    setOptions,
   };
   return (
     <AppContext.Provider value={ contextValue }>
