@@ -1,0 +1,34 @@
+@import '../0.helpers/mixins';
+@import '../0.helpers/variables';
+
+@keyframes zoomin {
+  0% {
+    fill: yellow;
+  }
+  100% {
+    fill: yellowgreen;
+  }
+}
+
+.full-page-icon {
+  position: absolute;
+  @include flexBox(column);
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  background-color: $lightBlue1;
+
+  svg {
+    width: 50vw;
+    height: auto;
+
+    & #logo-circle {
+      fill: $lightBlue2; 
+      animation: zoomin, 2s, ease-in, 0, 1, normal, none
+    }
+
+    & #circle-shadow {
+      fill: $lightBlue3;
+    }
+  }
+}
