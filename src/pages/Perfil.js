@@ -4,7 +4,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import './Perfil.css';
 
-export default function Perfil() {
+function Perfil() {
   const { email } = JSON.parse(localStorage.getItem('user'));
 
   function handleExit() {
@@ -51,3 +51,5 @@ export default function Perfil() {
     </div>
   );
 }
+
+export default Perfil;
