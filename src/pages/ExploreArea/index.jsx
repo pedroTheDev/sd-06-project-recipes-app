@@ -52,11 +52,11 @@ function ExploreArea({ pageType }) {
     return foodsByArea;
   }, [currentRecipes]);
 
-  if (loadingAreas) {
-    return (
-      <p>Loading...</p>
-    );
-  }
+  // if (loadingAreas) {
+  //   return (
+  //     <p>Loading...</p>
+  //   );
+  // }
 
   return (
     <div className="explore-ingredients-page">
@@ -71,7 +71,7 @@ function ExploreArea({ pageType }) {
           onChange={handleAreaChange}
           data-testid="explore-by-area-dropdown"
         >
-          <option value="all">All</option>
+          <option value="all" data-testid="All-option">All</option>
           {foodAreas.map((area) => (
             <option
               key={area}
@@ -102,7 +102,7 @@ function ExploreArea({ pageType }) {
                   alt={meal.strMeal}
                   data-testid={`${index}-card-img`}
                 />
-                <strong>{meal.strMeal}</strong>
+                <strong data-testid={`${index}-card-name`}>{meal.strMeal}</strong>
               </Link>
             ))}
           </div>

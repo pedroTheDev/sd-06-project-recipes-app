@@ -11,16 +11,16 @@ import './styles.css';
 function Navbar() {
   return (
     <nav className="app-nav-bar" data-testid="footer">
-      <Link to="/bebidas" data-testid="drinks-bottom-btn">
-        <img src={drinkIcon} alt="drinks page" />
+      <Link to="/bebidas">
+        <img data-testid="drinks-bottom-btn" src={drinkIcon} alt="drinks page" />
       </Link>
 
-      <Link to="/explorar" data-testid="explore-bottom-btn">
-        <img src={exploreIcon} alt="explore page" />
+      <Link to="/explorar">
+        <img data-testid="explore-bottom-btn" src={exploreIcon} alt="explore page" />
       </Link>
 
-      <Link to="/comidas" data-testid="food-bottom-btn">
-        <img src={mealIcon} alt="meals page" />
+      <Link to="/comidas">
+        <img data-testid="food-bottom-btn" src={mealIcon} alt="meals page" />
       </Link>
     </nav>
   );

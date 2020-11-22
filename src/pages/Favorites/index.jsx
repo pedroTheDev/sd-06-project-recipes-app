@@ -108,11 +108,11 @@ function Favorites() {
             </Link>
 
             {recipe.type === 'comida' && (
-              <p data-testid={`${index}-horizontal-top-text`}>{recipe.category}</p>
+              <p data-testid={`${index}-horizontal-top-text`}>{`${recipe.category} - ${recipe.area}`}</p>
             )}
 
             {recipe.type === 'comida' && (
-              <p data-testid={`${index}-horizontal-area`}>{recipe.area}</p>
+              // <p data-testid={`${index}-horizontal-area`}>{recipe.area}</p>
             )}
 
             {recipe.type === 'bebida' && (
@@ -120,7 +120,11 @@ function Favorites() {
             )}
 
             <div className="done-recipe-share-container">
-              <button type="button" onClick={() => handleShareClick(recipe.id)}>
+              <button
+                type="button"
+                onClick={() => handleShareClick(recipe.id)}
+                data-testid={`${index}-horizontal-share-btn`}
+              >
                 <img src={shareIcon} alt="share this recipe" />
               </button>
 
@@ -129,7 +133,11 @@ function Favorites() {
               )}
             </div>
 
-            <button type="button" onClick={() => handleRecipeUnfavorite(recipe.id, recipe.type)}>
+            <button
+              type="button"
+              onClick={() => handleRecipeUnfavorite(recipe.id, recipe.type)}
+              data-testid={`${index}-horizontal-favorite-btn`}
+            >
               <img src={heartIcon} alt="unfavorite this recipe" />
             </button>
 
