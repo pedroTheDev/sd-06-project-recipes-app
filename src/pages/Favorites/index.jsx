@@ -58,7 +58,7 @@ function Favorites() {
   }, [updateFavoriteRecipes]);
 
   return (
-    <div className="done-recepis-page">
+    <div className="favorite-recipes-page">
       <Header pageName="Receitas Favoritas" />
 
       <div className="done-filters-container">
@@ -95,7 +95,7 @@ function Favorites() {
 
       <div className="done-recipes-container">
         {filteredItems.map((recipe, index) => (
-          <div className="done-recipe-card" key={recipe.doneDate.toLocaleString()}>
+          <div className="done-recipe-card" key={`${recipe.type}-${recipe.name}`}>
             <Link to={`/${recipe.type}s/${recipe.id}`}>
               <img src={recipe.image} alt={recipe.name} data-testid={`${index}-horizontal-image`} />
             </Link>

@@ -36,7 +36,7 @@ function Login() {
     const emailRegex = /\w+@(\w+\.)+\w+$/i;
     const emailIsValid = emailRegex.test(email);
 
-    const MIN_PW_LENGTH = 5;
+    const MIN_PW_LENGTH = 6;
     const passwordIsValid = password.length > MIN_PW_LENGTH;
 
     return (emailIsValid && passwordIsValid);

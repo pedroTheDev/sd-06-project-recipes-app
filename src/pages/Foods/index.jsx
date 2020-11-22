@@ -98,7 +98,12 @@ function Foods({ pageType }) {
             data-testid={`${index}-recipe-card`}
             key={meal.idMeal}
           >
-            <img src={meal.strMealThumb} alt={meal.strMeal} />
+            <img
+              src={meal.strMealThumb}
+              alt={meal.strMeal}
+              data-testid={`${index}-card-img`}
+
+            />
             <strong>{meal.strMeal}</strong>
           </Link>
         ))}

@@ -101,7 +101,11 @@ function Drinks({ pageType }) {
             data-testid={`${index}-recipe-card`}
             key={drink.idDrink}
           >
-            <img src={drink.strDrinkThumb} alt={drink.strDrink} />
+            <img
+              src={drink.strDrinkThumb}
+              alt={drink.strDrink}
+              data-testid={`${index}-card-img`}
+            />
             <strong>{drink.strDrink}</strong>
           </Link>
         ))}

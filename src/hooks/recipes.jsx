@@ -8,13 +8,13 @@ import { fetchFoodsCategories, fetchMealsByCategory } from '../services/foodApi'
 import { useAuth } from './auth';
 
 const recipesStructure = {
-  Comidas: [],
-  Bebidas: [],
+  comidas: [],
+  bebidas: [],
 };
 
 const fetchCategoryOptions = {
-  Comidas: fetchMealsByCategory,
-  Bebidas: fetchDrinksByCategory,
+  comidas: fetchMealsByCategory,
+  bebidas: fetchDrinksByCategory,
 };
 
 const recipesContext = createContext();

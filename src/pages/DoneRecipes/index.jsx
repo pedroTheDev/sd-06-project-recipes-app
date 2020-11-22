@@ -51,7 +51,7 @@ function DoneRecipes() {
   }, []);
 
   return (
-    <div className="done-recepis-page">
+    <div className="done-recipes-page">
       <Header pageName="Receitas Finalizadas" />
 
       <div className="done-filters-container">
@@ -110,10 +110,14 @@ function DoneRecipes() {
             {recipe.type === 'bebida' && (
               <p data-testid={`${index}-horizontal-alcoholic`}>{recipe.alcoholicOrNot}</p>
             )}
-            <p data-testid={`${index}-horizontal-done.date`}>{recipe.doneDate.toLocaleString()}</p>
+            <p data-testid={`${index}-horizontal-done-date`}>{recipe.doneDate.toLocaleString()}</p>
 
             <div className="done-recipe-share-container">
-              <button type="button" onClick={() => handleShareClick(recipe.id, recipe.type)}>
+              <button
+                type="button"
+                onClick={() => handleShareClick(recipe.id, recipe.type)}
+                data-testid={`${index}-horizontal-share-btn`}
+              >
                 <img src={shareIcon} alt="share this recipe" />
               </button>
 

@@ -6,8 +6,8 @@ import PropTypes from 'prop-types';
 import saveDoneRecipe from './utils/saveDoneRecipes';
 
 const cookRecipesStructure = {
-  Comidas: [],
-  Bebidas: [],
+  comidas: [],
+  bebidas: [],
 };
 
 const localStorageTrack = {
@@ -16,13 +16,13 @@ const localStorageTrack = {
 };
 
 const recipeIdOptions = {
-  Comidas: 'idMeal',
-  Bebidas: 'idDrink',
+  comidas: 'idMeal',
+  bebidas: 'idDrink',
 };
 
 const typeToKey = {
-  Comidas: 'meals',
-  Bebidas: 'cocktails',
+  comidas: 'meals',
+  bebidas: 'cocktails',
 };
 
 const cookContext = createContext();

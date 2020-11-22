@@ -9,17 +9,17 @@ import { fetchMealsSearch } from '../services/foodApi';
 import { fetchDrinksSearch } from '../services/drinksApi';
 
 const getID = {
-  Comidas: 'idMeal',
-  Bebidas: 'idDrink',
+  comidas: 'idMeal',
+  bebidas: 'idDrink',
 };
 
 const initialSearchValues = {
-  Comidas: {
+  comidas: {
     option: 'name',
     value: 'Chicken',
     token: '1',
   },
-  Bebidas: {
+  bebidas: {
     option: 'name',
     value: 'Martini',
     token: '1',
@@ -27,8 +27,8 @@ const initialSearchValues = {
 };
 
 const fetchSearchOptions = {
-  Comidas: fetchMealsSearch,
-  Bebidas: fetchDrinksSearch,
+  comidas: fetchMealsSearch,
+  bebidas: fetchDrinksSearch,
 };
 
 const searchContext = createContext();
@@ -63,7 +63,7 @@ function SearchProvider({ children }) {
 
       updateRecipes(type, recipesSearched);
 
-      return (recipesSearched.length === 1) ? firstItemID : null;
+      return firstItemID;
     } catch (err) {
       console.log(err);
 

@@ -8,7 +8,7 @@ import Navbar from '../../components/Navbar';
 import { useSingleRecipe } from '../../hooks/singleRecipe';
 
 function ExploreRecipes({ pageType }) {
-  const isFoodPage = useMemo(() => (pageType === 'Comidas'), [pageType]);
+  const isFoodPage = useMemo(() => (pageType === 'comidas'), [pageType]);
 
   const { loadRandomRecipe } = useSingleRecipe();
   const { push } = useHistory();
@@ -36,7 +36,7 @@ function ExploreRecipes({ pageType }) {
         to={`/explorar/${pageType}/ingredientes`}
         data-testid="explore-by-ingredient"
       >
-        Por ingredientes
+        Por Ingredientes
       </Link>
 
       {isFoodPage && (

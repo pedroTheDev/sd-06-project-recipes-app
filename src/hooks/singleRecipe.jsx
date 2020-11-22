@@ -8,45 +8,45 @@ import { fetchMealDetails, fetchMealsSearch, fetchRandomMeal } from '../services
 import { useAuth } from './auth';
 
 const singleRecipeStructure = {
-  Comidas: {
+  comidas: {
     recipe: {},
     recommendations: [],
   },
-  Bebidas: {
+  bebidas: {
     recipe: {},
     recommendations: [],
   },
 };
 
 const fetchSinglesOptions = {
-  Comidas: fetchMealDetails,
-  Bebidas: fetchDrinkDetails,
+  comidas: fetchMealDetails,
+  bebidas: fetchDrinkDetails,
 };
 
 const fetchRecommendationsOptions = {
-  Comidas: fetchMealsSearch,
-  Bebidas: fetchDrinksSearch,
+  comidas: fetchMealsSearch,
+  bebidas: fetchDrinksSearch,
 };
 
 const fetchRandomOptions = {
-  Comidas: fetchRandomMeal,
-  Bebidas: fetchRandomDrink,
+  comidas: fetchRandomMeal,
+  bebidas: fetchRandomDrink,
 };
 
 function invertType(type) {
-  const comidas = 'Comidas';
-  const bebidas = 'Bebidas';
+  const comidas = 'comidas';
+  const bebidas = 'bebidas';
 
   return (type === comidas) ? bebidas : comidas;
 }
 
 const recommendationsDefault = {
-  Comidas: {
+  comidas: {
     value: 'Chicken',
     token: '1',
     option: 'name',
   },
-  Bebidas: {
+  bebidas: {
     value: 'Martini',
     token: '1',
     option: 'name',

@@ -12,7 +12,7 @@ function Explore() {
 
       <Link
         to="/explorar/comidas"
-        data-testid="explore-foods"
+        data-testid="explore-food"
       >
         Explorar Comidas
 
