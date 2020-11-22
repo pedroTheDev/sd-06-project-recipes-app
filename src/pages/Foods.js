@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import Cards from '../components/Cards';
+import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Context from '../context/Context';
 
@@ -18,6 +19,7 @@ export default function Foods() {
       <Header id="comidas" />
       <Cards />
       {items ? handleAlert() : null}
+      <Footer />
     </div>
   );
 }

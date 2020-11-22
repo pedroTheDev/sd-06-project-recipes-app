@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import Header from '../components/Header';
 import Cards from '../components/Cards';
 import Context from '../context/Context';
+import Footer from '../components/Footer';
 
 export default function Drinks() {
   document.title = 'Drinks';
@@ -18,6 +19,7 @@ export default function Drinks() {
       <Header id="bebidas" />
       <Cards />
       {items ? handleAlert() : null}
+      <Footer />
     </div>
   );
 }
