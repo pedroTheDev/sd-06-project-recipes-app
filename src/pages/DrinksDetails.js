@@ -12,7 +12,10 @@ class DrinksDetails extends React.Component {
     this.state = {
       Drink: [],
       RecommendedDrinks: [],
+      x: 0,
     };
+    this.goLeft = this.goLeft.bind(this);
+    this.goRight = this.goRight.bind(this);
   }
 
   async componentDidMount() {
@@ -30,16 +33,33 @@ class DrinksDetails extends React.Component {
     });
   }
 
+  goLeft() {
+    const additionalX = 110;
+    const mintranslateX = 0;
+    const maxtranslateX = 440;
+    const { x } = this.state;
+    if (x === mintranslateX) this.setState({ x: x - maxtranslateX });
+    else this.setState({ x: x + additionalX });
+  }
+
+  goRight() {
+    const additionalX = 110;
+    const maxtranslateX = 440;
+    const { x } = this.state;
+    if (x === -maxtranslateX) this.setState({ x: x + maxtranslateX });
+    else this.setState({ x: x - additionalX });
+  }
+
   render() {
     const { history } = this.props;
-    const { Drink, RecommendedDrinks } = this.state;
+    const { Drink, RecommendedDrinks, x } = this.state;
     return (
       <div>
         <Header history={ history } />
         {Drink ? Drink.map((recipe, index) => {
           console.log(Drink);
           return (
-            <div className="card" key={ index }>
+            <div className="card detail-card" key={ index }>
               <img
                 src={ recipe.strDrinkThumb }
                 data-testid="recipe-photo"
@@ -79,20 +99,31 @@ class DrinksDetails extends React.Component {
               <div>{recipe.strInstructions}</div>
               <p data-testid={ `${index}-card-name` }>{recipe.strMeal}</p>
               <h2>Recomendadas</h2>
-              {RecommendedDrinks.map((recomend, i) => {
-                console.log('bla');
-                return (
-                  <div key={ i }>
-                    <img
-                      src={ recomend.strDrinkThumb }
-                      data-testid="recipe-photo"
-                      alt="recipe-img"
-                    />
-                    <p>{recomend.strAlcoholic}</p>
-                    <h3>{recomend.strDrink}</h3>
-                  </div>
-                );
-              })}
+              <div className="slider">
+                {RecommendedDrinks.map((recomend, i) => {
+                  return (
+                    <div key={ i } className="slide" style={ { transform: `translateX(${x}%)` } }>
+                      <img
+                        src={ recomend.strDrinkThumb }
+                        data-testid="recipe-photo"
+                        alt="recipe-img"
+                      />
+                      <div className="text-slider-div">
+                        <p>{recomend.strAlcoholic}</p>
+                        <h3>{recomend.strDrink}</h3>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="slider-controls">
+                <button type="button" id="goLeft" onClick={ this.goLeft }>
+                  <i className="fas fa-chevron-left" />
+                </button>
+                <button type="button" id="goRight" onClick={ this.goRight }>
+                  <i className="fas fa-chevron-right" />
+                </button>
+              </div>
             </div>
           );
         }) : null}

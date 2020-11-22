@@ -50,8 +50,26 @@ export function fetchDrinksById(endPoint) {
 }
 
 export function fetchRecommendedDrinks() {
+  const INITIAL_LENGTH = 0;
+  const MAX_LENGTH = 6;
   const variavel = fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=')
     .then((response) => response.json())
-    .then((response) => response.drinks);
+    .then((response) => response.drinks.slice(INITIAL_LENGTH, MAX_LENGTH));
+  return variavel;
+}
+
+export function fetchMealsById(endPoint) {
+  const variavel = fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${endPoint}`)
+    .then((response) => response.json())
+    .then((response) => response.meals);
+  return variavel;
+}
+
+export function fetchRecommendedMeals() {
+  const INITIAL_LENGTH = 0;
+  const MAX_LENGTH = 6;
+  const variavel = fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=')
+    .then((response) => response.json())
+    .then((response) => response.meals.slice(INITIAL_LENGTH, MAX_LENGTH));
   return variavel;
 }

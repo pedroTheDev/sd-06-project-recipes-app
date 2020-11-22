@@ -25,10 +25,6 @@ class SearchInput extends React.Component {
   redirectFromState() {
     const { meals, drinks } = this.state;
     const { history } = this.props;
-    // if (meals !== null || drinks !== null) {
-    //   if (meals.length === 1) {
-    //     history.push(`/comidas/${meals[0].idMeal}`);
-    //   }
     if (meals !== null && meals.length === 1) {
       history.push(`/comidas/${meals[0].idMeal}`);
     }

@@ -9,7 +9,6 @@ class Drinks extends React.Component {
     const INITIAL_LENGTH = 0;
     const MAX_LENGTH = 12;
     const newArray = stateDrinks.slice(INITIAL_LENGTH, MAX_LENGTH);
-
     return (
       <div className="food-drink-container">
         <Header history={ history } />

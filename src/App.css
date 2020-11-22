@@ -209,6 +209,21 @@ body {
   border: 0.3px solid rgba(97, 96, 96, 0.150);
 }
 
+.slider {
+  display: flex;
+}
+
+.food-drink-detail-container {
+}
+
+.detail-card {
+  margin: 150px auto 70px auto;
+}
+
+.detail-instructions {
+
+}
+
 @media (max-width:600px) {
   :root {
     background: url(https://ak.picdn.net/shutterstock/videos/14891857/thumb/1.jpg);
@@ -337,5 +352,5 @@ body {
     border-left: 1px solid rgba(0, 0, 0, 0.225);
     border-right: 1px solid rgba(0, 0, 0, 0.225);
   }
-
+  
 }
