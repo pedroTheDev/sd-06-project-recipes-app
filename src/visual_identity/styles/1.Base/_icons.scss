@@ -1,15 +1,6 @@
 @import '../0.helpers/mixins';
 @import '../0.helpers/variables';
 
-@keyframes zoomin {
-  0% {
-    fill: yellow;
-  }
-  100% {
-    fill: yellowgreen;
-  }
-}
-
 .full-page-icon {
   position: absolute;
   @include flexBox(column);
@@ -24,11 +15,48 @@
 
     & #logo-circle {
       fill: $lightBlue2; 
-      animation: zoomin, 2s, ease-in, 0, 1, normal, none
+      animation: zoomin 1.5s 1 ease;
+    }
+
+    & #book-left, #book, #book-right {
+      animation: appear 2.5s 1 ease-out;
+    }
+
+    & #book-marker {
+      animation: appear 3.5s 1 ease-out;
+    }
+
+    & #hat, #hat-rigth {
+      animation: appear 4s 1 ease;  
     }
 
     & #circle-shadow {
       fill: $lightBlue3;
+      animation: appear 4s 1 ease;
     }
   }
 }
+
+@keyframes zoomin {
+  0% {
+    transform: scale(0, 0);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
