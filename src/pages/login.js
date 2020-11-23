@@ -56,31 +56,41 @@ class Login extends Component {
   render() {
     const { email, password, isValid } = this.state;
     return (
-      <div>
-        <input
-          name="email"
-          data-testid="email-input"
-          type="email"
-          placeholder="Email"
-          value={ email }
-          onChange={ this.handleInput }
-        />
-        <input
-          name="password"
-          data-testid="password-input"
-          type="password"
-          placeholder="Password"
-          value={ password }
-          onChange={ this.handleInput }
-        />
-        <button
-          data-testid="login-submit-btn"
-          type="button"
-          disabled={ isValid }
-          onClick={ this.sendToRedux }
-        >
-          Submit
-        </button>
+      <div className="login-container">
+        <div className="email-container">
+          <input
+            className="login-input"
+            data-testid="email-input"
+            placeholder="Email"
+            name="email"
+            id="email"
+            type="text"
+            value={ email }
+            onChange={ this.handleInput }
+          />
+        </div>
+        <div className="password-container">
+          <input
+            className="login-input"
+            name="password"
+            data-testid="password-input"
+            type="password"
+            placeholder="Password"
+            value={ password }
+            onChange={ this.handleInput }
+          />
+        </div>
+        <div className="button-container">
+          <button
+            className="submit-button"
+            data-testid="login-submit-btn"
+            type="button"
+            disabled={ isValid }
+            onClick={ this.sendToRedux }
+          >
+            Submit
+          </button>
+        </div>
       </div>
     );
   }

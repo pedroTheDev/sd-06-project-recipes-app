@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import SearchBar from './SearchBar';
 
 class Header extends Component {
   constructor() {
@@ -11,9 +12,15 @@ class Header extends Component {
 
     this.state = {
       showSearchBar: false,
+      searchInput: '',
     };
 
     this.handleSearchBarButton = this.handleSearchBarButton.bind(this);
+    this.handleInput = this.handleInput.bind(this);
+  }
+
+  handleInput({ target: { name, value } }) {
+    this.setState({ [name]: value });
   }
 
   handleSearchBarButton() {
@@ -31,7 +38,7 @@ class Header extends Component {
 
   render() {
     const { title } = this.props;
-    const { showSearchBar } = this.state;
+    const { showSearchBar, searchInput } = this.state;
     return (
       <header>
         <div>
@@ -45,7 +52,14 @@ class Header extends Component {
         </div>
         {showSearchBar && (
           <div>
-            <input type="text" data-testid="search-input" />
+            <input
+              name="searchInput"
+              type="text"
+              data-testid="search-input"
+              value={ searchInput }
+              onChange={ this.handleInput }
+            />
+            <SearchBar title={ title } searchInput={ searchInput } />
           </div>
         )}
       </header>
