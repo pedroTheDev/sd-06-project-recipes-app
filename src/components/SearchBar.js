@@ -1,56 +1,73 @@
 import React, { useState, useContext } from 'react';
 import RecipesContext from '../context/RecipesContext';
 import HeaderContext from '../context/HeaderContext';
+import getMealInformation from '../services/mealAPI';
 
 function SearchBar() {
   const [searchRadioOption, setSearchRadioOption] = useState('');
-  const { setSelectedApiEndpoint } = useContext(RecipesContext);
+  const {
+    selectedApiEndpoint,
+    setSelectedApiEndpoint,
+    searchTerm,
+    setSearchTerm,
+  } = useContext(RecipesContext);
+
   const { title } = useContext(HeaderContext);
 
   const handleSearchRadioOption = ({ target: { value } }) => {
+    setSearchRadioOption(value);
     switch (value) {
     case 'first-letter':
-      if (value.length > 1) {
-        alert('Sua busca deve conter somente 1 (um) character');
-        break;
-      }
       if (title === 'Comidas') {
-        setSearchRadioOption(
-          `https://www.themealdb.com/api/json/v1/1/search.php?f=${value}`,
+        setSelectedApiEndpoint(
+          'https://www.themealdb.com/api/json/v1/1/search.php?f=',
         );
         break;
       }
-      setSearchRadioOption(
-        `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${value}`,
+      setSelectedApiEndpoint(
+        'https://www.thecocktaildb.com/api/json/v1/1/search.php?f=',
       );
       break;
     case 'ingredient':
       if (title === 'Comidas') {
-        setSearchRadioOption(
-          `https://www.themealdb.com/api/json/v1/1/filter.php?i=${value}`,
+        setSelectedApiEndpoint(
+          'https://www.themealdb.com/api/json/v1/1/filter.php?i=',
         );
         break;
       }
-      setSearchRadioOption(
-        `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${value}`,
+      setSelectedApiEndpoint(
+        'https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=',
       );
       break;
     default:
       if (title === 'Comidas') {
-        setSearchRadioOption(
-          `https://www.themealdb.com/api/json/v1/1/search.php?s=${value}`,
+        setSelectedApiEndpoint(
+          'https://www.themealdb.com/api/json/v1/1/search.php?s=',
         );
         break;
       }
-      setSearchRadioOption(
-        `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${value}`,
+      setSelectedApiEndpoint(
+        'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=',
       );
       break;
     }
   };
 
   const handleSearchSubmitOption = () => {
-    setSelectedApiEndpoint(searchRadioOption);
+    if (searchTerm.length !== 1 && searchRadioOption === 'first-letter') {
+      alert('Sua busca deve conter somente 1 (um) caracter');
+    } else {
+      if (!selectedApiEndpoint && title === 'Comidas') {
+        setSelectedApiEndpoint(
+          'https://www.themealdb.com/api/json/v1/1/search.php?s=',
+        );
+      } else if (!selectedApiEndpoint && title === 'Bebidas') {
+        setSelectedApiEndpoint(
+          'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=',
+        );
+      }
+      getMealInformation(selectedApiEndpoint + searchTerm);
+    }
   };
 
   return (
@@ -59,10 +76,11 @@ function SearchBar() {
         type="text"
         data-testid="search-input"
         placeholder="Buscar Receita"
+        value={ searchTerm }
+        onChange={ ({ target: { value } }) => setSearchTerm(value) }
       />
       <label htmlFor="ingredient-search-radio">
         Ingredientes
-        <input type="radio" />
         <input
           type="radio"
           name="search-radio"
@@ -85,7 +103,6 @@ function SearchBar() {
       </label>
       <label htmlFor="first-letter-search-radio">
         Primeira letra
-        <input type="radio" data-testid="first-letter-search-radio" />
         <input
           type="radio"
           name="search-radio"
@@ -97,6 +114,7 @@ function SearchBar() {
       </label>
       <button
         type="button"
+        data-testid="exec-search-btn"
         onClick={ handleSearchSubmitOption }
       >
         Buscar
