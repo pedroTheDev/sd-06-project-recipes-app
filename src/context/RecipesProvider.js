@@ -4,9 +4,12 @@ import RecipesContext from './RecipesContext';
 
 const RecipesProvider = ({ children }) => {
   const [selectedApiEndpoint, setSelectedApiEndpoint] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
   const providerValue = {
     selectedApiEndpoint,
     setSelectedApiEndpoint,
+    searchTerm,
+    setSearchTerm,
   };
   return (
     <RecipesContext.Provider value={ providerValue }>

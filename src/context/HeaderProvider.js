@@ -4,10 +4,13 @@ import HeaderContext from './HeaderContext';
 
 const HeaderProvider = ({ children }) => {
   const [title, setTitle] = useState('Login');
+  const [showsSearchBar, setShowsSearchBar] = useState(false);
 
   const headerValues = {
     title,
     setTitle,
+    showsSearchBar,
+    setShowsSearchBar,
   };
 
   return (

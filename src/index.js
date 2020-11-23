@@ -5,13 +5,16 @@ import './index.css';
 import App from './App';
 import LoginProvider from './context/LoginProvider';
 import HeaderProvider from './context/HeaderProvider';
+import RecipesProvider from './context/RecipesProvider';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <BrowserRouter>
     <LoginProvider>
       <HeaderProvider>
-        <App />
+        <RecipesProvider>
+          <App />
+        </RecipesProvider>
       </HeaderProvider>
     </LoginProvider>
   </BrowserRouter>,

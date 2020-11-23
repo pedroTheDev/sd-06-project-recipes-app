@@ -4,10 +4,13 @@ import searchIcon from '../images/searchIcon.svg';
 import profileIcon from '../images/profileIcon.svg';
 import './Header.css';
 import HeaderContext from '../context/HeaderContext';
+import SearchBar from './SearchBar';
 
 const Header = () => {
   const {
     title,
+    showsSearchBar,
+    setShowsSearchBar,
   } = useContext(HeaderContext);
 
   const handleSearchImage = () => {
@@ -21,6 +24,14 @@ const Header = () => {
     return false;
   };
 
+  const toggleSearchBar = () => {
+    if (showsSearchBar) {
+      setShowsSearchBar(false);
+    } else {
+      setShowsSearchBar(true);
+    }
+  };
+
   return (
     <div>
       <div className="main-header">
@@ -28,13 +39,24 @@ const Header = () => {
           <img src={ profileIcon } alt="Profile" data-testid="profile-top-btn" />
         </Link>
         <h1 data-testid="page-title">{ title }</h1>
-        { handleSearchImage() && <img
-          id="search-image"
-          data-testid="search-top-btn"
-          src={ searchIcon }
-          alt="Search"
-        /> }
+        {
+          handleSearchImage() && (
+            <button
+              type="button"
+              data-testid="search-top-btn"
+              onClick={ toggleSearchBar }
+              src={ searchIcon }
+            >
+              <img
+                src={ searchIcon }
+                id="search-image"
+                alt="Search"
+              />
+            </button>
+          )
+        }
       </div>
+      { showsSearchBar && <SearchBar /> }
     </div>
   );
 };
