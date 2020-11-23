@@ -7,12 +7,12 @@ const INITIAL_STATE = {
 
 function searchReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case SAVE_FOOD_SEARCH:
-      return { ...state, meals: action.meals };
-    case SAVE_DRINK_SEARCH:
-      return { ...state, drinks: action.drinks };
-    default:
-      return state;
+  case SAVE_FOOD_SEARCH:
+    return { ...state, meals: action.meals };
+  case SAVE_DRINK_SEARCH:
+    return { ...state, drinks: action.drinks };
+  default:
+    return state;
   }
 }
 

@@ -1,23 +1,28 @@
+/* eslint-disable no-alert */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import Header from '../components/Header';
-import MealCard from '../components/MealCard'
+import MealCard from '../components/MealCard';
+import Footer from '../components/Footer';
 
 function Comidas({ retrievedFood }) {
   const checkRequestSize = (request) => {
+    const noLength = 0;
+    const maxLength = 11;
     if (request === null) {
       alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
-    } else if (request.length === 0) {
+    } else if (request.length === noLength) {
       return null;
     } else if (request.length === 1) {
       const { idMeal } = request[0];
       return <Redirect to={ `/comidas/${idMeal}` } />;
     } else {
-      return request.map((meal, index) => {
-        return index <= 11 ? <MealCard meal={ meal } key={ meal.idmeal } index={ index } /> : null;
-      });
+      return request.map((meal, index) => (
+        index <= maxLength
+          ? <MealCard meal={ meal } key={ meal.idmeal } index={ index } />
+          : null));
     }
     return null;
   };
@@ -27,6 +32,7 @@ function Comidas({ retrievedFood }) {
       Comidas Page
       { checkRequestSize(retrievedFood) }
 
+      <Footer />
     </main>
   );
 }

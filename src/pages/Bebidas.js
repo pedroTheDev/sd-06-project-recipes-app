@@ -1,25 +1,28 @@
+/* eslint-disable no-alert */
 import React from 'react';
-import PropTypes, { array } from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import Header from '../components/Header';
 import DrinkCard from '../components/DrinkCard';
+import Footer from '../components/Footer';
 
 function Bebidas({ retrievedDrinks }) {
   const checkRequestSize = (request) => {
+    const noLength = 0;
+    const maxLength = 11;
     if (request === null) {
       alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
-    } else if (request.length === 0) {
+    } else if (request.length === noLength) {
       return null;
     } else if (request.length === 1) {
       const { idDrink } = request[0];
       return <Redirect to={ `/bebidas/${idDrink}` } />;
     } else {
-      //[3,4,5,6,7,8,9]
-    return request.map((drink, index) => {
-      return index <= 11 ? <DrinkCard drink={ drink } key={ drink.idDrink } index={ index } /> : null;
-      
-    });
+      return request.map((drink, index) => (
+        index <= maxLength
+          ? <DrinkCard drink={ drink } key={ drink.idDrink } index={ index } />
+          : null));
     }
     return null;
   };
@@ -29,6 +32,7 @@ function Bebidas({ retrievedDrinks }) {
       <Header pageName="Bebidas" renderSearch />
       Bebidas Page
       { checkRequestSize(retrievedDrinks) }
+      <Footer />
     </main>
   );
 }
