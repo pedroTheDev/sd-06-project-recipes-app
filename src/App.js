@@ -4,6 +4,8 @@ import Provider from './context/Provider';
 import Login from './pages/Login';
 import Foods from './pages/Foods';
 import Perfil from './pages/Perfil';
+import favoriteFoods from './pages/FavoriteFoods';
+import recipesMade from './pages/RecipesMade';
 
 function App() {
   return (
@@ -12,6 +14,8 @@ function App() {
         <Route exact path="/" component={Login} />
         <Route path="/comidas" component={Foods} />
         <Route path="/perfil" component={Perfil} />
+        <Route path="/receitas-feitas" component={recipesMade} />
+        <Route path="/receitas-favoritas" component={favoriteFoods} />
       </Switch>
     </Provider>
   );
