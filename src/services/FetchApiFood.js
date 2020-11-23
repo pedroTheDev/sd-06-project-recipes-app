@@ -1,4 +1,4 @@
-export default async function fetchApiFood(radioSelected, value, setData) {
+export default async function fetchApiFood(radioSelected, setData, value = '') {
   let endpoint;
   if (radioSelected === '1') {
     endpoint = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${value}`;
@@ -9,5 +9,5 @@ export default async function fetchApiFood(radioSelected, value, setData) {
   }
   const response = await fetch(endpoint);
   const responseJson = await response.json();
-  setData(responseJson);
+  setData(responseJson.meals);
 }
