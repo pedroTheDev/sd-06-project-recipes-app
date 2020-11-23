@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+// teste
 function MealCard(props) {
   const { meal: { strMealThumb, strMeal }, index } = props;
   console.log(index);
