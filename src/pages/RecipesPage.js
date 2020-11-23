@@ -12,6 +12,8 @@ class RecipesPage extends React.Component {
       categories: [],
       filter: '',
     };
+
+    this.setFilter = this.setFilter.bind(this);
   }
 
   componentDidMount() {
@@ -24,20 +26,39 @@ class RecipesPage extends React.Component {
     }
   }
 
+  componentDidUpdate() {
+    const { type } = this.state;
+    this.loadRecipes(type);
+  }
+
   setRecipesType(type) {
     this.setState({ type });
   }
 
+  setFilter({ target }) {
+    this.setState({ filter: target.value });
+  }
+
   async loadRecipes(type) {
+    const { filter } = this.state;
+    let recipes = {};
     if (type === 'cocktails') {
-      const recipes = await cocktailAPI.searchByName('');
+      if (filter !== '') {
+        recipes = await cocktailAPI.filterByCategory(filter);
+      } else {
+        recipes = await cocktailAPI.searchByName('');
+      }
       const categories = await cocktailAPI.listCategories();
       this.setState({
         recipes: recipes.drinks,
         categories: categories.drinks,
       });
     } else if (type === 'meals') {
-      const recipes = await mealAPI.searchByName('');
+      if (filter !== '') {
+        recipes = await mealAPI.filterByCategory(filter);
+      } else {
+        recipes = await mealAPI.searchByName('');
+      }
       const categories = await mealAPI.listCategories();
       this.setState({
         recipes: recipes.meals,
@@ -70,6 +91,7 @@ class RecipesPage extends React.Component {
                       type="button"
                       data-testid={ dataTestID }
                       value={ category.strCategory }
+                      onClick={ this.setFilter }
                     />
                   </div>
                 );
@@ -81,6 +103,7 @@ class RecipesPage extends React.Component {
                       type="button"
                       data-testid={ dataTestID }
                       value={ category.strCategory }
+                      onClick={ this.setFilter }
                     />
                   </div>
                 );
