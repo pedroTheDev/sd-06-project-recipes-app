@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
-// import '../Header/styles.css';
-import searchIcon from '/home/bestcpu/Trybe/sd-06-project-recipes-app/src/images/searchIcon.svg';
+import React, { useContext } from 'react';
+import searchIcon from '../../images/searchIcon.svg';
+import ContextAPI from '../../Context/ContextAPI';
 
 const IconSearch = () => {
-  const [icon, setIcon] = useState(false);
-
+  const { searchComponent, setSearchComponent } = useContext(ContextAPI);
   const searchBarDisplay = () => {
-    if (icon === false) {
-      setIcon(true);
-      document.getElementById('search-bar').style.display = 'none';
+    if (searchComponent === false) {
+      setSearchComponent(true);
     } else {
-      setIcon(false);
-      document.getElementById('search-bar').style.display = 'flex';
+      setSearchComponent(false);
     }
   };
 
   return (
-    <button onClick={() => searchBarDisplay()} type="button">
+    <button
+      onClick={() => searchBarDisplay()}
+      type="button"
+    >
       <img
-        date-testid="search-top-btn"
+        data-testid="search-top-btn"
         src={searchIcon}
         alt="IconSearch"
       />
