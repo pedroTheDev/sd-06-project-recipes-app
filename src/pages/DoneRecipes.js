@@ -1,14 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import Header from '../components/Header';
 
-export default function DoneRecipes(props) {
-  const { title } = props;
+export default function DoneRecipes() {
   return (
-    <Header title={ title } />
+    <div>Done Recipes</div>
   );
 }
-
-DoneRecipes.propTypes = {
-  title: PropTypes.string.isRequired,
-};

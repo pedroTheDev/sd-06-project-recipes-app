@@ -1,16 +1,11 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import Header from '../components/Header';
 import RevenueContext from '../context/RevenueContext';
-import Footer from '../components/Footer';
 
-export default function Profile(props) {
-  const { title } = props;
+export default function Profile() {
   const { email } = useContext(RevenueContext);
   return (
     <div>
-      <Header title={ title } />
       <span data-testid="profile-email">
         {email}
       </span>
@@ -35,16 +30,12 @@ export default function Profile(props) {
           <button
             data-testid="profile-logout-btn"
             type="button"
+            onClick={ () => localStorage.clear() }
           >
             Sair
           </button>
         </Link>
       </div>
-      <Footer />
     </div>
   );
 }
-
-Profile.propTypes = {
-  title: PropTypes.string.isRequired,
-};

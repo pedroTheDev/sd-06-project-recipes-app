@@ -1,27 +1,9 @@
-import React, { useContext, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import Header from '../components/Header';
-import RevenueContext from '../context/RevenueContext';
-import Footer from '../components/Footer';
+import React from 'react';
 
-export default function Foods(props) {
-  const { title } = props;
-  const { setSearchButton, setSearch } = useContext(RevenueContext);
-  useEffect(() => {
-    setSearchButton(false);
-    return () => {
-      setSearchButton(true);
-      setSearch(false);
-    };
-  }, []);
+export default function Foods() {
   return (
     <div>
-      <Header title={ title } />
-      <Footer />
+      Foods
     </div>
   );
 }
-
-Foods.propTypes = {
-  title: PropTypes.string.isRequired,
-};
