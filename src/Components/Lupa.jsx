@@ -1,17 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import searchImage from '../images/searchIcon.svg';
 
-export default function Lupa() {
+export default function Lupa({ onClick }) {
   return (
     <div>
-      <Link to="/explorar">
+      <button type="button" onClick={ onClick }>
         <img
           data-testid="search-top-btn"
           src={ searchImage }
           alt="search"
         />
-      </Link>
+      </button>
     </div>
   );
 }
+
+Lupa.propTypes = {
+  onClick: PropTypes.func.isRequired,
+};
