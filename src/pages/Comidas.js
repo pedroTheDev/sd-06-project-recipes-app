@@ -6,6 +6,7 @@ import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
 import ReceitasContext from '../context/ReceitasContext';
 import ComidaCard from '../components/ComidaCard';
+// import BotoesFiltrar from '../components/BotoesFiltrar';
 
 const Comidas = () => {
   const { searchBox } = useContext(ReceitasContext);
@@ -25,7 +26,10 @@ const Comidas = () => {
     <section>
       <Header title="Comidas" searchBtn />
       {searchBox && <SearchBar />}
-      {location.pathname === '/comidas' ? <Footer /> : null}
+      {location.pathname === '/comidas' ? <Footer /> : null }
+      <div>
+        {/* <BotoesFiltrar /> */}
+      </div>
       <div>
         {data.meals.filter((x, index) => index < doze)
           .map((food, i) => (<ComidaCard key={ food } food={ food } index={ i } />

@@ -3,28 +3,29 @@
 // import ReceitasContext from '../context/ReceitasContext';
 
 // const BotoesFiltrar = () => {
-//   // const { filtersData, setFiltersData } = useContext(ReceitasContext);
+//   const { filtersData, setFiltersData } = useContext(ReceitasContext);
 
-//   // function teste() {
-//   //   categoriesApi().then((response) => {});
-//   // }
-//   // teste();
+//   function teste() {
+//     categoriesApi().then((response) => {
+//       setFiltersData(response);
+//     });
+//   }
+//   teste();
 
+//   const cinco = 5;
 //   return (
 //     <div>
-//       {/* {filtersData.map((categ, i) =>
-//         i <= 4 ? (
+//       {filtersData.meals
+//         .filter((x, index) => index < cinco)
+//         .map((cat) => (
 //           <button
 //             type="button"
-//             key={categ.strCategory}
-//             data-testid={`${categ.strCategory}-category-filter`}
-//             onClick={handleClick}
-//             value={categ.strCategory}
+//             key={ cat.strCategory }
+//             data-testid={ `${cat.strCategory}-category-filter` }
 //           >
-//             {categ.strCategory}
+//             {cat.strCategory}
 //           </button>
-//         ) : null
-//       )} */}
+//         ))}
 //     </div>
 //   );
 // };
