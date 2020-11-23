@@ -1,14 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import Header from '../components/Header';
 
-export default function FavoriteRecipes(props) {
-  const { title } = props;
+export default function FavoriteRecipes() {
   return (
-    <Header title={ title } />
+    <div>Favorite Recipes</div>
   );
 }
-
-FavoriteRecipes.propTypes = {
-  title: PropTypes.string.isRequired,
-};
