@@ -38,38 +38,36 @@ function Login() {
   if (redirect) return <Redirect to="/comidas" />;
 
   return (
-    <>
+    <main className="flex-center full-height light-blue-bg">
+      <h1 id="app-name">iChef</h1>
       <Logo />
-      <main className="flex-center full-height">
-        <p>Login</p>
-        <div className="flex-center">
-          <input
-            type="email"
-            name="email"
-            value={ email }
-            placeholder="Email"
-            data-testid="email-input"
-            onChange={ (event) => handleInput(event) }
-          />
-          <input
-            type="password"
-            name="password"
-            value={ passwordInput }
-            placeholder="Senha"
-            data-testid="password-input"
-            onChange={ (event) => handleInput(event) }
-          />
-          <button
-            type="button"
-            data-testid="login-submit-btn"
-            onClick={ handleLoginClick }
-            disabled={ isDisabled }
-          >
-            Entrar
-          </button>
-        </div>
-      </main>
-    </>
+      <div id="login-form">
+        <input
+          type="email"
+          name="email"
+          value={ email }
+          placeholder="Email"
+          data-testid="email-input"
+          onChange={ (event) => handleInput(event) }
+        />
+        <input
+          type="password"
+          name="password"
+          value={ passwordInput }
+          placeholder="Senha"
+          data-testid="password-input"
+          onChange={ (event) => handleInput(event) }
+        />
+        <button
+          type="button"
+          data-testid="login-submit-btn"
+          onClick={ handleLoginClick }
+          disabled={ isDisabled }
+        >
+          Entrar
+        </button>
+      </div>
+    </main>
   );
 }
 
