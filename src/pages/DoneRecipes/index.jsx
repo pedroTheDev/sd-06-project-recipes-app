@@ -33,10 +33,10 @@ function DoneRecipes() {
     setFilter(filterClicked);
   }, []);
 
-  const handleShareClick = useCallback((id, type) => {
+  const handleShareClick = useCallback(async (id, type) => {
     const url = `http://localhost:3000/${type}s/${id}`;
 
-    window.navigator.clipboard.writeText(url);
+    await window.navigator.clipboard.writeText(url);
 
     const copiedRecipe = {
       [id]: true,
