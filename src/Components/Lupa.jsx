@@ -8,10 +8,10 @@ export default function Lupa() {
       <Link to="/explorar">
         <img
           data-testid="search-top-btn"
-          src={searchImage}
+          src={ searchImage }
           alt="search"
         />
-        </Link>
+      </Link>
     </div>
   );
 }
