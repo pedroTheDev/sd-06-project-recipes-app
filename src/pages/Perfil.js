@@ -13,7 +13,7 @@ function Perfil() {
 
   return (
     <div>
-      <Header />
+      <Header title="Perfil" />
       <div className="body-perfil">
         <p data-testid="profile-email">{email}</p>
 
