@@ -18,7 +18,7 @@ class DrinkCard extends React.Component {
     // pegando uma comida e uma bebida como exemplo
     // estas comidas/bebidas vão vir de outra tela
     // basta pegar do estado
-    const drinks = await fetchDrinksById('16986');
+    const drinks = await fetchDrinksById('178319');
     this.setDrinkState(drinks);
   }
 

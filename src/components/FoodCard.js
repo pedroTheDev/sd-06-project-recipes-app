@@ -18,7 +18,7 @@ class FoodCard extends React.Component {
     // pegando uma comida e uma bebida como exemplo
     // estas comidas/bebidas vão vir de outra tela
     // basta pegar do estado
-    const foods = await fetchMealsById('52898');
+    const foods = await fetchMealsById('52771');
     this.setFoodState(foods);
   }
 
@@ -81,13 +81,6 @@ class FoodCard extends React.Component {
                 { `${tag} `}
               </span>
             ))}
-            {/*
-            <span key={ 0 } data-testid={ `${0}-${element.strTags[0]}-horizontal-tag` }>
-              { element.strTags[0] }
-            </span>
-            <span key={ 1 } data-testid={ `${1}-${element.strTags[1]}-horizontal-tag` }>
-              { element.strTags[1] }
-            </span> */}
 
             <input
               type="image"
