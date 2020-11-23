@@ -20,6 +20,10 @@ import DrinkInProgress from '../pages/DrinkInProgress';
 import AppProvider from '../provider/AppProvider';
 
 describe('testando os elementos do header na tela principal de receitas', () => {
+  beforeAll(() => {
+    const email = 'email@email.com';
+    localStorage.user = JSON.stringify({ email });
+  });
   it('O header tem os ícones corretos na tela de principal de receitas de comida', () => {
     const { getByTestId } = renderWithRouter(
       <AppProvider>

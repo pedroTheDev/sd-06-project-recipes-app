@@ -19,6 +19,10 @@ import DrinkInProgress from '../pages/DrinkInProgress';
 import AppProvider from '../provider/AppProvider';
 
 describe('testando os elementos do footer na tela principal de receitas', () => {
+  beforeAll(() => {
+    const email = 'email@email.com';
+    localStorage.user = JSON.stringify({ email });
+  });
   it('O footer tem os ícones corretos na tela de principal de receitas de comida', () => {
     const { getByTestId } = renderWithRouter(
       <AppProvider>
