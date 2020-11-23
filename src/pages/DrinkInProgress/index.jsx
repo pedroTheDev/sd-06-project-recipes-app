@@ -1,4 +1,6 @@
-import React, { useMemo, useState, useCallback } from 'react';
+import React, {
+  useMemo, useState, useCallback, useEffect,
+} from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -13,7 +15,7 @@ function DrinkInProgress({ pageType }) {
   const [copiedLink, setCopiedLink] = useState(false);
 
   const {
-    cookedRecipes, recipesProgress, updateRecipeProgress, finalizeRecipe,
+    cookedRecipes, recipesProgress, updateRecipeProgress, finalizeRecipe, loadRecipeToCook,
   } = useCook();
 
   const { id } = useParams();
@@ -27,6 +29,16 @@ function DrinkInProgress({ pageType }) {
 
     setCopiedLink(true);
   }, [id]);
+
+  useEffect(() => {
+    const recipeToCook = cookedRecipes[pageType].find(({ recipe }) => (
+      recipe.idDrink === id
+    ));
+
+    if (!recipeToCook) {
+      loadRecipeToCook(pageType, id);
+    }
+  }, []);
 
   const currentlyCooking = useMemo(() => {
     const recipeToCook = cookedRecipes[pageType].find(({ recipe }) => (

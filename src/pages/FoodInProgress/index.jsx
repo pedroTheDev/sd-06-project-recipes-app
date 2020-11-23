@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 
 import { useCook } from '../../hooks/cook';
 import { useRecipes } from '../../hooks/recipes';
-import { useSingleRecipe } from '../../hooks/singleRecipe';
 
 import shareIcon from '../../images/shareIcon.svg';
 import blackHeart from '../../images/blackHeartIcon.svg';
