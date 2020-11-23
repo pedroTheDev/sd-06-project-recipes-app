@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import RecipeContext from '../context/RecipeContext';
 import './Drink.css';
 
 function Drink() {
+  const { setDrinkAPI } = useContext(RecipeContext);
+
   const [drinks, setDrinks] = useState([]);
   const [categories, setCategories] = useState([]);
   const [currentCategories, setCurrentCategories] = useState('');
@@ -20,6 +23,7 @@ function Drink() {
       const APIResponse = await APIRequest.json();
       if (APIResponse !== null) {
         setDrinks(APIResponse.drinks);
+        setDrinkAPI(APIResponse.drinks);
       }
     };
     fecthDrinks();

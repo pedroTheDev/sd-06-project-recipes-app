@@ -1,7 +1,11 @@
-async function fetchRecipe(url) {
+export async function fetchRecipe(url) {
   const response = await fetch(url);
   const recipe = await response.json();
   return recipe;
 }
 
-export default fetchRecipe;
+export async function fetchRecommended(url) {
+  const response = await fetch(url);
+  const recommended = await response.json();
+  return recommended;
+}

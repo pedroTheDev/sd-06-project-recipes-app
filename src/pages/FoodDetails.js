@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import fetchRecipe from '../services/api';
+import { useLocation } from 'react-router-dom';
+import { fetchRecipe } from '../services/api';
+import './FoodDetails.css';
 
 function FoodDetails() {
   const [recipe, setRecipe] = useState({ recipe: { } });
   const [isFetching, setIsFetching] = useState(true);
-
-  const url = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=52772';
+  const sliceNumber = 9;
+  const itemId = useLocation().pathname.slice(sliceNumber);
+  const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${itemId}`;
 
   useEffect(() => {
     (async () => {

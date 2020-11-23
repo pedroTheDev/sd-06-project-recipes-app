@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import fetchRecipe from '../services/api';
+import { useLocation } from 'react-router-dom';
+import { fetchRecipe } from '../services/api';
+
+import './DrinkDetails.css';
 
 function DrinkDetails() {
   const [recipe, setRecipe] = useState({ recipe: { } });
   const [isFetching, setIsFetching] = useState(true);
-
-  const url = 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=11007';
+  const sliceNumber = 9;
+  const itemId = useLocation().pathname.slice(sliceNumber);
+  const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${itemId}`;
 
   useEffect(() => {
     (async () => {

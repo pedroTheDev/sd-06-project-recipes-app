@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import RecipeContext from '../context/RecipeContext';
 import './Food.css';
 
 function Food() {
+  const { setFoodAPI } = useContext(RecipeContext);
+
   const [meals, setMeals] = useState([]);
   const [categories, setCategories] = useState([]);
   const [currentCategories, setCurrentCategories] = useState('');
   const [currentMeals, setCurrentMeals] = useState([]);
-
   const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
   const urlCategories = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
   const urlMealsCategories = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${currentCategories}`;
@@ -20,6 +22,7 @@ function Food() {
       const APIResponse = await APIRequest.json();
       if (APIResponse !== null) {
         setMeals(APIResponse.meals);
+        setFoodAPI(APIResponse.meals);
       }
     };
     fecthMeals();
