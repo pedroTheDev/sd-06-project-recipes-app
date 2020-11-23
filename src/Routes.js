@@ -14,6 +14,7 @@ import IngredientFoods from './pages/IngredientFoods';
 import ExploreDrinks from './pages/ExploreDrinks';
 import Explore from './pages/Explore';
 import OriginFoods from './pages/OriginFoods';
+import Footer from './components/Footer';
 
 const Routes = () => {
   const { title } = useContext(HeaderContext);
@@ -27,10 +28,19 @@ const Routes = () => {
     }
     return true;
   };
+  const handleFooter = () => {
+    if (title === 'Comidas' || title === 'Explorar' || title === 'Explorar Comidas'
+      || title === 'Explorar Ingredientes' || title === 'Explorar Origem'
+      || title === 'Perfil' || title === 'Bebidas'
+      || title === 'Explorar Bebidas' || title === 'Explorar Comidas') {
+      return true;
+    }
+    return false;
+  };
 
   return (
     <main>
-      { handleHeader() && <Header /> }
+      { handleHeader() && <Header />}
       <Switch>
         <Route exact path="/" component={ Login } />
         <Route path="/explorar/comidas/ingredientes" component={ IngredientFoods } />
@@ -47,6 +57,7 @@ const Routes = () => {
         <Route path="/receitas-feitas" component={ DoneRecipes } />
         <Route path="/receitas-favoritas" component={ FavoriteRecipes } />
       </Switch>
+      {handleFooter() && <Footer />}
     </main>
   );
 };
