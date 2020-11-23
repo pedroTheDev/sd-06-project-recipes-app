@@ -75,18 +75,19 @@ class FoodCard extends React.Component {
             <p data-testid={ `${index}-horizontal-done-date` }>
               {element.dateModified}
             </p>
-            {/* {element.strTags.split(',').map((tag, i) => (
+
+            {element.strTags.split(',').map((tag, i) => (
               <span key={ i } data-testid={ `${i}-${tag}-horizontal-tag` }>
                 { `${tag} `}
               </span>
-            ))} */}
-
+            ))}
+            {/*
             <span key={ 0 } data-testid={ `${0}-${element.strTags[0]}-horizontal-tag` }>
               { element.strTags[0] }
             </span>
             <span key={ 1 } data-testid={ `${1}-${element.strTags[1]}-horizontal-tag` }>
               { element.strTags[1] }
-            </span>
+            </span> */}
 
             <input
               type="image"
