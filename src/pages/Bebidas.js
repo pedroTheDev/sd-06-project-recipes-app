@@ -1,11 +1,12 @@
 import React from 'react';
-// import { Header } from '../components/';
-import Header from '../components/Header';
+import { Header, Footer } from '../components';
+import '../style/Bebidas.css';
 
 function Bebidas() {
   return (
-    <div>
+    <div className="drink">
       <Header title="Bebidas" />
+      <Footer />
     </div>
   );
 }

@@ -1,15 +1,47 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import '../style/Header.css';
+import RecipesCards from './RecipesCards';
 
 function Header({ title }) {
   const [searchBar, setSearchBar] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [inputRecipe, setInputRecipe] = useState('');
   const [radioValue, setRadioValue] = useState('i');
   const [data, setData] = useState([]);
+  const history = useHistory();
+  const DOZE = 12;
+
+  useEffect(() => {
+    if (data.meals || data.drinks) {
+      setLoading(false);
+    }
+  }, [data]);
+
+  const onlyOne = (recipe) => {
+    if (title === 'Comidas') {
+      if (recipe.meals.length === 1) {
+        return history.push(
+          {
+            pathname: `/comidas/${recipe.meals[0].idMeal}`,
+            state: { recipe: recipe.meals[0] },
+          },
+        );
+      }
+      return;
+    }
+    if (recipe.drinks.length === 1) {
+      return history.push(
+        {
+          pathname: `/bebidas/${recipe.drinks[0].idDrink}`,
+          state: { recipe: recipe.drinks[0] },
+        },
+      );
+    }
+  };
 
   const searchFood = async () => {
     if (title === 'Comidas') {
@@ -21,6 +53,7 @@ function Header({ title }) {
             'Sinto muito, não encontramos nenhuma receita para esses filtros.',
           );
         }
+        onlyOne(responseJson);
         return setData(responseJson);
       }
       if (radioValue === 'f' && inputRecipe.length !== 1) {
@@ -33,6 +66,7 @@ function Header({ title }) {
           'Sinto muito, não encontramos nenhuma receita para esses filtros.',
         );
       }
+      onlyOne(responseJson);
       return setData(responseJson);
     }
 
@@ -44,6 +78,7 @@ function Header({ title }) {
           'Sinto muito, não encontramos nenhuma receita para esses filtros.',
         );
       }
+      onlyOne(responseJson);
       return setData(responseJson);
     }
     if (radioValue === 'f' && inputRecipe.length !== 1) {
@@ -56,6 +91,7 @@ function Header({ title }) {
         'Sinto muito, não encontramos nenhuma receita para esses filtros.',
       );
     }
+    onlyOne(responseJson);
     return setData(responseJson);
   };
 
@@ -130,6 +166,26 @@ function Header({ title }) {
             </button>
           </div>)
       }
+      {!loading && title === 'Comidas' && data.meals.filter((_, index) => index < DOZE)
+        .map((recipe, index) => (
+          <RecipesCards
+            key={ index }
+            title={ title }
+            recipe={ recipe }
+            index={ index }
+          />
+        )) }
+
+      {!loading && title === 'Bebidas' && data.drinks.filter((_, index) => index < DOZE)
+        .map((recipe, index) => (
+          <RecipesCards
+            key={ index }
+            title={ title }
+            recipe={ recipe }
+            index={ index }
+          />
+        )) }
+
     </header>
   );
 }

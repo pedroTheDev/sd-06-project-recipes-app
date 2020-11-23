@@ -1,11 +1,12 @@
 import React from 'react';
-// import { Header } from '../components/';
-import Header from '../components/Header';
+import { Header, Footer } from '../components';
+import '../style/Comidas.css';
 
 function Comidas() {
   return (
-    <div>
+    <div className="food">
       <Header title="Comidas" />
+      <Footer />
     </div>
   );
 }
