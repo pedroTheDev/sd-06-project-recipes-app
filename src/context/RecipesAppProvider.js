@@ -3,15 +3,12 @@ import propTypes from 'prop-types';
 import recipesAppContext from './recipesAppContext';
 
 function RecipesAppProvider({ children }) {
-  const INITIAL_SEARCHBAR = {
-    searchBar: false,
-  }
 
-  const [searchBar, setsearchBar] = useState({ ...INITIAL_SEARCHBAR });
+  const [searchBar, setSearchBar] = useState(false);
 
   const contextValue = {
     searchBar,
-    setsearchBar,
+    setSearchBar,
   };
   return (
     <recipesAppContext.Provider value={ contextValue }>

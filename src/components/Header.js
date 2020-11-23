@@ -1,10 +1,11 @@
-import React, { Component, useContext } from 'react';
+import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import SearchBar from './SearchBar';
-import { profileIcon } from '../images';
-// import { Link } from 'react-router-dom';
+import { profileIcon, searchIcon } from '../images';
+import { Link } from 'react-router-dom';
 
 export default class Header extends Component {
+
   constructor(){
     super();
     this.handleSearchBar = this.handleSearchBar.bind(this);
@@ -12,7 +13,6 @@ export default class Header extends Component {
       searchBar: false,
     }
   }
-  const { searchBar, setsearchBar } = useContext(recipesAppContext);
   
   handleSearchBar() {
     this.setState(prevState => ({
@@ -21,20 +21,23 @@ export default class Header extends Component {
   }
 
   render() {
-    const { className, pageTitle, BtnSearchBar } = this.props;
+    const { className, pageTitle } = this.props;
     return (
       <div>
         <header
         name="header"
         className={ className }
       >
-        {/* <Link to="/perfil"> */}
+        <Link to="/perfil">
           <button type="button" data-testid="profile-top-btn">
             <img alt="Ícone de Perfil" src={ profileIcon } />
           </button>
-        {/* </Link> */}
+        </Link>
         <h1 data-testid="page-title">{ pageTitle }</h1>
-        { BtnSearchBar && <BtnSearchBar handleSearchBar={ this.handleSearchBar } /> }
+        {/* { BtnSearchBar && <BtnSearchBar /> } */}
+        <button type="button" data-testid="search-top-btn" onClick={ this.handleSearchBar } >
+        <img alt="ícone de Pesquisa" src={ searchIcon } />
+      </button>
       </header>
       { this.state.searchBar && <SearchBar /> }
       </div>
