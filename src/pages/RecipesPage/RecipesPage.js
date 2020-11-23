@@ -14,6 +14,7 @@ class RecipesPage extends React.Component {
     };
 
     this.setFilter = this.setFilter.bind(this);
+    this.setFilterAll = this.setFilterAll.bind(this);
   }
 
   componentDidMount() {
@@ -36,7 +37,14 @@ class RecipesPage extends React.Component {
   }
 
   setFilter({ target }) {
-    this.setState({ filter: target.value });
+    const { filter } = this.state;
+    if (filter !== target.value) {
+      this.setState({ filter: target.value });
+    } else this.setState({ filter: '' });
+  }
+
+  setFilterAll() {
+    this.setState({ filter: '' });
   }
 
   async loadRecipes(type) {
@@ -81,6 +89,14 @@ class RecipesPage extends React.Component {
     return (
       <div className="recipes-page">
         <div className="categories">
+          <div className="category-button">
+            <input
+              type="button"
+              data-testid="All-category-filter"
+              value="All"
+              onClick={ this.setFilterAll }
+            />
+          </div>
           {categories.map((category, index) => {
             const dataTestID = `${category.strCategory}-category-filter`;
             if (index < five) {
