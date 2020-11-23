@@ -38,7 +38,7 @@ function ProcessoBebida() {
       {drinkIngredients.map((ingredient, index) => (
         <span
           key={ index }
-          data-testid="-ingredient-step"
+          data-testid={ `${index}-ingredient-step` }
         >
           {ingredient}
           <input
