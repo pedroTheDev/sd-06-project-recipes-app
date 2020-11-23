@@ -14,8 +14,9 @@ const urlRecipeTypes = {
   '/bebidas': 'cocktail',
 };
 
-const checkInputlength = async (firstLetter, text, fetchApi) => (text.length > 1
-  ? alert('Sua busca deve conter somente 1 (um) caracter') : fetchApi(firstLetter));
+const checkInputlength = async (endPoint, text, fetchApi) => {
+  if (text.length === 1) fetchApi(endPoint);
+};
 
 const fetchRecipesBySearchAttributes = (
   async (inputText, inputRadioSelection, recipeType) => {
@@ -30,6 +31,7 @@ const fetchRecipesBySearchAttributes = (
 
     const fetchBytype = fetchTypes[inputRadioSelection];
     const response = await fetchBytype();
+
     return response;
   });
 

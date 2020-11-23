@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
@@ -7,14 +7,19 @@ import findMatchInKeys from '../helpers/assets';
 
 function Food(props) {
   const { history: { location: { pathname } }, recipes } = props;
+  const [showMultipleResults, setShowMultipleResults] = useState(false);
 
-  const renderRecipeResults = () => {
-    if (recipes.results.length > 1) {
+  const renderRecipesResults = () => {
+    const maxRecipesNumber = 12;
+    if (showMultipleResults) {
       return (
-        recipes.results.map((recipe) => (<RecipeResults
-          recipe={ recipe }
-          key={ recipe[findMatchInKeys('id', recipe)] }
-        />))
+        recipes.results.filter((_recipe, index) => index < maxRecipesNumber)
+          .map((recipe, index) => (<RecipeResults
+            pathname={ pathname }
+            recipe={ recipe }
+            key={ recipe[findMatchInKeys('id', recipe)] }
+            recipeIndex={ index }
+          />))
       );
     }
     return null;
@@ -22,8 +27,11 @@ function Food(props) {
 
   return (
     <>
-      <Header pathname={ pathname } />
-      {renderRecipeResults()}
+      <Header
+        pathname={ pathname }
+        setShowMultipleResults={ setShowMultipleResults }
+      />
+      {renderRecipesResults()}
     </>
   );
 }

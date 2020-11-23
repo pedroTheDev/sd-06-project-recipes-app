@@ -6,36 +6,49 @@ import fetchRecipesByUrl from '../helpers/APIRequests';
 import findMatchInKeys from '../helpers/assets';
 import { addRecipes } from '../redux/actions/searchRecipes';
 
-function SearchRecipes({ pathname, dispatchRecipes, recipes }) {
+function SearchRecipes({ pathname,
+  dispatchRecipes, recipes, setShowMultipleResults }) {
   const [inputText, setInputText] = useState('');
   const [radioSearchSelection, setRadioSearchSelection] = useState('ingredients');
   const [isFetchin, setIsFetchin] = useState(false);
-  const [showResults, setShowResults] = useState(false);
+  const [showSingleResult, setShowSingleResult] = useState(false);
 
   const handleSucessAPIResponse = (recipesData) => {
-    if (recipesData !== null) {
+    if (recipesData !== null && recipesData) {
       const type = Object.keys(recipesData).join('');
+      console.log(recipesData);
       const recipesResults = recipesData[type];
-      console.log(recipesResults);
       dispatchRecipes({ type, results: recipesResults });
     }
   };
 
   const handleNullAPIResponse = (recipesData) => {
-    if (recipesData === null) {
+    if (recipesData) {
+      if (recipesData === null
+         || recipesData.meals === null || recipesData.drinks === null) {
+        dispatchRecipes({ type: 'notFound', results: [] });
+        alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+      }
+    }
+  };
+
+  const handleFirstLetterError = (recipesData) => {
+    if (!recipesData && recipesData !== null) {
       dispatchRecipes({ type: 'notFound', results: [] });
-      alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+      alert('Sua busca deve conter somente 1 (um) caracter');
     }
   };
 
   const handleAPIResponse = (recipesData) => {
-    handleSucessAPIResponse(recipesData);
+    handleFirstLetterError(recipesData);
     handleNullAPIResponse(recipesData);
+    handleSucessAPIResponse(recipesData);
   };
 
   useEffect(() => {
     async function fetchData() {
-      setShowResults(false);
+      setShowSingleResult(false);
+      setShowMultipleResults(false);
       const recipesAPIData = (await fetchRecipesByUrl(
         pathname,
         inputText,
@@ -43,12 +56,22 @@ function SearchRecipes({ pathname, dispatchRecipes, recipes }) {
       ));
       handleAPIResponse(recipesAPIData);
       setIsFetchin(false);
-      setShowResults(true);
     }
     if (isFetchin) {
       fetchData();
     }
   }, [isFetchin]);
+
+  const handleResults = () => {
+    if (recipes.results !== null) {
+      if (recipes.results.length > 1) setShowMultipleResults(true);
+      if (recipes.results.length === 1) setShowSingleResult(true);
+    }
+  };
+
+  useEffect(() => {
+    if (recipes.type !== '') handleResults();
+  }, [recipes]);
 
   const handleSubmitSearch = () => {
     setIsFetchin(true);
@@ -129,18 +152,15 @@ function SearchRecipes({ pathname, dispatchRecipes, recipes }) {
   );
 
   const renderRedirectToSingleResult = () => {
-    const recipe = recipes[0];
-
-    const id = findMatchInKeys('id', recipe);
-    return <Redirect to={ `${pathname}/${recipe[id]}` } />;
-  };
-
-  const handleSearchResults = () => {
-    if (recipes.results.length === 1) return renderRedirectToSingleResult();
+    if (recipes.results.length === 1) {
+      const recipe = recipes.results[0];
+      const id = findMatchInKeys('id', recipe);
+      return <Redirect to={ `${pathname}/${recipe[id]}` } />;
+    }
   };
 
   const renderSearchResults = () => {
-    if (showResults) return handleSearchResults();
+    if (showSingleResult) return renderRedirectToSingleResult();
   };
 
   return (
@@ -166,6 +186,7 @@ SearchRecipes.propTypes = {
   pathname: PropTypes.string.isRequired,
   dispatchRecipes: PropTypes.func.isRequired,
   recipes: PropTypes.shape(PropTypes.any),
+  setShowMultipleResults: PropTypes.func.isRequired,
 };
 
 SearchRecipes.defaultProps = {

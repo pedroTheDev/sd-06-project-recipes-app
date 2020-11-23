@@ -5,7 +5,7 @@ import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchRecipes from './SearchRecipes';
 
-function Header({ pathname }) {
+function Header({ pathname, setShowMultipleResults }) {
   const [toggleSearch, setToogleSearch] = useState(false);
 
   const renderProfileButton = () => (
@@ -36,7 +36,11 @@ function Header({ pathname }) {
   );
 
   const renderSearchRecipeComponent = () => (
-    toggleSearch ? <SearchRecipes pathname={ pathname } /> : null
+    toggleSearch ? (
+      <SearchRecipes
+        pathname={ pathname }
+        setShowMultipleResults={ setShowMultipleResults }
+      />) : null
   );
 
   return (

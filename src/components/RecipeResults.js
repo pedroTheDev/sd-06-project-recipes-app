@@ -1,11 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import findMatchInKeys from '../helpers/assets';
 
-export default function RecipeResults({ recipe }) {
+export default function RecipeResults({ recipe, recipeIndex, pathname }) {
   const [thumbKey, setthumbKey] = useState();
+  const [name, setName] = useState();
+  console.log(recipe);
+
+  const getMatcherByUrl = () => {
+    const nameByurl = {
+      '/comidas': 'strMeal',
+      '/bebidas': 'strDrink',
+    };
+    return nameByurl[pathname];
+  };
 
   useEffect(() => {
     setthumbKey(findMatchInKeys(/Thumb/, recipe));
+    setName(getMatcherByUrl());
   }, []);
 
   const renderRecipeImg = () => (
@@ -13,13 +24,16 @@ export default function RecipeResults({ recipe }) {
       src={ recipe[thumbKey] }
       alt="recipe-img"
       className="main__page__recipe-img"
+      data-testid={ `${recipeIndex}-card-img` }
     />
   );
 
   const renderRecipeTextData = () => (
-    Object.keys(recipe)
-      .filter((key) => key !== thumbKey)
-      .map((key, index) => <p key={ `key ${index}` }>{recipe[key]}</p>)
+    <p
+      data-testid={ `${recipeIndex}-card-name` }
+    >
+      {recipe[name]}
+    </p>
   );
 
   const renderRecipeDetails = () => (
@@ -32,7 +46,10 @@ export default function RecipeResults({ recipe }) {
   const render = () => {
     if (thumbKey) {
       return (
-        <div className="main__page__recipe-container">
+        <div
+          className="main__page__recipe-container"
+          data-testid={ `${recipeIndex}-recipe-card` }
+        >
           {renderRecipeDetails()}
         </div>
       );

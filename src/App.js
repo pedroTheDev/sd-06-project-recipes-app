@@ -10,10 +10,11 @@ function App() {
   return (
     <div className="App">
       <Switch>
-        <Route path="/comidas" component={ Food } />
-        <Route path="/bebidas" component={ Cocktail } />
+        <Route exact path="/comidas/:id" component={ Recipe } />
+        <Route exact path="/bebidas/:id" component={ Recipe } />
+        <Route exact path="/comidas" component={ Food } />
+        <Route exact path="/bebidas" component={ Cocktail } />
         <Route exact path="/" component={ Login } />
-        <Route path="/comidas/:id" component={ Recipe } />
         {
         /*
         <Route path="/comidas/{id-da-receita}/in-progress" component={definir} />
