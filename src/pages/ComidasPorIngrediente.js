@@ -1,14 +1,13 @@
 import React from 'react';
 import { Footer } from '../components';
-import '../style/Comidas.css';
 
-function Comidas() {
+function ComidasPorIngrediente() {
   return (
     <div className="food">
-      <span>Aqui vão estar as comidas...</span>
+      <span>Aqui vão estar as comidas por ingrediente...</span>
       <Footer />
     </div>
   );
 }
 
-export default Comidas;
+export default ComidasPorIngrediente;

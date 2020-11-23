@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import '../style/Login.css';
 
 function Login() {
   const [isDisabled, setIsDisabled] = useState(true);
@@ -23,10 +24,11 @@ function Login() {
   };
 
   return (
-    <div>
-      <form>
-        <h1>Login</h1>
+    <div className="login">
+      <form className="form">
+        <h1 className="title">Login</h1>
         <input
+          className="input"
           data-testid="email-input"
           type="text"
           name="email"
@@ -39,6 +41,7 @@ function Login() {
         />
         <br />
         <input
+          className="input"
           data-testid="password-input"
           type="password"
           name="password"
@@ -52,12 +55,13 @@ function Login() {
         <br />
         <Link to="/comidas">
           <button
+            className="button"
             data-testid="login-submit-btn"
             type="submit"
             disabled={ isDisabled }
             onClick={ saveEmail }
           >
-            Entrar
+            entrar
           </button>
         </Link>
       </form>
