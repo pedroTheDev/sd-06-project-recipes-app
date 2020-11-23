@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Footer from '../components/Footer';
 import profileIcon from '../images/profileIcon.svg';
 
 function Explore() {
@@ -25,6 +26,7 @@ function Explore() {
           Explorar Bebidas
         </button>
       </Link>
+      <Footer/>
     </div>
   );
 }
