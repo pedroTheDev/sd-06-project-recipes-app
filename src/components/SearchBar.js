@@ -20,9 +20,9 @@ function SearchBar({ page, dispatchSaveFood, dispatchSaveDrinks }) {
 
   function handleButtonClick() {
     if (!searchInput || !option) {
-      return alert('Please select an option or input some search parameter');
+      return customAlert('Please select an option or input some search parameter');
     } if (option === 'first-letter' && searchInput.length > 1) {
-      return alert('Sua busca deve conter somente 1 (um) caracter');
+      return customAlert('Sua busca deve conter somente 1 (um) caracter');
     }
     pageCheckSwitch(page);
 

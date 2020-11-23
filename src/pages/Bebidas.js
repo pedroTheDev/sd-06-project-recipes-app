@@ -4,23 +4,24 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import Header from '../components/Header';
 import DrinkCard from '../components/DrinkCard';
+import Footer from '../components/Footer';
 
 function Bebidas({ retrievedDrinks }) {
   const checkRequestSize = (request) => {
+    const noLength = 0;
+    const maxLength = 1;
     if (request === null) {
-      alert('Nenhuma receita encontrada');
-    } else if (request.length === 0) {
+      customAlert('Nenhuma receita encontrada');
+    } if (request.length === noLength) {
       return null;
-    } else if (request.length === 1) {
+    } if (request.length === 1) {
       const { idDrink } = request[0];
       return <Redirect to={ `/bebidas/${idDrink}` } />;
-    } else {
-      return request.map((drink, index) => (
-        index <= 11
-          ? <DrinkCard drink={ drink } key={ drink.idDrink } index={ index } />
-          : null));
     }
-    return null;
+    return request.map((drink, index) => (
+      index <= maxLength
+        ? <DrinkCard drink={ drink } key={ drink.idDrink } index={ index } />
+        : null));
   };
 
   return (
@@ -28,6 +29,7 @@ function Bebidas({ retrievedDrinks }) {
       <Header pageName="Bebidas" renderSearch />
       Bebidas Page
       { checkRequestSize(retrievedDrinks) }
+      <Footer />
     </main>
   );
 }
