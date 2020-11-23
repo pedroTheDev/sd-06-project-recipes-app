@@ -2,17 +2,18 @@ import React, { useContext, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import NavigationMenu from '../components/NavigationMenu';
 import AppContext from '../context/AppContext';
 import useRequestDrink from '../hooks/useRequestDrink';
 
 function Drink() {
   const { setHeader, options, setOptions } = useContext(AppContext);
-  const [apiResponse, setFilter] = useRequestDrink();
+  const [apiResponse, setFilter] = useRequestDrink([]);
 
   const maxShow = 12;
   useEffect(() => {
     setHeader({ page: 'Bebidas', search: true });
-    return () => setOptions({ text: '', option: '' });
+    return () => setOptions({ text: '', option: '', category: '' });
   }, []);
 
   useEffect(() => {
@@ -22,8 +23,10 @@ function Drink() {
   return (
     <div>
       <Header />
+      <NavigationMenu page="Bebidas" />
+      <hr />
       <div className="bodier">
-        { apiResponse.length === 1
+        { apiResponse.length === 1 && options.category === ''
           ? <Redirect to={ `/bebidas/${apiResponse[0].idDrink}` } />
           : apiResponse.filter((e, index) => e && index < maxShow).map((drink, index) => (
             <div
