@@ -1,10 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import MealsContext from '../context/MealsContext';
 import Footer from '../components/Footer';
 
 function Perfil() {
-  const { user } = useContext(MealsContext);
+  const { email } = JSON.parse(localStorage.user);
 
   const handleClearLocalStorage = () => {
     localStorage.clear();
@@ -13,7 +12,7 @@ function Perfil() {
   return (
     <div>
       <h1 data-testid="page-title">Perfil</h1>
-      <span data-testid="profile-email">{ user.email }</span>
+      <span data-testid="profile-email">{ email }</span>
       <Link to="receitas-feitas">
         <button
           type="button"
