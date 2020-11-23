@@ -1,12 +1,14 @@
-import React from 'react';
-import propTypes from 'prop-types';
-import { Header, Footer } from '../Components';
+import React from "react";
+import propTypes from "prop-types";
+import { Header, Footer } from "../Components";
+import MainScreen from "../Components/MainScreen";
 
 function Bebidas({ history }) {
   return (
     <div>
-      <Header pageName="Bebidas" history={ history } />
+      <Header pageName="Bebidas" history={history} />
       <h1>Bebidas</h1>
+      <MainScreen />
       <Footer />
     </div>
   );
