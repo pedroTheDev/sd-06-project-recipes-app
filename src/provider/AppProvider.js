@@ -4,7 +4,7 @@ import AppContext from '../context/AppContext';
 
 function AppProvider({ children }) {
   const [header, setHeader] = useState({ page: '', search: true });
-  const [options, setOptions] = useState({ text: '', option: '' });
+  const [options, setOptions] = useState({ text: '', option: '', category: '' });
 
   const contextValue = {
     header,

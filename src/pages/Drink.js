@@ -13,7 +13,7 @@ function Drink() {
   const maxShow = 12;
   useEffect(() => {
     setHeader({ page: 'Bebidas', search: true });
-    return () => setOptions({ text: '', option: '' });
+    return () => setOptions({ text: '', option: '', category: '' });
   }, []);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ function Drink() {
       <NavigationMenu page="Bebidas" />
       <hr />
       <div className="bodier">
-        { apiResponse.length === 1
+        { apiResponse.length === 1 && options.category === ''
           ? <Redirect to={ `/bebidas/${apiResponse[0].idDrink}` } />
           : apiResponse.filter((e, index) => e && index < maxShow).map((drink, index) => (
             <div

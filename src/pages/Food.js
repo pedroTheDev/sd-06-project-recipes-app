@@ -26,7 +26,7 @@ function Food() {
       <NavigationMenu page="Comidas" />
       <hr />
       <div className="bodier">
-        {apiResponse.length === 1
+        {apiResponse.length === 1 && options.category === ''
           ? <Redirect to={ `/comidas/${apiResponse[0].idMeal}` } />
           : apiResponse.filter((e, index) => e && index < maxShow).map((meal, index) => (
             <div
