@@ -238,7 +238,7 @@ describe.only('17 - Mostre as receitas em cards caso mais de uma receita seja en
   });
 });
 
-describe.skip('18 - Exiba um `alert` caso nenhuma receita seja encontrada', () => {
+describe.only('18 - Exiba um `alert` caso nenhuma receita seja encontrada', () => {
   it('Caso nenhuma comida seja encontrada o alert deve ser exibido', () => {
     cy.visit('http://localhost:3000/comidas', {
       onBeforeLoad(win) {

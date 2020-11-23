@@ -8,7 +8,7 @@ import MealCard from '../components/MealCard'
 function Comidas({ retrievedFood }) {
   const checkRequestSize = (request) => {
     if (request === null) {
-      alert('Nenhuma receita encontrada');
+      alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
     } else if (request.length === 0) {
       return null;
     } else if (request.length === 1) {
