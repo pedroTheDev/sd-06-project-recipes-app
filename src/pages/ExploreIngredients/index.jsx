@@ -34,7 +34,7 @@ function ExploreRecipes({ pageType }) {
 
   return (
     <div className="explore-ingredients-page">
-      <Header pageName={`Explorar ${pageType}`} />
+      <Header pageName="Explorar Ingredientes" />
       <Navbar />
 
       <div className="ingredients-container">
