@@ -10,10 +10,6 @@ function Header(props) {
   const { title, search } = props;
   const [hide, setHide] = useState(true);
 
-  const handleClick = () => {
-    hide ? setHide(false) : setHide(true);
-  };
-
   const space = '';
 
   return (
@@ -34,7 +30,7 @@ function Header(props) {
             src={ searchIcon }
             alt="icone de pesquisa"
             data-testid="search-top-btn"
-            onClick={ handleClick }
+            onClick={ () => (hide ? setHide(false) : setHide(true)) }
           />
         }
       </div>
