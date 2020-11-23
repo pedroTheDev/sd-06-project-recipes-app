@@ -10,7 +10,7 @@ const Header = ({ title, searchBtn = false }) => {
   const { searchBox, setSearchBox } = useContext(ReceitasContext);
 
   const showSearchBar = () => setSearchBox(!searchBox);
-
+  // comentário para merge, deletar depois
   return (
     <section className="header">
       <Link to="/perfil" className="image">
