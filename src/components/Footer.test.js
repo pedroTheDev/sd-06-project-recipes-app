@@ -1,11 +1,12 @@
 import React from 'react';
-import { fireEvent, cleanup } from '@testing-library/react';
+import { fireEvent, waitFor } from '@testing-library/react';
 import Footer from './Footer';
 import renderWithRouter from '../renderWithRouter';
 import { drinkIcon, mealIcon, exploreIcon } from '../images';
+import App from '../App';
 
 describe('renders footer correctly', () => {
-  afterEach(cleanup);
+  // afterEach(cleanup);
   it('expect data-testid="footer" to be in the document', () => {
     const { getByTestId } = renderWithRouter(<Footer />);
     const FOOTER = getByTestId('footer');
@@ -22,13 +23,13 @@ describe('renders footer correctly', () => {
     expect(FOOTER_PICS[2]).toHaveAttribute('src', `${exploreIcon}`);
   });
 
-  it('expect picture links to redirect correctly', () => {
-    const { history, getByTestId, getAllByRole } = renderWithRouter(<Footer />);
+  it('expect picture links to redirect correctly', async () => {
+    const { history, getByText } = renderWithRouter(<Footer />);
     const { pathname } = history.location;
-    const FOOTER_PICS = getAllByRole('img');
-    const DRINK = getByTestId('drinks-bottom-btn');
-    console.log(DRINK)
+    const DRINK = getByText(/Drinks/i);
     fireEvent.click(DRINK);
+    expect(DRINK).toBeInTheDocument();
+    await waitFor(() => getByText('Página principal de Drinks'));
     expect(pathname).toBe('/bebidas');
   });
 });

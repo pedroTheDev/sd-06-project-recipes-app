@@ -3,6 +3,16 @@ import { Link } from 'react-router-dom';
 import { drinkIcon, mealIcon, exploreIcon } from '../images';
 
 export default class Footer extends Component {
+  // constructor() {
+  //   super();
+
+  //   this.redirect = this.redirect.bind(this);
+  // }
+
+  // const redirect = (path) => {
+  //   window.location.replace(`http://localhost:3000/${path}`);
+  // }
+
   render() {
     return (
       <footer data-testid="footer">
