@@ -16,6 +16,7 @@ const Comidas = (history) => {
       {searchBox && <SearchBar history={ history } />}
       <MealsCard />
       {location.pathname === '/comidas' ? <Footer /> : null}
+
     </section>
   );
 };

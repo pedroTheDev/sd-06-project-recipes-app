@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
 import Footer from '../components/Footer';
-import DrinkCard from '../components/MealsCard';
+import DrinksCard from '../components/DrinksCard';
 import ReceitasContext from '../context/ReceitasContext';
 
 function Bebidas() {
@@ -14,9 +14,8 @@ function Bebidas() {
     <section>
       <Header title="Bebidas" searchBtn />
       {searchBox && <SearchBar />}
-      <DrinkCard />
+      <DrinksCard />
       {location.pathname === '/bebidas' ? <Footer /> : null}
-
     </section>
   );
 }
