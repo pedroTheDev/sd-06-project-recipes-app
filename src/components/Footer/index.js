@@ -7,8 +7,6 @@ import exploreIcon from '../../images/exploreIcon.svg';
 import mealIcon from '../../images/mealIcon.svg';
 
 const Footer = () => {
-  const kkk = 10;
-
   return (
     <div data-testid="footer" className="footer">
       <Link to="/bebidas">
