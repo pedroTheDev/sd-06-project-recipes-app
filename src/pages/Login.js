@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import AppContext from '../context/AppContext';
 
 function Login() {
   const history = useHistory();
+  const { setUser } = useContext(AppContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
@@ -23,6 +25,7 @@ function Login() {
 
   const handleSignUp = (event) => {
     event.preventDefault();
+    setUser({ email });
     localStorage.user = JSON.stringify({ email });
     localStorage.mealsToken = JSON.stringify(1);
     localStorage.cocktailsToken = JSON.stringify(1);
