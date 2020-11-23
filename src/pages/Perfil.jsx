@@ -5,7 +5,7 @@ import Context from '../context/Context';
 import Footer from '../Components/Footer';
 
 export default function Perfil() {
-  const { titulo, setTitulo } = useContext(Context);
+  const { titulo, setTitulo, email } = useContext(Context);
 
   useEffect(() => {
     setTitulo('Perfil');
@@ -15,7 +15,7 @@ export default function Perfil() {
     <div>
       <Header titulo={ titulo } />
       <h1>{ titulo }</h1>
-      <p data-testid="profile-email">email</p>
+      <p data-testid="profile-email">{email}</p>
       <Link to="/receitas-feitas">
         <button type="button" data-testid="profile-done-btn">
           Receitas Feitas

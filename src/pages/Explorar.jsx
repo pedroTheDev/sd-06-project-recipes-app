@@ -23,7 +23,12 @@ export default function Explorar() {
         </button>
       </Link>
       <Link to="/explorar/bebidas">
-        <button type="button" data-testid="explore-drinks">Explorar Bebidas</button>
+        <button
+          type="button"
+          data-testid="explore-drinks"
+        >
+          Explorar Bebidas
+        </button>
       </Link>
       <Footer />
     </div>
