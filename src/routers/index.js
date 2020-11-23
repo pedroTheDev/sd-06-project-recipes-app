@@ -21,7 +21,6 @@ export default function Routers() {
       <Route path="/explorar/comidas/ingredientes" component={ ComidasPorIngrediente } />
       <Route path="/explorar/bebidas/ingredientes" component={ BebidasPorIngrediente } />
       <Route path="/explorar/comidas/area" component={ ComidasPorLocalOrigem } />
-      <Route path="/perfil" component={ Profile } />
       <Route path="/receitas-feitas" component={ ReceitasFeitas } />
       <Route path="/receitas-favoritas" component={ ReceitasFavoritas } />
       <Route path="/perfil" component={ Profile } />
