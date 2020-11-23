@@ -43,7 +43,7 @@ function Favorites() {
   }, []);
 
   const handleShareClick = useCallback((id, type) => {
-    const url = `http://localhost:3000/${type}/${id}`;
+    const url = `http://localhost:3000/${type}s/${id}`;
 
     navigator.clipboard.writeText(url);
 
@@ -125,7 +125,7 @@ function Favorites() {
             <div className="done-recipe-share-container">
               <button
                 type="button"
-                onClick={() => handleShareClick(recipe.id)}
+                onClick={() => handleShareClick(recipe.id, recipe.type)}
               >
                 <img
                   src={shareIcon}

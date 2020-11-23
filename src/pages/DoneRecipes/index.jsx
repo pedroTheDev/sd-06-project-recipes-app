@@ -34,7 +34,7 @@ function DoneRecipes() {
   }, []);
 
   const handleShareClick = useCallback((id, type) => {
-    const url = `http://localhost:3000/${type}/${id}`;
+    const url = `http://localhost:3000/${type}s/${id}`;
 
     navigator.clipboard.writeText(url);
 

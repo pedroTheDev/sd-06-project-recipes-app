@@ -22,7 +22,7 @@ const initialSearchValues = {
   },
   bebidas: {
     option: 'name',
-    value: 'martini',
+    value: '',
     token: '1',
   },
 };
