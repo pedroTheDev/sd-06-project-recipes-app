@@ -6,6 +6,7 @@ import FoodRecipesPage from './pages/FoodRecipesPage';
 import ProfilePage from './pages/ProfilePage';
 import DrinksRecipesPage from './pages/DrinksRecipesPage';
 import RecipesAppProvider from './context/RecipesAppProvider';
+import DrinksDetails from './pages/DrinksDetails';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Route path="/comidas" component={FoodRecipesPage} />
             <Route path="/perfil" component={ProfilePage} />
             <Route path="/bebidas" component={DrinksRecipesPage} />
+            <Route path="/bebidas/:id" render={() => <DrinksDetails />} />
           </Switch>
         </BrowserRouter>
         <div id="meals">

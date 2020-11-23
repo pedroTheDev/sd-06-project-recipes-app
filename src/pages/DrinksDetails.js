@@ -1,6 +1,7 @@
 import React from 'react';
 
-function DrinksDetails() {
+function DrinksDetails(props) {
+  const { match: { params } } = props;
   return (
     <div>
       Drinks details uhuu
