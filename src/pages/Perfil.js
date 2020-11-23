@@ -33,7 +33,7 @@ function Perfil() {
         <button
           type="button"
           data-testid="profile-logout-btn"
-          onClick={handleClearLocalStorage}
+          onClick={ handleClearLocalStorage }
         >
           Sair
         </button>

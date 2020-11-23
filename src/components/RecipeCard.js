@@ -5,29 +5,30 @@ import './RecipeCard.css';
 
 function RecipeCard({ cards }) {
   const location = useLocation();
-
+  const inicio = 0;
+  const fim = 12;
   return (
-    cards && cards.slice(0, 12)
+    cards && cards.slice(inicio, fim)
       .map((item, index) => (
         <Link
-          to={`${location.pathname}/${item.id}`}
-          key={item.id}
+          to={ `${location.pathname}/${item.id}` }
+          key={ item.id }
           className="link-card"
         >
           <div
-            data-testid={`${index}-recipe-card`}
+            data-testid={ `${index}-recipe-card` }
             className="recipe-card"
           >
             <div className="img-container">
               <img
                 className="card-img"
                 alt="Recipe Card"
-                data-testid={`${index}-card-img`}
-                src={item.strThumb}
+                data-testid={ `${index}-card-img` }
+                src={ item.strThumb }
               />
             </div>
             <p
-              data-testid={`${index}-card-name`}
+              data-testid={ `${index}-card-name` }
               className="card-name"
             >
               {item.strName}

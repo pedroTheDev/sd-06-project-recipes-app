@@ -67,6 +67,9 @@ function RecipeList() {
     getCards('All');
   }, []);
 
+  const numberZero = 0;
+  const numberTwo = 2;
+  const numberFive = 5;
   return (
     <div>
       <div>
@@ -75,30 +78,30 @@ function RecipeList() {
             type="button"
             data-testid="All-category-filter"
             className="button-recipe"
-            onClick={() => getCards('All')}
+            onClick={ () => getCards('All') }
           >
             All
           </button>
-          {cardCategories.slice(0, 2).map((item) => (
+          {cardCategories.slice(numberZero, numberTwo).map((item) => (
             <button
               type="button"
-              data-testid={`${item.strCategory}-category-filter`}
-              key={item.strCategory}
+              data-testid={ `${item.strCategory}-category-filter` }
+              key={ item.strCategory }
               className="button-recipe"
-              onClick={() => getCards(item.strCategory)}
+              onClick={ () => getCards(item.strCategory) }
             >
               {item.strCategory}
             </button>
           ))}
         </div>
         <div className="container-button">
-          {cardCategories.slice(2, 5).map((item) => (
+          {cardCategories.slice(numberTwo, numberFive).map((item) => (
             <button
               type="button"
-              data-testid={`${item.strCategory}-category-filter`}
-              key={item.strCategory}
+              data-testid={ `${item.strCategory}-category-filter` }
+              key={ item.strCategory }
               className="button-recipe"
-              onClick={() => getCards(item.strCategory)}
+              onClick={ () => getCards(item.strCategory) }
             >
               {item.strCategory}
             </button>
@@ -106,7 +109,7 @@ function RecipeList() {
         </div>
       </div>
       <div className="cards-container">
-        <RecipeCard cards={cardsRecipe} />
+        <RecipeCard cards={ cardsRecipe } />
       </div>
     </div>
   );
