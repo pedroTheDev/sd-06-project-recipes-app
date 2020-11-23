@@ -78,13 +78,9 @@ describe('5 - Desenvolva a tela de maneira que o formulário só seja válido ap
 });
 
 describe('6 - Salve 2 tokens no localStorage após a submissão, identificados pelas chaves mealsToken e cocktailsToken', () => {
-  afterEach(() => { 
-    cleanup()
-    localStorage.clear()
-  });
   it('Após a submissão mealsToken e cocktailsToken devem estar salvos em localStorage', () => {
     
-    const { getByTestId } = render(<App/>);
+    const { getByTestId, unmount } = renderWithRouter(<App/>);
     const emailInput = getByTestId('email-input');
     const passwordInput = getByTestId('password-input');
     const button = getByTestId('login-submit-btn');
@@ -100,13 +96,8 @@ describe('6 - Salve 2 tokens no localStorage após a submissão, identificados p
 });
 
 describe('7 - Salve o e-mail da pessoa usuária no localStorage na chave user após a submissão', () => {
-  afterEach(() => {
-    cleanup()
-    localStorage.clear()
-  });
-
   it('Após a submissão a chave user deve estar salva em localStorage', () => {
-    const { getByTestId } = render(<App/>);
+    const { getByTestId } = renderWithRouter(<App/>);
     const emailInput = getByTestId('email-input');
     const passwordInput = getByTestId('password-input');
     const button = getByTestId('login-submit-btn');
@@ -121,28 +112,19 @@ describe('7 - Salve o e-mail da pessoa usuária no localStorage na chave user ap
   });
 });
 
-// describe('8 - Redirecione a pessoa usuária para a tela principal de receitas de comidas após a submissão e validação com sucesso do login', () => {
-//   it('A rota muda para a tela principal de receitas de comidas', () => {
-//     cy.visit('http://localhost:3000/', {
-//       onBeforeLoad(win) {
-//         win.localStorage.clear();
-//       },
-//     });
+describe('8 - Redirecione a pessoa usuária para a tela principal de receitas de comidas após a submissão e validação com sucesso do login', () => {
+  it('A rota muda para a tela principal de receitas de comidas', () => {
+    const { getByTestId, history } = renderWithRouter(<App/>);
+    const emailInput = getByTestId('email-input');
+    const passwordInput = getByTestId('password-input');
+    const button = getByTestId('login-submit-btn');
 
-//     cy.get('[data-testid="login-submit-btn"]').should('be.disabled');
-//     cy.window().then((win) => {
-//       expect(win.localStorage.getItem('user')).to.be.null;
-//     });
+    fireEvent.change(emailInput, { target: { value: 'email@email.com' } })
+    fireEvent.change(passwordInput, { target: { value: '12345678' } })
+    fireEvent.click(button)
 
+    const path = history.location.pathname;
 
-//     cy.get('[data-testid="email-input"]').type('email@mail.com');
-//     cy.get('[data-testid="password-input"]').type('1234567');
-//     cy.get('[data-testid="login-submit-btn"]').click();
-
-//     cy.location().should((loc) => expect(loc.pathname).to.eq('/comidas'));
-
-//     cy.window().then((win) => {
-//       win.localStorage.clear();
-//     });
-//   });
-// });
+    expect(path).toBe('comidas');
+  });
+});
