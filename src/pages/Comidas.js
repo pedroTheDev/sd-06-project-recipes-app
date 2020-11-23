@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import Header from '../components/Header';
+import MealCard from '../components/MealCard'
 
 function Comidas({ retrievedFood }) {
   const checkRequestSize = (request) => {
@@ -14,9 +15,9 @@ function Comidas({ retrievedFood }) {
       const { idMeal } = request[0];
       return <Redirect to={ `/comidas/${idMeal}` } />;
     } else {
-      return request.map((meal) => (
-        <div key={ meal.idMeal }>{ meal.strMeal }</div>
-      ));
+      return request.map((meal, index) => {
+        return index <= 11 ? <MealCard meal={ meal } key={ meal.idmeal } index={ index } /> : null;
+      });
     }
     return null;
   };

@@ -1,8 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { array } from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import Header from '../components/Header';
+import DrinkCard from '../components/DrinkCard';
 
 function Bebidas({ retrievedDrinks }) {
   const checkRequestSize = (request) => {
@@ -14,12 +15,15 @@ function Bebidas({ retrievedDrinks }) {
       const { idDrink } = request[0];
       return <Redirect to={ `/bebidas/${idDrink}` } />;
     } else {
-      return request.map((drink) => (
-        <div key={ drink.idDrink }>{ drink.strDrink }</div>
-      ));
+      //[3,4,5,6,7,8,9]
+    return request.map((drink, index) => {
+      return index <= 11 ? <DrinkCard drink={ drink } key={ drink.idDrink } index={ index } /> : null;
+      
+    });
     }
     return null;
   };
+
   return (
     <main>
       <Header pageName="Bebidas" renderSearch />

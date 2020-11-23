@@ -150,7 +150,7 @@ describe('15 - Busque na API de comidas caso a pessoa esteja na página de comid
   });
 });
 
-describe.only('16 - Redirecione para a tela de detalhes da receita caso apenas uma receita seja encontrada, com o ID da mesma na URL', () => {
+describe('16 - Redirecione para a tela de detalhes da receita caso apenas uma receita seja encontrada, com o ID da mesma na URL', () => {
   it('Caso apenas uma comida seja encontrada, deve-se ir para sua rota de detalhes', () => {
     cy.visit('http://localhost:3000/comidas', {
       onBeforeLoad(win) {
@@ -182,7 +182,7 @@ describe.only('16 - Redirecione para a tela de detalhes da receita caso apenas u
   });
 });
 
-describe.skip('17 - Mostre as receitas em cards caso mais de uma receita seja encontrada', () => {
+describe.only('17 - Mostre as receitas em cards caso mais de uma receita seja encontrada', () => {
   it('Caso mais de uma comida seja encontrada, mostrar as 12 primeiras', () => {
     cy.visit('http://localhost:3000/comidas', {
       onBeforeLoad(win) {
