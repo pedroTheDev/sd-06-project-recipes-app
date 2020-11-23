@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 function MealCard(props) {
   const { meal: { strMealThumb, strMeal }, index } = props;
