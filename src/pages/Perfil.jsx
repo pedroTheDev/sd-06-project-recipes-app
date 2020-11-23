@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../Components/Header';
 import Context from '../context/Context';
+import Footer from '../Components/Footer';
 
 export default function Perfil() {
   const { titulo, setTitulo } = useContext(Context);
@@ -30,6 +31,8 @@ export default function Perfil() {
           Sair
         </button>
       </Link>
+
+      <Footer />
     </div>
   );
 }

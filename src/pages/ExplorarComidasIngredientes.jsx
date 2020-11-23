@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import Context from '../context/Context';
 import Header from '../Components/Header';
+import Footer from '../Components/Footer';
 
 export default function ExplorarComidasingredientes() {
   const { titulo, setTitulo } = useContext(Context);
@@ -12,6 +13,7 @@ export default function ExplorarComidasingredientes() {
   return (
     <div>
       <Header titulo={ titulo } />
+      <Footer />
     </div>
   );
 }
