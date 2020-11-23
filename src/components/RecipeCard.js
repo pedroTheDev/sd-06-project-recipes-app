@@ -1,31 +1,39 @@
 import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './RecipeCard.css';
 
 function RecipeCard({ cards }) {
+  const location = useLocation();
+
   return (
     cards && cards.slice(0, 12)
       .map((item, index) => (
-        <div
-          data-testid={`${index}-recipe-card`}
-          className="recipe-card"
+        <Link
+          to={`${location.pathname}/${item.id}`}
           key={item.id}
+          className="link-card"
         >
-          <div className="img-container">
-            <img
-              className="card-img"
-              alt="Recipe Card"
-              data-testid={`${index}-card-img`}
-              src={item.strThumb}
-            />
-          </div>
-          <p
-            data-testid={`${index}-card-name`}
-            className="card-name"
+          <div
+            data-testid={`${index}-recipe-card`}
+            className="recipe-card"
           >
-            {item.strName}
-          </p>
-        </div>
+            <div className="img-container">
+              <img
+                className="card-img"
+                alt="Recipe Card"
+                data-testid={`${index}-card-img`}
+                src={item.strThumb}
+              />
+            </div>
+            <p
+              data-testid={`${index}-card-name`}
+              className="card-name"
+            >
+              {item.strName}
+            </p>
+          </div>
+        </Link>
       )));
 }
 

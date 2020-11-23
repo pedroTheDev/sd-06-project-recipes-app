@@ -8,10 +8,21 @@ export async function getAllDrinkTypesApi(type) {
 }
 
 // Lista de receitas de Bebidas
-export async function getRecipeDrinksMealsApi() {
+export async function getRecipeDrinksApi() {
   const response = await fetch(`${URL_BASE}search.php?s=`);
   const result = await response.json();
   return result.drinks;
 }
 
-export default { getAllDrinkTypesApi, getRecipeDrinksMealsApi };
+// Lista de receitas de Bebidas por categoria
+export async function getRecipeDrinksByCategoryApi(category) {
+  const response = await fetch(`${URL_BASE}filter.php?c=${category}`);
+  const result = await response.json();
+  return result.drinks;
+}
+
+export default {
+  getAllDrinkTypesApi,
+  getRecipeDrinksApi,
+  getRecipeDrinksByCategoryApi,
+};

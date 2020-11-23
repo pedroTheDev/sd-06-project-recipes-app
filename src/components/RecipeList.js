@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
-import { getRecipesMealsApi } from '../services/mealsAPI';
-import { getRecipeDrinksMealsApi } from '../services/drinksAPI';
+import { getRecipesMealsApi, getRecipesMealsByCategoryApi } from '../services/mealsAPI';
+import { getRecipeDrinksApi, getRecipeDrinksByCategoryApi } from '../services/drinksAPI';
 
 import MealsContext from '../context/MealsContext';
 import RecipeCard from './RecipeCard';
@@ -13,7 +13,9 @@ function RecipeList() {
 
   const [cardsRecipe, setCardsRecipe] = useState([]);
   const [cardCategories, setCardCategories] = useState([]);
+  const [categorySelected, setcategorySelected] = useState([]);
 
+  // Será usado para pegar o pathname ("comidas" ou "bebidas")
   const location = useLocation();
 
   // Atualizando estado da categoria local dependendo se for bebidas ou comidas
@@ -27,30 +29,42 @@ function RecipeList() {
     }
   }
 
-  useEffect(() => {
-    async function fetchRecipes() {
-      let myCards = [];
-      let results = [];
-      if (location.pathname === '/comidas') {
-        results = await getRecipesMealsApi();
-        myCards = results.map((item) => {
-          const myCategoriesMeal = {
-            id: item.idMeal, strName: item.strMeal, strThumb: item.strMealThumb,
-          };
-          return myCategoriesMeal;
-        });
-      } else if (location.pathname === '/bebidas') {
-        results = await getRecipeDrinksMealsApi();
-        myCards = results.map((item) => {
-          const myCategoriesDrink = {
-            id: item.idDrink, strName: item.strDrink, strThumb: item.strDrinkThumb,
-          };
-          return myCategoriesDrink;
-        });
+  async function getCards(category) {
+    let myCards = [];
+    let result = [];
+    if (location.pathname === '/comidas') {
+      if (category === 'All' || category === categorySelected) {
+        result = await getRecipesMealsApi();
+        console.log(result);
+      } else {
+        result = await getRecipesMealsByCategoryApi(category);
       }
-      setCardsRecipe(myCards);
+      console.log(category);
+      myCards = result.map((item) => {
+        const myCategoriesMeal = {
+          id: item.idMeal, strName: item.strMeal, strThumb: item.strMealThumb,
+        };
+        return myCategoriesMeal; // retorna o novo objeto criado no map do myCards
+      });
+    } else if (location.pathname === '/bebidas') {
+      if (category === 'All' || category === categorySelected) {
+        result = await getRecipeDrinksApi();
+      } else {
+        result = await getRecipeDrinksByCategoryApi(category);
+      }
+      myCards = result.map((item) => {
+        const myCategoriesDrink = {
+          id: item.idDrink, strName: item.strDrink, strThumb: item.strDrinkThumb,
+        };
+        return myCategoriesDrink; // retorna o novo objeto criado no map do myCards
+      });
     }
-    fetchRecipes();
+    setCardsRecipe(myCards);
+    setcategorySelected(category);
+  }
+
+  useEffect(() => {
+    getCards('All');
   }, []);
 
   return (
@@ -61,6 +75,7 @@ function RecipeList() {
             type="button"
             data-testid="All-category-filter"
             className="button-recipe"
+            onClick={() => getCards('All')}
           >
             All
           </button>
@@ -70,6 +85,7 @@ function RecipeList() {
               data-testid={`${item.strCategory}-category-filter`}
               key={item.strCategory}
               className="button-recipe"
+              onClick={() => getCards(item.strCategory)}
             >
               {item.strCategory}
             </button>
@@ -82,6 +98,7 @@ function RecipeList() {
               data-testid={`${item.strCategory}-category-filter`}
               key={item.strCategory}
               className="button-recipe"
+              onClick={() => getCards(item.strCategory)}
             >
               {item.strCategory}
             </button>

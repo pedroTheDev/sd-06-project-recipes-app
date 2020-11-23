@@ -14,4 +14,15 @@ export async function getRecipesMealsApi() {
   return result.meals;
 }
 
-export default { getAllRecipeTypesApi, getRecipesMealsApi };
+// Lista de receitas de comidas por categoria
+export async function getRecipesMealsByCategoryApi(category) {
+  const response = await fetch(`${URL_BASE}filter.php?c=${category}`);
+  const result = await response.json();
+  return result.meals;
+}
+
+export default {
+  getAllRecipeTypesApi,
+  getRecipesMealsApi,
+  getRecipesMealsByCategoryApi,
+};

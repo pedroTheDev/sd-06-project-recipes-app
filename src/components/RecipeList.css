@@ -8,11 +8,12 @@
 
 .button-recipe {
   width: 110px;
-  background-color: rgb(156, 147, 147);
+  background-color: rgb(61, 22, 22);
   border-radius: 3px;
-  color: rgb(29, 30, 31);
+  color: rgb(240, 241, 241);
   border: none;
   height: 35px;
+  cursor: pointer;
 }
 
 .button-recipe:hover {
