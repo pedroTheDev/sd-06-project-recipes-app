@@ -1,11 +1,19 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import LoginContext from '../context/LoginContext';
+import HeaderContext from '../context/HeaderContext';
 
 const Login = () => {
   const {
     email, setEmail, password, setPassword,
   } = useContext(LoginContext);
+
+  const {
+    setTitle,
+  } = useContext(HeaderContext);
+  useEffect(() => {
+    setTitle('Login');
+  }, []);
 
   const infoVerifier = () => {
     const minimumPasswordLength = 6;

@@ -3,11 +3,17 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
+import LoginProvider from './context/LoginProvider';
+import HeaderProvider from './context/HeaderProvider';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <BrowserRouter>
-    <App />
+    <LoginProvider>
+      <HeaderProvider>
+        <App />
+      </HeaderProvider>
+    </LoginProvider>
   </BrowserRouter>,
   document.getElementById('root'),
 );
