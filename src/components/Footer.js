@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import RecipesContext from '../context/Context';
 import drinkIcon from '../images/drinkIcon.svg';
 import exploreIcon from '../images/exploreIcon.svg';
 import mealIcon from '../images/mealIcon.svg';
 
 export default function Footer() {
+  const { setFilters } = useContext(RecipesContext);
   const footerStyle = {
     position: 'fixed',
     bottom: 0,
@@ -13,7 +15,14 @@ export default function Footer() {
 
   return (
     <footer data-testid="footer" style={ footerStyle }>
-      <Link to="/bebidas">
+      <Link
+        to="/bebidas"
+        onClick={ () => setFilters({
+          searchText: '',
+          searchType: 'name',
+          category: 'bebidas',
+        }) }
+      >
         <img
           src={ drinkIcon }
           alt="Ícone de drink"
@@ -27,7 +36,14 @@ export default function Footer() {
           data-testid="explore-bottom-btn"
         />
       </Link>
-      <Link to="/comidas">
+      <Link
+        to="/comidas"
+        onClick={ () => setFilters({
+          searchText: '',
+          searchType: 'name',
+          category: 'comidas',
+        }) }
+      >
         <img
           src={ mealIcon }
           alt="Meal icon"

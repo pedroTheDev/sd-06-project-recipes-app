@@ -1,0 +1,15 @@
+.cards-wrapper {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.item-card {
+  border: 1px red solid;
+  max-width: 200px;
+  padding: 0;
+}
+
+.item-card img {
+  margin: 0;
+  max-width: 200px;
+}

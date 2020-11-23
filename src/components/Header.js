@@ -7,6 +7,7 @@ import SearchBar from './SearchBar';
 
 export default function Header(props) {
   const [search, setSearch] = useState(false);
+
   const { id } = props;
   return (
     <div>

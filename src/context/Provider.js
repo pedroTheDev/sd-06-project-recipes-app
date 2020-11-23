@@ -6,6 +6,11 @@ function Provider({ children }) {
   const [login, setLogin] = useState({ email: '', password: '', redirect: false });
   const [disabled, setDisabled] = useState(true);
   const [items, setItems] = useState();
+  const [filters, setFilters] = useState({
+    searchText: '',
+    searchType: 'name',
+    category: 'comidas',
+  });
 
   const contextValue = {
     login,
@@ -14,6 +19,8 @@ function Provider({ children }) {
     setDisabled,
     items,
     setItems,
+    filters,
+    setFilters,
   };
 
   return (

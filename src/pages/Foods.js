@@ -3,10 +3,12 @@ import Cards from '../components/Cards';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Context from '../context/Context';
+import useSearch from '../hooks/useSearch';
 
 export default function Foods() {
   document.title = 'Comidas';
   const { items } = useContext(Context);
+  useSearch();
 
   function handleAlert() {
     if (items.meals === null) {
@@ -17,7 +19,7 @@ export default function Foods() {
   return (
     <div>
       <Header id="comidas" />
-      <Cards />
+      <Cards id="comidas" />
       {items ? handleAlert() : null}
       <Footer />
     </div>
