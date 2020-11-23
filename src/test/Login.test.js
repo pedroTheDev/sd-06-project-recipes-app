@@ -4,13 +4,13 @@ import userEvent from '@testing-library/user-event';
 import renderWithRouter from './renderWithRouter';
 import Login from '../pages/Login';
 
-describe('The Login page', () => {
-  it('Renders the home page on the path "/"', () => {
+describe('Página de Login', () => {
+  it('Renderiza a home page com o caminho "/"', () => {
     const { history } = renderWithRouter(<Login />);
     const { pathname } = history.location;
     expect(pathname).toBe('/');
   });
-  it('Disable SignUp for invalid email or password', () => {
+  it('Desabilita login para email ou senha inválidos', () => {
     renderWithRouter(<Login />);
     const button = screen.getByTestId('login-submit-btn');
     expect(button).toBeDisabled();
@@ -29,7 +29,7 @@ describe('The Login page', () => {
     userEvent.type(senha, '1234567');
     expect(button).toBeEnabled();
   });
-  it('Renders the Main page on path "/comidas" on sign up', () => {
+  it('Renderiza a página principal com o caminho "/comidas" no login', () => {
     const { history } = renderWithRouter(<Login />);
     const email = screen.getByTestId('email-input');
     const senha = screen.getByTestId('password-input');
