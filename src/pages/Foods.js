@@ -2,36 +2,37 @@ import React, { useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 import RecipesContext from '../context/RecipesAppContext';
 
-function Bebidas() {
+function Foods() {
   const { recipes, errorFromApi } = useContext(RecipesContext);
   const ZERO = 0;
   const DOZE = 12;
 
   if (recipes.length === 1) {
-    const id = recipes[0].idDrink;
-    return <Redirect to={ `/bebidas/${id}` } />;
+    const id = recipes[0].idMeal;
+    return <Redirect to={ `/comidas/${id}` } />;
   }
 
   if (errorFromApi === true) {
     alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
     return <span>Ops...</span>;
   }
+
   const divStyle = {
     width: '10rem',
   };
 
   return (
     <>
-      {recipes.slice(ZERO, DOZE).map((drink, index) => (
+      {recipes.slice(ZERO, DOZE).map((meal, index) => (
         <div
-          key={ drink.idDrink }
+          key={ meal.idMeal }
           data-testid={ `${index}-recipe-card` }
           className="card"
           style={ divStyle }
         >
           <img
-            src={ drink.strDrinkThumb }
-            alt={ drink.strDrink }
+            src={ meal.strMealThumb }
+            alt={ meal.strMeal }
             data-testid={ `${index}-card-img` }
             className="card-img-top"
           />
@@ -39,7 +40,7 @@ function Bebidas() {
             data-testid={ `${index}-card-name` }
             className="card-text"
           >
-            { drink.strDrink }
+            { meal.strMeal }
           </p>
         </div>))}
       {' '}
@@ -47,4 +48,4 @@ function Bebidas() {
   );
 }
 
-export default Bebidas;
+export default Foods;

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import Comidas from './Comidas';
-import Bebidas from './Bebidas';
+import Foods from './Foods';
+import Drinks from './Drinks';
 import SearchBar from '../components/SearchBar';
 import Header from '../components/Header';
 import RecipesAppContext from '../context/RecipesAppContext';
@@ -101,7 +101,7 @@ function Home({ title }) {
         verification={ verification }
         onClick={ requisition }
       />
-      {title === 'Comidas' ? <Comidas /> : <Bebidas />}
+      {title === 'Comidas' ? <Foods /> : <Drinks />}
     </div>
   );
 }
