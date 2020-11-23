@@ -163,8 +163,9 @@ describe('testando a barra de busca logo abaixo do header', () => {
     const searchButton = queryByTestId('exec-search-btn');
     fireEvent.click(searchButton);
     await findByTestId('0-recipe-card');
-    expect(global.fetch).toHaveBeenCalledTimes(1);
-    expect(global.fetch).toBeCalledWith('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=vodka');
+    expect(global.fetch).toHaveBeenCalledTimes(2);
+    expect(global.fetch).toBeCalledWith('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+    expect(global.fetch).toBeCalledWith('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=vodka');
   });
   it('se o radio selecionado for Nome  na pagina de bebidas', async () => {
     const { queryByTestId, findByTestId } = renderWithRouter(
@@ -243,6 +244,7 @@ describe('testando a barra de busca logo abaixo do header', () => {
     expect(global.alert).toBeCalledWith('Sua busca deve conter somente 1 (um) caracter');
   });
 });
+
 describe('Mostre as receitas em cards caso mais de uma receita seja encontrada', () => {
   it('se mais de uma comida seja encontrada, mostrar as 12 primeiras', async () => {
     const { queryByTestId, findByTestId } = renderWithRouter(
