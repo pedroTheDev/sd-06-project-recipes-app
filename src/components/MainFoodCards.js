@@ -1,20 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react';
+import FetchApiFood from '../services/FetchApiFood';
 
 import RecipesContext from '../context/RecipesContext';
 
 function MainFoodCard() {
   const {
-    FoodApi,
     fetchFood,
-    FoodButton,
+    setFetchFood,
     FoodBtn,
+    setFoodBtn,
     filterFood,
-    FoodCategory,
     setFilterFood } = useContext(RecipesContext);
 
   useEffect(() => {
-    FoodApi();
-    FoodButton();
+    FetchApiFood('2', setFetchFood);
+    FetchApiFood('4', setFoodBtn);
   }, []);
 
   const [targetName, setTargetName] = useState('');
@@ -24,11 +24,12 @@ function MainFoodCard() {
 
   const handleClick = ({ target }) => {
     const filter = target.name;
+    console.log(filter);
     if (targetName === filter) {
       setFilterFood([]);
     }
     if (targetName !== filter) {
-      FoodCategory(filter);
+      FetchApiFood('5', setFilterFood, filter);
       setTargetName(filter);
     }
   };

@@ -1,20 +1,22 @@
 import React, { useContext, useEffect, useState } from 'react';
+import FetchApiDrink from '../services/FetchApiDrink';
 
 import RecipesContext from '../context/RecipesContext';
 
 function MainDrinkCard() {
   const {
-    DrinkApi,
+    // DrinkApi,
     fetchDrink,
-    DrinkButton,
     DrinkBtn,
+    setDrinkBtn,
     filterDrink,
-    DrinkCategory,
+    setFetchDrink,
     setFilterDrink } = useContext(RecipesContext);
 
   useEffect(() => {
-    DrinkApi();
-    DrinkButton();
+    // DrinkApi();
+    FetchApiDrink('2', setFetchDrink);
+    FetchApiDrink('4', setDrinkBtn);
   }, []);
 
   const [targetName, setTargetName] = useState('');
@@ -28,7 +30,7 @@ function MainDrinkCard() {
       setFilterDrink([]);
     }
     if (targetName !== filter) {
-      DrinkCategory(filter);
+      FetchApiDrink('5', setFilterDrink, filter);
       setTargetName(filter);
     }
   };
@@ -55,7 +57,7 @@ function MainDrinkCard() {
               name={ el.strCategory }
               onClick={ (e) => handleClick(e) }
             >
-              {`${el.strCategory}${idx}`}
+              {el.strCategory}
             </button>)).slice(inicio, btn) }
         </section>
         <section>
@@ -64,7 +66,7 @@ function MainDrinkCard() {
               key={ idx }
               data-testid={ `${idx}-recipe-card` }
             >
-              <p data-testid={ `${idx}-card-name` }>{`${el.strDrink}${idx}`}</p>
+              <p data-testid={ `${idx}-card-name` }>{el.strDrink}</p>
               <a
                 href={ `/bebidas/${el.idDrink}` }
               >
