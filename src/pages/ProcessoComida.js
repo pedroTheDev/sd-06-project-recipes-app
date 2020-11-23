@@ -1,9 +1,14 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import RecipesContext from '../context/RecipesContext';
 import { shareIcon, whiteHeartIcon } from '../images';
 
 function ProcessoComida() {
   const { foodIngredients } = useContext(RecipesContext);
+  const [checked, setChecked] = useState({});
+
+  const handleChange = ({ target }) => {
+    setChecked({ ...checked, [target.name]: target.checked });
+  };
 
   return (
     <div>
@@ -38,6 +43,9 @@ function ProcessoComida() {
           {ingredient}
           <input
             type="checkbox"
+            name={ ingredient }
+            checked={ checked[ingredient[ingredient.name]] }
+            onChange={ handleChange }
           />
         </span>
       ))}
