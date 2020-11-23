@@ -7,7 +7,7 @@ class RecipesPage extends React.Component {
     super(props);
 
     this.state = {
-      type: props.type,
+      type: 'meals',
       recipes: [],
       categories: [],
       filter: '',
@@ -17,19 +17,17 @@ class RecipesPage extends React.Component {
     this.setFilterAll = this.setFilterAll.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const { type } = this.state;
-    this.loadRecipes(type);
-    if (window.location.href === 'http://localhost:3000/comidas') {
-      this.setRecipesType('meals');
-    } else if (window.location.href === 'http://localhost:3000/bebidas') {
-      this.setRecipesType('cocktails');
-    }
+    await this.loadRecipes(type);
+    // if (window.location.href === 'http://localhost:3000/comidas') {
+    //   this.setRecipesType('meals');
+    // } else if (window.location.href === 'http://localhost:3000/bebidas') {
+    //   this.setRecipesType('cocktails');
+    // }
   }
 
   componentDidUpdate() {
-    const { type } = this.state;
-    this.loadRecipes(type);
   }
 
   setRecipesType(type) {
@@ -37,10 +35,17 @@ class RecipesPage extends React.Component {
   }
 
   setFilter({ target }) {
-    const { filter } = this.state;
+    const { filter, type } = this.state;
     if (filter !== target.value) {
       this.setState({ filter: target.value });
-    } else this.setState({ filter: '' });
+    } else {
+      this.setState({
+        filter: '',
+        recipes: [],
+      });
+    }
+
+    this.loadRecipes(type);
   }
 
   setFilterAll() {
@@ -138,7 +143,7 @@ class RecipesPage extends React.Component {
                       alt="Drink Thumb"
                       src={ recipe.strDrinkThumb }
                       className="recipe-thumb"
-                      height="200"
+                      height="250"
                     />
                     <h2 className="recipe-name">{recipe.strDrink}</h2>
                   </div>
@@ -151,7 +156,7 @@ class RecipesPage extends React.Component {
                       alt="Meal Thumb"
                       src={ recipe.strMealThumb }
                       className="recipe-thumb"
-                      height="200"
+                      height="250"
                     />
                     <h2 className="recipe-name">{recipe.strMeal}</h2>
                   </div>

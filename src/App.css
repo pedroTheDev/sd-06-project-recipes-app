@@ -81,7 +81,7 @@
   align-items: center;
   display: grid;
   flex-direction: unset;
-  grid-template-columns: repeat(auto-fit, minmax(220px, auto));
+  grid-template-columns: repeat(auto-fit, minmax(270px, auto));
   justify-content: center;
   margin: auto;
   width: 85%;
@@ -90,12 +90,13 @@
 .recipe-card {
   background-color: rgb(240,240,240);
   border-radius: 10%;
-  height: 250px;
+  height: 300px;
   margin: 10px;
-  width: 200px;
+  width: 250px;
 }
 
 .recipe-name {
+  font-size: x-large;
   margin-left: 20px;
   margin-top: 5px;
 }
