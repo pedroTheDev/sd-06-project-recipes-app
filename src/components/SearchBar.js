@@ -57,9 +57,13 @@ function SearchBar(props) {
           onClick={ (e) => {
             e.preventDefault();
 
-            return title === 'Bebidas'
-              ? fetchDrink(filterType, searchTerm)
-              : fetchMeal(filterType, searchTerm);
+            if (filterType === 'firstLetter' && searchTerm.length > 1) {
+              alert('Sua busca deve conter somente 1 (um) caracter');
+            } else {
+              return title === 'Bebidas'
+                ? fetchDrink(filterType, searchTerm)
+                : fetchMeal(filterType, searchTerm);
+            }
           } }
         >
           Buscar
