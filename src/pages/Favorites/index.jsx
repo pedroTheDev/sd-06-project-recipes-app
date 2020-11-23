@@ -45,6 +45,8 @@ function Favorites() {
   const handleShareClick = useCallback((id, type) => {
     // document.execCommand('copy', false, `http://localhost:3000/${type}s/${id}`);s
 
+    console.log(type);
+
     setCopyLink((oldCopied) => ({
       ...oldCopied,
       [id]: true,

@@ -22,7 +22,7 @@ function FoodDetails({ pageType }) {
   const { id } = useParams();
 
   const {
-    cookedRecipes, startCooking, doneRecipes, recipesProgress,
+    startCooking, doneRecipes, recipesProgress,
   } = useCook();
 
   const { favoriteRecipes, updateFavoriteRecipes } = useRecipes();
