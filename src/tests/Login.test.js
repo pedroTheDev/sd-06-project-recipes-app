@@ -33,7 +33,7 @@ describe('Login test', () => {
 
     const email = screen.getByTestId('email-input');
     const senha = screen.getByTestId('password-input');
-    const button = screen.getByText(/Entrar/i);
+    const button = screen.getByTestId('login-submit-btn');
 
     userEvent.type(email, 'email@email.com');
     userEvent.type(senha, '1234567');
@@ -41,6 +41,7 @@ describe('Login test', () => {
     fireEvent.click(button);
 
     const { pathname } = history.location;
-    expect(pathname).toBe('/comidas');
+    expect(pathname).toEqual('/comidas');
+    console.log(pathname);
   });
 });
