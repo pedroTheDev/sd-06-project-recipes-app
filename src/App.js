@@ -6,6 +6,8 @@ import Comidas from './pages/Comidas';
 import Bebidas from './pages/Bebidas';
 import Explore from './pages/Explore';
 import Perfil from './pages/Perfil';
+import ExploreBebidas from './pages/ExploreBebidas';
+import ExploreComidas from './pages/ExploreComidas';
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
           <Route exact path="/bebidas" component={Bebidas} />
           <Route exact path="/explorar" component={Explore} />
           <Route exact path="/perfil" component={Perfil} />
+          <Route exact path="/explorar/comidas" component={ExploreComidas} />
+          <Route exact path="/explorar/bebidas" component={ExploreBebidas} />
 
         </Switch>
       </BrowserRouter>
