@@ -5,6 +5,7 @@ const useRequestDrink = () => {
   const [filter, setFilter] = useState({ text: '', option: '' });
   const [apiResponse, setApiResponse] = useState([]);
   const requestAPI = async () => {
+    console.log(filter);
     let URL = '';
     if (filter.option === 'Ingrediente') {
       URL = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${filter.text}`;

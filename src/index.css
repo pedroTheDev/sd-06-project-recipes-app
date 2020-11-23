@@ -21,7 +21,28 @@ body {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  margin-bottom: 50px;
 }
+
+.categories {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-size: 1.5em;
+  margin: 10px;
+}
+
+.categ-buttons {
+  background-color: rgb(57, 58, 58);
+  color: white;
+}
+
+.search-bar {
+  font-size: 1.2em;
+}
+
+
 
 .text {
   background-color: rgb(70, 59, 59);
