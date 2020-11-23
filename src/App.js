@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Foods from './pages/Foods';
 import Perfil from './pages/Perfil';
 import Drinks from './pages/Drinks';
+import Explore from './pages/Explore';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/comidas" component={ Foods } />
         <Route path="/perfil" component={ Perfil } />
         <Route path="/bebidas" component={ Drinks } />
+        <Route exact path="/explorar" component={ Explore } />
       </Switch>
     </Provider>
   );
