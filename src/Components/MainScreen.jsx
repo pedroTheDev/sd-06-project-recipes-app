@@ -27,7 +27,6 @@ export default function MainScreen() {
     }
     if (pathname === "/bebidas") {
       return drinkRecipes && drinkRecipes.length && drinkRecipes.map((drinks, index) => {
-        // console.log('entrou na função');
         if (index < doze) {
           return (
             <div data-testid={`${index}-recipe-card`}>
