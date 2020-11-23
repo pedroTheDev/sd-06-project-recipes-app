@@ -1,10 +1,11 @@
 import React from 'react';
-import Footer from '../Components/Footer';
+import { Header, Footer } from '../Components';
 
 function ExplorarBebidas() {
   return (
     <div>
-      <h1>ExplorarBebidas</h1>
+      <Header pageName="Explorar Bebidas" />
+      <h1>Explorar Bebidas</h1>
       <Footer />
     </div>
   );

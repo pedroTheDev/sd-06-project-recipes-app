@@ -1,13 +1,21 @@
-import React from 'react';
-import Footer from '../Components/Footer';
+import React from "react";
+import propTypes from "prop-types";
+import { Header, Footer } from "../Components";
+import MainScreen from "../Components/MainScreen";
 
-function Bebidas() {
+function Bebidas({ history }) {
   return (
     <div>
+      <Header pageName="Bebidas" history={history} />
       <h1>Bebidas</h1>
+      <MainScreen />
       <Footer />
     </div>
   );
 }
+
+Bebidas.propTypes = {
+  history: propTypes.arrayOf(Object).isRequired,
+};
 
 export default Bebidas;
