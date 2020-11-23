@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Redirect, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
-import DrinksDetails from '../pages/DrinksDetails';
+import Cards from '../components/Cards';
 import {
   requestIngredients,
   requestName,
@@ -10,6 +10,7 @@ import {
   requestDrinksName,
   requestDrinksFirstLetter,
 } from '../services/requestsAPI';
+
 
 function Filters() {
   const history = useHistory();
@@ -76,22 +77,37 @@ function Filters() {
         alert('Sua busca deve conter somente 1 (um) caracter');
       }
     }
-    console.log(resultsFoodsAndDrinks);
     return null;
   }
 
   function handleResults() {
-    // const idDrinks = resultsFoodsAndDrinks.length && resultsFoodsAndDrinks.drinks[0];
-    const idDrinks = resultsFoodsAndDrinks.drinks[0].idDrink;
+    const url = document.URL;
+    const splitedURL = url.split('/');
+    const one = 1;
 
-    history.push(`/bebidas/${idDrinks}`);
+    if(resultsFoodsAndDrinks.drinks.length === 0 || resultsFoodsAndDrinks.meals.length === 0) {
+      alert('Sinto muito, não encontramos nenhuma receita para esses filtros.')
+    } else {
+      if(splitedURL[3] === 'comidas') {
+        const idFood = resultsFoodsAndDrinks.meals[0].idMeal
+        if(resultsFoodsAndDrinks.meals.length === one) {
+          history.push(`/comidas/${idFood}`);
+        }
+      }
+      
+      if(splitedURL[3] === 'bebidas') {
+        const idDrinks = resultsFoodsAndDrinks.drinks[0].idDrink;
+        if(resultsFoodsAndDrinks.drinks.length === one) {
+          history.push(`/bebidas/${idDrinks}`);
+        }
+      }
+    }
 
-    // return null;
+    return null;
   }
 
   useEffect(() => {
-    console.log('oi entrouuu no useEffect', resultsFoodsAndDrinks);
-    if (resultsFoodsAndDrinks.drinks) {
+    if (resultsFoodsAndDrinks.drinks || resultsFoodsAndDrinks.meals) {
       console.log('entrou no iif');
       handleResults();
     }
@@ -143,7 +159,10 @@ function Filters() {
       >
         Buscar
       </button>
-
+      <div>
+        { resultsFoodsAndDrinks.meals !== undefined ? <Cards /> : null }
+        { resultsFoodsAndDrinks.drinks !== undefined ? <Cards /> : null }
+      </div>
     </div>
   );
 }

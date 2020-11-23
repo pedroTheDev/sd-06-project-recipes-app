@@ -4,6 +4,7 @@ const drinksUrl = 'https://www.thecocktaildb.com/api/json/v1/1';
 export async function requestIngredients(info) {
   const resolve = await fetch(`${url}/filter.php?i=${info}`);
   const result = await resolve.json();
+  
   return result;
 }
 
