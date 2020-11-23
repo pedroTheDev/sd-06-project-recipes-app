@@ -80,7 +80,7 @@ describe('5 - Desenvolva a tela de maneira que o formulário só seja válido ap
 describe('6 - Salve 2 tokens no localStorage após a submissão, identificados pelas chaves mealsToken e cocktailsToken', () => {
   it('Após a submissão mealsToken e cocktailsToken devem estar salvos em localStorage', () => {
     
-    const { getByTestId, unmount } = renderWithRouter(<App/>);
+    const { getByTestId } = renderWithRouter(<App/>);
     const emailInput = getByTestId('email-input');
     const passwordInput = getByTestId('password-input');
     const button = getByTestId('login-submit-btn');
@@ -91,6 +91,7 @@ describe('6 - Salve 2 tokens no localStorage após a submissão, identificados p
 
     expect(localStorage.getItem('mealsToken')).toBe("1");
     expect(localStorage.getItem('cocktailsToken')).toBe("1");
+    cleanup()
   });
 
 });
@@ -109,8 +110,10 @@ describe('7 - Salve o e-mail da pessoa usuária no localStorage na chave user ap
     const user = JSON.parse(localStorage.getItem('user'))
 
     expect(user.email).toBe(emailInput.value);
+    });
   });
-});
+
+// });
 
 describe('8 - Redirecione a pessoa usuária para a tela principal de receitas de comidas após a submissão e validação com sucesso do login', () => {
   it('A rota muda para a tela principal de receitas de comidas', () => {
