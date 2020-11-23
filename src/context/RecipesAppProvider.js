@@ -7,6 +7,8 @@ function RecipesAppProvider({ children }) {
   const [firstLetter, setFirstLetter] = useState(false);
   const [name, setName] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [recipes, setRecipes] = useState([]);
+  const [errorFromApi, setErrorFromApi] = useState(false);
 
   const value = {
     ingredient,
@@ -17,6 +19,10 @@ function RecipesAppProvider({ children }) {
     setName,
     searchTerm,
     setSearchTerm,
+    recipes,
+    setRecipes,
+    errorFromApi,
+    setErrorFromApi,
   };
 
   return (

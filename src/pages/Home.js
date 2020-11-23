@@ -1,15 +1,17 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import Comidas from './Comidas';
+import Bebidas from './Bebidas';
 import SearchBar from '../components/SearchBar';
 import Header from '../components/Header';
 import RecipesAppContext from '../context/RecipesAppContext';
 import {
-  getMealByFirstLetter,
-  getMealByName,
-  getMealAPIByIngredient,
-  getDrinkAPIByFirstLetter,
-  getDrinkAPIByName,
-  getDrinkAPIByIngredient,
+  fetchMealByFirstLetter,
+  fetchMealByName,
+  fetchMealAPIByIngredient,
+  fetchDrinkAPIByFirstLetter,
+  fetchDrinkAPIByName,
+  fetchDrinkAPIByIngredient,
 } from '../services';
 
 function Home({ title }) {
@@ -21,6 +23,8 @@ function Home({ title }) {
     name,
     setName,
     searchTerm,
+    setRecipes,
+    setErrorFromApi,
   } = useContext(RecipesAppContext);
 
   function verification({ target: { id } }) {
@@ -39,25 +43,38 @@ function Home({ title }) {
     }
   }
 
-  const requisitionToAPI = async (byIngridient, byFirstLetter, byName) => {
+  const requisitionToAPI = async (byIngredient, byFirstLetter, byName) => {
     if (ingredient) {
-      console.log('requisição para API de ingredientes');
-      const response = await byIngridient(searchTerm);
-      console.log(response);
+      const response = await byIngredient(searchTerm);
+      if (response === null) {
+        setRecipes([]);
+        setErrorFromApi(true);
+      } else {
+        setRecipes(response);
+        setErrorFromApi(false);
+      }
     } else if (firstLetter) {
-      console.log('requisição para API de primeira letra');
       if (searchTerm.length !== 1) {
-        console.log('uma letra', searchTerm.length);
         window.alert('Sua busca deve conter somente 1 (um) caracter');
       } else {
-        console.log('duas letras', searchTerm.length);
         const response = await byFirstLetter(searchTerm);
-        console.log(response);
+        if (response === null) {
+          setRecipes([]);
+          setErrorFromApi(true);
+        } else {
+          setRecipes(response);
+          setErrorFromApi(false);
+        }
       }
     } else if (name) {
-      console.log('requisição para API de nomes');
       const response = await byName(searchTerm);
-      console.log(response);
+      if (response === null) {
+        setRecipes([]);
+        setErrorFromApi(true);
+      } else {
+        setRecipes(response);
+        setErrorFromApi(false);
+      }
     } else {
       window.alert('Escolha uma opção dentre ingredientes, Primeira letra ou Nome');
     }
@@ -65,14 +82,14 @@ function Home({ title }) {
 
   const requisition = () => {
     if (title === 'Comidas') {
-      requisitionToAPI(getMealAPIByIngredient,
-        getMealByFirstLetter,
-        getMealByName);
+      requisitionToAPI(fetchMealAPIByIngredient,
+        fetchMealByFirstLetter,
+        fetchMealByName);
       console.log('Entrou em comidas', title);
     } else {
-      requisitionToAPI(getDrinkAPIByIngredient,
-        getDrinkAPIByFirstLetter,
-        getDrinkAPIByName);
+      requisitionToAPI(fetchDrinkAPIByIngredient,
+        fetchDrinkAPIByFirstLetter,
+        fetchDrinkAPIByName);
       console.log('Entrou em bebidas', title);
     }
   };
@@ -84,6 +101,7 @@ function Home({ title }) {
         verification={ verification }
         onClick={ requisition }
       />
+      {title === 'Comidas' ? <Comidas /> : <Bebidas />}
     </div>
   );
 }

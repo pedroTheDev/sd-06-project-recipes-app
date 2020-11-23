@@ -1,5 +1,3 @@
-const fetch = require('node-fetch');
-
 const baseAPIDrinks = ('https://www.thecocktaildb.com/api/json/v1/1/');
 const endPointDrinkIngredient = ('filter.php?i=');
 const endPointDrinkName = ('search.php?s=');
@@ -10,39 +8,39 @@ const endPointMealIngredient = ('filter.php?i=');
 const endPointMealName = ('search.php?s=');
 const endPointMealFirstLetter = ('search.php?f=');
 
-export const getDrinkAPIByIngredient = async (ingredient) => {
+export const fetchDrinkAPIByIngredient = async (ingredient) => {
   const response = await fetch(`${baseAPIDrinks}${endPointDrinkIngredient}${ingredient}`);
-  const fetchDrinkByIngredient = await response.json();
-  return fetchDrinkByIngredient;
+  const json = await response.json();
+  return json.drinks;
 };
 
-export const getDrinkAPIByName = async (name) => {
+export const fetchDrinkAPIByName = async (name) => {
   const response = await fetch(`${baseAPIDrinks}${endPointDrinkName}${name}`);
-  const fetchDrinkByName = await response.json();
-  return fetchDrinkByName;
+  const json = await response.json();
+  return json.drinks;
 };
 
-export const getDrinkAPIByFirstLetter = async (firstLetter) => {
+export const fetchDrinkAPIByFirstLetter = async (firstLetter) => {
   const response = await
   fetch(`${baseAPIDrinks}${endPointDrinkFirstLetter}${firstLetter}`);
-  const fetchDrinkByFirstLetter = await response.json();
-  return fetchDrinkByFirstLetter;
+  const json = await response.json();
+  return json.drinks;
 };
 
-export const getMealAPIByIngredient = async (ingredient) => {
+export const fetchMealAPIByIngredient = async (ingredient) => {
   const response = await fetch(`${baseAPIMeal}${endPointMealIngredient}${ingredient}`);
-  const fetchMealByIngredient = await response.json();
-  return fetchMealByIngredient;
+  const json = await response.json();
+  return json.meals;
 };
 
-export const getMealByName = async (name) => {
+export const fetchMealByName = async (name) => {
   const response = await fetch(`${baseAPIMeal}${endPointMealName}${name}`);
-  const fetchMealByName = await response.json();
-  return fetchMealByName;
+  const json = await response.json();
+  return json.meals;
 };
 
-export const getMealByFirstLetter = async (firstLetter) => {
+export const fetchMealByFirstLetter = async (firstLetter) => {
   const response = await fetch(`${baseAPIMeal}${endPointMealFirstLetter}${firstLetter}`);
-  const fetchMealByFirstLetter = await response.json();
-  return fetchMealByFirstLetter;
+  const json = await response.json();
+  return json.meals;
 };
