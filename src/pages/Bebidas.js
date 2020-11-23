@@ -30,12 +30,14 @@ const Bebidas = () => {
     <section>
       <Header title="Bebidas" searchBtn />
       {searchBox && <SearchBar />}
-      {location.pathname === '/bebidas' ? <Footer /> : null }
       <div>
-        {data.drinks.filter((x, index) => index < doze)
-          .map((drink, i) => (<BebidaCard key={ drink } drink={ drink } index={ i } />
+        {data.drinks
+          .filter((x, index) => index < doze)
+          .map((drink, i) => (
+            <BebidaCard key={ drink } drink={ drink } index={ i } />
           ))}
       </div>
+      {location.pathname === '/bebidas' ? <Footer /> : null}
     </section>
   );
 };

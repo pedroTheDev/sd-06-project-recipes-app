@@ -25,7 +25,6 @@ const Comidas = () => {
     <section>
       <Header title="Comidas" searchBtn />
       {searchBox && <SearchBar />}
-      {location.pathname === '/comidas' ? <Footer /> : null }
       <div>
         {/* <BotoesFiltrar /> */}
       </div>
