@@ -9,6 +9,20 @@ class Explore extends React.Component {
     return (
       <div>
         <Header history={ history } />
+        <button
+          type="button"
+          onClick={ () => history.push('/explorar/comidas') }
+          data-testid="explore-food"
+        >
+          <h1>Explorar Comidas</h1>
+        </button>
+        <button
+          type="button"
+          onClick={ () => history.push('/explorar/bebidas') }
+          data-testid="explore-drinks"
+        >
+          <h1>Explorar Bebidas</h1>
+        </button>
         <Footer history={ history } />
       </div>
     );
