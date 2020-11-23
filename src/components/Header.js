@@ -5,14 +5,14 @@ import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 
 function Header() {
-  const { header: { page, search }, setOptions } = useContext(AppContext);
+  const { header: { page, search }, setOptions, options } = useContext(AppContext);
   const [searchBar, setSearchBar] = useState(false);
   const [inputs, setInputs] = useState({ text: '', option: '' });
   const handleChange = (event) => {
     setInputs({ ...inputs, [event.target.id]: event.target.value });
   };
   const handleFilter = () => {
-    setOptions({ ...inputs });
+    setOptions({ ...options, ...inputs });
   };
   const alertFunction = () => {
     alert('Sua busca deve conter somente 1 (um) caracter');

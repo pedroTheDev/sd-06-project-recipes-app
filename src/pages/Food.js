@@ -13,7 +13,7 @@ function Food() {
 
   useEffect(() => {
     setHeader({ page: 'Comidas', search: true });
-    return () => setOptions({ text: '', option: '' });
+    return () => setOptions({ text: '', option: '', category: '' });
   }, []);
 
   useEffect(() => {
