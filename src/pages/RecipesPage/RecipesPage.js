@@ -1,6 +1,6 @@
 import React from 'react';
-import * as cocktailAPI from '../services/cocktailAPI';
-import * as mealAPI from '../services/mealAPI';
+import * as cocktailAPI from '../../services/cocktailAPI';
+import * as mealAPI from '../../services/mealAPI';
 
 class RecipesPage extends React.Component {
   constructor(props) {
