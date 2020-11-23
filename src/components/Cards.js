@@ -2,21 +2,21 @@ import React, { useContext, useEffect } from 'react';
 import { PropTypes } from 'prop-types';
 import RecipesContext from '../context/Context';
 import history from '../helpers/History';
-import useSearch from '../hooks/useSearch';
+// import useSearch from '../hooks/useSearch';
 
 import '../css/Cards.css';
 
 export default function Cards({ id }) {
   const { items } = useContext(RecipesContext);
-  const setFilters = useSearch();
+  // const setFilters = useSearch();
 
-  useEffect(() => {
-    setFilters({
-      searchText: '',
-      searchType: 'name',
-      category: id,
-    });
-  }, []);
+  // useEffect(() => {
+  //   setFilters({
+  //     searchText: '',
+  //     searchType: 'name',
+  //     category: id,
+  //   });
+  // }, []);
 
   function handleRedirect() {
     if (items && items.meals) {

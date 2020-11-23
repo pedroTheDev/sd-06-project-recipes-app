@@ -1,12 +1,14 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Header from '../components/Header';
 import Cards from '../components/Cards';
 import Footer from '../components/Footer';
 import RecipesContext from '../context/Context';
+import useSearch from '../hooks/useSearch';
 
 export default function Drinks() {
   document.title = 'Bebidas';
   const { items } = useContext(RecipesContext);
+  useSearch();
 
   function handleAlert() {
     if (items.drinks === null) {
