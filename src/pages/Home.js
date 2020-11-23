@@ -5,6 +5,7 @@ import Drinks from './Drinks';
 import SearchBar from '../components/SearchBar';
 import Header from '../components/Header';
 import RecipesAppContext from '../context/RecipesAppContext';
+import CategoryList from '../components/CategoryList';
 import {
   fetchMealByFirstLetter,
   fetchMealByName,
@@ -110,6 +111,7 @@ function Home({ title }) {
         />
       }
       {title === 'Comidas' ? <Foods /> : <Drinks />}
+      <CategoryList title={ title } />
     </div>
   );
 }

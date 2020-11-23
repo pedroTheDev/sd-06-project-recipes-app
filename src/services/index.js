@@ -7,6 +7,7 @@ const baseAPIMeal = ('https://www.themealdb.com/api/json/v1/1/');
 const endPointMealIngredient = ('filter.php?i=');
 const endPointMealName = ('search.php?s=');
 const endPointMealFirstLetter = ('search.php?f=');
+const endPointCategoryList = ('list.php?c=list');
 
 export const fetchDrinkAPIByIngredient = async (ingredient) => {
   const response = await fetch(`${baseAPIDrinks}${endPointDrinkIngredient}${ingredient}`);
@@ -43,4 +44,16 @@ export const fetchMealByFirstLetter = async (firstLetter) => {
   const response = await fetch(`${baseAPIMeal}${endPointMealFirstLetter}${firstLetter}`);
   const json = await response.json();
   return json.meals;
+};
+
+export const fetchMealCategoryList = async () => {
+  const response = await fetch(`${baseAPIMeal}${endPointCategoryList}`);
+  const json = await response.json();
+  return json.meals;
+};
+
+export const fetchDrinkCategoryList = async () => {
+  const response = await fetch(`${baseAPIDrinks}${endPointCategoryList}`);
+  const json = await response.json();
+  return json.drinks;
 };
