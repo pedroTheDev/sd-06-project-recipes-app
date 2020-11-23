@@ -11,7 +11,7 @@ function Bebidas({ retrievedDrinks }) {
     const noLength = 0;
     const maxLength = 1;
     if (request === null) {
-      customAlert('Nenhuma receita encontrada');
+      customAlert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
     } if (request.length === noLength) {
       return null;
     } if (request.length === 1) {

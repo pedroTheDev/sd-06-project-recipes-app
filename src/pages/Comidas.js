@@ -12,7 +12,7 @@ function Comidas({ retrievedFood }) {
     const maxLength = 11;
 
     if (request === null) {
-      customAlert('Nenhuma receita encontrada');
+      customAlert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
     } else if (request.length === noLength) {
       return null;
     } else if (request.length === 1) {
