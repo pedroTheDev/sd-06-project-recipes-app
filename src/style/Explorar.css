@@ -11,4 +11,47 @@ body {
   width: 360px;
 }
 
-/* font-family: 'Montserrat', sans-serif; */
+.div-buttons{
+  align-items: center;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  margin: auto;
+  margin-top: 50%;
+}
+
+.button-drink-page {
+  background-color: #f1e510;
+  border: none;
+  border-radius: 5px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  height: 40px;
+  margin: auto;
+  margin-top: 10px;
+  width: 305px;
+}
+
+.button-drink-page:hover {
+  background-color: #cfc50a;
+  cursor: pointer;
+}
+
+.button-food-page {
+  background-color: #d2d700;
+  border: none;
+  border-radius: 5%;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  height: 40px;
+  margin: auto;
+  margin-top: 5px;
+  width: 305px;
+}
+
+.button-food-page:hover {
+  background-color: #c4c703;
+  cursor: pointer;
+}
