@@ -11,7 +11,7 @@ export default function ReceitasFeitas() {
 
   return (
     <div>
-      <Header titulo={titulo} />
+      <Header titulo={ titulo } />
     </div>
   );
 }

@@ -25,24 +25,28 @@ export default function Rotas() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/" component={Login} />
-        <Route path="/comidas/:id/in-progress" component={ProcessoComidas} />
-        <Route path="/bebidas/:id/in-progress" component={ProcessoBebidas} />
-        <Route path="/comidas/:id" component={DetalhesComidas} />
-        <Route path="/bebidas/:id" component={DetalhesBebidas} />
-        <Route path="/comidas" component={Comidas} />
-        <Route path="/bebidas" component={Bebidas} />
-        <Route path="/explorar/bebidas/ingredientes" component={ExplorarBebidasIngredientes} />
-        <Route path="/explorar/comidas/ingredientes" component={ExplorarComidasIngredientes} />
-        <Route path="/explorar/comidas/area" component={ExplorarComidasLocalOrigem} />
-        <Route path="/explorar/bebidas" component={ExplorarBebidas} />
-        <Route path="/explorar/comidas" component={ExplorarComidas} />
-        <Route path="/explorar" component={Explorar} />
-        <Route path="/perfil" component={Perfil} />
-        {/* Receitas aqui abaixo ja linkadas na pagina de perfil
-        mas ainda nao feito os componentes */}
-        <Route path="/receitas-feitas" component={ReceitasFeitas} />
-        <Route path="/receitas-favoritas" component={ReceitasFavoritas} />
+        <Route exact path="/" component={ Login } />
+        <Route path="/comidas/:id/in-progress" component={ ProcessoComidas } />
+        <Route path="/bebidas/:id/in-progress" component={ ProcessoBebidas } />
+        <Route path="/comidas/:id" component={ DetalhesComidas } />
+        <Route path="/bebidas/:id" component={ DetalhesBebidas } />
+        <Route path="/comidas" component={ Comidas } />
+        <Route path="/bebidas" component={ Bebidas } />
+        <Route
+          path="/explorar/bebidas/ingredientes"
+          component={ ExplorarBebidasIngredientes }
+        />
+        <Route
+          path="/explorar/comidas/ingredientes"
+          component={ ExplorarComidasIngredientes }
+        />
+        <Route path="/explorar/comidas/area" component={ ExplorarComidasLocalOrigem } />
+        <Route path="/explorar/bebidas" component={ ExplorarBebidas } />
+        <Route path="/explorar/comidas" component={ ExplorarComidas } />
+        <Route path="/explorar" component={ Explorar } />
+        <Route path="/perfil" component={ Perfil } />
+        <Route path="/receitas-feitas" component={ ReceitasFeitas } />
+        <Route path="/receitas-favoritas" component={ ReceitasFavoritas } />
       </Switch>
     </BrowserRouter>
   );

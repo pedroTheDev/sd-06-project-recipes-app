@@ -14,7 +14,7 @@ export default function Provider({ children }) {
   };
 
   return (
-    <Context.Provider value={contextValue}>
+    <Context.Provider value={ contextValue }>
       { children }
     </Context.Provider>
   );

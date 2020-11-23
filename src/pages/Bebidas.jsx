@@ -12,7 +12,7 @@ export default function Bebidas() {
 
   return (
     <div>
-      <Header titulo={titulo} />
+      <Header titulo={ titulo } />
       <Lupa />
     </div>
   );

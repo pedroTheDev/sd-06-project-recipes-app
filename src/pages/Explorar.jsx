@@ -12,7 +12,7 @@ export default function Explorar() {
 
   return (
     <div>
-      <Header titulo={titulo} />
+      <Header titulo={ titulo } />
       <Link to="/explorar/comidas">
         <button type="button">Explorar Comidas</button>
       </Link>
