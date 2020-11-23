@@ -8,9 +8,10 @@ const Login = () => {
   } = useContext(LoginContext);
 
   const infoVerifier = () => {
+    const minimumPasswordLength = 6;
     const validateEmailRegex = /^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/;
     const testEmail = validateEmailRegex.test(email);
-    const testPassword = password.length >= 6;
+    const testPassword = password.length >= minimumPasswordLength;
     if (testEmail && testPassword) {
       return false;
     }
