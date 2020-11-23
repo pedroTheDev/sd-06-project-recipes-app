@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
-import SearchInput from './SearchInput';
+import SearchRecipes from './SearchRecipes';
 
 function Header({ pathname }) {
   const [toggleSearch, setToogleSearch] = useState(false);
@@ -35,8 +35,8 @@ function Header({ pathname }) {
     </button>
   );
 
-  const renderSearchInputComponent = () => (
-    toggleSearch ? <SearchInput pathname={ pathname } /> : null
+  const renderSearchRecipeComponent = () => (
+    toggleSearch ? <SearchRecipes pathname={ pathname } /> : null
   );
 
   return (
@@ -44,7 +44,7 @@ function Header({ pathname }) {
       {renderProfileButton()}
       {renderTitle()}
       {renderSearchButton()}
-      {renderSearchInputComponent()}
+      {renderSearchRecipeComponent()}
     </div>);
 }
 
@@ -52,4 +52,5 @@ export default Header;
 
 Header.propTypes = {
   pathname: PropTypes.string.isRequired,
+
 };

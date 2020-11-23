@@ -1,43 +1,41 @@
-const fetchAPI = async (endpoint) => {
-  const response = await fetch(endpoint);
-  const data = await response.json();
+export const fetchAPI = async (endpoint) => {
+  let data = null;
+  try {
+    const response = await fetch(endpoint);
+    data = await response.json();
+  } catch (err) {
+    console.error(err);
+  }
   return data;
 };
 
-const checkInputlength = async (firstLetter, text) => (text.length > 1
-  ? alert('Sua busca deve conter somente 1 (um) caracter') : fetchAPI(firstLetter));
-
-const fetchFoodRecipes = async (text, searchType) => {
-  const ingredientsEndPoint = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${text}`;
-  const nameEndPoint = `https://www.themealdb.com/api/json/v1/1/search.php?s=${text}`;
-  const firstLetterEndPoint = `https://www.themealdb.com/api/json/v1/1/search.php?f=${text}`;
-  const fetchTypes = {
-    ingredients: () => fetchAPI(ingredientsEndPoint),
-    name: () => fetchAPI(nameEndPoint),
-    firstLetter: () => checkInputlength(firstLetterEndPoint, text),
-  };
-
-  const response = await fetchTypes[searchType]();
-  return response;
+const urlRecipeTypes = {
+  '/comidas': 'meal',
+  '/bebidas': 'cocktail',
 };
 
-const fetchCocktailRecipes = async (text, searchType) => {
-  const ingredientsEndPoint = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${text}`;
-  const nameEndPoint = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${text}`;
-  const firstLetterEndPoint = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${text}`;
-  const fetchTypes = {
-    ingredients: () => fetchAPI(ingredientsEndPoint),
-    name: () => fetchAPI(nameEndPoint),
-    firstLetter: () => checkInputlength(firstLetterEndPoint, text),
-  };
+const checkInputlength = async (firstLetter, text, fetchApi) => (text.length > 1
+  ? alert('Sua busca deve conter somente 1 (um) caracter') : fetchApi(firstLetter));
 
-  const response = await fetchTypes[searchType]();
-  return response;
+const fetchRecipesBySearchAttributes = (
+  async (inputText, inputRadioSelection, recipeType) => {
+    const ingredientsEndPoint = `https://www.the${recipeType}db.com/api/json/v1/1/filter.php?i=${inputText}`;
+    const nameEndPoint = `https://www.the${recipeType}db.com/api/json/v1/1/search.php?s=${inputText}`;
+    const firstLetterEndPoint = `https://www.the${recipeType}db.com/api/json/v1/1/search.php?f=${inputText}`;
+    const fetchTypes = {
+      ingredients: () => fetchAPI(ingredientsEndPoint),
+      name: () => fetchAPI(nameEndPoint),
+      firstLetter: () => checkInputlength(firstLetterEndPoint, inputText, fetchAPI),
+    };
+
+    const fetchBytype = fetchTypes[inputRadioSelection];
+    const response = await fetchBytype();
+    return response;
+  });
+
+const fetchRecipesByUrl = async (url, inputText, inputRadioSelection) => {
+  const recipeType = urlRecipeTypes[url];
+  return fetchRecipesBySearchAttributes(inputText, inputRadioSelection, recipeType);
 };
 
-const fetchRecipes = async (url, text, searchType) => {
-  if (url === '/comidas') return fetchFoodRecipes(text, searchType);
-  if (url === '/bebidas') return fetchCocktailRecipes(text, searchType);
-};
-
-export default fetchRecipes;
+export default fetchRecipesByUrl;

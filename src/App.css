@@ -60,3 +60,16 @@
     transform: rotate(-10deg);
   }
 }
+
+
+.main__page__recipe-container {
+  display: flex;
+  max-height: 200px;
+  max-width: 1vw;
+
+}
+
+.main__page__recipe-img {
+  max-height: 80px;
+  border-radius: 25% 25%;
+}
