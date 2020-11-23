@@ -1394,7 +1394,7 @@ A rota `/explorar/bebidas/area` não deve estar disponível, retornando um erro 
 
   **Observações técnicas**
 
-  * Redireciona para a rota correta.
+  * Redireciona para a rota correta. !
 
 ### 86 - Redirecione a pessoa usuária que, ao clicar no botão de "Receitas Feitas", a rota deve mudar para a tela de receitas feitas
 
