@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import NavigationMenu from '../components/NavigationMenu';
@@ -34,18 +34,20 @@ function Drink() {
               data-testid={ `${index}-recipe-card` }
               key={ drink.idDrink }
             >
-              <h4
-                className="text"
-                data-testid={ `${index}-card-name` }
-              >
-                {drink.strDrink}
-              </h4>
-              <img
-                className="picture"
-                data-testid={ `${index}-card-img` }
-                src={ drink.strDrinkThumb }
-                alt={ drink.strDrink }
-              />
+              <Link to={ `/bebidas/${drink.idDrink}` }>
+                <h4
+                  className="text"
+                  data-testid={ `${index}-card-name` }
+                >
+                  {drink.strDrink}
+                </h4>
+                <img
+                  className="picture"
+                  data-testid={ `${index}-card-img` }
+                  src={ drink.strDrinkThumb }
+                  alt={ drink.strDrink }
+                />
+              </Link>
             </div>))}
       </div>
       <Footer />
