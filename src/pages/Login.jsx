@@ -32,7 +32,6 @@ export default function Login({ history }) {
   const handleClick = (e) => {
     e.preventDefault();
     history.push('/comidas');
-    // const item = { mealsToken: 1, cocktailsToken: 1, user: { email }};
     localStorage.setItem('mealsToken', 1);
     localStorage.setItem('cocktailsToken', 1);
     localStorage.setItem('user', JSON.stringify({ email }));

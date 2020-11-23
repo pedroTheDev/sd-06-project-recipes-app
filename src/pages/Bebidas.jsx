@@ -1,20 +1,19 @@
 import React, { useContext, useEffect } from 'react';
-import Header from '../Components/Header';
 import Context from '../context/Context';
+import Header from '../Components/Header';
 import Lupa from '../Components/Lupa';
 
-export default function Comidas() {
+export default function Bebidas() {
   const { titulo, setTitulo } = useContext(Context);
 
   useEffect(() => {
-    setTitulo('Comidas');
+    setTitulo('Bebidas');
   }, []);
 
   return (
     <div>
       <Header titulo={titulo} />
       <Lupa />
-      <h1>{ titulo }</h1>
     </div>
   );
 }

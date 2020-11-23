@@ -4,8 +4,14 @@ import Context from './Context';
 
 export default function Provider({ children }) {
   const [email, setEmail] = useState('');
+  const [titulo, setTitulo] = useState('');
 
-  const contextValue = { email, setEmail };
+  const contextValue = {
+    email,
+    setEmail,
+    titulo,
+    setTitulo,
+  };
 
   return (
     <Context.Provider value={contextValue}>
