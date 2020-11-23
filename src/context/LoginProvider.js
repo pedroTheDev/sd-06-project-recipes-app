@@ -9,7 +9,7 @@ const LoginProvider = ({ children }) => {
     email, setEmail, password, setPassword,
   };
   return (
-    <LoginContext.Provider value={providerValue}>
+    <LoginContext.Provider value={ providerValue }>
       { children }
     </LoginContext.Provider>
   );

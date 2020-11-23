@@ -11,14 +11,16 @@ const Login = () => {
   const {
     setTitle,
   } = useContext(HeaderContext);
+
   useEffect(() => {
     setTitle('Login');
   }, []);
 
   const infoVerifier = () => {
+    const minimumPasswordLength = 6;
     const validateEmailRegex = /^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/;
     const testEmail = validateEmailRegex.test(email);
-    const testPassword = password.length >= 6;
+    const testPassword = password.length > minimumPasswordLength;
     if (testEmail && testPassword) {
       return false;
     }
@@ -36,24 +38,24 @@ const Login = () => {
         type="email"
         data-testid="email-input"
         placeholder="email"
-        value={email}
-        onChange={({ target: { value } }) => setEmail(value)}
+        value={ email }
+        onChange={ ({ target: { value } }) => setEmail(value) }
         required
       />
       <input
         type="password"
         data-testid="password-input"
         placeholder="senha"
-        value={password}
-        onChange={({ target: { value } }) => setPassword(value)}
+        value={ password }
+        onChange={ ({ target: { value } }) => setPassword(value) }
         required
       />
       <Link to="/comidas">
         <button
           type="submit"
           data-testid="login-submit-btn"
-          onClick={handleClick}
-          disabled={infoVerifier()}
+          onClick={ handleClick }
+          disabled={ infoVerifier() }
         >
           Entrar
         </button>

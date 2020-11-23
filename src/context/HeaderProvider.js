@@ -11,8 +11,8 @@ const HeaderProvider = ({ children }) => {
   };
 
   return (
-    <HeaderContext.Provider value={headerValues}>
-      {children}
+    <HeaderContext.Provider value={ headerValues }>
+      { children }
     </HeaderContext.Provider>
   );
 };

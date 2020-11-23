@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import searchicon from '../images/searchIcon.svg';
-import profileicon from '../images/profileIcon.svg';
+import searchIcon from '../images/searchIcon.svg';
+import profileIcon from '../images/profileIcon.svg';
 import './Header.css';
 import HeaderContext from '../context/HeaderContext';
 
@@ -16,24 +16,24 @@ const Header = () => {
       || title === 'Bebidas'
       || title === 'Explorar Origem'
     ) {
-      return false;
+      return true;
     }
-    return true;
+    return false;
   };
+
   return (
     <div>
       <div className="main-header">
         <Link to="/perfil">
-          <img src={profileicon} alt="Profile" data-testid="profile-top-btn" />
+          <img src={ profileIcon } alt="Profile" data-testid="profile-top-btn" />
         </Link>
-        <h1 data-testid="page-title">{title}</h1>
-        <img
+        <h1 data-testid="page-title">{ title }</h1>
+        { handleSearchImage() && <img
           id="search-image"
           data-testid="search-top-btn"
-          src={searchicon}
-          hidden={handleSearchImage()}
+          src={ searchIcon }
           alt="Search"
-        />
+        /> }
       </div>
     </div>
   );
