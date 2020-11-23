@@ -4,11 +4,11 @@ import RecipeContext from "../hooks/RecipeContext";
 
 export default function MainScreen() {
   const history = useHistory();
-  const { foodRecipes, drinkRecipes } = useContext(RecipeContext);
+  const { foodRecipes, drinkRecipes, isLoading, setIsLoading } = useContext(RecipeContext);
   const doze = 12;
   const { pathname } = history.location;
   const renderCards = () => {
-    console.log(history);
+    console.log('texto', drinkRecipes);
     if (pathname === "/comidas") {
       return foodRecipes.map((food, index) => {
         if (index < doze) {
@@ -26,7 +26,8 @@ export default function MainScreen() {
       });
     }
     if (pathname === "/bebidas") {
-      return drinkRecipes.map((drinks, index) => {
+      return drinkRecipes && drinkRecipes.length && drinkRecipes.map((drinks, index) => {
+        // console.log('entrou na função');
         if (index < doze) {
           return (
             <div data-testid={`${index}-recipe-card`}>
@@ -42,5 +43,6 @@ export default function MainScreen() {
       });
     }
   };
-  return <div>{renderCards()}</div>;
+
+  return <div>{isLoading ? <p>Loading...</p> : renderCards()}</div>;
 }
