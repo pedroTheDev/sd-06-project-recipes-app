@@ -23,7 +23,7 @@ function App() {
     <Switch>
       <Route path="/bebidas/:id/in-progress" component={ DrinkInProgress } />
       <Route path="/comidas/:id/in-progress" component={ FoodInProgress } />
-      <Route path="/bebidas/:id" component={ DrinkDetails } />
+      <Route path="/bebidas/:id" render={ (props) => <DrinkDetails { ...props } /> } />
       <Route path="/comidas/:id" component={ FoodDetails } />
       <Route path="/bebidas" component={ Drink } />
       <Route path="/comidas" component={ Food } />
