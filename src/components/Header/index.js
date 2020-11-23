@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 
 import './styles.css';
 import { Link } from 'react-router-dom';
+
+import IconSearchHeader from './IconSearchHeader';
+import SearchBar from '../SearchBar/index';
+
 import profileIcon from '../../images/profileIcon.svg';
-import searchIcon from '../../images/searchIcon.svg';
 
 const Header = () => {
   const [state, setState] = useState({
@@ -78,30 +81,26 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="header">
-      <Link to="/perfil">
-        <img
-          data-testid="profile-top-btn"
-          src={profileIcon}
-          alt="profileIcon"
-        />
-      </Link>
-      <div>
-        {
+    <div>
+      <header className="header">
+        <Link to="/perfil">
+          <img
+            data-testid="profile-top-btn"
+            src={profileIcon}
+            alt="profileIcon"
+          />
+        </Link>
+        <div>
+          {
           !state ? <h2>Title</h2> : <h2 data-testid="page-title">{state.namePage}</h2>
         }
-      </div>
-      {!state.search ? <div />
-        : (
-          <Link to="/">
-            <img
-              data-testid="search-top-btn"
-              src={searchIcon}
-              alt="searchIcon"
-            />
-          </Link>
-        )}
-    </header>
+        </div>
+        {!state.search ? <div />
+          : <IconSearchHeader />}
+      </header>
+      <SearchBar />
+    </div>
+
   );
 };
 
