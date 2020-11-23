@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import dataApi from '../service/foodApi';
+import { dataApi } from '../service/foodApi';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';

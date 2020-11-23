@@ -1,4 +1,4 @@
-const drinkApi = () => (
+export const drinkApi = () => (
   fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=')
     .then((response) => (
       response
@@ -7,4 +7,10 @@ const drinkApi = () => (
     ))
 );
 
-export default drinkApi;
+export const fetchRandomDrink = () => fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php')
+  .then((response) => (
+    response
+      .json()
+      .then((json) => json.drinks[0])
+      .catch((error) => error)
+  ));
