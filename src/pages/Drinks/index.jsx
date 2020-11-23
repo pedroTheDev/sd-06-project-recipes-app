@@ -106,7 +106,7 @@ function Drinks({ pageType }) {
               alt={drink.strDrink}
               data-testid={`${index}-card-img`}
             />
-            <strong>{drink.strDrink}</strong>
+            <strong data-testid={`${index}-card-name`}>{drink.strDrink}</strong>
           </Link>
         ))}
       </div>

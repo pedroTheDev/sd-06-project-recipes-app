@@ -21,6 +21,13 @@ a {
   text-decoration: none;
 }
 
+.start-recipe-btn {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
 button {
   cursor: pointer;
 }

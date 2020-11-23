@@ -1,9 +1,12 @@
-import React, { useMemo, useState, useCallback } from 'react';
+import React, {
+  useMemo, useState, useCallback, useEffect,
+} from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { useCook } from '../../hooks/cook';
 import { useRecipes } from '../../hooks/recipes';
+import { useSingleRecipe } from '../../hooks/singleRecipe';
 
 import shareIcon from '../../images/shareIcon.svg';
 import blackHeart from '../../images/blackHeartIcon.svg';
@@ -13,7 +16,7 @@ function FoodInProgress({ pageType }) {
   const [copiedLink, setCopiedLink] = useState(false);
 
   const {
-    cookedRecipes, recipesProgress, updateRecipeProgress, finalizeRecipe,
+    cookedRecipes, recipesProgress, updateRecipeProgress, finalizeRecipe, loadRecipeToCook,
   } = useCook();
 
   const { id } = useParams();
@@ -21,6 +24,16 @@ function FoodInProgress({ pageType }) {
   const { push } = useHistory();
 
   const { favoriteRecipes, updateFavoriteRecipes } = useRecipes();
+
+  useEffect(() => {
+    const recipeToCook = cookedRecipes[pageType].find(({ recipe }) => (
+      recipe.idMeal === id
+    ));
+
+    if (!recipeToCook) {
+      loadRecipeToCook(pageType, id);
+    }
+  }, []);
 
   const handleShareClick = useCallback(() => {
     document.execCommand('copy', false, id);
@@ -34,7 +47,7 @@ function FoodInProgress({ pageType }) {
     ));
 
     if (!recipeToCook) {
-      return { error: 'You did not start this recipe yet' };
+      return { error: 'Something' };
     }
 
     return recipeToCook.recipe;
@@ -52,7 +65,7 @@ function FoodInProgress({ pageType }) {
       type: pageType,
       area: currentlyCooking.strArea || '',
       category: currentlyCooking.strCategory,
-      alcoholicOrNot: false,
+      alcoholicOrNot: '',
       name: currentlyCooking.strMeal,
       image: currentlyCooking.strMealThumb,
     };

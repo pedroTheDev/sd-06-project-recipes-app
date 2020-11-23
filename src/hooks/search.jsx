@@ -58,9 +58,14 @@ function SearchProvider({ children }) {
         return null;
       }
 
-      const firstItem = recipesSearched[0];
-      const correctIDAccess = getID[type];
-      const firstItemID = firstItem[correctIDAccess];
+      let firstItemID;
+      const singleRecipeReturned = (recipesSearched === 1);
+
+      if (singleRecipeReturned) {
+        const firstItem = recipesSearched[0];
+        const correctIDAccess = getID[type];
+        firstItemID = firstItem[correctIDAccess];
+      }
 
       updateRecipes(type, recipesSearched);
 
@@ -68,7 +73,9 @@ function SearchProvider({ children }) {
     } catch (err) {
       console.log(err);
 
-      return alert('Sinto muito, houve um erro ao buscar. Tente novamente.');
+      alert('Sinto muito, houve um erro ao buscar. Tente novamente.');
+
+      return null;
     }
   }, [updateRecipes]);
 

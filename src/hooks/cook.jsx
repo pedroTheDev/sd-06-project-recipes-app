@@ -3,7 +3,10 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 
+import { fetchSinglesOptions } from './singleRecipe';
+
 import saveDoneRecipe from './utils/saveDoneRecipes';
+import { useAuth } from './auth';
 
 const cookRecipesStructure = {
   comidas: [],
@@ -47,6 +50,8 @@ function CookProvider({ children }) {
 
     return [];
   });
+
+  const { userToken } = useAuth();
 
   useEffect(() => {
     localStorage.setItem('inProgressRecipes', JSON.stringify(recipesProgress));
@@ -122,6 +127,18 @@ function CookProvider({ children }) {
     });
   }, []);
 
+  const loadRecipeToCook = useCallback(async (type, recipeID) => {
+    const fetchSingle = fetchSinglesOptions[type];
+
+    try {
+      const recipe = await fetchSingle(recipeID, userToken);
+
+      startCooking(type, recipe);
+    } catch (err) {
+      console.log(err);
+    }
+  }, [userToken]);
+
   return (
     <cookContext.Provider value={{
       cookedRecipes,
@@ -130,6 +147,7 @@ function CookProvider({ children }) {
       startCooking,
       updateRecipeProgress,
       finalizeRecipe,
+      loadRecipeToCook,
     }}
     >
       {children}

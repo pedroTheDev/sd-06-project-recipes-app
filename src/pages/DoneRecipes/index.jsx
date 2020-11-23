@@ -42,7 +42,8 @@ function DoneRecipes() {
   }, []);
 
   const handleShareClick = useCallback((id, type) => {
-    document.execCommand('copy', false, `http://localhost:3000/${type}s/${id}`);
+    // document.execCommand('copy', false, `http://localhost:3000/${type}s/${id}`);
+    console.log(type);
 
     setCopyLink((oldCopied) => ({
       ...oldCopied,
@@ -114,9 +115,8 @@ function DoneRecipes() {
               <button
                 type="button"
                 onClick={() => handleShareClick(recipe.id, recipe.type)}
-                data-testid={`${index}-horizontal-share-btn`}
               >
-                <img src={shareIcon} alt="share this recipe" />
+                <img data-testid={`${index}-horizontal-share-btn`} src={shareIcon} alt="share this recipe" />
               </button>
 
               {copyLink[recipe.id] && (

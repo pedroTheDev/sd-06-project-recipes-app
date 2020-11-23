@@ -113,7 +113,7 @@ function DrinkDetails({ pageType }) {
     const favoriteMeal = {
       id,
       type: 'bebida',
-      area: null,
+      area: '',
       category: drinkDetails.strCategory,
       alcoholicOrNot: drinkDetails.strAlcoholic,
       name: drinkDetails.strDrink,
@@ -138,16 +138,17 @@ function DrinkDetails({ pageType }) {
       />
 
       <h2 data-testid="recipe-title">{drinkDetails.strDrink}</h2>
-      <p data-testid="recipe-category">{drinkDetails.strCategory}</p>
-      <p data-testid="recipe-alcoholic">{drinkDetails.strAlcoholic}</p>
-
+      <p data-testid="recipe-category">{drinkDetails.strAlcoholic}</p>
       <div className="share-btn-container">
         <button
-          data-testid="share-btn"
           onClick={handleShareClick}
           type="button"
         >
-          <img src={shareIcon} alt="share this recipe" />
+          <img
+            data-testid="share-btn"
+            src={shareIcon}
+            alt="share this recipe"
+          />
         </button>
 
         {copiedLink && (
@@ -156,8 +157,12 @@ function DrinkDetails({ pageType }) {
       </div>
 
       <div className="favorites-btn-container">
-        <button data-testid="favorite-btn" type="button" onClick={handleFavoriteToggle}>
-          <img src={recipeIsFavorited ? blackHeart : whiteHeart} alt="favorite this recipe" />
+        <button type="button" onClick={handleFavoriteToggle}>
+          <img
+            src={recipeIsFavorited ? blackHeart : whiteHeart}
+            alt="favorite this recipe"
+            data-testid="share-btn"
+          />
         </button>
       </div>
 
@@ -188,7 +193,7 @@ function DrinkDetails({ pageType }) {
             data-testid={`${index}-recomendation-card`}
           >
             <img src={recommendation.strMealThumb} alt={recommendation.strMeal} />
-            <strong>{recommendation.strMeal}</strong>
+            <strong data-testid={`${index}-recomendation-card`}>{recommendation.strMeal}</strong>
           </Link>
         ))}
       </div>
@@ -198,6 +203,7 @@ function DrinkDetails({ pageType }) {
           to={`/${pageType}/${id}/in-progress`}
           data-testid="start-recipe-btn"
           onClick={handleStartCooking}
+          className="start-recipe-btn"
         >
           {recipeHasBeenStarted ? 'Continuar Receita' : 'Iniciar Receita'}
         </Link>

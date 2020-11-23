@@ -1,4 +1,6 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, {
+  useCallback, useRef, useState, useMemo,
+} from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -53,18 +55,24 @@ function Header({ pageName, showSearch = false }) {
     }
   }, [push, appSearch, searchInputRef, radioValue, userToken, pageName]);
 
+  const parsedTitle = useMemo(() => {
+    const nameCapitalized = pageName.charAt(0).toUpperCase() + pageName.slice(1);
+
+    return nameCapitalized;
+  }, [pageName]);
+
   return (
     <header className="app-header">
-      <Link to="/perfil" data-testid="profile-top-btn">
-        <img src={userIcon} alt="user info" />
+      <Link to="/perfil">
+        <img data-testid="profile-top-btn" src={userIcon} alt="user info" />
       </Link>
 
-      <span data-testid="page-title">{ pageName }</span>
+      <span data-testid="page-title">{ parsedTitle }</span>
 
       {showSearch
         ? (
-          <button type="button" data-testid="search-top-btn" onClick={handleSearchIconClick}>
-            <img src={searchIcon} alt="search icon" />
+          <button type="button" onClick={handleSearchIconClick}>
+            <img data-testid="search-top-btn" src={searchIcon} alt="search icon" />
           </button>
         ) : (<div />)}
 

@@ -104,7 +104,7 @@ function Foods({ pageType }) {
               data-testid={`${index}-card-img`}
 
             />
-            <strong>{meal.strMeal}</strong>
+            <strong data-testid={`${index}-card-name`}>{meal.strMeal}</strong>
           </Link>
         ))}
       </div>

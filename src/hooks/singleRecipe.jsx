@@ -3,8 +3,12 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 
-import { fetchDrinkDetails, fetchDrinksSearch, fetchRandomDrink } from '../services/drinksApi';
-import { fetchMealDetails, fetchMealsSearch, fetchRandomMeal } from '../services/foodApi';
+import {
+  fetchDrinkDetails, fetchRandomDrink, fetchDrinkRecommendations,
+} from '../services/drinksApi';
+import {
+  fetchMealDetails, fetchRandomMeal, fetchFoodRecommendations,
+} from '../services/foodApi';
 import { useAuth } from './auth';
 
 const singleRecipeStructure = {
@@ -18,39 +22,19 @@ const singleRecipeStructure = {
   },
 };
 
-const fetchSinglesOptions = {
+export const fetchSinglesOptions = {
   comidas: fetchMealDetails,
   bebidas: fetchDrinkDetails,
 };
 
 const fetchRecommendationsOptions = {
-  comidas: fetchMealsSearch,
-  bebidas: fetchDrinksSearch,
+  comidas: fetchDrinkRecommendations,
+  bebidas: fetchFoodRecommendations,
 };
 
 const fetchRandomOptions = {
   comidas: fetchRandomMeal,
   bebidas: fetchRandomDrink,
-};
-
-function invertType(type) {
-  const comidas = 'comidas';
-  const bebidas = 'bebidas';
-
-  return (type === comidas) ? bebidas : comidas;
-}
-
-const recommendationsDefault = {
-  comidas: {
-    value: 'Chicken',
-    token: '1',
-    option: 'name',
-  },
-  bebidas: {
-    value: 'Martini',
-    token: '1',
-    option: 'name',
-  },
 };
 
 const singleRecipeContext = createContext();
@@ -66,13 +50,12 @@ function SingleRecipeProvider({ children }) {
     if (randomRedirect) return;
 
     const loadRecipe = fetchSinglesOptions[type];
-    const invertedType = invertType(type);
-    const loadRecommendations = fetchRecommendationsOptions[invertedType];
+    const loadRecommendations = fetchRecommendationsOptions[type];
 
     try {
       const recipe = await loadRecipe(recipeID, userToken);
 
-      let recommendations = await loadRecommendations(recommendationsDefault[invertedType]);
+      let recommendations = await loadRecommendations(userToken);
 
       const REC_LIMIT = 6;
       recommendations = recommendations.filter((_, index) => index < REC_LIMIT);
@@ -95,8 +78,7 @@ function SingleRecipeProvider({ children }) {
     setLoadingSingleRecipe(true);
 
     const loadRandom = fetchRandomOptions[type];
-    const invertedType = invertType(type);
-    const loadRecommendations = fetchRecommendationsOptions[invertedType];
+    const loadRecommendations = fetchRecommendationsOptions[type];
 
     let randomID;
     let recipe;
@@ -104,7 +86,7 @@ function SingleRecipeProvider({ children }) {
     try {
       [randomID, recipe] = await loadRandom(userToken);
 
-      let recommendations = await loadRecommendations(recommendationsDefault[invertedType]);
+      let recommendations = await loadRecommendations(userToken);
 
       const REC_LIMIT = 6;
       recommendations = recommendations.filter((_, index) => index < REC_LIMIT);

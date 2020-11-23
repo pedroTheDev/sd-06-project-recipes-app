@@ -125,9 +125,12 @@ function Favorites() {
               <button
                 type="button"
                 onClick={() => handleShareClick(recipe.id)}
-                data-testid={`${index}-horizontal-share-btn`}
               >
-                <img src={shareIcon} alt="share this recipe" />
+                <img
+                  src={shareIcon}
+                  alt="share this recipe"
+                  data-testid={`${index}-horizontal-share-btn`}
+                />
               </button>
 
               {copyLink[recipe.id] && (
@@ -138,9 +141,12 @@ function Favorites() {
             <button
               type="button"
               onClick={() => handleRecipeUnfavorite(recipe.id, recipe.type)}
-              data-testid={`${index}-horizontal-favorite-btn`}
             >
-              <img src={heartIcon} alt="unfavorite this recipe" />
+              <img
+                data-testid={`${index}-horizontal-favorite-btn`}
+                src={heartIcon}
+                alt="unfavorite this recipe"
+              />
             </button>
 
           </div>

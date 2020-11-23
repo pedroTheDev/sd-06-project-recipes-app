@@ -30,6 +30,15 @@ export async function fetchDrinksSearch({ option, value, token }) {
   return drinks;
 }
 
+export async function fetchDrinkRecommendations(token) {
+  const urlToFetch = `${baseURL}/${token}/${NAME_KEY}=`;
+
+  const data = await fetch(urlToFetch);
+  const { drinks } = await data.json();
+
+  return drinks;
+}
+
 export async function fetchDrinksCategories(token) {
   const urlToFetch = `${baseURL}/${token}/${CATEGORIES_KEY_VALUE}`;
 
