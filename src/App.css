@@ -4,6 +4,10 @@ body {
   background-color: #d39d60;
 }
 
+button {
+  cursor: pointer;
+}
+
 .login-container {
   color: #8B4513;
   display: flex;
@@ -179,7 +183,6 @@ body {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  /* background: url(https://ak.picdn.net/shutterstock/videos/14891857/thumb/1.jpg); */
 }
 
 .card {
@@ -224,7 +227,7 @@ body {
 
 .detail-card img {
   width: 100%;
-  border-radius: 3px;
+  border-radius: 1px;
 }
 
 .detail-instructions {
@@ -277,6 +280,46 @@ body {
 .exploredrinks-container {
   margin: 50% auto;
   background-color: khaki;
+}
+
+.video-div {
+  width: 90%;
+  height: 200px;
+  margin-bottom: 15px;
+}
+
+.video-div iframe {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.525);
+}
+
+.start-recipe {
+  position: fixed;
+  z-index: 99;
+  width: 150px;
+  height: 50px;
+  border-radius: 3px;
+  border: none;
+  color: white;
+  font-size: 16px;
+  font-weight: 100;
+  background-color: rgba(96, 218, 47, 0.800);
+  bottom: 0;
+  margin-bottom: 30px;
+}
+
+.start-recipe:hover{
+  outline: none;
+  transition: 0.5;
+  background-color: rgba(92, 206, 47, 1);
+}
+
+.start-recipe:focus{
+  outline: none;
+  transition: 0.5;
+  background-color: rgba(92, 206, 47, 1);
 }
 
 @media (max-width:600px) {

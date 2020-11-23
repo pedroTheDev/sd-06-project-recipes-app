@@ -14,11 +14,13 @@ class FoodsDetails extends React.Component {
       x: 0,
       Ingredients: [],
       Measures: [],
+      Video: '',
     };
     this.goLeft = this.goLeft.bind(this);
     this.goRight = this.goRight.bind(this);
     this.handleIngredients = this.handleIngredients.bind(this);
     this.setIngredients = this.setIngredients.bind(this);
+    this.handleYoutubeVideo = this.handleYoutubeVideo.bind(this);
   }
 
   async componentDidMount() {
@@ -30,6 +32,11 @@ class FoodsDetails extends React.Component {
     this.handleIngredients();
   }
 
+  handleYoutubeVideo(url) {
+    const Video = url.split('=')[1];
+    this.setState({ Video });
+  }
+
   handleIngredients() {
     const ingredientArray = [];
     const measureArray = [];
@@ -37,6 +44,7 @@ class FoodsDetails extends React.Component {
     let measure;
     const { Meal } = this.state;
     Meal.map((recipe) => {
+      this.handleYoutubeVideo(recipe.strYoutube);
       const twenty = 20;
       for (let index = 1; index <= twenty; index += 1) {
         ingredient = `strIngredient${index}`;
@@ -44,11 +52,11 @@ class FoodsDetails extends React.Component {
         ingredientArray.push(recipe[ingredient]);
         measureArray.push(recipe[measure]);
       }
-      const filteredIngredients = ingredientArray.filter((item) => item !== '')
-        .filter((element) => element !== 'null');
+      const filteredIngredients = ingredientArray.filter((item) => item !== undefined)
+        .filter((element) => element !== null).filter((element) => element !== '');
 
-      const filteredMeasure = measureArray.filter((item) => item !== '')
-        .filter((element) => element !== 'null');
+      const filteredMeasure = measureArray.filter((item) => item !== undefined)
+        .filter((element) => element !== null).filter((element) => element !== '');
 
       this.setIngredients(filteredIngredients, filteredMeasure);
       return null;
@@ -87,7 +95,7 @@ class FoodsDetails extends React.Component {
   }
 
   render() {
-    const { Meal, RecommendedDrinks, x, Ingredients, Measures } = this.state;
+    const { Meal, RecommendedDrinks, x, Ingredients, Measures, Video } = this.state;
     return (
       <div className="food-drink-detail-container">
         {Meal ? Meal.map((recipe, index) => (
@@ -133,16 +141,30 @@ class FoodsDetails extends React.Component {
                 ))}
               </ul>
             </div>
-            <h2 data-testid="instructions">Instructions</h2>
-            <div className="detail-instructions">{recipe.strInstructions}</div>
+            <h2>Instructions</h2>
+            <div className="detail-instructions" data-testid="instructions">
+              {recipe.strInstructions}
+            </div>
             <p data-testid={ `${index}-card-name` }>{recipe.strMeal}</p>
             <h2>Recomendadas</h2>
+            <div className="video-div">
+              <iframe
+                data-testid="video"
+                title="recipe-video"
+                src={ `https://www.youtube.com/embed/${Video}` }
+                frameBorder="0"
+                allow="accelerometer;autoplay;
+                clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
             <div className="slider">
               {RecommendedDrinks.map((recomend, i) => (
                 <div
                   key={ i }
                   className="slide"
                   style={ { transform: `translateX(${x}%)` } }
+                  data-testid={ `${i}-recomendation-card` }
                 >
                   <img
                     src={ recomend.strDrinkThumb }
@@ -151,7 +173,7 @@ class FoodsDetails extends React.Component {
                   />
                   <div className="text-slider-div">
                     <p>{recomend.strAlcoholic}</p>
-                    <h4>{recomend.strDrink}</h4>
+                    <h4 data-testid={ `${i}-recomendation-title` }>{recomend.strDrink}</h4>
                   </div>
                 </div>
               ))}
@@ -164,11 +186,9 @@ class FoodsDetails extends React.Component {
                 <i className="fas fa-chevron-right" />
               </button>
             </div>
-            <div>
-              <button type="button" data-testid="start-recipe-btn">
-                Iniciar Receita
-              </button>
-            </div>
+            <button type="button" data-testid="start-recipe-btn" className="start-recipe">
+              Iniciar Receita
+            </button>
           </div>
         )) : null }
       </div>);
