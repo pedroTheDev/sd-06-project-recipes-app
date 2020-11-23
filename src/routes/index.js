@@ -1,6 +1,5 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-
 import Login from '../pages/Login';
 import Home from '../pages/Home';
 // import RecipeDrink from '../pages/RecipeDrink';
@@ -24,8 +23,14 @@ function Routes() {
       <Route path="/" exact component={ Login } />
       <Route path="/comidas" exact render={ () => <Home title="Comidas" /> } />
       <Route path="/bebidas" exact render={ () => <Home title="Bebidas" /> } />
-      <Route path="/comidas/:id" exact component={ RecipeFoodDetails } />
-      <Route path="/bebidas/:id" exact component={ RecipeDrinkDetails } />
+      <Route
+        path="/comidas/:id"
+        render={ (props) => <RecipeFoodDetails { ...props } /> }
+      />
+      <Route
+        path="/bebidas/:id"
+        render={ (props) => <RecipeDrinkDetails { ...props } /> }
+      />
       <Route path="/comidas/:id/in-progress" exact component={ RecipeFoodProcess } />
       <Route path="/bebidas/:id/in-progress" exact component={ RecipeDrinkProcess } />
       <Route path="/explorar" exact component={ Explore } />
