@@ -21,7 +21,7 @@ body {
 }
 
 .button-drink-page {
-  background-color: #f1e510;
+  background-color: #fffb00;
   border: none;
   border-radius: 5px;
   font-family: 'Montserrat', sans-serif;
@@ -34,12 +34,12 @@ body {
 }
 
 .button-drink-page:hover {
-  background-color: #cfc50a;
+  background-color: #ece802;
   cursor: pointer;
 }
 
 .button-food-page {
-  background-color: #d2d700;
+  background-color: #fac001;
   border: none;
   border-radius: 5%;
   font-family: 'Montserrat', sans-serif;
@@ -52,6 +52,60 @@ body {
 }
 
 .button-food-page:hover {
-  background-color: #c4c703;
+  background-color: #e9b304;
+  cursor: pointer;
+}
+
+.button-ingredient {
+  background-color: #4fd401;
+  border: none;
+  border-radius: 5%;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  height: 40px;
+  margin: auto;
+  margin-top: 5px;
+  width: 305px;
+}
+
+.button-ingredient:hover {
+  background-color: #47c001;
+  cursor: pointer;
+}
+
+.button-area {
+  background-color: #02bbdb;
+  border: none;
+  border-radius: 5%;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  height: 40px;
+  margin: auto;
+  margin-top: 5px;
+  width: 305px;
+}
+
+.button-area:hover {
+  background-color: #02a6c3;
+  cursor: pointer;
+}
+
+.button-surprise {
+  background-color: #bd0165;
+  border: none;
+  border-radius: 5%;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  height: 40px;
+  margin: auto;
+  margin-top: 5px;
+  width: 305px;
+}
+
+.button-surprise:hover {
+  background-color: #ac015c;
   cursor: pointer;
 }
