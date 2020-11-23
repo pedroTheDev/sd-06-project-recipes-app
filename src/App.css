@@ -60,3 +60,29 @@
     transform: rotate(-10deg);
   }
 }
+
+.recipes-section {
+  align-items: flex-end;
+  display: grid;
+  flex-direction: unset;
+  justify-content: unset;
+  grid-template-columns: repeat(auto-fit, minmax(220px, auto));
+  width: 85%;
+}
+
+.recipe-card {
+  background-color: rgb(240,240,240);
+  border-radius: 10%;
+  height: 250px;
+  margin: 10px;
+  width: 200px;
+}
+
+.recipe-name {
+  margin-left: 20px;
+  margin-top: 5px;
+}
+
+.recipe-thumb {
+  border-radius: 10%;
+}
