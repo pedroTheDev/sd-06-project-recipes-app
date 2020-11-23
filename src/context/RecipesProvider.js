@@ -9,7 +9,7 @@ const RecipesProvider = ({ children }) => {
     setSelectedApiEndpoint,
   };
   return (
-    <RecipesContext.Provider value={providerValue}>
+    <RecipesContext.Provider value={ providerValue }>
       { children }
     </RecipesContext.Provider>
   );

@@ -3,7 +3,7 @@ import HeaderContext from '../context/HeaderContext';
 
 const Foods = () => {
   const { title, setTitle } = useContext(HeaderContext);
-  
+
   useEffect(() => {
     setTitle('Comidas');
   }, []);

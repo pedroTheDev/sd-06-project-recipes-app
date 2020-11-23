@@ -8,7 +8,7 @@ const Drinks = () => {
     setTitle('Bebidas');
   }, []);
 
-  return(
+  return (
     <h1>
       { title }
     </h1>

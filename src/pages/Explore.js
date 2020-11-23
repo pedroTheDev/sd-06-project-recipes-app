@@ -13,6 +13,6 @@ const Explore = () => {
       { title }
     </h1>
   );
-}
+};
 
 export default Explore;

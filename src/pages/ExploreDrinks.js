@@ -7,7 +7,7 @@ const ExploreDrinks = () => {
   useEffect(() => {
     setTitle('Explorar Bebidas');
   }, []);
-  
+
   return (
     <h1>
       { title }

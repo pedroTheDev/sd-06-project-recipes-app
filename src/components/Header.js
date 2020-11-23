@@ -25,13 +25,13 @@ const Header = () => {
     <div>
       <div className="main-header">
         <Link to="/perfil">
-          <img src={profileIcon} alt="Profile" data-testid="profile-top-btn" />
+          <img src={ profileIcon } alt="Profile" data-testid="profile-top-btn" />
         </Link>
-        <h1 data-testid="page-title">{title}</h1>
+        <h1 data-testid="page-title">{ title }</h1>
         { handleSearchImage() && <img
           id="search-image"
           data-testid="search-top-btn"
-          src={searchIcon}
+          src={ searchIcon }
           alt="Search"
         /> }
       </div>

@@ -7,12 +7,12 @@ const ExploreFoods = () => {
   useEffect(() => {
     setTitle('Explorar Comidas');
   }, []);
-  
+
   return (
     <h1>
       { title }
     </h1>
   );
-}
+};
 
 export default ExploreFoods;
