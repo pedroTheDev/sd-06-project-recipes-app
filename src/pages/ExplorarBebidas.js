@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import { fetchRandomDrink } from '../service/drinkApi';
+import { fetchRandomDrink } from '../services/drinkAPI';
 
 const ExplorarBebidas = () => {
   const [randomDrinkID, setRandomDrink] = useState();

@@ -3,10 +3,13 @@ import React, { useState } from 'react';
 import ReceitasContext from './ReceitasContext';
 
 const ReceitasProvider = ({ children }) => {
+  const [meals, setMeals] = useState([]);
   const [searchBox, setSearchBox] = useState(false);
   const [data, setData] = useState([]);
 
   const state = {
+    meals,
+    setMeals,
     searchBox,
     setSearchBox,
     data,

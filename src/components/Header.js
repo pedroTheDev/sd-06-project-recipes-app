@@ -26,7 +26,10 @@ const Header = ({ title, searchBtn = false }) => {
               className="image"
               onClick={ showSearchBar }
             >
-              <img src={ searchIcon } alt="show-hide-sbr" />
+              <img
+                src={ searchIcon }
+                alt="show-hide-sbr"
+              />
             </button>
           )
           : <div className="image" />

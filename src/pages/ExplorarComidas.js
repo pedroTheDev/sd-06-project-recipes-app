@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import { fetchRandomMeal } from '../service/foodApi';
+import { fetchRandomMeal } from '../services/foodAPI';
 
 const ExplorarComidas = () => {
   const [randomMealID, setRandomMeal] = useState();
