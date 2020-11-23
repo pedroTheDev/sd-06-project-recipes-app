@@ -11,6 +11,7 @@ const Login = () => {
   const {
     setTitle,
   } = useContext(HeaderContext);
+  
   useEffect(() => {
     setTitle('Login');
   }, []);
@@ -19,7 +20,7 @@ const Login = () => {
     const minimumPasswordLength = 6;
     const validateEmailRegex = /^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/;
     const testEmail = validateEmailRegex.test(email);
-    const testPassword = password.length >= minimumPasswordLength;
+    const testPassword = password.length > minimumPasswordLength;
     if (testEmail && testPassword) {
       return false;
     }
