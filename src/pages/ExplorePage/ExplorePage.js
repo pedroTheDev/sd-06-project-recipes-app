@@ -1,16 +1,20 @@
 import React from 'react';
 import Header from '../../components/Header';
+import BtnSearchBar from '../../components/BtnSearchBar';
 import Footer from '../../components/Footer';
 
-export default function DrinksPage() {
+function ExplorePage() {
   return (
     <div>
       <Header
         className="header"
-        pageTitle="Bebidas"
+        pageTitle="Explorar"
+        BtnSearchBar={ BtnSearchBar }
       />
-      <h1>Página de Bebidas</h1>
+      <h1> Página principal de Explorar</h1>
       <Footer />
     </div>
   );
 }
+
+export default ExplorePage;

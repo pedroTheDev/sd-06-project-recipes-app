@@ -1,8 +1,9 @@
 import React from 'react';
 import BtnSearchBar from '../../components/BtnSearchBar';
 import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
-function MealsPage() {
+export default function MealsPage() {
   return (
     <div>
       <Header
@@ -10,9 +11,8 @@ function MealsPage() {
         pageTitle="Comidas"
         BtnSearchBar={ BtnSearchBar }
       />
-      <h1> Página principal de comidas</h1>
+      <h1> Página principal de Comidas</h1>
+      <Footer />
     </div>
   );
 }
-
-export default MealsPage;

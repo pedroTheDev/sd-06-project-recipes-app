@@ -4,6 +4,8 @@ import './App.css';
 import Login from './pages/Login/Login';
 import MealsPage from './pages/MealsPage/MealsPage';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
+import DrinksPage from './pages/DrinksPage/DrinksPage';
+import ExplorePage from './pages/ExplorePage/ExplorePage';
 
 function App() {
   return (
@@ -11,6 +13,8 @@ function App() {
       <Route exact path="/" component={ Login } />
       <Route exact path="/comidas" component={ MealsPage } />
       <Route exact path="/perfil" component={ ProfilePage } />
+      <Route exact path="/bebidas" component={ DrinksPage } />
+      <Route exact path="/explorar" component={ ExplorePage } />
     </Switch>
   );
 }
