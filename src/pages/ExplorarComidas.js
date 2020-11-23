@@ -1,14 +1,13 @@
 import React from 'react';
 import { Footer } from '../components';
-import '../style/Comidas.css';
 
-function Comidas() {
+function ExplorarComidas() {
   return (
     <div className="food">
-      <span>Aqui vão estar as comidas...</span>
+      <span>Aqui é para explorar comidas...</span>
       <Footer />
     </div>
   );
 }
 
-export default Comidas;
+export default ExplorarComidas;
