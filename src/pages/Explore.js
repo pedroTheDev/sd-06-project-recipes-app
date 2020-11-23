@@ -11,11 +11,13 @@ function Explore() {
       <h2 data-testid="page-title">Explorar</h2>
       <button
         data-testid="explore-food"
+        type="button"
       >
         Explorar Comidas
       </button>
       <button
         data-testid="explore-drinks"
+        type="button"
       >
         Explorar Bebidas
       </button>
