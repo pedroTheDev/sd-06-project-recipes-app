@@ -179,7 +179,11 @@ class DrinksDetails extends React.Component {
                       />
                       <div className="text-slider-div">
                         <p>{recomend.strCategory}</p>
-                        <h4 data-testid={ `${i}-recomendation-title` }>{recomend.strMeal}</h4>
+                        <h4
+                          data-testid={ `${i}-recomendation-title` }
+                        >
+                          {recomend.strMeal}
+                        </h4>
                       </div>
                     </div>
                   );
@@ -193,7 +197,11 @@ class DrinksDetails extends React.Component {
                   <i className="fas fa-chevron-right" />
                 </button>
               </div>
-              <button type="button" data-testid="start-recipe-btn" className="start-recipe">
+              <button
+                type="button"
+                data-testid="start-recipe-btn"
+                className="start-recipe"
+              >
                 Iniciar Receita
               </button>
             </div>
