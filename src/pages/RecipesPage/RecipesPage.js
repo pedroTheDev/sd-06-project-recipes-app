@@ -10,12 +10,22 @@ class RecipesPage extends React.Component {
       type: props.type,
       recipes: [],
       categories: [],
+      filter: '',
     };
   }
 
   componentDidMount() {
     const { type } = this.state;
     this.loadRecipes(type);
+    if (window.location.href === 'http://localhost:3000/comidas') {
+      this.setRecipesType('meals');
+    } else if (window.location.href === 'http://localhost:3000/bebidas') {
+      this.setRecipesType('cocktails');
+    }
+  }
+
+  setRecipesType(type) {
+    this.setState({ type });
   }
 
   async loadRecipes(type) {
@@ -26,10 +36,13 @@ class RecipesPage extends React.Component {
         recipes: recipes.drinks,
         categories: categories.drinks,
       });
-
     } else if (type === 'meals') {
       const recipes = await mealAPI.searchByName('');
-      this.setState({ recipes: recipes.meals });
+      const categories = await mealAPI.listCategories();
+      this.setState({
+        recipes: recipes.meals,
+        categories: categories.meals,
+      });
     }
   }
 
@@ -37,27 +50,43 @@ class RecipesPage extends React.Component {
     const { recipes, type, categories } = this.state;
     const twelve = 12;
     const zero = 0;
+    const five = 5;
 
-    if (recipes.length === zero) {
+    if (recipes.length === zero || categories.length === zero) {
       console.log(0);
       return <h2>Carregando...</h2>;
     }
     console.log(recipes);
     return (
-      <div>
-        <div className="categoriesButtons">
+      <div className="recipes-page">
+        <div className="categories">
           {categories.map((category, index) => {
-            const dataTestID = `${category}-category-filter`;
-            if (type === 'cocktails') {
-              return (
-                <div key={index}>
-                  <input
-                    type="button"
-                    data-testid={dataTestID}
-                  />
-                <div>
-              );
+            const dataTestID = `${category.strCategory}-category-filter`;
+            if (index < five) {
+              if (type === 'cocktails') {
+                return (
+                  <div className="category-button" key={ index }>
+                    <input
+                      type="button"
+                      data-testid={ dataTestID }
+                      value={ category.strCategory }
+                    />
+                  </div>
+                );
+              }
+              if (type === 'meals') {
+                return (
+                  <div className="category-button" key={ index }>
+                    <input
+                      type="button"
+                      data-testid={ dataTestID }
+                      value={ category.strCategory }
+                    />
+                  </div>
+                );
+              }
             }
+            return <div key={ index } />;
           })}
         </div>
         <div className="recipes-section">
