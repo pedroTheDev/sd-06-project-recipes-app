@@ -1,4 +1,4 @@
-const urlDrink = 'https://www.thecocktaildb.com/api/json/v1/1/';
+export const urlDrink = 'https://www.thecocktaildb.com/api/json/v1/1/';
 
 async function randomRequestApiDrink(urlParameter = '') {
   const url = `${urlDrink}${urlParameter}`;

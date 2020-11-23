@@ -1,4 +1,4 @@
-const urlFood = 'https://www.themealdb.com/api/json/v1/1/';
+export const urlFood = 'https://www.themealdb.com/api/json/v1/1/';
 
 async function randomRequestApiFood(urlParameter = '') {
   const url = `${urlFood}${urlParameter}`;
