@@ -66,6 +66,7 @@ function Foods({ pageType }) {
           id="all"
           checked={filterSelected === 'all'}
           onChange={handleFilterChange}
+          data-testid="All-category-filter"
         />
 
         {currentFoodFilters.map((filter) => (
