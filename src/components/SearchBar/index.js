@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import ContextAPI from '../../Context/ContextAPI';
 
-const SearchBar = () => (
-  <div id="search-bar">
-    <input data-testid="search-input" type="text" />
-  </div>
-);
-
+const SearchBar = () => {
+  const { searchComponent } = useContext(ContextAPI);
+  return searchComponent && (
+    <div id="search-bar">
+      <input data-testid="search-input" type="text" />
+    </div>
+  );
+};
 export default SearchBar;
