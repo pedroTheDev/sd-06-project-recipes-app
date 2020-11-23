@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes, { array } from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import Header from '../components/Header';
@@ -15,11 +15,10 @@ function Bebidas({ retrievedDrinks }) {
       const { idDrink } = request[0];
       return <Redirect to={ `/bebidas/${idDrink}` } />;
     } else {
-      //[3,4,5,6,7,8,9]
-    return request.map((drink, index) => {
-      return index <= 11 ? <DrinkCard drink={ drink } key={ drink.idDrink } index={ index } /> : null;
-      
-    });
+      return request.map((drink, index) => (
+        index <= 11
+          ? <DrinkCard drink={ drink } key={ drink.idDrink } index={ index } />
+          : null));
     }
     return null;
   };
