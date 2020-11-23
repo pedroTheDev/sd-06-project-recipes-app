@@ -1,11 +1,10 @@
-import React, { Component } from 'react'
+import { func } from 'prop-types';
+import React from 'react';
 
-export default class DrinksPage extends Component {
-  render() {
-    return (
-      <div>
-        <h1>Página de Bebidas</h1>
-      </div>
-    )
-  }
+export default function DrinksPage() {
+  return (
+    <div>
+      <h1>Página de Bebidas</h1>
+    </div>
+  );
 }
