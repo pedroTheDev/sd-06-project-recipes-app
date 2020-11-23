@@ -1,13 +1,15 @@
 import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 import './App.css';
-import { profileIcon, searchIcon } from './images/';
-import Header from './components/Header';
+import Login from './pages/Login/Login';
+import MealsPage from './pages/MealsPage/MealsPage';
 
 function App() {
   return (
-    <div id="meals">
-      
-    </div>
+    <Switch>
+      <Route exact path="/" component={ Login } />
+      <Route exact path="/comidas" component={ MealsPage } />
+    </Switch>
   );
 }
 
