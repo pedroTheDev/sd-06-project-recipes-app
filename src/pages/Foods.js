@@ -17,7 +17,7 @@ export default function Foods() {
   return (
     <div>
       <Header id="comidas" />
-      <Cards />
+      <Cards id="comidas" />
       {items ? handleAlert() : null}
       <Footer />
     </div>

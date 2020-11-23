@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import Header from '../components/Header';
 import Cards from '../components/Cards';
-import Context from '../context/Context';
 import Footer from '../components/Footer';
+import RecipesContext from '../context/Context';
 
 export default function Drinks() {
-  document.title = 'Drinks';
-  const { items } = useContext(Context);
+  document.title = 'Bebidas';
+  const { items } = useContext(RecipesContext);
 
   function handleAlert() {
     if (items.drinks === null) {
@@ -17,7 +17,7 @@ export default function Drinks() {
   return (
     <div>
       <Header id="bebidas" />
-      <Cards />
+      <Cards id="bebidas" />
       {items ? handleAlert() : null}
       <Footer />
     </div>

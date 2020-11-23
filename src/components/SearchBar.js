@@ -1,23 +1,15 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
-import useSearch from '../hooks/useSearch';
-import Context from '../context/Context';
+import RecipesContext from '../context/Context';
 
 export default function SearchBar(props) {
+  const { setFilters } = useContext(RecipesContext);
   const { id } = props;
   const [searchOptions, setSearchOptions] = useState({
     searchText: '',
     searchType: '',
     category: id,
   });
-
-  const { setItems } = useContext(Context);
-
-  const [redirect, setRedirect] = useState(false);
-  const [itemId, setItemId] = useState('');
-
-  const [results, setFilters] = useSearch();
 
   function handleSearch({ target }) {
     setSearchOptions({ ...searchOptions, [target.name]: target.value });
@@ -35,30 +27,8 @@ export default function SearchBar(props) {
     }
   }
 
-  function handleRedirect() {
-    if (!redirect) {
-      if (results) {
-        setItems(results);
-        if (results.meals) {
-          if (results.meals.length === 1) {
-            setItemId(results.meals[0].idMeal);
-            setRedirect(true);
-          }
-        }
-        if (results.drinks) {
-          if (results.drinks.length === 1) {
-            setItemId(results.drinks[0].idDrink);
-            setRedirect(true);
-          }
-        }
-      }
-    }
-  }
-
   return (
     <form>
-      {handleRedirect()}
-      {redirect ? <Redirect to={ `/${id}/${itemId}` } /> : null}
       <label htmlFor="search-input">
         <input
           type="text"

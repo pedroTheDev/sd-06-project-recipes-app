@@ -13,7 +13,9 @@ export default function Footer() {
 
   return (
     <footer data-testid="footer" style={ footerStyle }>
-      <Link to="/bebidas">
+      <Link
+        to="/bebidas"
+      >
         <img
           src={ drinkIcon }
           alt="Ícone de drink"
