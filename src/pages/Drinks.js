@@ -1,15 +1,15 @@
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { fetchAPIRecipes } from '../services';
+import { fetchAPIDrinks } from '../services';
 
-function Foods() {
+function Drinks() {
   return (
     <div>
-      <Header fetchApi={ fetchAPIRecipes } title="Comida" />
+      <Header title="Bebidas" fetchApi={ fetchAPIDrinks } />
       <Footer />
     </div>
   );
 }
 
-export default Foods;
+export default Drinks;

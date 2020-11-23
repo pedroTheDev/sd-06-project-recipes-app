@@ -6,16 +6,18 @@ import Foods from './pages/Foods';
 import Perfil from './pages/Perfil';
 import favoriteFoods from './pages/FavoriteFoods';
 import recipesMade from './pages/RecipesMade';
+import Drinks from './pages/Drinks';
 
 function App() {
   return (
     <Provider>
       <Switch>
-        <Route exact path="/" component={Login} />
-        <Route path="/comidas" component={Foods} />
-        <Route path="/perfil" component={Perfil} />
-        <Route path="/receitas-feitas" component={recipesMade} />
-        <Route path="/receitas-favoritas" component={favoriteFoods} />
+        <Route path="/receitas-feitas" component={ recipesMade } />
+        <Route path="/receitas-favoritas" component={ favoriteFoods } />
+        <Route exact path="/" component={ Login } />
+        <Route path="/comidas" component={ Foods } />
+        <Route path="/perfil" component={ Perfil } />
+        <Route path="/bebidas" component={ Drinks } />
       </Switch>
     </Provider>
   );
