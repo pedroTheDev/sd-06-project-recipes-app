@@ -33,6 +33,10 @@ function DrinkInProgress({ pageType }) {
       recipe.idDrink === id
     ));
 
+    if (!recipeToCook) {
+      return { error: 'You did not start this recipe yet' };
+    }
+
     return recipeToCook.recipe;
   }, [id, cookedRecipes, pageType]);
 
@@ -124,7 +128,15 @@ function DrinkInProgress({ pageType }) {
     finalizeRecipe(pageType, id);
 
     push('/receitas-feitas');
-  }, [id, finalizeRecipe, pageType]);
+  }, [id, finalizeRecipe, pageType, push]);
+
+  if (currentlyCooking.error) {
+    return (
+      <div className="recipe-dint-start">
+        <p>{currentlyCooking.error}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="recipe-details-page">

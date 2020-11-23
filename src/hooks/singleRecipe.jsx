@@ -94,7 +94,7 @@ function SingleRecipeProvider({ children }) {
   const loadRandomRecipe = useCallback(async (type) => {
     setLoadingSingleRecipe(true);
 
-    const leadRandomRecipe = fetchRandomOptions[type];
+    const loadRandom = fetchRandomOptions[type];
     const invertedType = invertType(type);
     const loadRecommendations = fetchRecommendationsOptions[invertedType];
 
@@ -102,7 +102,7 @@ function SingleRecipeProvider({ children }) {
     let recipe;
 
     try {
-      [randomID, recipe] = await leadRandomRecipe(userToken);
+      [randomID, recipe] = await loadRandom(userToken);
 
       let recommendations = await loadRecommendations(recommendationsDefault[invertedType]);
 

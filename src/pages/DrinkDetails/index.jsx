@@ -91,7 +91,7 @@ function DrinkDetails({ pageType }) {
     const recipeStarted = recipesProgress[accessKey][id];
 
     return recipeStarted;
-  }, [cookedRecipes, id, recipesProgress]);
+  }, [id, recipesProgress]);
 
   const recipeHasBeenFinished = useMemo(() => {
     const recipeHasFinished = doneRecipes.find((recipe) => recipe.id === id);
@@ -112,7 +112,7 @@ function DrinkDetails({ pageType }) {
   const handleFavoriteToggle = useCallback(() => {
     const favoriteMeal = {
       id,
-      type: pageType,
+      type: 'bebida',
       area: null,
       category: drinkDetails.strCategory,
       alcoholicOrNot: drinkDetails.strAlcoholic,
@@ -184,6 +184,7 @@ function DrinkDetails({ pageType }) {
           <Link
             to={`/bebidas/${recommendation.idMeal}`}
             className="recommendation-card"
+            key={recommendation}
             data-testid={`${index}-recomendation-card`}
           >
             <img src={recommendation.strMealThumb} alt={recommendation.strMeal} />

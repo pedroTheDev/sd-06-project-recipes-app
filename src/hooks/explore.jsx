@@ -87,7 +87,7 @@ function ExploreProvider({ children }) {
     } finally {
       setLoadingFoodsByArea(false);
     }
-  }, [userToken]);
+  }, [userToken, updateRecipes]);
 
   return (
     <exploreContext.Provider value={{

@@ -43,7 +43,7 @@ function Favorites() {
   }, []);
 
   const handleShareClick = useCallback((id, type) => {
-    document.execCommand('copy', false, `http://localhost:3000/${type}s/${id}`);
+    // document.execCommand('copy', false, `http://localhost:3000/${type}s/${id}`);s
 
     setCopyLink((oldCopied) => ({
       ...oldCopied,
@@ -93,7 +93,7 @@ function Favorites() {
         />
       </div>
 
-      <div className="done-recipes-container">
+      <div className="favorite-recipes-container">
         {filteredItems.map((recipe, index) => (
           <div className="done-recipe-card" key={`${recipe.type}-${recipe.name}`}>
             <Link to={`/${recipe.type}s/${recipe.id}`}>
@@ -108,16 +108,16 @@ function Favorites() {
             </Link>
 
             <p data-testid={`${index}-horizontal-top-text`}>
-              {recipe.type === 'comida' ? `${recipe.category} - ${recipe.area}` : `${recipe.category}`}
+              {recipe.type === 'comida' ? `${recipe.area} - ${recipe.category}` : `${recipe.alcoholicOrNot}`}
             </p>
 
             {/* {recipe.type === 'comida' && (
               <p data-testid={`${index}-horizontal-area`}>{recipe.area}</p>
             )} */}
 
-            {recipe.type === 'bebida' && (
+            {/* {recipe.type === 'bebida' && (
               <p data-testid={`${index}-horizontal-alcoholic`}>{recipe.alcoholicOrNot}</p>
-            )}
+            )} */}
 
             <div className="done-recipe-share-container">
               <button

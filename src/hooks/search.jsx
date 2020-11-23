@@ -17,12 +17,12 @@ const getID = {
 const initialSearchValues = {
   comidas: {
     option: 'name',
-    value: 'Chicken',
+    value: 'chicken',
     token: '1',
   },
   bebidas: {
     option: 'name',
-    value: 'Martini',
+    value: 'martini',
     token: '1',
   },
 };

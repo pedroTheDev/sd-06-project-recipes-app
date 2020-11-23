@@ -50,7 +50,7 @@ function ExploreArea({ pageType }) {
     const foodsByArea = currentRecipes[pageType];
 
     return foodsByArea;
-  }, [currentRecipes]);
+  }, [currentRecipes, pageType]);
 
   // if (loadingAreas) {
   //   return (

@@ -23,7 +23,7 @@ function AuthProvider({ children }) {
       return existentMealsToken;
     }
 
-    return null;
+    return '1';
   });
 
   const signIn = useCallback(({ email }) => {

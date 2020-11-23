@@ -91,7 +91,7 @@ function FoodDetails({ pageType }) {
     const recipeStarted = recipesProgress[accessKey][id];
 
     return recipeStarted;
-  }, [cookedRecipes, id, recipesProgress]);
+  }, [id, recipesProgress]);
 
   const recipeHasBeenFinished = useMemo(() => {
     const recipeHasFinished = doneRecipes.find((recipe) => recipe.id === id);
@@ -112,7 +112,7 @@ function FoodDetails({ pageType }) {
   const handleFavoriteToggle = useCallback(() => {
     const favoriteMeal = {
       id,
-      type: pageType,
+      type: 'comida',
       area: foodDetails.strArea,
       category: foodDetails.strCategory,
       alcoholicOrNot: false,

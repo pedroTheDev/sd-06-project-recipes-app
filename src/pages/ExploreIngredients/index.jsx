@@ -24,7 +24,7 @@ function ExploreRecipes({ pageType }) {
     const search = { option, value };
 
     updateSearch(pageType, search);
-  }, []);
+  }, [pageType, updateSearch]);
 
   if (loadingIngredients) {
     return (

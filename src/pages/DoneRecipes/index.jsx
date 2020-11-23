@@ -101,16 +101,12 @@ function DoneRecipes() {
             </Link>
 
             <p data-testid={`${index}-horizontal-top-text`}>
-              {recipe.type === 'comida' ? `${recipe.category} - ${recipe.area}` : `${recipe.category}`}
+              {recipe.type === 'comida' ? `${recipe.area} - ${recipe.category}` : `${recipe.alcoholicOrNot}`}
             </p>
 
             {/* {recipe.type === 'comida' && (
               <p data-testid={`${index}-horizontal-area`}>{recipe.area}</p>
             )} */}
-
-            {recipe.type === 'bebida' && (
-              <p data-testid={`${index}-horizontal-alcoholic`}>{recipe.alcoholicOrNot}</p>
-            )}
 
             <p data-testid={`${index}-horizontal-done-date`}>{recipe.doneDate.toLocaleString()}</p>
 
