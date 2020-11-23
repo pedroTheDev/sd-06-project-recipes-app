@@ -59,7 +59,7 @@ function SearchProvider({ children }) {
       }
 
       let firstItemID;
-      const singleRecipeReturned = (recipesSearched === 1);
+      const singleRecipeReturned = (recipesSearched.length === 1);
 
       if (singleRecipeReturned) {
         const firstItem = recipesSearched[0];

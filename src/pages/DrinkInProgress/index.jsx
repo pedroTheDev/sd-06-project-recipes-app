@@ -61,7 +61,7 @@ function DrinkInProgress({ pageType }) {
   const handleFavoriteToggle = useCallback(() => {
     const favoriteMeal = {
       id,
-      type: pageType,
+      type: 'bebida',
       area: currentlyCooking.strArea || '',
       category: currentlyCooking.strCategory,
       alcoholicOrNot: currentlyCooking.strAlcoholic,
@@ -164,11 +164,14 @@ function DrinkInProgress({ pageType }) {
 
       <div className="share-btn-container">
         <button
-          data-testid="share-btn"
           onClick={handleShareClick}
           type="button"
         >
-          <img src={shareIcon} alt="share this recipe" />
+          <img
+            data-testid="share-btn"
+            src={shareIcon}
+            alt="share this recipe"
+          />
         </button>
 
         {copiedLink && (
@@ -177,8 +180,8 @@ function DrinkInProgress({ pageType }) {
       </div>
 
       <div className="favorites-btn-container">
-        <button data-testid="favorite-btn" type="button" onClick={handleFavoriteToggle}>
-          <img src={recipeIsFavorited ? blackHeart : whiteHeart} alt="favorite this recipe" />
+        <button type="button" onClick={handleFavoriteToggle}>
+          <img data-testid="favorite-btn" src={recipeIsFavorited ? blackHeart : whiteHeart} alt="favorite this recipe" />
         </button>
       </div>
 

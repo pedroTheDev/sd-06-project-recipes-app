@@ -53,7 +53,7 @@ function DoneRecipes() {
 
   return (
     <div className="done-recipes-page">
-      <Header pageName="Receitas Finalizadas" />
+      <Header pageName="Receitas Feitas" />
 
       <div className="done-filters-container">
         <label htmlFor="all" data-testid="filter-by-all-btn">All</label>

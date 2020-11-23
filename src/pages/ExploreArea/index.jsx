@@ -60,7 +60,7 @@ function ExploreArea({ pageType }) {
 
   return (
     <div className="explore-ingredients-page">
-      <Header pageName="Explorar Origem" />
+      <Header pageName="Explorar Origem" showSearch />
       <Navbar />
 
       <div className="area-select-container">

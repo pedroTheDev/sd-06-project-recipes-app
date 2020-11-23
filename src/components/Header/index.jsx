@@ -56,9 +56,15 @@ function Header({ pageName, showSearch = false }) {
   }, [push, appSearch, searchInputRef, radioValue, userToken, pageName]);
 
   const parsedTitle = useMemo(() => {
-    const nameCapitalized = pageName.charAt(0).toUpperCase() + pageName.slice(1);
+    const headerWords = pageName.split(' ');
 
-    return nameCapitalized;
+    const namesCapitalized = headerWords.map((word) => (
+      word.charAt(0).toUpperCase() + word.slice(1)
+    ));
+
+    const wordsCapitalized = namesCapitalized.join(' ');
+
+    return wordsCapitalized;
   }, [pageName]);
 
   return (

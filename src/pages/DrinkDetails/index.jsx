@@ -161,7 +161,7 @@ function DrinkDetails({ pageType }) {
           <img
             src={recipeIsFavorited ? blackHeart : whiteHeart}
             alt="favorite this recipe"
-            data-testid="share-btn"
+            data-testid="favorite-btn"
           />
         </button>
       </div>

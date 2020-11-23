@@ -82,6 +82,7 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 155px;
 }
 
 .recommendations-container a img {
