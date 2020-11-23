@@ -52,7 +52,8 @@ function SearchBar() {
           data-testid="exec-search-btn"
           onClick={ (e) => {
             e.preventDefault();
-            fetchMeal(filterType, searchTerm)} }
+            fetchMeal(filterType, searchTerm);
+          } }
         >
           Buscar
         </button>

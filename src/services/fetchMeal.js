@@ -19,7 +19,29 @@ async function fetchMeal(filter, searchTerm) {
     return firstLetterResponse.meals;
   }
 
-  default:
+  case 'allIngredients': {
+    const fetchAllIngredients = await fetch(`${url}list.php?i=list`);
+    const allIngredientsResponse = await fetchAllIngredients.json();
+    return allIngredientsResponse.meals;
+  }
+
+  case 'allAreas': {
+    const fetchAllAreas = await fetch(`${url}list.php?a=list`);
+    const allAreasResponse = await fetchAllAreas.json();
+    return allAreasResponse.meals;
+  }
+
+  case 'allCategories': {
+    const fetchAllCategories = await fetch(`${url}list.php?c=list`);
+    const allCategoriesResponse = await fetchAllCategories.json();
+    return allCategoriesResponse.meals;
+  }
+
+  default: {
+    const fetchRandomMeal = await fetch(`${url}random.php`);
+    const randomMealResponse = await fetchRandomMeal.json();
+    return randomMealResponse.meals;
+  }
   }
 }
 
