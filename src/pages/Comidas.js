@@ -1,12 +1,11 @@
 import React, { useContext, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { dataApi } from '../service/foodApi';
+import dataApi from '../service/foodApi';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
 import ReceitasContext from '../context/ReceitasContext';
 import ComidaCard from '../components/ComidaCard';
-// import BotoesFiltrar from '../components/BotoesFiltrar';
 
 const Comidas = () => {
   const { searchBox } = useContext(ReceitasContext);
@@ -35,6 +34,8 @@ const Comidas = () => {
           .map((food, i) => (<ComidaCard key={ food } food={ food } index={ i } />
           ))}
       </div>
+      {location.pathname === '/comidas' ? <Footer /> : null}
+
     </section>
   );
 };

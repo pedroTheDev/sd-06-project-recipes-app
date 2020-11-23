@@ -9,7 +9,7 @@ function ComidaCard({ food, index }) {
         src={ food.strMealThumb }
         alt={ food.strMeal }
       />
-      <h3 data-testid={ `${index}-card-name` }>{food.strMeal}</h3>
+      <h3 data-testid={ `${index}-card-name` }>{ food.strMeal }</h3>
     </div>
   );
 }
