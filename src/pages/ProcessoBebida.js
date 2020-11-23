@@ -36,6 +36,9 @@ function ProcessoBebida() {
           data-testid="-ingredient-step"
         >
           {ingredient}
+          <input
+            type="checkbox"
+          />
         </span>
       ))}
       <p data-testid="instructions">
