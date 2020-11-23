@@ -1,4 +1,6 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, {
+  useCallback, useMemo, useState,
+} from 'react';
 import { Link } from 'react-router-dom';
 
 import Header from '../../components/Header';
@@ -10,17 +12,7 @@ import shareIcon from '../../images/shareIcon.svg';
 function DoneRecipes() {
   const { doneRecipes } = useCook();
 
-  const [copyLink, setCopyLink] = useState(() => {
-    const doneIDs = doneRecipes.map((recipe) => recipe.id);
-
-    const copiedIDs = {};
-
-    doneIDs.forEach((id) => {
-      copiedIDs[id] = false;
-    });
-
-    return doneIDs;
-  });
+  const [copyLink, setCopyLink] = useState({});
 
   const [filter, setFilter] = useState('all');
 
@@ -42,13 +34,15 @@ function DoneRecipes() {
   }, []);
 
   const handleShareClick = useCallback((id, type) => {
-    // document.execCommand('copy', false, `http://localhost:3000/${type}s/${id}`);
-    console.log(type);
+    const url = `http://localhost:3000/${type}/${id}`;
 
-    setCopyLink((oldCopied) => ({
-      ...oldCopied,
+    navigator.clipboard.writeText(url);
+
+    const copiedRecipe = {
       [id]: true,
-    }));
+    };
+
+    setCopyLink(copiedRecipe);
   }, []);
 
   return (

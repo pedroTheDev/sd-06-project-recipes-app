@@ -3,10 +3,10 @@ import { MemoryRouter, Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { render, fireEvent } from '@testing-library/react';
 
-import Login from '../pages/Login';
-import AppProvider from '../hooks';
+import Login from '../../pages/Login';
+import AppProvider from '../../hooks';
 
-import LocalStorageFake from '../fakes/localStorage';
+import LocalStorageFake from '../../fakes/localStorage';
 
 let screen;
 

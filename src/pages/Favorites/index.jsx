@@ -43,14 +43,15 @@ function Favorites() {
   }, []);
 
   const handleShareClick = useCallback((id, type) => {
-    // document.execCommand('copy', false, `http://localhost:3000/${type}s/${id}`);s
+    const url = `http://localhost:3000/${type}/${id}`;
 
-    console.log(type);
+    navigator.clipboard.writeText(url);
 
-    setCopyLink((oldCopied) => ({
-      ...oldCopied,
+    const copiedRecipe = {
       [id]: true,
-    }));
+    };
+
+    setCopyLink(copiedRecipe);
   }, []);
 
   const handleRecipeUnfavorite = useCallback((id) => {

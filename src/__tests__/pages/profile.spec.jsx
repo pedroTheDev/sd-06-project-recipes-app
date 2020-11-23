@@ -3,10 +3,10 @@ import { MemoryRouter, Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { render, fireEvent } from '@testing-library/react';
 
-import Profile from '../pages/Profile';
-import AppProvider from '../hooks';
+import Profile from '../../pages/Profile';
+import AppProvider from '../../hooks';
 
-import LocalStorageFake from '../fakes/localStorage';
+import LocalStorageFake from '../../fakes/localStorage';
 
 let screen;
 
@@ -29,6 +29,20 @@ describe('profile page structure testing', () => {
     expect(pageTitle.innerHTML).toBe('Perfil');
 
     expect(screen.queryByTestId('search-top-btn')).not.toBeInTheDocument();
+  });
+
+  it('should have the correct navBar', () => {
+    screen = render(
+      <MemoryRouter>
+        <AppProvider>
+          <Profile />
+        </AppProvider>
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByTestId('drinks-bottom-btn')).toBeInTheDocument();
+    expect(screen.getByTestId('food-bottom-btn')).toBeInTheDocument();
+    expect(screen.getByTestId('explore-bottom-btn')).toBeInTheDocument();
   });
 
   it('should display user email and links to done/favorite recipes', () => {

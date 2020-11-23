@@ -24,7 +24,7 @@ function Routes() {
       <Route path="/comidas" exact render={() => <Foods pageType="comidas" />} />
       <Route path="/comidas/:id" exact render={() => <FoodDetails pageType="comidas" />} />
       <Route path="/comidas/:id/in-progress" render={() => <FoodInProgress pageType="comidas" />} />
-      <Route path="/bebidas" exact render={() => <Drinks pageType="bebidas" />} />
+      <Route path="/bebidas" sensitive exact render={() => <Drinks pageType="bebidas" />} />
       <Route path="/bebidas/:id" exact render={() => <DrinkDetails pageType="bebidas" />} />
       <Route path="/bebidas/:id/in-progress" exact render={() => <DrinkInProgress pageType="bebidas" />} />
       <Route path="/receitas-feitas" exact component={DoneRecipes} />

@@ -35,10 +35,12 @@ function FoodInProgress({ pageType }) {
   }, []);
 
   const handleShareClick = useCallback(() => {
-    document.execCommand('copy', false, id);
+    const url = `http://localhost:3000/${pageType}/${id}`;
+
+    navigator.clipboard.writeText(url);
 
     setCopiedLink(true);
-  }, [id]);
+  }, [id, pageType]);
 
   const currentlyCooking = useMemo(() => {
     const recipeToCook = cookedRecipes[pageType].find(({ recipe }) => (
@@ -189,16 +191,8 @@ function FoodInProgress({ pageType }) {
         {foodIngredients.map((ingredient, index) => (
           <div
             className="ingredients-checkbox-container"
-            key={`${ingredient}`}
+            key={ingredient}
           >
-            <input
-              type="checkbox"
-              name={ingredient}
-              id={ingredient}
-              value={index}
-              checked={currentProgress.includes(`${index}`)}
-              onChange={handleIngredientClick}
-            />
 
             <label
               key={ingredient}
@@ -206,6 +200,15 @@ function FoodInProgress({ pageType }) {
               htmlFor={ingredient}
               className={currentProgress.includes(`${index}`) ? 'item-checked' : ''}
             >
+              <input
+                type="checkbox"
+                name={ingredient}
+                id={ingredient}
+                value={index}
+                checked={currentProgress.includes(`${index}`)}
+                onChange={handleIngredientClick}
+              />
+
               {ingredient}
 
             </label>

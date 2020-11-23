@@ -1,7 +1,7 @@
 import React, {
   useCallback, useEffect, useMemo, useState,
 } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { useSearch } from '../../hooks/search';
@@ -17,6 +17,10 @@ function Drinks({ pageType }) {
   const {
     currentRecipes, currentFilters, currentFilteredRecipes, updateFilteredRecipes,
   } = useRecipes();
+
+  const location = useLocation();
+
+  console.log(location);
 
   useEffect(() => {
     const drinksToSearch = infoSearched[pageType];

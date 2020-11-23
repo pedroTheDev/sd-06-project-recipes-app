@@ -34,10 +34,12 @@ function FoodDetails({ pageType }) {
   }, [id, loadSingleRecipe]);
 
   const handleShareClick = useCallback(() => {
-    document.execCommand('copy', false, id);
+    const url = `http://localhost:3000/${pageType}/${id}`;
+
+    navigator.clipboard.writeText(url);
 
     setCopiedLink(true);
-  }, [id]);
+  }, [id, pageType]);
 
   const foodDetails = useMemo(
     () => currentFocusedRecipes[pageType].recipe,

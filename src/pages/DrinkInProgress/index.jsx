@@ -25,10 +25,12 @@ function DrinkInProgress({ pageType }) {
   const { favoriteRecipes, updateFavoriteRecipes } = useRecipes();
 
   const handleShareClick = useCallback(() => {
-    document.execCommand('copy', false, id);
+    const url = `http://localhost:3000/${pageType}/${id}`;
+
+    navigator.clipboard.writeText(url);
 
     setCopiedLink(true);
-  }, [id]);
+  }, [id, pageType]);
 
   useEffect(() => {
     const recipeToCook = cookedRecipes[pageType].find(({ recipe }) => (
@@ -191,14 +193,6 @@ function DrinkInProgress({ pageType }) {
             key={ingredient}
             className="ingredients-checkbox-container"
           >
-            <input
-              type="checkbox"
-              name={ingredient}
-              id={ingredient}
-              value={index}
-              checked={currentProgress.includes(`${index}`)}
-              onChange={handleIngredientClick}
-            />
 
             <label
               key={ingredient}
@@ -206,6 +200,14 @@ function DrinkInProgress({ pageType }) {
               htmlFor={ingredient}
               className={currentProgress.includes(`${index}`) ? 'item-checked' : ''}
             >
+              <input
+                type="checkbox"
+                name={ingredient}
+                id={ingredient}
+                value={index}
+                checked={currentProgress.includes(`${index}`)}
+                onChange={handleIngredientClick}
+              />
               {ingredient}
 
             </label>

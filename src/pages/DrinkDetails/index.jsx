@@ -34,10 +34,12 @@ function DrinkDetails({ pageType }) {
   }, [id, loadSingleRecipe]);
 
   const handleShareClick = useCallback(() => {
-    document.execCommand('copy');
+    const url = `http://localhost:3000/${pageType}/${id}`;
+
+    navigator.clipboard.writeText(url);
 
     setCopiedLink(true);
-  }, []);
+  }, [id, pageType]);
 
   const drinkDetails = useMemo(
     () => currentFocusedRecipes[pageType].recipe,
@@ -189,11 +191,11 @@ function DrinkDetails({ pageType }) {
           <Link
             to={`/bebidas/${recommendation.idMeal}`}
             className="recommendation-card"
-            key={recommendation}
+            key={recommendation.idMeal}
             data-testid={`${index}-recomendation-card`}
           >
             <img src={recommendation.strMealThumb} alt={recommendation.strMeal} />
-            <strong data-testid={`${index}-recomendation-card`}>{recommendation.strMeal}</strong>
+            <strong data-testid={`${index}-recomendation-title`}>{recommendation.strMeal}</strong>
           </Link>
         ))}
       </div>
