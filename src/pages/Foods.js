@@ -1,8 +1,4 @@
-import React, { useContext, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import Header from '../components/Header';
-import RevenueContext from '../context/RevenueContext';
-import Footer from '../components/Footer';
+import React from 'react';
 
 export default function Foods(props) {
   const { title } = props;
@@ -14,15 +10,9 @@ export default function Foods(props) {
     //
     fetchFoods();
     //
-    setSearchButton(false);
-    return () => {
-      setSearchButton(true);
-      setSearch(false);
-    };
-  }, []);
+    }, []);
   return (
     <div>
-      <Header title={ title } />
 
       {/* map renderizando cateoria e imagem  */}
       {foods.map((food) => (
@@ -33,11 +23,6 @@ export default function Foods(props) {
       ))}
       {/* map renderizando cateoria e imagem  */}
 
-      <Footer />
     </div>
   );
 }
-
-Foods.propTypes = {
-  title: PropTypes.string.isRequired,
-};

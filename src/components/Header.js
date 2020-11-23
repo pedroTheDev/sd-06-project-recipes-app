@@ -18,18 +18,12 @@ export default function Header(props) {
     <div>
       <header>
         <div className="container">
-          <div className="row">
-            <div className="col">
-              <Link to="/perfil">
-                <img src={ ProfileIcon } alt="Profile" data-testid="profile-top-btn" />
-              </Link>
-            </div>
-            <div className="col-6">
-              <h1 data-testid="page-title">{title}</h1>
-            </div>
-            <div className="col">
-              {!searchButton && searchButtonHidden()}
-            </div>
+          <div className="row justify-content-around">
+            <Link to="/perfil">
+              <img src={ ProfileIcon } alt="Profile" data-testid="profile-top-btn" />
+            </Link>
+            <h1 data-testid="page-title">{title}</h1>
+            {!searchButton && searchButtonHidden()}
           </div>
         </div>
       </header>
