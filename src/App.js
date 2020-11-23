@@ -11,7 +11,6 @@ import ExploreComidas from './pages/ExploreComidas';
 import ReceitasFavoritas from './pages/ReceitasFavoritas';
 import ReceitasFeitas from './pages/ReceitasFeitas';
 
-
 function App() {
   return (
     <MyProvider>
