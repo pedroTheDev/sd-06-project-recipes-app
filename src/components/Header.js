@@ -4,25 +4,23 @@ import PropTypes from 'prop-types';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 
-function Header({ title }) {
+function Header({ title, setSearch, isSearching }) {
   return (
     <header>
       <button
         type="button"
+        data-testid="search-top-btn"
+        onClick={ () => setSearch(!isSearching) }
       >
-        <img
-          data-testid="search-top-btn"
-          src={ searchIcon }
-          alt="Search"
-        />
+        <img src={ searchIcon } alt="Search" />
       </button>
       <h2 data-testid="page-title">{ title }</h2>
       <Link
         to="/perfil"
+        data-testid="profile-top-btn"
         type="button"
       >
         <img
-          data-testid="profile-top-btn"
           src={ profileIcon }
           alt="Profile"
         />
@@ -33,6 +31,8 @@ function Header({ title }) {
 
 Header.propTypes = {
   title: PropTypes.string.isRequired,
+  isSearching: PropTypes.bool.isRequired,
+  setSearch: PropTypes.func.isRequired,
 };
 
 export default Header;
