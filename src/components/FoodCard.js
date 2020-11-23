@@ -63,27 +63,34 @@ class FoodCard extends React.Component {
               {element.strArea}
             </p>
 
-            <p testid={ `${index}-horizontal-top-text` }>
+            <p data-testid={ `${index}-horizontal-top-text` }>
               {element.strCategory}
             </p>
             <input
               type="button"
-              testid={ `${index}-horizontal-name` }
+              data-testid={ `${index}-horizontal-name` }
               onClick={ () => history.push(`/comidas/${element.idMeal}`) }
               value={ element.strMeal }
             />
-            <p testid={ `${index}-horizontal-done-date` }>
+            <p data-testid={ `${index}-horizontal-done-date` }>
               {element.dateModified}
             </p>
-            {element.strTags.split(',').map((tag, i) => (
+            {/* {element.strTags.split(',').map((tag, i) => (
               <span key={ i } data-testid={ `${i}-${tag}-horizontal-tag` }>
                 { `${tag} `}
               </span>
-            ))}
+            ))} */}
+
+            <span key={ 0 } data-testid={ `${0}-${element.strTags[0]}-horizontal-tag` }>
+              { element.strTags[0] }
+            </span>
+            <span key={ 1 } data-testid={ `${1}-${element.strTags[1]}-horizontal-tag` }>
+              { element.strTags[1] }
+            </span>
 
             <input
               type="image"
-              testid={ `${index}-horizontal-share-btn` }
+              data-testid={ `${index}-horizontal-share-btn` }
               src={ shareIcon }
               alt="share"
               onClick={ () => this.handleShareFood(element) }

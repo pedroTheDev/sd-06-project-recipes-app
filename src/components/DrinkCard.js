@@ -59,22 +59,22 @@ class DrinkCard extends React.Component {
               onClick={ () => history.push(`/bebidas/${element.idDrink}`) }
             />
 
-            <p testid={ `${index}-horizontal-top-text` }>
+            <p data-testid={ `${index}-horizontal-top-text` }>
               {element.strAlcoholic}
             </p>
             <input
               type="button"
-              testid={ `${index}-horizontal-name` }
+              data-testid={ `${index}-horizontal-name` }
               onClick={ () => history.push(`/bebidas/${element.idDrink}`) }
               value={ element.strDrink }
             />
-            <p testid={ `${index}-horizontal-done-date` }>
+            <p data-testid={ `${index}-horizontal-done-date` }>
               {element.dateModified}
             </p>
 
             <input
               type="image"
-              testid={ `${index}-horizontal-share-btn` }
+              data-testid={ `${index}-horizontal-share-btn` }
               src={ shareIcon }
               alt="share"
               onClick={ () => this.handleShareDrink(element) }
