@@ -17,5 +17,4 @@ describe('Login test', () => {
 
     expect(login).toBeInTheDocument();
   });
-
-})
+});
