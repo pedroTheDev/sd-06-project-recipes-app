@@ -61,12 +61,29 @@
   }
 }
 
+.recipes-page {
+  width: 85%;
+}
+
+.categories {
+  justify-content: center;
+  display: flex;
+  margin: auto;
+  width: auto;
+}
+
+.category-button {
+  margin-top: 25px;
+  padding: 5px;
+}
+
 .recipes-section {
-  align-items: flex-end;
+  align-items: center;
   display: grid;
   flex-direction: unset;
-  justify-content: unset;
   grid-template-columns: repeat(auto-fit, minmax(220px, auto));
+  justify-content: center;
+  margin: auto;
   width: 85%;
 }
 
