@@ -12,7 +12,7 @@ export default function Comidas() {
 
   return (
     <div>
-      <Header titulo={titulo} />
+      <Header titulo={ titulo } />
       <Lupa />
       <h1>{ titulo }</h1>
     </div>

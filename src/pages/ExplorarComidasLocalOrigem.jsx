@@ -12,7 +12,7 @@ export default function ExplorarComidasLocalOrigem() {
 
   return (
     <div>
-      <Header titulo={titulo} />
+      <Header titulo={ titulo } />
       <Lupa />
     </div>
   );

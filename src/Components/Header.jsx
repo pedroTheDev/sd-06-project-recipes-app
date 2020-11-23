@@ -10,8 +10,13 @@ export default function Header() {
     <header className="header">
       <div>
         <Link to="/perfil">
-          <button type="button" data-testid="profile-top-btn" src="../images/profileIcon.svg" alt="profile">
-            <img src={profileImage} alt="profile" />
+          <button
+            type="button"
+            data-testid="profile-top-btn"
+            src="../images/profileIcon.svg"
+            alt="profile"
+          >
+            <img src={ profileImage } alt="profile" />
           </button>
         </Link>
         <h1 data-testid="page-title">{ titulo }</h1>

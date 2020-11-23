@@ -11,7 +11,7 @@ export default function ExplorarBebidas() {
 
   return (
     <div>
-      <Header titulo={titulo} />
+      <Header titulo={ titulo } />
     </div>
   );
 }

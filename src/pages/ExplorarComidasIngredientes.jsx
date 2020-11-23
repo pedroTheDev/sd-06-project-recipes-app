@@ -11,7 +11,7 @@ export default function ExplorarComidasingredientes() {
 
   return (
     <div>
-      <Header titulo={titulo} />
+      <Header titulo={ titulo } />
     </div>
   );
 }

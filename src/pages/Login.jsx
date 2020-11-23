@@ -44,8 +44,8 @@ export default function Login({ history }) {
           type="email"
           id="input-email"
           data-testid="email-input"
-          onChange={handleEmail}
-          value={email}
+          onChange={ handleEmail }
+          value={ email }
         />
       </label>
       <label htmlFor="input-password">
@@ -53,15 +53,15 @@ export default function Login({ history }) {
           type="password"
           id="input-password"
           data-testid="password-input"
-          onChange={handlePass}
-          value={pass}
+          onChange={ handlePass }
+          value={ pass }
         />
       </label>
       <button
-        disabled={valid}
+        disabled={ valid }
         type="submit"
         data-testid="login-submit-btn"
-        onClick={handleClick}
+        onClick={ handleClick }
       >
         Entrar
       </button>
