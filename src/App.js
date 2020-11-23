@@ -5,11 +5,12 @@ import Login from './pages/Login';
 import Food from './pages/Food';
 import Drink from './pages/Drink';
 import Explore from './pages/Explore';
-import DrinkRecipes from './pages/DrinkRecipes';
 import ExploreFood from './pages/ExploreFood';
 import ExploreDrink from './pages/ExploreDrink';
 import ExploreFoodByIngredients from './pages/ExploreFoodByIngredients';
 import Perfil from './pages/Perfil';
+import FoodDetail from './pages/FoodDetail';
+import DrinkDetail from './pages/DrinkDetail';
 
 function App() {
   return (
@@ -19,9 +20,10 @@ function App() {
         <Route exact path="/" component={ Login } />
         <Route exact path="/bebidas" component={ Drink } />
         <Route exact path="/explorar" component={ Explore } />
-        <Route exact path="/bebidas/178319" component={ DrinkRecipes } />
+        <Route exact path="/bebidas/178319" component={ DrinkDetail } />
         <Route path="/explorar/comidas" component={ ExploreFood } />
         <Route path="/explorar/bebidas" component={ ExploreDrink } />
+        <Route path="/comidas/52771" component={ FoodDetail } />
         <Route
           path="/explorar/comidas/ingredientes"
           component={ ExploreFoodByIngredients }
@@ -29,7 +31,6 @@ function App() {
         <Route path="/perfil" component={ Perfil } />
         {
         /*
-        <Route path="/comidas/{id-da-receita}" component={definir} />
         <Route path="/comidas/{id-da-receita}/in-progress" component={definir} />
         <Route path="/bebidas/{id-da-receita}/in-progress" component={definir} />
         <Route path="/explorar/bebidas/ingredientes" component={definir} />
