@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchMealsById, fetchRecommendedDrinks } from '../services';
+import { currentID } from '../actions';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
@@ -19,11 +20,13 @@ class FoodsDetails extends React.Component {
     this.goRight = this.goRight.bind(this);
     this.handleIngredients = this.handleIngredients.bind(this);
     this.setIngredients = this.setIngredients.bind(this);
+    this.redirectFromState = this.redirectFromState.bind(this);
   }
 
   async componentDidMount() {
-    const { history: { location: { pathname } } } = this.props;
+    const { history: { location: { pathname } }, ID } = this.props;
     const endpoint = pathname.split('/').pop();
+    ID(endpoint);
     const mealRecipe = await fetchMealsById(endpoint);
     const recommendedDrinks = await fetchRecommendedDrinks();
     this.setMealState(mealRecipe, recommendedDrinks);
@@ -86,8 +89,19 @@ class FoodsDetails extends React.Component {
     else this.setState({ x: x - additionalX });
   }
 
+  redirectFromState() {
+    const { idCurrent } = this.props;
+    const { history } = this.props;
+    // if (meals !== null && meals.length === 1) {
+    //   history.push(`/comidas/${meals[0].idMeal}`);
+    // }
+    // if (drinks !== null && drinks.length === 1) {
+    history.push(`/comidas/${idCurrent}/in-progress`);
+  }
+
   render() {
     const { Meal, RecommendedDrinks, x, Ingredients, Measures } = this.state;
+    // const { history } = this.props;
     return (
       <div className="food-drink-detail-container">
         {Meal ? Meal.map((recipe, index) => (
@@ -165,7 +179,11 @@ class FoodsDetails extends React.Component {
               </button>
             </div>
             <div>
-              <button type="button" data-testid="start-recipe-btn">
+              <button
+                type="button"
+                data-testid="start-recipe-btn"
+                onClick={ this.redirectFromState }
+              >
                 Iniciar Receita
               </button>
             </div>
@@ -175,8 +193,18 @@ class FoodsDetails extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  idCurrent: state.menu.currentID,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  ID: (endpoint) => dispatch(currentID(endpoint)),
+});
+
 FoodsDetails.propTypes = {
   history: PropTypes.shape().isRequired,
+  ID: PropTypes.string.isRequired,
+  idCurrent: PropTypes.string.isRequired,
 };
 
-export default connect(null, null)(FoodsDetails);
+export default connect(mapStateToProps, mapDispatchToProps)(FoodsDetails);
