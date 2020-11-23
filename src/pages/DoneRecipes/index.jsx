@@ -36,7 +36,7 @@ function DoneRecipes() {
   const handleShareClick = useCallback((id, type) => {
     const url = `http://localhost:3000/${type}s/${id}`;
 
-    navigator.clipboard.writeText(url);
+    window.navigator.clipboard.writeText(url);
 
     const copiedRecipe = {
       [id]: true,
@@ -121,7 +121,7 @@ function DoneRecipes() {
             {recipe.type === 'comida' && (
               <div className="recipe-tag-container">
                 {recipe.tags.filter((tag, i) => i < 2).map((tag) => (
-                  <span data-testid={`${index}-${tag}-horizontal-tag`}>{tag}</span>
+                  <span key={tag} data-testid={`${index}-${tag}-horizontal-tag`}>{tag}</span>
                 ))}
               </div>
             )}

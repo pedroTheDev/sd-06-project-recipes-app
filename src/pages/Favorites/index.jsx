@@ -114,14 +114,6 @@ function Favorites() {
               {recipe.type === 'comida' ? `${recipe.area} - ${recipe.category}` : `${recipe.alcoholicOrNot}`}
             </p>
 
-            {/* {recipe.type === 'comida' && (
-              <p data-testid={`${index}-horizontal-area`}>{recipe.area}</p>
-            )} */}
-
-            {/* {recipe.type === 'bebida' && (
-              <p data-testid={`${index}-horizontal-alcoholic`}>{recipe.alcoholicOrNot}</p>
-            )} */}
-
             <div className="done-recipe-share-container">
               <button
                 type="button"

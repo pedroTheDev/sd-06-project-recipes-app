@@ -26,7 +26,7 @@ describe('profile page structure testing', () => {
 
     const pageTitle = screen.getByTestId('page-title');
     expect(pageTitle).toBeInTheDocument();
-    expect(pageTitle.innerHTML).toBe('Perfil');
+    expect(pageTitle).toHaveTextContent('Perfil');
 
     expect(screen.queryByTestId('search-top-btn')).not.toBeInTheDocument();
   });
@@ -69,7 +69,7 @@ describe('profile page structure testing', () => {
 
     const userEmail = screen.getByTestId('profile-email');
     expect(userEmail).toBeInTheDocument();
-    expect(userEmail.innerHTML).toBe(validEmail);
+    expect(userEmail).toHaveTextContent(validEmail);
 
     expect(screen.getByTestId('profile-done-btn')).toBeInTheDocument();
     expect(screen.getByTestId('profile-favorite-btn')).toBeInTheDocument();

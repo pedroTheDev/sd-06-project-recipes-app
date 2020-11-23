@@ -22,7 +22,7 @@ describe('explore page structure testing', () => {
 
     const pageTitle = screen.getByTestId('page-title');
     expect(pageTitle).toBeInTheDocument();
-    expect(pageTitle.innerHTML).toBe('Explorar');
+    expect(pageTitle).toHaveTextContent('Explorar');
 
     expect(screen.queryByTestId('search-top-btn')).not.toBeInTheDocument();
   });
@@ -56,9 +56,9 @@ describe('explore page structure testing', () => {
     const exploreDrinksRef = 'http://localhost/explorar/bebidas';
 
     expect(exploreFoods).toBeInTheDocument();
-    expect(exploreFoods.href).toBe(exploreFoodsRef);
+    expect(exploreFoods).toHaveAttribute('href', exploreFoodsRef);
     expect(exploreDrinks).toBeInTheDocument();
-    expect(exploreDrinks.href).toBe(exploreDrinksRef);
+    expect(exploreDrinks).toHaveAttribute('href', exploreDrinksRef);
   });
 
   it('should navigate to the explore foods page when clicked on link', () => {
