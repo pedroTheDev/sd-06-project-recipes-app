@@ -8,7 +8,7 @@ class Header extends React.Component {
   constructor() {
     super();
     this.state = {
-      h1: 'Comidas',
+      h1: '',
       searchInput: false,
     };
     this.ajustingStatesWithH1 = this.ajustingStatesWithH1.bind(this);
@@ -59,13 +59,16 @@ class Header extends React.Component {
     return (
       <header className="header-global-header">
         <div className="global-header">
-          <input
-            src={ profileIcon }
-            type="image"
-            alt="bla"
-            data-testid="profile-top-btn"
-            onClick={ () => history.push('/perfil') }
-          />
+          <div className="profile-icon-div">
+            <input
+              src={ profileIcon }
+              type="image"
+              alt="bla"
+              data-testid="profile-top-btn"
+              className="profile-icon"
+              onClick={ () => history.push('/perfil') }
+            />
+          </div>
           <h1 id="header-h1" data-testid="page-title">{h1}</h1>
           <div className="search-input-div">
             {(pathname !== ('/explorar')
@@ -82,7 +85,7 @@ class Header extends React.Component {
               />}
           </div>
         </div>
-        { searchInput && <SearchInput /> }
+        { searchInput && <SearchInput history={ history } /> }
       </header>
     );
   }

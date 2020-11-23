@@ -1,5 +1,3 @@
-// import triviaAPI from '../services/triviaAPI';
-
 export const USER_INFO = 'USER_INFO';
 export const DRINKS = 'DRINKS';
 export const MEALS = 'MEALS';

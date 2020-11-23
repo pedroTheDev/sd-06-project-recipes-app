@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchDrinks, fetchMeal } from '../services/FetchAPI';
+import { fetchDrinks, fetchMeal } from '../services/index';
 import { bebida, comida } from '../actions';
 
 class SearchInput extends React.Component {
