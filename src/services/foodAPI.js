@@ -26,3 +26,11 @@ async function foodAPI(type, endpoint) {
 }
 
 export default foodAPI;
+
+export const fetchRandomMeal = () => fetch('https://www.themealdb.com/api/json/v1/1/random.php')
+  .then((response) => (
+    response
+      .json()
+      .then((json) => json.meals[0])
+      .catch((error) => error)
+  ));

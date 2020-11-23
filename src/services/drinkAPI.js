@@ -26,3 +26,11 @@ async function drinkAPI(type, endpoint) {
 }
 
 export default drinkAPI;
+
+export const fetchRandomDrink = () => fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php')
+  .then((response) => (
+    response
+      .json()
+      .then((json) => json.drinks[0])
+      .catch((error) => error)
+  ));
