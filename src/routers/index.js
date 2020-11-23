@@ -3,8 +3,8 @@ import { Switch, Route } from 'react-router-dom';
 import { Login, NotFound, Comidas, Bebidas, Explorar,
   ExplorarComidas, ExplorarBebidas, ComidasPorIngrediente,
   ComidasPorLocalOrigem, BebidasPorIngrediente, DetalhesBebida,
-  DetalhesComida, ProcessoBebida, ProcessoComida, ReceitasFavoritas,
-  ReceitasFeitas } from '../pages';
+  DetalhesComida, ProcessoBebida, ProcessoComida, Profile,
+  ReceitasFavoritas, ReceitasFeitas } from '../pages';
 
 export default function Routers() {
   return (
@@ -21,9 +21,10 @@ export default function Routers() {
       <Route path="/explorar/comidas/ingredientes" component={ ComidasPorIngrediente } />
       <Route path="/explorar/bebidas/ingredientes" component={ BebidasPorIngrediente } />
       <Route path="/explorar/comidas/area" component={ ComidasPorLocalOrigem } />
-      {/* <Route path="/perfil" component={ } /> */}
+      <Route path="/perfil" component={ Profile } />
       <Route path="/receitas-feitas" component={ ReceitasFeitas } />
       <Route path="/receitas-favoritas" component={ ReceitasFavoritas } />
+      <Route path="/perfil" component={ Profile } />
       <Route exact path="/" component={ Login } />
       <Route component={ NotFound } />
     </Switch>
