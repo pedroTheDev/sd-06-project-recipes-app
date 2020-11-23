@@ -1,9 +1,10 @@
 import React from 'react';
-import Footer from '../Components/Footer';
+import { Header, Footer } from '../Components';
 
 function Perfil() {
   return (
     <div>
+      <Header pageName="Perfil" />
       <h1>Perfil</h1>
       <Footer />
     </div>

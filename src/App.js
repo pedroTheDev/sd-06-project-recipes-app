@@ -1,21 +1,23 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Login from './Pages/Login';
-import Comidas from './Pages/Comidas';
-import Bebidas from './Pages/Bebidas';
-import ComidasDetails from './Pages/ComidasDetails';
-import BebidasDetails from './Pages/BebidasDetails';
-import Explorar from './Pages/Explorar';
-import ExplorarComidas from './Pages/ExplorarComidas';
-import ExplorarBebidas from './Pages/ExplorarBebidas';
-import ExplorarComidasIngredientes from './Pages/ExplorarComidasIngredientes';
-import ExplorarBebidasIngredientes from './Pages/ExplorarBebidasIngredientes';
-import ExplorarComidasArea from './Pages/ExplorarComidasArea';
-import Perfil from './Pages/Perfil';
-import ComidasInProgress from './Pages/ComidasInProgress';
-import BebidasInProgress from './Pages/BebidasInProgress';
-import ReceitasFeitas from './Pages/ReceitasFeitas';
-import ReceitasFavoritas from './Pages/ReceitasFavoritas';
+import {
+  Login,
+  Comidas,
+  Bebidas,
+  ComidasDetails,
+  BebidasDetails,
+  ComidasInProgress,
+  BebidasInProgress,
+  Explorar,
+  ExplorarComidas,
+  ExplorarBebidas,
+  ExplorarComidasIngredientes,
+  ExplorarBebidasIngredientes,
+  ExplorarComidasArea,
+  Perfil,
+  ReceitasFeitas,
+  ReceitasFavoritas,
+} from './Pages';
 
 function App() {
   return (
@@ -33,9 +35,7 @@ function App() {
         path="/bebidas/:id/in-progress"
         render={ (props) => <BebidasInProgress { ...props } /> }
       />
-      <Route path="/explorar" component={ Explorar } />
-      <Route path="/explorar/comidas" component={ ExplorarComidas } />
-      <Route path="/explorar/bebidas" component={ ExplorarBebidas } />
+      <Route path="/explorar/comidas/area" component={ ExplorarComidasArea } />
       <Route
         path="/explorar/comidas/ingredientes"
         component={ ExplorarComidasIngredientes }
@@ -44,7 +44,9 @@ function App() {
         path="/explorar/bebidas/ingredientes"
         component={ ExplorarBebidasIngredientes }
       />
-      <Route path="/explorar/comidas/area" component={ ExplorarComidasArea } />
+      <Route path="/explorar/comidas" component={ ExplorarComidas } />
+      <Route path="/explorar/bebidas" component={ ExplorarBebidas } />
+      <Route path="/explorar" component={ Explorar } />
       <Route path="/perfil" component={ Perfil } />
       <Route path="/receitas-feitas" component={ ReceitasFeitas } />
       <Route path="/receitas-favoritas" component={ ReceitasFavoritas } />
