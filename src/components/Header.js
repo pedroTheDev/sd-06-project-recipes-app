@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import perfil from '../images/profileIcon.svg';
 import busca from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
-import useSearch from '../hooks/useSearch';
 
 export default function Header(props) {
   const [search, setSearch] = useState(false);

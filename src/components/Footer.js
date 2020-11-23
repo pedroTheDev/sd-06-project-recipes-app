@@ -5,7 +5,6 @@ import drinkIcon from '../images/drinkIcon.svg';
 import exploreIcon from '../images/exploreIcon.svg';
 import mealIcon from '../images/mealIcon.svg';
 
-
 export default function Footer() {
   const { setFilters } = useContext(RecipesContext);
   const footerStyle = {
