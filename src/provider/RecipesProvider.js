@@ -12,6 +12,13 @@ export default function RecipesProvider({ children }) {
     password: '',
   });
   const [isValid, setValid] = useState(true);
+  const [fetchFood, setFetchFood] = useState([]);
+  const [fetchDrink, setFetchDrink] = useState([]);
+  const [DrinkBtn, setDrinkBtn] = useState([]);
+  const [FoodBtn, setFoodBtn] = useState([]);
+  const [filterFood, setFilterFood] = useState([]);
+  const [filterDrink, setFilterDrink] = useState([]);
+
   const [radioValue, setRadioValue] = useState('');
   const [searchBar, setSearchBar] = useState('');
   const [returnFoodApi, setReturnFoodAPi] = useState([]);
@@ -36,6 +43,17 @@ export default function RecipesProvider({ children }) {
     setLogin,
     isValid,
     setValid,
+    fetchFood,
+    setFetchFood,
+    fetchDrink,
+    DrinkBtn,
+    setDrinkBtn,
+    FoodBtn,
+    setFoodBtn,
+    filterFood,
+    filterDrink,
+    setFilterFood,
+    setFilterDrink,
     radioValue,
     setRadioValue,
     searchBar,
@@ -43,6 +61,7 @@ export default function RecipesProvider({ children }) {
     returnFoodApi,
     setReturnFoodAPi,
     returnDrinkApi,
+    setFetchDrink,
     setReturnDrinkAPi,
   };
 
