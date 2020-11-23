@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchMealsById, fetchRecommendedMeals } from '../services';
+import { fetchMealsById, fetchRecommendedDrinks } from '../services';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
@@ -10,25 +10,62 @@ class FoodsDetails extends React.Component {
     super();
     this.state = {
       Meal: [],
-      RecommendedMeals: [],
+      RecommendedDrinks: [],
       x: 0,
+      Ingredients: [],
+      Measures: [],
     };
     this.goLeft = this.goLeft.bind(this);
     this.goRight = this.goRight.bind(this);
+    this.handleIngredients = this.handleIngredients.bind(this);
+    this.setIngredients = this.setIngredients.bind(this);
   }
 
   async componentDidMount() {
     const { history: { location: { pathname } } } = this.props;
     const endpoint = pathname.split('/').pop();
     const mealRecipe = await fetchMealsById(endpoint);
-    const recommendedMeals = await fetchRecommendedMeals();
-    this.setMealState(mealRecipe, recommendedMeals);
+    const recommendedDrinks = await fetchRecommendedDrinks();
+    this.setMealState(mealRecipe, recommendedDrinks);
+    this.handleIngredients();
   }
 
-  setMealState(Meal, RecommendedMeals) {
+  handleIngredients() {
+    const ingredientArray = [];
+    const measureArray = [];
+    let ingredient;
+    let measure;
+    const { Meal } = this.state;
+    Meal.map((recipe) => {
+      const twenty = 20;
+      for (let index = 1; index <= twenty; index += 1) {
+        ingredient = `strIngredient${index}`;
+        measure = `strMeasure${index}`;
+        ingredientArray.push(recipe[ingredient]);
+        measureArray.push(recipe[measure]);
+      }
+      const filteredIngredients = ingredientArray.filter((item) => item !== '')
+        .filter((element) => element !== 'null');
+
+      const filteredMeasure = measureArray.filter((item) => item !== '')
+        .filter((element) => element !== 'null');
+
+      this.setIngredients(filteredIngredients, filteredMeasure);
+      return null;
+    });
+  }
+
+  setMealState(Meal, RecommendedDrinks) {
     this.setState({
       Meal,
-      RecommendedMeals,
+      RecommendedDrinks,
+    });
+  }
+
+  setIngredients(Ingredients, Measures) {
+    this.setState({
+      Ingredients,
+      Measures,
     });
   }
 
@@ -50,88 +87,91 @@ class FoodsDetails extends React.Component {
   }
 
   render() {
-    const { Meal, RecommendedMeals, x } = this.state;
+    const { Meal, RecommendedDrinks, x, Ingredients, Measures } = this.state;
     return (
       <div className="food-drink-detail-container">
-        {Meal ? Meal.map((recipe, index) => {
-          console.log(Meal);
-          return (
-            <div className="detail-card" key={ index }>
-              <img
-                src={ recipe.strMealThumb }
-                data-testid="recipe-photo"
-                alt="recipe-img"
-              />
-              <div className="details-title-div">
-                <div className="recipe-title">
-                  <h1 data-testid="recipe-title">{recipe.strMeal}</h1>
-                  <p data-testid="recipe-category">{recipe.strCategory}</p>
-                </div>
-                <div className="recipe-buttons">
-                  <input type="image" src={ shareIcon } alt="shareIcon" />
-                  <input type="image" src={ whiteHeartIcon } alt="whiteHeartIcon" />
-                </div>
+        {Meal ? Meal.map((recipe, index) => (
+          <div className="detail-card" key={ index }>
+            <img
+              src={ recipe.strMealThumb }
+              data-testid="recipe-photo"
+              alt="recipe-img"
+            />
+            <div className="details-title-div">
+              <div className="recipe-title">
+                <h1 data-testid="recipe-title">{recipe.strMeal}</h1>
+                <p data-testid="recipe-category">{recipe.strCategory}</p>
               </div>
-              <hr className="card-hr" />
-              <h2>Ingredients</h2>
-              <div className="ingredients">
-                <ul className="detail-ingredients">
-                  {recipe.strIngredient1 || recipe.strMeasure1
-                    ? <li>{`${recipe.strIngredient1} - ${recipe.strMeasure1}`}</li> : '' }
-                  {recipe.strIngredient2 || recipe.strMeasure2
-                    ? <li>{`${recipe.strIngredient2} - ${recipe.strMeasure2}`}</li> : '' }
-                  {recipe.strIngredient3 || recipe.strMeasure3
-                    ? <li>{`${recipe.strIngredient3} - ${recipe.strMeasure3}`}</li> : '' }
-                  {recipe.strIngredient4 || recipe.strMeasure4
-                    ? <li>{`${recipe.strIngredient4} - ${recipe.strMeasure4}`}</li> : '' }
-                  {recipe.strIngredient5 || recipe.strMeasure5
-                    ? <li>{`${recipe.strIngredient5} - ${recipe.strMeasure5}`}</li> : '' }
-                  {recipe.strIngredient6 || recipe.strMeasure6
-                    ? <li>{`${recipe.strIngredient6} - ${recipe.strMeasure6}`}</li> : '' }
-                  {recipe.strIngredient7 || recipe.strMeasure7
-                    ? <li>{`${recipe.strIngredient7} - ${recipe.strMeasure7}`}</li> : '' }
-                  {recipe.strIngredient8 || recipe.strMeasure8
-                    ? <li>{`${recipe.strIngredient8} - ${recipe.strMeasure8}`}</li> : '' }
-                  {recipe.strIngredient9 || recipe.strMeasure9
-                    ? <li>{`${recipe.strIngredient9} - ${recipe.strMeasure9}`}</li> : '' }
-                </ul>
-              </div>
-              <h2 data-testid="instructions">Instructions</h2>
-              <div className="detail-instructions">{recipe.strInstructions}</div>
-              <p data-testid={ `${index}-card-name` }>{recipe.strMeal}</p>
-              <h2>Recomendadas</h2>
-              <div className="slider">
-                {RecommendedMeals.map((recomend, i) => (
-                  <div
-                    key={ i }
-                    className="slide"
-                    style={ { transform: `translateX(${x}%)` } }
-                  >
-                    <img
-                      src={ recomend.strMealThumb }
-                      data-testid="recipe-photo"
-                      alt="recipe-img"
-                    />
-                    <div className="text-slider-div">
-                      <p>{recomend.strAlcoholic}</p>
-                      <h3>{recomend.strMeal}</h3>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="slider-controls">
-                <button type="button" id="goLeft" onClick={ this.goLeft }>
-                  <i className="fas fa-chevron-left" />
-                </button>
-                <button type="button" id="goRight" onClick={ this.goRight }>
-                  <i className="fas fa-chevron-right" />
-                </button>
+              <div className="recipe-buttons">
+                <input
+                  type="image"
+                  data-testid="share-btn"
+                  src={ shareIcon }
+                  alt="shareIcon"
+                />
+                <input
+                  type="image"
+                  data-testid="favorite-btn"
+                  src={ whiteHeartIcon }
+                  alt="whiteHeartIcon"
+                />
               </div>
             </div>
-          );
-        }) : null}
-      </div>
-    );
+            <hr className="card-hr" />
+            <h2>Ingredients</h2>
+            <div className="ingredients">
+              <ul className="detail-ingredients">
+                {Ingredients.map((recipes, i) => (
+                  <li
+                    key={ index }
+                    data-testid={ `${i}-ingredient-name-and-measure` }
+                  >
+                    {recipes}
+                    -
+                    { Measures[i] }
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <h2 data-testid="instructions">Instructions</h2>
+            <div className="detail-instructions">{recipe.strInstructions}</div>
+            <p data-testid={ `${index}-card-name` }>{recipe.strMeal}</p>
+            <h2>Recomendadas</h2>
+            <div className="slider">
+              {RecommendedDrinks.map((recomend, i) => (
+                <div
+                  key={ i }
+                  className="slide"
+                  style={ { transform: `translateX(${x}%)` } }
+                >
+                  <img
+                    src={ recomend.strDrinkThumb }
+                    data-testid="recipe-photo"
+                    alt="recipe-img"
+                  />
+                  <div className="text-slider-div">
+                    <p>{recomend.strAlcoholic}</p>
+                    <h4>{recomend.strDrink}</h4>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="slider-controls">
+              <button type="button" id="goLeft" onClick={ this.goLeft }>
+                <i className="fas fa-chevron-left" />
+              </button>
+              <button type="button" id="goRight" onClick={ this.goRight }>
+                <i className="fas fa-chevron-right" />
+              </button>
+            </div>
+            <div>
+              <button type="button" data-testid="start-recipe-btn">
+                Iniciar Receita
+              </button>
+            </div>
+          </div>
+        )) : null }
+      </div>);
   }
 }
 

@@ -7,12 +7,12 @@ class Explore extends React.Component {
   render() {
     const { history } = this.props;
     return (
-      <div>
+      <div className="explore-buttons">
         <Header history={ history } />
         <button
           type="button"
-          onClick={ () => history.push('/explorar/comidas') }
           data-testid="explore-food"
+          onClick={ () => history.push('/explorar/bebidas') }
         >
           <h1>Explorar Comidas</h1>
         </button>
