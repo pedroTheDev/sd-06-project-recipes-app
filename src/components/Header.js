@@ -34,7 +34,7 @@ function Header(props) {
           />
         }
       </div>
-      {(hide === true) ? '' : <SearchBar />}
+      {(hide === true) ? '' : <SearchBar title={ title } />}
     </header>
   );
 }

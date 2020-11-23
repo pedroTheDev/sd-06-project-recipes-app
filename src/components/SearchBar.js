@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import fetchDrink from '../services/fetchDrink';
 import fetchMeal from '../services/fetchMeal';
 import './Components.css';
 
-function SearchBar() {
+function SearchBar(props) {
   const [searchTerm, setSearchTerm] = useState();
   const [filterType, setFilterType] = useState();
+
+  const { title } = props;
 
   return (
     <div>
@@ -52,7 +56,10 @@ function SearchBar() {
           data-testid="exec-search-btn"
           onClick={ (e) => {
             e.preventDefault();
-            fetchMeal(filterType, searchTerm);
+
+            return title === 'Bebidas'
+              ? fetchDrink(filterType, searchTerm)
+              : fetchMeal(filterType, searchTerm);
           } }
         >
           Buscar
@@ -61,5 +68,7 @@ function SearchBar() {
     </div>
   );
 }
+
+SearchBar.propTypes = { title: PropTypes.string.isRequired };
 
 export default SearchBar;
