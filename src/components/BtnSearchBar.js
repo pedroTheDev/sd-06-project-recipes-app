@@ -1,25 +1,18 @@
-import React, { Component } from 'react';
+import React, { useContext } from 'react';
+import recipesAppContext from '../context/recipesAppContext';
 import { searchIcon } from '../images';
 
-export default class BtnSearchBar extends Component {
-  constructor(){
-    super();
-    this.handleSearchBar = this.handleSearchBar.bind(this);
-    this.state = {
-      searchBar: false,
-    }
-  }
+export default function BtnSearchBar() {
   
-  handleSearchBar() {
-    this.setState(prevState => ({
-      searchBar: !prevState.searchBar
-    }));
+  const { searchBar, setSearchBar } = useContext(recipesAppContext);
+  
+  const handleSearchBar = () => {
+    setSearchBar(!searchBar);
   }
-  render() {
-    return (
-      <button type="button" data-testid="search-top-btn" onClick={ this.handleSearchBar } >
-        <img alt="ícone de Pesquisa" src={ searchIcon } />
-      </button>
-    )
-  }
+
+  return (
+    <button type="button" data-testid="search-top-btn" onClick={ handleSearchBar } >
+      <img alt="ícone de Pesquisa" src={ searchIcon } />
+    </button>
+  )
 }

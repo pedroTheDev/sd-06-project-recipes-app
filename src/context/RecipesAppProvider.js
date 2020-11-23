@@ -3,7 +3,6 @@ import propTypes from 'prop-types';
 import recipesAppContext from './recipesAppContext';
 
 function RecipesAppProvider({ children }) {
-
   const [searchBar, setSearchBar] = useState(false);
 
   const contextValue = {

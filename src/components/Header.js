@@ -1,30 +1,15 @@
-import React, { Component } from 'react';
+import React, { useContext } from 'react';
 import propTypes from 'prop-types';
-import SearchBar from './SearchBar';
-import { profileIcon, searchIcon } from '../images';
 import { Link } from 'react-router-dom';
+import recipesAppContext from '../context/recipesAppContext';
+import SearchBar from './SearchBar';
+import { profileIcon } from '../images';
 
-export default class Header extends Component {
-
-  constructor(){
-    super();
-    this.handleSearchBar = this.handleSearchBar.bind(this);
-    this.state = {
-      searchBar: false,
-    }
-  }
-  
-  handleSearchBar() {
-    this.setState(prevState => ({
-      searchBar: !prevState.searchBar
-    }));
-  }
-
-  render() {
-    const { className, pageTitle } = this.props;
-    return (
-      <div>
-        <header
+export default function Header({ className, pageTitle, BtnSearchBar }) {
+  const { searchBar } = useContext(recipesAppContext);
+  return (
+    <div>
+      <header
         name="header"
         className={ className }
       >
@@ -34,50 +19,16 @@ export default class Header extends Component {
           </button>
         </Link>
         <h1 data-testid="page-title">{ pageTitle }</h1>
-        {/* { BtnSearchBar && <BtnSearchBar /> } */}
-        <button type="button" data-testid="search-top-btn" onClick={ this.handleSearchBar } >
-        <img alt="ícone de Pesquisa" src={ searchIcon } />
-      </button>
+        { BtnSearchBar && <BtnSearchBar /> }
+
       </header>
-      { this.state.searchBar && <SearchBar /> }
-      </div>
-    )
-  }
+      { searchBar && <SearchBar /> }
+    </div>
+  );
 }
 
 Header.propTypes = {
+  BtnSearchBar: propTypes.element.isRequired,
   className: propTypes.string.isRequired,
-  iconPerfil: propTypes.string,
-  pageTitle: propTypes.string,
-  iconPage: propTypes.string,
+  pageTitle: propTypes.string.isRequired,
 };
-
-
-
-
-// function Button() {
-// 	return <button>Button</button>
-// }
-
-// function Header(props) {
-// 	const { Button } = props
-
-// 	return (
-//   	<header>
-//   	  <h1>Header</h1>
-      
-//       {Button && <Button />} 
-//   	</header>
-//   )
-// }
-
-// function App() {
-// 	return (
-//   	<React.Fragment>
-//       <Header Button={Button} />
-//       <Header />
-//     </React.Fragment>
-//   )
-// }
-
-// ReactDOM.render(<App />, document.querySelector("#app"))
