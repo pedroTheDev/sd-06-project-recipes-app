@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import DrinksDetails from '../pages/DrinksDetails';
 import {
@@ -12,6 +12,7 @@ import {
 } from '../services/requestsAPI';
 
 function Filters() {
+  const history = useHistory();
   const [radioValue, setRadioValue] = useState('');
   const { resultsFoodsAndDrinks, setResultsFoodsAndDrinks } = useContext(RecipesContext);
 
@@ -79,18 +80,21 @@ function Filters() {
     return null;
   }
 
-  function handleResults(info) {
-    const idDrinks = info.idDrink;
-    console.log(idDrinks);
-    if (resultsFoodsAndDrinks.length === 1) {
-      console.log('entrou');
-      return (<Redirect to={`/bebidas/:${idDrinks}`} />);
-    }
-    return null;
+  function handleResults() {
+    // const idDrinks = resultsFoodsAndDrinks.length && resultsFoodsAndDrinks.drinks[0];
+    const idDrinks = resultsFoodsAndDrinks.drinks[0].idDrink;
+
+    history.push(`/bebidas/${idDrinks}`);
+
+    // return null;
   }
 
   useEffect(() => {
-    handleResults(resultsFoodsAndDrinks);
+    console.log('oi entrouuu no useEffect', resultsFoodsAndDrinks);
+    if (resultsFoodsAndDrinks.drinks) {
+      console.log('entrou no iif');
+      handleResults();
+    }
   }, [resultsFoodsAndDrinks]);
 
   return (

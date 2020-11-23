@@ -17,8 +17,8 @@ function App() {
             <Route exact path="/" component={LoginPage} />
             <Route path="/comidas" component={FoodRecipesPage} />
             <Route path="/perfil" component={ProfilePage} />
+            <Route path="/bebidas/:id" component={DrinksDetails} />
             <Route path="/bebidas" component={DrinksRecipesPage} />
-            <Route path="/bebidas/:id" render={() => <DrinksDetails />} />
           </Switch>
         </BrowserRouter>
         <div id="meals">
