@@ -1,15 +1,13 @@
 import React from 'react';
 import Footer from '../components/Footer';
-import Header from '../components/Header';
 
-function Comidas() {
+function Explore() {
   return (
     <div>
-      <h1>Comidas</h1>
-      <Header />
+      <h1>Explore</h1>
       <Footer />
     </div>
   );
 }
 
-export default Comidas;
+export default Explore;
