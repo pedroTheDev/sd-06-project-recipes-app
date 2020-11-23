@@ -11,7 +11,7 @@ function Provider({ children }) {
   const [recipes, setRecipes] = useState([]);
   const [drinks, setDrinks] = useState('');
   const [idRecipe, setIdRecipe] = useState('');
-  const [typeRecipe, setTypeRecipe] = useState('food'); // food, drink
+  const [typeRecipe, setTypeRecipe] = useState('aaa');
 
   const contextValue = {
     btnDisable,
