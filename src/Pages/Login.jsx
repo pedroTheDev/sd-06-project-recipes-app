@@ -42,6 +42,7 @@ const Login = () => {
   return redirect ? (
     <Redirect to="comidas" />
   ) : (
+
     <div className="main-login">
       <div className="login">
         <span>Login</span>
