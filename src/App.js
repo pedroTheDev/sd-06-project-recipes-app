@@ -6,6 +6,7 @@ import Foods from './pages/Foods';
 import Perfil from './pages/Perfil';
 import Drinks from './pages/Drinks';
 import Explore from './pages/Explore';
+import ExploreRecipes from './pages/ExploreRecipes';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/perfil" component={ Perfil } />
         <Route path="/bebidas" component={ Drinks } />
         <Route exact path="/explorar" component={ Explore } />
+        <Route path="/explorar/:id" component={ ExploreRecipes } />
       </Switch>
     </Provider>
   );

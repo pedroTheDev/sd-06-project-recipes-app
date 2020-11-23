@@ -9,18 +9,22 @@ function Explore() {
         <img src={ profileIcon } alt="Profile" data-testid="profile-top-btn" />
       </Link>
       <h2 data-testid="page-title">Explorar</h2>
-      <button
-        data-testid="explore-food"
-        type="button"
-      >
-        Explorar Comidas
-      </button>
-      <button
-        data-testid="explore-drinks"
-        type="button"
-      >
-        Explorar Bebidas
-      </button>
+      <Link to="/explorar/comidas">
+        <button
+          data-testid="explore-food"
+          type="button"
+        >
+          Explorar Comidas
+        </button>
+      </Link>
+      <Link to="/explorar/bebidas">
+        <button
+          data-testid="explore-drinks"
+          type="button"
+        >
+          Explorar Bebidas
+        </button>
+      </Link>
     </div>
   );
 }
