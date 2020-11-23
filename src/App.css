@@ -112,26 +112,26 @@ body {
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  background: rgba(0, 0, 0, 0.356);
+  height: 200px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 2px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .toogle-search-input input{
   width: 600px;
   height: 40px;
-  font-size: 30px;
+  font-size: 25px;
   margin-top: 35px;
   border: 2px solid rgba(10, 10, 10, 0.325);;
   border-radius: 5px;
   padding-left: 10px;
 }
 
-.toogle-search-input input:hover{
-  border: 3px solid rgba(0, 0, 0, 0.425);
-  box-shadow: 0 0 3px #ddd;
-}
-
 .toogle-search-input input:focus{
   border: 3px solid rgba(0, 0, 0, 0.425);
-  box-shadow: 0 0 3px #ddd;
   outline: none;
 }
 
@@ -175,7 +175,7 @@ body {
 }
 
 .food-drink-container {
-  margin: 300px auto;
+  margin: 200px auto;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -210,10 +210,6 @@ body {
   border: 0.3px solid rgba(97, 96, 96, 0.150);
 }
 
-.slider {
-  display: flex;
-}
-
 .detail-card {
   margin: 50px auto;
   display: flex;
@@ -228,11 +224,12 @@ body {
 
 .detail-card img {
   width: 100%;
+  border-radius: 3px;
 }
 
 .detail-instructions {
   width: 350px;
-  text-align: center;
+  text-align: left;
 }
 
 .detail-ingredients {
@@ -273,12 +270,34 @@ body {
   justify-content: space-around;
 }
 
+.explore-buttons {
+  margin: 300px auto;
+}
+
+.exploredrinks-container {
+  margin: 50% auto;
+  background-color: khaki;
+}
+
 @media (max-width:600px) {
   :root {
     background: url(https://ak.picdn.net/shutterstock/videos/14891857/thumb/1.jpg);
   }
   .master-container {
     background: url(https://ak.picdn.net/shutterstock/videos/14891857/thumb/1.jpg);
+  }
+  .toogle-search-input {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.356);
+    height: 200px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-top: none;
+    border-radius: 2px;
+    width: 90%;
+    margin: 0 auto;
   }
 
   .food-drink-container {
@@ -329,6 +348,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     width: 100%;
     margin-top: 25px;
   }
@@ -353,12 +373,16 @@ body {
     width: 30px;
   }
 
+  .search-button-div {
+    width: 80%;
+  }
+
   .search-button-div button{
     margin-top: 15px;
     margin-left: 20px;
-    background-color: #5a2d0c;
+    background: #5a2d0c;
     text-shadow: rgba(0, 0, 0, 0.5) 0 1px 2px;
-    border: 1px solid rgba(10, 10, 10, 0.125);
+    border: 1px solid rgba(0, 0, 0, 0.125);
     letter-spacing: 1px;
     border-radius: 3px;
     font-weight: 700;
@@ -369,11 +393,6 @@ body {
   }
 
   .search-button-div button:focus{
-    margin-top: 15px;
-    margin-left: 20px;
-    background-color: #5a2d0c;
-    text-shadow: rgba(0, 0, 0, 0.5) 0 1px 2px;
-    border: 2px solid rgba(0, 0, 0, 0.525);
     outline: none;
   }
   

@@ -4,6 +4,7 @@ import {
   Login, Foods, Drinks, Explore, Profile, DoneRecipes,
   FavoriteRecipes, FoodsDetails, DrinksDetails,
   FoodsRecipesInProgress, DrinksRecipesInProgress,
+  ExploreDrinks, ExploreFoods,
 } from './pages';
 import './App.css';
 import './Slider.scss';
@@ -28,6 +29,8 @@ function App() {
         />
         <Route path="/bebidas" component={ Drinks } />
         <Route path="/explorar" component={ Explore } />
+        <Route exact path="/explorar/comidas" component={ ExploreFoods } />
+        <Route exact path="/explorar/bebidas" component={ ExploreDrinks } />
         <Route path="/perfil" component={ Profile } />
         <Route path="/receitas-feitas" component={ DoneRecipes } />
         <Route path="/receitas-favoritas" component={ FavoriteRecipes } />

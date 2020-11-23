@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchDrinksById, fetchRecommendedDrinks } from '../services';
+import { fetchDrinksById, fetchRecommendedMeals } from '../services';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
@@ -10,7 +10,7 @@ class DrinksDetails extends React.Component {
     super();
     this.state = {
       Drink: [],
-      RecommendedDrinks: [],
+      RecommendedMeals: [],
       x: 0,
     };
     this.goLeft = this.goLeft.bind(this);
@@ -21,14 +21,14 @@ class DrinksDetails extends React.Component {
     const { history: { location: { pathname } } } = this.props;
     const endpoint = pathname.split('/').pop();
     const drinkRecipe = await fetchDrinksById(endpoint);
-    const recommendedDrinks = await fetchRecommendedDrinks();
-    this.setDrinkState(drinkRecipe, recommendedDrinks);
+    const recommendedMeals = await fetchRecommendedMeals();
+    this.setDrinkState(drinkRecipe, recommendedMeals);
   }
 
-  setDrinkState(Drink, RecommendedDrinks) {
+  setDrinkState(Drink, RecommendedMeals) {
     this.setState({
       Drink,
-      RecommendedDrinks,
+      RecommendedMeals,
     });
   }
 
@@ -50,11 +50,11 @@ class DrinksDetails extends React.Component {
   }
 
   render() {
-    const { Drink, RecommendedDrinks, x } = this.state;
+    const { Drink, RecommendedMeals, x } = this.state;
     return (
       <div>
         {Drink ? Drink.map((recipe, index) => {
-          console.log(Drink);
+          console.log(index);
           return (
             <div className="detail-card" key={ index }>
               <img
@@ -74,7 +74,7 @@ class DrinksDetails extends React.Component {
               </div>
               <hr className="card-hr" />
               <h2>Ingredients</h2>
-              <div>
+              <div className="ingredients">
                 <ul className="detail-ingredients">
                   {recipe.strIngredient1 || recipe.strMeasure1
                     ? <li>{`${recipe.strIngredient1} - ${recipe.strMeasure1}`}</li> : '' }
@@ -101,22 +101,23 @@ class DrinksDetails extends React.Component {
               <p data-testid={ `${index}-card-name` }>{recipe.strMeal}</p>
               <h2>Recomendadas</h2>
               <div className="slider">
-                {RecommendedDrinks.map((recomend, i) => {
+                {RecommendedMeals.map((recomend, i) => {
                   console.log('bla');
                   return (
                     <div
+                      data-testid={ `${i}-recomendation-card` }
                       key={ i }
                       className="slide"
                       style={ { transform: `translateX(${x}%)` } }
                     >
                       <img
-                        src={ recomend.strDrinkThumb }
+                        src={ recomend.strMealThumb }
                         data-testid="recipe-photo"
                         alt="recipe-img"
                       />
                       <div className="text-slider-div">
-                        <p>{recomend.strAlcoholic}</p>
-                        <h3>{recomend.strDrink}</h3>
+                        <p>{recomend.strCategory}</p>
+                        <h4>{recomend.strMeal}</h4>
                       </div>
                     </div>
                   );
@@ -128,6 +129,11 @@ class DrinksDetails extends React.Component {
                 </button>
                 <button type="button" id="goRight" onClick={ this.goRight }>
                   <i className="fas fa-chevron-right" />
+                </button>
+              </div>
+              <div>
+                <button type="button" data-testid="start-recipe-btn">
+                  Iniciar Receita
                 </button>
               </div>
             </div>
