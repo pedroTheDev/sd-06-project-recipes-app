@@ -8,6 +8,9 @@ import Explore from './pages/Explore';
 import Perfil from './pages/Perfil';
 import ExploreBebidas from './pages/ExploreBebidas';
 import ExploreComidas from './pages/ExploreComidas';
+import ReceitasFavoritas from './pages/ReceitasFavoritas';
+import ReceitasFeitas from './pages/ReceitasFeitas';
+
 
 function App() {
   return (
@@ -21,6 +24,8 @@ function App() {
           <Route exact path="/perfil" component={Perfil} />
           <Route exact path="/explorar/comidas" component={ExploreComidas} />
           <Route exact path="/explorar/bebidas" component={ExploreBebidas} />
+          <Route exact path="/receitas-feitas" component={ReceitasFeitas} />
+          <Route exact path="/receitas-favoritas" component={ReceitasFavoritas} />
 
         </Switch>
       </BrowserRouter>
