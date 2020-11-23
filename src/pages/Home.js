@@ -86,8 +86,8 @@ function Home({ title }) {
         title={ title }
       />
       {
-        isSearching &&
-        <SearchBar
+        isSearching
+        && <SearchBar
           verification={ verification }
           onClick={ requisition }
         />
