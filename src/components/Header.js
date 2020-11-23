@@ -13,7 +13,6 @@ function Header({ title }) {
   const {
     setValueRadioButton,
     setRetornoApiComidas,
-    // retornoApiComidas,
     setRetornoApiBebidas,
     valueRadioButton,
     searchBar,
@@ -37,10 +36,19 @@ function Header({ title }) {
     const urlPath = window.location.pathname;
 
     if (urlPath.includes('comidas')) {
-      await FetchApiComidas(valueRadioButton, searchBar, setRetornoApiComidas);
-      // console.log(retornoApiComidas);
+      const response = await FetchApiComidas(valueRadioButton, searchBar);
+      console.log(response);
+      setRetornoApiComidas(response);
+      if (response.length === 1) {
+        history.push(`/comidas/${response[0].idMeal}`);
+      }
     } else {
-      await FetchApiBebidas(valueRadioButton, searchBar, setRetornoApiBebidas);
+      const response = await FetchApiBebidas(valueRadioButton, searchBar);
+      setRetornoApiBebidas(response);
+      if (response.length === 1) {
+        history.push(`/bebidas/${response[0].idDrink}`);
+      }
+      console.log(response);
     }
   };
 
