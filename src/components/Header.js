@@ -11,8 +11,7 @@ function Header(props) {
   const [hide, setHide] = useState(true);
 
   const handleClick = () => {
-    if (hide === true) setHide(false);
-    if (hide === false) setHide(true);
+    hide ? setHide(false) : setHide(true);
   };
 
   const space = '';
