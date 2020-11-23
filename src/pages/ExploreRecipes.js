@@ -1,14 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import profileIcon from '../images/profileIcon.svg';
+import { useLocation } from 'react-router-dom';
+import ExploreDrinks from '../components/ExploreDrinks';
+import ExploreFoods from '../components/ExploreFoods';
 
 function ExploreRecipes() {
+  const location = useLocation().pathname;
+
   return (
     <div>
-      <Link to="/perfil">
-        <img src={ profileIcon } alt="Profile" data-testid="profile-top-btn" />
-      </Link>
-      <h2 data-testid="page-title">Explorar Comidas</h2>
+      { location === '/explorar/comidas' ? <ExploreFoods /> : <ExploreDrinks /> }
     </div>
   );
 }

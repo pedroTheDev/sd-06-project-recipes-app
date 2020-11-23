@@ -3,27 +3,26 @@ import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import profileIcon from '../images/profileIcon.svg';
 
-function Explore() {
+function ExploreDrinks() {
+
   return (
     <div>
       <Link to="/perfil">
         <img src={ profileIcon } alt="Profile" data-testid="profile-top-btn" />
       </Link>
-      <h2 data-testid="page-title">Explorar</h2>
-      <Link to="/explorar/comidas">
+      <h2 data-testid="page-title">Explorar Bebidas</h2>
+      <Link>
         <button
-          data-testid="explore-food"
-          type="button"
+          data-testid="explore-by-ingredient"
         >
-          Explorar Comidas
+          Por Ingredientes
         </button>
       </Link>
-      <Link to="/explorar/bebidas">
+      <Link>
         <button
-          data-testid="explore-drinks"
-          type="button"
+          data-testid="explore-surprise"
         >
-          Explorar Bebidas
+          Me Surpreenda!
         </button>
       </Link>
       <Footer />
@@ -31,4 +30,4 @@ function Explore() {
   );
 }
 
-export default Explore;
+export default ExploreDrinks;
