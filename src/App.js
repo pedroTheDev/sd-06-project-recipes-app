@@ -28,8 +28,14 @@ function App() {
         <Route path="/bebidas" component={ Bebidas } />
         <Route path="/comidas" component={ Comidas } />
 
-        <Route path="/comidas/:id" render={ (props) => <ComidasDetails { ...props } /> } />
-        <Route path="/bebidas/:id" render={ (props) => <BebidasDetails { ...props } /> } />
+        <Route
+          path="/comidas/:id"
+          render={ (props) => <ComidasDetails { ...props } /> }
+        />
+        <Route
+          path="/bebidas/:id"
+          render={ (props) => <BebidasDetails { ...props } /> }
+        />
         <Route
           path="/comidas/:id/in-progress"
           render={ (props) => <ComidasInProgress { ...props } /> }

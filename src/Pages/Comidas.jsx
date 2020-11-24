@@ -1,11 +1,11 @@
-import React from "react";
-import { Header, Footer } from "../Components";
-import MainScreen from "../Components/MainScreen";
+import React from 'react';
+import { Header, Footer } from '../Components';
+import MainScreen from '../Components/MainScreen';
 
 function Comidas() {
   return (
     <div>
-      <Header pageName="Comidas" />
+      <Header pageName='Comidas' />
       <h1>COmidas</h1>
       <MainScreen />
       <Footer />

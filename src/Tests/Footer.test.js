@@ -20,7 +20,7 @@ describe('Teste componente Footer', () => {
     const { getByTestId, container } = renderWithRouter(<Footer />);
     const footerTest = container.querySelector('.footer');
     const footerStyleTest = getByTestId('footer');
-    const style = window.getComputedStyle(footerStyleTest).getPropertyValue('position');
+    // const style = window.getComputedStyle(footerStyleTest).getPropertyValue('position');
     console.log(footerTest.style);
     expect(footerTest).toHaveStyle('position: fixed');
     expect(footerTest).toHaveStyle('bottom: 0');
