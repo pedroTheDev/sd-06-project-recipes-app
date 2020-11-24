@@ -5,6 +5,7 @@ import AppProvider from '../provider/AppProvider';
 import Header from '../components/Header';
 import Food from '../pages/Food';
 import Drink from '../pages/Drink';
+import NavigationMenu from '../components/NavigationMenu';
 
 describe('testando os elementos da barra de busca', () => {
   it('existir os data-testids tanto da barra de busca quanto de todos os buttons', () => {
@@ -360,5 +361,36 @@ describe('Mostre as receitas em cards caso mais de uma receita seja encontrada',
     }
     const lastCard = queryByTestId(`${maximum}-recipe-card`);
     expect(lastCard).not.toBeInTheDocument();
+  });
+});
+
+describe('verificar se tem as categorias', () => {
+  it('se todas as categorias aparecem na tela de comida', async () => {
+    const answer = { meals: [{ strCategory: 'Beef' }, { strCategory: 'Breakfast' },
+      { strCategory: 'Goat' }, { strCategory: 'Dessert' },
+      { strCategory: 'Chicken' }] };
+    global.fetch = jest.fn(() => Promise.resolve({
+      json: () => Promise.resolve(answer),
+    }));
+    const { queryByTestId, findByTestId } = renderWithRouter(
+      <AppProvider>
+        <NavigationMenu page="Comidas" />
+      </AppProvider>,
+    );
+    await findByTestId('Beef-category-filter');
+    const beef = queryByTestId('Beef-category-filter');
+    const breakfast = queryByTestId('Breakfast-category-filter');
+    const chicken = queryByTestId('Chicken-category-filter');
+    const dessert = queryByTestId('Dessert-category-filter');
+    const goat = queryByTestId('Goat-category-filter');
+    const all = queryByTestId('All-category-filter');
+    expect(beef).toBeInTheDocument();
+    expect(breakfast).toBeInTheDocument();
+    expect(chicken).toBeInTheDocument();
+    expect(dessert).toBeInTheDocument();
+    expect(goat).toBeInTheDocument();
+    expect(all).toBeInTheDocument();
+    expect(global.fetch).toHaveBeenCalledTimes(1);
+    expect(global.fetch).toBeCalledWith('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
   });
 });
