@@ -5,16 +5,20 @@ import DrinkCard from './DrinkCard';
 
 function FoodCards() {
   const { resultsFoodsAndDrinks } = useContext(RecipesContext);
-  console.log(resultsFoodsAndDrinks)
+  console.log(resultsFoodsAndDrinks);
   const url = document.URL;
   const splitedURL = url.split('/');
   return (
-  <div>
-    { splitedURL[3] === 'bebidas' ?
-      resultsFoodsAndDrinks.drinks.map((element) => <DrinkCard element={ element } key={ element.idDrink }/>) :
-      resultsFoodsAndDrinks.meals.map((element) => <FoodCard element={ element } key={ element.idMeal }/>)
-    } 
-  </div>
+    <div>
+      { splitedURL[3] === 'bebidas'
+        ? (
+          resultsFoodsAndDrinks.drinks.slice(0, 12).map((element, idx) => (
+            <DrinkCard element={element} idx={idx} key={element.idDrink} />))
+        )
+        : (
+          resultsFoodsAndDrinks.meals.slice(0, 12).map((element, idx) => (
+            <FoodCard element={element} idx={idx} key={element.idMeal} />)))}
+    </div>
   );
 }
 

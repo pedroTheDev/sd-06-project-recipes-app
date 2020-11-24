@@ -1,7 +1,7 @@
 import React from 'react';
 
-function DrinksDetails(props) {
-  const { match: { params } } = props;
+function DrinksDetails() {
+  // const { match: { params } } = props;
   return (
     <div>
       Drinks details uhuu
