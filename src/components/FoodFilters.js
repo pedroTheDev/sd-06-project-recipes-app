@@ -3,7 +3,7 @@ import ReceitasContext from '../context/ReceitasContext';
 import { foodCategoryApi, foodByCategoryApi, foodApi } from '../services/foodAPI';
 
 function FoodFilters() {
-  const { filtersData, setFiltersData, setMeals } = useContext(ReceitasContext);
+  const { filtersData, setFiltersData, setFoods } = useContext(ReceitasContext);
   const { selectedFilter, setSelectedFilter } = useContext(ReceitasContext);
 
   useEffect(() => {
@@ -23,12 +23,12 @@ function FoodFilters() {
     if (category === selectedFilter || category === 'All') {
       setSelectedFilter('All');
       foodApi().then((response) => {
-        setMeals(response);
+        setFoods(response);
       });
     } else {
       setSelectedFilter(category);
       foodByCategoryApi(category).then((response) => {
-        setMeals(response);
+        setFoods(response);
       });
     }
   };
