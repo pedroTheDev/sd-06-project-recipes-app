@@ -7,7 +7,8 @@ const RecipesProvider = ({ children }) => {
   const [searchComponent, setSearchComponent] = useState(false);
   const [pageName, setPageName] = useState(false);
   const [apiValueSearch, setApiValueSearch] = useState({
-    resultsApi: '',
+    foods: '',
+    drinks: '',
   });
 
   const contextState = {

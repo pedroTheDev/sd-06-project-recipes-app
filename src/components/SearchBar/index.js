@@ -6,10 +6,11 @@ import { searchFoodIngredients,
   searchFoodFirstLetter,
   searchDrinkIngredients,
   searchDrinkName,
+  searchDrinkFirstLetter,
 } from '../../services/aPI';
 
 const SearchBar = () => {
-  const { searchComponent, setApiValueSearch } = useContext(ContextAPI);
+  const { searchComponent, setApiValueSearch, apiValueSearch } = useContext(ContextAPI);
   const [nome, setNome] = useState('');
   const [radioButton, setRadioButton] = useState('');
 
@@ -20,38 +21,50 @@ const SearchBar = () => {
   };
 
   const apiOfIngredients = async () => {
-    let results = await searchFoodIngredients(nome);
-    if (results.meals === null) {
-      results = await searchDrinkIngredients(nome);
+    if (window.location.pathname === '/bebidas') {
+      const drinks = await searchDrinkIngredients(nome);
+      return setApiValueSearch({
+        ...apiValueSearch,
+        drinks,
+      });
     }
-    console.log(results);
-    setApiValueSearch({
-      results,
+    const foods = await searchFoodIngredients(nome);
+    return setApiValueSearch({
+      ...apiValueSearch,
+      foods,
     });
   };
 
   const apiOfName = async () => {
-    let results = await searchFoodName(nome);
-    if (results.meals === null && window.location.pathname === '/bebidas') {
-      results = await searchDrinkName(nome);
-      console.log(results);
-    } else {
-      setApiValueSearch({
-        results,
+    if (window.location.pathname === '/bebidas') {
+      const drinks = await searchDrinkName(nome);
+      return setApiValueSearch({
+        ...apiValueSearch,
+        drinks,
       });
     }
+    const foods = await searchFoodName(nome);
+    return setApiValueSearch({
+      ...apiValueSearch,
+      foods,
+    });
   };
 
   const apiOfFirstLetter = async () => {
     if (nome.length > 1) {
       return alert('Sua busca deve conter somente 1 (um) caracter');
     }
-    let results = await searchFoodFirstLetter(nome);
-    if (results.meals === null) {
-      results = await searchFoodFirstLetter(nome);
+    if (window.location.pathname === '/bebidas') {
+      const drinks = await searchDrinkFirstLetter(nome);
+      return setApiValueSearch({
+        ...apiValueSearch,
+        drinks,
+      });
     }
-    setApiValueSearch({
-      results,
+    const foods = await searchFoodFirstLetter(nome);
+    return setApiValueSearch({
+      ...apiValueSearch,
+      foods,
     });
   };
 

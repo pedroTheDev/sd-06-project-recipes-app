@@ -51,3 +51,21 @@ export async function searchFoodFirstLetter(letter) {
 
   return json;
 }
+
+export async function showAllFoodsCategories() {
+  const URL = 'https://www.themealdb.com/api/json/v1/1/categories.php';
+
+  const response = await fetch(`${URL}`);
+  const json = response.json();
+
+  return json;
+}
+
+export async function showAllDrinksCategories() {
+  const URL = 'https://www.themealdb.com/api/json/v1/1/categories.php';
+
+  const response = await fetch(`${URL}`);
+  const json = response.json();
+
+  return json;
+}
