@@ -34,8 +34,11 @@ const SearchBar = () => {
   };
 
   const apiOfFirstLetter = async () => {
+    if (nome.length > 1) {
+      return alert('Sua busca deve conter somente 1 (um) caracter');
+    }
     const results = await searchFoodFirstLetter(nome);
-    console.log(results);
+    // console.log(results);
     setApiValueSearch({
       results,
     });
