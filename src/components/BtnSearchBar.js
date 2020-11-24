@@ -10,7 +10,12 @@ export default function BtnSearchBar() {
   };
 
   return (
-    <button type="button" src={ searchIcon } data-testid="search-top-btn" onClick={ handleSearchBar }>
+    <button
+      type="button"
+      src={ searchIcon }
+      data-testid="search-top-btn"
+      onClick={ handleSearchBar }
+    >
       <img alt="ícone de Pesquisa" src={ searchIcon } />
     </button>
   );
