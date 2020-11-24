@@ -6,6 +6,7 @@ function AppProvider({ children }) {
   const [header, setHeader] = useState({ page: '', search: true });
   const [options, setOptions] = useState({ text: '', option: '', category: '' });
   const [user, setUser] = useState({ email: 'email@email.com' });
+  const [recipe, setRecipe] = useState('');
 
   const contextValue = {
     header,
@@ -14,6 +15,8 @@ function AppProvider({ children }) {
     setOptions,
     user,
     setUser,
+    recipe,
+    setRecipe,
   };
   return (
     <AppContext.Provider value={ contextValue }>

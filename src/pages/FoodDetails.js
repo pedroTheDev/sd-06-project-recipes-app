@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import useRequestDrink from '../hooks/useRequestDrink';
 import fetchRecipes from '../services';
+import FavoriteBtn from '../components/FavoriteBtn';
+import ShareBtn from '../components/ShareBtn';
 
 function FoodDetails(props) {
   const { match: { params: { id } } } = props;
+  const history = useHistory();
   const [requestDetails, setrequestDetails] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [apiResponse, setFilter] = useRequestDrink([]);
@@ -14,13 +18,15 @@ function FoodDetails(props) {
     const response = await fetchRecipes(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
     setrequestDetails(response.meals[0]);
   };
+
   const requestIngredients = () => {
     const twentyOne = 21;
     const zero = 0;
     const TheIngredients = [];
     for (let i = 1; i < twentyOne; i += 1) {
       if (requestDetails.length !== zero
-          && requestDetails[`strIngredient${i}`] !== ''
+        && requestDetails[`strIngredient${i}`] !== null
+        && requestDetails[`strIngredient${i}`] !== ''
       ) {
         TheIngredients
           .push(`${requestDetails[`strMeasure${i}`]}
@@ -28,6 +34,10 @@ function FoodDetails(props) {
       }
     }
     setIngredients(TheIngredients);
+  };
+
+  const handleInitRecipe = () => {
+    history.push(`/comidas/${id}/in-progress`);
   };
 
   useEffect(() => {
@@ -47,12 +57,8 @@ function FoodDetails(props) {
         data-testid="recipe-photo"
       />
       <h1 data-testid="recipe-title">{requestDetails.strMeal}</h1>
-      <button data-testid="share-btn" type="button">
-        Compartilhar
-      </button>
-      <button data-testid="favorite-btn" type="button">
-        Favoritar
-      </button>
+      <ShareBtn />
+      <FavoriteBtn />
       <p data-testid="recipe-category">{requestDetails.strCategory}</p>
       {ingredients.map((ingredient, index) => (
         <div key={ index }>
@@ -92,14 +98,14 @@ function FoodDetails(props) {
           </div>))}
       </div>
       <button
-        style={ { position: 'fixed', display: 'none', bottom: '0px' } }
+        onClick={ handleInitRecipe }
+        style={ { position: 'fixed', bottom: '0px' } }
         data-testid="start-recipe-btn"
         type="button"
       >
-        Iniciar
+        Iniciar Receita
       </button>
     </div>
-
   );
 }
 
