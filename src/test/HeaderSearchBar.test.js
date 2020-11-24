@@ -385,6 +385,8 @@ describe('verificar se tem as categorias', () => {
     const goat = queryByTestId('Goat-category-filter');
     const all = queryByTestId('All-category-filter');
     expect(beef).toBeInTheDocument();
+    fireEvent.click(all);
+    fireEvent.click(beef);
     expect(breakfast).toBeInTheDocument();
     expect(chicken).toBeInTheDocument();
     expect(dessert).toBeInTheDocument();
