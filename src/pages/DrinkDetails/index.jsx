@@ -194,7 +194,11 @@ function DrinkDetails({ pageType }) {
             key={recommendation.idMeal}
             data-testid={`${index}-recomendation-card`}
           >
-            <img src={recommendation.strMealThumb} alt={recommendation.strMeal} />
+            <img
+              src={recommendation.strMealThumb}
+              alt={recommendation.strMeal}
+              data-testid={`${index}-recomendation-image`}
+            />
             <strong data-testid={`${index}-recomendation-title`}>{recommendation.strMeal}</strong>
           </Link>
         ))}

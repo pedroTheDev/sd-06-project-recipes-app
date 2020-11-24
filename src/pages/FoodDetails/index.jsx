@@ -203,11 +203,16 @@ function FoodDetails({ pageType }) {
       <div className="recommendations-container">
         {foodRecommendations.map((recommendation, index) => (
           <Link
+            key={recommendation.idDrink}
             to={`/bebidas/${recommendation.idDrink}`}
             className="recommendation-card"
             data-testid={`${index}-recomendation-card`}
           >
-            <img src={recommendation.strDrinkThumb} alt={recommendation.strDrink} />
+            <img
+              src={recommendation.strDrinkThumb}
+              alt={recommendation.strDrink}
+              data-testid={`${index}-recomendation-image`}
+            />
             <strong data-testid={`${index}-recomendation-title`}>{recommendation.strDrink}</strong>
           </Link>
         ))}
