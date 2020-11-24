@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, waitFor } from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 import Footer from './Footer';
 import renderWithRouter from '../renderWithRouter';
 import { drinkIcon, mealIcon, exploreIcon } from '../images';
@@ -22,13 +22,30 @@ describe('renders footer correctly', () => {
     expect(FOOTER_PICS[2]).toHaveAttribute('src', `${exploreIcon}`);
   });
 
-  it('expect picture links to redirect correctly', async () => {
+  it('expect drink link to redirect correctly', () => {
     const { history, getByText } = renderWithRouter(<Footer />);
-    const { pathname } = history.location;
     const DRINK = getByText(/Drinks/i);
-    fireEvent.click(DRINK);
     expect(DRINK).toBeInTheDocument();
-    await waitFor(() => getByText('Página principal de Drinks'));
+    fireEvent.click(DRINK);
+    const { pathname } = history.location;
     expect(pathname).toBe('/bebidas');
+  });
+
+  it('expect meal link to redirect correctly', () => {
+    const { history, getByText } = renderWithRouter(<Footer />);
+    const MEAL = getByText(/Alimento/i);
+    expect(MEAL).toBeInTheDocument();
+    fireEvent.click(MEAL);
+    const { pathname } = history.location;
+    expect(pathname).toBe('/comidas');
+  });
+
+  it('expect meal link to redirect correctly', async () => {
+    const { history, getByText } = renderWithRouter(<Footer />);
+    const EXPLORE = getByText(/Explore/i);
+    expect(EXPLORE).toBeInTheDocument();
+    fireEvent.click(EXPLORE);
+    const { pathname } = history.location;
+    expect(pathname).toBe('/explorar');
   });
 });

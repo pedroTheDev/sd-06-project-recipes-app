@@ -38,7 +38,7 @@ export default class Footer extends Component {
             </Link>
           </p>
           <p data-testid="explore-bottom-btn">
-            <Link to="explorar">
+            <Link to="/explorar">
               Explore
               <img
                 src={ exploreIcon }
