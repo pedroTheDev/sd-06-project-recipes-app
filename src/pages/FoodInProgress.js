@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import fetchRecipes from '../services';
 import FavoriteBtn from '../components/FavoriteBtn';
 import ShareBtn from '../components/ShareBtn';
@@ -12,8 +13,8 @@ function FoodInProgress(props) {
   const [isDisabled, setIsDisabled] = useState(true);
 
   const requestDetailsAPI = async () => {
-    const response = await fetchRecipes(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
-    setRecipe(response.drinks[0]);
+    const response = await fetchRecipes(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
+    setRecipe(response.meals[0]);
   };
 
   const requestIngredients = () => {
@@ -53,10 +54,10 @@ function FoodInProgress(props) {
         <img
           className="picture"
           data-testid="recipe-photo"
-          src={ recipe.strDrinkThumb }
-          alt={ recipe.strDrink }
+          src={ recipe.strMealThumb }
+          alt={ recipe.strMeal }
         />
-        <h1 data-testid="recipe-title">{ recipe.strDrink }</h1>
+        <h1 data-testid="recipe-title">{ recipe.strMeal }</h1>
         <ShareBtn />
         <FavoriteBtn />
         <p data-testid="recipe-category">{ recipe.strCategory }</p>
