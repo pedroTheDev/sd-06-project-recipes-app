@@ -13,9 +13,9 @@ export function success(data) {
   const processing = data.meals || data.drinks;
   let list = [];
   if (processing) {
-    const maximumLength = 12;
+    const maxLength = 12;
     const increment = 1;
-    const lengthLimit = processing.length > maximumLength ? maximumLength : processing.length;
+    const lengthLimit = processing.length > maxLength ? maxLength : processing.length;
     for (let i = 0; i < lengthLimit; i += increment) {
       list.push(processing[i]);
     }
