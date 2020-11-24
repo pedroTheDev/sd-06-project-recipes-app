@@ -19,7 +19,7 @@ function Footer() {
         <Link to="/bebidas">
           <p src={ drinkIcon } data-testid="drinks-bottom-btn">
             Drinks
-              <img
+            <img
               src={ drinkIcon }
               alt="Imagem de drink"
               height="25"
@@ -29,7 +29,7 @@ function Footer() {
         <Link to="/comidas">
           <p src={ mealIcon } data-testid="food-bottom-btn">
             Comidas
-              <img
+            <img
               src={ mealIcon }
               alt="Imagem de alimento"
               height="25"
@@ -39,7 +39,7 @@ function Footer() {
         <Link to="explorar">
           <p src={ exploreIcon } data-testid="explore-bottom-btn">
             Explore
-              <img
+            <img
               src={ exploreIcon }
               alt="Explore o Site"
               height="25"
