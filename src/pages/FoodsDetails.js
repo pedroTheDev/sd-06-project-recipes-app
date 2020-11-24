@@ -17,7 +17,6 @@ class FoodsDetails extends React.Component {
       Ingredients: [],
       Measures: [],
       Video: '',
-      favorite: false,
     };
     this.goLeft = this.goLeft.bind(this);
     this.goRight = this.goRight.bind(this);
@@ -96,14 +95,25 @@ class FoodsDetails extends React.Component {
     });
   }
 
-  changeFavIcon(idMeal) {
-    const { favorite } = this.state;
-    const { dispatchFavorite } = this.props;
-    if (favorite) {
-      dispatchFavorite(favorite, idMeal);
+  setLocalState(recipe) {
+    localStorage.setItem('favoriteRecipes', JSON.stringify([{
+      id: recipe.idMeal,
+      type: 'Meal',
+      area: recipe.strArea,
+      category: recipe.strCategory,
+      alcoholicOrNot: '',
+      name: recipe.strMeal,
+      image: recipe.strMealThumb,
+    }]));
+    this.changeFavIcon(recipe);
+  }
+
+  changeFavIcon({ idMeal }) {
+    const favoriteLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (localStorage.favoriteRecipes) {
+      favoriteLocalStorage.filter((element) => element.id === idMeal);
       return blackHeartIcon;
     }
-    dispatchFavorite(favorite, idMeal);
     return whiteHeartIcon;
   }
 
@@ -138,6 +148,7 @@ class FoodsDetails extends React.Component {
       Measures,
       Video,
       favorite } = this.state;
+    const favoriteLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
     return (
       <div className="food-drink-detail-container">
         {Meal ? Meal.map((recipe, index) => (
@@ -163,8 +174,8 @@ class FoodsDetails extends React.Component {
                 <input
                   type="image"
                   data-testid="favorite-btn"
-                  src={ this.changeFavIcon(recipe.idMeal) }
-                  onClick={ () => this.setState({ favorite: !favorite }) }
+                  src={ this.changeFavIcon(recipe) }
+                  onClick={ () => this.setLocalState(recipe) }
                   alt="whiteHeartIcon"
                 />
               </div>
