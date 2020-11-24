@@ -16,3 +16,17 @@ export default async function FetchApiBebidas(filtro, value) {
     return responseJson.drinks;
   }
 }
+
+export async function fetchApiBebidasCategorias() {
+  const endpoint = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
+  const response = await fetch(endpoint);
+  const responseJson = await response.json();
+  return responseJson.drinks;
+}
+
+export async function fetchApiBebidasByCategory(category) {
+  const endpoint = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`;
+  const response = await fetch(endpoint);
+  const responseJson = await response.json();
+  return responseJson.drinks;
+}
