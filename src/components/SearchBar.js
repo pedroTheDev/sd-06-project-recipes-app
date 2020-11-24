@@ -12,12 +12,15 @@ function SearchBar() {
   const [redirect, setRedirect] = useState(false);
   const history = useHistory();
   const { location: { pathname } } = history;
+  const ZERO = 0;
+  const DOZE = 12;
   const {
     showSearchBar,
     setSearchBar,
     getFilteredRecipesApi,
     getFilteredDrinksApi,
   } = useContext(MealsContext);
+
   const showOrHideSearchBar = () => {
     if (showSearchBar) {
       setSearchBar(false);
@@ -33,14 +36,14 @@ function SearchBar() {
   const handleRadio = ({ target }) => {
     const { value } = target;
     switch (value) {
-      case 'ingredients':
-        return setRadioValue(value);
-      case 'name':
-        return setRadioValue(value);
-      case 'first':
-        return setRadioValue(value);
-      default:
-        return '';
+    case 'ingredients':
+      return setRadioValue(value);
+    case 'name':
+      return setRadioValue(value);
+    case 'first':
+      return setRadioValue(value);
+    default:
+      return '';
     }
   };
 
@@ -73,47 +76,96 @@ function SearchBar() {
 
   const renderFoodCard = () => {
     if (redirect && pathname === '/comidas') {
-      return <Redirect to={`/comidas/${foodResult[0].idMeal}`} />;
+      return <Redirect to={ `/comidas/${foodResult[0].idMeal}` } />;
     }
-    return test && foodResult.slice(0, 12).map((recipe, i) => (
-      <div data-testid={`${i}-recipe-card`} key={recipe.strMeal}>
-        <p data-testid={`${i}-card-name`}>{recipe.strMeal}</p>
-        <img data-testid={`${i}-card-img`} alt="food recipe" src={recipe.strMealThumb} width="100px" />
+    return test && foodResult.slice(ZERO, DOZE).map((recipe, i) => (
+      <div data-testid={ `${i}-recipe-card` } key={ recipe.strMeal }>
+        <p data-testid={ `${i}-card-name` }>{recipe.strMeal}</p>
+        <img
+          data-testid={ `${i}-card-img` }
+          alt="food recipe"
+          src={ recipe.strMealThumb }
+          width="100px"
+        />
       </div>
     ));
   };
 
   const renderDrinksCard = () => {
     if (redirect && pathname === '/bebidas') {
-      return <Redirect to={`/bebidas/${drinksResult[0].idDrink}`} />;
+      return <Redirect to={ `/bebidas/${drinksResult[0].idDrink}` } />;
     }
-    return test && drinksResult.slice(0, 12).map((recipe, i) => (
-      <div data-testid={`${i}-recipe-card`} key={recipe.strDrink}>
-        <p data-testid={`${i}-card-name`}>{recipe.strDrink}</p>
-        <img data-testid={`${i}-card-img`} alt="drink recipe" src={recipe.strDrinkThumb} width="100px" />
+    return test && drinksResult.slice(ZERO, DOZE).map((recipe, i) => (
+      <div data-testid={ `${i}-recipe-card` } key={ recipe.strDrink }>
+        <p data-testid={ `${i}-card-name` }>{recipe.strDrink}</p>
+        <img
+          data-testid={ `${i}-card-img` }
+          alt="drink recipe"
+          src={ recipe.strDrinkThumb }
+          width="100px"
+        />
       </div>
     ));
   };
 
   return (
     <div>
-      <img src={searchIcon} alt="Search" data-testid="search-top-btn" onClick={showOrHideSearchBar} aria-hidden="true" />
-      {showSearchBar ? <input type="text" data-testid="search-input" id="search-input" name="search" onChange={handleChange} /> : null}
+      <img
+        src={ searchIcon }
+        alt="Search"
+        data-testid="search-top-btn"
+        onClick={ showOrHideSearchBar }
+        aria-hidden="true"
+      />
+      {showSearchBar
+        ? (
+          <input
+            type="text"
+            data-testid="search-input"
+            id="search-input"
+            name="search"
+            onChange={ handleChange }
+          />)
+        : null}
       <div>
-        <label>
-          <input type="radio" value="ingredients" name="filter" data-testid="ingredient-search-radio" onChange={handleRadio} />
+        <label htmlFor="filter">
+          <input
+            type="radio"
+            value="ingredients"
+            name="filter"
+            data-testid="ingredient-search-radio"
+            onChange={ handleRadio }
+          />
           Ingredients
         </label>
-        <label>
-          <input type="radio" value="name" name="filter" data-testid="name-search-radio" onChange={handleRadio} />
+        <label htmlFor="filter">
+          <input
+            type="radio"
+            value="name"
+            name="filter"
+            data-testid="name-search-radio"
+            onChange={ handleRadio }
+          />
           Nome
         </label>
-        <label>
-          <input type="radio" value="first" name="filter" data-testid="first-letter-search-radio" onChange={handleRadio} />
+        <label htmlFor="filter">
+          <input
+            type="radio"
+            value="first"
+            name="filter"
+            data-testid="first-letter-search-radio"
+            onChange={ handleRadio }
+          />
           Primeira letra
         </label>
       </div>
-      <button type="button" data-testid="exec-search-btn" onClick={handleButton}>Buscar</button>
+      <button
+        type="button"
+        data-testid="exec-search-btn"
+        onClick={ handleButton }
+      >
+        Buscar
+      </button>
       {renderFoodCard()}
       {renderDrinksCard()}
     </div>

@@ -7,6 +7,7 @@ export async function getAllDrinkTypesApi(type) {
   return result.drinks;
 }
 
+// Lista de receitas de bebidas filtradas
 export async function getFilteredDrinksApi(type, value) {
   if (type === 'ingredients') {
     const response = await fetch(`${URL_BASE}filter.php?i=${value}`);
@@ -29,4 +30,23 @@ export async function getFilteredDrinksApi(type, value) {
   return [];
 }
 
-export default { getAllDrinkTypesApi, getFilteredDrinksApi };
+// Lista de receitas de Bebidas
+export async function getRecipeDrinksApi() {
+  const response = await fetch(`${URL_BASE}search.php?s=`);
+  const result = await response.json();
+  return result.drinks;
+}
+
+// Lista de receitas de Bebidas por categoria
+export async function getRecipeDrinksByCategoryApi(category) {
+  const response = await fetch(`${URL_BASE}filter.php?c=${category}`);
+  const result = await response.json();
+  return result.drinks;
+}
+
+export default {
+  getAllDrinkTypesApi,
+  getRecipeDrinksApi,
+  getRecipeDrinksByCategoryApi,
+  getFilteredDrinksApi,
+};
