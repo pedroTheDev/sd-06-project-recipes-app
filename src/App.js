@@ -6,6 +6,13 @@ import MealsPage from './pages/MealsPage/MealsPage';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import DrinksPage from './pages/DrinksPage/DrinksPage';
 import ExplorePage from './pages/ExplorePage/ExplorePage';
+import Detail from './pages/Detail/Detail';
+import InProgress from './pages/InProgress/InProgres';
+import MainExplore from './pages/MainExplore/MainExplore';
+import ExploreIngredients from './pages/ExploreIngredients/ExploreIngredients';
+import ExploreByArea from './pages/ExploreByArea/ExploreByArea';
+import CompletedRecipes from './pages/CompletedRecipes/CompletedRecipes';
+import FavoriteRecipes from './pages/FavoriteRecipes/FavoriteRecipes';
 import RecipesAppProvider from './context/RecipesAppProvider';
 
 function App() {
