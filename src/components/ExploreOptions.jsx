@@ -8,7 +8,7 @@ class ExploreOptions extends Component {
     const path = pathname;
     return (
       <div>
-        <Link data-testid="explore-by-ingredient" to={ `${pathname}/ingredients` }>
+        <Link data-testid="explore-by-ingredient" to={ `${pathname}/ingredientes` }>
           Por Ingredientes
         </Link>
         {!path.includes('bebidas') && (
