@@ -60,3 +60,23 @@
     transform: rotate(-10deg);
   }
 }
+
+.meals-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.meal-card {
+  display: flex;
+  width: 200px;
+}
+
+.meal-title {
+  height: 70px;
+  overflow: auto;
+}
+
+.meal-img {
+  height: 150px;
+}

@@ -1,6 +1,8 @@
 const getMealInformation = async (endpoint) => {
   const mealInformation = await fetch(endpoint);
-  return mealInformation;
+  const mealInformationJason = await mealInformation.json();
+
+  return mealInformationJason;
 };
 
 export default getMealInformation;
