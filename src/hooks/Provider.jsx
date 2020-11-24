@@ -7,6 +7,9 @@ function Provider({ children }) {
   const [password, setPassword] = useState('');
   const [searchHeader, setSearchHeader] = useState(false);
 
+  const [cardFood, setCardFood] = useState([]);
+  const [cardDrink, setCardDrink] = useState([]);
+
   const contextValue = {
     email,
     setEmail,
@@ -14,10 +17,16 @@ function Provider({ children }) {
     setPassword,
     searchHeader,
     setSearchHeader,
+    cards: {
+      cardFood,
+      setCardFood,
+      cardDrink,
+      setCardDrink,
+    },
   };
 
   return (
-    <RecipesAppContext.Provider value={ { contextValue } }>
+    <RecipesAppContext.Provider value={ contextValue }>
       {children}
     </RecipesAppContext.Provider>
   );

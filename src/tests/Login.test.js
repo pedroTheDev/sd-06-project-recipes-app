@@ -1,7 +1,7 @@
 import React from 'react';
+import { screen } from '@testing-library/react';
 import App from '../App';
 import renderWithRouter from './RenderWithRouter';
-import { screen, fireEvent, userEvent } from '@testing-library/react';
 
 describe('Login test', () => {
   it('test about a pathname is /', () => {
@@ -9,13 +9,12 @@ describe('Login test', () => {
     const { pathname } = history.location;
 
     expect(pathname).toBe('/');
-  })
+  });
 
   it('test if Login words have in screen', () => {
     renderWithRouter(<App />);
-    const login = screen.getByText(/Login/i)
-    
-    expect(login).toBeInTheDocument();
-  })
+    const login = screen.getByText(/Login/i);
 
+    expect(login).toBeInTheDocument();
+  });
 });

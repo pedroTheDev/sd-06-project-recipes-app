@@ -4,12 +4,13 @@ import RecipesAppContext from '../hooks/RecipesAppContext';
 import profileIcon from '../styles/images/profileIcon.svg';
 import searchIcon from '../styles/images/searchIcon.svg';
 import HeaderSearch from './HeaderSearch';
-
 import './components.css';
 
-function Header({ name, button }) {
-  const { contextValue:
-    { searchHeader, setSearchHeader } } = useContext(RecipesAppContext);
+function Header({ name }) {
+  const {
+    searchHeader,
+    setSearchHeader,
+  } = useContext(RecipesAppContext);
 
   const isClick = () => {
     if (searchHeader) {
@@ -25,6 +26,15 @@ function Header({ name, button }) {
         <button type="button" className="logo-profile" data-testid="profile-top-btn">
           <img src={ profileIcon } alt="profile icon" />
         </button>
+        <h1 data-testid="page-title">{name}</h1>
+        <button
+          type="button"
+          className="logo-search"
+          data-testid="search-top-btn"
+          onClick={ isClick }
+        >
+          <img src={ searchIcon } alt="search icon" />
+        </button>
         <h1 data-testid="page-title">{ name }</h1>
         { button && (
 
@@ -39,7 +49,7 @@ function Header({ name, button }) {
         )}
 
       </header>
-      <HeaderSearch enable={ searchHeader } />
+      <HeaderSearch enable={ searchHeader } name={ name } />
     </div>
   );
 }
