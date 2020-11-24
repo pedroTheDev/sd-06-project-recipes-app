@@ -1,8 +1,62 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import RevenueContext from '../context/RevenueContext';
 
-export default function SearchBar() {
+export default function SearchBar(props) {
+  const { fetchApi, setSearchParam } = useContext(RevenueContext);
+  const { title } = props;
+  const [searchInputValue, setsearchInputValue] = useState();
+  const [searchRadioValue, setsearchRadioValue] = useState();
+  const [URLToFetch, setURLToFetch] = useState();
+
+  useEffect(() => {
+    fetchApi(URLToFetch);
+    console.log(URLToFetch);
+  }, [URLToFetch]);
+
+  const URLs = {
+    foodFirstLetter: `https://www.themealdb.com/api/json/v1/1/search.php?f=${searchInputValue}`,
+    foodIngredient: `https://www.themealdb.com/api/json/v1/1/filter.php?i=${searchInputValue}`,
+    foodName: `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchInputValue}`,
+    drinkFirstLetter: `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${searchInputValue}`,
+    drinkIngredient: `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${searchInputValue}`,
+    drinkName: `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchInputValue}`,
+  };
+
+  const handleChangeInputValue = ({ target: { value } }) => {
+    setsearchInputValue(value);
+  };
+  const handleRadioValue = ({ target: { value } }) => {
+    setsearchRadioValue(value);
+  };
+  const searchURL = () => {
+    if (title === 'Comidas') {
+      setSearchParam('Meal');
+      if (searchRadioValue === 'first-letter') {
+        setURLToFetch(URLs.foodFirstLetter);
+      }
+      if (searchRadioValue === 'ingredient') {
+        setURLToFetch(URLs.foodIngredient);
+      }
+      if (searchRadioValue === 'name') {
+        setURLToFetch(URLs.foodName);
+      }
+    }
+    if (title === 'Bebidas') {
+      setSearchParam('Drink');
+      if (searchRadioValue === 'first-letter') {
+        setURLToFetch(URLs.drinkFirstLetter);
+      }
+      if (searchRadioValue === 'ingredient') {
+        setURLToFetch(URLs.drinkIngredient);
+      }
+      if (searchRadioValue === 'name') {
+        setURLToFetch(URLs.drinkName);
+      }
+    }
+  };
+
   return (
-
     <form>
       <label htmlFor="search-input">
         <input
@@ -11,6 +65,7 @@ export default function SearchBar() {
           id="search-input"
           name="searh-input"
           placeholder="Buscar Receita"
+          onChange={ (e) => handleChangeInputValue(e) }
         />
       </label>
       <div>
@@ -21,8 +76,9 @@ export default function SearchBar() {
             id="ingredient"
             value="ingredient"
             name="radio-selection"
+            onChange={ (e) => handleRadioValue(e) }
           />
-          Ingediente
+          Ingrediente
         </label>
         <label htmlFor="name">
           <input
@@ -31,6 +87,7 @@ export default function SearchBar() {
             id="name"
             value="name"
             name="radio-selection"
+            onChange={ (e) => handleRadioValue(e) }
           />
           Nome
         </label>
@@ -41,11 +98,23 @@ export default function SearchBar() {
             id="first-letter"
             value="first-letter"
             name="radio-selection"
+            onChange={ (e) => handleRadioValue(e) }
           />
           Primeira Letra
         </label>
-        <button data-testid="exec-search-btn" type="button">Buscar</button>
+        <button
+          data-testid="exec-search-btn"
+          type="button"
+          onClick={ () => searchURL() }
+        >
+          Buscar
+
+        </button>
       </div>
     </form>
   );
 }
+
+SearchBar.propTypes = {
+  title: PropTypes.string.isRequired,
+};

@@ -27,7 +27,7 @@ export default function Header(props) {
           </div>
         </div>
       </header>
-      {search && <SearchBar />}
+      {search && <SearchBar title={ title } />}
     </div>
   );
 }

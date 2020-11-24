@@ -10,7 +10,6 @@ import ExploreFoods from './ExploreFoods';
 import DoneRecipes from './DoneRecipes';
 import FavoriteRecipes from './FavoriteRecipes';
 import ExploreDrinks from './ExploreDrinks';
-import Drinks from './Drinks';
 
 export default function MainPage(props) {
   const { title } = props;
@@ -35,7 +34,7 @@ export default function MainPage(props) {
     footerContent = <Footer />;
     break;
   case 'Bebidas':
-    mainContent = <Drinks />;
+    mainContent = <Foods />;
     footerContent = <Footer />;
     break;
   case 'Explorar':
