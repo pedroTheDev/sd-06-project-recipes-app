@@ -1,23 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Footer from '../components/Footer';
 import Header from '../components/Header';
 
-function ExploreFood(props) {
+export default function FavoriteRecipes(props) {
   const { history: { location: { pathname } } } = props;
   return (
-    <div>
-      <Header pathname={ pathname } />
-      <p>página de explorar comida</p>
-      <Footer />
-    </div>
+    <Header pathname={ pathname } />
   );
 }
 
-export default ExploreFood;
-
-ExploreFood.propTypes = {
+FavoriteRecipes.propTypes = {
 
   history: PropTypes.shape({
     location: PropTypes.shape({
