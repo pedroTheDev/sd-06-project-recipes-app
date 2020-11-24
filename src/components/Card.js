@@ -6,7 +6,7 @@ function Card() {
   const MAX_NUMBER_OF_CARDS = 12;
   let name = '';
   let thumb = '';
-
+  console.log('CARD: ', recipes);
   if (typeRecipe === 'food') {
     name = 'strMeal';
     thumb = 'strMealThumb';
