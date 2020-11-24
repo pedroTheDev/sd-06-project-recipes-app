@@ -1,5 +1,6 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+
 import PropTypes from 'prop-types';
 import ContextRecipes from '../context/ContextRecipes';
 import profileIcon from '../images/profileIcon.svg';
@@ -8,7 +9,9 @@ import SearchBar from './SearchBar';
 
 function Header(props) {
   const { title, fetchApi, showSearchIcon = false } = props;
-  const { showSearchBar, setSearchBar } = useContext(ContextRecipes);
+  const { showSearchBar, setSearchBar, setTypeRecipe } = useContext(ContextRecipes);
+  const location = useLocation().pathname;
+  
   const toggleSearchBar = () => {
     if (showSearchBar) {
       setSearchBar(false);
@@ -16,6 +19,14 @@ function Header(props) {
       setSearchBar(true);
     }
   };
+
+  useEffect(() => {
+    if (location === '/comidas') {
+      setTypeRecipe('food');
+    } else {
+      setTypeRecipe('drink');
+    }
+  }, []);
 
   return (
     <div>
