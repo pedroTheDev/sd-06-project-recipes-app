@@ -12,7 +12,7 @@ function Explorar() {
     <>
       <Header name="Explorar" button={ false } />
       <div className="explore-btn">
-        <Link to="/explorarcomidas">
+        <Link to="/explorar/comidas">
           <button
             type="button"
             data-testid="explore-food"
@@ -20,7 +20,7 @@ function Explorar() {
             Explorar Comidas
           </button>
         </Link>
-        <Link to="/explorarbebidas">
+        <Link to="/explorar/bebidas">
           <button
             type="button"
             data-testid="explore-drink"
