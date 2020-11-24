@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import RecipesContext from '../context/RecipesContext';
 import HeaderContext from '../context/HeaderContext';
-import getMealInformation from '../services/mealAPI';
+import getRecipesInformation from '../services/recipesAPI';
 
 function SearchBar() {
   const [searchRadioOption, setSearchRadioOption] = useState('');
@@ -11,6 +11,7 @@ function SearchBar() {
     searchTerm,
     setSearchTerm,
     setIsFetching,
+    fetchedResults,
     setFetchedResults,
   } = useContext(RecipesContext);
 
@@ -70,8 +71,14 @@ function SearchBar() {
       }
 
       setIsFetching(true);
-      await setFetchedResults(await getMealInformation(selectedApiEndpoint + searchTerm));
-      setIsFetching(false);
+      const expectedRecipes = await getRecipesInformation(selectedApiEndpoint + searchTerm)
+      setFetchedResults(expectedRecipes);
+
+      if (expectedRecipes.recipes.length === 0) {
+        alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+      } else {
+        setIsFetching(false);
+      }
     }
   };
 

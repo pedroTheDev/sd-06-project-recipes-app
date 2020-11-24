@@ -6,44 +6,51 @@ import RecipesContext from '../context/RecipesContext';
 const Foods = ({ history }) => {
   const { title, setTitle } = useContext(HeaderContext);
   const { fetchedResults, isFetching } = useContext(RecipesContext);
-  const defaultTypeOfData = {
-    groupName: 'meals',
-    idMeal: 'idMeal',
-  };
 
   useEffect(() => {
     setTitle('Comidas');
   }, []);
 
   const handleQuantityOfResults = () => {
-    const { groupName, idMeal } = defaultTypeOfData;
     const onlyIndex = 0;
-    const mealID = fetchedResults[groupName][onlyIndex][idMeal];
+    if (fetchedResults.recipes.length) {
+      const recipeId = fetchedResults.recipes[onlyIndex].idMeal;
 
-    if (fetchedResults[groupName].length === 1) {
-      const sendToDetailsPath = `/${title.toLowerCase()}/${mealID}`;
-      history.push(sendToDetailsPath);
+      if (fetchedResults.recipes.length === 1) {
+        const sendToDetailsPath = `/${title.toLowerCase()}/${recipeId}`;
+        history.push(sendToDetailsPath);
+      }
     }
   };
 
   useEffect(() => {
-    if (fetchedResults.meals) {
+    if (fetchedResults.recipes) {
       handleQuantityOfResults();
     }
   }, [fetchedResults]);
 
   return (
-    <div className="meal-card">
+    <div className="meals-container">
       {
         isFetching
           ? <p>Faça uma Pesquisa</p>
-          : fetchedResults[defaultTypeOfData.groupName]
-            .map((recipe) => (
-              <div key={ recipe.idMeal }>
-                <p className="meal-title">{ recipe.strMeal }</p>
+          : fetchedResults.recipes
+            .map((recipe, index) => (
+              <div
+                key={ recipe.idMeal }
+                className="meal-card"
+                data-testid={ `${index}-recipe-card` }
+              >
+                <p
+                  className="meal-title"
+                  data-testid={ `${index}-card-name` }
+                >
+                  { recipe.strMeal }
+                </p>
                 <img
                   src={ recipe.strMealThumb }
                   className="meal-img"
+                  data-testid={ `${index}-card-img` }
                   alt={ recipe.strMeal }
                 />
                 <p className="meal-id">{ recipe.idMeal }</p>

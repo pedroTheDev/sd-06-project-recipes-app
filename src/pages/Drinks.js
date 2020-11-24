@@ -6,43 +6,50 @@ import RecipesContext from '../context/RecipesContext';
 const Drinks = ({ history }) => {
   const { title, setTitle } = useContext(HeaderContext);
   const { fetchedResults, isFetching } = useContext(RecipesContext);
-  const defaultTypeOfData = {
-    groupName: 'drinks',
-    idMeal: 'idDrink',
-  };
 
   useEffect(() => {
     setTitle('Bebidas');
   }, []);
 
   const handleQuantityOfResults = () => {
-    const { groupName, idMeal } = defaultTypeOfData;
     const onlyIndex = 0;
-    const mealID = fetchedResults[groupName][onlyIndex][idMeal];
+    if (fetchedResults.recipes.length) {
+      const recipeId = fetchedResults.recipes[onlyIndex].idDrink;
 
-    if (fetchedResults[groupName].length === 1) {
-      const sendToDetailsPath = `/${title.toLowerCase()}/${mealID}`;
-      history.push(sendToDetailsPath);
+      if (fetchedResults.recipes.length === 1) {
+        const sendToDetailsPath = `/${title.toLowerCase()}/${recipeId}`;
+        history.push(sendToDetailsPath);
+      }
     }
   };
 
   useEffect(() => {
-    if (fetchedResults.drinks) {
+    if (fetchedResults.recipes) {
       handleQuantityOfResults();
     }
   }, [fetchedResults]);
 
   return (
-    <div className="meal-card">
+    <div className="meals-container">
       {
         isFetching
           ? <p>Faça uma Pesquisa</p>
-          : fetchedResults[defaultTypeOfData.groupName]
-            .map((recipe) => (
-              <div key={ recipe.idDrink }>
-                <p className="meal-title">{ recipe.strDrink }</p>
+          : fetchedResults.recipes
+            .map((recipe, index) => (
+              <div
+                key={ recipe.idDrink }
+                className="meal-card"
+                data-testid={ `${index}-recipe-card` }
+              >
+                <p
+                  className="meal-title"
+                  data-testid={ `${index}-card-name` }
+                >
+                  { recipe.strDrink }
+                </p>
                 <img
                   src={ recipe.strDrinkThumb }
+                  data-testid={ `${index}-card-img` }
                   className="meal-img"
                   alt={ recipe.strMeal }
                 />
