@@ -9,6 +9,8 @@ import Explore from './pages/Explore';
 import FoodDetails from './pages/FoodDetails';
 import DrinkDetails from './pages/DrinkDetails';
 import ContextProvider from './context/ContextProvider';
+import ExploreFood from './pages/ExploreFood';
+import ExploreDrink from './pages/ExploreDrink';
 
 function App() {
   return (
@@ -21,6 +23,9 @@ function App() {
           <Route path="/comidas/:id" component={ FoodDetails } />
           <Route path="/comidas" component={ Food } />
           <Route path="/perfil" component={ Perfil } />
+          <Route path="/explorar/comidas/ingrediente" component={ ExploreFood } />
+          <Route path="/explorar/comidas" component={ ExploreFood } />
+          <Route path="/explorar/bebidas" component={ ExploreDrink } />
           <Route path="/explorar" component={ Explore } />
           <Login />
         </Switch>

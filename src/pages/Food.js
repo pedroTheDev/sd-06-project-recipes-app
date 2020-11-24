@@ -104,8 +104,6 @@ function Food() {
     }
   };
 
-  console.log(currentCategories);
-
   return (
     <div className="food-container">
       <Header title="Comidas" />

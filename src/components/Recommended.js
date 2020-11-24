@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { fetchRecommended } from '../services/api.js';
+import { fetchRecommended } from '../services/api';
 import './Recommended.css';
 
 function Recommended() {
@@ -24,27 +24,51 @@ function Recommended() {
     })();
   }, []);
 
-  function RenderRecommended() {
-    return (
-      <div className="cards-container">
-        {recommended.map((item, id) => (
-        <div
-          key={ id }
-          className="recipe-card"
-          data-testid={ `${id}-recomendation-card` }
-          value={ item.strCategory }
-        >
-          <img
-            className="card-img"
-            src={ item[`str${type}Thumb`] }
-            alt={ item[`str${type}`] }
-            data-testid={ `${id}-card-img` }
-          />
-          <h3 data-testid={ `${id}-recomendation-title` }>{item[`str${type}`]}</h3>
-        </div>
-        ))}
-      </div>
-    )}
+  console.log(recommended);
+
+  const renderRecommended = () => (
+    <div className="cards-container">
+      {recommended.map((item, id) => {
+        const visible = 2;
+        if (id < visible) {
+          return (
+            <div
+              key={ id }
+              className="recipe-card"
+              data-testid={ `${id}-recomendation-card` }
+              value={ item.strCategory }
+              style={ { visibility: 'visible' } }
+            >
+              <img
+                className="card-img"
+                src={ item[`str${type}Thumb`] }
+                alt={ item[`str${type}`] }
+                data-testid={ `${id}-card-img` }
+              />
+              <h3 data-testid={ `${id}-recomendation-title` }>{item[`str${type}`]}</h3>
+            </div>
+          );
+        }
+        return (
+          <div
+            key={ id }
+            className="recipe-card"
+            data-testid={ `${id}-recomendation-card` }
+            value={ item.strCategory }
+            style={ { visibility: 'hidden' } }
+          >
+            <img
+              className="card-img"
+              src={ item[`str${type}Thumb`] }
+              alt={ item[`str${type}`] }
+              data-testid={ `${id}-card-img` }
+            />
+            <h3 data-testid={ `${id}-recomendation-title` }>{item[`str${type}`]}</h3>
+          </div>
+        );
+      })}
+    </div>
+  );
 
   return (
     <section>
@@ -53,7 +77,7 @@ function Recommended() {
       </h5>
       {(isFetching) ? <div>Carregando</div>
         : (
-            <RenderRecommended />
+          renderRecommended()
         )}
     </section>
   );
