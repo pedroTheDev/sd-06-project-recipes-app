@@ -1,4 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import copyToClipboard from 'clipboard-copy';
 import RecipesContext from '../context/RecipesContext';
 import { shareIcon, whiteHeartIcon } from '../images';
 
@@ -7,9 +9,14 @@ function ProcessoComida() {
   const [checked, setChecked] = useState({});
 
   const handleChange = ({ target }) => {
-    localStorage.inProgressRecipes = JSON.stringify({ meals: { idComida: [Object.keys(checked)] } });
     setChecked({ ...checked, [target.name]: target.checked });
   };
+
+  useEffect(() => {
+    localStorage.inProgressRecipes = JSON.stringify(
+      { meals: { idComida: Object.keys(checked) } },
+    );
+  }, [checked]);
 
   return (
     <div>
@@ -18,6 +25,7 @@ function ProcessoComida() {
       <button
         type="button"
         data-testid="share-btn"
+        onClick={ () => copyToClipboard('Link copiado!') }
       >
         <img
           src={ shareIcon }
@@ -53,12 +61,14 @@ function ProcessoComida() {
       <p data-testid="instructions">
         Instruções
       </p>
-      <button
-        type="button"
-        data-testid="finish-recipe-btn"
-      >
-        Finalizar Receita
-      </button>
+      <Link to="/receitas-feitas">
+        <button
+          type="button"
+          data-testid="finish-recipe-btn"
+        >
+          Finalizar Receita
+        </button>
+      </Link>
     </div>
   );
 }
