@@ -22,6 +22,17 @@ function Categories({ id }) {
     ? ''
     : (
       <div>
+        <button
+          type="button"
+          data-testid="All-category-filter"
+          onClick={ () => setFilters({
+            searchText: '',
+            searchType: 'name',
+            category: id,
+          }) }
+        >
+          All
+        </button>
         { categories.map((category) => (
           <button
             type="button"
