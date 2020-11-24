@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import useRequestFood from '../hooks/useRequestFood';
 import fetchRecipes from '../services';
+import FavoriteBtn from '../components/FavoriteBtn';
+import ShareBtn from '../components/ShareBtn';
 
 function DrinkDetails(props) {
   const { match: { params: { id } } } = props;
+  const history = useHistory();
   const [requestDetails, setrequestDetails] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [apiResponse, setFilter] = useRequestFood([]);
@@ -14,13 +18,16 @@ function DrinkDetails(props) {
     const response = await fetchRecipes(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
     setrequestDetails(response.drinks[0]);
   };
+
   const requestIngredients = () => {
     const twentyOne = 21;
     const zero = 0;
     const TheIngredients = [];
     for (let i = 1; i < twentyOne; i += 1) {
       if (requestDetails.length !== zero
-          && requestDetails[`strIngredient${i}`] !== ''
+        && requestDetails[`strIngredient${i}`] !== null
+        && requestDetails[`strIngredient${i}`] !== ''
+        && requestDetails[`strIngredient${i}`] !== undefined
       ) {
         TheIngredients
           .push(`${requestDetails[`strMeasure${i}`]}
@@ -28,6 +35,10 @@ function DrinkDetails(props) {
       }
     }
     setIngredients(TheIngredients);
+  };
+
+  const handleInitRecipe = () => {
+    history.push(`/bebidas/${id}/in-progress`);
   };
 
   useEffect(() => {
@@ -47,12 +58,8 @@ function DrinkDetails(props) {
         data-testid="recipe-photo"
       />
       <h1 data-testid="recipe-title">{requestDetails.strDrink}</h1>
-      <button data-testid="share-btn" type="button">
-        Compartilhar
-      </button>
-      <button data-testid="favorite-btn" type="button">
-        Favoritar
-      </button>
+      <ShareBtn />
+      <FavoriteBtn />
       <p data-testid="recipe-category">{requestDetails.strAlcoholic}</p>
       {ingredients.map((ingredient, index) => (
         <div key={ index }>
@@ -80,14 +87,14 @@ function DrinkDetails(props) {
           </div>))}
       </div>
       <button
-        style={ { position: 'fixed', display: 'none', bottom: '0px' } }
+        onClick={ handleInitRecipe }
+        style={ { position: 'fixed', bottom: '0px' } }
         data-testid="start-recipe-btn"
         type="button"
       >
-        Iniciar
+        Iniciar Receita
       </button>
     </div>
-
   );
 }
 

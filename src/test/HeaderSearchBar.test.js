@@ -151,6 +151,7 @@ describe('testando a barra de busca logo abaixo do header', () => {
         <Drink />
       </AppProvider>,
     );
+    const two = 2;
     const search = queryByTestId('search-top-btn');
     fireEvent.click(search);
     const input = queryByTestId('search-input');
@@ -160,7 +161,7 @@ describe('testando a barra de busca logo abaixo do header', () => {
     const searchButton = queryByTestId('exec-search-btn');
     fireEvent.click(searchButton);
     await findByTestId('0-recipe-card');
-    expect(global.fetch).toHaveBeenCalledTimes(2);
+    expect(global.fetch).toHaveBeenCalledTimes(two);
     expect(global.fetch).toBeCalledWith('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
     expect(global.fetch).toBeCalledWith('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=vodka');
   });
