@@ -171,7 +171,10 @@ describe('done recipes navigation', () => {
     jest.spyOn(JSON, 'parse').mockImplementation((value) => value);
     jest.spyOn(JSON, 'stringify').mockImplementation((value) => value);
 
-    history = createMemoryHistory();
+    const componentPath = '/receitas-favoritas';
+    history = createMemoryHistory({
+      initialEntries: [componentPath],
+    });
 
     screen = render(
       <Router history={ history }>

@@ -6,19 +6,19 @@ import PropTypes from 'prop-types';
 
 import { useExplore } from '../../hooks/explore';
 import { useRecipes } from '../../hooks/recipes';
+import { useSearch } from '../../hooks/search';
 
 import Header from '../../components/Header';
 import Navbar from '../../components/Navbar';
-import { useSearch } from '../../hooks/search';
 
 const noFilterOption = {
   option: 'name',
-  value: 'Chicken',
+  value: '',
   token: '1',
 };
 
 function ExploreArea({ pageType }) {
-  const [areaSelected, setAreaSelected] = useState('American');
+  const [areaSelected, setAreaSelected] = useState('All');
 
   const {
     loadAreas, loadingAreas, foodAreas, loadingFoodsByArea, loadFoodsByArea,
@@ -38,7 +38,7 @@ function ExploreArea({ pageType }) {
         loadFoodsByArea(areaSelected);
       }
     }
-  }, [areaSelected, loadingAreas, pageType]);
+  }, [areaSelected, loadingAreas, pageType, loadFoodsByArea, appSearch]);
 
   const handleAreaChange = useCallback(({ target }) => {
     const { value: area } = target;
