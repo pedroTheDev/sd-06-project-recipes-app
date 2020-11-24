@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import './styles/App.css';
 import Home from './pages/Home';
 import Comidas from './pages/Comidas';
+import Bebidas from './pages/Bebidas';
 import Provider from './hooks/Provider';
 
 function App() {
@@ -11,7 +12,7 @@ function App() {
       <Switch>
         <Route path="/" exact component={ Home } />
         <Route path="/comidas" exact component={ Comidas } />
-        <Route path="/bebidas" exact component={ App } />
+        <Route path="/bebidas" exact component={ Bebidas } />
         <Route path="/comidas/{id-da-receita}" exact component={ App } />
         <Route path="/bebidas/{id-da-receita}" exact component={ App } />
         <Route path="/comidas/{id-da-receita}/in-progress" exact component={ App } />
