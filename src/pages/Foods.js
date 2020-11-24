@@ -4,6 +4,14 @@ import RevenueContext from '../context/RevenueContext';
 
 export default function Foods() {
   const { foods, fetchApi, searchParam, setFoods } = useContext(RevenueContext);
+  const DOZE = 12;
+  const ZERO = 0;
+  const dataLengthTest = () => {
+    if (foods.length === ZERO) {
+      // alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+      return <div>Sinto muito, não encontramos nenhuma receita para esses filtros.</div>;
+    }
+  };
   useEffect(() => {
     if (searchParam === 'Meal') {
       fetchApi('https://www.themealdb.com/api/json/v1/1/search.php?s=')
@@ -14,16 +22,7 @@ export default function Foods() {
     }
     setFoods([]);
   }, []);
-  const DOZE = 12;
-  const ZERO = 0;
-  const dataLengthTest = () => {
-    if (foods.length === ZERO) {
-      alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
-    }
-  };
-  // const renderCard = (
 
-  // );
   console.log(foods);
   if (foods.length > ZERO) {
     return (

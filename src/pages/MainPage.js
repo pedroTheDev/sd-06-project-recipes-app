@@ -10,7 +10,6 @@ import ExploreFoods from './ExploreFoods';
 import DoneRecipes from './DoneRecipes';
 import FavoriteRecipes from './FavoriteRecipes';
 import ExploreDrinks from './ExploreDrinks';
-import Drinks from './Drinks';
 
 export default function MainPage(props) {
   const { title } = props;
