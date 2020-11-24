@@ -58,9 +58,11 @@ const oneDrink = {
   ],
 };
 
+const drink = oneDrink.drinks[0];
+
 export const mealIngredientsAndMeasure = (
   Object
-    .keys(oneDrink)
+    .keys(drink)
     .filter((detail) => {
       const ingredientPattern = /strIngredient\d/i;
 
@@ -70,7 +72,7 @@ export const mealIngredientsAndMeasure = (
 
       // makes sure we only have filled ingredients
       if (detailIsIngredient) {
-        return oneDrink[detail];
+        return drink[detail];
       }
 
       return false;
@@ -81,8 +83,8 @@ export const mealIngredientsAndMeasure = (
 
       const matchingMeasure = `strMeasure${ingredientNumber}`;
 
-      const ingredient = oneDrink[ingredientKey];
-      const measure = oneDrink[matchingMeasure];
+      const ingredient = drink[ingredientKey];
+      const measure = drink[matchingMeasure];
 
       const displayFormat = `${ingredient} - ${measure}`;
 

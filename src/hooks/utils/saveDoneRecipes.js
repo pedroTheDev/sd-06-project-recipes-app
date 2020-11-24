@@ -1,5 +1,5 @@
 function extractRecipeInfo(type, recipe) {
-  if (type === 'Comidas') {
+  if (type === 'comidas') {
     const {
       idMeal: id,
       strArea: area,
@@ -50,7 +50,7 @@ export default function saveDoneRecipe(type, recipe) {
   const previouslyDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
 
   const newRecipeInfoParsed = extractRecipeInfo(type, recipe);
-  const doneDate = new Date();
+  const doneDate = new Date(Date.now());
 
   const recipeToAdd = { ...newRecipeInfoParsed, doneDate };
 
