@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Footer from './Footer';
-import Header from '../components/Header';
+import Header from './Header';
 
 function ExploreFoods() {
   const history = useHistory();
@@ -9,10 +9,9 @@ function ExploreFoods() {
   const randomMeal = async () => {
     const apiRequest = await fetch('https://www.themealdb.com/api/json/v1/1/random.php');
     const response = await apiRequest.json();
-    return (response.meals);
-    // pra mudar de rota vou precisar usar um history.push
-    // usar tela Andre pra renderizar através do id da comida
-  }
+    const responseId = response.meals[0].idMeal;
+    return history.push(`/comidas/${responseId}`);
+  };
 
   return (
     <div>

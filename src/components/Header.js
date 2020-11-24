@@ -34,7 +34,7 @@ function Header(props) {
               aria-hidden="true"
             />
           </div>
-        ) : <div/> }
+        ) : <div /> }
       <div>
         {showSearchBar ? <SearchBar fetchApi={ fetchApi } /> : null}
       </div>
@@ -45,6 +45,7 @@ function Header(props) {
 Header.propTypes = {
   fetchApi: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
+  showSearchIcon: PropTypes.bool.isRequired,
 };
 
 export default Header;
