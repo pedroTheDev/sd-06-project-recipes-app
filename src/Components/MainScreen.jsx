@@ -10,38 +10,33 @@ export default function MainScreen() {
   const renderCards = () => {
     console.log('texto', drinkRecipes);
     if (pathname === '/comidas') {
-      return (foodRecipes.map((food, index) => {
-        if (index < doze) {
-          return (
-            <div data-testid={ `${index}-recipe-card` }>
-              <img
-                src={ food.strMealThumb }
-                data-testid={ `${index}-card-img` }
-                alt={ food.strMeal }
-              />
-              <p data-testid={ `${index}-card-name` }>{ food.strMeal }</p>
-            </div>
-          );
-        }
-      }));
+      return foodRecipes.filter((food, index) => index < doze)
+        .map((food, index) => (
+          <div data-testid={ `${index}-recipe-card` } key="index">
+            <img
+              src={ food.strMealThumb }
+              data-testid={ `${index}-card-img` }
+              alt={ food.strMeal }
+            />
+            <p data-testid={ `${index}-card-name` }>{food.strMeal}</p>
+          </div>
+        ));
     }
+
     if (pathname === '/bebidas') {
-      return (drinkRecipes && drinkRecipes.length && drinkRecipes.map((drinks, index) => {
-        if (index < doze) {
-          return (
-            <div data-testid={ `${index}-recipe-card` }>
-              <img
-                src={ drinks.strDrinkThumb }
-                data-testid={ `${index}-card-img` }
-                alt={ drinks.strDrink }
-              />
-              <p data-testid={ `${index}-card-name` }>{ drinks.strDrink }</p>
-            </div>
-          );
-        }
-      }));
+      return (drinkRecipes && drinkRecipes.length && drinkRecipes
+        .filter((drinks, index) => index < doze)
+        .map((drinks, index) => (
+          <div data-testid={ `${index}-recipe-card` } key="index">
+            <img
+              src={ drinks.strDrinkThumb }
+              data-testid={ `${index}-card-img` }
+              alt={ drinks.strDrink }
+            />
+            <p data-testid={ `${index}-card-name` }>{ drinks.strDrink}</p>
+          </div>
+        )));
     }
   };
-
   return <div>{ isLoading ? <p>Loading...</p> : renderCards() }</div>;
 }
