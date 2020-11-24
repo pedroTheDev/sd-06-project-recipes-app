@@ -72,7 +72,7 @@ function SearchBar() {
       setIsFetching(true);
 
       const expectedRecipes = await getRecipesInformation(
-        selectedApiEndpoint + searchTerm
+        selectedApiEndpoint + searchTerm,
       );
       setFetchedResults(expectedRecipes);
 
