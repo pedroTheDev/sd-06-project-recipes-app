@@ -1,16 +1,21 @@
 import React from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Footer from './Footer';
-import profileIcon from '../images/profileIcon.svg';
+import Header from './Header';
 
 function ExploreFoods() {
   const history = useHistory();
+
+  const randomMeal = async () => {
+    const apiRequest = await fetch('https://www.themealdb.com/api/json/v1/1/random.php');
+    const response = await apiRequest.json();
+    const responseId = response.meals[0].idMeal;
+    return history.push(`/comidas/${responseId}`);
+  };
+
   return (
     <div>
-      <Link to="/perfil">
-        <img src={ profileIcon } alt="Profile" data-testid="profile-top-btn" />
-      </Link>
-      <h2 data-testid="page-title">Explorar Comidas</h2>
+      <Header title="Explorar Comidas" />
       <button
         data-testid="explore-by-ingredient"
         type="button"
@@ -28,6 +33,7 @@ function ExploreFoods() {
       <button
         data-testid="explore-surprise"
         type="button"
+        onClick={ () => randomMeal() }
       >
         Me Surpreenda!
       </button>
