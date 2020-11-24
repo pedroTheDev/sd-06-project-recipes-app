@@ -56,5 +56,5 @@ export default Header;
 
 Header.propTypes = {
   pathname: PropTypes.string.isRequired,
-
+  setShowMultipleResults: PropTypes.func.isRequired,
 };
