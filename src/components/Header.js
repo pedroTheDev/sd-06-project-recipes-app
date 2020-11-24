@@ -8,10 +8,10 @@ import searchIcon from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
 
 function Header(props) {
-  const { title, fetchApi } = props;
+  const { title, fetchApi, showSearchIcon = false } = props;
   const { showSearchBar, setSearchBar, setTypeRecipe } = useContext(ContextRecipes);
   const location = useLocation().pathname;
-
+  
   const toggleSearchBar = () => {
     if (showSearchBar) {
       setSearchBar(false);
@@ -34,14 +34,19 @@ function Header(props) {
         <img src={ profileIcon } alt="Profile" data-testid="profile-top-btn" />
       </Link>
       <h2 data-testid="page-title">{title}</h2>
+      { showSearchIcon
+        ? (
+          <div>
+            <img
+              src={ searchIcon }
+              alt="Search"
+              data-testid="search-top-btn"
+              onClick={ toggleSearchBar }
+              aria-hidden="true"
+            />
+          </div>
+        ) : <div /> }
       <div>
-        <img
-          src={ searchIcon }
-          alt="Search"
-          data-testid="search-top-btn"
-          onClick={ toggleSearchBar }
-          aria-hidden="true"
-        />
         {showSearchBar ? <SearchBar fetchApi={ fetchApi } /> : null}
       </div>
     </div>
@@ -51,6 +56,7 @@ function Header(props) {
 Header.propTypes = {
   fetchApi: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
+  showSearchIcon: PropTypes.bool.isRequired,
 };
 
 export default Header;

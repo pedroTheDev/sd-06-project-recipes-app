@@ -21,7 +21,7 @@ function Foods() {
 
   return (
     <div>
-      <Header fetchApi={ fetchAPIRecipes } title="Comida" />
+      <Header fetchApi={ fetchAPIRecipes } title="Comida" showSearchIcon />
       {showCard && <Card />}
       <Footer />
     </div>
