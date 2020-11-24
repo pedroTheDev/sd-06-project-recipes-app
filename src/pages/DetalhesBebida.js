@@ -8,7 +8,7 @@ function DetalhesBebida() {
     <div>
       <img src={ strDrinkThumb } alt={ strDrink } />
       <h1>{ strDrink }</h1>
-      <span>Aqui vão estar os detalhes de comidas...</span>
+      <span>Aqui vão estar os detalhes da bebida...</span>
     </div>
   );
 }
