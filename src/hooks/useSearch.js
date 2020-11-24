@@ -51,7 +51,7 @@ export default function useSearch() {
     } catch (error) {
       setItems({ [typeOfFetch]: null });
       console.log(error);
-      // alert('alert da fetch: ', error.message);
+      alert('alert da fetch: ', error.message);
     }
   };
 
