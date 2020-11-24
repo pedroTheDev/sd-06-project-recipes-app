@@ -25,16 +25,22 @@ export default function RecipesProvider({ children }) {
   const [returnDrinkApi, setReturnDrinkAPi] = useState([]);
 
   useEffect(() => {
-    if (returnFoodApi.length === 1) {
+    if (returnFoodApi && returnFoodApi.length === 1) {
       const { idMeal } = returnFoodApi[0];
       window.location.pathname = `/comidas/${idMeal}`;
+    }
+    if (!returnFoodApi) {
+      alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
     }
   }, [returnFoodApi]);
 
   useEffect(() => {
-    if (returnDrinkApi.length === 1) {
+    if (returnDrinkApi && returnDrinkApi.length === 1) {
       const { idDrink } = returnDrinkApi[0];
       window.location.pathname = `/bebidas/${idDrink}`;
+    }
+    if (!returnDrinkApi) {
+      alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
     }
   }, [returnDrinkApi]);
 
