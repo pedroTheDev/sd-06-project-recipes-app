@@ -4,13 +4,24 @@ import ContextAPI from '../../Context/ContextAPI';
 const Cards = () => {
   const { apiValueSearch } = useContext(ContextAPI);
 
-  return (
+  return apiValueSearch.meals ? (
     <div>
       {apiValueSearch.results && (
         apiValueSearch.results.meals.map((res) => (
           <div key={ res.strMeal }>
             <p>{res.strMeal}</p>
-            <img src={ res.strMealThumb } alt={ res.strMeal } />
+            <img width="200" src={ res.strMealThumb } alt={ res.strMeal } />
+          </div>
+        ))
+      )}
+    </div>
+  ) : (
+    <div>
+      {apiValueSearch.results && (
+        apiValueSearch.results.drinks.map((res) => (
+          <div key={ res.idDrink }>
+            <p>{res.strDrink}</p>
+            <img width="200" src={ res.strDrinkThumb } alt={ res.strMeal } />
           </div>
         ))
       )}

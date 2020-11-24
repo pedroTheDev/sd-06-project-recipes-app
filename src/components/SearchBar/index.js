@@ -4,6 +4,8 @@ import ContextAPI from '../../Context/ContextAPI';
 import { searchFoodIngredients,
   searchFoodName,
   searchFoodFirstLetter,
+  searchDrinkIngredients,
+  searchDrinkName,
 } from '../../services/aPI';
 
 const SearchBar = () => {
@@ -18,27 +20,36 @@ const SearchBar = () => {
   };
 
   const apiOfIngredients = async () => {
-    const results = await searchFoodIngredients(nome);
-    // console.log(results);
-    setApiValueSearch({
-      results,
-    });
-  };
-
-  const apiOfName = async () => {
-    const results = await searchFoodName(nome);
+    let results = await searchFoodIngredients(nome);
+    if (results.meals === null) {
+      results = await searchDrinkIngredients(nome);
+    }
     console.log(results);
     setApiValueSearch({
       results,
     });
   };
 
+  const apiOfName = async () => {
+    let results = await searchFoodName(nome);
+    if (results.meals === null && window.location.pathname === '/bebidas') {
+      results = await searchDrinkName(nome);
+      console.log(results);
+    } else {
+      setApiValueSearch({
+        results,
+      });
+    }
+  };
+
   const apiOfFirstLetter = async () => {
     if (nome.length > 1) {
       return alert('Sua busca deve conter somente 1 (um) caracter');
     }
-    const results = await searchFoodFirstLetter(nome);
-    // console.log(results);
+    let results = await searchFoodFirstLetter(nome);
+    if (results.meals === null) {
+      results = await searchFoodFirstLetter(nome);
+    }
     setApiValueSearch({
       results,
     });
