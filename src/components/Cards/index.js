@@ -8,9 +8,9 @@ const Cards = () => {
     <div>
       {apiValueSearch.results && (
         apiValueSearch.results.meals.map((res) => (
-          <div key={res.strMeal}>
+          <div key={ res.strMeal }>
             <p>{res.strMeal}</p>
-            <img src={res.strMealThumb} alt={res.strMeal} />
+            <img src={ res.strMealThumb } alt={ res.strMeal } />
           </div>
         ))
       )}

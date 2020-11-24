@@ -18,7 +18,7 @@ const RecipesProvider = ({ children }) => {
     setApiValueSearch,
   };
   return (
-    <ContextAPI.Provider value={contextState}>
+    <ContextAPI.Provider value={ contextState }>
       { children }
     </ContextAPI.Provider>
   );

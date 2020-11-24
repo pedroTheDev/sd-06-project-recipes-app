@@ -13,7 +13,7 @@ const Login = () => {
   const [redirect, setRedirect] = useState(false);
 
   const handleInput = (value) => {
-    const regex = /[A-Z0-9]{1,}@[A-Z0-9]{2,}.[A-Z0-9]{2,}/i;
+    const regex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
     if (regex.test(value.toLowerCase())) {
       setEmailValid(true);
       setUsername(value);
@@ -23,7 +23,8 @@ const Login = () => {
   };
 
   const handlePassword = (value) => {
-    if (value.length > 6) {
+    const passwordLength = 6;
+    if (value.length > passwordLength) {
       setPasswordValid(true);
     } else {
       setPasswordValid(false);
@@ -52,7 +53,7 @@ const Login = () => {
             id="email"
             placeholder="Email"
             data-testid="email-input"
-            onChange={(e) => handleInput(e.target.value)}
+            onChange={ (e) => handleInput(e.target.value) }
           />
         </label>
         <label htmlFor="senha">
@@ -61,10 +62,17 @@ const Login = () => {
             id="senha"
             placeholder="Senha"
             data-testid="password-input"
-            onChange={(e) => handlePassword(e.target.value)}
+            onChange={ (e) => handlePassword(e.target.value) }
           />
         </label>
-        <button data-testid="login-submit-btn" disabled={!(isEmailValid && isPasswordValid)} onClick={() => buttonClick()} type="button">Entrar</button>
+        <button
+          data-testid="login-submit-btn"
+          disabled={ !(isEmailValid && isPasswordValid) }
+          onClick={ () => buttonClick() }
+          type="button"
+        >
+          Entrar
+        </button>
       </div>
     </div>
   );
