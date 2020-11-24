@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import Explore from '../components/Explore';
-import ExploreOptions from '../components/ExploreOptions';
+import { Header, Footer, Explore, ExploreOptions } from '../components';
 
 class Explorar extends Component {
   render() {

@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import RecipesCard from '../components/RecipesCard';
+import { Header, Footer, RecipesCard } from '../components';
 
 class ReceitasComidas extends Component {
   render() {

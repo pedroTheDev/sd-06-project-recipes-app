@@ -1,14 +1,9 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import ReceitasComidas from './pages/receitasComidas';
-import ReceitasBebidas from './pages/receitasBebidas';
-import Explorar from './pages/explorar';
-import RecipesCard from './components/RecipesCard';
-
+import { Login, Perfil, Explorar, ReceitasComidas, ReceitasBebidas } from './pages';
+import { RecipesCard } from './components';
 import './App.css';
-import Login from './pages/login';
-import Perfil from './pages/perfil';
 
 // mudar componentes de rotas com parametros
 
