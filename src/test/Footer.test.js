@@ -67,7 +67,7 @@ describe('testando um ícone para a tela de perfil', () => {
   it('Não tem footer na tela de detalhes de uma receita de comida;', () => {
     const { queryByTestId } = renderWithRouter(
       <AppProvider>
-        <FoodDetails />
+        <FoodDetails match={ { params: { id: '52977' } } } />
       </AppProvider>,
     );
     const drinks = queryByTestId('drinks-bottom-btn');
@@ -80,7 +80,7 @@ describe('testando um ícone para a tela de perfil', () => {
   it('Não tem footer na tela de detalhes de uma receita de bebida;', () => {
     const { queryByTestId } = renderWithRouter(
       <AppProvider>
-        <DrinkDetails />
+        <DrinkDetails match={ { params: { id: '15997' } } } />
       </AppProvider>,
     );
     const drinks = queryByTestId('drinks-bottom-btn');
