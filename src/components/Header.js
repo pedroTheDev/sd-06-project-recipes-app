@@ -14,7 +14,7 @@ export default function Header({ className, pageTitle, BtnSearchBar }) {
         className={ className }
       >
         <Link to="/perfil">
-          <button type="button" data-testid="profile-top-btn">
+          <button src={ profileIcon } type="button" data-testid="profile-top-btn">
             <img alt="Ícone de Perfil" src={ profileIcon } />
           </button>
         </Link>

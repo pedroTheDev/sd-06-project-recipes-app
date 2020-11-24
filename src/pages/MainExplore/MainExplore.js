@@ -1,9 +1,13 @@
 import React from 'react';
+import Header from '../../components/Header';
 
 function MainExplore() {
   return (
     <div>
-      <h1>Explorar comida e bebida</h1>
+      <Header
+        className="header"
+        pageTitle="Explorar Comidas"
+      />
     </div>
   );
 }

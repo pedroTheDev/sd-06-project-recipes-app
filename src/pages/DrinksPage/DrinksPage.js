@@ -9,7 +9,6 @@ export default function DrinksPage() {
         className="header"
         pageTitle="Bebidas"
       />
-      <h1>Página de Bebidas</h1>
       <Footer />
     </div>
   );

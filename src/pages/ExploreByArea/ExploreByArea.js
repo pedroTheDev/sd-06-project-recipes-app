@@ -1,9 +1,15 @@
 import React from 'react';
+import Header from '../../components/Header';
+import BtnSearchBar from '../../components/BtnSearchBar';
 
 function ExploreByArea() {
   return (
     <div>
-      <h1>Explorar por area</h1>
+      <Header
+        className="header"
+        pageTitle="Explorar Origem"
+        BtnSearchBar={ BtnSearchBar }
+      />
     </div>
   );
 }

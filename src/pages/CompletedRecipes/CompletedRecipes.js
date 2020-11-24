@@ -1,9 +1,13 @@
 import React from 'react';
+import Header from '../../components/Header';
 
 function CompletedRecipes() {
   return (
     <div>
-      <h1>Receitas concluídas</h1>
+      <Header
+        className="header"
+        pageTitle="Receitas Feitas"
+      />
     </div>
   );
 }

@@ -11,7 +11,6 @@ export default function MealsPage() {
         pageTitle="Comidas"
         BtnSearchBar={ BtnSearchBar }
       />
-      <h1> Página principal de Comidas</h1>
       <Footer />
     </div>
   );
