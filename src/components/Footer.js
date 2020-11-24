@@ -1,42 +1,54 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { drinkIcon, mealIcon, exploreIcon } from '../images';
 
-
 function Footer() {
+  // constructor() {
+  //   super();
+
+  //   this.redirect = this.redirect.bind(this);
+  // }
+
+  // const redirect = (path) => {
+  //   window.location.replace(`http://localhost:3000/${path}`);
+  // }
+
   return (
     <footer data-testid="footer">
-      <p data-testid="drinks-bottom-btn">
-        <a>
-          Drinks
-            <img
-            src={ drinkIcon }
-            alt="Imagem de drink"
-            height="25"
-          />
-        </a>
-      </p>
-      <p data-testid="food-bottom-btn">
-        <a>
-          Alimento
-            <img
-            src={ mealIcon }
-            alt="Imagem de alimento"
-            height="25"
-          />
-        </a>
-      </p>
-      <p data-testid="explore-bottom-btn">
-        <a>
-          Explore
-            <img
-            src={ exploreIcon }
-            alt="Explore o Site"
-            height="25"
-          />
-        </a>
-      </p>
+      <nav>
+        <p data-testid="drinks-bottom-btn">
+          <Link to="/bebidas">
+            Drinks
+              <img
+              src={drinkIcon}
+              alt="Imagem de drink"
+              height="25"
+            />
+          </Link>
+        </p>
+        <p data-testid="food-bottom-btn">
+          <Link to="/comidas">
+            Alimento
+              <img
+              src={mealIcon}
+              alt="Imagem de alimento"
+              height="25"
+            />
+          </Link>
+        </p>
+        <p data-testid="explore-bottom-btn">
+          <Link to="explorar">
+            Explore
+              <img
+              src={exploreIcon}
+              alt="Explore o Site"
+              height="25"
+            />
+          </Link>
+        </p>
+      </nav>
     </footer>
-  )
+  );
 }
 
 export default Footer;

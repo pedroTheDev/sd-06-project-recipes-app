@@ -1,10 +1,10 @@
 import React from 'react';
 import Footer from '../../components/Footer';
 
-function MealsPage() {
+function ExploreDrinksByIngredients() {
   return (
     <div>
-      <h1> Página principal de Comidas</h1>
+      <h1> Explorar bebidas por ingredientes</h1>
       <div className="footer">
         <Footer />
       </div>
@@ -12,4 +12,4 @@ function MealsPage() {
   );
 }
 
-export default MealsPage;
+export default ExploreDrinksByIngredients;

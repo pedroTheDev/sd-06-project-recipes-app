@@ -1,10 +1,10 @@
 import React from 'react';
 import Footer from '../../components/Footer';
 
-function MealsPage() {
+function DrinksPage() {
   return (
     <div>
-      <h1> Página principal de Comidas</h1>
+      <h1> Página principal de Drinks</h1>
       <div className="footer">
         <Footer />
       </div>
@@ -12,4 +12,4 @@ function MealsPage() {
   );
 }
 
-export default MealsPage;
+export default DrinksPage;
