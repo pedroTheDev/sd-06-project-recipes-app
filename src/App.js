@@ -1,5 +1,7 @@
 import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 import './App.css';
+<<<<<<< HEAD
 import Footer from './components/Footer';
 
 function App() {
@@ -27,6 +29,17 @@ function App() {
       </svg>
       <Footer />
     </div>
+=======
+import Login from './pages/Login/Login';
+import MealsPage from './pages/MealsPage/MealsPage';
+
+function App() {
+  return (
+    <Switch>
+      <Route exact path="/" component={ Login } />
+      <Route exact path="/comidas" component={ MealsPage } />
+    </Switch>
+>>>>>>> 19df179b0dab3630ace85191ea8b8091e4d0967b
   );
 }
 
