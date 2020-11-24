@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { fetchMealsById } from '../services';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import { doneRecipesFood } from '../actions';
 
 class FoodsRecipesInProgress extends React.Component {
   constructor() {
@@ -16,6 +17,7 @@ class FoodsRecipesInProgress extends React.Component {
     this.handleIngredients = this.handleIngredients.bind(this);
     this.setIngredients = this.setIngredients.bind(this);
     this.setMealState = this.setMealState.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   async componentDidMount() {
@@ -25,6 +27,13 @@ class FoodsRecipesInProgress extends React.Component {
     console.log(mealRecipe);
     this.setMealState(mealRecipe);
     this.handleIngredients();
+  }
+
+  handleClick() {
+    const { myRecipe, history } = this.props;
+    const { Meal } = this.state;
+    myRecipe(Meal);
+    history.push('/receitas-feitas');
   }
 
   handleIngredients() {
@@ -121,7 +130,11 @@ class FoodsRecipesInProgress extends React.Component {
             <div className="detail-instructions">{recipe.strInstructions}</div>
             <p data-testid={ `${index}-card-name` }>{recipe.strMeal}</p>
             <div>
-              <button type="button" data-testid="start-recipe-btn">
+              <button
+                type="button"
+                data-testid="start-recipe-btn"
+                onClick={ () => this.handleClick() }
+              >
                 Finalizar Receita
               </button>
             </div>
@@ -135,8 +148,14 @@ const mapStateToProps = (state) => ({
   idCurrent: state.menu.currentID,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  myRecipe: (recipe) => dispatch(doneRecipesFood(recipe)),
+});
+
 FoodsRecipesInProgress.propTypes = {
+  history: PropTypes.shape().isRequired,
   idCurrent: PropTypes.string.isRequired,
+  myRecipe: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, null)(FoodsRecipesInProgress);
+export default connect(mapStateToProps, mapDispatchToProps)(FoodsRecipesInProgress);

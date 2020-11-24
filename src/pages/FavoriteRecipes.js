@@ -18,4 +18,8 @@ FavoriteRecipes.propTypes = {
   history: PropTypes.shape().isRequired,
 };
 
-export default connect(null, null)(FavoriteRecipes);
+const mapStateToProps = (state) => ({
+  favorite: state.menu.favorite,
+});
+
+export default connect(mapStateToProps, null)(FavoriteRecipes);

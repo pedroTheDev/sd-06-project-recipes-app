@@ -23,6 +23,7 @@ class DoneRecipes extends React.Component {
   render() {
     const { history } = this.props;
     const { type } = this.state;
+    console.log(type);
     return (
       <div>
         <Header history={ history } />
@@ -56,15 +57,15 @@ class DoneRecipes extends React.Component {
           Drinks
         </button>
 
-        {type === 'food' ? <FoodCard history={ history } /> : null }
-        {type === 'drink' ? <DrinkCard history={ history } /> : null }
+        {type === 'food' ? <FoodCard history={ history } /> : '' }
+        {type === 'drink' ? <DrinkCard history={ history } /> : '' }
         {type === 'all'
           ? (
-            <div>
+            <>
               <DrinkCard history={ history } />
               <FoodCard history={ history } />
-            </div>)
-          : null }
+            </>)
+          : '' }
 
       </div>
     );

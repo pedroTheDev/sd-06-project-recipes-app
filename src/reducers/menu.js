@@ -1,9 +1,20 @@
-import { DRINKS, MEALS, CURRENT_ID, FAVORITE } from '../actions';
+import { DRINKS, MEALS, CURRENT_ID, FAVORITE_FOOD, FAVORITE_DRINK,
+  RECIPE_FOOD, RECIPE_DRINK } from '../actions';
 
 const INITIAL_STATE = {
   meals: [],
   drinks: [],
   currentID: '',
+  doneRecipesFood: [],
+  doneRecipesDrink: [],
+  favFood: {
+    isFavoriteFood: false,
+    favoriteFood: [],
+  },
+  favDrink: {
+    isFavoriteDrink: false,
+    favoriteDrink: [],
+  },
 };
 
 export default function (state = INITIAL_STATE, action) {
@@ -11,6 +22,16 @@ export default function (state = INITIAL_STATE, action) {
   case DRINKS:
     return {
       ...state, drinks: action.drink,
+    };
+  case RECIPE_FOOD:
+    return {
+      ...state,
+      doneRecipesFood: state.doneRecipesFood.concat(action.recipe),
+    };
+  case RECIPE_DRINK:
+    return {
+      ...state,
+      doneRecipesDrink: state.doneRecipesDrink.concat(action.recipe),
     };
   case MEALS:
     return {
@@ -20,9 +41,21 @@ export default function (state = INITIAL_STATE, action) {
     return {
       ...state, currentID: action.id,
     };
-  case FAVORITE:
+  case FAVORITE_FOOD:
     return {
-      ...state, favorite: { [action.id]: action.fav },
+      ...state,
+      favFood: {
+        isFavoriteFood: action.fav,
+        favoriteFood: state.favFood.favoriteFood.concat(action.food),
+      },
+    };
+  case FAVORITE_DRINK:
+    return {
+      ...state,
+      favDrink: {
+        isFavoriteDrink: action.fav,
+        favoriteDrink: state.favDrink.favoriteDrink.concat(action.drink),
+      },
     };
   default:
     return state;

@@ -5,7 +5,7 @@ import { fetchDrinksById, fetchRecommendedMeals } from '../services';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
-import { currentID, favRecipe } from '../actions';
+import { currentID, favRecipeDrink } from '../actions';
 
 class DrinksDetails extends React.Component {
   constructor() {
@@ -82,14 +82,14 @@ class DrinksDetails extends React.Component {
     });
   }
 
-  changeFavIcon(idMeal) {
+  changeFavIcon(drink) {
     const { favorite } = this.state;
     const { dispatchFavorite } = this.props;
     if (favorite) {
-      dispatchFavorite(favorite, idMeal);
+      dispatchFavorite(favorite, drink);
       return blackHeartIcon;
     }
-    dispatchFavorite(favorite, idMeal);
+    dispatchFavorite(favorite, drink);
     return whiteHeartIcon;
   }
 
@@ -144,7 +144,7 @@ class DrinksDetails extends React.Component {
                   <input
                     type="image"
                     data-testid="favorite-btn"
-                    src={ this.changeFavIcon(recipe.idMeal) }
+                    src={ this.changeFavIcon(recipe) }
                     onClick={ () => this.setState({ favorite: !favorite }) }
                     alt="whiteHeartIcon"
                   />
@@ -239,7 +239,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchID: (endpoint) => dispatch(currentID(endpoint)),
-  dispatchFavorite: (isFavorite, idMeal) => dispatch(favRecipe(isFavorite, idMeal)),
+  dispatchFavorite: (isFavorite, drink) => dispatch(favRecipeDrink(isFavorite, drink)),
 });
 
 DrinksDetails.propTypes = {

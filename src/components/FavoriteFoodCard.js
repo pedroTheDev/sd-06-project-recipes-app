@@ -3,15 +3,15 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import shareIcon from '../images/shareIcon.svg';
 
-class DrinkCard extends React.Component {
+class FavoriteFoodCard extends React.Component {
   constructor() {
     super();
 
-    this.handleShareDrink = this.handleShareDrink.bind(this);
+    this.handleShareFood = this.handleShareFood.bind(this);
   }
 
-  handleShareDrink({ idDrink }) {
-    const url = `http://localhost:3000/bebidas/${idDrink}`;
+  handleShareFood({ idMeal }) {
+    const url = `http://localhost:3000/comidas/${idMeal}`;
     window.alert('Link copiado!');
     //  https://www.30secondsofcode.org/blog/s/copy-text-to-clipboard-with-javascript
     const el = document.createElement('textarea');
@@ -26,54 +26,63 @@ class DrinkCard extends React.Component {
   }
 
   render() {
-    const { history, myRecipesDrink } = this.props;
+    const { history, myRecipesFood } = this.props;
     return (
-      <>
-        {myRecipesDrink.map((element, index) => (
+      <div>
+        {myRecipesFood.map((element, index) => (
           <div key={ index }>
             <input
               type="image"
               data-testid={ `${index}-horizontal-image` }
-              src={ element.strDrinkThumb }
+              src={ element.strMealThumb }
               width="200px"
               alt="horizontal"
-              onClick={ () => history.push(`/bebidas/${element.idDrink}`) }
+              onClick={ () => history.push(`/comidas/${element.idMeal}`) }
             />
 
+            <p id="area">
+              {element.strArea}
+            </p>
+
             <p data-testid={ `${index}-horizontal-top-text` }>
-              {element.strAlcoholic}
+              {element.strCategory}
             </p>
             <input
               type="button"
               data-testid={ `${index}-horizontal-name` }
-              onClick={ () => history.push(`/bebidas/${element.idDrink}`) }
-              value={ element.strDrink }
+              onClick={ () => history.push(`/comidas/${element.idMeal}`) }
+              value={ element.strMeal }
             />
             <p data-testid={ `${index}-horizontal-done-date` }>
               {element.dateModified}
             </p>
+
+            {element.strTags.split(',').map((tag, i) => (
+              <span key={ i } data-testid={ `${i}-${tag}-horizontal-tag` }>
+                { `${tag} `}
+              </span>
+            ))}
 
             <input
               type="image"
               data-testid={ `${index}-horizontal-share-btn` }
               src={ shareIcon }
               alt="share"
-              onClick={ () => this.handleShareDrink(element) }
+              onClick={ () => this.handleShareFood(element) }
             />
 
           </div>))}
-      </>
+      </div>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  myRecipesDrink: state.menu.doneRecipesDrink,
+  favorite: state.menu.favorite,
 });
-
-DrinkCard.propTypes = {
+FavoriteFoodCard.propTypes = {
   history: PropTypes.shape().isRequired,
-  myRecipesDrink: PropTypes.shape().isRequired,
+  myRecipesFood: PropTypes.shape().isRequired,
 };
 
-export default connect(mapStateToProps, null)(DrinkCard);
+export default connect(mapStateToProps, null)(FavoriteFoodCard);

@@ -2,24 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import shareIcon from '../images/shareIcon.svg';
-import { fetchMealsById } from '../services';
 
 class FoodCard extends React.Component {
   constructor() {
     super();
-    this.state = {
-      Food: [],
-    };
-    this.setFoodState = this.setFoodState.bind(this);
-    this.handleShareFood = this.handleShareFood.bind(this);
-  }
 
-  async componentDidMount() {
-    // pegando uma comida e uma bebida como exemplo
-    // estas comidas/bebidas vão vir de outra tela
-    // basta pegar do estado
-    const foods = await fetchMealsById('52771');
-    this.setFoodState(foods);
+    this.handleShareFood = this.handleShareFood.bind(this);
   }
 
   handleShareFood({ idMeal }) {
@@ -37,18 +25,11 @@ class FoodCard extends React.Component {
     document.body.removeChild(el);
   }
 
-  setFoodState(Food) {
-    this.setState({
-      Food,
-    });
-  }
-
   render() {
-    const { Food } = this.state;
-    const { history } = this.props;
+    const { history, myRecipesFood } = this.props;
     return (
-      <div>
-        {Food.map((element, index) => (
+      <>
+        {myRecipesFood.map((element, index) => (
           <div key={ index }>
             <input
               type="image"
@@ -91,13 +72,18 @@ class FoodCard extends React.Component {
             />
 
           </div>))}
-      </div>
+      </>
     );
   }
 }
 
+const mapStateToProps = (state) => ({
+  myRecipesFood: state.menu.doneRecipesFood,
+});
+
 FoodCard.propTypes = {
   history: PropTypes.shape().isRequired,
+  myRecipesFood: PropTypes.shape().isRequired,
 };
 
-export default connect(null, null)(FoodCard);
+export default connect(mapStateToProps, null)(FoodCard);

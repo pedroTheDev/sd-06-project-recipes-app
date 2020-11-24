@@ -2,7 +2,10 @@ export const USER_INFO = 'USER_INFO';
 export const DRINKS = 'DRINKS';
 export const MEALS = 'MEALS';
 export const CURRENT_ID = 'CURRENT_ID';
-export const FAVORITE = 'FAVORITE';
+export const FAVORITE_FOOD = 'FAVORITE_FOOD';
+export const FAVORITE_DRINK = 'FAVORITE_DRINK';
+export const RECIPE_FOOD = 'RECIPE_FOOD';
+export const RECIPE_DRINK = 'RECIPE_DRINK';
 
 export const UserInfo = (email, password) => ({
   type: USER_INFO,
@@ -15,6 +18,16 @@ export const comida = (meal) => ({
   meal,
 });
 
+export const doneRecipesFood = (recipe) => ({
+  type: RECIPE_FOOD,
+  recipe,
+});
+
+export const doneRecipesDrink = (recipe) => ({
+  type: RECIPE_DRINK,
+  recipe,
+});
+
 export const bebida = (drink) => ({
   type: DRINKS,
   drink,
@@ -25,8 +38,14 @@ export const currentID = (id) => ({
   id,
 });
 
-export const favRecipe = (fav, id) => ({
-  type: FAVORITE,
+export const favRecipeFood = (fav, food) => ({
+  type: FAVORITE_FOOD,
   fav,
-  id,
+  food,
+});
+
+export const favRecipeDrink = (fav, drink) => ({
+  type: FAVORITE_FOOD,
+  fav,
+  drink,
 });
