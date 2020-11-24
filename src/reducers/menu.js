@@ -4,6 +4,7 @@ const INITIAL_STATE = {
   meals: [],
   drinks: [],
   currentID: '',
+  favorite: '',
 };
 
 export default function (state = INITIAL_STATE, action) {

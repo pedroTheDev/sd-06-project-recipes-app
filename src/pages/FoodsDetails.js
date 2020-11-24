@@ -34,6 +34,17 @@ class FoodsDetails extends React.Component {
     const recommendedDrinks = await fetchRecommendedDrinks();
     this.setMealState(mealRecipe, recommendedDrinks);
     this.handleIngredients();
+
+    const emptyStorage = [{
+      id: '',
+      type: '',
+      area: '',
+      category: '',
+      alcoholicOrNot: '',
+      name: '',
+      image: '',
+    }];
+    localStorage.setItem('favoriteRecipes', JSON.stringify(emptyStorage));
   }
 
   handleYoutubeVideo(url) {
@@ -96,28 +107,32 @@ class FoodsDetails extends React.Component {
   }
 
   setLocalState(recipe) {
-    const favoriteLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    localStorage.setItem('favoriteRecipes', JSON.stringify(
-      {
-        ...favoriteLocalStorage,
-        id: recipe.idMeal,
-        type: 'Meal',
-        area: recipe.strArea,
-        category: recipe.strCategory,
-        alcoholicOrNot: '',
-        name: recipe.strMeal,
-        image: recipe.strMealThumb,
-      },
-    ));
+    const myObject = [{
+      id: recipe.idMeal,
+      type: 'Meal',
+      area: recipe.strArea,
+      category: recipe.strCategory,
+      alcoholicOrNot: '',
+      name: recipe.strMeal,
+      image: recipe.strMealThumb,
+    }];
+
+    const MyLSObj = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const combineObjects = MyLSObj.concat(myObject);
+
+    localStorage.setItem('favoriteRecipes', JSON.stringify(combineObjects));
+    this.changeFavIcon(recipe);
   }
 
   changeFavIcon({ idMeal }) {
-    // const favoriteLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    // if (localStorage.favoriteRecipes) {
-    //   favoriteLocalStorage.filter((element) => element.id === idMeal);
-    //   return blackHeartIcon;
-    // }
-    // return whiteHeartIcon;
+    const { favorite } = this.props;
+    const { dispatchFavorite } = this.props;
+    const favId = JSON.parse(localStorage.getItem('favoriteRecipes')).id;
+    if (favId === idMeal && Object.values(favorite)[0] !== true) {
+      return dispatchFavorite(true, idMeal);
+    }
+
+    return dispatchFavorite(false, 'nan');
   }
 
   goLeft() {
@@ -149,9 +164,10 @@ class FoodsDetails extends React.Component {
       x,
       Ingredients,
       Measures,
-      Video,
-      favorite } = this.state;
-    const favoriteLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      Video } = this.state;
+
+    const { favorite } = this.props;
+    // const favoriteLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
     return (
       <div className="food-drink-detail-container">
         {Meal ? Meal.map((recipe, index) => (
@@ -177,7 +193,7 @@ class FoodsDetails extends React.Component {
                 <input
                   type="image"
                   data-testid="favorite-btn"
-                  src={ this.changeFavIcon(recipe) }
+                  src={ Object.values(favorite)[0] ? blackHeartIcon : whiteHeartIcon }
                   onClick={ () => this.setLocalState(recipe) }
                   alt="whiteHeartIcon"
                 />
@@ -189,7 +205,7 @@ class FoodsDetails extends React.Component {
               <ul className="detail-ingredients">
                 {Ingredients.map((recipes, i) => (
                   <li
-                    key={ index }
+                    key={ `${i}-key` }
                     data-testid={ `${i}-ingredient-name-and-measure` }
                   >
                     {recipes}
@@ -264,6 +280,7 @@ class FoodsDetails extends React.Component {
 
 const mapStateToProps = (state) => ({
   idCurrent: state.menu.currentID,
+  favorite: state.menu.favorite,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -274,6 +291,7 @@ const mapDispatchToProps = (dispatch) => ({
 FoodsDetails.propTypes = {
   history: PropTypes.shape().isRequired,
   dispatchID: PropTypes.func.isRequired,
+  favorite: PropTypes.shape().isRequired,
   idCurrent: PropTypes.string.isRequired,
   dispatchFavorite: PropTypes.func.isRequired,
 };
