@@ -23,8 +23,8 @@ function Login() {
 
   const isPassword = (e) => {
     const { value } = e.target;
-    const minSize = 6;
-    if (value.length > minSize) {
+    const minimumLength = 6;
+    if (value.length > minimumLength) {
       setPassword(value);
     } else {
       setPassword('');

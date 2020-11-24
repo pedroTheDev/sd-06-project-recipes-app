@@ -36,12 +36,13 @@ function Header({ name }) {
         </button>
       </header>
       <HeaderSearch enable={ searchHeader } name={ name } />
+
     </div>
   );
 }
 
 Header.propTypes = {
-  name: propTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
 };
 
 export default Header;
