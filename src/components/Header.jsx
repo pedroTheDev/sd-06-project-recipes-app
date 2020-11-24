@@ -4,7 +4,7 @@ import RecipesAppContext from '../hooks/RecipesAppContext';
 import profileIcon from '../styles/images/profileIcon.svg';
 import searchIcon from '../styles/images/searchIcon.svg';
 import HeaderSearch from './HeaderSearch';
-import './components.css';
+// import './components.css';
 
 function Header({ name, button }) {
   const {

@@ -17,7 +17,7 @@ import Provider from './hooks/Provider';
 
 function App() {
   return (
-    <div className="containe-app">
+    <div className="container-app">
       <Provider>
         <Switch>
           <Route path="/" exact component={ Home } />
