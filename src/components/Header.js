@@ -11,13 +11,13 @@ export default function Header({ pageName, renderSearch }) {
   const renderSearchIcon = () => (
     <button
       type="button"
-      data-testid="search-top-btn"
       onClick={ () => setShowSearchBar(!showSearchBar) }
     >
       <img
         className="header-icon"
         src={ searchIcon }
         alt="searchIcon"
+        data-testid="search-top-btn"
       />
     </button>
   );

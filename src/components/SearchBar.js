@@ -1,24 +1,31 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { fetchMealAPI, fetchDrinkAPI } from '../services/foodAPI';
+import { saveFoodSearch, saveDrinksSearch } from '../redux/actions';
 
-function SearchBar({ page }) {
+function SearchBar({ page, dispatchSaveFood, dispatchSaveDrinks }) {
   const [searchInput, setSearchInput] = useState('');
   const [option, setOption] = useState('');
 
-  function pageCheckSwitch(pageName) {
+  async function pageCheckSwitch(pageName) {
     if (pageName === 'Bebidas') {
-      return fetchDrinkAPI(option, searchInput);
+      const API_RESPONSE = await fetchDrinkAPI(option, searchInput);
+      dispatchSaveDrinks(API_RESPONSE);
+    } else {
+      const API_RESPONSE = await fetchMealAPI(option, searchInput);
+      dispatchSaveFood(API_RESPONSE);
     }
-    return fetchMealAPI(option, searchInput);
   }
-  async function handleButtonClick() {
+
+  function handleButtonClick() {
     if (!searchInput || !option) {
       return alert('Please select an option or input some search parameter');
     } if (option === 'first-letter' && searchInput.length > 1) {
       return alert('Sua busca deve conter somente 1 (um) caracter');
     }
-    const apiResponse = await pageCheckSwitch(page);
+    pageCheckSwitch(page);
+
     return null;
   }
 
@@ -73,6 +80,13 @@ function SearchBar({ page }) {
 
 SearchBar.propTypes = {
   page: PropTypes.string.isRequired,
+  dispatchSaveFood: PropTypes.func.isRequired,
+  dispatchSaveDrinks: PropTypes.func.isRequired,
 };
 
-export default SearchBar;
+const mapDispatchToProps = (dispatch) => ({
+  dispatchSaveFood: (payload) => dispatch(saveFoodSearch(payload)),
+  dispatchSaveDrinks: (payload) => dispatch(saveDrinksSearch(payload)),
+});
+
+export default connect(null, mapDispatchToProps)(SearchBar);
