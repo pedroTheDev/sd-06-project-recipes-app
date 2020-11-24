@@ -30,11 +30,6 @@ describe('testando os elementos da barra de busca', () => {
 
 describe('testando a barra de busca logo abaixo do header', () => {
   it('Se o radio selecionado for Ingrediente, na pagina de comidas', async () => {
-    const { queryByTestId, findByTestId } = renderWithRouter(
-      <AppProvider>
-        <Food />
-      </AppProvider>,
-    );
     const answer = { meals: [
       { strMeal: 'Brown Stew Chicken',
         strMealThumb: 'https:www.themealdb.comimagesmediamealssypxpx1515365095.jpg',
@@ -46,6 +41,11 @@ describe('testando a barra de busca logo abaixo do header', () => {
     global.fetch = jest.fn(() => Promise.resolve({
       json: () => Promise.resolve(answer),
     }));
+    const { queryByTestId, findByTestId } = renderWithRouter(
+      <AppProvider>
+        <Food />
+      </AppProvider>,
+    );
     const search = queryByTestId('search-top-btn');
     fireEvent.click(search);
     const input = queryByTestId('search-input');
@@ -55,15 +55,9 @@ describe('testando a barra de busca logo abaixo do header', () => {
     const searchButton = queryByTestId('exec-search-btn');
     fireEvent.click(searchButton);
     await findByTestId('0-recipe-card');
-    expect(global.fetch).toHaveBeenCalledTimes(1);
     expect(global.fetch).toBeCalledWith('https://www.themealdb.com/api/json/v1/1/filter.php?i=chicken');
   });
   it('se o radio selecionado for Nome, na pagina de comidas', async () => {
-    const { queryByTestId, findByTestId } = renderWithRouter(
-      <AppProvider>
-        <Food />
-      </AppProvider>,
-    );
     const answer = { meals: [
       { strMeal: 'Brown Stew Chicken',
         strMealThumb: 'https:www.themealdb.comimagesmediamealssypxpx1515365095.jpg',
@@ -75,6 +69,11 @@ describe('testando a barra de busca logo abaixo do header', () => {
     global.fetch = jest.fn(() => Promise.resolve({
       json: () => Promise.resolve(answer),
     }));
+    const { queryByTestId, findByTestId } = renderWithRouter(
+      <AppProvider>
+        <Food />
+      </AppProvider>,
+    );
     const search = queryByTestId('search-top-btn');
     fireEvent.click(search);
     const input = queryByTestId('search-input');
@@ -84,15 +83,9 @@ describe('testando a barra de busca logo abaixo do header', () => {
     const searchButton = queryByTestId('exec-search-btn');
     fireEvent.click(searchButton);
     await findByTestId('0-recipe-card');
-    expect(global.fetch).toHaveBeenCalledTimes(1);
     expect(global.fetch).toBeCalledWith('https://www.themealdb.com/api/json/v1/1/search.php?s=chicken');
   });
   it('se o radio selecionado for Primeira letra, na pagina de comidas', async () => {
-    const { queryByTestId, findByTestId } = renderWithRouter(
-      <AppProvider>
-        <Food />
-      </AppProvider>,
-    );
     const answer = { meals: [
       { strMeal: 'Brown Stew Chicken',
         strMealThumb: 'https:www.themealdb.comimagesmediamealssypxpx1515365095.jpg',
@@ -104,6 +97,11 @@ describe('testando a barra de busca logo abaixo do header', () => {
     global.fetch = jest.fn(() => Promise.resolve({
       json: () => Promise.resolve(answer),
     }));
+    const { queryByTestId, findByTestId } = renderWithRouter(
+      <AppProvider>
+        <Food />
+      </AppProvider>,
+    );
     const search = queryByTestId('search-top-btn');
     fireEvent.click(search);
     const input = queryByTestId('search-input');
@@ -113,7 +111,6 @@ describe('testando a barra de busca logo abaixo do header', () => {
     const searchButton = queryByTestId('exec-search-btn');
     fireEvent.click(searchButton);
     await findByTestId('0-recipe-card');
-    expect(global.fetch).toHaveBeenCalledTimes(1);
     expect(global.fetch).toBeCalledWith('https://www.themealdb.com/api/json/v1/1/search.php?f=c');
   });
   it('se o radio selecionado for Primeira letra e escrever mais de 1 letra', () => {
@@ -138,11 +135,6 @@ describe('testando a barra de busca logo abaixo do header', () => {
 
 describe('testando a barra de busca logo abaixo do header', () => {
   it('Se o radio selecionado for Ingrediente na pagina de bebidas', async () => {
-    const { queryByTestId, findByTestId } = renderWithRouter(
-      <AppProvider>
-        <Drink />
-      </AppProvider>,
-    );
     const answer = { drinks: [
       { strDrink: 'Long vodka',
         strDrinkThumb: 'https:www.thecocktaildb.comimagesmediadrink9179i01503565212.jpg',
@@ -154,6 +146,11 @@ describe('testando a barra de busca logo abaixo do header', () => {
     global.fetch = jest.fn(() => Promise.resolve({
       json: () => Promise.resolve(answer),
     }));
+    const { queryByTestId, findByTestId } = renderWithRouter(
+      <AppProvider>
+        <Drink />
+      </AppProvider>,
+    );
     const search = queryByTestId('search-top-btn');
     fireEvent.click(search);
     const input = queryByTestId('search-input');
@@ -168,11 +165,6 @@ describe('testando a barra de busca logo abaixo do header', () => {
     expect(global.fetch).toBeCalledWith('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=vodka');
   });
   it('se o radio selecionado for Nome  na pagina de bebidas', async () => {
-    const { queryByTestId, findByTestId } = renderWithRouter(
-      <AppProvider>
-        <Drink />
-      </AppProvider>,
-    );
     const answer = { drinks: [
       { strDrink: 'Long vodka',
         strDrinkThumb: 'https:www.thecocktaildb.comimagesmediadrink9179i01503565212.jpg',
@@ -184,6 +176,11 @@ describe('testando a barra de busca logo abaixo do header', () => {
     global.fetch = jest.fn(() => Promise.resolve({
       json: () => Promise.resolve(answer),
     }));
+    const { queryByTestId, findByTestId } = renderWithRouter(
+      <AppProvider>
+        <Drink />
+      </AppProvider>,
+    );
     const search = queryByTestId('search-top-btn');
     fireEvent.click(search);
     const input = queryByTestId('search-input');
@@ -193,15 +190,9 @@ describe('testando a barra de busca logo abaixo do header', () => {
     const searchButton = queryByTestId('exec-search-btn');
     fireEvent.click(searchButton);
     await findByTestId('0-recipe-card');
-    expect(global.fetch).toHaveBeenCalledTimes(1);
     expect(global.fetch).toBeCalledWith('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=vodka');
   });
   it('se o radio selecionado for Primeira letra  na pagina de bebidas', async () => {
-    const { queryByTestId, findByTestId } = renderWithRouter(
-      <AppProvider>
-        <Drink />
-      </AppProvider>,
-    );
     const answer = { drinks: [
       { strDrink: 'Long vodka',
         strDrinkThumb: 'https:www.thecocktaildb.comimagesmediadrink9179i01503565212.jpg',
@@ -213,6 +204,11 @@ describe('testando a barra de busca logo abaixo do header', () => {
     global.fetch = jest.fn(() => Promise.resolve({
       json: () => Promise.resolve(answer),
     }));
+    const { queryByTestId, findByTestId } = renderWithRouter(
+      <AppProvider>
+        <Drink />
+      </AppProvider>,
+    );
     const search = queryByTestId('search-top-btn');
     fireEvent.click(search);
     const input = queryByTestId('search-input');
@@ -222,7 +218,6 @@ describe('testando a barra de busca logo abaixo do header', () => {
     const searchButton = queryByTestId('exec-search-btn');
     fireEvent.click(searchButton);
     await findByTestId('0-recipe-card');
-    expect(global.fetch).toHaveBeenCalledTimes(1);
     expect(global.fetch).toBeCalledWith('https://www.thecocktaildb.com/api/json/v1/1/search.php?f=v');
   });
   it('se o radio selecionado for Primeira letra e digitado mais de 1 letra', () => {
@@ -247,11 +242,6 @@ describe('testando a barra de busca logo abaixo do header', () => {
 
 describe('Mostre as receitas em cards caso mais de uma receita seja encontrada', () => {
   it('se mais de uma comida seja encontrada, mostrar as 12 primeiras', async () => {
-    const { queryByTestId, findByTestId } = renderWithRouter(
-      <AppProvider>
-        <Food />
-      </AppProvider>,
-    );
     const answer = { meals: [
       { strMeal: 'Brown Stew Chicken',
         strMealThumb: 'https:www.themealdb.comimagesmediamealssypxpx1515365095.jpg',
@@ -275,6 +265,11 @@ describe('Mostre as receitas em cards caso mais de uma receita seja encontrada',
     global.fetch = jest.fn(() => Promise.resolve({
       json: () => Promise.resolve(answer),
     }));
+    const { queryByTestId, findByTestId } = renderWithRouter(
+      <AppProvider>
+        <Food />
+      </AppProvider>,
+    );
     const search = queryByTestId('search-top-btn');
     fireEvent.click(search);
     const input = queryByTestId('search-input');
@@ -293,11 +288,6 @@ describe('Mostre as receitas em cards caso mais de uma receita seja encontrada',
     expect(lastCard).not.toBeInTheDocument();
   });
   it('se mais de uma bebida seja encontrada, mostrar as 12 primeiras', async () => {
-    const { queryByTestId, findByTestId } = renderWithRouter(
-      <AppProvider>
-        <Drink />
-      </AppProvider>,
-    );
     const answer = { drinks: [
       { strDrink: 'Long vodka',
         strDrinkThumb: 'https:www.thecocktaildb.comimagesmediadrink9179i01503565212.jpg',
@@ -351,6 +341,11 @@ describe('Mostre as receitas em cards caso mais de uma receita seja encontrada',
     global.fetch = jest.fn(() => Promise.resolve({
       json: () => Promise.resolve(answer),
     }));
+    const { queryByTestId, findByTestId } = renderWithRouter(
+      <AppProvider>
+        <Drink />
+      </AppProvider>,
+    );
     const search = queryByTestId('search-top-btn');
     fireEvent.click(search);
     const input = queryByTestId('search-input');
@@ -368,29 +363,5 @@ describe('Mostre as receitas em cards caso mais de uma receita seja encontrada',
     }
     const lastCard = queryByTestId(`${maximum}-recipe-card`);
     expect(lastCard).not.toBeInTheDocument();
-  });
-});
-describe('testando um alert caso nenhuma receita seja encontrada', () => {
-  it('Caso nenhuma comida seja encontrada o alert deve ser exibido;', async () => {
-    const { queryByTestId } = renderWithRouter(
-      <AppProvider>
-        <Food />
-      </AppProvider>,
-    );
-    const answer = { meals: null };
-    global.fetch = jest.fn(() => Promise.resolve({
-      json: () => Promise.resolve(answer),
-    }));
-    const search = queryByTestId('search-top-btn');
-    fireEvent.click(search);
-    const input = queryByTestId('search-input');
-    fireEvent.change(input, { target: { value: 'xablau' } });
-    const ingredButton = queryByTestId('ingredient-search-radio');
-    fireEvent.click(ingredButton);
-    const searchButton = queryByTestId('exec-search-btn');
-    fireEvent.click(searchButton);
-    expect(global.fetch).toHaveBeenCalledTimes(1);
-    const card = queryByTestId('0-recipe-card');
-    expect(card).not.toBeInTheDocument();
   });
 });

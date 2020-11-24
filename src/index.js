@@ -5,17 +5,14 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-import LoginProvider from './provider/LoginProvider';
 import AppProvider from './provider/AppProvider';
 
 ReactDOM.render(
-  <LoginProvider>
-    <AppProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </AppProvider>
-  </LoginProvider>,
+  <AppProvider>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </AppProvider>,
   document.getElementById('root'),
 );
 

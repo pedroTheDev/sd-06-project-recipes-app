@@ -17,6 +17,17 @@ body {
   width: 48%;
 }
 
+.food-details {
+  width: 95%;
+  margin: 10px;
+  text-align: justify;
+  font-size: 1.5em;
+}
+
+.pictureDetail {
+  width: 100%;
+}
+
 .bodier {
   display: flex;
   flex-direction: row;
@@ -50,6 +61,25 @@ body {
   width: 100%;
   color: white;
   border-radius: 10px;
+}
+
+.mini-card {
+  text-align: center;
+}
+
+.mini-picture {
+  border-radius: 30px;
+  width: 170px;
+  -webkit-box-shadow: 0px 3px 5px 0px rgba(184,175,184,1);
+  -moz-box-shadow: 0px 3px 5px 0px rgba(184,175,184,1);
+  box-shadow: 0px 3px 5px 0px rgba(184,175,184,1);
+  margin: 5px;
+}
+
+.recomended {
+  display: flex;
+  font-size: 1em;
+  overflow-x: scroll;
 }
 
 .picture {
