@@ -47,7 +47,7 @@ export default function RecipeResults({ recipe, recipeIndex, pathname }) {
     if (thumbKey) {
       return (
         <div
-          className="main__page__recipe-container"
+          className="main__page__recipe-card"
           data-testid={ `${recipeIndex}-recipe-card` }
         >
           {renderRecipeDetails()}

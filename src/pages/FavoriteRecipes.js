@@ -1,22 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Footer from '../components/Footer';
+
 import Header from '../components/Header';
 
-function Perfil(props) {
+export default function FavoriteRecipes(props) {
   const { history: { location: { pathname } } } = props;
   return (
-    <div>
-      <Header pathname={ pathname } />
-      <p>página de perfil</p>
-      <Footer />
-    </div>
+    <Header pathname={ pathname } />
   );
 }
 
-export default Perfil;
-
-Perfil.propTypes = {
+FavoriteRecipes.propTypes = {
 
   history: PropTypes.shape({
     location: PropTypes.shape({
