@@ -4,6 +4,15 @@ import './styles/App.css';
 import Home from './pages/Home';
 import Comidas from './pages/Comidas';
 import Bebidas from './pages/Bebidas';
+import BebidasPorIngredientes from './pages/BebidasPorIngredientes';
+import ComidasPorIngredientes from './pages/ComidasPorIngredientes';
+import ExplorarBebidas from './pages/ExplorarBebidas';
+import ExplorarComidas from './pages/ExplorarComidas';
+import ComidaPorOrigem from './pages/ComidasPorOrigem';
+import Explorar from './pages/Explorar';
+import ReceitasFeitas from './pages/ReceitasFeitas';
+import ReceitasFavoritas from './pages/ReceitasFavoritas';
+import Perfil from './pages/Perfil';
 import Provider from './hooks/Provider';
 
 function App() {
@@ -13,19 +22,27 @@ function App() {
         <Route path="/" exact component={ Home } />
         <Route path="/comidas" exact component={ Comidas } />
         <Route path="/bebidas" exact component={ Bebidas } />
-        <Route path="/comidas/{id-da-receita}" exact component={ App } />
-        <Route path="/bebidas/{id-da-receita}" exact component={ App } />
-        <Route path="/comidas/{id-da-receita}/in-progress" exact component={ App } />
-        <Route path="/bebidas/{id-da-receita}/in-progress" exact component={ App } />
-        <Route path="/explorar" exact component={ App } />
-        <Route path="/explorar/comidas" exact component={ App } />
-        <Route path="/explorar/bebidas" exact component={ App } />
-        <Route path="/explorar/comidas/ingredientes" exact component={ App } />
-        <Route path="/explorar/bebidas/ingredientes" exact component={ App } />
-        <Route path="/explorar/comidas/area" exact component={ App } />
-        <Route path="/perfil" exact component={ App } />
-        <Route path="/receitas-feitas" exact component={ App } />
-        <Route path="/receitas-favoritas" exact component={ App } />
+        <Route path="/comidas/:id" exact component={ App } />
+        <Route path="/bebidas/:id" exact component={ App } />
+        <Route path="/comidas/:id/in-progress" exact component={ App } />
+        <Route path="/bebidas/:id/in-progress" exact component={ App } />
+        <Route path="/explorar" exact component={ Explorar } />
+        <Route path="/explorar/comidas" exact component={ ExplorarComidas } />
+        <Route path="/explorar/bebidas" exact component={ ExplorarBebidas } />
+        <Route
+          path="/explorar/comidas/ingredientes"
+          exact
+          component={ ComidasPorIngredientes }
+        />
+        <Route
+          path="/explorar/bebidas/ingredientes"
+          exact
+          component={ BebidasPorIngredientes }
+        />
+        <Route path="/explorar/comidas/area" exact component={ ComidaPorOrigem } />
+        <Route path="/perfil" exact component={ Perfil } />
+        <Route path="/receitas-feitas" exact component={ ReceitasFeitas } />
+        <Route path="/receitas-favoritas" exact component={ ReceitasFavoritas } />
       </Switch>
     </Provider>
   );
