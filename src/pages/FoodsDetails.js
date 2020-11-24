@@ -17,6 +17,7 @@ class FoodsDetails extends React.Component {
       Ingredients: [],
       Measures: [],
       Video: '',
+      Update: false,
     };
     this.goLeft = this.goLeft.bind(this);
     this.goRight = this.goRight.bind(this);
@@ -117,6 +118,27 @@ class FoodsDetails extends React.Component {
       image: recipe.strMealThumb,
     }];
 
+    if (!localStorage.getItem('favoriteRecipes')) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify(myObject));
+    }
+
+    // Lógica para remoção
+    const isFavorite = JSON.parse(localStorage.getItem('isFav'));
+    const myLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+
+    if (isFavorite && myLocalStorage) {
+      const itemToRemove = myLocalStorage.find((element) => (element.id === '52819'));
+      const indexToRemove = myLocalStorage.indexOf(itemToRemove, 0);
+
+      myLocalStorage.splice(indexToRemove, 1);
+
+      localStorage.setItem('favoriteRecipes', JSON.stringify(myLocalStorage));
+
+      // const arrayteste = ['a', 'b', 'c', 'd'];
+      // const indexteste = arrayteste.indexOf('c');
+      // console.log(arrayteste.splice(indexteste, 1)); // esse eu removi
+      // console.log(arrayteste);// esse oq sobrou
+    }
     const MyLSObj = JSON.parse(localStorage.getItem('favoriteRecipes'));
     const combineObjects = MyLSObj.concat(myObject);
 
@@ -125,14 +147,14 @@ class FoodsDetails extends React.Component {
   }
 
   changeFavIcon({ idMeal }) {
-    const { favorite } = this.props;
-    const { dispatchFavorite } = this.props;
-    const favId = JSON.parse(localStorage.getItem('favoriteRecipes')).id;
-    if (favId === idMeal && Object.values(favorite)[0] !== true) {
-      return dispatchFavorite(true, idMeal);
-    }
-
-    return dispatchFavorite(false, 'nan');
+    const { Update } = this.state;
+    const isFav = JSON.parse(localStorage.getItem('isFav'));
+    const favId = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const filteredStorage = favId
+      .filter((v, i, a) => a.findIndex((t) => (t.id === v.id)) === i); // só registra um único id
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favId));
+    this.setState({ Update: !Update });
+    localStorage.setItem('isFav', !isFav);
   }
 
   goLeft() {
@@ -166,8 +188,8 @@ class FoodsDetails extends React.Component {
       Measures,
       Video } = this.state;
 
-    const { favorite } = this.props;
-    // const favoriteLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const isFav = JSON.parse(localStorage.getItem('isFav'));
+
     return (
       <div className="food-drink-detail-container">
         {Meal ? Meal.map((recipe, index) => (
@@ -193,7 +215,7 @@ class FoodsDetails extends React.Component {
                 <input
                   type="image"
                   data-testid="favorite-btn"
-                  src={ Object.values(favorite)[0] ? blackHeartIcon : whiteHeartIcon }
+                  src={ isFav ? blackHeartIcon : whiteHeartIcon }
                   onClick={ () => this.setLocalState(recipe) }
                   alt="whiteHeartIcon"
                 />
@@ -293,7 +315,6 @@ FoodsDetails.propTypes = {
   dispatchID: PropTypes.func.isRequired,
   favorite: PropTypes.shape().isRequired,
   idCurrent: PropTypes.string.isRequired,
-  dispatchFavorite: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FoodsDetails);
