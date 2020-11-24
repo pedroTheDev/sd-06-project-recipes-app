@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router';
 import Footer from '../components/Footer';
+import { getRecipesMealsByRandomIngredients } from '../services/mealsAPI';
 
 function ExploreComidas() {
+  const [idRecipeRandom, setRecipeRandom] = useState('');
+  async function getRandom() {
+    const result = await getRecipesMealsByRandomIngredients();
+    setRecipeRandom(result[0].idMeal);
+  }
   return (
     <div>
       <h1>Explore Comidas</h1>
@@ -16,11 +23,14 @@ function ExploreComidas() {
           Por Ingredientes
         </button>
       </Link>
-      <Link to="/?">
-        <button type="button" data-testid="explore-surprise">
-          Me Surpreenda!
-        </button>
-      </Link>
+      <button type="button" data-testid="explore-surprise" onClick={ getRandom }>
+        Me Surpreenda!
+      </button>
+      {
+        idRecipeRandom !== ''
+          ? (<Redirect to={ `/comidas/${idRecipeRandom}` } />)
+          : null
+      }
       <Footer />
     </div>
   );
