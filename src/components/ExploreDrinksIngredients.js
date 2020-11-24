@@ -19,8 +19,7 @@ function ExploreDrinksIngredients() {
       <div key={index} data-testid={ `${index}-ingredient-card` }>
         <img
           data-testid={ `${index}-card-img` }
-          width="60px"
-          src={`https://www.themealdb.com/images/ingredients/${drinks.strIngredient1}.png`}
+          src={`https://www.thecocktaildb.com/images/ingredients/${drinks.strIngredient1}-Small.png`}
         />
         <h3
           data-testid={ `${index}-card-name` }

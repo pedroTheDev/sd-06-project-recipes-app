@@ -19,8 +19,7 @@ function ExploreFoodsIngredients() {
       <div key={index} data-testid={ `${index}-ingredient-card` }>
         <img
           data-testid={ `${index}-card-img` }
-          width="60px"
-          src={`https://www.themealdb.com/images/ingredients/${meals.strIngredient}.png`}
+          src={`https://www.themealdb.com/images/ingredients/${meals.strIngredient}-Small.png`}
         />
         <h3
           data-testid={ `${index}-card-name` }
