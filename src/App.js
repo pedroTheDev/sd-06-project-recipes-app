@@ -24,7 +24,7 @@ function App() {
         <Route exact path="/bebidas/:id" component={ DrinksDetails } />
         <Route
           exact
-          path="/bebidas/178319/in-progress"
+          path="/bebidas/:id/in-progress"
           component={ DrinksRecipesInProgress }
         />
         <Route path="/bebidas" component={ Drinks } />
