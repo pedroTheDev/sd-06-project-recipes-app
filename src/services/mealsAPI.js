@@ -7,4 +7,26 @@ export async function getAllRecipeTypesApi(type) {
   return result.meals;
 }
 
-export default { getAllRecipeTypesApi };
+export async function getFilteredRecipesApi(type, value) {
+  if (type === 'ingredients') {
+    const response = await fetch(`${URL_BASE}filter.php?i=${value}`);
+    const result = await response.json();
+    console.log(result.meals);
+    return result.meals;
+  }
+  if (type === 'name') {
+    const response = await fetch(`${URL_BASE}search.php?s=${value}`);
+    const result = await response.json();
+    console.log(result.meals);
+    return result.meals;
+  }
+  if (type === 'first') {
+    const response = await fetch(`${URL_BASE}search.php?f=${value}`);
+    const result = await response.json();
+    console.log(result.meals);
+    return result.meals;
+  }
+  return [];
+}
+
+export default { getAllRecipeTypesApi, getFilteredRecipesApi };

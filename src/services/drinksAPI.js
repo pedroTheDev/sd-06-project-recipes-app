@@ -7,4 +7,26 @@ export async function getAllDrinkTypesApi(type) {
   return result.drinks;
 }
 
-export default { getAllDrinkTypesApi };
+export async function getFilteredDrinksApi(type, value) {
+  if (type === 'ingredients') {
+    const response = await fetch(`${URL_BASE}filter.php?i=${value}`);
+    const result = await response.json();
+    console.log(result.drinks);
+    return result.drinks;
+  }
+  if (type === 'name') {
+    const response = await fetch(`${URL_BASE}search.php?s=${value}`);
+    const result = await response.json();
+    console.log(result.drinks);
+    return result.drinks;
+  }
+  if (type === 'first') {
+    const response = await fetch(`${URL_BASE}search.php?f=${value}`);
+    const result = await response.json();
+    console.log(result.drinks);
+    return result.drinks;
+  }
+  return [];
+}
+
+export default { getAllDrinkTypesApi, getFilteredDrinksApi };
