@@ -15,6 +15,18 @@ function Header({ title }) {
   const history = useHistory();
   const DOZE = 12;
 
+  useEffect(async () => {
+    if (title === 'Comidas') {
+      const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+      const responseJson = await response.json();
+      setData(responseJson);
+    } else {
+      const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+      const responseJson = await response.json();
+      setData(responseJson);
+    }
+  }, []);
+
   useEffect(() => {
     if (data.meals || data.drinks) {
       setLoading(false);
