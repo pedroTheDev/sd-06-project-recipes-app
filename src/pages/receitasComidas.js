@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { Header, Footer, RecipesCard } from '../components';
+import { Header, Footer, RecipesCardMeals } from '../components';
 
 import getMeals from '../services/theMealApi';
 import addMeals from '../actions/meals';
@@ -25,7 +26,7 @@ class ReceitasComidas extends Component {
     return (
       <div>
         <Header title="Comidas" />
-        <RecipesCard />
+        <RecipesCardMeals />
         <Footer title="Comidas" />
       </div>
     );
@@ -36,5 +37,10 @@ const mapDispatchToProps = (dispatch) => ({
   sendMeals: (meals) => dispatch(addMeals(meals)),
   sendMealsCategories: (meals) => dispatch(addMealsCategories(meals)),
 });
+
+ReceitasComidas.propTypes = {
+  sendMealsCategories: PropTypes.func.isRequired,
+  sendMeals: PropTypes.func.isRequired,
+};
 
 export default connect(null, mapDispatchToProps)(ReceitasComidas);

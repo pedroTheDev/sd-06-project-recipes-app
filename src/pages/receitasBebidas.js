@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { Header, Footer, RecipesCard } from '../components';
+import { Header, Footer, RecipesCardDrinks } from '../components';
 
 import getCockTail from '../services/theCockTailApi';
 import addDrinks from '../actions/drinks';
@@ -25,7 +26,7 @@ class ReceitasBebidas extends Component {
     return (
       <div>
         <Header title="Bebidas" />
-        <RecipesCard />
+        <RecipesCardDrinks />
         <Footer title="Bebidas" />
       </div>
     );
@@ -36,5 +37,10 @@ const mapDispatchToProps = (dispatch) => ({
   sendCockTail: (drinks) => dispatch(addDrinks(drinks)),
   sendCocktailCategories: (drinks) => dispatch(addDrinksCategories(drinks)),
 });
+
+ReceitasBebidas.propTypes = {
+  sendCocktailCategories: PropTypes.func.isRequired,
+  sendCockTail: PropTypes.func.isRequired,
+};
 
 export default connect(null, mapDispatchToProps)(ReceitasBebidas);
