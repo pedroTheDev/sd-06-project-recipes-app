@@ -16,7 +16,7 @@ export function success(data) {
     const maxLength = 12;
     const increment = 1;
     const lengthLimit = processing.length > maxLength ? maxLength : processing.length;
-    for (let i = 0; i < lengthLimit; i += increment) {
+    for (let i = increment; i <= lengthLimit; i += increment) {
       list.push(processing[i]);
     }
     list = list.map((recipe) => (apiDataProcessor(recipe)));
