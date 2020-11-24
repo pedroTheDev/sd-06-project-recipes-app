@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import RecipesAppContext from '../context/RecipesAppContext';
 
 function Card({ title }) {
