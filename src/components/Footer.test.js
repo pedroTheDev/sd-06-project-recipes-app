@@ -3,7 +3,7 @@ import { fireEvent, waitFor } from '@testing-library/react';
 import Footer from './Footer';
 import renderWithRouter from '../renderWithRouter';
 import { drinkIcon, mealIcon, exploreIcon } from '../images';
-import App from '../App';
+// import App from '../App';
 
 describe('renders footer correctly', () => {
   // afterEach(cleanup);

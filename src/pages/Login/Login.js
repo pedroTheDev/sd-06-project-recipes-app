@@ -27,7 +27,7 @@ function Login() {
   };
 
   return (
-    <div>
+    <div className="login-center">
       <h1>Bem-vindo chef!</h1>
       <form>
         <div className="form-group">
