@@ -12,7 +12,7 @@ export function requestApiDrinkFilterIngredient(ingredient) {
   return randomRequestApiDrink(`filter.php?i=${ingredient}`);
 }
 
-export function requestApiDrinkFilterName(name) {
+export function requestApiDrinkFilterName(name = '') {
   return randomRequestApiDrink(`search.php?s=${name}`);
 }
 

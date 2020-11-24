@@ -1,16 +1,23 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import RecipesAppContext from '../hooks/RecipesAppContext';
 import Footer from '../components/Footer';
+import { requestApiDrinkFilterName } from '../services/requestDrink';
 
 function Bebidas({ history }) {
   const {
     cards: {
       cardDrink,
+      setCardDrink,
     },
   } = useContext(RecipesAppContext);
+
+  useEffect(() => {
+    requestApiDrinkFilterName()
+      .then((arrayApi) => setCardDrink(arrayApi));
+  }, []);
 
   if (cardDrink.length === 1) {
     const { idDrink } = cardDrink[0];

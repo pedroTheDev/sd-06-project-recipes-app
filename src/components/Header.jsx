@@ -21,8 +21,8 @@ function Header({ name, button }) {
   };
 
   return (
-    <div data-testid="header" className="header">
-      <header>
+    <div data-testid="header">
+      <header className="header">
         <button type="button" className="logo-profile" data-testid="profile-top-btn">
           <img src={ profileIcon } alt="profile icon" />
         </button>

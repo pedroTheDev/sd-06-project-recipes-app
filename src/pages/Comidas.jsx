@@ -1,16 +1,23 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import RecipesAppContext from '../hooks/RecipesAppContext';
 import Footer from '../components/Footer';
+import { requestApiFoodFilterName } from '../services/requestFood';
 
 function Comidas({ history }) {
   const {
     cards: {
       cardFood,
+      setCardFood,
     },
   } = useContext(RecipesAppContext);
+
+  useEffect(() => {
+    requestApiFoodFilterName()
+      .then((arrayApi) => setCardFood(arrayApi));
+  }, []);
 
   if (cardFood.length === 1) {
     const { idMeal } = cardFood[0];
@@ -25,28 +32,29 @@ function Comidas({ history }) {
     <div>
       <Header name="Comidas" button={ buttonIs } />
       <div>
-        {cardFood.slice(ofTheFirstParameter, upToParameter12).map(({
-          idMeal,
-          strMeal,
-          strMealThumb,
-        }, index) => (
-          <Link
-            key={ idMeal }
-            to={ `/comidas/${idMeal}` }
-            data-testid={ `${index}-recipe-card` }
-          >
-            <img
-              src={ strMealThumb }
-              alt={ strMeal }
-              data-testid={ `${index}-card-img` }
-            />
-            <h4
-              data-testid={ `${index}-card-name` }
+        {(cardFood.length === 0) ? <span>Loading...</span> : cardFood
+          .slice(ofTheFirstParameter, upToParameter12).map(({
+            idMeal,
+            strMeal,
+            strMealThumb,
+          }, index) => (
+            <Link
+              key={ idMeal }
+              to={ `/comidas/${idMeal}` }
+              data-testid={ `${index}-recipe-card` }
             >
-              { strMeal }
-            </h4>
-          </Link>
-        ))}
+              <img
+                src={ strMealThumb }
+                alt={ strMeal }
+                data-testid={ `${index}-card-img` }
+              />
+              <h4
+                data-testid={ `${index}-card-name` }
+              >
+                { strMeal }
+              </h4>
+            </Link>
+          ))}
       </div>
       <Footer />
     </div>
