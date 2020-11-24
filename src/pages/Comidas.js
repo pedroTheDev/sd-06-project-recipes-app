@@ -19,10 +19,15 @@ function Comidas({ retrievedFood }) {
       const { idMeal } = request[0];
       return <Redirect to={ `/comidas/${idMeal}` } />;
     } else {
-      return request.map((meal, index) => (
-        index <= maxLength
-          ? <MealCard meal={ meal } key={ meal.idmeal } index={ index } />
-          : null));
+      return (
+        <main className="recipes-display">
+          {' '}
+          {request.map((meal, index) => (
+            index <= maxLength
+              ? <MealCard meal={ meal } key={ meal.idmeal } index={ index } />
+              : null))}
+          ;
+        </main>);
     }
     return null;
   };
