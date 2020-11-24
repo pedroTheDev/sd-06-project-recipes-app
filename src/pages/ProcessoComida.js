@@ -7,7 +7,11 @@ function ProcessoComida() {
   const [checked, setChecked] = useState({});
 
   const handleChange = ({ target }) => {
-    localStorage.inProgressRecipes = JSON.stringify({ meals: { idComida: [Object.keys(checked)] } });
+    localStorage.inProgressRecipes = JSON.stringify(
+      {
+        meals: { idComida: [Object.keys(checked)] },
+      },
+    );
     setChecked({ ...checked, [target.name]: target.checked });
   };
 
