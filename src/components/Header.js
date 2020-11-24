@@ -9,7 +9,7 @@ function Header({ pathname, setShowMultipleResults }) {
   const [toggleSearch, setToogleSearch] = useState(false);
 
   const renderProfileButton = () => (
-    <Link to="/profile">
+    <Link to="/perfil">
       <button
         type="button"
         data-testid="profile-top-btn"
@@ -56,5 +56,6 @@ export default Header;
 
 Header.propTypes = {
   pathname: PropTypes.string.isRequired,
+  setShowMultipleResults: propTypes.func.isRequired,
 
 };

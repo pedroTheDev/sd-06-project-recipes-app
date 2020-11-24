@@ -29,10 +29,7 @@ function App() {
         <Route exact path="/explorar" component={ Explore } />
         <Route path="/perfil" component={ Perfil } />
         <Route exact path="/" component={ Login } />
-    
 
-      
-        
       </Switch>
     </div>
   );
