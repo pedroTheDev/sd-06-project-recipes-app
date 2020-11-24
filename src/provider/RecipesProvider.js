@@ -64,11 +64,7 @@ export default function RecipesProvider({ children }) {
     setRadioValue,
     searchBar,
     setSearchBar,
-    // returnFoodApi,
-    // setReturnFoodAPi,
-    // returnDrinkApi,
     setFetchDrink,
-    // setReturnDrinkAPi,
   };
 
   return (
