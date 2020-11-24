@@ -4,7 +4,6 @@ import { createMemoryHistory } from 'history';
 import { render,
   fireEvent,
   waitForElement,
-  wait,
 } from '@testing-library/react';
 
 import ExploreIngredients from '../../pages/ExploreIngredients';
@@ -107,11 +106,7 @@ describe('explore by food ingredients specifications', () => {
   });
 
   it('navigates to main searching for foods with the ingredient on click', () => {
-    const { meals: ingredients } = mealIngredients;
-    const toSearchIndex = 0;
-    const mockedIngredient = ingredients[toSearchIndex].strIngredient;
-
-    const ingredientCard = screen.queryByTestId(`${toSearchIndex}-ingredient-card`);
+    const ingredientCard = screen.queryByTestId('0-ingredient-card');
     fireEvent.click(ingredientCard);
 
     const { pathname } = history.location;
