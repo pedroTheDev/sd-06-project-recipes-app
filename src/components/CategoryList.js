@@ -6,7 +6,7 @@ import RecipesContext from '../context/RecipesAppContext';
 function CategoryList({ title }) {
   const ZERO = 0;
   const CINCO = 5;
-  const { categoryList, setCategoryList } = useContext(RecipesContext);
+  const { categoryList, setCategoryList, setFilter } = useContext(RecipesContext);
 
   const renderCategoryList = async (callback) => {
     const response = await callback();
@@ -27,26 +27,19 @@ function CategoryList({ title }) {
     setBase();
   }, []);
 
-  const divStyle = {
-    width: '10rem',
-  };
-
   return (
     <>
       {categoryList.slice(ZERO, CINCO).map((cat) => (
-        <div
+        <button
+          type="button"
           key={ cat.strCategory }
-          className="card"
-          style={ divStyle }
+          data-testid={ `${cat.strCategory}-category-filter` }
+          onClick={ () => setFilter(cat.strCategory) }
         >
-          <p
-            data-testid={ `${cat.strCategory}-category-filter` }
-            className="card-text"
-          >
-            { cat.strCategory }
-          </p>
-        </div>))}
-      {' '}
+          {' '}
+          { cat.strCategory }
+        </button>))}
+
     </>
   );
 }
