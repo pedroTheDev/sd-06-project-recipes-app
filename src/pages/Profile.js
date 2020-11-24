@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 function MainFood() {
-  const userEmail = JSON.parse(localStorage.getItem('user'));
+  const userEmail = JSON.parse(localStorage.getItem('user')) || '';
   const { email } = userEmail;
 
   const doneRedirect = () => {

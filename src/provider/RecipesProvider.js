@@ -18,11 +18,8 @@ export default function RecipesProvider({ children }) {
   const [FoodBtn, setFoodBtn] = useState([]);
   const [filterFood, setFilterFood] = useState([]);
   const [filterDrink, setFilterDrink] = useState([]);
-
   const [radioValue, setRadioValue] = useState('');
   const [searchBar, setSearchBar] = useState('');
-  // const [returnFoodApi, setReturnFoodAPi] = useState([]);
-  // const [returnDrinkApi, setReturnDrinkAPi] = useState([]);
 
   useEffect(() => {
     if (fetchFood && fetchFood.length === 1) {
