@@ -17,6 +17,7 @@ class FoodsDetails extends React.Component {
       Ingredients: [],
       Measures: [],
       Video: '',
+      Update: false,
     };
     this.goLeft = this.goLeft.bind(this);
     this.goRight = this.goRight.bind(this);
@@ -125,14 +126,17 @@ class FoodsDetails extends React.Component {
   }
 
   changeFavIcon({ idMeal }) {
-    const { favorite } = this.props;
-    const { dispatchFavorite } = this.props;
-    const favId = JSON.parse(localStorage.getItem('favoriteRecipes')).id;
-    if (favId === idMeal && Object.values(favorite)[0] !== true) {
-      return dispatchFavorite(true, idMeal);
+    const { Update } = this.state;
+    const isFav = JSON.parse(localStorage.getItem('isFav'));
+    const favId = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const filter = favId.find((item) => item.id === idMeal);
+    if (filter) {
+      this.setState({ Update: !Update });
+      localStorage.setItem('isFav', !isFav);
+    } else {
+      this.setState({ Update: !Update });
+      localStorage.setItem('isFav', !isFav);
     }
-
-    return dispatchFavorite(false, 'nan');
   }
 
   goLeft() {
@@ -166,8 +170,8 @@ class FoodsDetails extends React.Component {
       Measures,
       Video } = this.state;
 
-    const { favorite } = this.props;
-    // const favoriteLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const isFav = JSON.parse(localStorage.getItem('isFav'));
+
     return (
       <div className="food-drink-detail-container">
         {Meal ? Meal.map((recipe, index) => (
@@ -193,7 +197,7 @@ class FoodsDetails extends React.Component {
                 <input
                   type="image"
                   data-testid="favorite-btn"
-                  src={ Object.values(favorite)[0] ? blackHeartIcon : whiteHeartIcon }
+                  src={ isFav ? blackHeartIcon : whiteHeartIcon }
                   onClick={ () => this.setLocalState(recipe) }
                   alt="whiteHeartIcon"
                 />
@@ -293,7 +297,6 @@ FoodsDetails.propTypes = {
   dispatchID: PropTypes.func.isRequired,
   favorite: PropTypes.shape().isRequired,
   idCurrent: PropTypes.string.isRequired,
-  dispatchFavorite: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FoodsDetails);
