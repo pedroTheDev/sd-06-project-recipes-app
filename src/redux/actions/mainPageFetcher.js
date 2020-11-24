@@ -9,16 +9,20 @@ function loading() {
   return { type: LOADING };
 }
 
-function success(data) {
+export function success(data) {
   const processing = data.meals || data.drinks;
   let list = [];
-  const doze = 12;
-  const um = 1;
-  const lengthLimit = processing.length > doze ? doze : processing.length;
-  for (let i = 0; i < lengthLimit; i += um) {
-    list.push(processing[i]);
+  if (processing) {
+    const maximumLength = 12;
+    const increment = 1;
+    const lengthLimit = processing.length > maximumLength ? maximumLength : processing.length;
+    for (let i = 0; i < lengthLimit; i += increment) {
+      list.push(processing[i]);
+    }
+    list = list.map((recipe) => (apiDataProcessor(recipe)));
+  } else {
+    list = null;
   }
-  list = list.map((recipe) => (apiDataProcessor(recipe)));
   return { type: SUCCESS, list };
 }
 
