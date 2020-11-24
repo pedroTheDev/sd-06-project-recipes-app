@@ -37,8 +37,9 @@ function Login(props) {
     setState({
       ...state,
       isDisable:
-      !((/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-        .test(email))
+
+      !((/^[^\s@]+@[^\s@]+\.[^\s@]+$/).test(email)
+
       && password.length > NUM_PASSWORD),
     });
   };
@@ -50,8 +51,9 @@ function Login(props) {
   };
 
   const setLocalStorageData = () => {
-    localStorage.setItem('mealToken', '1');
-    localStorage.setItem('cocktailsToken', '1');
+
+    localStorage.setItem('mealsToken', JSON.stringify(1));
+    localStorage.setItem('cocktailsToken', JSON.stringify(1));
     localStorage.setItem('user', JSON.stringify({ email: state.email }));
   };
 

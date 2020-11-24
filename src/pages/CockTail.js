@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -6,18 +5,18 @@ import Header from '../components/Header';
 import RecipeResults from '../components/RecipeResults';
 import findMatchInKeys from '../helpers/assets';
 
-function Food(props) {
+function CockTail(props) {
   const { history: { location: { pathname } }, recipes } = props;
   const [showMultipleResults, setShowMultipleResults] = useState(false);
 
-  const renderRecipesResults = () => {
+  const renderRecipeResults = () => {
     const maxRecipesNumber = 12;
     if (showMultipleResults) {
       return (
         recipes.results.filter((_recipe, index) => index < maxRecipesNumber)
           .map((recipe, index) => (<RecipeResults
-            pathname={ pathname }
             recipe={ recipe }
+            pathname={ pathname }
             key={ recipe[findMatchInKeys('id', recipe)] }
             recipeIndex={ index }
           />))
@@ -28,11 +27,8 @@ function Food(props) {
 
   return (
     <>
-      <Header
-        pathname={ pathname }
-        setShowMultipleResults={ setShowMultipleResults }
-      />
-      {renderRecipesResults()}
+      <Header pathname={ pathname } setShowMultipleResults={ setShowMultipleResults } />
+      {renderRecipeResults()}
     </>
   );
 }
@@ -41,9 +37,9 @@ const mapStateToProps = (state) => ({
   recipes: state.searchRecipes.recipes,
 });
 
-export default connect(mapStateToProps, null)(Food);
+export default connect(mapStateToProps, null)(CockTail);
 
-Food.propTypes = {
+CockTail.propTypes = {
   recipes: PropTypes.shape({
     type: PropTypes.string,
     results: PropTypes.arrayOf(PropTypes.any),
@@ -54,5 +50,3 @@ Food.propTypes = {
     }).isRequired,
   }).isRequired,
 };
-
-
