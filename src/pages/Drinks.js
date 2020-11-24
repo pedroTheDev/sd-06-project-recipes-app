@@ -10,7 +10,6 @@ function Drinks() {
 
   const fetchRecipes = async () => {
     const recipesApi = await fetchAPIDrinks('name', '');
-    console.log(recipesApi);
     setRecipes(recipesApi);
     setShowCard(true);
   };

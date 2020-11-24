@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ContextRecipes from '../context/ContextRecipes';
@@ -6,7 +6,7 @@ import ContextRecipes from '../context/ContextRecipes';
 function SearchBar(props) {
   const { fetchApi } = props;
   const {
-    setSelectedRadio, setSearchText, setIdRecipe, setRecipes, setTypeRecipe,
+    setSelectedRadio, setSearchText, setIdRecipe, setRecipes,
   } = useContext(ContextRecipes);
 
   const location = useLocation().pathname;
@@ -18,22 +18,16 @@ function SearchBar(props) {
       alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
     } else if (recipeApi.length === 1) {
       if (location === '/comidas') {
-        setIdRecipe(recipeApi[0].idMeal);
-        history.push(`/comidas/${recipeApi[0].idMeal}`);
+        const idRecipe = recipeApi[0].idMeal;
+        setIdRecipe(idRecipe);
+        history.push(`/comidas/${idRecipe}`);
       } else {
-        setIdRecipe(recipeApi[0].idDrink);
-        history.push(`/bebidas/${recipeApi[0].idDrink}`);
+        const idRecipe = recipeApi[0].idDrink;
+        setIdRecipe(idRecipe);
+        history.push(`/bebidas/${idRecipe}`);
       }
     }
   };
-
-  useEffect(() => {
-    if (location === '/comidas') {
-      setTypeRecipe('food');
-    } else {
-      setTypeRecipe('drink');
-    }
-  }, []);
 
   const handleClick = async () => {
     const selectedRadio = document.querySelector('input[name="search"]:checked').value;
@@ -47,7 +41,6 @@ function SearchBar(props) {
 
   return (
     <div>
-      {/* {renderRecipes ? <Card /> : null} */}
       <input type="text" data-testid="search-input" id="search-input" />
       <label htmlFor="ingredient">
         Ingrediente
