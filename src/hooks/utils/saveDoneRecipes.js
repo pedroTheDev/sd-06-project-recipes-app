@@ -6,10 +6,15 @@ function extractRecipeInfo(type, recipe) {
       strMeal: name,
       strCategory: category,
       strMealThumb: image,
-      strTags: tags,
+      strTags: stringTags,
     } = recipe;
 
     const alcoholicOrNot = '';
+
+    const tags = (stringTags
+      ? stringTags.split(',')
+      : []
+    );
 
     return {
       id,
@@ -17,7 +22,7 @@ function extractRecipeInfo(type, recipe) {
       name,
       category: (category || ''),
       image,
-      tags: (tags || []),
+      tags,
       alcoholicOrNot,
       type: 'comida',
     };
@@ -28,11 +33,16 @@ function extractRecipeInfo(type, recipe) {
     strDrink: name,
     strCategory: category,
     strDrinkThumb: image,
-    strTags: tags,
+    strTags: stringTags,
     strAlcoholic: alcoholicOrNot,
   } = recipe;
 
   const area = '';
+
+  const tags = (stringTags
+    ? stringTags.split(',')
+    : []
+  );
 
   return {
     id,
@@ -40,7 +50,7 @@ function extractRecipeInfo(type, recipe) {
     name,
     category: (category || ''),
     image,
-    tags: (tags || []),
+    tags,
     alcoholicOrNot,
     type: 'bebida',
   };
