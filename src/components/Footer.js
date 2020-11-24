@@ -9,13 +9,13 @@ const Footer = () => (
   <div>
     <div className="main-footer" data-testid="footer">
       <Link to="/bebidas">
-        <img src={ drinkIcon } alt="Profile" data-testid="drinks-bottom-btn" />
+        <img src={ drinkIcon } alt="drink" data-testid="drinks-bottom-btn" />
       </Link>
       <Link to="/explorar">
-        <img src={ exploreIcon } alt="Profile" data-testid="explore-bottom-btn" />
+        <img src={ exploreIcon } alt="explore" data-testid="explore-bottom-btn" />
       </Link>
       <Link to="/comidas">
-        <img src={ mealIcon } alt="Profile" data-testid="food-bottom-btn" />
+        <img src={ mealIcon } alt="food" data-testid="food-bottom-btn" />
       </Link>
     </div>
   </div>
