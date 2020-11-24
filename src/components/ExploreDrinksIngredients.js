@@ -7,8 +7,8 @@ function ExploreDrinksIngredients() {
   const apiIngredients = async () => {
     const apiRequest = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list');
     const response = await apiRequest.json();
-    setData(response.drinks)
-  }
+    setData(response.drinks);
+  };
 
   useEffect(() => {
     apiIngredients();
@@ -16,14 +16,17 @@ function ExploreDrinksIngredients() {
 
   return (
     data.map((drinks, index) => (
-      <div key={index} data-testid={ `${index}-ingredient-card` }>
+      <div key={ index } data-testid={ `${index}-ingredient-card` }>
         <img
           data-testid={ `${index}-card-img` }
-          src={`https://www.thecocktaildb.com/images/ingredients/${drinks.strIngredient1}-Small.png`}
+          alt="drink"
+          src={ `https://www.thecocktaildb.com/images/ingredients/${drinks.strIngredient1}-Small.png` }
         />
         <h3
           data-testid={ `${index}-card-name` }
-        >{ drinks.strIngredient1 }</h3>
+        >
+          { drinks.strIngredient1 }
+        </h3>
       </div>
     )).filter((_, index) => index < MAX_NUMBER_OF_CARDS)
   );
