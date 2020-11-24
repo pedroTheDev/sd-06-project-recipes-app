@@ -17,7 +17,7 @@ const getID = {
 const initialSearchValues = {
   comidas: {
     option: 'name',
-    value: 'chicken',
+    value: '',
     token: '1',
   },
   bebidas: {

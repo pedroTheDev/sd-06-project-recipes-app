@@ -14,4 +14,11 @@ const drinkCategories = {
   ],
 };
 
-module.exports = drinkCategories;
+export const categoriesToRender = (
+  drinkCategories
+    .drinks
+    .map(c => c.strCategory)
+    .filter((_, index) => index < 5)
+)
+
+export default drinkCategories;
