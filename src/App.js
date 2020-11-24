@@ -4,6 +4,8 @@ import MyProvider from './context/MyProvider';
 import Login from './pages/Login';
 import Menu from './pages/Menu';
 import Perfil from './pages/Perfil';
+import ExploreBebidas from './pages/ExploreBebidas';
+import ExploreComidas from './pages/ExploreComidas';
 import MenuDetails from './pages/MenuDetails';
 import NotFound from './pages/NotFound';
 import Explore from './pages/Explore';
@@ -15,6 +17,8 @@ function App() {
     <MyProvider>
       <BrowserRouter>
         <Switch>
+          <Route exact path="/explorar/comidas" component={ ExploreComidas } />
+          <Route exact path="/explorar/bebidas" component={ ExploreBebidas } />
           <Route exact path="/comidas" component={ Menu } />
           <Route exact path="/bebidas" component={ Menu } />
           <Route exact path="/explorar" component={ Explore } />

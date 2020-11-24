@@ -21,8 +21,16 @@ export async function getRecipesMealsByCategoryApi(category) {
   return result.meals;
 }
 
+// Lista de receitas de comidas por igredientes aleatorios
+export async function getRecipesMealsByRandomIngredients() {
+  const response = await fetch(`${URL_BASE}random.php`);
+  const result = await response.json();
+  return result.meals;
+}
+
 export default {
   getAllRecipeTypesApi,
   getRecipesMealsApi,
   getRecipesMealsByCategoryApi,
+  getRecipesMealsByRandomIngredients,
 };
