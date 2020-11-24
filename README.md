@@ -225,7 +225,7 @@ A base de dados serão 2 APIs distintas, uma para comidas e outra para bebidas.
 O layout tem como foco dispositivos móveis, então todos os protótipos vão estar desenvolvidos em telas menores.
 
 ### Protótipo do projeto
-
+ 
 Você pode acessar um protótipo no link abaixo:
 
 https://www.figma.com/file/WatDxtKl7g54QxhDi9qdbq/App-Receitas?node-id=0%3A1
@@ -1394,7 +1394,7 @@ A rota `/explorar/bebidas/area` não deve estar disponível, retornando um erro 
 
   **Observações técnicas**
 
-  * Redireciona para a rota correta.
+  * Redireciona para a rota correta. !
 
 ### 86 - Redirecione a pessoa usuária que, ao clicar no botão de "Receitas Feitas", a rota deve mudar para a tela de receitas feitas
 

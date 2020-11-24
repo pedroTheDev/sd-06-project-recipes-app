@@ -1,17 +1,29 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useLocation, useHistory } from 'react-router-dom';
 import ContextRecipes from '../context/ContextRecipes';
 import { fetchAPIDrinks, fetchAPIRecipes } from '../services';
+import shareIcon from '../images/shareIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 function RecipeDetails() {
-  const { typeRecipe, idRecipe, recipes, setRecipes } = useContext(ContextRecipes);
+  const {
+    typeRecipe,
+    idRecipe,
+    recipes,
+    setRecipes,
+    recipeStarted,
+    favoriteRecipe,
+    setFavoriteRecipe } = useContext(ContextRecipes);
   const [singleRecipe, setSingleRecipe] = useState([]);
   const [isFetching, setFetching] = useState(true);
+  const location = useLocation().pathname;
 
   const fetchDetailedRecipe = async () => {
     if (typeRecipe === 'food') {
       const data = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idRecipe}`);
       const responseJSON = await data.json();
-      const mealRecipe = await responseJSON.meals;
+      const mealRecipe = responseJSON.meals;
       setSingleRecipe(mealRecipe[0]);
       const recipesRecomend = await fetchAPIDrinks('name', '');
       setRecipes(recipesRecomend);
@@ -44,16 +56,16 @@ function RecipeDetails() {
           measure: recipeData[`strMeasure${index}`],
         });
       }
-      console.log(arrayIngredients);
     }
     return arrayIngredients;
   };
 
   const maxCards = 6;
   const allIngredients = renderIngredients(singleRecipe);
+  const history = useHistory();
 
   return (
-    <div>c
+    <div>
       {(isFetching) ? <h2>Carregando receita...</h2>
         : (
           <div>
@@ -147,9 +159,25 @@ function RecipeDetails() {
                 </section>
               </div>
             )}
-            <button type="button" data-testid="start-recipe-btn">Iniciar Receita</button>
-            <button type="button" data-testid="share-btn">Compartilhar</button>
-            <button type="button" data-testid="favorite-btn">Favoritar</button>
+            <section>
+              <button
+                type="button"
+                data-testid="start-recipe-btn"
+                onClick={ () => history.push(`${location}/in-progress`) }
+              >
+                {recipeStarted ? 'Continuar Receita' : 'Iniciar Receita'}
+              </button>
+              <button type="button" data-testid="share-btn">Compartilhar</button>
+              <button type="button" data-testid="favorite-btn">Favoritar</button>
+            </section>
+            <section>
+              <img src={ shareIcon } alt="Share" data-testid="share-btn" />
+              <img
+                src={ favoriteRecipe ? blackHeartIcon : whiteHeartIcon }
+                alt="Favorite"
+                data-testid="favorite-btn"
+              />
+            </section>
           </div>
         )}
     </div>

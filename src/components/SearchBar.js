@@ -36,7 +36,7 @@ function SearchBar(props) {
   useEffect(() => {
     if (location === '/comidas') {
       setTypeRecipe('food');
-    } else {
+    } else if (location === '/bebidas') {
       setTypeRecipe('drink');
     }
   }, []);
