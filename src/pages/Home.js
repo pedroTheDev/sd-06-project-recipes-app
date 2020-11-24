@@ -48,7 +48,6 @@ function Home({ title }) {
     if (ingredient) {
       const response = await byIngredient(searchTerm);
       if (response === null) {
-        setRecipes([]);
         setErrorFromApi(true);
       } else {
         setRecipes(response);
@@ -60,7 +59,6 @@ function Home({ title }) {
       } else {
         const response = await byFirstLetter(searchTerm);
         if (response === null) {
-          setRecipes([]);
           setErrorFromApi(true);
         } else {
           setRecipes(response);
@@ -70,7 +68,6 @@ function Home({ title }) {
     } else if (name) {
       const response = await byName(searchTerm);
       if (response === null) {
-        setRecipes([]);
         setErrorFromApi(true);
       } else {
         setRecipes(response);
