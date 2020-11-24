@@ -10,8 +10,9 @@ import DrinkFilters from '../components/DrinkFilters';
 import { drinkApi } from '../services/drinkAPI';
 
 function Bebidas() {
-  const { searchBox, drinks, setDrinks } = useContext(ReceitasContext);
-  const { stopApi, setStopApi } = useContext(ReceitasContext);
+  const {
+    searchBox, meals, setMeals, stopApi, setStopApi,
+  } = useContext(ReceitasContext);
 
   const location = useLocation();
 
@@ -20,16 +21,16 @@ function Bebidas() {
       return '';
     }
     drinkApi().then((response) => {
-      setDrinks(response);
+      setMeals(response.drinks);
     });
     return setStopApi(false);
   }, []);
 
-  if (!drinks.drinks) return <div>Carregando...</div>;
+  if (!meals) return <div>Carregando...</div>;
   const doze = 12;
-  if (drinks.drinks.length === 1) {
-    return <Redirect to={ `/bebidas/${drinks.drinks[0].idDrink}` } />;
-  }
+  // if (drinks.length === 1) {
+  //   return <Redirect to={ `/bebidas/${drinks[0].idDrink}` } />;
+  // }
 
   return (
     <section>
@@ -37,7 +38,7 @@ function Bebidas() {
       {searchBox && <SearchBar />}
       <DrinkFilters />
       <div>
-        {drinks.drinks
+        {meals
           .filter((x, index) => index < doze)
           .map((drink, i) => (
             <DrinksCard key={ drink } drink={ drink } index={ i } />

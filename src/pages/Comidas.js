@@ -10,8 +10,7 @@ import FoodFilters from '../components/FoodFilters';
 import { foodApi } from '../services/foodAPI';
 
 const Comidas = (history) => {
-  const { searchBox, foods, setFoods } = useContext(ReceitasContext);
-  const { stopApi, setStopApi } = useContext(ReceitasContext);
+  const { searchBox, meals, setMeals,stopApi, setStopApi  } = useContext(ReceitasContext);
 
   const location = useLocation();
 
@@ -20,13 +19,15 @@ const Comidas = (history) => {
       return '';
     }
     foodApi().then((response) => {
-      setFoods(response);
+      setMeals(response.meals);
     });
     return setStopApi(false);
   }, []);
 
-  if (!foods.meals) return <div>Carregando...</div>;
+  if (!meals.length) return <div>Carregando...</div>;
   const doze = 12;
+
+  console.log("flag", meals)
 
   return (
     <section>
@@ -34,7 +35,7 @@ const Comidas = (history) => {
       {searchBox && <SearchBar history={ history } /> }
       <FoodFilters />
       <div>
-        {foods.meals
+        {meals
           .filter((x, index) => index < doze)
           .map((food, i) => (
             <MealsCard key={ food } food={ food } index={ i } />
