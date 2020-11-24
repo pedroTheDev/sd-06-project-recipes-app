@@ -14,13 +14,10 @@ function CategoryList({ title }) {
   };
 
   const setBase = async () => {
-    if (title === 'Comidas') {
-      const list = await renderCategoryList(fetchMealCategoryList);
-      setCategoryList(list);
-    } else {
-      const list = await renderCategoryList(fetchDrinkCategoryList);
-      setCategoryList(list);
-    }
+    const list = (title === 'Comidas')
+      ? await renderCategoryList(fetchMealCategoryList)
+      : await renderCategoryList(fetchDrinkCategoryList);
+    setCategoryList(list);
   };
 
   useEffect(() => {
