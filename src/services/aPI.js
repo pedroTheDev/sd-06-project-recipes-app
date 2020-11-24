@@ -3,7 +3,7 @@ export async function searchDrinkIngredients(ingredient) {
 
   const response = await fetch(`${URL}${ingredient}`);
   const json = response.json();
-  console.log(json);
+
   return json;
 }
 
@@ -12,7 +12,7 @@ export async function searchDrinkName(name) {
 
   const response = await fetch(`${URL}${name}`);
   const json = response.json();
-  console.log(json);
+
   return json;
 }
 
@@ -21,6 +21,7 @@ export async function searchDrinkFirstLetter(letter) {
 
   const response = await fetch(`${URL}${letter}`);
   const json = response.json();
+
   return json;
 }
 
@@ -29,7 +30,7 @@ export async function searchFoodIngredients(ingredient) {
 
   const response = await fetch(`${URL}${ingredient}`);
   const json = response.json();
-  console.log(json);
+
   return json;
 }
 
@@ -38,6 +39,15 @@ export async function searchFoodName(name) {
 
   const response = await fetch(`${URL}${name}`);
   const json = response.json();
-  console.log(json);
+
+  return json;
+}
+
+export async function searchFoodFirstLetter(letter) {
+  const URL = 'https://www.themealdb.com/api/json/v1/1/search.php?f=';
+
+  const response = await fetch(`${URL}${letter}`);
+  const json = response.json();
+
   return json;
 }

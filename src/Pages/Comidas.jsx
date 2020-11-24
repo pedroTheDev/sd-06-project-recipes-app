@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
 
 import Header from '../components/Header';
-import ResultsAPI from '../components/ResultsAPI';
 import Footer from '../components/Footer';
+import Cards from '../components/Cards';
 
 const Comidas = () => (
   <div>
     <Header />
-    <ResultsAPI />
+    <Cards />
     <Footer />
   </div>
 );

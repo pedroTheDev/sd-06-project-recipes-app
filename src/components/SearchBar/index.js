@@ -1,8 +1,10 @@
 import React, { useContext, useState } from 'react';
 import ContextAPI from '../../Context/ContextAPI';
 
+import { searchFoodIngredients, searchFoodName, searchFoodFirstLetter } from '../../services/aPI';
+
 const SearchBar = () => {
-  const { searchComponent, setApiValueSearch } = useContext(ContextAPI);
+  const { searchComponent, setApiValueSearch, apiValueSearch } = useContext(ContextAPI);
   const [nome, setNome] = useState('');
   const [radioButton, setRadioButton] = useState('');
 
@@ -12,10 +14,41 @@ const SearchBar = () => {
     if (target.name === 'text') setNome(target.value);
   };
 
-  const setValuesApi = () => {
-    const value = [nome];
-    value.push(radioButton);
-    setApiValueSearch(value);
+  const apiOfIngredients = async () => {
+    const results = await searchFoodIngredients(nome);
+    // console.log(results);
+    setApiValueSearch({
+      results,
+    });
+  };
+
+  const apiOfName = async () => {
+    const results = await searchFoodName(nome);
+    console.log(results);
+    setApiValueSearch({
+      results,
+    });
+  };
+
+  const apiOfFirstLetter = async () => {
+    const results = await searchFoodFirstLetter(nome);
+    console.log(results);
+    setApiValueSearch({
+      results,
+    });
+  };
+
+  const handleChangeButton = () => {
+    switch (radioButton) {
+      case 'ingrediente':
+        return apiOfIngredients();
+      case 'nome':
+        return apiOfName();
+      case 'primeira-letra':
+        return apiOfFirstLetter();
+      default:
+        return alert('error');
+    }
   };
 
   return searchComponent && (
@@ -29,8 +62,9 @@ const SearchBar = () => {
       <input type="radio" data-testid="first-letter-search-radio" id="primeira-letra" name="radio-button" value="primeira-letra" onChange={(e) => handleChange(e.target)} />
       <label htmlFor="primeira-letra">Primeira Letra</label>
       <br />
-      <button type="button" onClick={() => setValuesApi()} data-testid="exec-search-btn">Buscar</button>
+      <button type="button" onClick={handleChangeButton} data-testid="exec-search-btn">Buscar</button>
     </div>
   );
 };
+
 export default SearchBar;

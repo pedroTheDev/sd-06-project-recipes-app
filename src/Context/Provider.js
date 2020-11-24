@@ -5,7 +5,10 @@ import ContextAPI from './ContextAPI';
 const RecipesProvider = ({ children }) => {
   const [email, setEmail] = useState([]);
   const [searchComponent, setSearchComponent] = useState(false);
-  const [apiValueSearch, setApiValueSearch] = useState([]);
+  const [apiValueSearch, setApiValueSearch] = useState({
+    resultsApi: '',
+  });
+
   const contextState = {
     email,
     setEmail,
