@@ -96,25 +96,28 @@ class FoodsDetails extends React.Component {
   }
 
   setLocalState(recipe) {
-    localStorage.setItem('favoriteRecipes', JSON.stringify([{
-      id: recipe.idMeal,
-      type: 'Meal',
-      area: recipe.strArea,
-      category: recipe.strCategory,
-      alcoholicOrNot: '',
-      name: recipe.strMeal,
-      image: recipe.strMealThumb,
-    }]));
-    this.changeFavIcon(recipe);
+    const favoriteLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    localStorage.setItem('favoriteRecipes', JSON.stringify(
+      {
+        ...favoriteLocalStorage,
+        id: recipe.idMeal,
+        type: 'Meal',
+        area: recipe.strArea,
+        category: recipe.strCategory,
+        alcoholicOrNot: '',
+        name: recipe.strMeal,
+        image: recipe.strMealThumb,
+      },
+    ));
   }
 
   changeFavIcon({ idMeal }) {
-    const favoriteLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    if (localStorage.favoriteRecipes) {
-      favoriteLocalStorage.filter((element) => element.id === idMeal);
-      return blackHeartIcon;
-    }
-    return whiteHeartIcon;
+    // const favoriteLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    // if (localStorage.favoriteRecipes) {
+    //   favoriteLocalStorage.filter((element) => element.id === idMeal);
+    //   return blackHeartIcon;
+    // }
+    // return whiteHeartIcon;
   }
 
   goLeft() {
