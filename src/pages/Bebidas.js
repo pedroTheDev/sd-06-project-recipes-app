@@ -5,12 +5,13 @@ import SearchBar from '../components/SearchBar';
 import Footer from '../components/Footer';
 import ReceitasContext from '../context/ReceitasContext';
 import BebidaCard from '../components/DrinksCard';
-import drinkAPI from '../services/drinkAPI';
+
+import { drinkAPI } from '../services/drinkAPI';
 
 function Bebidas() {
-  const { searchBox, meals, setMeals, fetching, setFetching } = useContext(
-    ReceitasContext,
-  );
+  const {
+    searchBox, meals, setMeals, fetching, setFetching,
+  } = useContext(ReceitasContext);
   const location = useLocation();
 
   const doze = 12;
@@ -27,19 +28,23 @@ function Bebidas() {
     fetchDrink();
   }, []);
 
-  return !fetching ? (
-    <section>
-      <Header title="Bebidas" searchBtn />
-      {searchBox && <SearchBar />}
-      {meals
-        .filter((_, index) => index < doze)
-        .map((drink, i) => (
-          <BebidaCard key={ i } drink={ drink } index={ i } />
-        ))}
-      {location.pathname === '/bebidas' && <Footer />}
-    </section>
-  ) : (
-    <span>loading</span>
+  return (
+    !fetching
+      ? (
+        <section>
+          <Header title="Bebidas" searchBtn />
+          {searchBox && <SearchBar />}
+          {
+            meals
+              .filter((_, index) => index < doze)
+              .map((drink, i) => (
+                <BebidaCard key={ i } drink={ drink } index={ i } />
+              ))
+          }
+          {location.pathname === '/bebidas' && <Footer />}
+        </section>
+      )
+      : <span>loading</span>
   );
 }
 

@@ -5,12 +5,14 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
 import ReceitasContext from '../context/ReceitasContext';
-import foodAPI from '../services/foodAPI';
+
+import { foodAPI } from '../services/foodAPI';
 
 const Comidas = (history) => {
-  const { searchBox, meals, setMeals, fetching, setFetching } = useContext(
-    ReceitasContext,
-  );
+  const {
+    searchBox, meals, setMeals, fetching, setFetching,
+  } = useContext(ReceitasContext);
+
   const location = useLocation();
 
   const doze = 12;
@@ -27,19 +29,22 @@ const Comidas = (history) => {
     fetchFood();
   }, []);
 
-  return !fetching ? (
-    <section>
-      <Header title="Comidas" searchBtn />
-      {searchBox && <SearchBar history={ history } />}
-      {meals
-        .filter((_, index) => index < doze)
-        .map((food, i) => (
-          <ComidaCard key={ i } food={ food } index={ i } />
-        ))}
-      {location.pathname === '/comidas' && <Footer />}
-    </section>
-  ) : (
-    <span>loading</span>
+  return (
+    !fetching
+      ? (
+        <section>
+          <Header title="Comidas" searchBtn />
+          {searchBox && <SearchBar history={ history } />}
+          {
+            meals.filter((_, index) => index < doze)
+              .map((food, i) => (<ComidaCard key={ i } food={ food } index={ i } />
+              ))
+          }
+          {location.pathname === '/comidas' && <Footer />}
+
+        </section>
+      )
+      : <span>loading</span>
   );
 };
 

@@ -1,4 +1,4 @@
-async function foodAPI(type, endpoint) {
+export async function foodAPI(type, endpoint) {
   let url;
 
   switch (type) {
@@ -12,7 +12,7 @@ async function foodAPI(type, endpoint) {
     url = `https://www.themealdb.com/api/json/v1/1/search.php?f=${endpoint}`;
     break;
   default:
-    return url;
+    url = 'https://www.themealdb.com/api/json/v1/1/filter.php?i=';
   }
 
   const fetchAPI = await fetch(url)
@@ -24,8 +24,6 @@ async function foodAPI(type, endpoint) {
 
   return fetchAPI;
 }
-
-export default foodAPI;
 
 export const fetchRandomMeal = () => fetch('https://www.themealdb.com/api/json/v1/1/random.php')
   .then((response) => (
