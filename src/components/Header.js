@@ -11,7 +11,7 @@ function Header(props) {
   const { title, fetchApi, showSearchIcon = false } = props;
   const { showSearchBar, setSearchBar, setTypeRecipe } = useContext(ContextRecipes);
   const location = useLocation().pathname;
-  
+
   const toggleSearchBar = () => {
     if (showSearchBar) {
       setSearchBar(false);
