@@ -1,7 +1,6 @@
+/*
 import React from 'react';
 import TestRenderer from 'react-test-renderer';
-import renderWithRouter from '../renderWithRouter';
-import App from '../App';
 import Foods from '../pages/Foods';
 import HeaderContext from '../context/HeaderContext';
 
@@ -12,8 +11,8 @@ describe('Requisito 9 - Implemente os elementos de header na tela principal', ()
     </HeaderContext.Provider>,
   );
   expect(food).toBeInTheDocument();
-}
-  /*
+});
+
   it('Verificar se existem  na tela file-top-btn, page-title e search-top-btn', () => {
     const { getByTestId, history } = renderWithRouter(<App />);
     history.push('/comidas');
@@ -23,6 +22,5 @@ describe('Requisito 9 - Implemente os elementos de header na tela principal', ()
     expect(title).toBeInTheDocument();
     expect(profile).toBeInTheDocument();
     expect(search).toBeInTheDocument();
-  });7
-  */
-
+  })
+*/

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import RecipesContext from '../context/RecipesContext';
 import HeaderContext from '../context/HeaderContext';
-import getMealInformation from '../services/mealAPI';
+import getRecipesInformation from '../services/recipesAPI';
 
 function SearchBar() {
   const [searchRadioOption, setSearchRadioOption] = useState('');
@@ -10,6 +10,8 @@ function SearchBar() {
     setSelectedApiEndpoint,
     searchTerm,
     setSearchTerm,
+    setIsFetching,
+    setFetchedResults,
   } = useContext(RecipesContext);
 
   const { title } = useContext(HeaderContext);
@@ -53,7 +55,7 @@ function SearchBar() {
     }
   };
 
-  const handleSearchSubmitOption = () => {
+  const handleSearchSubmitOption = async () => {
     if (searchTerm.length !== 1 && searchRadioOption === 'first-letter') {
       alert('Sua busca deve conter somente 1 (um) caracter');
     } else {
@@ -66,7 +68,19 @@ function SearchBar() {
           'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=',
         );
       }
-      getMealInformation(selectedApiEndpoint + searchTerm);
+
+      setIsFetching(true);
+
+      const expectedRecipes = await getRecipesInformation(
+        selectedApiEndpoint + searchTerm,
+      );
+      setFetchedResults(expectedRecipes);
+
+      if (!expectedRecipes.recipes.length) {
+        alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+      } else {
+        setIsFetching(false);
+      }
     }
   };
 
