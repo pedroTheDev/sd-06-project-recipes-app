@@ -2,22 +2,42 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Context from './Context';
 import fetchMeal from '../services/fetchMeal';
+import fetchDrink from '../services/fetchDrink';
 
 function RecipesAppProvider({ children }) {
-  const [meals, setMeals] = useState([]);
+  const [recipes, setRecipes] = useState([]);
+  const [categories, setCategories] = useState([]);
 
-  const mealsToRender = async () => {
-    let fetchedMeals = await fetchMeal('name');
+  const recipesToRender = async (type) => {
+    let fetchedRecipes = await (type === 'meal'
+      ? fetchMeal('name')
+      : fetchDrink('name')
+    );
     const first = 0;
     const twelfth = 12;
 
-    fetchedMeals = fetchedMeals.slice(first, twelfth);
-    setMeals(fetchedMeals);
+    fetchedRecipes = fetchedRecipes.slice(first, twelfth);
+    setRecipes(fetchedRecipes);
+  };
+
+  const categoriesToRender = async (type) => {
+    let categoriesList = await (type === 'meal'
+      ? fetchMeal('allCategories')
+      : fetchDrink('allCategories')
+    );
+    const first = 0;
+    const sixth = 6;
+
+    categoriesList = categoriesList.slice(first, sixth);
+    console.log(categoriesList);
+    setCategories(categoriesList);
   };
 
   const contextValue = {
-    meals,
-    mealsToRender,
+    recipes,
+    recipesToRender,
+    categories,
+    categoriesToRender,
   };
 
   return (

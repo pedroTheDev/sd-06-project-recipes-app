@@ -24,6 +24,7 @@ function MealRecipeCard({ mealInfo, index }) {
 
 MealRecipeCard.propTypes = {
   mealInfo: PropTypes.objectOf(PropTypes.string).isRequired,
-  index: PropTypes.number.isRequired };
+  index: PropTypes.number.isRequired,
+};
 
 export default MealRecipeCard;
