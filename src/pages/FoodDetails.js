@@ -12,8 +12,9 @@ function FoodDetails(props) {
   const [requestDetails, setrequestDetails] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [apiResponse, setFilter] = useRequestDrink([]);
+  const [isFavorite, setIsfavorite] = useState(false);
   const maxShow = 6;
-
+  const zero = 0;
   const requestDetailsAPI = async () => {
     const response = await fetchRecipes(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
     setrequestDetails(response.meals[0]);
@@ -21,7 +22,6 @@ function FoodDetails(props) {
 
   const requestIngredients = () => {
     const twentyOne = 21;
-    const zero = 0;
     const TheIngredients = [];
     for (let i = 1; i < twentyOne; i += 1) {
       if (requestDetails.length !== zero
@@ -38,6 +38,26 @@ function FoodDetails(props) {
 
   const handleInitRecipe = () => {
     history.push(`/comidas/${id}/in-progress`);
+  };
+  const changesFavorites = () => {
+    if (localStorage.length > zero) {
+      const readLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      console.log(readLocalStorage);
+      console.log(requestDetails);
+    }
+    favoriteRecipes = [...favoriteRecipes, { id: requestDetails.idMeal,
+      area: 'area',
+      category: requestDetails.strCategory,
+      alcoholicOrNot: requestDetails.strDrinkAlternate,
+      name: requestDetails.strMeal,
+      image: requestDetails.strMealThumb,
+    }];
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+
+    // salvar o array de obj que veio do localStorage numa varriavel JS (JSON.stringify)
+    // map no array de obj que vier do localStorage
+    // ler array do local storage
+    // favoriteRecipes O formato deve ser [{ id, type, area, category, alcoholicOrNot, name, image }]
   };
 
   useEffect(() => {
@@ -58,7 +78,7 @@ function FoodDetails(props) {
       />
       <h1 data-testid="recipe-title">{requestDetails.strMeal}</h1>
       <ShareBtn />
-      <FavoriteBtn />
+      <FavoriteBtn isFavorite={ isFavorite } changesFavorites={ changesFavorites } />
       <p data-testid="recipe-category">{requestDetails.strCategory}</p>
       {ingredients.map((ingredient, index) => (
         <div key={ index }>

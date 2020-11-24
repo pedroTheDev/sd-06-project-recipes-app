@@ -17,6 +17,8 @@ function AppProvider({ children }) {
     setUser,
     recipe,
     setRecipe,
+    favoriteRecipes,
+    setFavoriteRecipes,
   };
   return (
     <AppContext.Provider value={ contextValue }>

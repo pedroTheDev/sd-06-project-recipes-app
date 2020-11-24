@@ -1,8 +1,9 @@
 import React from 'react';
+import shareIcon from '../images/shareIcon.svg';
 
 function ShareBtn() {
   return (
-    <button data-testid="share-btn" type="button">Compartilhar</button>
+    <img data-testid="share-btn" src={ shareIcon } alt="shareButton" />
   );
 }
 
