@@ -1,20 +1,21 @@
 import React from 'react';
-import BtnSearchBar from '../../components/BtnSearchBar';
 import Header from '../../components/Header';
+import BtnSearchBar from '../../components/BtnSearchBar';
 import Footer from '../../components/Footer';
 
-export default function MealsPage() {
+function ExploreByArea() {
   return (
     <div>
-      <h1> Página principal de Comidas</h1>
       <Header
         className="header"
-        pageTitle="Comidas"
+        pageTitle="Explorar Origem"
         BtnSearchBar={ BtnSearchBar }
       />
       <div className="footer">
-        <Footer />
-      </div>
+      <Footer />
+    </div>
     </div>
   );
 }
+
+export default ExploreByArea;
