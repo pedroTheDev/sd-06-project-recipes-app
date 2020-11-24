@@ -11,11 +11,11 @@ function Foods() {
   const fetchRecipes = async () => {
     const recipesApi = await fetchAPIRecipes('name', '');
     setRecipes(recipesApi);
+    setShowCard(true);
   };
 
   useEffect(() => {
     fetchRecipes();
-    setShowCard(true);
   }, []);
 
   return (
