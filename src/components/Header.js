@@ -9,7 +9,7 @@ function Header({ pathname, setShowMultipleResults }) {
   const [toggleSearch, setToogleSearch] = useState(false);
 
   const renderProfileButton = () => (
-    <Link to="/profile">
+    <Link to="/perfil">
       <button
         type="button"
         data-testid="profile-top-btn"
@@ -29,6 +29,7 @@ function Header({ pathname, setShowMultipleResults }) {
     <button
       type="button"
       data-testid="search-top-btn"
+      className="header__search__bar"
       onClick={ () => setToogleSearch(!toggleSearch) }
     >
       <img src={ searchIcon } alt="search-icon" />
@@ -44,7 +45,7 @@ function Header({ pathname, setShowMultipleResults }) {
   );
 
   return (
-    <div>
+    <div className="header__container">
       {renderProfileButton()}
       {renderTitle()}
       {renderSearchButton()}

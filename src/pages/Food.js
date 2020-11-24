@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Header from '../components/Header';
 import RecipeResults from '../components/RecipeResults';
 import findMatchInKeys from '../helpers/assets';
+import Footer from '../components/Footer';
 
 function Food(props) {
   const { history: { location: { pathname } }, recipes } = props;
@@ -31,7 +32,10 @@ function Food(props) {
         pathname={ pathname }
         setShowMultipleResults={ setShowMultipleResults }
       />
-      {renderRecipesResults()}
+      <div className="main__page__recipe-container">
+        {renderRecipesResults()}
+      </div>
+      <Footer />
     </>
   );
 }
