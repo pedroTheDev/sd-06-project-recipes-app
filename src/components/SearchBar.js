@@ -1,9 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
-
-import foodAPI from '../services/foodAPI';
-import drinkAPI from '../services/drinkAPI';
-
+import { foodAPI } from '../services/foodAPI';
+import { drinkAPI } from '../services/drinkAPI';
 import ReceitasContext from '../context/ReceitasContext';
 
 function SearchBar() {
@@ -16,7 +14,7 @@ function SearchBar() {
   const path = window.location.pathname;
 
   const handleUrl = (response, id) => {
-    if (response.length === 1) { setUrl(`${path}/${response[0][id]}`); }
+    if (response.length === 1) setUrl(`${path}/${response[0][id]}`);
   };
 
   const handleFormSubmit = async () => {

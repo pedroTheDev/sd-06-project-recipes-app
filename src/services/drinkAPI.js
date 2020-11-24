@@ -1,4 +1,4 @@
-async function drinkAPI(type, endpoint) {
+export async function drinkAPI(type, endpoint) {
   let url;
 
   switch (type) {
@@ -12,7 +12,7 @@ async function drinkAPI(type, endpoint) {
     url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${endpoint}`;
     break;
   default:
-    return url;
+    url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
   }
 
   const fetchAPI = await fetch(url)
@@ -24,8 +24,6 @@ async function drinkAPI(type, endpoint) {
 
   return fetchAPI;
 }
-
-export default drinkAPI;
 
 export const fetchRandomDrink = () => fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php')
   .then((response) => (
