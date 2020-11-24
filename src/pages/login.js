@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import './style/login.css';
-import addLogin from '../actions';
+import addLogin from '../actions/login';
 
 class Login extends Component {
   constructor() {
