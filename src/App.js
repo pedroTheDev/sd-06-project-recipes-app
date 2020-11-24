@@ -16,7 +16,18 @@ function App() {
         <Route exact path="/comidas" component={ MealsPage } />
         <Route exact path="/perfil" component={ ProfilePage } />
         <Route exact path="/bebidas" component={ DrinksPage } />
+        <Route exact path="/comidas/:id" component={ Detail } />
+        <Route exact path="/bebidas/:id" component={ Detail } />
+        <Route exact path="/comidas/:id/in-progress" component={ InProgress } />
+        <Route exact path="/bebidas/:id/in-progress" component={ InProgress } />
         <Route exact path="/explorar" component={ ExplorePage } />
+        <Route exact path="/explorar/comidas" component={ MainExplore } />
+        <Route exact path="/explorar/bebidas" component={ MainExplore } />
+        <Route path="/explorar/comidas/ingredientes" component={ ExploreIngredients } />
+        <Route path="/explorar/bebidas/ingredientes" component={ ExploreIngredients } />
+        <Route exact path="/explorar/comidas/area" component={ ExploreByArea } />
+        <Route exact path="/receitas-feitas" component={ CompletedRecipes } />
+        <Route exact path="/receitas-favoritas" component={ FavoriteRecipes } />
       </Switch>
     </RecipesAppProvider>
   );
