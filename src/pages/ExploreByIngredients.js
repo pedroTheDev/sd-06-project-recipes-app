@@ -1,7 +1,7 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import Footer from '../components/Footer';
-import profileIcon from '../images/profileIcon.svg';
+import Header from '../components/Header';
 import ExploreFoodsIngredients from '../components/ExploreFoodsIngredients';
 import ExploreDrinksIngredients from '../components/ExploreDrinksIngredients';
 
@@ -9,10 +9,7 @@ function ExploreByIngredients() {
   const location = useLocation().pathname;
   return (
     <div>
-      <Link to="/perfil">
-        <img src={ profileIcon } alt="Profile" data-testid="profile-top-btn" />
-      </Link>
-      <h2 data-testid="page-title">Explorar Ingredientes</h2>
+      <Header title="Explorar Ingredientes" />
       <div>
         { location === '/explorar/comidas/ingredientes' ? <ExploreFoodsIngredients />
           : <ExploreDrinksIngredients /> }

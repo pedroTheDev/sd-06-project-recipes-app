@@ -1,11 +1,9 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ContextRecipes from '../context/ContextRecipes';
-import Card from './Card';
 
 function SearchBar(props) {
-  const [renderRecipes, setRenderRecipes] = useState(false);
   const { fetchApi } = props;
   const {
     setSelectedRadio, setSearchText, setIdRecipe, setRecipes, setTypeRecipe,
@@ -28,18 +26,8 @@ function SearchBar(props) {
         setIdRecipe(idRecipe);
         history.push(`/bebidas/${idRecipe}`);
       }
-    } else {
-      setRenderRecipes(true);
     }
   };
-
-  useEffect(() => {
-    if (location === '/comidas') {
-      setTypeRecipe('food');
-    } else if (location === '/bebidas') {
-      setTypeRecipe('drink');
-    }
-  }, []);
 
   const handleClick = async () => {
     const selectedRadio = document.querySelector('input[name="search"]:checked').value;
@@ -53,7 +41,6 @@ function SearchBar(props) {
 
   return (
     <div>
-      {renderRecipes ? <Card /> : null}
       <input type="text" data-testid="search-input" id="search-input" />
       <label htmlFor="ingredient">
         Ingrediente
