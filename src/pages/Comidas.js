@@ -9,11 +9,9 @@ import { foodAPI } from '../services/foodAPI';
 
 const Comidas = (history) => {
   const {
-    searchBox, meals, setMeals, fetching, setFetching,
+    meals, searchBox, setMeals, setFetching,
   } = useContext(ReceitasContext);
   const location = useLocation();
-
-  const doze = 12;
 
   useEffect(() => {
     setFetching(true);
@@ -27,22 +25,15 @@ const Comidas = (history) => {
     fetchFood();
   }, []);
 
-  return (
-    !fetching
-      ? (
-        <section>
-          <Header title="Comidas" searchBtn />
-          {searchBox && <SearchBar history={ history } />}
-          {
-            meals.filter((_, index) => index < doze)
-              .map((food, i) => (<ComidaCard key={ i } food={ food } index={ i } />
-              ))
-          }
-          {location.pathname === '/comidas' && <Footer />}
+  if (!meals) return <div>Carregando...</div>;
 
-        </section>
-      )
-      : <span>loading</span>
+  return (
+    <section>
+      <Header title="Comidas" searchBtn />
+      {searchBox && <SearchBar history={history} />}
+      <ComidaCard />
+      {location.pathname === '/comidas' && <Footer />}
+    </section>
   );
 };
 

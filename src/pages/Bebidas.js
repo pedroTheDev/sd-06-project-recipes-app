@@ -9,11 +9,9 @@ import { drinkAPI } from '../services/drinkAPI';
 
 function Bebidas() {
   const {
-    searchBox, meals, setMeals, fetching, setFetching,
+    searchBox, meals, setMeals, setFetching,
   } = useContext(ReceitasContext);
   const location = useLocation();
-
-  const doze = 12;
 
   useEffect(() => {
     setFetching(true);
@@ -27,23 +25,15 @@ function Bebidas() {
     fetchDrink();
   }, []);
 
+  if (!meals) return <div>Carregando...</div>;
+
   return (
-    !fetching
-      ? (
-        <section>
-          <Header title="Bebidas" searchBtn />
-          {searchBox && <SearchBar />}
-          {
-            meals
-              .filter((_, index) => index < doze)
-              .map((drink, i) => (
-                <BebidaCard key={ i } drink={ drink } index={ i } />
-              ))
-          }
-          {location.pathname === '/bebidas' && <Footer />}
-        </section>
-      )
-      : <span>loading</span>
+    <section>
+      <Header title="Bebidas" searchBtn />
+      {searchBox && <SearchBar />}
+      <BebidaCard />
+      {location.pathname === '/bebidas' && <Footer />}
+    </section>
   );
 }
 
