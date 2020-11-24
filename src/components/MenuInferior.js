@@ -18,14 +18,6 @@ function MenuInferior() {
   }
   return (
     <div data-testid="footer" className="MenuInferior">
-      <button
-        type="button"
-        data-testid="food-bottom-btn"
-        onClick={ redirectComidas }
-      >
-        <img src={ FoodImage } alt="food-img" />
-        Comidas
-      </button>
 
       <button
         type="button"
@@ -43,6 +35,15 @@ function MenuInferior() {
       >
         <img src={ ExploreImage } alt="explore-img" />
         Explorar
+      </button>
+
+      <button
+        type="button"
+        data-testid="food-bottom-btn"
+        onClick={ redirectComidas }
+      >
+        <img src={ FoodImage } alt="food-img" />
+        Comidas
       </button>
     </div>
   );
