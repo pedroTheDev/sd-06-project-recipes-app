@@ -3,7 +3,7 @@ import ReceitasContext from '../context/ReceitasContext';
 import { drinkCategoryApi, drinkByCategoryApi, drinkApi } from '../services/drinkAPI';
 
 function DrinkFilters() {
-  const { filtersData, setFiltersData, setMeals } = useContext(ReceitasContext);
+  const { filtersData, setFiltersData, setDrinks } = useContext(ReceitasContext);
   const { selectedFilter, setSelectedFilter } = useContext(ReceitasContext);
 
   useEffect(() => {
@@ -23,12 +23,12 @@ function DrinkFilters() {
     if (category === selectedFilter || category === 'All') {
       setSelectedFilter('All');
       drinkApi().then((response) => {
-        setMeals(response);
+        setDrinks(response);
       });
     } else {
       setSelectedFilter(category);
       drinkByCategoryApi(category).then((response) => {
-        setMeals(response);
+        setDrinks(response);
       });
     }
   };
