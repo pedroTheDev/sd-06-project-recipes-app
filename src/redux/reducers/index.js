@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import exampleReducer from './exampleReducer';
 import mainPageReducer from './mainPageReducer';
 import categoryReducer from './categoryReducer';
+import searchReducer from './searchReducer';
 
-const rootReducer = combineReducers({ exampleReducer, mainPageReducer, categoryReducer });
+const rootReducer = combineReducers({ mainPageReducer, categoryReducer, searchReducer });
 
 export default rootReducer;

@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import Header from '../components/Header';
-import DrinkCard from '../components/DrinkCard';
+import MealCard from '../components/MealCard';
 import Footer from '../components/Footer';
 
-function Bebidas({ retrievedDrinks }) {
+function Comidas({ retrievedFood }) {
   const checkRequestSize = (request) => {
     const noLength = 0;
     const maxLength = 11;
@@ -16,33 +16,33 @@ function Bebidas({ retrievedDrinks }) {
     } else if (request.length === noLength) {
       return null;
     } else if (request.length === 1) {
-      const { idDrink } = request[0];
-      return <Redirect to={ `/bebidas/${idDrink}` } />;
+      const { idMeal } = request[0];
+      return <Redirect to={ `/comidas/${idMeal}` } />;
     } else {
-      return request.map((drink, index) => (
+      return request.map((meal, index) => (
         index <= maxLength
-          ? <DrinkCard drink={ drink } key={ drink.idDrink } index={ index } />
+          ? <MealCard meal={ meal } key={ meal.idmeal } index={ index } />
           : null));
     }
     return null;
   };
-
   return (
     <main>
-      <Header pageName="Bebidas" renderSearch />
-      Bebidas Page
-      { checkRequestSize(retrievedDrinks) }
+      <Header pageName="Comidas" renderSearch />
+      Comidas Page
+      { checkRequestSize(retrievedFood) }
+
       <Footer />
     </main>
   );
 }
 
 const mapStateToProps = (state) => ({
-  retrievedDrinks: state.searchReducer.drinks,
+  retrievedFood: state.searchReducer.meals,
 });
 
-Bebidas.propTypes = {
-  retrievedDrinks: PropTypes.arrayOf(PropTypes.object).isRequired,
+Comidas.propTypes = {
+  retrievedFood: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-export default connect(mapStateToProps)(Bebidas);
+export default connect(mapStateToProps)(Comidas);
