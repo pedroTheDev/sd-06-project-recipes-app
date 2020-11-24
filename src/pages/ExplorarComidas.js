@@ -1,8 +1,20 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Header, Footer } from '../components';
 
 function ExplorarComidas() {
+  const history = useHistory();
+  const surpriseFood = async () => {
+    const response = await fetch('https://www.themealdb.com/api/json/v1/1/random.php');
+    const responseJson = await response.json();
+    return history.push(
+      {
+        pathname: `/comidas/${responseJson.meals[0].idMeal}`,
+        state: { recipe: responseJson.meals[0] },
+      },
+    );
+  };
+
   return (
     <div className="food">
       <Header title="Explorar Comidas" />
@@ -31,6 +43,7 @@ function ExplorarComidas() {
           className="button-surprise"
           data-testid="explore-surprise"
           type="button"
+          onClick={ surpriseFood }
         >
           Me Surpreenda!
         </button>
