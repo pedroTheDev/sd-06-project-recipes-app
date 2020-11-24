@@ -1,6 +1,11 @@
-export async function fetchMealRecipe(id) {
-  const dataJson = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
+export async function fetchDetail(type, recipeId) {
+  const api = (type === 'comidas')
+    ? `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeId}`
+    : `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${recipeId}`;
+
+  const dataJson = await fetch(api);
   const data = await dataJson.json();
+
   return data;
 }
 
