@@ -15,7 +15,12 @@ const Footer = () => {
           className={ selected === 'a' ? 'active' : '' }
           onClick={ () => setSelected('a') }
         >
-          <img data-testid="drinks-bottom-btn" src={ drinkIcon } alt="" />
+          <img
+            data-testid="drinks-bottom-btn"
+            src={ drinkIcon }
+            alt=""
+            className="footer-icon"
+          />
         </button>
       </Link>
       <Link to="/explorar">
@@ -24,7 +29,12 @@ const Footer = () => {
           className={ selected === 'b' ? 'active' : '' }
           onClick={ () => setSelected('b') }
         >
-          <img data-testid="explore-bottom-btn" src={ exploreIcon } alt="" />
+          <img
+            data-testid="explore-bottom-btn"
+            src={ exploreIcon }
+            alt=""
+            className="footer-icon"
+          />
         </button>
       </Link>
       <Link to="/comidas">
@@ -33,7 +43,12 @@ const Footer = () => {
           className={ selected === 'c' ? 'active' : '' }
           onClick={ () => setSelected('c') }
         >
-          <img data-testid="food-bottom-btn" src={ mealIcon } alt="" />
+          <img
+            data-testid="food-bottom-btn"
+            src={ mealIcon }
+            alt=""
+            className="footer-icon"
+          />
         </button>
       </Link>
     </footer>
