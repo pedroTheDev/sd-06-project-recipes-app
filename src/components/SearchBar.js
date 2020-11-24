@@ -11,7 +11,6 @@ function SearchBar() {
     searchTerm,
     setSearchTerm,
     setIsFetching,
-    fetchedResults,
     setFetchedResults,
   } = useContext(RecipesContext);
 
@@ -71,10 +70,13 @@ function SearchBar() {
       }
 
       setIsFetching(true);
-      const expectedRecipes = await getRecipesInformation(selectedApiEndpoint + searchTerm)
+
+      const expectedRecipes = await getRecipesInformation(
+        selectedApiEndpoint + searchTerm
+      );
       setFetchedResults(expectedRecipes);
 
-      if (expectedRecipes.recipes.length === 0) {
+      if (!expectedRecipes.recipes.length) {
         alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
       } else {
         setIsFetching(false);
