@@ -6,7 +6,7 @@ import { fetchAPIRecipes } from '../services';
 function Foods() {
   return (
     <div>
-      <Header fetchApi={ fetchAPIRecipes } title="Comida" />
+      <Header fetchApi={ fetchAPIRecipes } title="Comida" showSearchIcon />
       <Footer />
     </div>
   );

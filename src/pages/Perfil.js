@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import Header from '../components/Header';
 
 function Perfil() {
   const getemail = JSON.parse(localStorage.getItem('user'));
   const history = useHistory();
   return (
     <div>
-      <h2 data-testid="page-title">Perfil</h2>
+      <Header title="Perfil" />
       <h3 data-testid="profile-email">{ getemail.email }</h3>
       <button
         type="button"

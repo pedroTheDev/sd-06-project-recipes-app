@@ -1,7 +1,7 @@
 import React from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Footer from './Footer';
-import profileIcon from '../images/profileIcon.svg';
+import Header from '../components/Header';
 
 function ExploreFoods() {
   const history = useHistory();
@@ -16,10 +16,7 @@ function ExploreFoods() {
 
   return (
     <div>
-      <Link to="/perfil">
-        <img src={ profileIcon } alt="Profile" data-testid="profile-top-btn" />
-      </Link>
-      <h2 data-testid="page-title">Explorar Comidas</h2>
+      <Header title="Explorar Comidas" />
       <button
         data-testid="explore-by-ingredient"
         type="button"

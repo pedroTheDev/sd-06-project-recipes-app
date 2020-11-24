@@ -1,16 +1,13 @@
 import React from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Footer from '../components/Footer';
-import profileIcon from '../images/profileIcon.svg';
+import Header from '../components/Header';
 
 function Explore() {
   const history = useHistory();
   return (
     <div>
-      <Link to="/perfil">
-        <img src={ profileIcon } alt="Profile" data-testid="profile-top-btn" />
-      </Link>
-      <h2 data-testid="page-title">Explorar</h2>
+      <Header title="Explorar" />
       <button
         data-testid="explore-food"
         type="button"
