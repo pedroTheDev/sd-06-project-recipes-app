@@ -5,6 +5,15 @@ import profileIcon from '../images/profileIcon.svg';
 
 function ExploreFoods() {
   const history = useHistory();
+
+  const randomMeal = async () => {
+    const apiRequest = await fetch('https://www.themealdb.com/api/json/v1/1/random.php');
+    const response = await apiRequest.json();
+    return (response.meals);
+    // pra mudar de rota vou precisar usar um history.push
+    // usar tela Andre pra renderizar através do id da comida
+  }
+
   return (
     <div>
       <Link to="/perfil">
@@ -28,6 +37,7 @@ function ExploreFoods() {
       <button
         data-testid="explore-surprise"
         type="button"
+        onClick={ () => randomMeal() }
       >
         Me Surpreenda!
       </button>
