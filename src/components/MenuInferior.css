@@ -1,6 +1,5 @@
 .MenuInferior {
-position: absolute;
-border: 1px solid green;
+position: fixed;
 bottom: 0;
-width: 80%;
+width: 100%;
 }
