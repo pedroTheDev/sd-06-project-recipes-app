@@ -4,7 +4,7 @@ import { drinkCategoryApi, drinkByCategoryApi, drinkApi } from '../services/drin
 
 function DrinkFilters() {
   const {
-    filtersData, setFiltersData, setMeals, selectedFilter, setSelectedFilter,
+    filtersData, setFiltersData, setDrinks, selectedFilter, setSelectedFilter,
   } = useContext(ReceitasContext);
 
   useEffect(() => {
@@ -24,12 +24,12 @@ function DrinkFilters() {
     if (category === selectedFilter || category === 'All') {
       setSelectedFilter('All');
       drinkApi().then((response) => {
-        setMeals(response.drinks);
+        setDrinks(response.drinks);
       });
     } else {
       setSelectedFilter(category);
       drinkByCategoryApi(category).then((response) => {
-        setMeals(response.drinks);
+        setDrinks(response.drinks);
       });
     }
   };
