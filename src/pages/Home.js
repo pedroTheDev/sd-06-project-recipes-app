@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import Foods from './Foods';
-import Drinks from './Drinks';
 import SearchBar from '../components/SearchBar';
 import Header from '../components/Header';
+import Foods from './Foods';
+import Drinks from './Drinks';
 import RecipesAppContext from '../context/RecipesAppContext';
 import {
   fetchMealByFirstLetter,
@@ -109,7 +109,7 @@ function Home({ title }) {
           onClick={ requisition }
         />
       }
-      {title === 'Comidas' ? <Foods /> : <Drinks />}
+      {title === 'Comidas' ? <Foods title={ title } /> : <Drinks title={ title } />}
     </div>
   );
 }
