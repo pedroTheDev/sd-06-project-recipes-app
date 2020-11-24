@@ -19,7 +19,7 @@ describe('Teste componente Footer', () => {
   it.only('Posicione o menu inferior de forma fixa e apresente 3 ícones', () => {
     const { getByTestId, container } = renderWithRouter(<Footer />);
     const footerTest = container.querySelector('.footer');
-    const footerStyleTest = getByTestId('footer');
+    // const footerStyleTest = getByTestId('footer');
     // const style = window.getComputedStyle(footerStyleTest).getPropertyValue('position');
     console.log(footerTest.style);
     expect(footerTest).toHaveStyle('position: fixed');

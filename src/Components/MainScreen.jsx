@@ -31,8 +31,8 @@ export default function MainScreen() {
           return (
             <div data-testid={ `${index}-recipe-card` }>
               <img
-                src={drinks.strDrinkThumb}
-                data-testid={ `${ index }-card-img` }
+                src={ drinks.strDrinkThumb }
+                data-testid={ `${index}-card-img` }
                 alt={ drinks.strDrink }
               />
               <p data-testid={ `${index}-card-name` }>{ drinks.strDrink }</p>

@@ -6,7 +6,7 @@ import MainScreen from '../Components/MainScreen';
 function Bebidas({ history }) {
   return (
     <div>
-      <Header pageName='Bebidas' history={history} />
+      <Header pageName="Bebidas" history={ history } />
       <h1>Bebidas</h1>
       <MainScreen />
       <Footer />
