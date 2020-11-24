@@ -10,7 +10,9 @@ import FoodFilters from '../components/FoodFilters';
 import { foodApi } from '../services/foodAPI';
 
 const Comidas = (history) => {
-  const { searchBox, meals, setMeals,stopApi, setStopApi  } = useContext(ReceitasContext);
+  const {
+    searchBox, meals, setMeals, stopApi, setStopApi,
+  } = useContext(ReceitasContext);
 
   const location = useLocation();
 
@@ -26,8 +28,6 @@ const Comidas = (history) => {
 
   if (!meals.length) return <div>Carregando...</div>;
   const doze = 12;
-
-  console.log("flag", meals)
 
   return (
     <section>

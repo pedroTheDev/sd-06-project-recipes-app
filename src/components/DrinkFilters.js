@@ -4,7 +4,7 @@ import { drinkCategoryApi, drinkByCategoryApi, drinkApi } from '../services/drin
 
 function DrinkFilters() {
   const {
-    filtersData, setFiltersData, setMeals, selectedFilter, setSelectedFilter
+    filtersData, setFiltersData, setMeals, selectedFilter, setSelectedFilter,
   } = useContext(ReceitasContext);
 
   useEffect(() => {
