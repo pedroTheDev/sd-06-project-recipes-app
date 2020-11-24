@@ -1,9 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import searchRecipe from '../hooks/searchRecipe';
 
+import '../css/itemDetails.css';
+
 export default function FoodsDetails(props) {
   const [recipe, recipeId, setRecipeId] = searchRecipe();
+  const [recipeDetails, setRecipeDetails] = useState([]);
 
   useEffect(() => {
     if (recipeId === '') {
@@ -11,56 +14,64 @@ export default function FoodsDetails(props) {
     }
   }, [recipeId]);
 
-  function handle(item) {
-    return (
-      <div>
-        <p data-testid="0-ingredient-name-and-measure">{item.strIngredient1}</p>
-        <p data-testid="0-ingredient-name-and-measure">{item.strMeasure1}</p>
-        <p data-testid="1-ingredient-name-and-measure">{item.strIngredient2}</p>
-        <p data-testid="1-ingredient-name-and-measure">{item.strMeasure2}</p>
-        <p data-testid="2-ingredient-name-and-measure">{item.strIngredient3}</p>
-        <p data-testid="2-ingredient-name-and-measure">{item.strMeasure3}</p>
-        <p data-testid="3-ingredient-name-and-measure">{item.strIngredient4}</p>
-        <p data-testid="3-ingredient-name-and-measure">{item.strMeasure4}</p>
-        <p data-testid="4-ingredient-name-and-measure">{item.strIngredient5}</p>
-        <p data-testid="4-ingredient-name-and-measure">{item.strMeasure5}</p>
-        <p data-testid="5-ingredient-name-and-measure">{item.strIngredient6}</p>
-        <p data-testid="5-ingredient-name-and-measure">{item.strMeasure6}</p>
-        <p data-testid="6-ingredient-name-and-measure">{item.strIngredient7}</p>
-        <p data-testid="6-ingredient-name-and-measure">{item.strMeasure7}</p>
-        <p data-testid="7-ingredient-name-and-measure">{item.strIngredient8}</p>
-        <p data-testid="7-ingredient-name-and-measure">{item.strMeasure8}</p>
-        <p data-testid="8-ingredient-name-and-measure">{item.strIngredient9}</p>
-        <p data-testid="8-ingredient-name-and-measure">{item.strMeasure9}</p>
-        <p data-testid="9-ingredient-name-and-measure">{item.strIngredient10}</p>
-        <p data-testid="9-ingredient-name-and-measure">{item.strMeasure10}</p>
-        <p data-testid="10-ingredient-name-and-measure">{item.strIngredient11}</p>
-        <p data-testid="10-ingredient-name-and-measure">{item.strMeasure11}</p>
-      </div>
-    );
+  useEffect(() => {
+    if (recipe.meals) {
+      const currRecipe = { ...recipe.meals[0] };
+      const array = [];
+      const maxLength = 20;
+      for (let counter = 1; counter <= maxLength; counter += 1) {
+        array.push(counter);
+      }
+      const recipeArray = array.map((number) => (
+        (currRecipe[`strIngredient${number}`] !== ''
+          || currRecipe[`strIngredient${number}`])
+          ? [currRecipe[`strIngredient${number}`], currRecipe[`strMeasure${number}`]]
+          : ''
+      ));
+      setRecipeDetails(recipeArray);
+    }
+  }, [recipe]);
+
+  function renderIngredients() {
+    const empty = 0;
+    if (recipeDetails.length > empty) {
+      return (
+        <div>
+          { recipeDetails.filter((ingredient) => ingredient !== '')
+            .map((ingredient, index) => (
+              <p
+                key={ ingredient[0] }
+                data-testid={ `${index}-ingredient-name-and-measure` }
+              >
+                {`${ingredient[0]}: ${ingredient[1]}`}
+              </p>
+            )) }
+        </div>
+      );
+    }
   }
 
   if (recipe.meals) {
+    const item = recipe.meals[0];
     return (
       <div>
-        {recipe.meals.map((item) => (
-          <div key={ item }>
-            <img
-              data-testid="recipe-photo"
-              alt="Foto da receita"
-              src={ item.strMealThumb }
-            />
-            <p data-testid="recipe-title">{item.strMeal}</p>
-            <input type="button" data-testid="share-btn" value="Share" />
-            <input type="button" data-testid="favorite-btn" value="favorite" />
-            <p data-testid="recipe-category">{item.strCategory}</p>
-            <p data-testid="instructions">{item.strInstructions}</p>
-            {handle(item)}
-            <p data-testid="video">{item.strYoutube}</p>
-            <div data-testid="0-recomendation-card"> recomendação</div>
-            <input type="button" data-testid="start-recipe-btn" value="Começar receita" />
-          </div>
-        ))}
+        <div key={ item }>
+          <img
+            data-testid="recipe-photo"
+            alt="Foto da receita"
+            src={ item.strMealThumb }
+            className="item-img"
+          />
+          <p data-testid="recipe-title">{item.strMeal}</p>
+          <input type="button" data-testid="share-btn" value="Share" />
+          <input type="button" data-testid="favorite-btn" value="favorite" />
+          <p data-testid="recipe-category">{item.strCategory}</p>
+          <p data-testid="instructions">{item.strInstructions}</p>
+          {renderIngredients()}
+          <p data-testid="video">{item.strYoutube}</p>
+          <div data-testid="0-recomendation-card"> recomendação</div>
+          <input type="button" data-testid="start-recipe-btn" value="Começar receita" />
+        </div>
       </div>
     );
   }

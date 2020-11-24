@@ -12,8 +12,7 @@ export default function useSearch() {
     const typeOfFetch = (category === 'comidas')
       ? 'meals'
       : 'drinks';
-    console.log(category);
-    console.log(typeOfFetch);
+
     try {
       const api = (category === 'comidas')
         ? 'https://www.themealdb.com/api/json/v1/1/'
@@ -36,9 +35,8 @@ export default function useSearch() {
       }
 
       const dataJson = await fetch(`${api + endpoint}`);
-      console.log('dataJson ', dataJson);
+
       const data = await dataJson.json();
-      console.log(api, endpoint);
 
       const firstCard = 0;
       const maxCards = 12;
@@ -50,7 +48,6 @@ export default function useSearch() {
       setItems({ [typeOfFetch]: slicedResults });
     } catch (error) {
       setItems({ [typeOfFetch]: null });
-      console.log(error);
       alert('alert da fetch: ', error.message);
     }
   };
