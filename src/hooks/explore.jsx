@@ -5,7 +5,10 @@ import PropTypes from 'prop-types';
 
 import { useAuth } from './auth';
 
-import { fetchMealIngredients, fetchFoodAreas, fetchFoodsByArea } from '../services/foodApi';
+import { fetchMealIngredients,
+  fetchFoodAreas,
+  fetchFoodsByArea,
+} from '../services/foodApi';
 import { fetchDrinkIngredients } from '../services/drinksApi';
 import { useRecipes } from './recipes';
 
@@ -90,16 +93,17 @@ function ExploreProvider({ children }) {
   }, [userToken, updateRecipes]);
 
   return (
-    <exploreContext.Provider value={{
-      ingredientsSearched,
-      foodAreas,
-      loadingIngredients,
-      loadingAreas,
-      loadingFoodsByArea,
-      loadIngredients,
-      loadAreas,
-      loadFoodsByArea,
-    }}
+    <exploreContext.Provider
+      value={ {
+        ingredientsSearched,
+        foodAreas,
+        loadingIngredients,
+        loadingAreas,
+        loadingFoodsByArea,
+        loadIngredients,
+        loadAreas,
+        loadFoodsByArea,
+      } }
     >
       {children}
     </exploreContext.Provider>

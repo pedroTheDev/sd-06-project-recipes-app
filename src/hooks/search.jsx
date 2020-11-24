@@ -89,9 +89,10 @@ function SearchProvider({ children }) {
   }, [userToken]);
 
   return (
-    <searchContext.Provider value={{
-      appSearch, infoSearched, updateSearch,
-    }}
+    <searchContext.Provider
+      value={ {
+        appSearch, infoSearched, updateSearch,
+      } }
     >
       {children}
     </searchContext.Provider>
