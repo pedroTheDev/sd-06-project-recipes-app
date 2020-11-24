@@ -4,6 +4,7 @@ import Login from '../pages/Login';
 import Foods from '../pages/Foods';
 import Drinks from '../pages/Drinks';
 import Profile from '../pages/Profile';
+import FoodsDetails from './FoodsDetails';
 
 export default class Router extends React.Component {
   render() {
@@ -26,8 +27,8 @@ export default class Router extends React.Component {
         />
         <Route
           exact
-          path="/comidas/:id-da-receita"
-          component={ Foods }
+          path="/comidas/:id"
+          render={ (props) => <FoodsDetails { ...props } /> }
         />
         <Route
           exact
