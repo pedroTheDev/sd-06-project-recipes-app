@@ -20,6 +20,8 @@ export default function RecipesProvider({ children }) {
   const [filterDrink, setFilterDrink] = useState([]);
   const [radioValue, setRadioValue] = useState('');
   const [searchBar, setSearchBar] = useState('');
+  // state para foodDetails
+  const [foodDetail, setFoodDetail] = useState([]);
 
   useEffect(() => {
     if (fetchFood && fetchFood.length === 1) {
@@ -62,6 +64,8 @@ export default function RecipesProvider({ children }) {
     searchBar,
     setSearchBar,
     setFetchDrink,
+    foodDetail,
+    setFoodDetail,
   };
 
   return (

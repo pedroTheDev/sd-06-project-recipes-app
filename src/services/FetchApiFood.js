@@ -10,7 +10,9 @@ export default async function fetchApiFood(radioSelected, setData = '', value = 
     endpoint = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
   } else if (radioSelected === '5') {
     endpoint = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${value}`;
-  }
+  } else if (radioSelected === '6') {
+    endpoint = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${value}`;
+  } // procura pelo id da receita e mostra todos os detalhes da mesma
 
   const response = await fetch(endpoint);
   const responseJson = await response.json();
