@@ -56,27 +56,29 @@ function Drinks({ pageType }) {
 
   return (
     <div className="drinks-page">
-      <Header pageName={pageType} showSearch />
+      <Header pageName={ pageType } showSearch />
       <Navbar />
 
       <div className="filters-container">
-        <label htmlFor="all">Todos</label>
-        <input
-          type="checkbox"
-          name="filter"
-          id="all"
-          value="all"
-          checked={filterSelected === 'all'}
-          onChange={handleFilterChange}
-
-        />
+        <label htmlFor="all">
+          <input
+            type="checkbox"
+            name="filter"
+            id="all"
+            value="all"
+            checked={ filterSelected === 'all' }
+            onChange={ handleFilterChange }
+            data-testid="All-category-filter"
+          />
+          Todos
+        </label>
 
         {currentDrinkFilters.map((filter) => (
-          <React.Fragment key={filter}>
+          <React.Fragment key={ filter }>
             <label
-              data-testid={`${filter}-category-filter`}
-              htmlFor={filter}
-              key={filter}
+              data-testid={ `${filter}-category-filter` }
+              htmlFor={ filter }
+              key={ filter }
             >
               {filter}
 
@@ -84,10 +86,10 @@ function Drinks({ pageType }) {
             <input
               type="checkbox"
               name="filter"
-              id={filter}
-              value={filter}
-              checked={filterSelected === filter}
-              onChange={handleFilterChange}
+              id={ filter }
+              value={ filter }
+              checked={ filterSelected === filter }
+              onChange={ handleFilterChange }
             />
           </React.Fragment>
         ))}
@@ -96,17 +98,17 @@ function Drinks({ pageType }) {
       <div className="drinks-container">
         {currentDrinkRecipes.map((drink, index) => (
           <Link
-            to={`/${pageType}/${drink.idDrink}`}
+            to={ `/${pageType}/${drink.idDrink}` }
             className="recipe-card"
-            data-testid={`${index}-recipe-card`}
-            key={drink.idDrink}
+            data-testid={ `${index}-recipe-card` }
+            key={ drink.idDrink }
           >
             <img
-              src={drink.strDrinkThumb}
-              alt={drink.strDrink}
-              data-testid={`${index}-card-img`}
+              src={ drink.strDrinkThumb }
+              alt={ drink.strDrink }
+              data-testid={ `${index}-card-img` }
             />
-            <strong data-testid={`${index}-card-name`}>{drink.strDrink}</strong>
+            <strong data-testid={ `${index}-card-name` }>{drink.strDrink}</strong>
           </Link>
         ))}
       </div>

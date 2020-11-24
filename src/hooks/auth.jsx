@@ -50,9 +50,10 @@ function AuthProvider({ children }) {
   }, []);
 
   return (
-    <authContext.Provider value={{
-      user, userToken, signIn, signOut,
-    }}
+    <authContext.Provider
+      value={ {
+        user, userToken, signIn, signOut,
+      } }
     >
       {children}
     </authContext.Provider>

@@ -44,15 +44,15 @@ function Login() {
 
   return (
     <div className="login-page">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={ handleSubmit }>
         <h1>Faça seu login</h1>
 
         <input
           placeholder="Seu E-mail"
           name="email"
           data-testid="email-input"
-          value={email}
-          onChange={handleEmailChange}
+          value={ email }
+          onChange={ handleEmailChange }
         />
 
         <input
@@ -60,14 +60,14 @@ function Login() {
           type="password"
           name="password"
           placeholder="Sua senha"
-          value={password}
-          onChange={handlePasswordChange}
+          value={ password }
+          onChange={ handlePasswordChange }
         />
 
         <button
           type="submit"
           data-testid="login-submit-btn"
-          disabled={!userDataIsValid}
+          disabled={ !userDataIsValid }
         >
           Entrar
         </button>

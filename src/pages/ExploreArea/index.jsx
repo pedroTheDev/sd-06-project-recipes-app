@@ -67,16 +67,16 @@ function ExploreArea({ pageType }) {
         <select
           name="area"
           id="area"
-          value={areaSelected}
-          onChange={handleAreaChange}
+          value={ areaSelected }
+          onChange={ handleAreaChange }
           data-testid="explore-by-area-dropdown"
         >
           <option value="all" data-testid="All-option">All</option>
           {foodAreas.map((area) => (
             <option
-              key={area}
-              value={area}
-              data-testid={`${area}-option`}
+              key={ area }
+              value={ area }
+              data-testid={ `${area}-option` }
             >
               {area}
 
@@ -92,17 +92,17 @@ function ExploreArea({ pageType }) {
           <div className="foods-container">
             {currentRecipesByArea.map((meal, index) => (
               <Link
-                to={`/${pageType}/${meal.idMeal}`}
+                to={ `/${pageType}/${meal.idMeal}` }
                 className="recipe-card"
-                data-testid={`${index}-recipe-card`}
-                key={meal.idMeal}
+                data-testid={ `${index}-recipe-card` }
+                key={ meal.idMeal }
               >
                 <img
-                  src={meal.strMealThumb}
-                  alt={meal.strMeal}
-                  data-testid={`${index}-card-img`}
+                  src={ meal.strMealThumb }
+                  alt={ meal.strMeal }
+                  data-testid={ `${index}-card-img` }
                 />
-                <strong data-testid={`${index}-card-name`}>{meal.strMeal}</strong>
+                <strong data-testid={ `${index}-card-name` }>{meal.strMeal}</strong>
               </Link>
             ))}
           </div>

@@ -22,7 +22,7 @@ const initialSearchValues = {
   },
   bebidas: {
     option: 'name',
-    value: 'martini',
+    value: '',
     token: '1',
   },
 };
@@ -53,6 +53,7 @@ function SearchProvider({ children }) {
       const recipesSearched = await fetchRecipes(userSearch);
 
       if (!recipesSearched) {
+        // eslint-disable-next-line
         alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
 
         return null;
@@ -73,6 +74,7 @@ function SearchProvider({ children }) {
     } catch (err) {
       console.log(err);
 
+      // eslint-disable-next-line
       alert('Sinto muito, houve um erro ao buscar. Tente novamente.');
 
       return null;
@@ -89,9 +91,10 @@ function SearchProvider({ children }) {
   }, [userToken]);
 
   return (
-    <searchContext.Provider value={{
-      appSearch, infoSearched, updateSearch,
-    }}
+    <searchContext.Provider
+      value={ {
+        appSearch, infoSearched, updateSearch,
+      } }
     >
       {children}
     </searchContext.Provider>

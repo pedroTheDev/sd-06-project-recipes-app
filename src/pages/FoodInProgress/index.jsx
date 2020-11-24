@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import copy from 'clipboard-copy';
 
 import { useCook } from '../../hooks/cook';
 import { useRecipes } from '../../hooks/recipes';
@@ -15,7 +16,11 @@ function FoodInProgress({ pageType }) {
   const [copiedLink, setCopiedLink] = useState(false);
 
   const {
-    cookedRecipes, recipesProgress, updateRecipeProgress, finalizeRecipe, loadRecipeToCook,
+    cookedRecipes,
+    recipesProgress,
+    updateRecipeProgress,
+    finalizeRecipe,
+    loadRecipeToCook,
   } = useCook();
 
   const { id } = useParams();
@@ -35,10 +40,12 @@ function FoodInProgress({ pageType }) {
   }, []);
 
   const handleShareClick = useCallback(() => {
-    document.execCommand('copy', false, id);
+    const url = `http://localhost:3000/${pageType}/${id}`;
+
+    copy(url);
 
     setCopiedLink(true);
-  }, [id]);
+  }, [id, pageType]);
 
   const currentlyCooking = useMemo(() => {
     const recipeToCook = cookedRecipes[pageType].find(({ recipe }) => (
@@ -154,8 +161,8 @@ function FoodInProgress({ pageType }) {
     <div className="recipe-details-page">
       <img
         data-testid="recipe-photo"
-        src={currentlyCooking.strMealThumb}
-        alt={currentlyCooking.strMeal}
+        src={ currentlyCooking.strMealThumb }
+        alt={ currentlyCooking.strMeal }
       />
 
       <h2 data-testid="recipe-title">{currentlyCooking.strMeal}</h2>
@@ -164,12 +171,12 @@ function FoodInProgress({ pageType }) {
 
       <div className="share-btn-container">
         <button
-          onClick={handleShareClick}
+          onClick={ handleShareClick }
           type="button"
         >
           <img
             data-testid="share-btn"
-            src={shareIcon}
+            src={ shareIcon }
             alt="share this recipe"
           />
         </button>
@@ -180,8 +187,12 @@ function FoodInProgress({ pageType }) {
       </div>
 
       <div className="favorites-btn-container">
-        <button type="button" onClick={handleFavoriteToggle}>
-          <img data-testid="favorite-btn" src={recipeIsFavorited ? blackHeart : whiteHeart} alt="favorite this recipe" />
+        <button type="button" onClick={ handleFavoriteToggle }>
+          <img
+            data-testid="favorite-btn"
+            src={ recipeIsFavorited ? blackHeart : whiteHeart }
+            alt="favorite this recipe"
+          />
         </button>
       </div>
 
@@ -189,23 +200,24 @@ function FoodInProgress({ pageType }) {
         {foodIngredients.map((ingredient, index) => (
           <div
             className="ingredients-checkbox-container"
-            key={`${ingredient}`}
+            key={ ingredient }
           >
-            <input
-              type="checkbox"
-              name={ingredient}
-              id={ingredient}
-              value={index}
-              checked={currentProgress.includes(`${index}`)}
-              onChange={handleIngredientClick}
-            />
 
             <label
-              key={ingredient}
-              data-testid={`${index}-ingredient-step`}
-              htmlFor={ingredient}
-              className={currentProgress.includes(`${index}`) ? 'item-checked' : ''}
+              key={ ingredient }
+              data-testid={ `${index}-ingredient-step` }
+              htmlFor={ ingredient }
+              className={ currentProgress.includes(`${index}`) ? 'item-checked' : '' }
             >
+              <input
+                type="checkbox"
+                name={ ingredient }
+                id={ ingredient }
+                value={ index }
+                checked={ currentProgress.includes(`${index}`) }
+                onChange={ handleIngredientClick }
+              />
+
               {ingredient}
 
             </label>
@@ -222,8 +234,8 @@ function FoodInProgress({ pageType }) {
       <button
         type="button"
         data-testid="finish-recipe-btn"
-        disabled={!canFinalizeRecipe}
-        onClick={handleFinalizeRecipe}
+        disabled={ !canFinalizeRecipe }
+        onClick={ handleFinalizeRecipe }
       >
         Finalizar Receita
       </button>

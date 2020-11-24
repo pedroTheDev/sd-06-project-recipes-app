@@ -140,15 +140,16 @@ function CookProvider({ children }) {
   }, [userToken]);
 
   return (
-    <cookContext.Provider value={{
-      cookedRecipes,
-      recipesProgress,
-      doneRecipes,
-      startCooking,
-      updateRecipeProgress,
-      finalizeRecipe,
-      loadRecipeToCook,
-    }}
+    <cookContext.Provider
+      value={ {
+        cookedRecipes,
+        recipesProgress,
+        doneRecipes,
+        startCooking,
+        updateRecipeProgress,
+        finalizeRecipe,
+        loadRecipeToCook,
+      } }
     >
       {children}
     </cookContext.Provider>

@@ -34,7 +34,7 @@ function Profile() {
       <button
         data-testid="profile-logout-btn"
         type="button"
-        onClick={handleLogOut}
+        onClick={ handleLogOut }
       >
         Sair
       </button>

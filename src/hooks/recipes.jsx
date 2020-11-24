@@ -104,15 +104,16 @@ function RecipeProvider({ children }) {
   }, []);
 
   return (
-    <recipesContext.Provider value={{
-      currentRecipes,
-      currentFilters,
-      favoriteRecipes,
-      currentFilteredRecipes,
-      updateRecipes,
-      updateFilteredRecipes,
-      updateFavoriteRecipes,
-    }}
+    <recipesContext.Provider
+      value={ {
+        currentRecipes,
+        currentFilters,
+        favoriteRecipes,
+        currentFilteredRecipes,
+        updateRecipes,
+        updateFilteredRecipes,
+        updateFavoriteRecipes,
+      } }
     >
       {children}
     </recipesContext.Provider>

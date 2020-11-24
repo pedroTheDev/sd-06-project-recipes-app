@@ -41,6 +41,7 @@ function Header({ pageName, showSearch = false }) {
     }
 
     if (option === 'first_letter' && search.length !== 1) {
+      // eslint-disable-next-line
       alert('Sua busca deve conter somente 1 (um) caracter');
 
       return;
@@ -59,7 +60,7 @@ function Header({ pageName, showSearch = false }) {
     const headerWords = pageName.split(' ');
 
     const namesCapitalized = headerWords.map((word) => (
-      word.charAt(0).toUpperCase() + word.slice(1)
+      word.charAt(1 - 1).toUpperCase() + word.slice(1)
     ));
 
     const wordsCapitalized = namesCapitalized.join(' ');
@@ -70,73 +71,79 @@ function Header({ pageName, showSearch = false }) {
   return (
     <header className="app-header">
       <Link to="/perfil">
-        <img data-testid="profile-top-btn" src={userIcon} alt="user info" />
+        <img data-testid="profile-top-btn" src={ userIcon } alt="user info" />
       </Link>
 
       <span data-testid="page-title">{ parsedTitle }</span>
 
       {showSearch
         ? (
-          <button type="button" onClick={handleSearchIconClick}>
-            <img data-testid="search-top-btn" src={searchIcon} alt="search icon" />
+          <button type="button" onClick={ handleSearchIconClick }>
+            <img data-testid="search-top-btn" src={ searchIcon } alt="search icon" />
           </button>
         ) : (<div />)}
 
       {searchBarShowing && (
-      <div className="search-bar-container">
-        <form onSubmit={handleRecipeSearch}>
-          <input
-            type="text"
-            data-testid="search-input"
-            placeholder="Palavra-chave"
-            ref={searchInputRef}
-          />
+        <div className="search-bar-container">
+          <form onSubmit={ handleRecipeSearch }>
+            <input
+              type="text"
+              data-testid="search-input"
+              placeholder="Palavra-chave"
+              ref={ searchInputRef }
+            />
 
-          <div className="radio-type-container">
-            <div className="radio-container">
-              <label htmlFor="ingredients">Ingredientes</label>
-              <input
-                type="radio"
-                onChange={handleRadioChange}
-                name="searchOption"
-                id="ingredients"
-                value="ingredients"
-                data-testid="ingredient-search-radio"
-              />
-            </div>
-            <div className="radio-container">
-              <label htmlFor="name">Nome</label>
-              <input
-                type="radio"
-                onChange={handleRadioChange}
-                name="searchOption"
-                id="name"
-                value="name"
-                data-testid="name-search-radio"
-              />
-            </div>
-            <div className="radio-container">
-              <label htmlFor="first_letter">Primeira Letra</label>
-              <input
-                type="radio"
-                onChange={handleRadioChange}
-                name="searchOption"
-                id="first_letter"
-                value="first_letter"
-                data-testid="first-letter-search-radio"
-              />
-            </div>
+            <div className="radio-type-container">
+              <div className="radio-container">
+                <label htmlFor="ingredients">
+                  <input
+                    type="radio"
+                    onChange={ handleRadioChange }
+                    name="searchOption"
+                    id="ingredients"
+                    value="ingredients"
+                    data-testid="ingredient-search-radio"
+                  />
+                  Ingredientes
+                </label>
+              </div>
+              <div className="radio-container">
+                <label htmlFor="name">
+                  <input
+                    type="radio"
+                    onChange={ handleRadioChange }
+                    name="searchOption"
+                    id="name"
+                    value="name"
+                    data-testid="name-search-radio"
+                  />
+                  Nome
+                </label>
+              </div>
+              <div className="radio-container">
+                <label htmlFor="first_letter">
+                  <input
+                    type="radio"
+                    onChange={ handleRadioChange }
+                    name="searchOption"
+                    id="first_letter"
+                    value="first_letter"
+                    data-testid="first-letter-search-radio"
+                  />
+                  Primeira Letra
+                </label>
+              </div>
 
-            <button
-              type="submit"
-              data-testid="exec-search-btn"
-            >
-              Buscar
+              <button
+                type="submit"
+                data-testid="exec-search-btn"
+              >
+                Buscar
 
-            </button>
-          </div>
-        </form>
-      </div>
+              </button>
+            </div>
+          </form>
+        </div>
       )}
     </header>
   );
@@ -152,17 +159,3 @@ Header.propTypes = {
 };
 
 export default Header;
-
-// O header tem os ícones corretos na tela de principal de receitas de bebidas;
-// Não tem header na tela de detalhes de uma receita de comida;
-// Não tem header na tela de detalhes de uma receita de bebida;
-// Não tem header na tela de receita em processo de comida;
-// Não tem header na tela de receita em processo de bebida;
-// O header tem os ícones corretos na tela de explorar;
-// O header tem os ícones corretos na tela de explorar comidas;
-// O header tem os ícones corretos na tela de explorar bebidas;
-// O header tem os ícones corretos na tela de explorar comidas por ingrediente;
-// O header tem os ícones corretos na tela de explorar bebidas por ingrediente;
-// O header tem os ícones corretos na tela de explorar comidas por local de origem;
-// O header tem os ícones corretos na tela de receitas feitas;
-// O header tem os ícones corretos na tela de receitas favoritas.

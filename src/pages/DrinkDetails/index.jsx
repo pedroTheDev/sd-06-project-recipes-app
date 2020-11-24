@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import copy from 'clipboard-copy';
 
 import { useSingleRecipe } from '../../hooks/singleRecipe';
 import { useCook } from '../../hooks/cook';
@@ -34,10 +35,12 @@ function DrinkDetails({ pageType }) {
   }, [id, loadSingleRecipe]);
 
   const handleShareClick = useCallback(() => {
-    document.execCommand('copy');
+    const url = `http://localhost:3000/${pageType}/${id}`;
+
+    copy(url);
 
     setCopiedLink(true);
-  }, []);
+  }, [id, pageType]);
 
   const drinkDetails = useMemo(
     () => currentFocusedRecipes[pageType].recipe,
@@ -133,20 +136,20 @@ function DrinkDetails({ pageType }) {
     <div className="recipe-details-page">
       <img
         data-testid="recipe-photo"
-        src={drinkDetails.strDrinkThumb}
-        alt={drinkDetails.strDrink}
+        src={ drinkDetails.strDrinkThumb }
+        alt={ drinkDetails.strDrink }
       />
 
       <h2 data-testid="recipe-title">{drinkDetails.strDrink}</h2>
       <p data-testid="recipe-category">{drinkDetails.strAlcoholic}</p>
       <div className="share-btn-container">
         <button
-          onClick={handleShareClick}
+          onClick={ handleShareClick }
           type="button"
         >
           <img
             data-testid="share-btn"
-            src={shareIcon}
+            src={ shareIcon }
             alt="share this recipe"
           />
         </button>
@@ -157,9 +160,9 @@ function DrinkDetails({ pageType }) {
       </div>
 
       <div className="favorites-btn-container">
-        <button type="button" onClick={handleFavoriteToggle}>
+        <button type="button" onClick={ handleFavoriteToggle }>
           <img
-            src={recipeIsFavorited ? blackHeart : whiteHeart}
+            src={ recipeIsFavorited ? blackHeart : whiteHeart }
             alt="favorite this recipe"
             data-testid="favorite-btn"
           />
@@ -169,8 +172,8 @@ function DrinkDetails({ pageType }) {
       <div className="recipe-ingredients">
         {drinkIngredients.map((ingredients, index) => (
           <p
-            key={ingredients}
-            data-testid={`${index}-ingredient-name-and-measure`}
+            key={ ingredients }
+            data-testid={ `${index}-ingredient-name-and-measure` }
           >
             {ingredients}
 
@@ -187,22 +190,31 @@ function DrinkDetails({ pageType }) {
       <div className="recommendations-container">
         {drinkRecommendations.map((recommendation, index) => (
           <Link
-            to={`/bebidas/${recommendation.idMeal}`}
+            to={ `/bebidas/${recommendation.idMeal}` }
             className="recommendation-card"
-            key={recommendation}
-            data-testid={`${index}-recomendation-card`}
+            key={ recommendation.idMeal }
+            data-testid={ `${index}-recomendation-card` }
           >
-            <img src={recommendation.strMealThumb} alt={recommendation.strMeal} />
-            <strong data-testid={`${index}-recomendation-card`}>{recommendation.strMeal}</strong>
+            <img
+              src={ recommendation.strMealThumb }
+              alt={ recommendation.strMeal }
+              data-testid={ `${index}-recomendation-image` }
+            />
+            <strong
+              data-testid={ `${index}-recomendation-title` }
+            >
+              {recommendation.strMeal}
+
+            </strong>
           </Link>
         ))}
       </div>
 
       {!recipeHasBeenFinished && (
         <Link
-          to={`/${pageType}/${id}/in-progress`}
+          to={ `/${pageType}/${id}/in-progress` }
           data-testid="start-recipe-btn"
-          onClick={handleStartCooking}
+          onClick={ handleStartCooking }
           className="start-recipe-btn"
         >
           {recipeHasBeenStarted ? 'Continuar Receita' : 'Iniciar Receita'}

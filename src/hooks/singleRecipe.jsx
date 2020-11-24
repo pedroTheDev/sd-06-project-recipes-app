@@ -40,7 +40,9 @@ const fetchRandomOptions = {
 const singleRecipeContext = createContext();
 
 function SingleRecipeProvider({ children }) {
-  const [currentFocusedRecipes, setCurrentFocusedRecipes] = useState(singleRecipeStructure);
+  const [currentFocusedRecipes, setCurrentFocusedRecipes] = useState(
+    singleRecipeStructure,
+  );
   const [loadingSingleRecipe, setLoadingSingleRecipe] = useState(true);
   const [randomRedirect, setRandomRedirect] = useState(false);
 
@@ -114,13 +116,14 @@ function SingleRecipeProvider({ children }) {
   }, []);
 
   return (
-    <singleRecipeContext.Provider value={{
-      currentFocusedRecipes,
-      loadingSingleRecipe,
-      loadSingleRecipe,
-      loadRandomRecipe,
-      unloadRandom,
-    }}
+    <singleRecipeContext.Provider
+      value={ {
+        currentFocusedRecipes,
+        loadingSingleRecipe,
+        loadSingleRecipe,
+        loadRandomRecipe,
+        unloadRandom,
+      } }
     >
       {children}
     </singleRecipeContext.Provider>
