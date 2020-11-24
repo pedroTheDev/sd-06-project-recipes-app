@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { fetchDrinksById, fetchRecommendedMeals } from '../services';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import { currentID, favRecipe } from '../actions';
 
 class DrinksDetails extends React.Component {
   constructor() {
@@ -12,9 +14,16 @@ class DrinksDetails extends React.Component {
       Drink: [],
       RecommendedMeals: [],
       x: 0,
+      Ingredients: [],
+      Measures: [],
+      Video: '',
+      favorite: false,
     };
     this.goLeft = this.goLeft.bind(this);
     this.goRight = this.goRight.bind(this);
+    this.handleIngredients = this.handleIngredients.bind(this);
+    this.setIngredients = this.setIngredients.bind(this);
+    this.handleYoutubeVideo = this.handleYoutubeVideo.bind(this);
   }
 
   async componentDidMount() {
@@ -23,6 +32,40 @@ class DrinksDetails extends React.Component {
     const drinkRecipe = await fetchDrinksById(endpoint);
     const recommendedMeals = await fetchRecommendedMeals();
     this.setDrinkState(drinkRecipe, recommendedMeals);
+    this.handleIngredients();
+  }
+
+  handleYoutubeVideo(url) {
+    if (url) {
+      const Video = url.split('=')[1];
+      this.setState({ Video });
+    }
+  }
+
+  handleIngredients() {
+    const ingredientArray = [];
+    const measureArray = [];
+    let ingredient;
+    let measure;
+    const { Drink } = this.state;
+    Drink.map((recipe) => {
+      this.handleYoutubeVideo(recipe.strYoutube);
+      const twenty = 20;
+      for (let index = 1; index <= twenty; index += 1) {
+        ingredient = `strIngredient${index}`;
+        measure = `strMeasure${index}`;
+        ingredientArray.push(recipe[ingredient]);
+        measureArray.push(recipe[measure]);
+      }
+
+      const filteredIngredients = ingredientArray.filter((element) => element !== null)
+        .filter((element) => element !== undefined).filter((element) => element !== '');
+      const filteredMeasure = measureArray.filter((element) => element !== null)
+        .filter((element) => element !== undefined).filter((element) => element !== '');
+
+      this.setIngredients(filteredIngredients, filteredMeasure);
+      return null;
+    });
   }
 
   setDrinkState(Drink, RecommendedMeals) {
@@ -30,6 +73,24 @@ class DrinksDetails extends React.Component {
       Drink,
       RecommendedMeals,
     });
+  }
+
+  setIngredients(Ingredients, Measures) {
+    this.setState({
+      Ingredients,
+      Measures,
+    });
+  }
+
+  changeFavIcon(idMeal) {
+    const { favorite } = this.state;
+    const { dispatchFavorite } = this.props;
+    if (favorite) {
+      dispatchFavorite(favorite, idMeal);
+      return blackHeartIcon;
+    }
+    dispatchFavorite(favorite, idMeal);
+    return whiteHeartIcon;
   }
 
   goLeft() {
@@ -50,7 +111,13 @@ class DrinksDetails extends React.Component {
   }
 
   render() {
-    const { Drink, RecommendedMeals, x } = this.state;
+    const { Drink,
+      RecommendedMeals,
+      x,
+      Ingredients,
+      Measures,
+      Video,
+      favorite } = this.state;
     return (
       <div>
         {Drink ? Drink.map((recipe, index) => {
@@ -68,47 +135,63 @@ class DrinksDetails extends React.Component {
                   <p data-testid="recipe-category">{recipe.strAlcoholic}</p>
                 </div>
                 <div className="recipe-buttons">
-                  <input type="image" src={ shareIcon } alt="shareIcon" />
-                  <input type="image" src={ whiteHeartIcon } alt="whiteHeartIcon" />
+                  <input
+                    type="image"
+                    data-testid="share-btn"
+                    src={ shareIcon }
+                    alt="shareIcon"
+                  />
+                  <input
+                    type="image"
+                    data-testid="favorite-btn"
+                    src={ this.changeFavIcon(recipe.idMeal) }
+                    onClick={ () => this.setState({ favorite: !favorite }) }
+                    alt="whiteHeartIcon"
+                  />
                 </div>
               </div>
               <hr className="card-hr" />
               <h2>Ingredients</h2>
               <div className="ingredients">
                 <ul className="detail-ingredients">
-                  {recipe.strIngredient1 || recipe.strMeasure1
-                    ? <li>{`${recipe.strIngredient1} - ${recipe.strMeasure1}`}</li> : '' }
-                  {recipe.strIngredient2 || recipe.strMeasure2
-                    ? <li>{`${recipe.strIngredient2} - ${recipe.strMeasure2}`}</li> : '' }
-                  {recipe.strIngredient3 || recipe.strMeasure3
-                    ? <li>{`${recipe.strIngredient3} - ${recipe.strMeasure3}`}</li> : '' }
-                  {recipe.strIngredient4 || recipe.strMeasure4
-                    ? <li>{`${recipe.strIngredient4} - ${recipe.strMeasure4}`}</li> : '' }
-                  {recipe.strIngredient5 || recipe.strMeasure5
-                    ? <li>{`${recipe.strIngredient5} - ${recipe.strMeasure5}`}</li> : '' }
-                  {recipe.strIngredient6 || recipe.strMeasure6
-                    ? <li>{`${recipe.strIngredient6} - ${recipe.strMeasure6}`}</li> : '' }
-                  {recipe.strIngredient7 || recipe.strMeasure7
-                    ? <li>{`${recipe.strIngredient7} - ${recipe.strMeasure7}`}</li> : '' }
-                  {recipe.strIngredient8 || recipe.strMeasure8
-                    ? <li>{`${recipe.strIngredient8} - ${recipe.strMeasure8}`}</li> : '' }
-                  {recipe.strIngredient9 || recipe.strMeasure9
-                    ? <li>{`${recipe.strIngredient9} - ${recipe.strMeasure9}`}</li> : '' }
+                  {Ingredients.map((ingredient, i) => (
+                    <li
+                      key={ index }
+                      data-testid={ `${i}-ingredient-name-and-measure` }
+                    >
+                      {ingredient}
+                      -
+                      { Measures[i] }
+                    </li>
+                  ))}
                 </ul>
               </div>
               <h2 data-testid="instructions">Instructions</h2>
-              <div className="detail-instructions">{recipe.strInstructions}</div>
+              <div className="detail-instructions" data-testid="instructions">
+                {recipe.strInstructions}
+              </div>
               <p data-testid={ `${index}-card-name` }>{recipe.strMeal}</p>
               <h2>Recomendadas</h2>
+              <div className="video-div">
+                <iframe
+                  data-testid="video"
+                  title="recipe-video"
+                  src={ `https://www.youtube.com/embed/${Video}` }
+                  frameBorder="0"
+                  allow="accelerometer;autoplay;
+                  clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
               <div className="slider">
                 {RecommendedMeals.map((recomend, i) => {
                   console.log('bla');
                   return (
                     <div
-                      data-testid={ `${i}-recomendation-card` }
                       key={ i }
                       className="slide"
                       style={ { transform: `translateX(${x}%)` } }
+                      data-testid={ `${i}-recomendation-card` }
                     >
                       <img
                         src={ recomend.strMealThumb }
@@ -117,7 +200,11 @@ class DrinksDetails extends React.Component {
                       />
                       <div className="text-slider-div">
                         <p>{recomend.strCategory}</p>
-                        <h4>{recomend.strMeal}</h4>
+                        <h4
+                          data-testid={ `${i}-recomendation-title` }
+                        >
+                          {recomend.strMeal}
+                        </h4>
                       </div>
                     </div>
                   );
@@ -131,11 +218,13 @@ class DrinksDetails extends React.Component {
                   <i className="fas fa-chevron-right" />
                 </button>
               </div>
-              <div>
-                <button type="button" data-testid="start-recipe-btn">
-                  Iniciar Receita
-                </button>
-              </div>
+              <button
+                type="button"
+                data-testid="start-recipe-btn"
+                className="start-recipe"
+              >
+                Iniciar Receita
+              </button>
             </div>
           );
         }) : null}
@@ -144,8 +233,18 @@ class DrinksDetails extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  idCurrent: state.menu.currentID,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatchID: (endpoint) => dispatch(currentID(endpoint)),
+  dispatchFavorite: (isFavorite, idMeal) => dispatch(favRecipe(isFavorite, idMeal)),
+});
+
 DrinksDetails.propTypes = {
   history: PropTypes.shape().isRequired,
+  dispatchFavorite: PropTypes.func.isRequired,
 };
 
-export default connect(null, null)(DrinksDetails);
+export default connect(mapStateToProps, mapDispatchToProps)(DrinksDetails);
