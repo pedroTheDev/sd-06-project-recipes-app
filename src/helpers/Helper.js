@@ -6,7 +6,7 @@ export async function fetchMealRecipe(id) {
 
 export async function fetchCategories(type) {
   const api = (type === 'comidas')
-    ? 'https://www.themealdb.com/api/json/v1/1/categories.php'
+    ? 'https://www.themealdb.com/api/json/v1/1/list.php?c=list'
     : 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
 
   const dataJson = await fetch(api);
@@ -16,7 +16,7 @@ export async function fetchCategories(type) {
   const maxCategories = 5;
 
   const slicedResults = (type === 'comidas')
-    ? data.categories.slice(firstCategory, maxCategories)
+    ? data.meals.slice(firstCategory, maxCategories)
     : data.drinks.slice(firstCategory, maxCategories);
 
   return slicedResults;
