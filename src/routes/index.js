@@ -9,7 +9,6 @@ import RecipeFoodProcess from '../pages/RecipeFoodProcess';
 import RecipeDrinkProcess from '../pages/RecipeDrinkProcess';
 import Explore from '../pages/Explore';
 import ExploreMealsOrDrinks from '../pages/ExploreMealsOrDrinks';
-import ExploreDrinks from '../pages/ExploreDrinks';
 import ExploreFoodIngredients from '../pages/ExploreFoodIngredients';
 import ExploreDrinkIngredients from '../pages/ExploreDrinkIngredients';
 import ExploreFoodSourcePlace from '../pages/ExploreFoodSourcePlace';
@@ -34,8 +33,16 @@ function Routes() {
       <Route path="/comidas/:id/in-progress" exact component={ RecipeFoodProcess } />
       <Route path="/bebidas/:id/in-progress" exact component={ RecipeDrinkProcess } />
       <Route path="/explorar" exact component={ Explore } />
-      <Route path="/explorar/comidas" exact render={ () => <ExploreMealsOrDrinks type="comidas" /> } />
-      <Route path="/explorar/bebidas" exact render={ () => <ExploreMealsOrDrinks type="bebidas" /> } />
+      <Route
+        path="/explorar/comidas"
+        exact
+        render={ () => <ExploreMealsOrDrinks type="comidas" /> }
+      />
+      <Route
+        path="/explorar/bebidas"
+        exact
+        render={ () => <ExploreMealsOrDrinks type="bebidas" /> }
+      />
       <Route
         path="/explorar/comidas/ingredientes"
         exact

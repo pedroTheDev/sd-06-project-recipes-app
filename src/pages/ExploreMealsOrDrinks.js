@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Header from '../components/header';
 import Footer from '../components/Footer';
 import ExploreButton from '../components/explore/ExploreButton';
@@ -16,10 +17,10 @@ function ExploreMealsOrDrinks({ type }) {
         {
           (type === 'comidas')
           && <ExploreButton
-          title="Por Local de Origem"
-          url={ `/explorar/${type}/area` }
-          testId="explore-by-area"
-        />
+            title="Por Local de Origem"
+            url={ `/explorar/${type}/area` }
+            testId="explore-by-area"
+          />
         }
         {/* REQ.74 Precisa da pagina de detalhes */}
         <ExploreButton
@@ -32,5 +33,9 @@ function ExploreMealsOrDrinks({ type }) {
     </>
   );
 }
+
+ExploreMealsOrDrinks.propTypes = {
+  type: PropTypes.string.isRequired,
+};
 
 export default ExploreMealsOrDrinks;

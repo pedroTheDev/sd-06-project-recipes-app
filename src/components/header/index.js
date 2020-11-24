@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import SearchButton from './SearchButton';
 import profileIcon from '../../images/profileIcon.svg';
 
-function Header({ title , setSearch, isSearching, enableSearchBar = false }) {
+function Header({ title, setSearch, isSearching, enableSearchBar = false }) {
   return (
     <header>
       {
@@ -30,6 +30,7 @@ Header.propTypes = {
   title: PropTypes.string.isRequired,
   isSearching: PropTypes.bool.isRequired,
   setSearch: PropTypes.func.isRequired,
+  enableSearchBar: enableSearchBar.bool.isRequired,
 };
 
 export default Header;

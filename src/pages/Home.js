@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import SearchBar from '../components/SearchBar';
-import Header from '../components/header/';
+import Header from '../components/header';
 import Foods from './Foods';
 import Drinks from './Drinks';
 import Footer from '../components/Footer';
@@ -98,7 +98,7 @@ function Home({ title }) {
     <div>
       <Header
         title={ title }
-        enableSearchBar={ true }
+        enableSearchBar
         setSearch={ setSearch }
         isSearching={ isSearching }
       />
