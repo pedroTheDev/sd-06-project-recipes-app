@@ -4,7 +4,7 @@ import propTypes from 'prop-types';
 import ReceitasContext from '../context/ReceitasContext';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
-import './Header.css';
+import '../style/Header.css';
 
 const Header = ({ title, searchBtn = false }) => {
   const { searchBox, setSearchBox } = useContext(ReceitasContext);

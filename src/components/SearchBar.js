@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 import { foodAPI } from '../services/foodAPI';
 import { drinkAPI } from '../services/drinkAPI';
+
 import ReceitasContext from '../context/ReceitasContext';
 
 function SearchBar() {
