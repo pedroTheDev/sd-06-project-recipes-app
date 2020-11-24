@@ -67,6 +67,7 @@ class DrinksRecipesInProgress extends React.Component {
 
   render() {
     const { Drink, Ingredients, Measures } = this.state;
+    const { history } = this.props;
     return (
       <div className="food-drink-detail-container">
         {Drink ? Drink.map((recipe, index) => (
@@ -121,7 +122,11 @@ class DrinksRecipesInProgress extends React.Component {
             <div className="detail-instructions">{recipe.strInstructions}</div>
             <p data-testid={ `${index}-card-name` }>{recipe.strDrink}</p>
             <div>
-              <button type="button" data-testid="finish-recipe-btn">
+              <button
+                data-testid="finish-recipe-btn"
+                type="button"
+                onClick={ () => history.push('/receitas-feitas') }
+              >
                 Finalizar Receita
               </button>
             </div>
