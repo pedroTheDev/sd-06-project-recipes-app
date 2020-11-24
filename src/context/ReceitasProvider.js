@@ -5,15 +5,15 @@ import ReceitasContext from './ReceitasContext';
 const ReceitasProvider = ({ children }) => {
   const [meals, setMeals] = useState([]);
   const [searchBox, setSearchBox] = useState(false);
-  const [data, setData] = useState([]);
+  const [fetching, setFetching] = useState(true);
 
   const state = {
     meals,
     setMeals,
     searchBox,
     setSearchBox,
-    data,
-    setData,
+    fetching,
+    setFetching,
   };
 
   return (
