@@ -1,9 +1,10 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import Foods from './Foods';
-import Drinks from './Drinks';
 import SearchBar from '../components/SearchBar';
 import Header from '../components/Header';
+import Foods from './Foods';
+import Drinks from './Drinks';
+import Footer from '../components/Footer';
 import RecipesAppContext from '../context/RecipesAppContext';
 import CategoryList from '../components/CategoryList';
 import {
@@ -49,7 +50,6 @@ function Home({ title }) {
     if (ingredient) {
       const response = await byIngredient(searchTerm);
       if (response === null) {
-        setRecipes([]);
         setErrorFromApi(true);
       } else {
         setRecipes(response);
@@ -61,7 +61,6 @@ function Home({ title }) {
       } else {
         const response = await byFirstLetter(searchTerm);
         if (response === null) {
-          setRecipes([]);
           setErrorFromApi(true);
         } else {
           setRecipes(response);
@@ -71,7 +70,6 @@ function Home({ title }) {
     } else if (name) {
       const response = await byName(searchTerm);
       if (response === null) {
-        setRecipes([]);
         setErrorFromApi(true);
       } else {
         setRecipes(response);
@@ -110,8 +108,9 @@ function Home({ title }) {
           onClick={ requisition }
         />
       }
-      {title === 'Comidas' ? <Foods /> : <Drinks />}
+      {title === 'Comidas' ? <Foods title={ title } /> : <Drinks title={ title } />}
       <CategoryList title={ title } />
+      <Footer />
     </div>
   );
 }

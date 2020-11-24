@@ -1,50 +1,33 @@
-import React, { useContext } from 'react';
-import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import React, { useContext, useEffect } from 'react';
+import Card from '../components/Card';
 import RecipesContext from '../context/RecipesAppContext';
 
-function Drinks() {
-  const { recipes, errorFromApi } = useContext(RecipesContext);
-  const ZERO = 0;
-  const DOZE = 12;
+function Drinks({ title }) {
+  const { setRecipes, isFetching, setIsFetching } = useContext(RecipesContext);
 
-  if (recipes.length === 1) {
-    const id = recipes[0].idDrink;
-    return <Redirect to={ `/bebidas/${id}` } />;
-  }
-
-  if (errorFromApi === true) {
-    alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
-    return <span>Ops...</span>;
-  }
-  const divStyle = {
-    width: '10rem',
+  const getDrinksStart = async () => {
+    const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+    const json = await response.json();
+    setRecipes(json.drinks);
   };
 
+  useEffect(() => {
+    getDrinksStart();
+    setIsFetching(false);
+  }, []);
+
+  if (isFetching) {
+    return <span> Loading...</span>;
+  }
+
   return (
-    <>
-      {recipes.slice(ZERO, DOZE).map((drink, index) => (
-        <div
-          key={ drink.idDrink }
-          data-testid={ `${index}-recipe-card` }
-          className="card"
-          style={ divStyle }
-        >
-          <img
-            src={ drink.strDrinkThumb }
-            alt={ drink.strDrink }
-            data-testid={ `${index}-card-img` }
-            className="card-img-top"
-          />
-          <p
-            data-testid={ `${index}-card-name` }
-            className="card-text"
-          >
-            { drink.strDrink }
-          </p>
-        </div>))}
-      {' '}
-    </>
+    <Card title={ title } />
   );
 }
+
+Drinks.propTypes = {
+  title: PropTypes.string.isRequired,
+};
 
 export default Drinks;
