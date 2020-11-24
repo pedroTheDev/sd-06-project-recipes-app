@@ -51,7 +51,6 @@ function Login(props) {
   };
 
   const setLocalStorageData = () => {
-
     localStorage.setItem('mealsToken', JSON.stringify(1));
     localStorage.setItem('cocktailsToken', JSON.stringify(1));
     localStorage.setItem('user', JSON.stringify({ email: state.email }));

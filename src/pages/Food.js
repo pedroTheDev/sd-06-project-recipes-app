@@ -1,10 +1,10 @@
-
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import RecipeResults from '../components/RecipeResults';
 import findMatchInKeys from '../helpers/assets';
+import Footer from '../components/Footer';
 
 function Food(props) {
   const { history: { location: { pathname } }, recipes } = props;
@@ -33,6 +33,7 @@ function Food(props) {
         setShowMultipleResults={ setShowMultipleResults }
       />
       {renderRecipesResults()}
+      <Footer />
     </>
   );
 }
@@ -54,5 +55,3 @@ Food.propTypes = {
     }).isRequired,
   }).isRequired,
 };
-
-

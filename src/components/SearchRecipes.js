@@ -79,6 +79,7 @@ function SearchRecipes({ pathname,
 
   const renderSearchRecipeTextInput = () => (
     <input
+      className="main__search__input"
       onChange={ (event) => setInputText(event.target.value) }
       value={ inputText }
       placeholder="buscar receita"
@@ -88,10 +89,14 @@ function SearchRecipes({ pathname,
   );
 
   const renderIngredientRadioInput = () => (
-    <label htmlFor="ingredients">
+    <label
+      htmlFor="ingredients"
+      className="main__search__radio"
+    >
       <input
         type="radio"
         value="ingredients"
+        className="main__search__radio-button"
         checked={ radioSearchSelection === 'ingredients' }
         id="ingredients"
         name="radio-search-button"
@@ -103,10 +108,14 @@ function SearchRecipes({ pathname,
   );
 
   const renderNameRadioInput = () => (
-    <label htmlFor="name">
+    <label
+      htmlFor="name"
+      className="main__search__radio"
+    >
       <input
         type="radio"
         value="name"
+        className="main__search__radio-button"
         checked={ radioSearchSelection === 'name' }
         id="name"
         name="radio-search-button"
@@ -118,10 +127,14 @@ function SearchRecipes({ pathname,
   );
 
   const renderFirstLetterRadioInput = () => (
-    <label htmlFor="first-letter">
+    <label
+      htmlFor="first-letter"
+      className="main__search__radio"
+    >
       <input
         type="radio"
         value="firstLetter"
+        className="main__search__radio-button"
         name="radio-search-button"
         checked={ radioSearchSelection === 'firstLetter' }
         id="first-letter"
@@ -134,11 +147,11 @@ function SearchRecipes({ pathname,
   );
 
   const renderRadioButtons = () => (
-    <>
+    <div className="main__search__radio-buttons-container">
       {renderIngredientRadioInput()}
       {renderNameRadioInput()}
       {renderFirstLetterRadioInput()}
-    </>
+    </div>
   );
 
   const renderSubmitButton = () => (
@@ -164,12 +177,12 @@ function SearchRecipes({ pathname,
   };
 
   return (
-    <>
+    <div className="search__bar-container">
       {renderSearchRecipeTextInput()}
       {renderRadioButtons()}
       {renderSubmitButton()}
       {renderSearchResults()}
-    </>);
+    </div>);
 }
 
 const mapDispatchToProps = (dispatch) => ({

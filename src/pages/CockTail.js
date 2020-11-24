@@ -4,12 +4,13 @@ import { connect } from 'react-redux';
 import Header from '../components/Header';
 import RecipeResults from '../components/RecipeResults';
 import findMatchInKeys from '../helpers/assets';
+import Footer from '../components/Footer';
 
 function CockTail(props) {
   const { history: { location: { pathname } }, recipes } = props;
   const [showMultipleResults, setShowMultipleResults] = useState(false);
 
-  const renderRecipeResults = () => {
+  const renderRecipesResults = () => {
     const maxRecipesNumber = 12;
     if (showMultipleResults) {
       return (
@@ -28,7 +29,11 @@ function CockTail(props) {
   return (
     <>
       <Header pathname={ pathname } setShowMultipleResults={ setShowMultipleResults } />
-      {renderRecipeResults()}
+      <div className="main__page__recipe-container">
+        {renderRecipesResults()}
+      </div>
+      <Footer />
+
     </>
   );
 }

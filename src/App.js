@@ -10,18 +10,32 @@ import ExploreFood from './pages/ExploreFood';
 import ExploreDrink from './pages/ExploreDrink';
 import ExploreFoodByIngredients from './pages/ExploreFoodByIngredients';
 import Perfil from './pages/Perfil';
+import DoneRecipes from './pages/DoneRecipes';
+import FavoriteRecipes from './pages/FavoriteRecipes';
 
 function App() {
   return (
     <div className="App">
       <Switch>
+        <Route
+          path="/receitas-feitas"
+          component={ DoneRecipes }
+        />
+        <Route
+          component={ FavoriteRecipes }
+          path="/receitas-favoritas"
+        />
 
-        <Route exact path="/comidas/:id" component={ Recipe } />
-        <Route exact path="/bebidas/:id" component={ Recipe } />
         <Route
           path="/explorar/comidas/ingredientes"
           component={ ExploreFoodByIngredients }
         />
+        <Route
+          path="/explorar/bebidas/ingredientes"
+          component={ ExploreFoodByIngredients }
+        />
+        <Route exact path="/comidas/:id" component={ Recipe } />
+        <Route exact path="/bebidas/:id" component={ Recipe } />
         <Route path="/explorar/comidas" component={ ExploreFood } />
         <Route path="/explorar/bebidas" component={ ExploreDrink } />
         <Route exact path="/comidas" component={ Food } />
@@ -29,10 +43,7 @@ function App() {
         <Route exact path="/explorar" component={ Explore } />
         <Route path="/perfil" component={ Perfil } />
         <Route exact path="/" component={ Login } />
-    
 
-      
-        
       </Switch>
     </div>
   );
