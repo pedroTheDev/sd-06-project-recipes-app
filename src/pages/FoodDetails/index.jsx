@@ -135,8 +135,8 @@ function FoodDetails({ pageType }) {
     <div className="recipe-details-page">
       <img
         data-testid="recipe-photo"
-        src={foodDetails.strMealThumb}
-        alt={foodDetails.strMeal}
+        src={ foodDetails.strMealThumb }
+        alt={ foodDetails.strMeal }
       />
 
       <h2 data-testid="recipe-title">{foodDetails.strMeal}</h2>
@@ -145,12 +145,12 @@ function FoodDetails({ pageType }) {
 
       <div className="share-btn-container">
         <button
-          onClick={handleShareClick}
+          onClick={ handleShareClick }
           type="button"
         >
           <img
             data-testid="share-btn"
-            src={shareIcon}
+            src={ shareIcon }
             alt="share this recipe"
           />
         </button>
@@ -161,9 +161,9 @@ function FoodDetails({ pageType }) {
       </div>
 
       <div className="favorites-btn-container">
-        <button type="button" onClick={handleFavoriteToggle}>
+        <button type="button" onClick={ handleFavoriteToggle }>
           <img
-            src={recipeIsFavorited ? blackHeart : whiteHeart}
+            src={ recipeIsFavorited ? blackHeart : whiteHeart }
             alt="favorite this recipe"
             data-testid="favorite-btn"
           />
@@ -173,8 +173,8 @@ function FoodDetails({ pageType }) {
       <div className="recipe-ingredients">
         {foodIngredients.map((ingredients, index) => (
           <p
-            key={ingredients}
-            data-testid={`${index}-ingredient-name-and-measure`}
+            key={ ingredients }
+            data-testid={ `${index}-ingredient-name-and-measure` }
           >
             {ingredients}
           </p>
@@ -186,10 +186,10 @@ function FoodDetails({ pageType }) {
           width="560"
           height="315"
           data-testid="video"
-          title={foodDetails.strMeal}
-          src={foodDetails.strYoutube}
+          title={ foodDetails.strMeal }
+          src={ foodDetails.strYoutube }
           frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allow="accelerometer; clipboard-write; encrypted-media; picture-in-picture"
           allowFullScreen
         />
       </div>
@@ -203,26 +203,30 @@ function FoodDetails({ pageType }) {
       <div className="recommendations-container">
         {foodRecommendations.map((recommendation, index) => (
           <Link
-            key={recommendation.idDrink}
-            to={`/bebidas/${recommendation.idDrink}`}
+            key={ recommendation.idDrink }
+            to={ `/bebidas/${recommendation.idDrink}` }
             className="recommendation-card"
-            data-testid={`${index}-recomendation-card`}
+            data-testid={ `${index}-recomendation-card` }
           >
             <img
-              src={recommendation.strDrinkThumb}
-              alt={recommendation.strDrink}
-              data-testid={`${index}-recomendation-image`}
+              src={ recommendation.strDrinkThumb }
+              alt={ recommendation.strDrink }
+              data-testid={ `${index}-recomendation-image` }
             />
-            <strong data-testid={`${index}-recomendation-title`}>{recommendation.strDrink}</strong>
+            <strong
+              data-testid={ `${index}-recomendation-title` }
+            >
+              {recommendation.strDrink}
+            </strong>
           </Link>
         ))}
       </div>
 
       {!recipeHasBeenFinished && (
         <Link
-          to={`/${pageType}/${id}/in-progress`}
+          to={ `/${pageType}/${id}/in-progress` }
           data-testid="start-recipe-btn"
-          onClick={handleStartCooking}
+          onClick={ handleStartCooking }
           className="start-recipe-btn"
         >
           {recipeHasBeenStarted ? 'Continuar Receita' : 'Iniciar Receita'}

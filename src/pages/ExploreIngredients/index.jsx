@@ -40,14 +40,18 @@ function ExploreRecipes({ pageType }) {
       <div className="ingredients-container">
         {ingredientsSearched.map((ingredient, index) => (
           <Link
-            to={`/${pageType}`}
-            onClick={() => handleIngredientClick(ingredient)}
-            data-testid={`${index}-ingredient-card`}
+            to={ `/${pageType}` }
+            onClick={ () => handleIngredientClick(ingredient) }
+            data-testid={ `${index}-ingredient-card` }
             className="ingredient-card"
-            key={ingredient}
+            key={ ingredient }
           >
-            <img data-testid={`${index}-card-img`} src={getIngredientUrl(pageType, ingredient)} alt={ingredient} />
-            <strong data-testid={`${index}-card-name`}>{ingredient}</strong>
+            <img
+              data-testid={ `${index}-card-img` }
+              src={ getIngredientUrl(pageType, ingredient) }
+              alt={ ingredient }
+            />
+            <strong data-testid={ `${index}-card-name` }>{ingredient}</strong>
           </Link>
         ))}
       </div>

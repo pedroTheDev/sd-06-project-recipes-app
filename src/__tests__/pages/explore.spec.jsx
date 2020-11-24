@@ -65,7 +65,7 @@ describe('explore page structure testing', () => {
     const history = createMemoryHistory();
 
     screen = render(
-      <Router history={history}>
+      <Router history={ history }>
         <AppProvider>
           <Explore />
         </AppProvider>
@@ -85,7 +85,7 @@ describe('explore page structure testing', () => {
     const history = createMemoryHistory();
 
     screen = render(
-      <Router history={history}>
+      <Router history={ history }>
         <AppProvider>
           <Explore />
         </AppProvider>

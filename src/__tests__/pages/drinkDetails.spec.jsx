@@ -29,9 +29,12 @@ describe('food details page structure testing', () => {
     });
 
     screen = render(
-      <Router history={history}>
+      <Router history={ history }>
         <AppProvider>
-          <Route path="/bebidas/:id" render={() => <DrinkDetails pageType="bebidas" />} />
+          <Route
+            path="/bebidas/:id"
+            render={ () => <DrinkDetails pageType="bebidas" /> }
+          />
         </AppProvider>
       </Router>,
     );
@@ -76,9 +79,12 @@ describe('food details logic testing', () => {
     });
 
     screen = render(
-      <Router history={history}>
+      <Router history={ history }>
         <AppProvider>
-          <Route path="/bebidas/:id" render={() => <DrinkDetails pageType="bebidas" />} />
+          <Route
+            path="/bebidas/:id"
+            render={ () => <DrinkDetails pageType="bebidas" /> }
+          />
         </AppProvider>
       </Router>,
     );
@@ -102,7 +108,9 @@ describe('food details logic testing', () => {
     expect(screen.getByTestId('favorite-btn')).toBeInTheDocument();
 
     mealIngredientsAndMeasure.forEach((ingredient, index) => {
-      const ingredientAndMeasure = screen.getByTestId(`${index}-ingredient-name-and-measure`);
+      const ingredientAndMeasure = screen.getByTestId(
+        `${index}-ingredient-name-and-measure`,
+      );
 
       expect(ingredientAndMeasure).toHaveTextContent(ingredient);
     });
@@ -159,7 +167,9 @@ describe('food details logic testing', () => {
 
     repetitiveTries.forEach((tryNumber) => {
       fireEvent.click(favoriteBtn);
-      const oddTry = (tryNumber % 2 !== 0);
+      const EVEN_DIVISOR = 2;
+      const ZERO = 0;
+      const oddTry = (tryNumber % EVEN_DIVISOR !== ZERO);
 
       const recipeIsFavorite = localStorageFake.store.favoriteRecipes.find(
         (recipe) => recipe.id === drinkRendered.idDrink,
@@ -202,9 +212,12 @@ describe('continue recipe test', () => {
     });
 
     screen = render(
-      <Router history={history}>
+      <Router history={ history }>
         <AppProvider>
-          <Route path="/bebidas/:id" render={() => <DrinkDetails pageType="bebidas" />} />
+          <Route
+            path="/bebidas/:id"
+            render={ () => <DrinkDetails pageType="bebidas" /> }
+          />
         </AppProvider>
       </Router>,
     );
@@ -220,7 +233,7 @@ describe('continue recipe test', () => {
 });
 
 describe('start/continue hidden test', () => {
-  it('start/continue button should only appear if recipe has not been finished', async () => {
+  it('start/continue should only appear if recipe hasnt been finished', async () => {
     localStorageFake = new LocalStorageFake();
 
     const fakeDoneRecipes = [{
@@ -254,9 +267,12 @@ describe('start/continue hidden test', () => {
     });
 
     screen = render(
-      <Router history={history}>
+      <Router history={ history }>
         <AppProvider>
-          <Route path="/bebidas/:id" render={() => <DrinkDetails pageType="bebidas" />} />
+          <Route
+            path="/bebidas/:id"
+            render={ () => <DrinkDetails pageType="bebidas" /> }
+          />
         </AppProvider>
       </Router>,
     );
@@ -289,9 +305,12 @@ describe('food details navigation', () => {
     });
 
     screen = render(
-      <Router history={history}>
+      <Router history={ history }>
         <AppProvider>
-          <Route path="/bebidas/:id" render={() => <DrinkDetails pageType="bebidas" />} />
+          <Route
+            path="/bebidas/:id"
+            render={ () => <DrinkDetails pageType="bebidas" /> }
+          />
         </AppProvider>
       </Router>,
     );
@@ -334,9 +353,12 @@ describe('food details navigation', () => {
     });
 
     screen = render(
-      <Router history={history}>
+      <Router history={ history }>
         <AppProvider>
-          <Route path="/bebidas/:id" render={() => <DrinkDetails pageType="bebidas" />} />
+          <Route
+            path="/bebidas/:id"
+            render={ () => <DrinkDetails pageType="bebidas" /> }
+          />
         </AppProvider>
       </Router>,
     );

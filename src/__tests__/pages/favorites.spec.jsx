@@ -100,7 +100,10 @@ describe('favorites page logic testing', () => {
     const itemName = favoriteRecipes[1].name;
     expect(screen.getByText(itemName)).toBeInTheDocument();
 
-    const unfavoriteBtn = screen.queryByTestId(`${indexToRemove}-horizontal-favorite-btn`);
+    const unfavoriteBtn = screen.queryByTestId(
+      `${indexToRemove}-horizontal-favorite-btn`,
+    );
+
     expect(unfavoriteBtn).toBeInTheDocument();
 
     fireEvent.click(unfavoriteBtn);
@@ -109,7 +112,10 @@ describe('favorites page logic testing', () => {
 
     const updatedFavorites = localStorageFake.store.favoriteRecipes;
 
-    const recipeStillInFavorites = updatedFavorites.find((recipe) => recipe.name === itemName);
+    const recipeStillInFavorites = updatedFavorites.find(
+      (recipe) => recipe.name === itemName,
+    );
+
     expect(recipeStillInFavorites).toBeFalsy();
   });
 
@@ -175,7 +181,7 @@ describe('favorite navigation', () => {
     history = createMemoryHistory();
 
     screen = render(
-      <Router history={history}>
+      <Router history={ history }>
         <AppProvider>
           <Favorites />
         </AppProvider>

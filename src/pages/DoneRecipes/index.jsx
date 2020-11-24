@@ -18,12 +18,12 @@ function DoneRecipes() {
 
   const filteredItems = useMemo(() => {
     switch (filter) {
-      case 'foods':
-        return doneRecipes.filter((recipe) => recipe.type === 'comida');
-      case 'drinks':
-        return doneRecipes.filter((recipe) => recipe.type === 'bebida');
-      default:
-        return doneRecipes;
+    case 'foods':
+      return doneRecipes.filter((recipe) => recipe.type === 'comida');
+    case 'drinks':
+      return doneRecipes.filter((recipe) => recipe.type === 'bebida');
+    default:
+      return doneRecipes;
     }
   }, [doneRecipes, filter]);
 
@@ -56,8 +56,8 @@ function DoneRecipes() {
           name="filter"
           id="all"
           value="all"
-          checked={filter === 'all'}
-          onChange={handleFilterChange}
+          checked={ filter === 'all' }
+          onChange={ handleFilterChange }
         />
         <label htmlFor="foods" data-testid="filter-by-food-btn">Foods</label>
         <input
@@ -65,8 +65,8 @@ function DoneRecipes() {
           name="filter"
           id="foods"
           value="foods"
-          onChange={handleFilterChange}
-          checked={filter === 'foods'}
+          onChange={ handleFilterChange }
+          checked={ filter === 'foods' }
 
         />
         <label htmlFor="drinks" data-testid="filter-by-drink-btn">Drinks</label>
@@ -75,42 +75,56 @@ function DoneRecipes() {
           name="filter"
           id="drinks"
           value="drinks"
-          checked={filter === 'drinks'}
-          onChange={handleFilterChange}
+          checked={ filter === 'drinks' }
+          onChange={ handleFilterChange }
 
         />
       </div>
 
       <div className="done-recipes-container">
         {filteredItems.map((recipe, index) => (
-          <div className="done-recipe-card" key={recipe.doneDate.toLocaleString()}>
-            <Link to={`/${recipe.type}s/${recipe.id}`}>
-              <img src={recipe.image} alt={recipe.name} data-testid={`${index}-horizontal-image`} />
+          <div className="done-recipe-card" key={ recipe.doneDate.toLocaleString() }>
+            <Link to={ `/${recipe.type}s/${recipe.id}` }>
+              <img
+                src={ recipe.image }
+                alt={ recipe.name }
+                data-testid={ `${index}-horizontal-image` }
+              />
             </Link>
 
             <Link
-              to={`/${recipe.type}s/${recipe.id}`}
-              data-testid={`${index}-horizontal-name`}
+              to={ `/${recipe.type}s/${recipe.id}` }
+              data-testid={ `${index}-horizontal-name` }
             >
               {recipe.name}
             </Link>
 
-            <p data-testid={`${index}-horizontal-top-text`}>
-              {recipe.type === 'comida' ? `${recipe.area} - ${recipe.category}` : `${recipe.alcoholicOrNot}`}
+            <p data-testid={ `${index}-horizontal-top-text` }>
+              {recipe.type === 'comida'
+                ? `${recipe.area} - ${recipe.category}`
+                : `${recipe.alcoholicOrNot}`}
             </p>
 
             {/* {recipe.type === 'comida' && (
               <p data-testid={`${index}-horizontal-area`}>{recipe.area}</p>
             )} */}
 
-            <p data-testid={`${index}-horizontal-done-date`}>{recipe.doneDate.toLocaleString()}</p>
+            <p
+              data-testid={ `${index}-horizontal-done-date` }
+            >
+              {recipe.doneDate.toLocaleString()}
+            </p>
 
             <div className="done-recipe-share-container">
               <button
                 type="button"
-                onClick={() => handleShareClick(recipe.id, recipe.type)}
+                onClick={ () => handleShareClick(recipe.id, recipe.type) }
               >
-                <img data-testid={`${index}-horizontal-share-btn`} src={shareIcon} alt="share this recipe" />
+                <img
+                  data-testid={ `${index}-horizontal-share-btn` }
+                  src={ shareIcon }
+                  alt="share this recipe"
+                />
               </button>
 
               {copyLink[recipe.id] && (
@@ -120,8 +134,13 @@ function DoneRecipes() {
 
             {recipe.type === 'comida' && (
               <div className="recipe-tag-container">
-                {recipe.tags.filter((tag, i) => i < 2).map((tag) => (
-                  <span key={tag} data-testid={`${index}-${tag}-horizontal-tag`}>{tag}</span>
+                {recipe.tags.filter((tag, i) => i < 1 + 1).map((tag) => (
+                  <span
+                    key={ tag }
+                    data-testid={ `${index}-${tag}-horizontal-tag` }
+                  >
+                    {tag}
+                  </span>
                 ))}
               </div>
             )}

@@ -15,7 +15,11 @@ function DrinkInProgress({ pageType }) {
   const [copiedLink, setCopiedLink] = useState(false);
 
   const {
-    cookedRecipes, recipesProgress, updateRecipeProgress, finalizeRecipe, loadRecipeToCook,
+    cookedRecipes,
+    recipesProgress,
+    updateRecipeProgress,
+    finalizeRecipe,
+    loadRecipeToCook,
   } = useCook();
 
   const { id } = useParams();
@@ -156,8 +160,8 @@ function DrinkInProgress({ pageType }) {
     <div className="recipe-details-page">
       <img
         data-testid="recipe-photo"
-        src={currentlyCooking.strDrinkThumb}
-        alt={currentlyCooking.strDrink}
+        src={ currentlyCooking.strDrinkThumb }
+        alt={ currentlyCooking.strDrink }
       />
 
       <h2 data-testid="recipe-title">{currentlyCooking.strDrink}</h2>
@@ -166,12 +170,12 @@ function DrinkInProgress({ pageType }) {
 
       <div className="share-btn-container">
         <button
-          onClick={handleShareClick}
+          onClick={ handleShareClick }
           type="button"
         >
           <img
             data-testid="share-btn"
-            src={shareIcon}
+            src={ shareIcon }
             alt="share this recipe"
           />
         </button>
@@ -182,31 +186,35 @@ function DrinkInProgress({ pageType }) {
       </div>
 
       <div className="favorites-btn-container">
-        <button type="button" onClick={handleFavoriteToggle}>
-          <img data-testid="favorite-btn" src={recipeIsFavorited ? blackHeart : whiteHeart} alt="favorite this recipe" />
+        <button type="button" onClick={ handleFavoriteToggle }>
+          <img
+            data-testid="favorite-btn"
+            src={ recipeIsFavorited ? blackHeart : whiteHeart }
+            alt="favorite this recipe"
+          />
         </button>
       </div>
 
       <div className="recipe-ingredients in-progress-ingredients">
         {drinkIngredients.map((ingredient, index) => (
           <div
-            key={ingredient}
+            key={ ingredient }
             className="ingredients-checkbox-container"
           >
 
             <label
-              key={ingredient}
-              data-testid={`${index}-ingredient-step`}
-              htmlFor={ingredient}
-              className={currentProgress.includes(`${index}`) ? 'item-checked' : ''}
+              key={ ingredient }
+              data-testid={ `${index}-ingredient-step` }
+              htmlFor={ ingredient }
+              className={ currentProgress.includes(`${index}`) ? 'item-checked' : '' }
             >
               <input
                 type="checkbox"
-                name={ingredient}
-                id={ingredient}
-                value={index}
-                checked={currentProgress.includes(`${index}`)}
-                onChange={handleIngredientClick}
+                name={ ingredient }
+                id={ ingredient }
+                value={ index }
+                checked={ currentProgress.includes(`${index}`) }
+                onChange={ handleIngredientClick }
               />
               {ingredient}
 
@@ -224,8 +232,8 @@ function DrinkInProgress({ pageType }) {
       <button
         type="button"
         data-testid="finish-recipe-btn"
-        disabled={!canFinalizeRecipe}
-        onClick={handleFinalizeRecipe}
+        disabled={ !canFinalizeRecipe }
+        onClick={ handleFinalizeRecipe }
       >
         Finalizar Receita
       </button>

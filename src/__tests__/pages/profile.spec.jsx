@@ -75,11 +75,11 @@ describe('profile page structure testing', () => {
     expect(screen.getByTestId('profile-favorite-btn')).toBeInTheDocument();
   });
 
-  it('should redirect the user to the login page when logged out, clearing localStorage data', () => {
+  it('should redirect user to login page when logged out, clearing localStorage', () => {
     const history = createMemoryHistory();
 
     screen = render(
-      <Router history={history}>
+      <Router history={ history }>
         <AppProvider>
           <Profile />
         </AppProvider>
@@ -100,7 +100,9 @@ describe('profile page structure testing', () => {
 
     fireEvent.click(logOutButton);
 
-    expect(removeItem).toHaveBeenCalledTimes(6);
+    const numberOfLocalStorageControlledItems = 6;
+
+    expect(removeItem).toHaveBeenCalledTimes(numberOfLocalStorageControlledItems);
     expect(removeItem).toHaveBeenCalledWith('user');
     expect(removeItem).toHaveBeenCalledWith('mealsToken');
     expect(removeItem).toHaveBeenCalledWith('cocktailsToken');

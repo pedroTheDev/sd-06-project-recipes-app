@@ -27,12 +27,12 @@ function Favorites() {
 
   const filteredItems = useMemo(() => {
     switch (filter) {
-      case 'foods':
-        return favoriteRecipes.filter((recipe) => recipe.type === 'comida');
-      case 'drinks':
-        return favoriteRecipes.filter((recipe) => recipe.type === 'bebida');
-      default:
-        return favoriteRecipes;
+    case 'foods':
+      return favoriteRecipes.filter((recipe) => recipe.type === 'comida');
+    case 'drinks':
+      return favoriteRecipes.filter((recipe) => recipe.type === 'bebida');
+    default:
+      return favoriteRecipes;
     }
   }, [favoriteRecipes, filter]);
 
@@ -71,8 +71,8 @@ function Favorites() {
           name="filter"
           id="all"
           value="all"
-          checked={filter === 'all'}
-          onChange={handleFilterChange}
+          checked={ filter === 'all' }
+          onChange={ handleFilterChange }
         />
         <label htmlFor="foods" data-testid="filter-by-food-btn">Foods</label>
         <input
@@ -80,8 +80,8 @@ function Favorites() {
           name="filter"
           id="foods"
           value="foods"
-          onChange={handleFilterChange}
-          checked={filter === 'foods'}
+          onChange={ handleFilterChange }
+          checked={ filter === 'foods' }
 
         />
         <label htmlFor="drinks" data-testid="filter-by-drink-btn">Drinks</label>
@@ -90,39 +90,45 @@ function Favorites() {
           name="filter"
           id="drinks"
           value="drinks"
-          checked={filter === 'drinks'}
-          onChange={handleFilterChange}
+          checked={ filter === 'drinks' }
+          onChange={ handleFilterChange }
 
         />
       </div>
 
       <div className="favorite-recipes-container">
         {filteredItems.map((recipe, index) => (
-          <div className="done-recipe-card" key={`${recipe.type}-${recipe.name}`}>
-            <Link to={`/${recipe.type}s/${recipe.id}`}>
-              <img src={recipe.image} alt={recipe.name} data-testid={`${index}-horizontal-image`} />
+          <div className="done-recipe-card" key={ `${recipe.type}-${recipe.name}` }>
+            <Link to={ `/${recipe.type}s/${recipe.id}` }>
+              <img
+                src={ recipe.image }
+                alt={ recipe.name }
+                data-testid={ `${index}-horizontal-image` }
+              />
             </Link>
 
             <Link
-              to={`/${recipe.type}s/${recipe.id}`}
-              data-testid={`${index}-horizontal-name`}
+              to={ `/${recipe.type}s/${recipe.id}` }
+              data-testid={ `${index}-horizontal-name` }
             >
               {recipe.name}
             </Link>
 
-            <p data-testid={`${index}-horizontal-top-text`}>
-              {recipe.type === 'comida' ? `${recipe.area} - ${recipe.category}` : `${recipe.alcoholicOrNot}`}
+            <p data-testid={ `${index}-horizontal-top-text` }>
+              {recipe.type === 'comida'
+                ? `${recipe.area} - ${recipe.category}`
+                : `${recipe.alcoholicOrNot}`}
             </p>
 
             <div className="done-recipe-share-container">
               <button
                 type="button"
-                onClick={() => handleShareClick(recipe.id, recipe.type)}
+                onClick={ () => handleShareClick(recipe.id, recipe.type) }
               >
                 <img
-                  src={shareIcon}
+                  src={ shareIcon }
                   alt="share this recipe"
-                  data-testid={`${index}-horizontal-share-btn`}
+                  data-testid={ `${index}-horizontal-share-btn` }
                 />
               </button>
 
@@ -133,11 +139,11 @@ function Favorites() {
 
             <button
               type="button"
-              onClick={() => handleRecipeUnfavorite(recipe.id, recipe.type)}
+              onClick={ () => handleRecipeUnfavorite(recipe.id, recipe.type) }
             >
               <img
-                data-testid={`${index}-horizontal-favorite-btn`}
-                src={heartIcon}
+                data-testid={ `${index}-horizontal-favorite-btn` }
+                src={ heartIcon }
                 alt="unfavorite this recipe"
               />
             </button>

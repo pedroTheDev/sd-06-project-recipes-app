@@ -174,7 +174,7 @@ describe('done recipes navigation', () => {
     history = createMemoryHistory();
 
     screen = render(
-      <Router history={history}>
+      <Router history={ history }>
         <AppProvider>
           <DoneRecipes />
         </AppProvider>

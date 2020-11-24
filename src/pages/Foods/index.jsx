@@ -56,7 +56,7 @@ function Foods({ pageType }) {
 
   return (
     <div className="foods-page">
-      <Header pageName={pageType} showSearch />
+      <Header pageName={ pageType } showSearch />
 
       <div className="filters-container">
         <label htmlFor="all">Todos</label>
@@ -64,17 +64,17 @@ function Foods({ pageType }) {
           type="checkbox"
           name="filter"
           id="all"
-          checked={filterSelected === 'all'}
-          onChange={handleFilterChange}
+          checked={ filterSelected === 'all' }
+          onChange={ handleFilterChange }
           data-testid="All-category-filter"
         />
 
         {currentFoodFilters.map((filter) => (
-          <React.Fragment key={filter}>
+          <React.Fragment key={ filter }>
             <label
-              data-testid={`${filter}-category-filter`}
-              htmlFor={filter}
-              key={filter}
+              data-testid={ `${filter}-category-filter` }
+              htmlFor={ filter }
+              key={ filter }
             >
               {filter}
 
@@ -82,10 +82,10 @@ function Foods({ pageType }) {
             <input
               type="checkbox"
               name="filter"
-              id={filter}
-              value={filter}
-              checked={filterSelected === filter}
-              onChange={handleFilterChange}
+              id={ filter }
+              value={ filter }
+              checked={ filterSelected === filter }
+              onChange={ handleFilterChange }
             />
           </React.Fragment>
         ))}
@@ -94,18 +94,18 @@ function Foods({ pageType }) {
       <div className="foods-container">
         {currentFoodRecipes.map((meal, index) => (
           <Link
-            to={`/${pageType}/${meal.idMeal}`}
+            to={ `/${pageType}/${meal.idMeal}` }
             className="recipe-card"
-            data-testid={`${index}-recipe-card`}
-            key={meal.idMeal}
+            data-testid={ `${index}-recipe-card` }
+            key={ meal.idMeal }
           >
             <img
-              src={meal.strMealThumb}
-              alt={meal.strMeal}
-              data-testid={`${index}-card-img`}
+              src={ meal.strMealThumb }
+              alt={ meal.strMeal }
+              data-testid={ `${index}-card-img` }
 
             />
-            <strong data-testid={`${index}-card-name`}>{meal.strMeal}</strong>
+            <strong data-testid={ `${index}-card-name` }>{meal.strMeal}</strong>
           </Link>
         ))}
       </div>

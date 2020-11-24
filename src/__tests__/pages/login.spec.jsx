@@ -40,7 +40,9 @@ describe('Login page structure testing', () => {
     const invalidEmail2 = '@fabio.com';
     const invalidEmail3 = 'fabio.com';
     const invalidEmail4 = 'fabiosenracorrea';
-    const invalidEmailOptions = [invalidEmail, invalidEmail2, invalidEmail3, invalidEmail4];
+    const invalidEmailOptions = [
+      invalidEmail, invalidEmail2, invalidEmail3, invalidEmail4,
+    ];
 
     const invalidPw = '123456';
     const invalidPw2 = 'fabio';
@@ -93,7 +95,8 @@ describe('Login page logic testing', () => {
 
     fireEvent.click(loginBtn);
 
-    expect(localSetItem).toHaveBeenCalledTimes(3);
+    const numberOfLocalStorageInteractions = 3;
+    expect(localSetItem).toHaveBeenCalledTimes(numberOfLocalStorageInteractions);
 
     const expectedMealsKey = 'mealsToken';
     const expectedCocktailsKey = 'cocktailsToken';
@@ -109,11 +112,11 @@ describe('Login page logic testing', () => {
     expect(mockedLocalStorageValues[expectedCocktailsKey]).toStrictEqual(expectedToken);
   });
 
-  it('should redirect the user to the main foods page after successfully logged in', () => {
+  it('should redirect user to the main foods page after successfully logged in', () => {
     const history = createMemoryHistory();
 
     screen = render(
-      <Router history={history}>
+      <Router history={ history }>
         <AppProvider>
           <Login />
         </AppProvider>

@@ -30,11 +30,11 @@ function ExploreRecipes({ pageType }) {
 
   return (
     <div className="explore-page">
-      <Header pageName={`Explorar ${pageType}`} />
+      <Header pageName={ `Explorar ${pageType}` } />
       <Navbar />
 
       <Link
-        to={`/explorar/${pageType}/ingredientes`}
+        to={ `/explorar/${pageType}/ingredientes` }
         data-testid="explore-by-ingredient"
       >
         Por Ingredientes
@@ -42,7 +42,7 @@ function ExploreRecipes({ pageType }) {
 
       {isFoodPage && (
         <Link
-          to={`/explorar/${pageType}/area`}
+          to={ `/explorar/${pageType}/area` }
           data-testid="explore-by-area"
         >
           Por Local de Origem
@@ -52,7 +52,7 @@ function ExploreRecipes({ pageType }) {
       <button
         type="button"
         data-testid="explore-surprise"
-        onClick={handleRandomClick}
+        onClick={ handleRandomClick }
       >
         Me Surpreenda!
       </button>
