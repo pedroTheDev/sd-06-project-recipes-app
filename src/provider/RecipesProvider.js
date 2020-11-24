@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // Proptypes
 import PropTypes from 'prop-types';
@@ -12,12 +12,57 @@ export default function RecipesProvider({ children }) {
     password: '',
   });
   const [isValid, setValid] = useState(true);
+  const [fetchFood, setFetchFood] = useState([]);
+  const [fetchDrink, setFetchDrink] = useState([]);
+  const [DrinkBtn, setDrinkBtn] = useState([]);
+  const [FoodBtn, setFoodBtn] = useState([]);
+  const [filterFood, setFilterFood] = useState([]);
+  const [filterDrink, setFilterDrink] = useState([]);
+
+  const [radioValue, setRadioValue] = useState('');
+  const [searchBar, setSearchBar] = useState('');
+  const [returnFoodApi, setReturnFoodAPi] = useState([]);
+  const [returnDrinkApi, setReturnDrinkAPi] = useState([]);
+
+  useEffect(() => {
+    if (returnFoodApi.length === 1) {
+      const { idMeal } = returnFoodApi[0];
+      window.location.pathname = `/comidas/${idMeal}`;
+    }
+  }, [returnFoodApi]);
+
+  useEffect(() => {
+    if (returnDrinkApi.length === 1) {
+      const { idDrink } = returnDrinkApi[0];
+      window.location.pathname = `/bebidas/${idDrink}`;
+    }
+  }, [returnDrinkApi]);
 
   const context = {
     login,
     setLogin,
     isValid,
     setValid,
+    fetchFood,
+    setFetchFood,
+    fetchDrink,
+    DrinkBtn,
+    setDrinkBtn,
+    FoodBtn,
+    setFoodBtn,
+    filterFood,
+    filterDrink,
+    setFilterFood,
+    setFilterDrink,
+    radioValue,
+    setRadioValue,
+    searchBar,
+    setSearchBar,
+    returnFoodApi,
+    setReturnFoodAPi,
+    returnDrinkApi,
+    setFetchDrink,
+    setReturnDrinkAPi,
   };
 
   return (
