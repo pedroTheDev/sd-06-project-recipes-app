@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { fetchDrinksById, fetchRecommendedMeals } from '../services';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import { currentID, favRecipe } from '../actions';
 
 class DrinksDetails extends React.Component {
   constructor() {
@@ -15,6 +17,7 @@ class DrinksDetails extends React.Component {
       Ingredients: [],
       Measures: [],
       Video: '',
+      favorite: false,
     };
     this.goLeft = this.goLeft.bind(this);
     this.goRight = this.goRight.bind(this);
@@ -79,6 +82,17 @@ class DrinksDetails extends React.Component {
     });
   }
 
+  changeFavIcon(idMeal) {
+    const { favorite } = this.state;
+    const { dispatchFavorite } = this.props;
+    if (favorite) {
+      dispatchFavorite(favorite, idMeal);
+      return blackHeartIcon;
+    }
+    dispatchFavorite(favorite, idMeal);
+    return whiteHeartIcon;
+  }
+
   goLeft() {
     const additionalX = 110;
     const mintranslateX = 0;
@@ -97,7 +111,7 @@ class DrinksDetails extends React.Component {
   }
 
   render() {
-    const { Drink, RecommendedMeals, x, Ingredients, Measures, Video } = this.state;
+    const { Drink, RecommendedMeals, x, Ingredients, Measures, Video, favorite } = this.state;
     return (
       <div>
         {Drink ? Drink.map((recipe, index) => {
@@ -124,7 +138,8 @@ class DrinksDetails extends React.Component {
                   <input
                     type="image"
                     data-testid="favorite-btn"
-                    src={ whiteHeartIcon }
+                    src={ this.changeFavIcon(recipe.idMeal) }
+                    onClick={ () => this.setState({ favorite: !favorite }) }
                     alt="whiteHeartIcon"
                   />
                 </div>
@@ -212,8 +227,17 @@ class DrinksDetails extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  idCurrent: state.menu.currentID,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatchID: (endpoint) => dispatch(currentID(endpoint)),
+  dispatchFavorite: (isFavorite, idMeal) => dispatch(favRecipe(isFavorite, idMeal)),
+});
+
 DrinksDetails.propTypes = {
   history: PropTypes.shape().isRequired,
 };
 
-export default connect(null, null)(DrinksDetails);
+export default connect(mapStateToProps, mapDispatchToProps)(DrinksDetails);

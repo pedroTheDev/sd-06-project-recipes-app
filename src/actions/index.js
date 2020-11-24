@@ -2,6 +2,7 @@ export const USER_INFO = 'USER_INFO';
 export const DRINKS = 'DRINKS';
 export const MEALS = 'MEALS';
 export const CURRENT_ID = 'CURRENT_ID';
+export const FAVORITE = 'FAVORITE';
 
 export const UserInfo = (email, password) => ({
   type: USER_INFO,
@@ -21,5 +22,11 @@ export const bebida = (drink) => ({
 
 export const currentID = (id) => ({
   type: CURRENT_ID,
+  id,
+});
+
+export const favRecipe = (fav, id) => ({
+  type: FAVORITE,
+  fav,
   id,
 });

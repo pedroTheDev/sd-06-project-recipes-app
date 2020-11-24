@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchMealsById, fetchRecommendedDrinks } from '../services';
-import { currentID } from '../actions';
+import { currentID, favRecipe } from '../actions';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 class FoodsDetails extends React.Component {
   constructor() {
@@ -16,6 +17,7 @@ class FoodsDetails extends React.Component {
       Ingredients: [],
       Measures: [],
       Video: '',
+      favorite: false,
     };
     this.goLeft = this.goLeft.bind(this);
     this.goRight = this.goRight.bind(this);
@@ -23,7 +25,6 @@ class FoodsDetails extends React.Component {
     this.setIngredients = this.setIngredients.bind(this);
     this.handleYoutubeVideo = this.handleYoutubeVideo.bind(this);
     this.redirectFromState = this.redirectFromState.bind(this);
-
   }
 
   async componentDidMount() {
@@ -39,6 +40,20 @@ class FoodsDetails extends React.Component {
   handleYoutubeVideo(url) {
     const Video = url.split('=')[1];
     this.setState({ Video });
+  }
+
+  handleShareFood({ idMeal }) {
+    const url = `http://localhost:3000/comidas/${idMeal}`;
+    window.alert('Link copiado!');
+    const el = document.createElement('textarea');
+    el.value = url;
+    el.setAttribute('readonly', '');
+    el.style.position = 'absolute';
+    el.style.left = '-9999px';
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
   }
 
   handleIngredients() {
@@ -81,6 +96,17 @@ class FoodsDetails extends React.Component {
     });
   }
 
+  changeFavIcon(idMeal) {
+    const { favorite } = this.state;
+    const { dispatchFavorite } = this.props;
+    if (favorite) {
+      dispatchFavorite(favorite, idMeal);
+      return blackHeartIcon;
+    }
+    dispatchFavorite(favorite, idMeal);
+    return whiteHeartIcon;
+  }
+
   goLeft() {
     const additionalX = 110;
     const mintranslateX = 0;
@@ -101,15 +127,11 @@ class FoodsDetails extends React.Component {
   redirectFromState() {
     const { idCurrent } = this.props;
     const { history } = this.props;
-    // if (meals !== null && meals.length === 1) {
-    //   history.push(`/comidas/${meals[0].idMeal}`);
-    // }
-    // if (drinks !== null && drinks.length === 1) {
     history.push(`/comidas/${idCurrent}/in-progress`);
   }
 
   render() {
-    const { Meal, RecommendedDrinks, x, Ingredients, Measures, Video } = this.state;
+    const { Meal, RecommendedDrinks, x, Ingredients, Measures, Video, favorite } = this.state;
     return (
       <div className="food-drink-detail-container">
         {Meal ? Meal.map((recipe, index) => (
@@ -129,12 +151,14 @@ class FoodsDetails extends React.Component {
                   type="image"
                   data-testid="share-btn"
                   src={ shareIcon }
+                  onClick={ () => this.handleShareFood(recipe) }
                   alt="shareIcon"
                 />
                 <input
                   type="image"
                   data-testid="favorite-btn"
-                  src={ whiteHeartIcon }
+                  src={ this.changeFavIcon(recipe.idMeal) }
+                  onClick={ () => this.setState({ favorite: !favorite }) }
                   alt="whiteHeartIcon"
                 />
               </div>
@@ -220,6 +244,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchID: (endpoint) => dispatch(currentID(endpoint)),
+  dispatchFavorite: (isFavorite, idMeal) => dispatch(favRecipe(isFavorite, idMeal)),
 });
 
 FoodsDetails.propTypes = {
