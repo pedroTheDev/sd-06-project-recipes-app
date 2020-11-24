@@ -1,10 +1,11 @@
 import React, { useContext, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import ComidaCard from '../components/MealsCard';
+import MealsCard from '../components/MealsCard';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
 import ReceitasContext from '../context/ReceitasContext';
+import FoodFilters from '../components/FoodFilters';
 
 import { foodAPI } from '../services/foodAPI';
 
@@ -34,17 +35,20 @@ const Comidas = (history) => {
       ? (
         <section>
           <Header title="Comidas" searchBtn />
-          {searchBox && <SearchBar history={ history } />}
+          {searchBox && <SearchBar history={ history } /> }
+          <section>
+            <FoodFilters />
+          </section>
           {
             meals.filter((_, index) => index < doze)
-              .map((food, i) => (<ComidaCard key={ i } food={ food } index={ i } />
+              .map((food, i) => (<MealsCard key={ i } food={ food } index={ i } />
               ))
           }
           {location.pathname === '/comidas' && <Footer />}
 
         </section>
       )
-      : <span>loading</span>
+      : <span>Loading...</span>
   );
 };
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import '../style/ReceitasList.css';
+import '../style/RecipesList.css';
 
-function BebidaCard({ drink, index }) {
+function DrinksCard({ drink, index }) {
   return (
     <div className="drink-card" data-testid={ `${index}-recipe-card` }>
       <img
@@ -18,9 +18,9 @@ function BebidaCard({ drink, index }) {
   );
 }
 
-BebidaCard.propTypes = {
+DrinksCard.propTypes = {
   drink: PropTypes.instanceOf(Object).isRequired,
   index: PropTypes.number.isRequired,
 };
 
-export default BebidaCard;
+export default DrinksCard;

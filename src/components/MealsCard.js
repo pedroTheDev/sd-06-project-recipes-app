@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import '../style/ReceitasList.css';
+import '../style/RecipesList.css';
 
-function ComidaCard({ food, index }) {
+function MealsCard({ food, index }) {
   return (
     <div className="food-card" data-testid={ `${index}-recipe-card` }>
       <img
@@ -18,9 +18,9 @@ function ComidaCard({ food, index }) {
   );
 }
 
-ComidaCard.propTypes = {
+MealsCard.propTypes = {
   food: PropTypes.instanceOf(Object).isRequired,
   index: PropTypes.number.isRequired,
 };
 
-export default ComidaCard;
+export default MealsCard;

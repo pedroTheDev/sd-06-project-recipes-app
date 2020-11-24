@@ -6,6 +6,8 @@ const ReceitasProvider = ({ children }) => {
   const [meals, setMeals] = useState([]);
   const [searchBox, setSearchBox] = useState(false);
   const [fetching, setFetching] = useState(true);
+  const [filtersData, setFiltersData] = useState(['All']);
+  const [selectedFilter, setSelectedFilter] = useState('All');
 
   const state = {
     meals,
@@ -14,6 +16,10 @@ const ReceitasProvider = ({ children }) => {
     setSearchBox,
     fetching,
     setFetching,
+    filtersData,
+    setFiltersData,
+    selectedFilter,
+    setSelectedFilter,
   };
 
   return (

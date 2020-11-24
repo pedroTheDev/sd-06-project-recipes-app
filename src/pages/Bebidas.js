@@ -4,7 +4,8 @@ import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
 import Footer from '../components/Footer';
 import ReceitasContext from '../context/ReceitasContext';
-import BebidaCard from '../components/DrinksCard';
+import DrinksCard from '../components/DrinksCard';
+import DrinkFilters from '../components/DrinkFilters';
 
 import { drinkAPI } from '../services/drinkAPI';
 
@@ -33,18 +34,19 @@ function Bebidas() {
       ? (
         <section>
           <Header title="Bebidas" searchBtn />
-          {searchBox && <SearchBar />}
+          {searchBox && <SearchBar /> }
+          <DrinkFilters />
           {
             meals
               .filter((_, index) => index < doze)
               .map((drink, i) => (
-                <BebidaCard key={ i } drink={ drink } index={ i } />
+                <DrinksCard key={ i } drink={ drink } index={ i } />
               ))
           }
           {location.pathname === '/bebidas' && <Footer />}
         </section>
       )
-      : <span>loading</span>
+      : <span>Loading...</span>
   );
 }
 
