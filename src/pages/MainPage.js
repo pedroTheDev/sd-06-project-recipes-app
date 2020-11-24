@@ -13,7 +13,7 @@ import ExploreDrinks from './ExploreDrinks';
 
 export default function MainPage(props) {
   const { title } = props;
-  const { setSearchButton, setSearch } = useContext(RevenueContext);
+  const { setSearchButton, setSearch, setSearchParam } = useContext(RevenueContext);
   useEffect(() => {
     if (title === 'Comidas'
     || title === 'Bebidas'
@@ -30,10 +30,12 @@ export default function MainPage(props) {
   let footerContent;
   switch (title) {
   case 'Comidas':
+    setSearchParam('Meal');
     mainContent = <Foods />;
     footerContent = <Footer />;
     break;
   case 'Bebidas':
+    setSearchParam('Drink');
     mainContent = <Foods />;
     footerContent = <Footer />;
     break;
