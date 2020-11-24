@@ -44,9 +44,16 @@ export async function getRecipeDrinksByCategoryApi(category) {
   return result.drinks;
 }
 
+export async function getRecipeDrinksByRandom() {
+  const response = await fetch(`${URL_BASE}random.php`);
+  const result = await response.json();
+  return result.drinks;
+}
+
 export default {
   getAllDrinkTypesApi,
   getRecipeDrinksApi,
   getRecipeDrinksByCategoryApi,
   getFilteredDrinksApi,
+  getRecipeDrinksByRandom,
 };
