@@ -27,7 +27,6 @@ function Header({ name, button }) {
           <img src={ profileIcon } alt="profile icon" />
         </button>
         <h1 data-testid="page-title">{name}</h1>
-        
         { button && (
           <button
             type="button"
