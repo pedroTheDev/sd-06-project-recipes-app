@@ -1,19 +1,26 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import '../style/ReceitasList.css';
 
-import ComidaCard from './ComidaCard';
-
-import ReceitasContext from '../context/ReceitasContext';
-
-function MealsCard() {
-  const { meals } = useContext(ReceitasContext);
-  const doze = 12;
+function ComidaCard({ food, index }) {
   return (
-    <div>
-      {meals.filter((_, index) => index < doze)
-        .map((food, i) => (<ComidaCard key={ food } food={ food } index={ i } />
-        ))}
+    <div className="food-card" data-testid={ `${index}-recipe-card` }>
+      <img
+        data-testid={ `${index}-card-img` }
+        src={ food.strMealThumb }
+        alt={ food.strMeal }
+        className="food-img"
+      />
+      <h3 className="food-name" data-testid={ `${index}-card-name` }>
+        {food.strMeal}
+      </h3>
     </div>
   );
 }
 
-export default MealsCard;
+ComidaCard.propTypes = {
+  food: PropTypes.instanceOf(Object).isRequired,
+  index: PropTypes.number.isRequired,
+};
+
+export default ComidaCard;
