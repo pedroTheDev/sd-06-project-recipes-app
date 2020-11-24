@@ -111,7 +111,13 @@ class DrinksDetails extends React.Component {
   }
 
   render() {
-    const { Drink, RecommendedMeals, x, Ingredients, Measures, Video, favorite } = this.state;
+    const { Drink,
+      RecommendedMeals,
+      x,
+      Ingredients,
+      Measures,
+      Video,
+      favorite } = this.state;
     return (
       <div>
         {Drink ? Drink.map((recipe, index) => {
@@ -238,6 +244,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 DrinksDetails.propTypes = {
   history: PropTypes.shape().isRequired,
+  dispatchFavorite: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DrinksDetails);

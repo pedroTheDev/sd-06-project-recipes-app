@@ -131,7 +131,13 @@ class FoodsDetails extends React.Component {
   }
 
   render() {
-    const { Meal, RecommendedDrinks, x, Ingredients, Measures, Video, favorite } = this.state;
+    const { Meal,
+      RecommendedDrinks,
+      x,
+      Ingredients,
+      Measures,
+      Video,
+      favorite } = this.state;
     return (
       <div className="food-drink-detail-container">
         {Meal ? Meal.map((recipe, index) => (
@@ -211,7 +217,11 @@ class FoodsDetails extends React.Component {
                   />
                   <div className="text-slider-div">
                     <p>{recomend.strAlcoholic}</p>
-                    <h4 data-testid={ `${i}-recomendation-title` }>{recomend.strDrink}</h4>
+                    <h4
+                      data-testid={ `${i}-recomendation-title` }
+                    >
+                      {recomend.strDrink}
+                    </h4>
                   </div>
                 </div>
               ))}
@@ -251,6 +261,7 @@ FoodsDetails.propTypes = {
   history: PropTypes.shape().isRequired,
   dispatchID: PropTypes.func.isRequired,
   idCurrent: PropTypes.string.isRequired,
+  dispatchFavorite: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FoodsDetails);
