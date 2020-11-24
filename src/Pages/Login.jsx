@@ -13,7 +13,7 @@ const Login = () => {
   const [redirect, setRedirect] = useState(false);
 
   const handleInput = (value) => {
-    const regex = /[A-Z0-9]{1,}@[A-Z0-9]{2,}.[A-Z0-9]{2,}/i;
+    const regex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
     if (regex.test(value.toLowerCase())) {
       setEmailValid(true);
       setUsername(value);
