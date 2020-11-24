@@ -1,15 +1,15 @@
 import React from 'react';
 import Header from '../../components/Header';
 
-function MainExplore() {
+function MainExploreDrink() {
   return (
     <div>
       <Header
         className="header"
-        pageTitle="Explorar Comidas"
+        pageTitle="Explorar Bebidas"
       />
     </div>
   );
 }
 
-export default MainExplore;
+export default MainExploreDrink;

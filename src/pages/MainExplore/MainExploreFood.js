@@ -1,15 +1,15 @@
 import React from 'react';
 import Header from '../../components/Header';
-import Footer from '../../components/Footer';
 
-export default function DrinksPage() {
+function MainExploreFood() {
   return (
     <div>
       <Header
         className="header"
-        pageTitle="Explorar Bebidas"
+        pageTitle="Explorar Comidas"
       />
-      <Footer />
     </div>
   );
 }
+
+export default MainExploreFood;
