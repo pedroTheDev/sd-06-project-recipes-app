@@ -15,7 +15,6 @@ function ExploreRecipes({ pageType }) {
 
   const handleRandomClick = useCallback(async () => {
     const randomRecipeID = await loadRandomRecipe(pageType);
-    console.log(randomRecipeID);
 
     if (!randomRecipeID) {
       alert('Ocorreu um erro na busca aleatória, tente novamente.');
