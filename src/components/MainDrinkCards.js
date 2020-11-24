@@ -58,7 +58,7 @@ function MainDrinkCard() {
               onClick={ (e) => handleClick(e) }
             >
               {el.strCategory}
-            </button>)).slice(inicio, btn) }
+            </button>)).splice(inicio, btn) }
         </section>
         <section>
           {filterDrink.map((el, idx) => (
@@ -101,10 +101,10 @@ function MainDrinkCard() {
             onClick={ (e) => handleClick(e) }
           >
             {el.strCategory}
-          </button>)).slice(inicio, btn) }
+          </button>)).splice(inicio, btn) }
       </section>
       <section>
-        {fetchDrink.map((el, idx) => (
+        {fetchDrink ? fetchDrink.map((el, idx) => (
           <div
             key={ idx }
             data-testid={ `${idx}-recipe-card` }
@@ -120,7 +120,7 @@ function MainDrinkCard() {
               />
             </a>
           </div>
-        )).splice(inicio, fim)}
+        )).splice(inicio, fim) : null}
       </section>
     </main>
   );

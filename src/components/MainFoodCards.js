@@ -24,7 +24,6 @@ function MainFoodCard() {
 
   const handleClick = ({ target }) => {
     const filter = target.name;
-    console.log(filter);
     if (targetName === filter) {
       setFilterFood([]);
     }
@@ -36,7 +35,6 @@ function MainFoodCard() {
   const filterAll = () => {
     setFilterFood([]);
   };
-  console.log(filterFood);
   if (filterFood.length > inicio) {
     return (
       <main>
@@ -57,7 +55,7 @@ function MainFoodCard() {
               onClick={ (e) => handleClick(e) }
             >
               {el.strCategory}
-            </button>)).slice(inicio, btn) }
+            </button>)).splice(inicio, btn) }
         </section>
         <section>
           {filterFood.map((el, idx) => (
@@ -100,10 +98,10 @@ function MainFoodCard() {
             onClick={ (e) => handleClick(e) }
           >
             {el.strCategory}
-          </button>)).slice(inicio, btn) }
+          </button>)).splice(inicio, btn) }
       </section>
       <section>
-        {fetchFood.map((el, idx) => (
+        {fetchFood ? fetchFood.map((el, idx) => (
           <div
             key={ idx }
             data-testid={ `${idx}-recipe-card` }
@@ -119,7 +117,7 @@ function MainFoodCard() {
               />
             </a>
           </div>
-        )).splice(inicio, fim)}
+        )).splice(inicio, fim) : null}
       </section>
     </main>
   );

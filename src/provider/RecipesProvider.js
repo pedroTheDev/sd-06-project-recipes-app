@@ -21,28 +21,28 @@ export default function RecipesProvider({ children }) {
 
   const [radioValue, setRadioValue] = useState('');
   const [searchBar, setSearchBar] = useState('');
-  const [returnFoodApi, setReturnFoodAPi] = useState([]);
-  const [returnDrinkApi, setReturnDrinkAPi] = useState([]);
+  // const [returnFoodApi, setReturnFoodAPi] = useState([]);
+  // const [returnDrinkApi, setReturnDrinkAPi] = useState([]);
 
   useEffect(() => {
-    if (returnFoodApi && returnFoodApi.length === 1) {
-      const { idMeal } = returnFoodApi[0];
+    if (fetchFood && fetchFood.length === 1) {
+      const { idMeal } = fetchFood[0];
       window.location.pathname = `/comidas/${idMeal}`;
     }
-    if (!returnFoodApi) {
+    if (!fetchFood) {
       alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
     }
-  }, [returnFoodApi]);
+  }, [fetchFood]);
 
   useEffect(() => {
-    if (returnDrinkApi && returnDrinkApi.length === 1) {
-      const { idDrink } = returnDrinkApi[0];
+    if (fetchDrink && fetchDrink.length === 1) {
+      const { idDrink } = fetchDrink[0];
       window.location.pathname = `/bebidas/${idDrink}`;
     }
-    if (!returnDrinkApi) {
+    if (!fetchDrink) {
       alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
     }
-  }, [returnDrinkApi]);
+  }, [fetchDrink]);
 
   const context = {
     login,
@@ -64,11 +64,11 @@ export default function RecipesProvider({ children }) {
     setRadioValue,
     searchBar,
     setSearchBar,
-    returnFoodApi,
-    setReturnFoodAPi,
-    returnDrinkApi,
+    // returnFoodApi,
+    // setReturnFoodAPi,
+    // returnDrinkApi,
     setFetchDrink,
-    setReturnDrinkAPi,
+    // setReturnDrinkAPi,
   };
 
   return (

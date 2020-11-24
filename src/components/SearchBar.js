@@ -6,10 +6,10 @@ import fetchApiDrink from '../services/FetchApiDrink';
 export default function SearchBar() {
   const { setRadioValue,
     setSearchBar,
-    setReturnFoodAPi,
     radioValue,
     searchBar,
-    setReturnDrinkAPi,
+    setFetchDrink,
+    setFetchFood,
   } = useContext(RecipesContext);
 
   const radioClick = ({ target }) => {
@@ -26,9 +26,9 @@ export default function SearchBar() {
     }
     const path = window.location.pathname;
     if (path.includes('comidas')) {
-      await fetchApiFood(radioValue, setReturnFoodAPi, searchBar);
+      await fetchApiFood(radioValue, setFetchFood, searchBar);
     } else {
-      await fetchApiDrink(radioValue, setReturnDrinkAPi, searchBar);
+      await fetchApiDrink(radioValue, setFetchDrink, searchBar);
     }
   };
 
