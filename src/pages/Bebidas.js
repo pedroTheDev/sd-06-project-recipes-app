@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import Header from '../components/Header';
+import MenuInferior from '../components/MenuInferior';
 import RecipeContext from '../context/RecipeContext';
 import CardBebida from '../components/CardBebida';
 
@@ -17,6 +18,7 @@ function Bebidas() {
           return undefined;
         }) : alert('Sinto muito, não encontramos nenhuma receita para esses filtros.')
       }
+      <MenuInferior />
     </div>
   );
 }
