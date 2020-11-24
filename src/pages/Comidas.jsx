@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import RecipesAppContext from '../hooks/RecipesAppContext';
+import Footer from '../components/Footer';
 
 function Comidas({ history }) {
   const {
@@ -45,6 +46,7 @@ function Comidas({ history }) {
           </h4>
         </Link>
       ))}
+      <Footer />
     </div>
   );
 }

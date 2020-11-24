@@ -6,7 +6,7 @@ import searchIcon from '../styles/images/searchIcon.svg';
 import HeaderSearch from './HeaderSearch';
 import './components.css';
 
-function Header({ name }) {
+function Header({ name, button }) {
   const {
     searchHeader,
     setSearchHeader,
@@ -27,17 +27,8 @@ function Header({ name }) {
           <img src={ profileIcon } alt="profile icon" />
         </button>
         <h1 data-testid="page-title">{name}</h1>
-        <button
-          type="button"
-          className="logo-search"
-          data-testid="search-top-btn"
-          onClick={ isClick }
-        >
-          <img src={ searchIcon } alt="search icon" />
-        </button>
-        <h1 data-testid="page-title">{ name }</h1>
+        
         { button && (
-
           <button
             type="button"
             className="logo-search"

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import RecipesAppContext from '../hooks/RecipesAppContext';
+import Footer from '../components/Footer';
 
 function Bebidas({ history }) {
   const {
@@ -47,6 +48,7 @@ function Bebidas({ history }) {
           </Link>
         ))}
       </div>
+      <Footer />
     </div>
   );
 }
