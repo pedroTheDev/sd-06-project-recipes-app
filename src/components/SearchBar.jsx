@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
 
 import getMeals from '../services/theMealApi';
 import getCockTail from '../services/theCockTailApi';
+import addMeals from '../actions/meals';
+import addDrinks from '../actions/drinks';
 
 class SearchRadio extends Component {
   constructor() {
@@ -11,7 +15,10 @@ class SearchRadio extends Component {
     this.requestFromApi = this.requestFromApi.bind(this);
     this.handleInput = this.handleInput.bind(this);
 
-    this.state = { inputRadio: '' };
+    this.state = {
+      inputRadio: '',
+      redirectTo: '',
+    };
   }
 
   handleInput({ target: { name, id } }) {
@@ -19,35 +26,45 @@ class SearchRadio extends Component {
   }
 
   async requestFromApi() {
-    const { searchInput, title } = this.props;
+    const { searchInput, title, sendMeals, sendCockTail } = this.props;
     const { inputRadio } = this.state;
-
-    if (inputRadio === 'primeira-letra' && searchInput.length !== 1) {
-      return alert('Sua busca deve conter somente 1 (um) caracter');
-    }
-
+    const displayAlert = () => (
+      alert('Sinto muito, não encontramos nenhuma receita para esses filtros.')
+    );
     const inputValue = {
       ingrediente: 'filter.php?i',
       nome: 'search.php?s',
       'primeira-letra': 'search.php?f',
     };
 
-    let meals = [];
+    if (inputRadio === 'primeira-letra' && searchInput.length !== 1) {
+      return alert('Sua busca deve conter somente 1 (um) caracter');
+    }
+
     const endPointString = `${inputValue[inputRadio]}=${searchInput}`;
 
     if (title === 'Comidas') {
-      meals = await getMeals(endPointString);
-    }
-    if (title === 'Bebidas') {
-      meals = await getCockTail(endPointString);
+      const { meals } = await getMeals(endPointString); // Apple Frangipan Tart
+
+      if (meals && meals.length === 1) {
+        const { idMeal } = meals[0];
+        sendMeals(meals);
+        return this.setState({ redirectTo: `/comidas/${idMeal}` });
+      }
+      return meals ? sendMeals(meals) : displayAlert();
     }
 
-    if (!meals[0]) {
-      return alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+    const { drinks } = await getCockTail(endPointString); // Avalon
+    if (drinks && drinks.length === 1) {
+      const { idDrink } = drinks[0];
+      sendCockTail(drinks);
+      return this.setState({ redirectTo: `/bebidas/${idDrink}` });
     }
+    return drinks ? sendCockTail(drinks) : displayAlert();
   }
 
   render() {
+    const { redirectTo } = this.state;
     return (
       <div>
         <label htmlFor="ingrediente">
@@ -89,14 +106,22 @@ class SearchRadio extends Component {
         >
           Buscar
         </button>
+        {redirectTo && <Redirect to={ redirectTo } />}
       </div>
     );
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  sendMeals: (meals) => dispatch(addMeals(meals)),
+  sendCockTail: (drinks) => dispatch(addDrinks(drinks)),
+});
+
 SearchRadio.propTypes = {
   searchInput: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
+  sendMeals: PropTypes.func.isRequired,
+  sendCockTail: PropTypes.func.isRequired,
 };
 
-export default SearchRadio;
+export default connect(null, mapDispatchToProps)(SearchRadio);
