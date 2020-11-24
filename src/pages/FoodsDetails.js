@@ -116,22 +116,23 @@ class FoodsDetails extends React.Component {
     const myLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
 
     if (isFavorite && myLocalStorage) {
-      const itemToRemove = myLocalStorage.find((element) => (element.id === '52819'));
+      const itemToRemove = myLocalStorage.find((element) => (element.id === recipe.idMeal));
+      // console.log(itemToRemove);
       const indexToRemove = myLocalStorage.indexOf(itemToRemove, 0);
+      // console.log(indexToRemove);
 
-      myLocalStorage.splice(indexToRemove, 1);
+      if (indexToRemove !== -1) {
+        myLocalStorage.splice(indexToRemove, 1);
+        localStorage.setItem('favoriteRecipes', JSON.stringify(myLocalStorage));
+      }
 
-      localStorage.setItem('favoriteRecipes', JSON.stringify(myLocalStorage));
-
-      // const arrayteste = ['a', 'b', 'c', 'd'];
-      // const indexteste = arrayteste.indexOf('c');
-      // console.log(arrayteste.splice(indexteste, 1)); // esse eu removi
-      // console.log(arrayteste);// esse oq sobrou
+      localStorage.setItem('favoriteRecipes', JSON.stringify(myLocalStorage)); // assim remove
+    } else {
+      const MyLSObj = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      const combineObjects = MyLSObj.concat(myObject);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(combineObjects)); // assim add
     }
-    const MyLSObj = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    const combineObjects = MyLSObj.concat(myObject);
 
-    localStorage.setItem('favoriteRecipes', JSON.stringify(combineObjects));
     this.changeFavIcon(recipe);
   }
 
@@ -143,19 +144,10 @@ class FoodsDetails extends React.Component {
     // https://stackoverflow.com/questions/2218999/remove-duplicates-from-an-array-of-objects-in-javascript
     const filteredStorage = favId
       .filter((v, i, a) => a.findIndex((t) => (t.id === v.id)) === i); // só registra um único id
+    localStorage.setItem('favoriteRecipes', JSON.stringify(filteredStorage));
 
-    localStorage.setItem('favoriteRecipes', JSON.stringify(favId));
-
-    // const filter = favId.find((item) => item.id === idMeal);
-
-    // if (filter) {
     this.setState({ Update: !Update });
     localStorage.setItem('isFav', !isFav);
-
-    // } else {
-    //   this.setState({ Update: !Update });
-    //   localStorage.setItem('isFav', !isFav);
-    // }
   }
 
   goLeft() {
