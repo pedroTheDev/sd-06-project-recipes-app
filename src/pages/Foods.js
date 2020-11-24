@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Cards from '../components/Cards';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
@@ -7,7 +7,12 @@ import useSearch from '../hooks/useSearch';
 
 export default function Foods() {
   document.title = 'Comidas';
-  const { items } = useContext(Context);
+  const { items, filters, setFilters } = useContext(Context);
+  useEffect(() => {
+    if (filters.category === '') {
+      setFilters({ ...filters, category: 'comidas' });
+    }
+  }, []);
   useSearch();
 
   function handleAlert() {
