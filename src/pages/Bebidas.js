@@ -19,10 +19,13 @@ function Bebidas({ retrievedDrinks }) {
       const { idDrink } = request[0];
       return <Redirect to={ `/bebidas/${idDrink}` } />;
     } else {
-      return request.map((drink, index) => (
-        index <= maxLength
-          ? <DrinkCard drink={ drink } key={ drink.idDrink } index={ index } />
-          : null));
+      return (
+        <main className="recipes-display">
+          {request.map((drink, index) => (
+            index <= maxLength
+              ? <DrinkCard drink={ drink } key={ drink.idDrink } index={ index } />
+              : null))}
+        </main>);
     }
     return null;
   };
