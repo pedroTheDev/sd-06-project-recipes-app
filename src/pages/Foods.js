@@ -27,7 +27,7 @@ const Foods = ({ history }) => {
   };
 
   useEffect(() => {
-    if (!isFetching) {
+    if (fetchedResults.meals) {
       handleQuantityOfResults();
     }
   }, [fetchedResults]);

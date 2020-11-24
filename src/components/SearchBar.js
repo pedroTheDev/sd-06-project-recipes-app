@@ -69,6 +69,7 @@ function SearchBar() {
         );
       }
 
+      setIsFetching(true);
       await setFetchedResults(await getMealInformation(selectedApiEndpoint + searchTerm));
       setIsFetching(false);
     }

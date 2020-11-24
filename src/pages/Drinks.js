@@ -27,7 +27,7 @@ const Drinks = ({ history }) => {
   };
 
   useEffect(() => {
-    if (!isFetching) {
+    if (fetchedResults.drinks) {
       handleQuantityOfResults();
     }
   }, [fetchedResults]);
