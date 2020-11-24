@@ -53,7 +53,7 @@ function RecipeDetails() {
   const allIngredients = renderIngredients(singleRecipe);
 
   return (
-    <div>
+    <div>c
       {(isFetching) ? <h2>Carregando receita...</h2>
         : (
           <div>
