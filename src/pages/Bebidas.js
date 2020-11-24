@@ -9,17 +9,14 @@ import { drinkAPI } from '../services/drinkAPI';
 
 function Bebidas() {
   const {
-    searchBox, meals, setMeals, setFetching,
+    searchBox, meals, setMeals,
   } = useContext(ReceitasContext);
   const location = useLocation();
 
   useEffect(() => {
-    setFetching(true);
-
     async function fetchDrink() {
       const responseDrinksAPI = await drinkAPI();
       setMeals(responseDrinksAPI);
-      setFetching(false);
     }
 
     fetchDrink();

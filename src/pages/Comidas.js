@@ -9,17 +9,14 @@ import { foodAPI } from '../services/foodAPI';
 
 const Comidas = (history) => {
   const {
-    meals, searchBox, setMeals, setFetching,
+    meals, searchBox, setMeals,
   } = useContext(ReceitasContext);
   const location = useLocation();
 
   useEffect(() => {
-    setFetching(true);
-
     async function fetchFood() {
       const responseFoodsAPI = await foodAPI();
       setMeals(responseFoodsAPI);
-      setFetching(false);
     }
 
     fetchFood();
@@ -30,7 +27,7 @@ const Comidas = (history) => {
   return (
     <section>
       <Header title="Comidas" searchBtn />
-      {searchBox && <SearchBar history={history} />}
+      {searchBox && <SearchBar history={ history } />}
       <ComidaCard />
       {location.pathname === '/comidas' && <Footer />}
     </section>

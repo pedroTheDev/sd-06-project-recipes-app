@@ -7,20 +7,20 @@ function ComidaCard() {
   const {
     meals,
   } = useContext(ReceitasContext);
-  
+
   const doze = 12;
 
   return (
     meals.filter((_, index) => index < doze)
       .map((food, index) => (
-        <div className="food-card" data-testid={`${index}-recipe-card`}>
+        <div key={ index } className="food-card" data-testid={ `${index}-recipe-card` }>
           <img
-            data-testid={`${index}-card-img`}
-            src={food.strMealThumb}
-            alt={food.strMeal}
+            data-testid={ `${index}-card-img` }
+            src={ food.strMealThumb }
+            alt={ food.strMeal }
             className="food-img"
           />
-          <h3 className="food-name" data-testid={`${index}-card-name`}>
+          <h3 className="food-name" data-testid={ `${index}-card-name` }>
             {food.strMeal}
           </h3>
         </div>
