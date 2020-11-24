@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import './App.css';
 import Login from './pages/Login';
 import MainPage from './pages/MainPage';
+import RecipeDetails from './pages/RecipeDetails';
 
 function App() {
   return (
@@ -11,11 +12,10 @@ function App() {
         <Route exact path="/" component={ () => <Login title="Login" /> } />
         <Route exact path="/comidas" component={ () => <MainPage title="Comidas" /> } />
         <Route exact path="/bebidas" component={ () => <MainPage title="Bebidas" /> } />
-        {/* <Route exact path={ `/comidas/${recipeId}` } component={ Foods } title="" />
-        <Route exact path={ `/bebidas/${recipeId}` } component={ Foods } title="" />
-        <Route exact path={ `/comidas/${recipeId}/in-progress` } component={ Foods } title="" />
-        <Route exact path={ `/bebidas/${recipeId}/in-progress` }
-        component={ Foods } title="" /> */}
+        <Route path="/comidas/:recipeId" component={ RecipeDetails } />
+        <Route path="/bebidas/:recipeId" component={ RecipeDetails } />
+        <Route path="/comidas/:recipeId/in-progress" component={ RecipeDetails } />
+        <Route path="/bebidas/:recipeId/in-progress" component={ RecipeDetails } />
         <Route
           exact
           path="/explorar"
