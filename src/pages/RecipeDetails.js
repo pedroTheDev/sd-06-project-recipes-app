@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useHistory, useParams } from 'react-router-dom';
 import ContextRecipes from '../context/ContextRecipes';
 import { fetchAPIDrinks, fetchAPIRecipes } from '../services';
 import shareIcon from '../images/shareIcon.svg';
@@ -8,19 +8,18 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 function RecipeDetails() {
   const {
-    typeRecipe,
-    idRecipe,
     recipes,
     setRecipes,
     recipeStarted,
     favoriteRecipe,
-    setFavoriteRecipe } = useContext(ContextRecipes);
+  } = useContext(ContextRecipes);
   const [singleRecipe, setSingleRecipe] = useState([]);
   const [isFetching, setFetching] = useState(true);
   const location = useLocation().pathname;
+  const { idRecipe } = useParams();
 
   const fetchDetailedRecipe = async () => {
-    if (typeRecipe === 'food') {
+    if (location.includes('comidas')) {
       const data = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idRecipe}`);
       const responseJSON = await data.json();
       const mealRecipe = responseJSON.meals;
@@ -40,6 +39,7 @@ function RecipeDetails() {
   useEffect(() => {
     fetchDetailedRecipe();
     setFetching(false);
+    console.log(location);
   }, []);
 
   const renderIngredients = (recipeData) => {
@@ -70,7 +70,7 @@ function RecipeDetails() {
         : (
           <div>
             <h2>Detalhes da Receita</h2>
-            {(typeRecipe === 'food') ? (
+            {(location.includes('comidas')) ? (
               <div>
                 <img
                   src={ singleRecipe.strMealThumb }

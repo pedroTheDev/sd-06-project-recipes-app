@@ -6,7 +6,7 @@ import ContextRecipes from '../context/ContextRecipes';
 function SearchBar(props) {
   const { fetchApi } = props;
   const {
-    setSelectedRadio, setSearchText, setIdRecipe, setRecipes, setTypeRecipe,
+    setSelectedRadio, setSearchText, setIdRecipe, setRecipes,
   } = useContext(ContextRecipes);
 
   const location = useLocation().pathname;
