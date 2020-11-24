@@ -1,19 +1,16 @@
 import React from 'react';
-import propTypes from 'prop-types';
 import { Header, Footer } from '../Components';
+import MainScreen from '../Components/MainScreen';
 
-function Bebidas({ history }) {
+function Bebidas() {
   return (
     <div>
-      <Header pageName="Bebidas" history={ history } />
+      <Header pageName="Bebidas" />
       <h1>Bebidas</h1>
+      <MainScreen />
       <Footer />
     </div>
   );
 }
-
-Bebidas.propTypes = {
-  history: propTypes.arrayOf(Object).isRequired,
-};
 
 export default Bebidas;
