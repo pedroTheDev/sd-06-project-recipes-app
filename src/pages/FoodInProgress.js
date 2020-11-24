@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import fetchRecipes from '../services';
 import FavoriteBtn from '../components/FavoriteBtn';
 import ShareBtn from '../components/ShareBtn';
+import './RecipeInProgress.css';
 
 function FoodInProgress(props) {
   const { match: { params: { id } } } = props;
@@ -27,12 +28,27 @@ function FoodInProgress(props) {
           && recipe[`strIngredient${i}`] !== ''
           && recipe[`strIngredient${i}`] !== undefined
       ) {
-        TheIngredients
-          .push(`${recipe[`strMeasure${i}`]}
-            ${recipe[`strIngredient${i}`]}`);
+        const ingredient = {
+          id: i,
+          value: `${recipe[`strMeasure${i}`]}${recipe[`strIngredient${i}`]}`,
+          isChecked: false,
+        };
+        TheIngredients.push(ingredient);
       }
     }
     setIngredients(TheIngredients);
+  };
+  const verifyIngredientsChecked = () => {
+    const isAllChecked = !ingredients
+      .some((ingredient) => ingredient.isChecked === false);
+    setIsDisabled(!isAllChecked);
+  };
+
+  const handleCheckedIngredient = (event, index) => {
+    const ingredientsChecked = [...ingredients];
+    ingredientsChecked[index].isChecked = event.target.checked;
+    setIngredients(ingredientsChecked);
+    verifyIngredientsChecked();
   };
 
   useEffect(() => {
@@ -54,35 +70,33 @@ function FoodInProgress(props) {
         <img
           className="picture"
           data-testid="recipe-photo"
-          src={ recipe.strMealThumb }
-          alt={ recipe.strMeal }
+          src={ recipe.strDrinkThumb }
+          alt={ recipe.strDrink }
         />
-        <h1 data-testid="recipe-title">{ recipe.strMeal }</h1>
+        <h1 data-testid="recipe-title">{ recipe.strDrink }</h1>
         <ShareBtn />
         <FavoriteBtn />
         <p data-testid="recipe-category">{ recipe.strCategory }</p>
-        <p>
+        <ul>
           Ingredientes:
           {ingredients.map((ingredient, index) => (
-            <label htmlFor={ `${index}-ingredient` } key={ index }>
-              { ingredient }
+            <li data-testid={ `${index}-ingredient-step` } key={ index }>
+              { ingredient.value }
               <input
-                name="ingredient"
-                key={ index }
+                key={ ingredient.id }
                 type="checkbox"
-                id={ `${index}-ingredient` }
-                data-testid={ `${index}-ingredient-step` }
-                checked={ (ev) => console.log(ev.target) }
-                onChange={ () => setIsDisabled(false) }
+                value={ ingredient.value }
+                checked={ ingredient.isChecked }
+                onChange={ (ev) => handleCheckedIngredient(ev, index) }
               />
-            </label>
+            </li>
           ))}
-        </p>
+        </ul>
         <p data-testid="instructions">{ recipe.strInstructions }</p>
         <button
           data-testid="finish-recipe-btn"
           type="submit"
-          isDisabled={ isDisabled }
+          disabled={ isDisabled }
         >
           Finalizar receita
         </button>
