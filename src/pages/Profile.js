@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Footer } from '../components';
+import { Header, Footer } from '../components';
 import '../style/Profile.css';
 
 function Profile() {
-  const { email } = JSON.parse(localStorage.user);
+  const { email } = JSON.parse(localStorage.getItem('user'));
   return (
     <div className="profile">
+      <Header title="Perfil" />
       <div
         data-testid="profile-email"
       >
@@ -36,8 +37,8 @@ function Profile() {
         >
           Sair
         </button>
-        <Footer />
       </Link>
+      <Footer />
     </div>
   );
 }
