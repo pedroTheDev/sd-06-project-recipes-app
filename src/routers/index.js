@@ -1,10 +1,12 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { Login, NotFound, Comidas, Bebidas, Explorar,
+import {
+  Login, NotFound, Comidas, Bebidas, Explorar,
   ExplorarComidas, ExplorarBebidas, ComidasPorIngrediente,
   ComidasPorLocalOrigem, BebidasPorIngrediente, DetalhesBebida,
-  DetalhesComida, ProcessoBebida, ProcessoComida, Profile,
-  ReceitasFavoritas, ReceitasFeitas } from '../pages';
+  DetalhesComida, ProcessoBebida, ProcessoComida,
+  ReceitasFavoritas, ReceitasFeitas, Profile,
+} from '../pages';
 
 export default function Routers() {
   return (
