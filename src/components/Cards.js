@@ -3,21 +3,11 @@ import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom';
 import RecipesContext from '../context/Context';
 import history from '../helpers/History';
-// import useSearch from '../hooks/useSearch';
 
 import '../css/Cards.css';
 
 export default function Cards({ id }) {
   const { items } = useContext(RecipesContext);
-  // const setFilters = useSearch();
-
-  // useEffect(() => {
-  //   setFilters({
-  //     searchText: '',
-  //     searchType: 'name',
-  //     category: id,
-  //   });
-  // }, []);
 
   function handleRedirect() {
     if (items && items.meals) {
@@ -35,7 +25,6 @@ export default function Cards({ id }) {
 
   if (items) {
     handleRedirect();
-    // {redirect ? <Redirect to={ `/${id}/${itemId}` } /> : null}
     if (items.drinks) {
       return (
         <div className="cards-wrapper">

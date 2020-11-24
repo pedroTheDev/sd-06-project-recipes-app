@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import Provider from './context/Provider';
 import './App.css';
-import Router from './components/Router';
+import Router from './router/Router';
 import history from './helpers/History';
 
 function App() {

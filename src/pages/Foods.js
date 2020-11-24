@@ -1,18 +1,16 @@
 import React, { useContext, useEffect } from 'react';
-import Cards from '../components/Cards';
-import Footer from '../components/Footer';
-import Header from '../components/Header';
-import Context from '../context/Context';
+import { Cards, Footer, Header, Categories } from '../components';
+import RecipesContext from '../context/Context';
 import useSearch from '../hooks/useSearch';
 
 export default function Foods() {
   document.title = 'Comidas';
-  const { items, filters, setFilters } = useContext(Context);
+  const { items, filters, setFilters } = useContext(RecipesContext);
   useEffect(() => {
     if (filters.category === '') {
       setFilters({ ...filters, category: 'comidas' });
     }
-  }, []);
+  });
   useSearch();
 
   function handleAlert() {
@@ -24,6 +22,7 @@ export default function Foods() {
   return (
     <div>
       <Header id="comidas" />
+      <Categories id="comidas" />
       <Cards id="comidas" />
       {items ? handleAlert() : null}
       <Footer />

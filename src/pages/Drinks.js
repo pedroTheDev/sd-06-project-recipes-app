@@ -1,7 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import Header from '../components/Header';
-import Cards from '../components/Cards';
-import Footer from '../components/Footer';
+import { Header, Cards, Footer, Categories } from '../components';
 import RecipesContext from '../context/Context';
 import useSearch from '../hooks/useSearch';
 
@@ -24,6 +22,7 @@ export default function Drinks() {
   return (
     <div>
       <Header id="bebidas" />
+      <Categories id="bebidas" />
       <Cards id="bebidas" />
       {items ? handleAlert() : null}
       <Footer />
