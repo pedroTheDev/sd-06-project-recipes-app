@@ -51,6 +51,7 @@ function RecipesCards({ title }) {
     return (
       <div>
         <button
+          data-testid="All-category-filter"
           type="button"
           onClick={ ({ target }) => selectCategorie(target) }
         >
@@ -89,6 +90,7 @@ function RecipesCards({ title }) {
   return (
     <div>
       <button
+        data-testid="All-category-filter"
         type="button"
         onClick={ ({ target }) => selectCategorie(target) }
       >
