@@ -12,20 +12,33 @@ class FoodsRecipesInProgress extends React.Component {
       Meal: [],
       Ingredients: [],
       Measures: [],
+      checkedItems: [],
     };
     this.handleIngredients = this.handleIngredients.bind(this);
     this.setIngredients = this.setIngredients.bind(this);
     this.setMealState = this.setMealState.bind(this);
+    this.checked = this.checked.bind(this);
+    this.checkedItems = this.checkedItems.bind(this);
+    this.test = this.test.bind(this);
+    this.getLocalStorage = this.getLocalStorage.bind(this);
   }
 
   async componentDidMount() {
-    const { idCurrent } = this.props;
-    console.log(idCurrent);
-    const mealRecipe = await fetchMealsById(Number(idCurrent));
+    const { history: { location: { pathname } } } = this.props;
+    const endpoint = pathname.split('/')[2];
+    const mealRecipe = await fetchMealsById(Number(endpoint));
     console.log(mealRecipe);
     this.setMealState(mealRecipe);
     this.handleIngredients();
+    this.checkedItems();
+    this.getLocalStorage();
   }
+
+  // componentDidUpdate() {
+  //   const { checkedItems} = this.state;
+  //   if(checkedItems.length > 0)
+  //   const getRecipesInProgress = localStorage.getItem('storedRecipe', );
+  // }
 
   handleIngredients() {
     const ingredientArray = [];
@@ -41,15 +54,29 @@ class FoodsRecipesInProgress extends React.Component {
         ingredientArray.push(recipe[ingredient]);
         measureArray.push(recipe[measure]);
       }
-      const filteredIngredients = ingredientArray.filter((item) => item !== '')
-        .filter((element) => element !== 'null');
+      const filteredIngredients = ingredientArray
+        .filter((item) => item !== '' && item !== null && item !== undefined);
 
-      const filteredMeasure = measureArray.filter((item) => item !== '')
-        .filter((element) => element !== 'null');
+      const filteredMeasure = measureArray
+        .filter((item) => item !== '' && item !== null && item !== undefined);
 
       this.setIngredients(filteredIngredients, filteredMeasure);
       return null;
     });
+  }
+
+  handleShareFood({ idMeal }) {
+    const url = `http://localhost:3000/comidas/${idMeal}/in-progress`;
+    window.alert('Link copiado!');
+    const el = document.createElement('textarea');
+    el.value = url;
+    el.setAttribute('readonly', '');
+    el.style.position = 'absolute';
+    el.style.left = '-9999px';
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
   }
 
   setMealState(Meal) {
@@ -65,8 +92,62 @@ class FoodsRecipesInProgress extends React.Component {
     });
   }
 
+  getLocalStorage() {
+    const getRecipesInProgress = localStorage.getItem('storedRecipe');
+    if (getRecipesInProgress) {
+      const recipesInProgress = JSON.parse(getRecipesInProgress);
+      this.state({ checkedItems: recipesInProgress });
+    }
+  }
+
+  checkedItems() {
+    const checked = {};
+    const { Ingredients } = this.state;
+    const getCheckedItems = localStorage.getItem('storedRecipe');
+    // const zero = 0;
+    if (!getCheckedItems) {
+      Ingredients.forEach((item) => {
+        checked[item] = false;
+      });
+      this.setState({ checkedItems: checked });
+      // localStorage.setItem('storedRecipe', JSON.stringify(checked));
+    }
+  }
+
+  checked(e) {
+    const { checkedItems } = this.state;
+    const { value, checked } = e.target;
+    this.setState({
+      checkedItems: { ...checkedItems, [value]: checked },
+    });
+    const inputsList = document.querySelectorAll('input');
+    inputsList.forEach((item) => {
+      if (item.checked === true) {
+        item.parentNode.className = 'styled';
+      } else {
+        item.parentNode.className = 'not-styled';
+      }
+    });
+  }
+
+  test(e) {
+    const { idCurrent } = this.props;
+    console.log(idCurrent);
+    const object = {
+      meals: {
+        idCurrent,
+        ingredients: [
+          e.target.value,
+        ],
+      },
+    };
+    const test = localStorage.setItem('inProgressRecipes', JSON.stringify(object));
+    console.log(test);
+  }
+
   render() {
-    const { Meal, Ingredients, Measures } = this.state;
+    const { Meal, Ingredients, Measures, checkedItems } = this.state;
+    const { history } = this.props;
     return (
       <div className="food-drink-detail-container">
         {Meal ? Meal.map((recipe, index) => (
@@ -87,6 +168,7 @@ class FoodsRecipesInProgress extends React.Component {
                   data-testid="share-btn"
                   src={ shareIcon }
                   alt="shareIcon"
+                  onClick={ () => this.handleShareFood(recipe) }
                 />
                 <input
                   type="image"
@@ -100,15 +182,22 @@ class FoodsRecipesInProgress extends React.Component {
             <h2>Ingredients</h2>
             <div className="ingredients">
               {Ingredients.map((recipes, i) => (
-                <div key={ index }>
+                <div
+                  key={ i }
+                  // onChange={ (i) => this.test(i) }
+                >
                   <label
                     className="detail-ingredients"
-                    htmlFor="ingredient"
+                    htmlFor={ `ingredient ${i}` }
+                    data-testid={ `${i}-ingredient-step` }
                   >
                     <input
-                      id="ingredient"
+                      id={ `ingredient ${i}` }
+                      name={ `ingredient ${i}` }
                       type="checkbox"
-                      data-testid={ `${index}-ingredient-step` }
+                      onClick={ (e) => this.checked(e) }
+                      value={ recipes }
+                      checked={ checkedItems.recipes }
                     />
                     {recipes}
                     -
@@ -121,7 +210,11 @@ class FoodsRecipesInProgress extends React.Component {
             <div className="detail-instructions">{recipe.strInstructions}</div>
             <p data-testid={ `${index}-card-name` }>{recipe.strMeal}</p>
             <div>
-              <button type="button" data-testid="start-recipe-btn">
+              <button
+                data-testid="finish-recipe-btn"
+                type="button"
+                onClick={ () => history.push('/receitas-feitas') }
+              >
                 Finalizar Receita
               </button>
             </div>
@@ -136,6 +229,7 @@ const mapStateToProps = (state) => ({
 });
 
 FoodsRecipesInProgress.propTypes = {
+  history: PropTypes.shape().isRequired,
   idCurrent: PropTypes.string.isRequired,
 };
 

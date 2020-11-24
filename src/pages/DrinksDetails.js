@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchDrinksById, fetchRecommendedMeals } from '../services';
+import { currentID, favRecipe } from '../actions';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
-import { currentID, favRecipe } from '../actions';
 
 class DrinksDetails extends React.Component {
   constructor() {
@@ -24,11 +24,13 @@ class DrinksDetails extends React.Component {
     this.handleIngredients = this.handleIngredients.bind(this);
     this.setIngredients = this.setIngredients.bind(this);
     this.handleYoutubeVideo = this.handleYoutubeVideo.bind(this);
+    this.redirectFromState = this.redirectFromState.bind(this);
   }
 
   async componentDidMount() {
-    const { history: { location: { pathname } } } = this.props;
+    const { history: { location: { pathname } }, dispatchID } = this.props;
     const endpoint = pathname.split('/').pop();
+    dispatchID(endpoint);
     const drinkRecipe = await fetchDrinksById(endpoint);
     const recommendedMeals = await fetchRecommendedMeals();
     this.setDrinkState(drinkRecipe, recommendedMeals);
@@ -110,6 +112,12 @@ class DrinksDetails extends React.Component {
     else this.setState({ x: x - additionalX });
   }
 
+  redirectFromState() {
+    const { idCurrent } = this.props;
+    const { history } = this.props;
+    history.push(`/bebidas/${idCurrent}/in-progress`);
+  }
+
   render() {
     const { Drink,
       RecommendedMeals,
@@ -119,115 +127,113 @@ class DrinksDetails extends React.Component {
       Video,
       favorite } = this.state;
     return (
-      <div>
-        {Drink ? Drink.map((recipe, index) => {
-          console.log(index);
-          return (
-            <div className="detail-card" key={ index }>
-              <img
-                src={ recipe.strDrinkThumb }
-                data-testid="recipe-photo"
-                alt="recipe-img"
-              />
-              <div className="details-title-div">
-                <div className="recipe-title">
-                  <h1 data-testid="recipe-title">{recipe.strDrink}</h1>
-                  <p data-testid="recipe-category">{recipe.strAlcoholic}</p>
-                </div>
-                <div className="recipe-buttons">
-                  <input
-                    type="image"
-                    data-testid="share-btn"
-                    src={ shareIcon }
-                    alt="shareIcon"
-                  />
-                  <input
-                    type="image"
-                    data-testid="favorite-btn"
-                    src={ this.changeFavIcon(recipe.idMeal) }
-                    onClick={ () => this.setState({ favorite: !favorite }) }
-                    alt="whiteHeartIcon"
-                  />
-                </div>
+      <div className="food-drink-detail-container">
+        {Drink ? Drink.map((recipe, index) => (
+          <div className="detail-card" key={ index }>
+            <img
+              src={ recipe.strDrinkThumb }
+              data-testid="recipe-photo"
+              alt="recipe-img"
+            />
+            <div className="details-title-div">
+              <div className="recipe-title">
+                <h1 data-testid="recipe-title">{recipe.strDrink}</h1>
+                <p data-testid="recipe-category">{recipe.strAlcoholic}</p>
               </div>
-              <hr className="card-hr" />
-              <h2>Ingredients</h2>
-              <div className="ingredients">
-                <ul className="detail-ingredients">
-                  {Ingredients.map((ingredient, i) => (
-                    <li
-                      key={ index }
-                      data-testid={ `${i}-ingredient-name-and-measure` }
-                    >
-                      {ingredient}
-                      -
-                      { Measures[i] }
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <h2 data-testid="instructions">Instructions</h2>
-              <div className="detail-instructions" data-testid="instructions">
-                {recipe.strInstructions}
-              </div>
-              <p data-testid={ `${index}-card-name` }>{recipe.strMeal}</p>
-              <h2>Recomendadas</h2>
-              <div className="video-div">
-                <iframe
-                  data-testid="video"
-                  title="recipe-video"
-                  src={ `https://www.youtube.com/embed/${Video}` }
-                  frameBorder="0"
-                  allow="accelerometer;autoplay;
-                  clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
+              <div className="recipe-buttons">
+                <input
+                  type="image"
+                  data-testid="share-btn"
+                  src={ shareIcon }
+                  alt="shareIcon"
+                />
+                <input
+                  type="image"
+                  data-testid="favorite-btn"
+                  src={ this.changeFavIcon(recipe.idMeal) }
+                  onClick={ () => this.setState({ favorite: !favorite }) }
+                  alt="whiteHeartIcon"
                 />
               </div>
-              <div className="slider">
-                {RecommendedMeals.map((recomend, i) => {
-                  console.log('bla');
-                  return (
-                    <div
-                      key={ i }
-                      className="slide"
-                      style={ { transform: `translateX(${x}%)` } }
-                      data-testid={ `${i}-recomendation-card` }
-                    >
-                      <img
-                        src={ recomend.strMealThumb }
-                        data-testid="recipe-photo"
-                        alt="recipe-img"
-                      />
-                      <div className="text-slider-div">
-                        <p>{recomend.strCategory}</p>
-                        <h4
-                          data-testid={ `${i}-recomendation-title` }
-                        >
-                          {recomend.strMeal}
-                        </h4>
-                      </div>
+            </div>
+            <hr className="card-hr" />
+            <h2>Ingredients</h2>
+            <div className="ingredients">
+              <ul className="detail-ingredients">
+                {Ingredients.map((ingredient, i) => (
+                  <li
+                    key={ index }
+                    data-testid={ `${i}-ingredient-name-and-measure` }
+                  >
+                    {ingredient}
+                    -
+                    { Measures[i] }
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <h2 data-testid="instructions">Instructions</h2>
+            <div className="detail-instructions" data-testid="instructions">
+              {recipe.strInstructions}
+            </div>
+            <p data-testid={ `${index}-card-name` }>{recipe.strMeal}</p>
+            <h2>Recomendadas</h2>
+            <div className="video-div">
+              <iframe
+                data-testid="video"
+                title="recipe-video"
+                src={ `https://www.youtube.com/embed/${Video}` }
+                frameBorder="0"
+                allow="accelerometer;autoplay;
+                clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+            <div className="slider">
+              {RecommendedMeals.map((recomend, i) => {
+                console.log('bla');
+                return (
+                  <div
+                    key={ i }
+                    className="slide"
+                    style={ { transform: `translateX(${x}%)` } }
+                    data-testid={ `${i}-recomendation-card` }
+                  >
+                    <img
+                      src={ recomend.strMealThumb }
+                      data-testid="recipe-photo"
+                      alt="recipe-img"
+                    />
+                    <div className="text-slider-div">
+                      <p>{recomend.strCategory}</p>
+                      <h4
+                        data-testid={ `${i}-recomendation-title` }
+                      >
+                        {recomend.strMeal}
+                      </h4>
                     </div>
-                  );
-                })}
-              </div>
-              <div className="slider-controls">
-                <button type="button" id="goLeft" onClick={ this.goLeft }>
-                  <i className="fas fa-chevron-left" />
-                </button>
-                <button type="button" id="goRight" onClick={ this.goRight }>
-                  <i className="fas fa-chevron-right" />
-                </button>
-              </div>
-              <button
-                type="button"
-                data-testid="start-recipe-btn"
-                className="start-recipe"
-              >
-                Iniciar Receita
+                  </div>
+                );
+              })}
+            </div>
+            <div className="slider-controls">
+              <button type="button" id="goLeft" onClick={ this.goLeft }>
+                <i className="fas fa-chevron-left" />
+              </button>
+              <button type="button" id="goRight" onClick={ this.goRight }>
+                <i className="fas fa-chevron-right" />
               </button>
             </div>
-          );
-        }) : null}
+            <button
+              type="button"
+              data-testid="start-recipe-btn"
+              className="start-recipe"
+              onClick={ this.redirectFromState }
+            >
+              Iniciar Receita
+            </button>
+          </div>
+        )) : null}
       </div>
     );
   }
@@ -239,11 +245,13 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchID: (endpoint) => dispatch(currentID(endpoint)),
-  dispatchFavorite: (isFavorite, idMeal) => dispatch(favRecipe(isFavorite, idMeal)),
+  dispatchFavorite: (isFavorite, idDrink) => dispatch(favRecipe(isFavorite, idDrink)),
 });
 
 DrinksDetails.propTypes = {
   history: PropTypes.shape().isRequired,
+  dispatchID: PropTypes.func.isRequired,
+  idCurrent: PropTypes.string.isRequired,
   dispatchFavorite: PropTypes.func.isRequired,
 };
 

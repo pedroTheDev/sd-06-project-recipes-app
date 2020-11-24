@@ -498,3 +498,11 @@ button {
     width: 90%;
   }
 }
+
+.not-styled {
+  text-decoration: none;
+} 
+
+.styled {
+  text-decoration: line-through;
+} 
