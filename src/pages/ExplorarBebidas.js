@@ -5,7 +5,7 @@ import { Header, Footer } from '../components';
 function ExplorarBebidas() {
   return (
     <div className="food">
-      <Header />
+      <Header title="Explorar Bebidas"/>
       <div className="div-buttons">
         <Link to="/explorar/bebidas/ingredientes">
           <button

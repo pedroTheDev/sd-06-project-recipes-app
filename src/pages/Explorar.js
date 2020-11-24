@@ -6,7 +6,7 @@ import '../style/Explorar.css';
 function Explorar() {
   return (
     <div className="explore">
-      <Header />
+      <Header title="Explorar"/>
       <div className="div-buttons">
         <Link to="/explorar/comidas">
           <button
