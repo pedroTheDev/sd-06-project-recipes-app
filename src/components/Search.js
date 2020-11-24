@@ -31,28 +31,34 @@ export default function SearchBar(props) {
     setsearchRadioValue(value);
   };
   const searchURL = () => {
-    if (title === 'Comidas') {
-      setSearchParam('Meal');
-      if (searchRadioValue === 'first-letter') {
-        setURLToFetch(URLs.foodFirstLetter);
+    if (searchInputValue
+      && searchRadioValue === 'first-letter'
+      && searchInputValue.length !== 1) {
+      alert('Sua busca deve conter somente 1 (um) caracter');
+    } else {
+      if (title === 'Comidas') {
+        setSearchParam('Meal');
+        if (searchRadioValue === 'first-letter') {
+          setURLToFetch(URLs.foodFirstLetter);
+        }
+        if (searchRadioValue === 'ingredient') {
+          setURLToFetch(URLs.foodIngredient);
+        }
+        if (searchRadioValue === 'name') {
+          setURLToFetch(URLs.foodName);
+        }
       }
-      if (searchRadioValue === 'ingredient') {
-        setURLToFetch(URLs.foodIngredient);
-      }
-      if (searchRadioValue === 'name') {
-        setURLToFetch(URLs.foodName);
-      }
-    }
-    if (title === 'Bebidas') {
-      setSearchParam('Drink');
-      if (searchRadioValue === 'first-letter') {
-        setURLToFetch(URLs.drinkFirstLetter);
-      }
-      if (searchRadioValue === 'ingredient') {
-        setURLToFetch(URLs.drinkIngredient);
-      }
-      if (searchRadioValue === 'name') {
-        setURLToFetch(URLs.drinkName);
+      if (title === 'Bebidas') {
+        setSearchParam('Drink');
+        if (searchRadioValue === 'first-letter') {
+          setURLToFetch(URLs.drinkFirstLetter);
+        }
+        if (searchRadioValue === 'ingredient') {
+          setURLToFetch(URLs.drinkIngredient);
+        }
+        if (searchRadioValue === 'name') {
+          setURLToFetch(URLs.drinkName);
+        }
       }
     }
   };
@@ -106,7 +112,11 @@ export default function SearchBar(props) {
         <button
           data-testid="exec-search-btn"
           type="button"
-          onClick={ () => searchURL() }
+          onClick={ () => (
+            (searchInputValue && searchRadioValue)
+              ? searchURL()
+              : alert('Preencha campo de busca e selecione ao menos uma opção')
+          ) }
         >
           Buscar
 

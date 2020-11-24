@@ -42,11 +42,6 @@ export default function Foods() {
             <div key={ food.idIngredient }>
               <h3>{ food.strIngredient }</h3>
               <p>{food.strDescription}</p>
-              <p>
-                Alcohol:
-                {' '}
-                {food.strAlcohol}
-              </p>
             </div>
           );
         }
