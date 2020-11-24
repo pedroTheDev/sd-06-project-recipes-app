@@ -4,6 +4,7 @@ import Foods from './Foods';
 import Drinks from './Drinks';
 import SearchBar from '../components/SearchBar';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import RecipesAppContext from '../context/RecipesAppContext';
 import {
   fetchMealByFirstLetter,
@@ -110,6 +111,7 @@ function Home({ title }) {
         />
       }
       {title === 'Comidas' ? <Foods /> : <Drinks />}
+      <Footer />
     </div>
   );
 }
