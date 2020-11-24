@@ -35,7 +35,7 @@ export default function MainPage(props) {
     footerContent = <Footer />;
     break;
   case 'Bebidas':
-    mainContent = <Drinks />;
+    mainContent = <Foods />;
     footerContent = <Footer />;
     break;
   case 'Explorar':

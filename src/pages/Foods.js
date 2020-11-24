@@ -1,28 +1,50 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
+import RevenueContext from '../context/RevenueContext';
+// import fetchApi from '../services/FetchApi';
 
-export default function Foods(props) {
-  const { title } = props;
-  const { setSearchButton, setSearch } = useContext(RevenueContext);
-  //
-  const { fetchFoods, foods } = useContext(RevenueContext);
-  //
+export default function Foods() {
+  const { foods, fetchApi, searchParam, setFoods } = useContext(RevenueContext);
   useEffect(() => {
-    //
-    fetchFoods();
-    //
-    }, []);
-  return (
-    <div>
+    if (searchParam === 'Meal') {
+      fetchApi('https://www.themealdb.com/api/json/v1/1/search.php?s=')
+        .then(() => dataLengthTest());
+    } else if (searchParam === 'Drink') {
+      fetchApi('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=')
+        .then(() => dataLengthTest());
+    }
+    setFoods([]);
+  }, []);
+  const DOZE = 12;
+  const ZERO = 0;
+  const dataLengthTest = () => {
+    if (foods.length === ZERO) {
+      alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+    }
+  };
+  // const renderCard = (
 
-      {/* map renderizando cateoria e imagem  */}
-      {foods.map((food) => (
-        <div key={ food.idCategory }>
-          <img src={ food.strCategoryThumb } alt={ food.strCategory } />
-          {food.strCategory}
-        </div>
-      ))}
-      {/* map renderizando cateoria e imagem  */}
-
-    </div>
-  );
+  // );
+  console.log(foods);
+  if (foods.length > ZERO) {
+    return (
+      <div>
+        {foods.map((food, index) => {
+          if (index < DOZE) {
+            console.log(food[`str${searchParam}`]);
+            return (
+              <div key={ food[`id${searchParam}`] }>
+                <img
+                  src={ food[`str${searchParam}Thumb`] }
+                  alt={ food[`str${searchParam}`] }
+                  width="360px"
+                />
+                {food[`str${searchParam}`]}
+              </div>
+            );
+          }
+          return '';
+        })}
+      </div>);
+  }
+  return <div>Sinto muito, não encontramos nenhuma receita para esses filtros.</div>;
 }
