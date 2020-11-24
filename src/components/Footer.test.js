@@ -1,17 +1,17 @@
-import React from 'react';
-import fireEvent from '@testing-library/react';
-import renderWithRouter from '../renderWithRouter';
-import { drinkIcon, mealIcon, exploreIcon } from '../images';
-import App from '../App';
-import ProfilePage from '../pages/ProfilePage/ProfilePage';
+// import React from 'react';
+// import fireEvent from '@testing-library/react';
+// import renderWithRouter from '../renderWithRouter';
+// import { drinkIcon, mealIcon, exploreIcon } from '../images';
+// import App from '../App';
+// import ProfilePage from '../pages/ProfilePage/ProfilePage';
 
-describe.only('renders footer correctly', () => {
-  it('expect data-testid="footer" to be in the document', () => {
-    const { getByText } = renderWithRouter(<ProfilePage />);
-    const teste = getByText(/Tela de Perfil/i);
-    expect(teste).toBeInTheDocument();
-  });
-});
+// describe.only('renders footer correctly', () => {
+//   it('expect data-testid="footer" to be in the document', () => {
+//     const { getByText } = renderWithRouter(<ProfilePage />);
+//     const teste = getByText(/Tela de Perfil/i);
+//     expect(teste).toBeInTheDocument();
+//   });
+// });
 
   // it('expect "drinkIcon.svg, exploreIcon.svg and mealIcon.svg" in the document', () => {
   //   const { getAllByRole } = renderWithRouter(<Footer />);
@@ -32,4 +32,3 @@ describe.only('renders footer correctly', () => {
   //   // // await waitFor(() => getByText('Página principal de Drinks'));
   //   // expect(pathname).toBe('/bebidas');
   // });
-

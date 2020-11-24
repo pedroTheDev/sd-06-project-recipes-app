@@ -10,8 +10,8 @@ function ExploreIngredients() {
         pageTitle="Explorar Ingredientes"
       />
       <div className="footer">
-      <Footer />
-    </div>
+        <Footer />
+      </div>
     </div>
   );
 }

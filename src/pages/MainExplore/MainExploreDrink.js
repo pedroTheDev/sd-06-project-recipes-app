@@ -9,7 +9,7 @@ function MainExploreDrink() {
         className="header"
         pageTitle="Explorar Bebidas"
       />
-        <div className="footer">
+      <div className="footer">
         <Footer />
       </div>
     </div>

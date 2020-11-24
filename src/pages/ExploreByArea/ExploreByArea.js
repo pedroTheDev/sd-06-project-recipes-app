@@ -9,11 +9,11 @@ function ExploreByArea() {
       <Header
         className="header"
         pageTitle="Explorar Origem"
-        BtnSearchBar={ BtnSearchBar }
+        BtnSearchBar={BtnSearchBar}
       />
       <div className="footer">
-      <Footer />
-    </div>
+        <Footer />
+      </div>
     </div>
   );
 }
