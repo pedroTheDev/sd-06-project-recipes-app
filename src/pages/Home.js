@@ -2,8 +2,12 @@ import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import SearchBar from '../components/SearchBar';
 import Header from '../components/Header';
+<<<<<<< HEAD
 import Foods from './Foods';
 import Drinks from './Drinks';
+=======
+import Footer from '../components/Footer';
+>>>>>>> da81f729ed46c444f1d2566eac9340071b7ad29a
 import RecipesAppContext from '../context/RecipesAppContext';
 import {
   fetchMealByFirstLetter,
@@ -106,7 +110,12 @@ function Home({ title }) {
           onClick={ requisition }
         />
       }
+<<<<<<< HEAD
       {title === 'Comidas' ? <Foods title={ title } /> : <Drinks title={ title } />}
+=======
+      {title === 'Comidas' ? <Foods /> : <Drinks />}
+      <Footer />
+>>>>>>> da81f729ed46c444f1d2566eac9340071b7ad29a
     </div>
   );
 }
