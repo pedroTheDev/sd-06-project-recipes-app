@@ -1,4 +1,4 @@
-async function fetchMeal(filter, searchTerm) {
+async function fetchMeal(filter, searchTerm = '') {
   const url = 'https://www.themealdb.com/api/json/v1/1/';
   switch (filter) {
   case 'ingredient': {

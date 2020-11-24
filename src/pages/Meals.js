@@ -1,15 +1,17 @@
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import Card from '../components/RecipeCard';
 
-function IngredientsOrigin() {
+function Meals() {
   const TRUE = true;
   return (
     <div>
-      <Header title="Explorar Origem" search={ TRUE } />
+      <Header title="Comidas" search={ TRUE } />
+      <Card />
       <Footer />
     </div>
   );
 }
 
-export default IngredientsOrigin;
+export default Meals;
