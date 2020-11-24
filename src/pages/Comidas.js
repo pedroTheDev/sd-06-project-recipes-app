@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { useLocation, Redirect } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import MealsCard from '../components/MealsCard';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
@@ -27,9 +27,6 @@ const Comidas = (history) => {
 
   if (!foods.meals) return <div>Carregando...</div>;
   const doze = 12;
-  if (foods.meals.length === 1) {
-    return <Redirect to={ `/comidas/${foods.meals[0].idMeal}` } />;
-  }
 
   return (
     <section>

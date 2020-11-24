@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import '../style/RecipesList.css';
 
 function DrinkCard({ drink, index }) {
   return (
@@ -21,9 +20,9 @@ function DrinkCard({ drink, index }) {
   );
 }
 
-export default DrinkCard;
-
 DrinkCard.propTypes = {
   drink: PropTypes.instanceOf(Object).isRequired,
   index: PropTypes.number.isRequired,
 };
+
+export default DrinkCard;
