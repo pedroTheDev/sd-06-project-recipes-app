@@ -12,11 +12,11 @@ function Drinks() {
     const recipesApi = await fetchAPIDrinks('name', '');
     console.log(recipesApi);
     setRecipes(recipesApi);
+    setShowCard(true);
   };
 
-  useEffect(async () => {
-    await fetchRecipes();
-    setShowCard(true);
+  useEffect(() => {
+    fetchRecipes();
   }, []);
 
   return (
