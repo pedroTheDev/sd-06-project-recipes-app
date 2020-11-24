@@ -38,7 +38,6 @@ function FoodInProgress(props) {
     }
     setIngredients(TheIngredients);
   };
-
   const verifyIngredientsChecked = () => {
     const isAllChecked = !ingredients
       .some((ingredient) => ingredient.isChecked === false);
