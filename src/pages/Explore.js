@@ -14,7 +14,7 @@ function Explore() {
           />
           <ExploreButton
             title="Explorar Bebidas"
-            url="/explorar/bebidas/ingredientes"
+            url="/explorar/bebidas"
             testId="explore-drinks"
           />
         </nav>

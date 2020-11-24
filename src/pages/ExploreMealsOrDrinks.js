@@ -6,18 +6,18 @@ import ExploreButton from '../components/explore/ExploreButton';
 function ExploreMealsOrDrinks({ type }) {
   return (
     <>
-      <Header title="Comidas" />
+      <Header title={ type.toUpperCase() } />
       <nav>
         <ExploreButton
           title="Por Ingredientes"
-          url="/explorar/comidas/ingredientes"
+          url={ `/explorar/${type}/ingredientes` }
           testId="explore-by-ingredient"
         />
         {
           (type === 'comidas')
           && <ExploreButton
           title="Por Local de Origem"
-          url="/explorar/comidas/area"
+          url={ `/explorar/${type}/area` }
           testId="explore-by-area"
         />
         }
