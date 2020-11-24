@@ -37,7 +37,6 @@ export default function Header({ pageName, renderSearch }) {
           data-testid="profile-top-btn"
         />
       </Link>
-
       <h2 data-testid="page-title">{ title }</h2>
       { renderSearch ? renderSearchIcon() : null }
       { showSearchBar && <SearchBar page={ title } /> }
