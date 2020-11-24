@@ -11,16 +11,15 @@ const Provider = ({ children }) => {
   const [drinkFilter, setDrinkFilter] = useState([]);
 
   const getAPI = async () => {
-    const foodRequest = await recipeRequest('https://www.themealdb.com/api/json/v1/1/search.php?s=A');
-    const drinkRequest = await recipeRequest('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=A');
+    setIsLoading(true);
     const foodFilterRequest = await recipeRequest('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
     const drinkFilterRequest = await recipeRequest('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
-    setIsLoading(true);
+    const foodRequest = await recipeRequest('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+    const drinkRequest = await recipeRequest('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
     await setDrinkRecipes(drinkRequest.drinks);
     await setFoodRecipes(foodRequest.meals);
     await setFoodFilter(foodFilterRequest.meals);
     await setDrinkFilter(drinkFilterRequest.drinks);
-    console.log('texto bebidas', drinkRecipes);
     setIsLoading(false);
   };
 
@@ -35,6 +34,8 @@ const Provider = ({ children }) => {
     setIsLoading,
     foodFilter,
     drinkFilter,
+    setFoodRecipes,
+    setDrinkRecipes,
   };
 
   return (

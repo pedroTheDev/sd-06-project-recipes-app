@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable no-alert */
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import propTypes from 'prop-types';
 import recipeRequest from '../services/recipeRequest';
+import RecipeContext from '../hooks/RecipeContext';
 
 const SearchBar = ({ className }) => {
   const history = useHistory();
@@ -10,6 +12,9 @@ const SearchBar = ({ className }) => {
   const [defaultUrl, setDefaultUrl] = useState('');
   const [API_URL, setApiUrl] = useState('');
   const [type, setType] = useState('');
+  const {
+    setDrinkRecipes,
+    setFoodRecipes } = useContext(RecipeContext);
 
   const handleSearch = ({ target }) => {
     setText(target.value);
@@ -49,21 +54,22 @@ const SearchBar = ({ className }) => {
   const handleButton = async () => {
     const firstLetter = `${defaultUrl}search.php?f=`;
     if (text.length > 1 && API_URL === firstLetter) {
-      // return alert('Sua busca deve conter somente 1 (um) caracter');
-      return (true);
+      return alert('Sua busca deve conter somente 1 (um) caracter');
     }
     const url = `${API_URL}${text}`;
     const data = await recipeRequest(url);
     if (data[type] === null) {
-      // return alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
-      return (false);
+      return alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
     }
     if (type === 'meals' && data[type].length === 1) {
       redirectToIdProduct(data, 'idMeal');
     } else if (type === 'drinks' && data[type].length === 1) {
       redirectToIdProduct(data, 'idDrink');
+    } else if (type === 'meals' && data[type].length > 1) {
+      setFoodRecipes(data.meals);
+    } else {
+      setDrinkRecipes(data.drinks);
     }
-    return data;
   };
 
   return (

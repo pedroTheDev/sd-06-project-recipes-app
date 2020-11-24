@@ -1,46 +1,71 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import RecipeContext from '../hooks/RecipeContext';
+import recipeRequest from '../services/recipeRequest';
 
 export default function MainScreen() {
   const history = useHistory();
-  const { foodRecipes, drinkRecipes, isLoading, foodFilter, drinkFilter } = useContext(RecipeContext);
+  const {
+    foodRecipes,
+    drinkRecipes,
+    isLoading,
+    foodFilter,
+    drinkFilter,
+    setDrinkRecipes,
+    setFoodRecipes } = useContext(RecipeContext);
   const twelve = 12;
   const five = 5;
   const { pathname } = history.location;
-  
+
+  const handleFilters = async ({ target }) => {
+    if (target.id === 'all' && pathname === '/comidas') {
+      const data = await recipeRequest('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+      await setFoodRecipes(data.meals);
+    } else if (target.id === 'all' && pathname === '/bebidas') {
+      const data = await recipeRequest('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+      await setDrinkRecipes(data.drinks);
+    } else if (pathname === '/comidas') {
+      const data = await recipeRequest(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${target.id}`);
+      await setFoodRecipes(data.meals);
+    } else if (pathname === '/bebidas') {
+      const data = await recipeRequest(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${target.id}`);
+      await setDrinkRecipes(data.drinks);
+    }
+  };
+
   const renderFilters = () => {
     if (pathname === '/comidas') {
-      console.log('entrei no filtro comidas');
       return foodFilter.filter((_, index) => index < five)
-          .map((filter, index) => (
-            <button
-              type="button"
-              data-testid={ `${filter.strCategory}-category-filter` }
-              key={index}
-              // onClick={ }
-            >
-              {filter.strCategory}
-            </button>
-          ));
+        .map((filter, index) => (
+          <button
+            type="button"
+            data-testid={ `${filter.strCategory}-category-filter` }
+            key={ index }
+            id={ filter.strCategory }
+            onClick={ handleFilters }
+          >
+            {filter.strCategory}
+          </button>
+        ));
     }
     if (pathname === '/bebidas') {
-      console.log('entrei no filtro bebidas');
       return drinkFilter.filter((_, index) => index < five)
-          .map((filter, index) => (
-            <button
-              type="button"
-              data-testid={ `${filter.strCategory}-category-filter` }
-              key={index}
-            >
-              {filter.strCategory}
-            </button>
-          ));
+        .map((filter, index) => (
+          <button
+            type="button"
+            data-testid={ `${filter.strCategory}-category-filter` }
+            key={ index }
+            id={ filter.strCategory }
+            onClick={ handleFilters }
+          >
+            {filter.strCategory}
+          </button>
+        ));
     }
   };
 
   const renderCards = () => {
-    if (pathname === '/comidas') {
+    if (pathname === '/comidas' && foodRecipes) {
       return foodRecipes.filter((food, index) => index < twelve)
         .map((food, index) => (
           <div data-testid={ `${index}-recipe-card` } key="index">
@@ -73,7 +98,7 @@ export default function MainScreen() {
   return (
     <div>
       <div className="filter-container">
-        <button type="button">All</button>
+        <button onClick={ handleFilters } id="all" type="button">All</button>
         {renderFilters()}
       </div>
       <div className="recipes-container">
