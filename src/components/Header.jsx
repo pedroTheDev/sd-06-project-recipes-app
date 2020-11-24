@@ -7,7 +7,9 @@ import HeaderSearch from './HeaderSearch';
 
 function Header({ name }) {
   const {
-    contextValue: { searchHeader, setSearchHeader } } = useContext(RecipesAppContext);
+    searchHeader,
+    setSearchHeader,
+  } = useContext(RecipesAppContext);
 
   const isClick = () => {
     if (searchHeader) {

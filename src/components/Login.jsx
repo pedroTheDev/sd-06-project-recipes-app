@@ -5,8 +5,11 @@ import { saveState } from '../services/localStorage';
 
 function Login() {
   const {
-    contextValue: {
-      setEmail, setPassword, email, password } } = useContext(RecipesAppContext);
+    setEmail,
+    setPassword,
+    email,
+    password,
+  } = useContext(RecipesAppContext);
 
   const isEmail = (e) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

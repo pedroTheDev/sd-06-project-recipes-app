@@ -4,46 +4,71 @@ import RecipesAppContext from '../hooks/RecipesAppContext';
 import {
   requestApiFoodFilterIngredient,
   requestApiFoodFilterName,
-  requestApiFoodFilterFirstLetter } from '../services/requestFood';
+  requestApiFoodFilterFirstLetter,
+} from '../services/requestFood';
 import {
   requestApiDrinkFilterIngredient,
   requestApiDrinkFilterName,
-  requestApiDrinkFilterFirstLetter } from '../services/requestDrink';
+  requestApiDrinkFilterFirstLetter,
+} from '../services/requestDrink';
 
 function HeaderSearch({ name }) {
-  const { contextValue: { searchHeader } } = useContext(RecipesAppContext);
+  const {
+    cards: {
+      setCardFood,
+      setCardDrink,
+    },
+    searchHeader,
+  } = useContext(RecipesAppContext);
   const [radioValue, setRadioValue] = useState('');
   const [textSearch, setTextSearch] = useState('');
 
   const searchFood = () => {
-    if (radioValue === 'ingredientes') {
-      requestApiFoodFilterIngredient(textSearch);
-    } else if (radioValue === 'nome') {
-      requestApiFoodFilterName(textSearch);
-    } else if (radioValue === 'primeira-letra' && textSearch.length === 1) {
-      requestApiFoodFilterFirstLetter(textSearch);
-    } else {
+    if (radioValue === 'ingredientes' && textSearch !== '') {
+      return requestApiFoodFilterIngredient(textSearch);
+    }
+    if (radioValue === 'nome' && textSearch !== '') {
+      return requestApiFoodFilterName(textSearch);
+    }
+    if (radioValue === 'primeira-letra' && textSearch.length === 1) {
+      return requestApiFoodFilterFirstLetter(textSearch);
+    }
+    if (radioValue === 'primeira-letra') {
       alert('Sua busca deve conter somente 1 (um) caracter');
     }
   };
 
   const searchDrink = () => {
-    if (radioValue === 'ingredientes') {
-      requestApiDrinkFilterIngredient(textSearch);
-    } else if (radioValue === 'nome') {
-      requestApiDrinkFilterName(textSearch);
-    } else if (radioValue === 'primeira-letra' && textSearch.length === 1) {
-      requestApiDrinkFilterFirstLetter(textSearch);
-    } else {
+    if (radioValue === 'ingredientes' && textSearch !== '') {
+      return requestApiDrinkFilterIngredient(textSearch);
+    }
+    if (radioValue === 'nome' && textSearch !== '') {
+      return requestApiDrinkFilterName(textSearch);
+    }
+    if (radioValue === 'primeira-letra' && textSearch.length === 1) {
+      return requestApiDrinkFilterFirstLetter(textSearch);
+    }
+    if (radioValue === 'primeira-letra') {
       alert('Sua busca deve conter somente 1 (um) caracter');
     }
   };
 
-  const searchOnClick = () => {
+  const alertFilterNotExist = (answerApi) => {
+    if (answerApi === null) {
+      alert('Sinto muito, não encontramos '
+      + 'nenhuma receita para esses filtros.');
+    }
+  };
+
+  const searchOnClick = async () => {
     if (name === 'Comidas') {
-      searchFood();
-    } else {
-      searchDrink();
+      const answerApi = await searchFood();
+      alertFilterNotExist(answerApi);
+      if (answerApi) setCardFood(answerApi);
+    } else if (name === 'Bebidas') {
+      const answerApi = await searchDrink();
+      alertFilterNotExist(answerApi);
+      if (answerApi) setCardDrink(answerApi);
     }
   };
 
@@ -60,6 +85,7 @@ function HeaderSearch({ name }) {
       <div />
     );
   }
+
   return (
     <div>
       <input type="text" data-testid="search-input" onChange={ captureTextInput } />
