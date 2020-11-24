@@ -10,18 +10,17 @@ function Foods() {
 
   const fetchRecipes = async () => {
     const recipesApi = await fetchAPIRecipes('name', '');
-    console.log(recipesApi);
     setRecipes(recipesApi);
   };
 
-  useEffect(async () => {
-    await fetchRecipes();
+  useEffect(() => {
+    fetchRecipes();
     setShowCard(true);
   }, []);
 
   return (
     <div>
-      <Header fetchApi={ fetchAPIRecipes } title="Comida" showSearchIcon />
+      <Header fetchApi={ fetchAPIRecipes } title="Comidas" showSearchIcon />
       {showCard && <Card />}
       <Footer />
     </div>
