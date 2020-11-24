@@ -7,6 +7,7 @@ function Categories({ id }) {
   const { setFilters } = useContext(RecipesContext);
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);
+  const [currCategory, setCurrCategory] = useState('');
 
   useEffect(() => {
     async function fetchData() {
@@ -18,6 +19,30 @@ function Categories({ id }) {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    if (currCategory === 'All') {
+      setFilters({
+        searchText: '',
+        searchType: 'name',
+        category: id,
+      });
+    } else if (currCategory !== '') {
+      setFilters({
+        searchText: currCategory,
+        searchType: 'category',
+        category: id,
+      });
+    }
+  }, [currCategory]);
+
+  function handleCategoryBtn(category) {
+    if (currCategory !== category) {
+      setCurrCategory(category);
+    } else if (currCategory === category) {
+      setCurrCategory('All');
+    }
+  }
+
   return (loading)
     ? ''
     : (
@@ -25,11 +50,7 @@ function Categories({ id }) {
         <button
           type="button"
           data-testid="All-category-filter"
-          onClick={ () => setFilters({
-            searchText: '',
-            searchType: 'name',
-            category: id,
-          }) }
+          onClick={ () => handleCategoryBtn('All') }
         >
           All
         </button>
@@ -37,11 +58,7 @@ function Categories({ id }) {
           <button
             type="button"
             key={ category.strCategory }
-            onClick={ () => setFilters({
-              searchText: category.strCategory,
-              searchType: 'category',
-              category: id,
-            }) }
+            onClick={ () => handleCategoryBtn(category.strCategory) }
             data-testid={ `${category.strCategory}-category-filter` }
           >
             { `${category.strCategory}` }
