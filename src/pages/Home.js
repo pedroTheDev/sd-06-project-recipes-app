@@ -108,8 +108,8 @@ function Home({ title }) {
           onClick={ requisition }
         />
       }
-      {title === 'Comidas' ? <Foods title={ title } /> : <Drinks title={ title } />}
       <CategoryList title={ title } />
+      {title === 'Comidas' ? <Foods title={ title } /> : <Drinks title={ title } />}
       <Footer />
     </div>
   );
