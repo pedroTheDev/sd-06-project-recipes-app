@@ -49,12 +49,14 @@ const SearchBar = ({ className }) => {
   const handleButton = async () => {
     const firstLetter = `${defaultUrl}search.php?f=`;
     if (text.length > 1 && API_URL === firstLetter) {
-      return alert('Sua busca deve conter somente 1 (um) caracter');
+      // return alert('Sua busca deve conter somente 1 (um) caracter');
+      return (true);
     }
     const url = `${API_URL}${text}`;
     const data = await recipeRequest(url);
     if (data[type] === null) {
-      return alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+      // return alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+      return (false);
     }
     if (type === 'meals' && data[type].length === 1) {
       redirectToIdProduct(data, 'idMeal');
