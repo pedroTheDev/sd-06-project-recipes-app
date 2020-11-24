@@ -1,35 +1,47 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import useRequestDrink from '../hooks/useRequestDrink';
 import fetchRecipes from '../services';
 
 function FoodDetails(props) {
-  const { id } = props.match.params;
+  const { match: { params: { id } } } = props;
   const [requestDetails, setrequestDetails] = useState([]);
   const [ingredients, setIngredients] = useState([]);
-  const fetchFunction = async (response) =>{
-    await setrequestDetails(response.meals[0]);
-  }
+  const [apiResponse, setFilter] = useRequestDrink([]);
+  const maxShow = 6;
+
   const requestDetailsAPI = async () => {
     const response = await fetchRecipes(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
-    // setrequestDetails(response.meals[0]);
-    await fetchFunction(response)
+    setrequestDetails(response.meals[0]);
+  };
+  const requestIngredients = () => {
+    const twentyOne = 21;
+    const zero = 0;
     const TheIngredients = [];
-    for (let i = 1; i < 21; i++) {
-      if (requestDetails.length > 0) {
-        TheIngredients.push(requestDetails[` strMeasure${i} strIngredients${i}`]);
-        console.log(TheIngredients);
-      } else {
-        break;
+    for (let i = 1; i < twentyOne; i += 1) {
+      if (requestDetails.length !== zero
+          && requestDetails[`strIngredient${i}`] !== ''
+      ) {
+        TheIngredients
+          .push(`${requestDetails[`strMeasure${i}`]}
+            ${requestDetails[`strIngredient${i}`]}`);
       }
     }
     setIngredients(TheIngredients);
   };
 
   useEffect(() => {
+    requestIngredients();
+  }, [requestDetails]);
+
+  useEffect(() => {
     requestDetailsAPI();
+    setFilter({ text: '', option: '', category: '' });
   }, []);
   return (
-    <div data-testid="food-details">
+    <div data-testid="food-details" className="food-details">
       <img
+        className="pictureDetail"
         src={ requestDetails.strMealThumb }
         alt={ requestDetails.strMeal }
         data-testid="recipe-photo"
@@ -50,12 +62,49 @@ function FoodDetails(props) {
         </div>
       ))}
 
+      <iframe
+        data-testid="video"
+        title={ requestDetails.strMeal }
+        width="100%"
+        height="315"
+        src={ requestDetails.strMeal
+          ? requestDetails.strYoutube.replace('watch?v=', 'embed/') : undefined }
+        frameBorder="0"
+        allow="accelerometer;
+          autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+      />
       <p data-testid="instructions">{requestDetails.strInstructions}</p>
-      {/* <h1 data-testid="${index}-recomendation-card">Receitas Recomendadas</h1> */}
-      <button data-testid="start-recipe-btn" type="button">Iniciar</button>
+      <h3>Receitas Recomendadas</h3>
+      <div className="recomended">
+        {apiResponse.filter((e, index) => e && index < maxShow).map((drink, index) => (
+          <div
+            className="mini-card"
+            key={ index }
+            data-testid={ `${index}-recomendation-card` }
+          >
+            <p data-testid={ `${index}-recomendation-title` }>{drink.strDrink}</p>
+            <img
+              className="mini-picture"
+              src={ drink.strDrinkThumb }
+              alt={ drink.strDrink }
+            />
+          </div>))}
+      </div>
+      <button
+        style={ { position: 'fixed', display: 'none', bottom: '0px' } }
+        data-testid="start-recipe-btn"
+        type="button"
+      >
+        Iniciar
+      </button>
     </div>
 
   );
 }
+
+FoodDetails.propTypes = {
+  match: PropTypes.func.isRequired,
+};
 
 export default FoodDetails;
