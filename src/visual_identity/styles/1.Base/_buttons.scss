@@ -16,4 +16,8 @@ button {
     color: $darkBlue3;
   }
 
+  & img {
+    filter: invert(1)
+  }
+
 }

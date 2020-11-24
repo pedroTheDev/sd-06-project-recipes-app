@@ -11,6 +11,7 @@ import {
 } from './pages';
 import store from './redux/store';
 import './visual_identity/styles/main.scss';
+import Footer from './components/Footer';
 
 function App() {
   return (
