@@ -3,25 +3,37 @@ import PropTypes from 'prop-types';
 import splitPathname from '../utils/splitPathname';
 import fetchRecipeDetails from '../services/fetchRecipeDetails';
 import apiDataProcessor from '../services/apiDataProcessor';
+import { processRecipeObject } from '../utils/processRecipeObject'
 
 function RecipeDetails({ location: { pathname } }) {
   const [path, id] = splitPathname(pathname);
-  const [recipe, setRecipe] = useState('');
-
+  const [recipe, setRecipe] = useState([]);
+  const { image,
+    name,
+    category,
+    ingredients = [],
+    measures = [],
+    instructions,
+    video,
+  } = recipe;
   useEffect(() => {
     async function request() {
       const data = await fetchRecipeDetails(id, path);
       const requestType = data.meals || data.drinks;
-      const treatedRecipe = requestType.map((r) => apiDataProcessor(r));
-      setRecipe(treatedRecipe);
+      const treatedRecipe = apiDataProcessor(requestType[0]);
+      const processedRecipeObject = processRecipeObject(treatedRecipe);
+      setRecipe(processedRecipeObject);
     }
     request();
   }, []);
 
+  console.log(recipe);
+
+
   return (
     <main>
-      <img data-testid="recipe-photo" alt="recipe image" />
-      <h1 data-testid="recipe-title">teste</h1>
+      <img data-testid="recipe-photo" src={ image } alt={ name } />
+      <h1 data-testid="recipe-title">{ name }</h1>
       <div>
         <button data-testid="share-btn" type="button">
           share
@@ -30,12 +42,21 @@ function RecipeDetails({ location: { pathname } }) {
           Fav
         </button>
       </div>
-      <p data-testid="recipe-category">teste</p>
+      <p data-testid="recipe-category">{ category }</p>
       <ul>
-        <li data-testid={ `${0}-ingredient-name-and-measure` }>ing. 1</li>
+        { ingredients.map((ingredient, index) => (
+          <li data-testid={ `${index}-ingredient-name-and-measure` }>
+            { `${ingredient} - ${measures[index]}` }
+          </li>
+        )) }
       </ul>
-      <p data-testid="instructions">teste</p>
-      <video data-testid="video" />
+      <h4>Instructions</h4>
+        <p data-testid="instructions">{ instructions }</p>
+      <h4>Video</h4>
+      { path === 'comidas'
+        ? <iframe src={ video }/>
+        : null
+      }
       <div>
         Recomendadas
         <div data-testid={ `${0}-recomendation-card` } />
