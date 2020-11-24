@@ -30,6 +30,7 @@ export default function SearchBar() {
       setMeals(filteredMeals);
       setLoading(false);
     } else if (searchParam === 'first-letter' && termoBusca.length > 1) {
+      // eslint-disable-next-line no-alert
       alert('Sua busca deve conter somente 1 (um) caracter');
     }
   };
@@ -53,6 +54,7 @@ export default function SearchBar() {
       setDrinks(filteredDrink);
       setLoading(false);
     } else if (searchParam === 'first-letter' && termoBusca.length > 1) {
+      // eslint-disable-next-line no-alert
       alert('Sua busca deve conter somente 1 (um) caracter');
     }
   };
