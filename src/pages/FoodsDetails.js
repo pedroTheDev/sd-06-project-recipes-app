@@ -35,17 +35,6 @@ class FoodsDetails extends React.Component {
     const recommendedDrinks = await fetchRecommendedDrinks();
     this.setMealState(mealRecipe, recommendedDrinks);
     this.handleIngredients();
-
-    const emptyStorage = [{
-      id: '',
-      type: '',
-      area: '',
-      category: '',
-      alcoholicOrNot: '',
-      name: '',
-      image: '',
-    }];
-    localStorage.setItem('favoriteRecipes', JSON.stringify(emptyStorage));
   }
 
   handleYoutubeVideo(url) {
@@ -118,6 +107,9 @@ class FoodsDetails extends React.Component {
       image: recipe.strMealThumb,
     }];
 
+    if (!localStorage.getItem('favoriteRecipes')) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify(myObject));
+    }
     const MyLSObj = JSON.parse(localStorage.getItem('favoriteRecipes'));
     const combineObjects = MyLSObj.concat(myObject);
 
@@ -129,7 +121,14 @@ class FoodsDetails extends React.Component {
     const { Update } = this.state;
     const isFav = JSON.parse(localStorage.getItem('isFav'));
     const favId = JSON.parse(localStorage.getItem('favoriteRecipes'));
+
+    const filteredStorage = favId
+      .filter((v, i, a) => a.findIndex((t) => (t.id === v.id)) === i);
+    localStorage.removeItem('favoriteRecipes');
+    localStorage.setItem('favoriteRecipes', JSON.stringify(filteredStorage));
+    // console.log(teste);
     const filter = favId.find((item) => item.id === idMeal);
+
     if (filter) {
       this.setState({ Update: !Update });
       localStorage.setItem('isFav', !isFav);
@@ -295,7 +294,6 @@ const mapDispatchToProps = (dispatch) => ({
 FoodsDetails.propTypes = {
   history: PropTypes.shape().isRequired,
   dispatchID: PropTypes.func.isRequired,
-  favorite: PropTypes.shape().isRequired,
   idCurrent: PropTypes.string.isRequired,
 };
 
