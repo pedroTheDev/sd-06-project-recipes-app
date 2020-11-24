@@ -30,6 +30,9 @@ export default function useSearch() {
       case 'first-letter':
         endpoint = `search.php?f=${searchText}`;
         break;
+      case 'category':
+        endpoint = `filter.php?c=${searchText}`;
+        break;
       default:
         break;
       }

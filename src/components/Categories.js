@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { PropTypes } from 'prop-types';
+import RecipesContext from '../context/Context';
 import { fetchCategories } from '../helpers/Helper';
 
 function Categories({ id }) {
+  const { setFilters } = useContext(RecipesContext);
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);
 
@@ -24,7 +26,11 @@ function Categories({ id }) {
           <button
             type="button"
             key={ category.strCategory }
-            // onClick={ console.log(category.strCategory) }
+            onClick={ () => setFilters({
+              searchText: category.strCategory,
+              searchType: 'category',
+              category: id,
+            }) }
             data-testid={ `${category.strCategory}-category-filter` }
           >
             { `${category.strCategory}` }
