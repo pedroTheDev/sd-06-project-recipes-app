@@ -8,6 +8,10 @@ export default function Provider({ children }) {
   const [meals, setMeals] = useState([]);
   const [drinks, setDrinks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedMeal, setSelectedMeal] = useState([]);
+  const [selectedDrink, setSelectedDrink] = useState([]);
+  const [favoriteMeals, setFavoriteMeals] = useState([]);
+  const [favoriteDrinks, setFavoriteDrinks] = useState([]);
 
   const contextValue = {
     email,
@@ -20,6 +24,14 @@ export default function Provider({ children }) {
     setDrinks,
     loading,
     setLoading,
+    selectedMeal,
+    setSelectedMeal,
+    selectedDrink,
+    setSelectedDrink,
+    favoriteMeals,
+    setFavoriteMeals,
+    favoriteDrinks,
+    setFavoriteDrinks,
   };
 
   return (
