@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import Recommended from '../components/Recommended';
 import { fetchRecipe } from '../services/api';
 
 import './DrinkDetails.css';
@@ -40,7 +41,8 @@ function DrinkDetails() {
   const { strDrink,
     strCategory,
     strInstructions,
-    strDrinkThumb } = data[0];
+    strDrinkThumb,
+    strAlcoholic } = data[0];
   const ingredients = ingredientsFunc(data[0]);
 
   return (
@@ -52,7 +54,7 @@ function DrinkDetails() {
               {strDrink}
             </h1>
             <h3 data-testid="recipe-category">
-              {strCategory}
+              {strAlcoholic}
             </h3>
             <img
               data-testid="recipe-photo"
@@ -78,6 +80,7 @@ function DrinkDetails() {
             <p data-testid="instructions">
               {strInstructions}
             </p>
+            <Recommended />
             <button
               type="button"
               className="start-recipe-btn"
