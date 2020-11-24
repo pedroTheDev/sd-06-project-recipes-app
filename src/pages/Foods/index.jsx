@@ -59,15 +59,17 @@ function Foods({ pageType }) {
       <Header pageName={ pageType } showSearch />
 
       <div className="filters-container">
-        <label htmlFor="all">Todos</label>
-        <input
-          type="checkbox"
-          name="filter"
-          id="all"
-          checked={ filterSelected === 'all' }
-          onChange={ handleFilterChange }
-          data-testid="All-category-filter"
-        />
+        <label htmlFor="all">
+          <input
+            type="checkbox"
+            name="filter"
+            id="all"
+            checked={ filterSelected === 'all' }
+            onChange={ handleFilterChange }
+            data-testid="All-category-filter"
+          />
+          Todos
+        </label>
 
         {currentFoodFilters.map((filter) => (
           <React.Fragment key={ filter }>

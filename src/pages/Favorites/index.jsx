@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
+import copy from 'clipboard-copy';
 
 import Header from '../../components/Header';
 
@@ -11,17 +12,7 @@ import heartIcon from '../../images/blackHeartIcon.svg';
 function Favorites() {
   const { favoriteRecipes, updateFavoriteRecipes } = useRecipes();
 
-  const [copyLink, setCopyLink] = useState(() => {
-    const doneIDs = favoriteRecipes.map((recipe) => recipe.id);
-
-    const copiedIDs = {};
-
-    doneIDs.forEach((id) => {
-      copiedIDs[id] = false;
-    });
-
-    return doneIDs;
-  });
+  const [copyLink, setCopyLink] = useState({});
 
   const [filter, setFilter] = useState('all');
 
@@ -45,7 +36,7 @@ function Favorites() {
   const handleShareClick = useCallback((id, type) => {
     const url = `http://localhost:3000/${type}s/${id}`;
 
-    navigator.clipboard.writeText(url);
+    copy(url);
 
     const copiedRecipe = {
       [id]: true,
@@ -65,35 +56,41 @@ function Favorites() {
       <Header pageName="Receitas Favoritas" />
 
       <div className="done-filters-container">
-        <label htmlFor="all" data-testid="filter-by-all-btn">All</label>
-        <input
-          type="radio"
-          name="filter"
-          id="all"
-          value="all"
-          checked={ filter === 'all' }
-          onChange={ handleFilterChange }
-        />
-        <label htmlFor="foods" data-testid="filter-by-food-btn">Foods</label>
-        <input
-          type="radio"
-          name="filter"
-          id="foods"
-          value="foods"
-          onChange={ handleFilterChange }
-          checked={ filter === 'foods' }
+        <label htmlFor="all" data-testid="filter-by-all-btn">
+          <input
+            type="radio"
+            name="filter"
+            id="all"
+            value="all"
+            checked={ filter === 'all' }
+            onChange={ handleFilterChange }
+          />
+          All
+        </label>
+        <label htmlFor="foods" data-testid="filter-by-food-btn">
+          <input
+            type="radio"
+            name="filter"
+            id="foods"
+            value="foods"
+            onChange={ handleFilterChange }
+            checked={ filter === 'foods' }
 
-        />
-        <label htmlFor="drinks" data-testid="filter-by-drink-btn">Drinks</label>
-        <input
-          type="radio"
-          name="filter"
-          id="drinks"
-          value="drinks"
-          checked={ filter === 'drinks' }
-          onChange={ handleFilterChange }
+          />
+          Foods
+        </label>
+        <label htmlFor="drinks" data-testid="filter-by-drink-btn">
+          <input
+            type="radio"
+            name="filter"
+            id="drinks"
+            value="drinks"
+            checked={ filter === 'drinks' }
+            onChange={ handleFilterChange }
 
-        />
+          />
+          Drinks
+        </label>
       </div>
 
       <div className="favorite-recipes-container">

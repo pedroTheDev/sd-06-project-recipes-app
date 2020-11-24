@@ -53,6 +53,7 @@ function SearchProvider({ children }) {
       const recipesSearched = await fetchRecipes(userSearch);
 
       if (!recipesSearched) {
+        // eslint-disable-next-line
         alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
 
         return null;
@@ -73,6 +74,7 @@ function SearchProvider({ children }) {
     } catch (err) {
       console.log(err);
 
+      // eslint-disable-next-line
       alert('Sinto muito, houve um erro ao buscar. Tente novamente.');
 
       return null;

@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import copy from 'clipboard-copy';
 
 import { useCook } from '../../hooks/cook';
 import { useRecipes } from '../../hooks/recipes';
@@ -41,7 +42,7 @@ function FoodInProgress({ pageType }) {
   const handleShareClick = useCallback(() => {
     const url = `http://localhost:3000/${pageType}/${id}`;
 
-    navigator.clipboard.writeText(url);
+    copy(url);
 
     setCopiedLink(true);
   }, [id, pageType]);

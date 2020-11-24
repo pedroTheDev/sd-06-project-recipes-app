@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import copy from 'clipboard-copy';
 
 import { useSingleRecipe } from '../../hooks/singleRecipe';
 import { useCook } from '../../hooks/cook';
@@ -36,7 +37,7 @@ function FoodDetails({ pageType }) {
   const handleShareClick = useCallback(() => {
     const url = `http://localhost:3000/${pageType}/${id}`;
 
-    navigator.clipboard.writeText(url);
+    copy(url);
 
     setCopiedLink(true);
   }, [id, pageType]);

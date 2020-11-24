@@ -11,15 +11,15 @@ function Navbar() {
   return (
     <nav className="app-nav-bar" data-testid="footer">
       <Link to="/bebidas">
-        <img data-testid="drinks-bottom-btn" src={drinkIcon} alt="drinks page" />
+        <img data-testid="drinks-bottom-btn" src={ drinkIcon } alt="drinks page" />
       </Link>
 
       <Link to="/explorar">
-        <img data-testid="explore-bottom-btn" src={exploreIcon} alt="explore page" />
+        <img data-testid="explore-bottom-btn" src={ exploreIcon } alt="explore page" />
       </Link>
 
       <Link to="/comidas">
-        <img data-testid="food-bottom-btn" src={mealIcon} alt="meals page" />
+        <img data-testid="food-bottom-btn" src={ mealIcon } alt="meals page" />
       </Link>
     </nav>
   );
