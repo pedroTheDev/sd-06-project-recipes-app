@@ -1,16 +1,15 @@
 import React from 'react';
-import Filters from '../components/Filters';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-function DrinksRecipesPage() {
+function ExploreFoodPage() {
   return (
     <div>
-      <Header pageName="Bebidas" />
-      <Filters />
+      <Header />
+      <h2>Explore food page</h2>
       <Footer />
     </div>
   );
 }
 
-export default DrinksRecipesPage;
+export default ExploreFoodPage;

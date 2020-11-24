@@ -8,6 +8,7 @@ import DrinksRecipesPage from './pages/DrinksRecipesPage';
 import RecipesAppProvider from './context/RecipesAppProvider';
 import DrinksDetails from './pages/DrinksDetails';
 import FoodDetails from './pages/FoodDetails';
+import ExplorePage from './pages/ExplorePage';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <BrowserRouter>
           <Switch>
             <Route exact path="/" component={LoginPage} />
+            <Route path="/explorar" component={ExplorePage} />
             <Route path="/comidas/:id" component={FoodDetails} />
             <Route path="/comidas" component={FoodRecipesPage} />
             <Route path="/perfil" component={ProfilePage} />

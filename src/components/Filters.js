@@ -39,12 +39,18 @@ function Filters() {
       if (radioValue === 'ingredients') {
         const resultIngredients = await requestIngredients(valueInput);
         console.log(resultIngredients);
-        return setResultsFoodsAndDrinks(resultIngredients);
+        if (resultIngredients.meals !== null) {
+          return setResultsFoodsAndDrinks(resultIngredients);
+        }
+        return (alert('Sinto muito, não encontramos nenhuma receita para esses filtros.'));
       }
       if (radioValue === 'name') {
         const resultName = await requestName(valueInput);
         console.log(resultName);
-        return setResultsFoodsAndDrinks(resultName);
+        if (resultName.meals !== null) {
+          return setResultsFoodsAndDrinks(resultName);
+        }
+        return (alert('Sinto muito, não encontramos nenhuma receita para esses filtros.'));
       }
       if (radioValue === 'firstLetter' && valueInput.length === 1) {
         const resultFirstLetter = await requestFirstLetter(valueInput);
@@ -60,12 +66,18 @@ function Filters() {
       if (radioValue === 'ingredients') {
         const resultDrinksIngredients = await requestDrinksIngredients(valueInput);
         console.log(resultDrinksIngredients);
-        return setResultsFoodsAndDrinks(resultDrinksIngredients);
+        if (resultDrinksIngredients !== null) {
+          return setResultsFoodsAndDrinks(resultDrinksIngredients);
+        }
       }
       if (radioValue === 'name') {
         const resultDrinksName = await requestDrinksName(valueInput);
         console.log(resultDrinksName);
-        return setResultsFoodsAndDrinks(resultDrinksName);
+        if (resultDrinksName.drinks !== null) {
+          console.log('entrou no if do null');
+          return setResultsFoodsAndDrinks(resultDrinksName);
+        }
+        return (alert('Sinto muito, não encontramos nenhuma receita para esses filtros.'));
       }
       if (radioValue === 'firstLetter' && valueInput.length === 1) {
         const resultDrinksFirstLetter = await requestDrinksFirstLetter(valueInput);
