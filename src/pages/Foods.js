@@ -19,13 +19,14 @@ export default function Foods() {
       {foods.map((food, index) => {
         if (index < DOZE) {
           return (
-            <div key={ food[`id${searchParam}`] }>
+            <div key={ food[`id${searchParam}`] } data-testid={ `${index}-recipe-card` }>
               <img
                 src={ food[`str${searchParam}Thumb`] }
                 alt={ food[`str${searchParam}`] }
+                data-testid={ `${index}-card-img` }
                 width="360px"
               />
-              {food[`str${searchParam}`]}
+              <div data-testid={ `${index}-card-name` }>{food[`str${searchParam}`]}</div>
             </div>
           );
         }

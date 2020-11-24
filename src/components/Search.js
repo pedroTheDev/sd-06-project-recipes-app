@@ -20,7 +20,7 @@ export default function SearchBar(props) {
     foodIngredient: `https://www.themealdb.com/api/json/v1/1/filter.php?i=${searchInputValue}`,
     foodName: `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchInputValue}`,
     drinkFirstLetter: `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${searchInputValue}`,
-    drinkIngredient: `https://www.thecocktaildb.com/api/json/v1/1/search.php?i=${searchInputValue}`,
+    drinkIngredient: `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${searchInputValue}`,
     drinkName: `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchInputValue}`,
   };
 
