@@ -30,7 +30,7 @@ Header.propTypes = {
   title: PropTypes.string.isRequired,
   isSearching: PropTypes.bool.isRequired,
   setSearch: PropTypes.func.isRequired,
-  enableSearchBar: enableSearchBar.bool.isRequired,
+  enableSearchBar: PropTypes.bool.isRequired,
 };
 
 export default Header;
