@@ -3,15 +3,16 @@ import PropTypes from 'prop-types';
 import RevenueContext from '../context/RevenueContext';
 
 export default function SearchBar(props) {
-  const { fetchApi, setSearchParam } = useContext(RevenueContext);
+  const { fetchApi, searchParam, setSearchParam } = useContext(RevenueContext);
   const { title } = props;
   const [searchInputValue, setsearchInputValue] = useState();
   const [searchRadioValue, setsearchRadioValue] = useState();
   const [URLToFetch, setURLToFetch] = useState();
 
   useEffect(() => {
-    fetchApi(URLToFetch);
-    console.log(URLToFetch);
+    if (!URLToFetch && searchParam === 'Meal') fetchApi('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+    if (!URLToFetch && searchParam === 'Drink') fetchApi('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+    if (URLToFetch) fetchApi(URLToFetch);
   }, [URLToFetch]);
 
   const URLs = {
@@ -19,7 +20,7 @@ export default function SearchBar(props) {
     foodIngredient: `https://www.themealdb.com/api/json/v1/1/filter.php?i=${searchInputValue}`,
     foodName: `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchInputValue}`,
     drinkFirstLetter: `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${searchInputValue}`,
-    drinkIngredient: `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${searchInputValue}`,
+    drinkIngredient: `https://www.thecocktaildb.com/api/json/v1/1/search.php?i=${searchInputValue}`,
     drinkName: `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchInputValue}`,
   };
 

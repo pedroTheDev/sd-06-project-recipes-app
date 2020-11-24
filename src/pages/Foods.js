@@ -3,47 +3,64 @@ import RevenueContext from '../context/RevenueContext';
 // import fetchApi from '../services/FetchApi';
 
 export default function Foods() {
-  const { foods, fetchApi, searchParam, setFoods } = useContext(RevenueContext);
+  const { foods, fetchApi, searchParam, isLoading } = useContext(RevenueContext);
   const DOZE = 12;
-  const ZERO = 0;
-  const dataLengthTest = () => {
-    if (foods.length === ZERO) {
-      // alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
-      return <div>Sinto muito, não encontramos nenhuma receita para esses filtros.</div>;
-    }
-  };
+
   useEffect(() => {
     if (searchParam === 'Meal') {
-      fetchApi('https://www.themealdb.com/api/json/v1/1/search.php?s=')
-        .then(() => dataLengthTest());
+      fetchApi('https://www.themealdb.com/api/json/v1/1/search.php?s=');
     } else if (searchParam === 'Drink') {
-      fetchApi('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=')
-        .then(() => dataLengthTest());
+      fetchApi('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
     }
-    setFoods([]);
   }, []);
 
-  console.log(foods);
-  if (foods.length > ZERO) {
+  const renderFoodOrDrink = () => (
+    <>
+      {foods.map((food, index) => {
+        if (index < DOZE) {
+          return (
+            <div key={ food[`id${searchParam}`] }>
+              <img
+                src={ food[`str${searchParam}Thumb`] }
+                alt={ food[`str${searchParam}`] }
+                width="360px"
+              />
+              {food[`str${searchParam}`]}
+            </div>
+          );
+        }
+        return '';
+      })}
+    </>
+  );
+
+  const renderIngredients = () => (
+    <>
+      {foods.map((food, index) => {
+        if (index < DOZE) {
+          return (
+            <div key={ food.idIngredient }>
+              <h3>{ food.strIngredient }</h3>
+              <p>{food.strDescription}</p>
+              <p>
+                Alcohol:
+                {' '}
+                {food.strAlcohol}
+              </p>
+            </div>
+          );
+        }
+        return '';
+      })}
+    </>
+  );
+
+  if (!isLoading) {
     return (
       <div>
-        {foods.map((food, index) => {
-          if (index < DOZE) {
-            console.log(food[`str${searchParam}`]);
-            return (
-              <div key={ food[`id${searchParam}`] }>
-                <img
-                  src={ food[`str${searchParam}Thumb`] }
-                  alt={ food[`str${searchParam}`] }
-                  width="360px"
-                />
-                {food[`str${searchParam}`]}
-              </div>
-            );
-          }
-          return '';
-        })}
-      </div>);
+        {(searchParam === 'Ingredients') ? renderIngredients() : renderFoodOrDrink()}
+      </div>
+    );
   }
-  return <div>Sinto muito, não encontramos nenhuma receita para esses filtros.</div>;
+  return <div>Loading...</div>;
 }

@@ -11,13 +11,34 @@ const Provider = ({ children }) => {
   const [searchButton, setSearchButton] = useState(true);
   const [searchParam, setSearchParam] = useState('Meal');
   const [foods, setFoods] = useState([]);
+  const [isLoading, setisLoading] = useState(false);
 
   const fetchApi = async (URL) => {
+    setisLoading(true);
     const response = await fetch(URL);
     const json = await response.json();
-    // if (json.categories) setFoods(json.categories);
-    if (json.drinks) setFoods(json.drinks);
-    if (json.meals) setFoods(json.meals);
+    setisLoading(false);
+    console.log(json);
+    if (searchParam === 'Drink') {
+      if (json.drinks) {
+        setFoods(json.drinks);
+      } else if (json.ingredients) {
+        setSearchParam('Ingredients');
+        setFoods(json.ingredients);
+      } else {
+        alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+      }
+    }
+    if (searchParam === 'Meal') {
+      if (json.meals) {
+        setFoods(json.meals);
+      } else if (json.ingredients) {
+        setSearchParam('Ingredients');
+        setFoods(json.ingredients);
+      } else {
+        alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+      }
+    }
   };
   // const [drinks, setDrinks] = useState([]);
   // //
@@ -45,6 +66,8 @@ const Provider = ({ children }) => {
     foods,
     setFoods,
     fetchApi,
+    isLoading,
+    setisLoading,
     // fetchFoods,
     // //
     // drinks,
