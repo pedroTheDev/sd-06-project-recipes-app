@@ -12,12 +12,14 @@ export default function Header(props) {
   return (
     <div>
       <div>
-        <Link to="/">
-          <img
-            src={ perfil }
-            alt="perfil"
-            data-testid="profile-top-btn"
-          />
+        <Link to="/perfil">
+          <button type="button" src={ perfil }>
+            <img
+              src={ perfil }
+              alt="perfil"
+              data-testid="profile-top-btn"
+            />
+          </button>
         </Link>
       </div>
       <div>
@@ -26,6 +28,7 @@ export default function Header(props) {
       <div>
         <button
           type="button"
+          src={ busca }
           data-testid="search-top-btn"
           onClick={ () => { setSearch(!search); } }
         >

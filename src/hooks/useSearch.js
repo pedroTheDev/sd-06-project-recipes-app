@@ -6,10 +6,14 @@ export default function useSearch() {
 
   const initSearch = async () => {
     const { searchText, searchType, category } = filters;
+    if (category === '') {
+      return undefined;
+    }
     const typeOfFetch = (category === 'comidas')
       ? 'meals'
       : 'drinks';
-
+    console.log(category);
+    console.log(typeOfFetch);
     try {
       const api = (category === 'comidas')
         ? 'https://www.themealdb.com/api/json/v1/1/'

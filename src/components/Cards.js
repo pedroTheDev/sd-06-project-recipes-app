@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { PropTypes } from 'prop-types';
+import { Link } from 'react-router-dom';
 import RecipesContext from '../context/Context';
 import history from '../helpers/History';
 // import useSearch from '../hooks/useSearch';
@@ -39,18 +40,20 @@ export default function Cards({ id }) {
       return (
         <div className="cards-wrapper">
           {items.drinks.map((item, index) => (
-            <div
-              key={ index }
-              className="item-card"
-              data-testid={ `${index}-recipe-card` }
-            >
-              <img
-                src={ item.strDrinkThumb }
-                data-testid={ `${index}-card-img` }
-                alt="imagem de drink"
-              />
-              <p data-testid={ `${index}-card-name` }>{item.strDrink}</p>
-            </div>
+            <Link key={ index } to={ `/${id}/${item.idDrink}` }>
+              <div
+                key={ index }
+                className="item-card"
+                data-testid={ `${index}-recipe-card` }
+              >
+                <img
+                  src={ item.strDrinkThumb }
+                  data-testid={ `${index}-card-img` }
+                  alt="imagem de drink"
+                />
+                <p data-testid={ `${index}-card-name` }>{item.strDrink}</p>
+              </div>
+            </Link>
           ))}
         </div>
       );
@@ -59,18 +62,20 @@ export default function Cards({ id }) {
       return (
         <div className="cards-wrapper">
           {items.meals.map((item, index) => (
-            <div
-              key={ index }
-              className="item-card"
-              data-testid={ `${index}-recipe-card` }
-            >
-              <img
-                src={ item.strMealThumb }
-                data-testid={ `${index}-card-img` }
-                alt="imagem de comida"
-              />
-              <p data-testid={ `${index}-card-name` }>{item.strMeal}</p>
-            </div>
+            <Link key={ index } to={ `/${id}/${item.idMeal}` }>
+              <div
+                key={ index }
+                className="item-card"
+                data-testid={ `${index}-recipe-card` }
+              >
+                <img
+                  src={ item.strMealThumb }
+                  data-testid={ `${index}-card-img` }
+                  alt="imagem de comida"
+                />
+                <p data-testid={ `${index}-card-name` }>{item.strMeal}</p>
+              </div>
+            </Link>
           ))}
         </div>
       );

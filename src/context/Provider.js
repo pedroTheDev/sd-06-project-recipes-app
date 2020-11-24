@@ -9,7 +9,7 @@ function Provider({ children }) {
   const [filters, setFilters] = useState({
     searchText: '',
     searchType: 'name',
-    category: 'comidas',
+    category: '',
   });
 
   const contextValue = {

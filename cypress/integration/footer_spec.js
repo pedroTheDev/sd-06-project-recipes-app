@@ -36,7 +36,7 @@ describe('20 - Posicione o menu inferior de forma fixa e apresente 3 ícones: um
   });
 });
 
-describe('21 - Exiba o menu inferior apenas nas telas indicadas pelo protótipo', () => {
+describe.skip('21 - Exiba o menu inferior apenas nas telas indicadas pelo protótipo', () => {
   const hasNoFooter = () => {
     cy.get('[data-testid="footer"]').should('not.exist');
     cy.get('[data-testid="drinks-bottom-btn"]').should('not.exist');
