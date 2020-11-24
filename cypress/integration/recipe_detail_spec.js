@@ -26,7 +26,7 @@ describe('33 - Implemente os elementos da tela de detalhes de uma receita respei
     cy.get('[data-testid="start-recipe-btn"]');
   });
 
-  it.skip('A tela de bebidas possui todos os atributos data-testid', () => {
+  it('A tela de bebidas possui todos os atributos data-testid', () => {
     cy.visit('http://localhost:3000/bebidas/178319', {
       onBeforeLoad(win) {
         win.fetch = fetchMock;
@@ -58,7 +58,7 @@ describe('34 - Realize uma request para a API passando o `id` da receita que dev
       .should('be.calledWith', 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=52771');
   });
 
-  it.skip('Verifica se a requisição para a API de bebidas foi realizada', () => {
+  it('Verifica se a requisição para a API de bebidas foi realizada', () => {
     cy.visit('http://localhost:3000/bebidas/178319', {
       onBeforeLoad(win) {
         cy.spy(win, 'fetch');
@@ -111,7 +111,7 @@ describe('35 - Desenvolva a tela de forma que contenha uma imagem da receita, o 
     cy.get('[data-testid*="recomendation-card"]').should('exist');
   });
 
-  it.skip('Verifica se os elementos descritos no protótipo existem na tela de detalhes de bebida', () => {
+  it('Verifica se os elementos descritos no protótipo existem na tela de detalhes de bebida', () => {
     cy.visit('http://localhost:3000/bebidas/178319', {
       onBeforeLoad(win) {
         win.fetch = fetchMock;

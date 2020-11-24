@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const useAbility = () => {
+const useAbility2 = () => {
   const [recipeId, setRecipeId] = useState('');
   const [recipe, setRecipe] = useState([]);
 
@@ -8,7 +8,7 @@ const useAbility = () => {
     if (recipeId === '') {
       return undefined;
     }
-    const dataJson = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeId}`);
+    const dataJson = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${recipeId}`);
     const data = await dataJson.json();
     return setRecipe(data);
   };
@@ -19,4 +19,4 @@ const useAbility = () => {
   return [recipe, recipeId, setRecipeId];
 };
 
-export default useAbility;
+export default useAbility2;
