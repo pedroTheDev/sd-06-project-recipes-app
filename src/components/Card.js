@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import RecipesAppContext from '../context/RecipesAppContext';
 
 function Card({ title }) {
@@ -55,7 +55,6 @@ function Card({ title }) {
         </p>
       </div>))
     // </>
-
   );
 }
 
