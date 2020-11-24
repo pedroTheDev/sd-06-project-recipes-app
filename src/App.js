@@ -5,30 +5,34 @@ import Login from './pages/Login';
 import Food from './pages/Food';
 import Cocktail from './pages/CockTail';
 import Recipe from './pages/Recipe';
+import Explore from './pages/Explore';
+import ExploreFood from './pages/ExploreFood';
+import ExploreDrink from './pages/ExploreDrink';
+import ExploreFoodByIngredients from './pages/ExploreFoodByIngredients';
+import Perfil from './pages/Perfil';
 
 function App() {
   return (
     <div className="App">
       <Switch>
+
         <Route exact path="/comidas/:id" component={ Recipe } />
         <Route exact path="/bebidas/:id" component={ Recipe } />
+        <Route
+          path="/explorar/comidas/ingredientes"
+          component={ ExploreFoodByIngredients }
+        />
+        <Route path="/explorar/comidas" component={ ExploreFood } />
+        <Route path="/explorar/bebidas" component={ ExploreDrink } />
         <Route exact path="/comidas" component={ Food } />
         <Route exact path="/bebidas" component={ Cocktail } />
+        <Route exact path="/explorar" component={ Explore } />
+        <Route path="/perfil" component={ Perfil } />
         <Route exact path="/" component={ Login } />
-        {
-        /*
-        <Route path="/comidas/{id-da-receita}/in-progress" component={definir} />
-        <Route path="/bebidas/{id-da-receita}/in-progress" component={definir} />
-        <Route path="/explorar" component={definir} />
-        <Route path="/bebidas/{id-da-receita}" component={definir} />
-        <Route path="/explorar/comidas" component={definir} />
-        <Route path="/explorar/bebidas" component={definir} />
-        <Route path="/explorar/comidas/ingredientes" component={definir} />
-        <Route path="/explorar/bebidas/ingredientes" component={definir} />
-        <Route path="/explorar/comidas/area" component={definir} />
-        <Route path="/perfil" component={definir} />
-        <Route path="/receitas-feitas" component={definir} />
-        <Route path="/receitas-favoritas" component={definir} /> */ }
+    
+
+      
+        
       </Switch>
     </div>
   );

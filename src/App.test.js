@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
+
 import Login from './pages/Login';
 import Food from './pages/Food';
 import App from './App';
@@ -21,22 +22,24 @@ describe('test LoginPage', () => {
     expect(password).toBeInTheDocument();
     expect(loginButton).toBeInTheDocument();
     expect(loginButton.innerText).toBe('Entrar');
-    expect(loginButton.disabled).toBe(true)
-    fireEvent.change(emailInput, { target: {value: 'p$'}});
+
     expect(loginButton.disabled).toBe(true);
-    fireEvent.change(emailInput, { target: {value: 'paulo.'}});
+    fireEvent.change(emailInput, { target: {value: 'p$'}})
     expect(loginButton.disabled).toBe(true);
-    fireEvent.change(emailInput, { target: {value: 'paulo@'}});
+    fireEvent.change(emailInput, { target: {value: 'paulo.'}})
     expect(loginButton.disabled).toBe(true);
-    fireEvent.change(emailInput, { target: {value: 'paulo@email'}});
+    fireEvent.change(emailInput, { target: {value: 'paulo@'}})
     expect(loginButton.disabled).toBe(true);
-    fireEvent.change(emailInput, { target: {value: 'paulo@email.com'}});
+    fireEvent.change(emailInput, { target: {value: 'paulo@email'}})
     expect(loginButton.disabled).toBe(true);
-    fireEvent.change(password, { target: {value: '123'}});
+    fireEvent.change(emailInput, { target: {value: 'paulo@email.com'}})
     expect(loginButton.disabled).toBe(true);
-    fireEvent.change(password, { target: {value: '123456'}});
+    fireEvent.change(password, { target: {value: '123'}})
     expect(loginButton.disabled).toBe(true);
-    fireEvent.change(password, { target: {value: '1234567'}});
+    fireEvent.change(password, { target: {value: '123456'}})
+    expect(loginButton.disabled).toBe(true);
+    fireEvent.change(password, { target: {value: '1234567'}})
+
     expect(loginButton.disabled).toBe(false);
   });
 
@@ -52,6 +55,7 @@ describe('test LoginPage', () => {
   //   fireEvent.click(loginButton);
   //   expect(getLocalStorageData('user')).toBeTruthy();
   // });
+
 
     test('tests header component', () => {
       // `profile-top-btn`, `page-title` e `search-top-btn`.
@@ -70,5 +74,6 @@ describe('test LoginPage', () => {
         expect(history.location.pathname).toBe('/profile');
       });      
     })
+
 });
 
