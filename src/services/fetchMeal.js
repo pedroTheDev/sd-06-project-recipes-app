@@ -37,6 +37,12 @@ async function fetchMeal(filter, searchTerm) {
     return allCategoriesResponse.meals;
   }
 
+  case 'details': {
+    const fetchDetails = await fetch(`${url}lookup.php?i=${searchTerm}`);
+    const detailsResponse = await fetchDetails.json();
+    return detailsResponse.meals;
+  }
+
   default: {
     const fetchRandomMeal = await fetch(`${url}random.php`);
     const randomMealResponse = await fetchRandomMeal.json();

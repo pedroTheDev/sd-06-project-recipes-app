@@ -1,13 +1,27 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Context from './Context';
+import fetchMeal from '../services/fetchMeal';
+import fetchDrink from '../services/fetchDrink';
 
 function RecipesAppProvider({ children }) {
-  const [estadoTeste, setEstadoTeste] = useState('teste');
+  const [details, setDetails] = useState('');
+
+
+  const getMealDetail = async() => {
+    const api = await fetchMeal('details', '52771');
+    setDetails(api);
+  };
+
+  const getDrinkDetail = async() => {
+    const api = await fetchDrink('details', '178319');
+    setDetails(api);
+  }
 
   const contextValue = {
-    estadoTeste,
-    setEstadoTeste,
+    getMealDetail,
+    getDrinkDetail,
+    details,
   };
 
   return (

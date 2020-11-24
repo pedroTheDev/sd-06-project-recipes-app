@@ -25,6 +25,12 @@ async function fetchDrink(filter, searchTerm) {
     return allIngredientsResponse.drinks;
   }
 
+  case 'details': {
+    const fetchDetails = await fetch(`${url}lookup.php?i=${searchTerm}`);
+    const detailsResponse = await fetchDetails.json();
+    return detailsResponse.drinks;
+  }
+
   default: {
     const fetchRandomDrink = await fetch(`${url}random.php`);
     const randomDrinkResponse = await fetchRandomDrink.json();

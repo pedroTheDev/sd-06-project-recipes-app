@@ -20,6 +20,8 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
+        <Route exact path="/comidas/:id" component={ RecipeDetails } />
+        <Route exact path="/bebidas/:id" component={ RecipeDetails } />
         <Route
           exact
           path="/explorar/comidas/ingredientes"
@@ -35,8 +37,6 @@ function App() {
         <Route exact path="/explorar/bebidas" component={ DrinkExp } />
         <Route exact path="/comidas" component={ Recipes } />
         <Route exact path="/bebidas" component={ Drinks } />
-        <Route exact path="/comidas/detalhes/:id" component={ RecipeDetails } />
-        <Route exact path="/bebidas/detalhes/:id" component={ DrinkDetails } />
         <Route exact path="/explorar" component={ Explore } />
         <Route exact path="/perfil" component={ Profile } />
         <Route exact path="/receitas-feitas" component={ DoneRecipe } />
