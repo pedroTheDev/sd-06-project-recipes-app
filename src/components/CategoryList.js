@@ -1,12 +1,25 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import { fetchMealCategoryList, fetchDrinkCategoryList } from '../services';
+import {
+  fetchMealCategoryList,
+  fetchDrinkCategoryList,
+  fetchMealByCategory,
+  fetchDrinkByCategory,
+  getDrinksStart,
+  initialRecipes,
+} from '../services';
 import RecipesContext from '../context/RecipesAppContext';
 
 function CategoryList({ title }) {
   const ZERO = 0;
   const CINCO = 5;
-  const { categoryList, setCategoryList, setFilter } = useContext(RecipesContext);
+  const {
+    categoryList,
+    setCategoryList,
+    setRecipes,
+  } = useContext(RecipesContext);
+
+  const [category, setCategory] = useState('all');
 
   const renderCategoryList = async (callback) => {
     const response = await callback();
@@ -14,18 +27,41 @@ function CategoryList({ title }) {
   };
 
   const setBase = async () => {
+    const list = (title === 'Comidas')
+      ? await renderCategoryList(fetchMealCategoryList)
+      : await renderCategoryList(fetchDrinkCategoryList);
+    setCategoryList(list);
+  };
+
+  const fetchMealOrDrink = async (actualCategory) => {
     if (title === 'Comidas') {
-      const list = await renderCategoryList(fetchMealCategoryList);
-      setCategoryList(list);
-    } else {
-      const list = await renderCategoryList(fetchDrinkCategoryList);
-      setCategoryList(list);
+      if (actualCategory === 'all') await initialRecipes(setRecipes);
+      else {
+        const response = await fetchMealByCategory(actualCategory);
+        setRecipes(response);
+      }
     }
+    if (title === 'Bebidas') {
+      if (actualCategory === 'all') await getDrinksStart(setRecipes);
+      else {
+        const response = await fetchDrinkByCategory(actualCategory);
+        setRecipes(response);
+      }
+    }
+  };
+
+  const onClick = (selectedCategory) => {
+    if (selectedCategory === category) setCategory('all');
+    else setCategory(selectedCategory);
   };
 
   useEffect(() => {
     setBase();
   }, []);
+
+  useEffect(() => {
+    fetchMealOrDrink(category);
+  }, [category]);
 
   return (
     <>
@@ -34,11 +70,18 @@ function CategoryList({ title }) {
           type="button"
           key={ cat.strCategory }
           data-testid={ `${cat.strCategory}-category-filter` }
-          onClick={ () => setFilter(cat.strCategory) }
+          onClick={ () => onClick(cat.strCategory) }
         >
           {' '}
           { cat.strCategory }
         </button>))}
+      <button
+        type="button"
+        data-testid="All-category-filter"
+        onClick={ () => setCategory('all') }
+      >
+        ALL
+      </button>
 
     </>
   );

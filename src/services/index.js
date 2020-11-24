@@ -8,6 +8,7 @@ const endPointMealIngredient = ('filter.php?i=');
 const endPointMealName = ('search.php?s=');
 const endPointMealFirstLetter = ('search.php?f=');
 const endPointCategoryList = ('list.php?c=list');
+const endPointCategory = ('filter.php?c=');
 
 export const fetchDrinkAPIByIngredient = async (ingredient) => {
   const response = await fetch(`${baseAPIDrinks}${endPointDrinkIngredient}${ingredient}`);
@@ -46,6 +47,18 @@ export const fetchMealByFirstLetter = async (firstLetter) => {
   return json.meals;
 };
 
+export const getDrinksStart = async (callback) => {
+  const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+  const json = await response.json();
+  callback(json.drinks);
+};
+
+export const initialRecipes = async (callback) => {
+  const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+  const json = await response.json();
+  callback(json.meals);
+};
+
 export const fetchMealCategoryList = async () => {
   const response = await fetch(`${baseAPIMeal}${endPointCategoryList}`);
   const json = await response.json();
@@ -54,6 +67,18 @@ export const fetchMealCategoryList = async () => {
 
 export const fetchDrinkCategoryList = async () => {
   const response = await fetch(`${baseAPIDrinks}${endPointCategoryList}`);
+  const json = await response.json();
+  return json.drinks;
+};
+
+export const fetchMealByCategory = async (category) => {
+  const response = await fetch(`${baseAPIMeal}${endPointCategory}${category}`);
+  const json = await response.json();
+  return json.meals;
+};
+
+export const fetchDrinkByCategory = async (category) => {
+  const response = await fetch(`${baseAPIDrinks}${endPointCategory}${category}`);
   const json = await response.json();
   return json.drinks;
 };

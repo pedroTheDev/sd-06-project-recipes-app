@@ -33,28 +33,28 @@ function Card({ title }) {
   };
 
   return (
-    <>
-      {recipes.slice(ZERO, DOZE).map((recipe, index) => (
-        <div
-          key={ recipe[`id${recipeType}`] }
-          data-testid={ `${index}-recipe-card` }
-          className="card"
-          style={ divStyle }
+    // <>
+    recipes.length > ZERO && recipes.slice(ZERO, DOZE).map((recipe, index) => (
+      <div
+        key={ recipe[`id${recipeType}`] }
+        data-testid={ `${index}-recipe-card` }
+        className="card"
+        style={ divStyle }
+      >
+        <img
+          src={ recipe[`str${recipeType}Thumb`] }
+          alt={ recipe[`str${recipeType}`] }
+          data-testid={ `${index}-card-img` }
+          className="card-img-top"
+        />
+        <p
+          data-testid={ `${index}-card-name` }
+          className="card-text"
         >
-          <img
-            src={ recipe[`str${recipeType}Thumb`] }
-            alt={ recipe[`str${recipeType}`] }
-            data-testid={ `${index}-card-img` }
-            className="card-img-top"
-          />
-          <p
-            data-testid={ `${index}-card-name` }
-            className="card-text"
-          >
-            { recipe[`str${recipeType}`] }
-          </p>
-        </div>))}
-    </>
+          { recipe[`str${recipeType}`] }
+        </p>
+      </div>))
+    // </>
 
   );
 }
