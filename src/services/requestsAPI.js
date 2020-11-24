@@ -51,3 +51,39 @@ export async function requestDrinksFirstLetter(info) {
   const result = await resolve.json();
   return result;
 }
+
+export async function requestFoods() {
+  const resolve = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+  const result = await resolve.json();
+  return result;
+}
+
+export async function requestDrinks() {
+  const resolve = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+  const result = await resolve.json();
+  return result;
+}
+
+export async function requestCategoryFood() {
+  const resolve = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
+  const result = await resolve.json();
+  return result;
+}
+
+export async function requestCategoryDrink() {
+  const resolve = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
+  const result = await resolve.json();
+  return result;
+}
+
+export async function filterCategoryFood(info) {
+  const resolve = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${info}`);
+  const result = await resolve.json();
+  return result;
+}
+
+export async function filterCategoryDrinks(info) {
+  const resolve = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${info}`);
+  const result = await resolve.json();
+  return result;
+}
