@@ -19,12 +19,12 @@
 }
 
 .button-drink:hover {
-  background-color: #cfc50a;
+  background-color: #e4cd03;
   cursor: pointer;
 }
 
 .button-explore {
-  background-color: #585856;
+  background-color: #b6b6b1;
   border: none;
   border-radius: 50%;
   height: 65px;
@@ -32,12 +32,12 @@
 }
 
 .button-explore:hover {
-  background-color: #70706e;
+  background-color: #92928f;
   cursor: pointer;
 }
 
 .button-food {
-  background-color: #d2d700;
+  background-color: #fac001;
   border: none;
   border-radius: 50%;
   height: 65px;
@@ -45,6 +45,6 @@
 }
 
 .button-food:hover {
-  background-color: #c4c703;
+  background-color: #e9b304;
   cursor: pointer;
 }

@@ -1,9 +1,10 @@
 import React from 'react';
-import { Footer } from '../components';
+import { Footer, Header } from '../components';
 
 function ComidasPorIngrediente() {
   return (
     <div className="food">
+      <Header title="Explorar Ingredientes" />
       <span>Aqui vão estar as comidas por ingrediente...</span>
       <Footer />
     </div>
