@@ -226,7 +226,6 @@ class FoodsRecipesInProgress extends React.Component {
       doneDate: fullDate,
       tags: recipe.strTags,
     }];
-
     if (!localStorage.getItem('doneRecipes')) {
       localStorage.setItem('doneRecipes', JSON.stringify(myObject));
     }
