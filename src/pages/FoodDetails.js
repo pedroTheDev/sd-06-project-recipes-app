@@ -1,15 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import clipboardCopy from 'clipboard-copy';
 import Recommended from '../components/Recommended';
 import { fetchRecipe } from '../services/api';
+import handleFavorite from '../services/storageFunctions';
+import shareIcon from '../images/shareIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import './FoodDetails.css';
 
 function FoodDetails() {
   const [recipe, setRecipe] = useState({ recipe: { } });
   const [isFetching, setIsFetching] = useState(true);
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [copied, setCopied] = useState(false);
   const sliceNumber = 9;
   const itemId = useLocation().pathname.slice(sliceNumber);
+  const itemUrl = useLocation().pathname;
   const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${itemId}`;
+
+  function favoriteStatus(id) {
+    let favRecipes = JSON.parse(localStorage.getItem('favorites'));
+    if (favRecipes === null) favRecipes = [];
+    if (favRecipes.includes(id)) {
+      setIsFavorite(true);
+    } else {
+      setIsFavorite(false);
+    }
+  }
 
   useEffect(() => {
     (async () => {
@@ -17,6 +35,7 @@ function FoodDetails() {
       setRecipe(recipeObj.meals);
       setIsFetching(false);
     })();
+    favoriteStatus(itemId);
   }, []);
 
   // lógica dessa função adaptada de https://stackoverflow.com/questions/49580528/
@@ -39,11 +58,36 @@ function FoodDetails() {
   const data = (isFetching) ? [{}] : recipe;
   const { strMeal,
     strCategory,
+    strArea,
     strInstructions,
     strYoutube = '',
     strMealThumb } = data[0];
   const vidUrl = strYoutube.replace(/watch\?v=/g, '/embed/');
   const ingredients = ingredientsFunc(data[0]);
+
+  const favoriteObj = {
+    id: itemId,
+    type: 'comida',
+    area: strArea,
+    alcoholicOrNot: '',
+    category: strCategory,
+    name: strMeal,
+    image: strMealThumb,
+  };
+
+  function handleFavoriteClick() {
+    handleFavorite(favoriteObj);
+    favoriteStatus(itemId);
+  }
+
+  function handleShareClick() {
+    clipboardCopy(`http://localhost:3000/${itemUrl}`);
+    const seconds = 5000;
+    setCopied(true);
+    setTimeout(() => {
+      setCopied(false);
+    }, seconds);
+  }
 
   return (
     <main>
@@ -63,10 +107,24 @@ function FoodDetails() {
               src={ strMealThumb }
               alt={ `${strMeal}` }
             />
-            <button type="button" data-testid="share-btn">
+            <button
+              type="button"
+              data-testid="share-btn"
+              onClick={ handleShareClick }
+            >
+              <img src={ shareIcon } alt="Compartilhar" />
               Compartilhar
             </button>
-            <button type="button" data-testid="favorite-btn">
+            {(copied) && <span>Link copiado!</span>}
+            <button
+              type="button"
+              onClick={ handleFavoriteClick }
+            >
+              <img
+                data-testid="favorite-btn"
+                src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+                alt="Favoritar"
+              />
               Favoritar
             </button>
             <iframe
