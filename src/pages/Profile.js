@@ -4,14 +4,13 @@ import { Header, Footer } from '../components';
 import '../style/Profile.css';
 
 function Profile() {
-  const { email } = JSON.parse(localStorage.getItem('user'));
   return (
     <div className="profile">
       <Header title="Perfil" />
       <div
         data-testid="profile-email"
       >
-        { email }
+        { localStorage.user ? JSON.parse(localStorage.user).email : ''}
       </div>
       <Link to="/receitas-feitas">
         <button
