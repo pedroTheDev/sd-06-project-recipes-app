@@ -99,7 +99,7 @@ class FoodsDetails extends React.Component {
   setLocalState(recipe) {
     const myObject = [{
       id: recipe.idMeal,
-      type: 'Meal',
+      type: 'comida',
       area: recipe.strArea,
       category: recipe.strCategory,
       alcoholicOrNot: '',

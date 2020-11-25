@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { fetchDrinksById } from '../services';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 class DrinksRecipesInProgress extends React.Component {
   constructor() {
@@ -12,6 +13,7 @@ class DrinksRecipesInProgress extends React.Component {
       Drink: [],
       Ingredients: [],
       Measures: [],
+      Update: false,
     };
     this.handleIngredients = this.handleIngredients.bind(this);
     this.setIngredients = this.setIngredients.bind(this);
@@ -22,7 +24,6 @@ class DrinksRecipesInProgress extends React.Component {
     const { history: { location: { pathname } } } = this.props;
     const endpoint = pathname.split('/')[2];
     const drinkRecipe = await fetchDrinksById(Number(endpoint));
-    console.log(drinkRecipe);
     this.setDrinkState(drinkRecipe);
     this.handleIngredients();
   }
@@ -52,6 +53,22 @@ class DrinksRecipesInProgress extends React.Component {
     });
   }
 
+  handleShareFood({ idDrink }) {
+    const shareBtn = document.querySelector('.share-btn');
+    const url = `http://localhost:3000/bebidas/${idDrink}`;
+    shareBtn.value = 'Link copiado!';
+    window.alert('Link copiado!');
+    const el = document.createElement('textarea');
+    el.value = url;
+    el.setAttribute('readonly', '');
+    el.style.position = 'absolute';
+    el.style.left = '-9999px';
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+  }
+
   setDrinkState(Drink) {
     this.setState({
       Drink,
@@ -63,6 +80,58 @@ class DrinksRecipesInProgress extends React.Component {
       Ingredients,
       Measures,
     });
+  }
+
+  setLocalState(recipe) {
+    const myObject = [{
+      id: recipe.idDrink,
+      type: 'bebida',
+      area: '',
+      category: recipe.strCategory,
+      alcoholicOrNot: recipe.strAlcoholic,
+      name: recipe.strDrink,
+      image: recipe.strDrinkThumb,
+    }];
+    if (!localStorage.getItem('favoriteRecipes')) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify(myObject));
+    }
+    const myLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const shareButton = document.querySelector('.fav-button');
+    const blackHeart = 'http://localhost:3000/static/media/blackHeartIcon.b8913346.svg';
+    const zero = 0;
+    const minusOne = -1;
+    if (shareButton.src === blackHeart && myLocalStorage) {
+      const itemToRemove = myLocalStorage
+        .find((element) => (element.id === recipe.idDrink));
+      const indexToRemove = myLocalStorage.indexOf(itemToRemove, zero);
+      if (indexToRemove !== minusOne) {
+        myLocalStorage.splice(indexToRemove, 1);
+        localStorage.setItem('favoriteRecipes', JSON.stringify(myLocalStorage));
+      }
+      localStorage.setItem('favoriteRecipes', JSON.stringify(myLocalStorage)); // assim remove
+    } else {
+      const MyLSObj = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      const combineObjects = MyLSObj.concat(myObject);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(combineObjects)); // assim add
+    }
+    const favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const filteredStorage = favRecipes
+      .filter((v, i, a) => a.findIndex((t) => (t.id === v.id)) === i); // só registra um único id
+    localStorage.setItem('favoriteRecipes', JSON.stringify(filteredStorage));
+    const { Update } = this.state;
+    this.setState({ Update: !Update });
+  }
+
+  teste(recipe) {
+    if (localStorage.favoriteRecipes) {
+      const favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      const receitaAtual = favRecipes.find((element) => (element.id === recipe.idDrink));
+      if (favRecipes.includes(receitaAtual)) {
+        return blackHeartIcon;
+      }
+      return whiteHeartIcon;
+    }
+    return whiteHeartIcon;
   }
 
   render() {
@@ -86,13 +155,17 @@ class DrinksRecipesInProgress extends React.Component {
                 <input
                   type="image"
                   data-testid="share-btn"
+                  className="share-btn"
                   src={ shareIcon }
                   alt="shareIcon"
+                  onClick={ () => this.handleShareFood(recipe) }
                 />
                 <input
                   type="image"
                   data-testid="favorite-btn"
-                  src={ whiteHeartIcon }
+                  className="fav-button"
+                  src={ this.teste(recipe) }
+                  onClick={ () => this.setLocalState(recipe) }
                   alt="whiteHeartIcon"
                 />
               </div>

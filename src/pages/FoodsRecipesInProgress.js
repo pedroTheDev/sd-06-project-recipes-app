@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { fetchMealsById } from '../services';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 class FoodsRecipesInProgress extends React.Component {
   constructor() {
@@ -13,6 +14,7 @@ class FoodsRecipesInProgress extends React.Component {
       Ingredients: [],
       Measures: [],
       checkedItems: [],
+      Update: false,
     };
     this.handleIngredients = this.handleIngredients.bind(this);
     this.setIngredients = this.setIngredients.bind(this);
@@ -27,7 +29,6 @@ class FoodsRecipesInProgress extends React.Component {
     const { history: { location: { pathname } } } = this.props;
     const endpoint = pathname.split('/')[2];
     const mealRecipe = await fetchMealsById(Number(endpoint));
-    console.log(mealRecipe);
     this.setMealState(mealRecipe);
     this.handleIngredients();
     this.checkedItems();
@@ -66,7 +67,9 @@ class FoodsRecipesInProgress extends React.Component {
   }
 
   handleShareFood({ idMeal }) {
-    const url = `http://localhost:3000/comidas/${idMeal}/in-progress`;
+    const shareBtn = document.querySelector('.share-btn');
+    const url = `http://localhost:3000/comidas/${idMeal}`;
+    shareBtn.value = 'Link copiado!';
     window.alert('Link copiado!');
     const el = document.createElement('textarea');
     el.value = url;
@@ -145,6 +148,58 @@ class FoodsRecipesInProgress extends React.Component {
     console.log(test);
   }
 
+  setLocalStorage(recipe) {
+    const myObject = [{
+      id: recipe.idMeal,
+      type: 'comida',
+      area: recipe.strArea,
+      category: recipe.strCategory,
+      alcoholicOrNot: '',
+      name: recipe.strMeal,
+      image: recipe.strMealThumb,
+    }];
+    if (!localStorage.getItem('favoriteRecipes')) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify(myObject));
+    }
+    const myLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const shareButton = document.querySelector('.fav-button');
+    const blackHeart = 'http://localhost:3000/static/media/blackHeartIcon.b8913346.svg';
+    const zero = 0;
+    const minusOne = -1;
+    if (shareButton.src === blackHeart && myLocalStorage) {
+      const itemToRemove = myLocalStorage
+        .find((element) => (element.id === recipe.idMeal));
+      const indexToRemove = myLocalStorage.indexOf(itemToRemove, zero);
+      if (indexToRemove !== minusOne) {
+        myLocalStorage.splice(indexToRemove, 1);
+        localStorage.setItem('favoriteRecipes', JSON.stringify(myLocalStorage));
+      }
+      localStorage.setItem('favoriteRecipes', JSON.stringify(myLocalStorage)); // assim remove
+    } else {
+      const MyLSObj = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      const combineObjects = MyLSObj.concat(myObject);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(combineObjects)); // assim add
+    }
+    const favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const filteredStorage = favRecipes
+      .filter((v, i, a) => a.findIndex((t) => (t.id === v.id)) === i); // só registra um único id
+    localStorage.setItem('favoriteRecipes', JSON.stringify(filteredStorage));
+    const { Update } = this.state;
+    this.setState({ Update: !Update });
+  }
+
+  teste(recipe) {
+    if (localStorage.favoriteRecipes) {
+      const favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      const receitaAtual = favRecipes.find((element) => (element.id === recipe.idMeal));
+      if (favRecipes.includes(receitaAtual)) {
+        return blackHeartIcon;
+      }
+      return whiteHeartIcon;
+    }
+    return whiteHeartIcon;
+  }
+
   render() {
     const { Meal, Ingredients, Measures, checkedItems } = this.state;
     const { history } = this.props;
@@ -166,6 +221,7 @@ class FoodsRecipesInProgress extends React.Component {
                 <input
                   type="image"
                   data-testid="share-btn"
+                  className="share-btn"
                   src={ shareIcon }
                   alt="shareIcon"
                   onClick={ () => this.handleShareFood(recipe) }
@@ -173,7 +229,9 @@ class FoodsRecipesInProgress extends React.Component {
                 <input
                   type="image"
                   data-testid="favorite-btn"
-                  src={ whiteHeartIcon }
+                  className="fav-button"
+                  src={ this.teste(recipe) }
+                  onClick={ () => this.setLocalStorage(recipe) }
                   alt="whiteHeartIcon"
                 />
               </div>

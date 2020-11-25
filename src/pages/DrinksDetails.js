@@ -87,7 +87,7 @@ class DrinksDetails extends React.Component {
   setLocalState(recipe) {
     const myObject = [{
       id: recipe.idDrink,
-      type: 'Drink',
+      type: 'bebida',
       area: '',
       category: recipe.strCategory,
       alcoholicOrNot: recipe.strAlcoholic,
@@ -133,17 +133,6 @@ class DrinksDetails extends React.Component {
       }
       return whiteHeartIcon;
     }
-    return whiteHeartIcon;
-  }
-
-  changeFavIcon(idMeal) {
-    const { favorite } = this.state;
-    const { dispatchFavorite } = this.props;
-    if (favorite) {
-      dispatchFavorite(favorite, idMeal);
-      return blackHeartIcon;
-    }
-    dispatchFavorite(favorite, idMeal);
     return whiteHeartIcon;
   }
 
