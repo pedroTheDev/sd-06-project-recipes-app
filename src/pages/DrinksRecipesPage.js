@@ -1,19 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { requestDrinks, requestCategoryDrink, filterCategoryDrinks } from '../services/requestsAPI';
 import DrinkCard from '../components/DrinkCard';
+import RecipesContext from '../context/RecipesContext';
 
 function DrinksRecipesPage() {
   const [apiResult, setApiResult] = useState([]);
   const [drinkCategory, setDrinkCategory] = useState([]);
   const [curcategory, setCurcategory] = useState([]);
+  const { hiddenInput } = useContext(RecipesContext);
 
-  useEffect(async () => {
-    const response = await requestDrinks();
-    setApiResult(response);
-    const categoryResults = await requestCategoryDrink();
-    setDrinkCategory(categoryResults);
+  useEffect(() => {
+    async function fetchData() {
+      const response = await requestDrinks();
+      setApiResult(response);
+      const categoryResults = await requestCategoryDrink();
+      setDrinkCategory(categoryResults);
+    }
+    fetchData();
   }, []);
 
   async function handleClick(e) {
@@ -39,8 +44,8 @@ function DrinksRecipesPage() {
         ))}
       </div>
       <div>
-        {apiResult.drinks && apiResult.drinks.slice(0, 12).map((element, idx) => (
-          <DrinkCard element={element} idx={idx} key={element.idDrink} />))}
+        { !hiddenInput ? apiResult.drinks && apiResult.drinks.slice(0, 12).map((element, idx) => (
+          <DrinkCard element={element} idx={idx} key={element.idDrink} />)) : null }
       </div>
 
       <Footer />

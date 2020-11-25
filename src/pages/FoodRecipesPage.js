@@ -1,18 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { requestFoods, requestCategoryFood, filterCategoryFood } from '../services/requestsAPI';
 import FoodCard from '../components/FoodCard';
+import RecipesContext from '../context/RecipesContext';
 
 function FoodRecipesPage() {
   const [apiResult, setApiResult] = useState([]);
   const [foodCategory, setFoodCategory] = useState([]);
+  const { hiddenInput } = useContext(RecipesContext);
 
-  useEffect(async () => {
-    const foodResults = await requestFoods();
-    setApiResult(foodResults);
-    const categoryResults = await requestCategoryFood();
-    setFoodCategory(categoryResults);
+  useEffect(() => {
+    async function fetchData() {
+      const foodResults = await requestFoods();
+      setApiResult(foodResults);
+      const categoryResults = await requestCategoryFood();
+      setFoodCategory(categoryResults);
+    }
+    fetchData();
   }, []);
 
   async function handleClick(e) {
@@ -35,8 +40,8 @@ function FoodRecipesPage() {
 
       </div>
       <div>
-        {apiResult.meals && apiResult.meals.slice(0, 12).map((element, idx) => (
-          <FoodCard element={element} idx={idx} key={element.idMeal} />))}
+        { !hiddenInput ? apiResult.meals && apiResult.meals.slice(0, 12).map((element, idx) => (
+          <FoodCard element={element} idx={idx} key={element.idMeal} />)) : null }
       </div>
 
       <Footer />
