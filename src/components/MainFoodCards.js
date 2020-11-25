@@ -10,11 +10,14 @@ function MainFoodCard() {
     FoodBtn,
     setFoodBtn,
     filterFood,
+    effectOnLoad,
     setFilterFood } = useContext(RecipesContext);
 
   useEffect(() => {
-    FetchApiFood('2', setFetchFood);
-    FetchApiFood('4', setFoodBtn);
+    if (effectOnLoad) {
+      FetchApiFood('2', setFetchFood);
+      FetchApiFood('4', setFoodBtn);
+    }
   }, []);
 
   const [targetName, setTargetName] = useState('');
