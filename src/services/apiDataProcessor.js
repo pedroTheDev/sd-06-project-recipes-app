@@ -1,9 +1,9 @@
 function ingredientMapper(recipe, type) {
   const ingredients = [];
   const recipeValues = Object.entries(recipe);
-  const um = 1;
-  const zero = 0;
-  for (let i = zero; i < recipeValues.length; i += um) {
+  const increment = 1;
+  const initialIndex = 0;
+  for (let i = initialIndex; i < recipeValues.length; i += increment) {
     if (recipeValues[i][0].includes(type)) ingredients.push(recipeValues[i][1]);
   }
   return ingredients;
