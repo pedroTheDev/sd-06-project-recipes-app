@@ -97,8 +97,8 @@ class FoodsRecipesInProgress extends React.Component {
 
   setRecipesLocalStorage() {
     const { checkedItems } = this.state;
-    const zero = 0;
-    if (checkedItems.length > zero) {
+    const length = 0;
+    if (checkedItems.length > length) {
       localStorage.setItem('inProgressRecipes', JSON.stringify(checkedItems));
     }
   }
@@ -241,8 +241,9 @@ class FoodsRecipesInProgress extends React.Component {
 
   check() {
     const { checkedItems } = this.state;
+    const length = 0;
     const verifyLocalStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    if (checkedItems.length === 0 && verifyLocalStorage) {
+    if (checkedItems.length === length && verifyLocalStorage) {
       const getCheckedItems = JSON.parse(localStorage.getItem('inProgressRecipes'));
       return getCheckedItems;
     }
@@ -250,7 +251,7 @@ class FoodsRecipesInProgress extends React.Component {
   }
 
   render() {
-    const { Meal, Ingredients, Measures, checkedItems, disabledButton } = this.state;
+    const { Meal, Ingredients, Measures, disabledButton } = this.state;
     const getChecked = this.check();
     return (
       <div className="food-drink-detail-container">
