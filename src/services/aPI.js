@@ -24,8 +24,8 @@ export async function searchDrink(drink, radioButton) {
   return json;
 }
 
-export async function showAllFoodsCategories() {
-  const URL = 'https://www.themealdb.com/api/json/v1/1/categories.php';
+export async function showSugestedFoods() {
+  const URL = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
 
   const response = await fetch(`${URL}`);
   const json = response.json();
@@ -33,11 +33,11 @@ export async function showAllFoodsCategories() {
   return json;
 }
 
-// export async function showAllDrinksCategories() {
-//   const URL = 'https://www.themealdb.com/api/json/v1/1/categories.php';
+export async function showSugestedDrinks() {
+  const URL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
 
-//   const response = await fetch(`${URL}`);
-//   const json = response.json();
+  const response = await fetch(`${URL}`);
+  const json = response.json();
 
-//   return json;
-// }
+  return json;
+}
