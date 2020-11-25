@@ -72,7 +72,9 @@ class DrinksRecipesInProgress extends React.Component {
 
   handleButton() {
     const { checkedItems, Ingredients } = this.state;
-    if (Ingredients.length === Object.keys(checkedItems).length + 1) {
+    if (Ingredients.length === Object
+      .values(checkedItems)
+      .filter((item) => item).length + 1) {
       this.setState({ disabledButton: true });
     } else {
       this.setState({ disabledButton: false });
