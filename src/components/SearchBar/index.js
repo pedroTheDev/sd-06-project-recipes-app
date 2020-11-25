@@ -1,13 +1,7 @@
 import React, { useContext, useState } from 'react';
 import ContextAPI from '../../Context/ContextAPI';
 
-import { searchFoodIngredients,
-  searchFoodName,
-  searchFoodFirstLetter,
-  searchDrinkIngredients,
-  searchDrinkName,
-  searchDrinkFirstLetter,
-} from '../../services/aPI';
+import { searchFood, searchDrink } from '../../services/aPI';
 
 const SearchBar = () => {
   const { searchComponent, setApiValueSearch, apiValueSearch } = useContext(ContextAPI);
@@ -20,65 +14,23 @@ const SearchBar = () => {
     if (target.name === 'text') setNome(target.value);
   };
 
-  const apiOfIngredients = async () => {
-    if (window.location.pathname === '/bebidas') {
-      const drinks = await searchDrinkIngredients(nome);
-      return setApiValueSearch({
-        ...apiValueSearch,
-        drinks,
-      });
-    }
-    const foods = await searchFoodIngredients(nome);
-    return setApiValueSearch({
-      ...apiValueSearch,
-      foods,
-    });
-  };
-
-  const apiOfName = async () => {
-    if (window.location.pathname === '/bebidas') {
-      const drinks = await searchDrinkName(nome);
-      return setApiValueSearch({
-        ...apiValueSearch,
-        drinks,
-      });
-    }
-    const foods = await searchFoodName(nome);
-    return setApiValueSearch({
-      ...apiValueSearch,
-      foods,
-    });
-  };
-
-  const apiOfFirstLetter = async () => {
-    if (nome.length > 1) {
+  const handleChangeButton = async () => {
+    if (radioButton === 'primeira-letra' && nome.length > 1) {
       return alert('Sua busca deve conter somente 1 (um) caracter');
     }
+
     if (window.location.pathname === '/bebidas') {
-      const drinks = await searchDrinkFirstLetter(nome);
+      const drinks = await searchDrink(nome, radioButton);
       return setApiValueSearch({
         ...apiValueSearch,
         drinks,
       });
     }
-    const foods = await searchFoodFirstLetter(nome);
+    const foods = await searchFood(nome, radioButton);
     return setApiValueSearch({
       ...apiValueSearch,
       foods,
     });
-  };
-
-  const handleChangeButton = () => {
-    switch (radioButton) {
-    case 'ingrediente':
-      return apiOfIngredients();
-    case 'nome':
-      return apiOfName();
-    case 'primeira-letra':
-      return apiOfFirstLetter();
-    default:
-      return '';
-    }
   };
 
   return searchComponent && (

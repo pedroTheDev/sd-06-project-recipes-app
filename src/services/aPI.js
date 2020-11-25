@@ -1,52 +1,24 @@
-export async function searchDrinkIngredients(ingredient) {
-  const URL = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=';
+export async function searchFood(food, radioButton) {
+  const URL = 'https://www.themealdb.com/api/json/v1/1/';
+  let endpoint = '';
+  if (radioButton === 'ingrediente') endpoint = `filter.php?i=${food}`;
+  else if (radioButton === 'nome') endpoint = `search.php?s=${food}`;
+  else if (radioButton === 'primeira-letra') endpoint = `search.php?f=${food}`;
 
-  const response = await fetch(`${URL}${ingredient}`);
+  const response = await fetch(`${URL}${endpoint}`);
   const json = response.json();
 
   return json;
 }
 
-export async function searchDrinkName(name) {
-  const URL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+export async function searchDrink(drink, radioButton) {
+  const URL = 'https://www.thecocktaildb.com/api/json/v1/1/';
+  let endpoint = '';
+  if (radioButton === 'ingrediente') endpoint = `filter.php?i=${drink}`;
+  else if (radioButton === 'nome') endpoint = `search.php?s=${drink}`;
+  else if (radioButton === 'primeira-letra') endpoint = `search.php?f=${drink}`;
 
-  const response = await fetch(`${URL}${name}`);
-  const json = response.json();
-
-  return json;
-}
-
-export async function searchDrinkFirstLetter(letter) {
-  const URL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?f=';
-
-  const response = await fetch(`${URL}${letter}`);
-  const json = response.json();
-
-  return json;
-}
-
-export async function searchFoodIngredients(ingredient) {
-  const URL = 'https://www.themealdb.com/api/json/v1/1/filter.php?i=';
-
-  const response = await fetch(`${URL}${ingredient}`);
-  const json = response.json();
-
-  return json;
-}
-
-export async function searchFoodName(name) {
-  const URL = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
-
-  const response = await fetch(`${URL}${name}`);
-  const json = response.json();
-
-  return json;
-}
-
-export async function searchFoodFirstLetter(letter) {
-  const URL = 'https://www.themealdb.com/api/json/v1/1/search.php?f=';
-
-  const response = await fetch(`${URL}${letter}`);
+  const response = await fetch(`${URL}${endpoint}`);
   const json = response.json();
 
   return json;
@@ -61,11 +33,11 @@ export async function showAllFoodsCategories() {
   return json;
 }
 
-export async function showAllDrinksCategories() {
-  const URL = 'https://www.themealdb.com/api/json/v1/1/categories.php';
+// export async function showAllDrinksCategories() {
+//   const URL = 'https://www.themealdb.com/api/json/v1/1/categories.php';
 
-  const response = await fetch(`${URL}`);
-  const json = response.json();
+//   const response = await fetch(`${URL}`);
+//   const json = response.json();
 
-  return json;
-}
+//   return json;
+// }
