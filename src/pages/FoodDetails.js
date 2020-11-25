@@ -12,7 +12,7 @@ import './FoodDetails.css';
 function FoodDetails() {
   const [recipe, setRecipe] = useState({ recipe: { } });
   const [isFetching, setIsFetching] = useState(true);
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(whiteHeartIcon);
   const [copied, setCopied] = useState(false);
   const sliceNumber = 9;
   const itemId = useLocation().pathname.slice(sliceNumber);
@@ -20,12 +20,13 @@ function FoodDetails() {
   const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${itemId}`;
 
   function favoriteStatus(id) {
-    let favRecipes = JSON.parse(localStorage.getItem('favorites'));
+    let favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
     if (favRecipes === null) favRecipes = [];
-    if (favRecipes.includes(id)) {
-      setIsFavorite(true);
+    const favorited = favRecipes.find((item) => (item.id === id));
+    if (favorited) {
+      setIsFavorite(blackHeartIcon);
     } else {
-      setIsFavorite(false);
+      setIsFavorite(whiteHeartIcon);
     }
   }
 
@@ -122,7 +123,7 @@ function FoodDetails() {
             >
               <img
                 data-testid="favorite-btn"
-                src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+                src={ isFavorite }
                 alt="Favoritar"
               />
               Favoritar

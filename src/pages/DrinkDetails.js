@@ -13,7 +13,7 @@ import './DrinkDetails.css';
 function DrinkDetails() {
   const [recipe, setRecipe] = useState({ recipe: { } });
   const [isFetching, setIsFetching] = useState(true);
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(whiteHeartIcon);
   const [copied, setCopied] = useState(false);
   const sliceNumber = 9;
   const itemId = useLocation().pathname.slice(sliceNumber);
@@ -21,12 +21,13 @@ function DrinkDetails() {
   const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${itemId}`;
 
   function favoriteStatus(id) {
-    let favRecipes = JSON.parse(localStorage.getItem('favorites'));
+    let favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
     if (favRecipes === null) favRecipes = [];
-    if (favRecipes.includes(id)) {
-      setIsFavorite(true);
+    const favorited = favRecipes.find((item) => (item.id === id));
+    if (favorited) {
+      setIsFavorite(blackHeartIcon);
     } else {
-      setIsFavorite(false);
+      setIsFavorite(whiteHeartIcon);
     }
   }
 
@@ -72,7 +73,7 @@ function DrinkDetails() {
     alcoholicOrNot: strAlcoholic,
     name: strDrink,
     image: strDrinkThumb,
-  }
+  };
 
   function handleFavoriteClick() {
     handleFavorite(favoriteObj);
@@ -120,7 +121,7 @@ function DrinkDetails() {
             >
               <img
                 data-testid="favorite-btn"
-                src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+                src={ isFavorite }
                 alt="Favoritar"
               />
               Favoritar
