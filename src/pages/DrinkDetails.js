@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import clipboardCopy from 'clipboard-copy';
 import Recommended from '../components/Recommended';
 import { fetchRecipe } from '../services/api';
 import handleFavorite from '../services/storageFunctions';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import clipboardCopy from 'clipboard-copy';
 
 import './DrinkDetails.css';
 
@@ -19,6 +19,16 @@ function DrinkDetails() {
   const itemId = useLocation().pathname.slice(sliceNumber);
   const itemUrl = useLocation().pathname;
   const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${itemId}`;
+
+  function favoriteStatus(id) {
+    let favRecipes = JSON.parse(localStorage.getItem('favorites'));
+    if (favRecipes === null) favRecipes = [];
+    if (favRecipes.includes(id)) {
+      setIsFavorite(true);
+    } else {
+      setIsFavorite(false);
+    }
+  }
 
   useEffect(() => {
     (async () => {
@@ -48,7 +58,7 @@ function DrinkDetails() {
 
   const data = (isFetching) ? [{}] : recipe;
   const { strDrink,
-    // strCategory,
+    strCategory,
     strInstructions,
     strDrinkThumb,
     strAlcoholic } = data[0];
@@ -69,19 +79,13 @@ function DrinkDetails() {
     favoriteStatus(itemId);
   }
 
-  function favoriteStatus(itemId) {
-    let favoriteStatus = JSON.parse(localStorage.getItem('favorites'));
-    if (favoriteStatus === null) favoriteStatus = [];
-    (favoriteStatus.includes(itemId)) ? setIsFavorite(true) : setIsFavorite(false);
-  }
-
   function handleShareClick() {
     clipboardCopy(`http://localhost:3000/${itemUrl}`);
-    const shareBtn = document.getElementById('share-button');
+    const seconds = 5000;
     setCopied(true);
     setTimeout(() => {
       setCopied(false);
-    }, 5000);
+    }, seconds);
   }
 
   return (
@@ -101,8 +105,12 @@ function DrinkDetails() {
               src={ strDrinkThumb }
               alt={ `${strDrink}` }
             />
-            <button id="share-button" type="button" data-testid="share-btn" onClick={ handleShareClick }>
-              <img src={ shareIcon } alt="Compartilhar"/>
+            <button
+              type="button"
+              data-testid="share-btn"
+              onClick={ handleShareClick }
+            >
+              <img src={ shareIcon } alt="Compartilhar" />
               Compartilhar
             </button>
             {(copied) && <span>Link copiado!</span>}
@@ -110,7 +118,11 @@ function DrinkDetails() {
               type="button"
               onClick={ handleFavoriteClick }
             >
-              <img data-testid="favorite-btn" src={ isFavorite ? blackHeartIcon : whiteHeartIcon } alt="Favoritar"/>
+              <img
+                data-testid="favorite-btn"
+                src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+                alt="Favoritar"
+              />
               Favoritar
             </button>
             <div>
