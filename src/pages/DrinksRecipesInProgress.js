@@ -13,11 +13,15 @@ class DrinksRecipesInProgress extends React.Component {
       Drink: [],
       Ingredients: [],
       Measures: [],
+      checkedItems: [],
+      disabledButton: false,
       Update: false,
     };
     this.handleIngredients = this.handleIngredients.bind(this);
     this.setIngredients = this.setIngredients.bind(this);
     this.setDrinkState = this.setDrinkState.bind(this);
+    this.checked = this.checked.bind(this);
+    this.checkedItems = this.checkedItems.bind(this);
   }
 
   async componentDidMount() {
@@ -26,6 +30,7 @@ class DrinksRecipesInProgress extends React.Component {
     const drinkRecipe = await fetchDrinksById(Number(endpoint));
     this.setDrinkState(drinkRecipe);
     this.handleIngredients();
+    this.checkedItems();
   }
 
   handleIngredients() {
@@ -69,6 +74,19 @@ class DrinksRecipesInProgress extends React.Component {
     document.body.removeChild(el);
   }
 
+  handleButton() {
+    const { checkedItems, Ingredients } = this.state;
+    if (Ingredients.length === Object
+      .values(checkedItems)
+      .filter((item) => item).length + 1) {
+      this.setState({ disabledButton: true });
+    } else {
+      this.setState({ disabledButton: false });
+    }
+    // console.log('checkedItems', Ingredients.length);
+    // console.log('Ingredients', Object.keys(checkedItems).length + 1);
+  }
+
   setDrinkState(Drink) {
     this.setState({
       Drink,
@@ -80,6 +98,51 @@ class DrinksRecipesInProgress extends React.Component {
       Ingredients,
       Measures,
     });
+  }
+
+  checkedItems() {
+    const checked = {};
+    const { Ingredients } = this.state;
+    const getCheckedItems = localStorage.getItem('storedRecipe');
+    // const zero = 0;
+    if (!getCheckedItems) {
+      Ingredients.forEach((item) => {
+        checked[item] = false;
+      });
+      this.setState({ checkedItems: checked });
+      // localStorage.setItem('storedRecipe', JSON.stringify(checked));
+    }
+  }
+
+  checked(e) {
+    const { checkedItems } = this.state;
+    const { value, checked } = e.target;
+    this.setState({
+      checkedItems: { ...checkedItems, [value]: checked },
+    });
+    const inputsList = document.querySelectorAll('input');
+    inputsList.forEach((item) => {
+      if (item.checked === true) {
+        item.parentNode.className = 'styled';
+      } else {
+        item.parentNode.className = 'not-styled';
+      }
+    });
+  }
+
+  test(e) {
+    const { idCurrent } = this.props;
+    console.log(idCurrent);
+    const object = {
+      meals: {
+        idCurrent,
+        ingredients: [
+          e.target.value,
+        ],
+      },
+    };
+    const test = localStorage.setItem('inProgressRecipes', JSON.stringify(object));
+    console.log(test);
   }
 
   setLocalState(recipe) {
@@ -172,9 +235,10 @@ class DrinksRecipesInProgress extends React.Component {
     localStorage.setItem('doneRecipes', JSON.stringify(filteredStorage));
     history.push('/receitas-feitas');
   }
-
+  
   render() {
-    const { Drink, Ingredients, Measures } = this.state;
+    const { Drink, Ingredients, Measures, checkedItems, disabledButton } = this.state;
+    const { history } = this.props;
     return (
       <div className="food-drink-detail-container">
         {Drink ? Drink.map((recipe, index) => (
@@ -196,7 +260,7 @@ class DrinksRecipesInProgress extends React.Component {
                   className="share-btn"
                   src={ shareIcon }
                   alt="shareIcon"
-                  onClick={ () => this.handleShareFood(recipe) }
+                  onClick={ () => this.handleShareDrink(recipe) }
                 />
                 <input
                   type="image"
@@ -215,12 +279,17 @@ class DrinksRecipesInProgress extends React.Component {
                 <div key={ i }>
                   <label
                     className="detail-ingredients"
-                    htmlFor="ingredient"
+                    htmlFor={ `ingredient ${i}` }
                     data-testid={ `${i}-ingredient-step` }
                   >
                     <input
-                      id="ingredient"
+                      id={ `ingredient ${i}` }
+                      name={ `ingredient ${i}` }
                       type="checkbox"
+                      onChange={ () => this.handleButton() }
+                      onClick={ (e) => this.checked(e) }
+                      value={ recipes }
+                      checked={ checkedItems.recipes }
                     />
                     {recipes}
                     -
@@ -238,6 +307,7 @@ class DrinksRecipesInProgress extends React.Component {
                 type="button"
                 onClick={ () => this.recipeDone(recipe) }
                 className="start-recipe"
+
               >
                 Finalizar Receita
               </button>
@@ -254,6 +324,7 @@ const mapStateToProps = (state) => ({
 
 DrinksRecipesInProgress.propTypes = {
   history: PropTypes.shape().isRequired,
+  idCurrent: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, null)(DrinksRecipesInProgress);

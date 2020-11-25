@@ -14,6 +14,7 @@ class FoodsRecipesInProgress extends React.Component {
       Ingredients: [],
       Measures: [],
       checkedItems: [],
+      disabledButton: false,
       Update: false,
     };
     this.handleIngredients = this.handleIngredients.bind(this);
@@ -21,6 +22,9 @@ class FoodsRecipesInProgress extends React.Component {
     this.setMealState = this.setMealState.bind(this);
     this.checked = this.checked.bind(this);
     this.checkedItems = this.checkedItems.bind(this);
+    this.test = this.test.bind(this);
+    // this.getLocalStorage = this.getLocalStorage.bind(this);
+    // this.handleButton = this.handleButton.bind(this);
     // this.test = this.test.bind(this);
     this.getLocalStorage = this.getLocalStorage.bind(this);
   }
@@ -32,7 +36,7 @@ class FoodsRecipesInProgress extends React.Component {
     this.setMealState(mealRecipe);
     this.handleIngredients();
     this.checkedItems();
-    this.getLocalStorage();
+    // this.getLocalStorage();
   }
 
   // componentDidUpdate() {
@@ -82,6 +86,19 @@ class FoodsRecipesInProgress extends React.Component {
     document.body.removeChild(el);
   }
 
+  handleButton() {
+    const { checkedItems, Ingredients } = this.state;
+    if (Ingredients.length === Object
+      .values(checkedItems)
+      .filter((item) => item).length + 1) {
+      this.setState({ disabledButton: true });
+    } else {
+      this.setState({ disabledButton: false });
+    }
+    // console.log('checkedItems', Ingredients.length);
+    // console.log('Ingredients', Object.keys(checkedItems).length + 1);
+  }
+
   setMealState(Meal) {
     this.setState({
       Meal,
@@ -95,13 +112,13 @@ class FoodsRecipesInProgress extends React.Component {
     });
   }
 
-  getLocalStorage() {
-    const getRecipesInProgress = localStorage.getItem('storedRecipe');
-    if (getRecipesInProgress) {
-      const recipesInProgress = JSON.parse(getRecipesInProgress);
-      this.state({ checkedItems: recipesInProgress });
-    }
-  }
+  // getLocalStorage() {
+  //   const getRecipesInProgress = localStorage.getItem('storedRecipe');
+  //   if (getRecipesInProgress) {
+  //     const recipesInProgress = JSON.parse(getRecipesInProgress);
+  //     this.state({ checkedItems: recipesInProgress });
+  //   }
+  // }
 
   setLocalStorage(recipe) {
     const myObject = [{
@@ -237,7 +254,8 @@ class FoodsRecipesInProgress extends React.Component {
   }
 
   render() {
-    const { Meal, Ingredients, Measures, checkedItems } = this.state;
+    const { Meal, Ingredients, Measures, checkedItems, disabledButton } = this.state;
+    const { history } = this.props;
     return (
       <div className="food-drink-detail-container">
         {Meal ? Meal.map((recipe, index) => (
@@ -288,6 +306,7 @@ class FoodsRecipesInProgress extends React.Component {
                       id={ `ingredient ${i}` }
                       name={ `ingredient ${i}` }
                       type="checkbox"
+                      onChange={ () => this.handleButton() }
                       onClick={ (e) => this.checked(e) }
                       value={ recipes }
                       checked={ checkedItems.recipes }
