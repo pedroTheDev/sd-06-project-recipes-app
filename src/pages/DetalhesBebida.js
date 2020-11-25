@@ -1,10 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
+import CardComida from '../components/CardComida';
+import RecipeContext from '../context/RecipeContext';
 import { fetchApiBebidasDetalhes } from '../services/FetchApiBebidas';
 
 function DetalhesBebida() {
   const { idDaReceita } = useParams();
   const [estadoApiBebidas, setEstadoApiBebidas] = useState([]);
+  const { retornoApi6Comidas } = useContext(RecipeContext);
+  const seis = 6;
+  const zero = 0;
   const fetchBebidasDetalhes = async () => {
     const response = await fetchApiBebidasDetalhes(idDaReceita);
     setEstadoApiBebidas(response);
@@ -96,7 +101,11 @@ function DetalhesBebida() {
         <button type="button" data-testid="favorite-btn">Favoritar</button>
         <button type="button" data-testid="start-recipe-btn">Favoritar</button>
         <div data-testid={ `${index}-recomendation-card` }>
-          Fazer o de comidas
+          {
+            retornoApi6Comidas
+            && retornoApi6Comidas.slice(zero, seis)
+              .map((food, indice) => CardComida(food, indice))
+          }
         </div>
       </div>
     )));
