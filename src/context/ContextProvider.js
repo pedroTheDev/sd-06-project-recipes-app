@@ -5,12 +5,15 @@ import RecipeContext from './RecipeContext';
 function ContextProvider({ children }) {
   const [foodAPI, setFoodAPI] = useState([]);
   const [drinkAPI, setDrinkAPI] = useState([]);
+  const [mealCategories, setMealCategories] = useState('');
 
   const ContextValue = {
     foodAPI,
     setFoodAPI,
     drinkAPI,
     setDrinkAPI,
+    mealCategories,
+    setMealCategories,
   };
 
   return (

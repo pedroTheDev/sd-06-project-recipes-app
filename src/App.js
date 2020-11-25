@@ -11,6 +11,9 @@ import DrinkDetails from './pages/DrinkDetails';
 import ContextProvider from './context/ContextProvider';
 import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
+import ExploreFood from './pages/ExploreFood';
+import ExploreDrink from './pages/ExploreDrink';
+import ExploreFoodIngredient from './pages/ExploreFoodIngredient';
 
 function App() {
   return (
@@ -23,6 +26,13 @@ function App() {
           <Route path="/comidas/:id" component={ FoodDetails } />
           <Route path="/comidas" component={ Food } />
           <Route path="/perfil" component={ Perfil } />
+          <Route
+            exact
+            path="/explorar/comidas/ingredientes"
+            component={ ExploreFoodIngredient }
+          />
+          <Route path="/explorar/comidas" component={ ExploreFood } />
+          <Route path="/explorar/bebidas" component={ ExploreDrink } />
           <Route path="/explorar" component={ Explore } />
           <Route path="/receitas-feitas" component={ DoneRecipes } />
           <Route path="/receitas-favoritas" component={ FavoriteRecipes } />

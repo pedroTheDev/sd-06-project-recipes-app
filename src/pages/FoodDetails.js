@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import Recommended from '../components/Recommended';
 import { fetchRecipe } from '../services/api';
 import './FoodDetails.css';
 
@@ -85,6 +86,7 @@ function FoodDetails() {
             <p data-testid="instructions">
               {strInstructions}
             </p>
+            <Recommended />
             <button
               type="button"
               className="start-recipe-btn"
