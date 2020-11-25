@@ -24,3 +24,8 @@
   flex-wrap: wrap;
   margin-bottom: 58px;
 }
+
+a:link, a:visited {
+  text-decoration: none;
+  color: black;
+}

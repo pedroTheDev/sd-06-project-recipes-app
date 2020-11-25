@@ -26,9 +26,9 @@ function RecipesAppProvider({ children }) {
       : fetchDrink('allCategories')
     );
     const first = 0;
-    const sixth = 6;
+    const fifth = 5;
 
-    categoriesList = categoriesList.slice(first, sixth);
+    categoriesList = categoriesList.slice(first, fifth);
     console.log(categoriesList);
     setCategories(categoriesList);
   };
