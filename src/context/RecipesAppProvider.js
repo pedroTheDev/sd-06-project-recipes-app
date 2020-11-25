@@ -11,14 +11,12 @@ function RecipesAppProvider({ children }) {
   const setFetchMeal = async (type, key) => {
     const result = await fetchMeal(type, key);
     setData(result);
-    console.log(result);
     return result;
   };
 
   const setFetchDrink = async (type, key) => {
     const result = await fetchDrink(type, key);
     setData(result);
-    console.log(result);
     return result;
   };
 
