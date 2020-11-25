@@ -14,7 +14,7 @@ function Food() {
   const [currentMeals, setCurrentMeals] = useState([]);
   const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
   const urlCategories = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
-  const urlMealsCategories = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${currentCategories}`;
+  const urlMealsCategories = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${currentCategories}`;
 
   useEffect(() => {
     const fecthMeals = async () => {
