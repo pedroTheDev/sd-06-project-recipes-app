@@ -39,7 +39,7 @@ function DrinkDetails() {
 
   const data = (isFetching) ? [{}] : recipe;
   const { strDrink,
-    strCategory,
+    // strCategory,
     strInstructions,
     strDrinkThumb,
     strAlcoholic } = data[0];
