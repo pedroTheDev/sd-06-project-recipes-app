@@ -32,7 +32,13 @@ function ExploreByOrigin() {
           data-testid="explore-by-area-dropdown"
         >
           { data.map((foodsArea, index) => (
-            <option key={ index } value={ foodsArea.strArea }>{ foodsArea.strArea }</option>
+            <option
+              key={ index }
+              value={ foodsArea.strArea }
+              data-testid={ `${foodsArea.strArea}-option` }
+            >
+              { foodsArea.strArea }
+            </option>
           ))}
         </select>
       ) : (
@@ -40,7 +46,13 @@ function ExploreByOrigin() {
           data-testid="explore-by-area-dropdown"
         >
           { data.map((drinksArea, index) => (
-            <option key={ index } value={ drinksArea.strAlcoholic }>{ drinksArea.strAlcoholic }</option>
+            <option
+              key={ index }
+              value={ drinksArea.strAlcoholic }
+              data-testid={ `${drinksArea.strArea}-option` }
+            >
+              { drinksArea.strAlcoholic }
+            </option>
           ))}
         </select>
       ) }

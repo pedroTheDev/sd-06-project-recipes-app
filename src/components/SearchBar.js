@@ -14,7 +14,7 @@ function SearchBar(props) {
   const history = useHistory();
 
   const renderCards = (recipeApi) => {
-    if (!recipeApi) {
+    if (recipeApi === null) {
       alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
     } else if (recipeApi.length === 1) {
       if (location === '/comidas') {
@@ -35,8 +35,10 @@ function SearchBar(props) {
     const recipesApi = await fetchApi(selectedRadio, inputSearch);
     setSearchText(inputSearch);
     setSelectedRadio(selectedRadio);
-    setRecipes(recipesApi);
     renderCards(recipesApi);
+    if(recipesApi !== null) {
+      setRecipes(recipesApi);
+    };
   };
 
   return (
