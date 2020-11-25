@@ -22,7 +22,7 @@ function ExplorarComidas() {
             type="button"
             data-testid="explore-by-area"
           >
-            Local de Origem
+            Por Local de Origem
           </button>
         </Link>
         {/* <Link> */}
