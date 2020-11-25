@@ -4,18 +4,22 @@ import userEvent from '@testing-library/user-event';
 import renderWithRouter from './renderWithRouter';
 // import FoodInProgress from '../pages/FoodInProgress';
 import DrinkInProgress from '../pages/DrinkInProgress';
+import drinks from '../../cypress/mocks/drinks';
 
 describe('Tela de Receita de Comida em progresso:', () => {
+  console.log(drinks.drinks[0]);
   it('Renderiza os items corretos', () => {
     renderWithRouter(
       <DrinkInProgress match={ { params: { id: '52977' } } } />,
     );
+    jest.spyOn(DrinkInProgress, 'requestDetailsAPI')
+      .mockImplementation(() => drinks.drinks[0]);
     const photo = screen.getByTestId('recipe-photo');
     const title = screen.getByTestId('recipe-title');
     const shareBtn = screen.getByTestId('share-btn');
     const favoriteBtn = screen.getByTestId('favorite-btn');
     const category = screen.getByTestId('recipe-category');
-    const ingredient = screen.getByText('0-ingredient-step');
+    const ingredient = screen.getByTestId('0-ingredient-step');
     const instructions = screen.getByTestId('instructions');
     const finishRecipeBtn = screen.getByTestId('finish-recipe-btn');
     expect(photo).toBeInTheDocument();
@@ -44,4 +48,5 @@ describe('Tela de Receita de Comida em progresso:', () => {
     const { pathname } = history.location;
     expect(pathname).toBe('/receitas-feitas');
   });
+  
 });
