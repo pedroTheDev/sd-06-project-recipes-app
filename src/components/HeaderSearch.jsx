@@ -34,7 +34,8 @@ function HeaderSearch({ name }) {
       return requestApiFoodFilterFirstLetter(textSearch);
     }
     if (radioValue === 'primeira-letra') {
-      // alert('Sua busca deve conter somente 1 (um) caracter');
+      // eslint-disable-next-line no-alert
+      alert('Sua busca deve conter somente 1 (um) caracter');
     }
   };
 
@@ -49,14 +50,16 @@ function HeaderSearch({ name }) {
       return requestApiDrinkFilterFirstLetter(textSearch);
     }
     if (radioValue === 'primeira-letra') {
-      // alert('Sua busca deve conter somente 1 (um) caracter');
+      // eslint-disable-next-line no-alert
+      alert('Sua busca deve conter somente 1 (um) caracter');
     }
   };
 
   const alertFilterNotExist = (answerApi) => {
     if (answerApi === null) {
-      // alert('Sinto muito, não encontramos '
-      // + 'nenhuma receita para esses filtros.');
+      // eslint-disable-next-line no-alert
+      alert('Sinto muito, não encontramos '
+      + 'nenhuma receita para esses filtros.');
     }
   };
 
