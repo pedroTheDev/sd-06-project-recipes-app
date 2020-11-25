@@ -13,6 +13,7 @@ function FoodDetails() {
   const [recipe, setRecipe] = useState({ recipe: { } });
   const [isFetching, setIsFetching] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [copied, setCopied] = useState(false);
   const sliceNumber = 9;
   const itemId = useLocation().pathname.slice(sliceNumber);
   const itemUrl = useLocation().pathname;
@@ -77,7 +78,11 @@ function FoodDetails() {
 
   function handleShareClick() {
     clipboardCopy(`http://localhost:3000/${itemUrl}`);
-    window.alert('Link copiado!');
+    const shareBtn = document.getElementById('share-button');
+    setCopied(true);
+    setTimeout(() => {
+      setCopied(false);
+    }, 5000);
   }
 
   return (
@@ -104,12 +109,12 @@ function FoodDetails() {
               <img src={ shareIcon } alt="Compartilhar"/>
               Compartilhar
             </button>
+            {(copied) && <span>Link copiado!</span>}
             <button
               type="button"
-              data-testid="favorite-btn"
               onClick={ handleFavoriteClick }
             >
-              <img src={ isFavorite ? blackHeartIcon : whiteHeartIcon } alt="Favoritar"/>
+              <img data-testid="favorite-btn" src={ isFavorite ? blackHeartIcon : whiteHeartIcon } alt="Favoritar"/>
               Favoritar
             </button>
             <iframe
