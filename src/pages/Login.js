@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import '../style/Login.css';
+import drinkIcon from '../images/drinkIcon.svg';
 
 const Login = () => {
   const [disabled, setDisabled] = useState(true);
@@ -45,7 +47,8 @@ const Login = () => {
   return (
     <section>
       <h1>TRYBE</h1>
-      <form>
+      <form className="login">
+        <img src={ drinkIcon } alt="logo" className="logo" />
         <label
           htmlFor="email-input"
         >
