@@ -91,6 +91,8 @@ function RecipeDetails({ location: { pathname }, recommendations }) {
   );
 }
 
+// teste
+
 RecipeDetails.propTypes = {
   pathname: PropTypes.string.isRequired,
   location: PropTypes.shape.isRequired,
