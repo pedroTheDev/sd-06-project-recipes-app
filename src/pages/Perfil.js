@@ -13,26 +13,30 @@ function Perfil() {
 
   return (
     <div>
-      <Header />
+      <Header title="Perfil" />
       <div className="body-perfil">
         <p data-testid="profile-email">{email}</p>
 
         <div>
-          <button
-            data-testid="profile-done-btn"
-            type="button"
-          >
-            Receitas Feitas
-          </button>
+          <Link to="/receitas-feitas">
+            <button
+              data-testid="profile-done-btn"
+              type="button"
+            >
+              Receitas Feitas
+            </button>
+          </Link>
         </div>
 
         <div>
-          <button
-            data-testid="profile-favorite-btn"
-            type="button"
-          >
-            Receitas Favoritas
-          </button>
+          <Link to="/receitas-favoritas">
+            <button
+              data-testid="profile-favorite-btn"
+              type="button"
+            >
+              Receitas Favoritas
+            </button>
+          </Link>
         </div>
 
         <div>
