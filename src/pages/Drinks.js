@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import HeaderContext from '../context/HeaderContext';
 import RecipesContext from '../context/RecipesContext';
 import getRecipesInformation from '../services/recipesAPI';
+import CategoryButtons from '../components/CategoryButtons';
 
 const Drinks = ({ history }) => {
   const { title, setTitle } = useContext(HeaderContext);
@@ -45,6 +46,7 @@ const Drinks = ({ history }) => {
 
   return (
     <div className="meals-container">
+      <CategoryButtons type="drinks" />
       {
         isFetching
           ? <p>Faça uma Pesquisa</p>
@@ -65,9 +67,8 @@ const Drinks = ({ history }) => {
                   src={ recipe.strDrinkThumb }
                   data-testid={ `${index}-card-img` }
                   className="meal-img"
-                  alt={ recipe.strMeal }
+                  alt={ recipe.strDrink }
                 />
-                <p className="meal-id">{ recipe.idDrink }</p>
               </div>
             ))
       }

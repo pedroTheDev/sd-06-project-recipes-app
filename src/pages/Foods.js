@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import HeaderContext from '../context/HeaderContext';
 import RecipesContext from '../context/RecipesContext';
 import getRecipesInformation from '../services/recipesAPI';
+import CategoryButtons from '../components/CategoryButtons';
 
 const Foods = ({ history }) => {
   const { title, setTitle } = useContext(HeaderContext);
@@ -16,25 +17,6 @@ const Foods = ({ history }) => {
   const defaultRecipes = async () => {
     const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
     const recipes = await getRecipesInformation(url);
-    const recipesCategories = [
-      recipes.recipes[0].strCategory,
-      recipes.recipes[1].strCategory,
-      recipes.recipes[2].strCategory,
-      recipes.recipes[3].strCategory,
-      recipes.recipes[4].strCategory,
-    ];
-    console.log(typeof recipesCategories);
-    console.log('recipesCategories', recipesCategories);
-    const newRecipesCategories = Array.from(recipesCategories);
-    console.log(typeof newRecipesCategories);
-    console.log('newRecipesCategories', newRecipesCategories);
-    console.log(recipes.recipes[0].strCategory);
-    console.log(recipes.recipes[1].strCategory);
-    console.log(recipes.recipes[2].strCategory);
-    console.log(recipes.recipes[3].strCategory);
-    console.log(recipes.recipes[4].strCategory);
-    const { strCategory } = recipes.recipes;
-    console.log(strCategory);
     setFetchedResults(recipes);
     setIsFetching(false);
   };
@@ -64,6 +46,7 @@ const Foods = ({ history }) => {
 
   return (
     <div className="meals-container">
+      <CategoryButtons type="meals" />
       {
         isFetching
           ? <p>Faça uma Pesquisa</p>
@@ -86,7 +69,6 @@ const Foods = ({ history }) => {
                   data-testid={ `${index}-card-img` }
                   alt={ recipe.strMeal }
                 />
-                <p className="meal-id">{ recipe.idMeal }</p>
               </div>
             ))
       }

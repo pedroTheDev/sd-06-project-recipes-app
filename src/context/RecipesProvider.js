@@ -6,7 +6,7 @@ const RecipesProvider = ({ children }) => {
   const [selectedApiEndpoint, setSelectedApiEndpoint] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [fetchedResults, setFetchedResults] = useState([]);
-  const [isFetching, setIsFetching] = useState('true');
+  const [isFetching, setIsFetching] = useState(true);
 
   const providerValue = {
     selectedApiEndpoint,

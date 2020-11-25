@@ -30,6 +30,7 @@ const fetch = (url) => Promise.resolve({
   status: 200,
   ok: true,
   json: () => {
+    console.log(url);
     if (url === 'https://www.themealdb.com/api/json/v1/1/list.php?c=list')
       return Promise.resolve(mealCategories);
 
