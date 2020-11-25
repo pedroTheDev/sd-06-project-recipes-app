@@ -322,6 +322,14 @@ button {
   background-color: rgba(92, 206, 47, 1);
 }
 
+.invisible {
+  background: transparent;
+  border: none !important;
+  font-size:0;
+  position: absolute;
+  top: -50%;
+}
+
 @media (max-width:600px) {
   :root {
     background: url(https://ak.picdn.net/shutterstock/videos/14891857/thumb/1.jpg);
