@@ -12,7 +12,7 @@ function FoodDetails(props) {
   const [requestDetails, setrequestDetails] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [apiResponse, setFilter] = useRequestDrink([]);
-  const [isFavorite, setIsfavorite] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
   const maxShow = 6;
   const zero = 0;
   const requestDetailsAPI = async () => {
@@ -39,27 +39,46 @@ function FoodDetails(props) {
   const handleInitRecipe = () => {
     history.push(`/comidas/${id}/in-progress`);
   };
-  const changesFavorites = () => {
-    if (localStorage.length > zero) {
-      const readLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
-      console.log(readLocalStorage);
-      console.log(requestDetails);
+  const removeIdLocalSotrage = () => {
+    const readLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const idFavorito = readLocalStorage !== null
+      ? readLocalStorage.find((element) => element.id === id)
+      : undefined;
+
+  };
+  const getLocalStorage = () => {
+    const readLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const idFavorito = readLocalStorage !== null
+      ? readLocalStorage.find((element) => element.id === id)
+      : undefined;
+    if (idFavorito) {
+      setIsFavorite(true);
+    } else {
+      setIsFavorite(false);
     }
-    favoriteRecipes = [...favoriteRecipes, { id: requestDetails.idMeal,
+  };
+
+  const setLocalStorage = () => {
+    const readLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const favoriteRecipes = readLocalStorage !== null ? readLocalStorage : [];
+    const newRecipe = { id: requestDetails.idMeal,
       area: 'area',
       category: requestDetails.strCategory,
       alcoholicOrNot: requestDetails.strDrinkAlternate,
       name: requestDetails.strMeal,
       image: requestDetails.strMealThumb,
-    }];
+    };
+    favoriteRecipes.push(newRecipe);
     localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
-
-    // salvar o array de obj que veio do localStorage numa varriavel JS (JSON.stringify)
-    // map no array de obj que vier do localStorage
-    // ler array do local storage
-    // favoriteRecipes O formato deve ser [{ id, type, area, category, alcoholicOrNot, name, image }]
   };
 
+  const changesFavorites = () => {
+    setLocalStorage();
+    setIsFavorite(!isFavorite);
+  };
+  useEffect(() => {
+    getLocalStorage();
+  }, []);
   useEffect(() => {
     requestIngredients();
   }, [requestDetails]);
