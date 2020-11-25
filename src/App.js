@@ -42,8 +42,8 @@ function App() {
         <Route exact path="/perfil" component={ Perfil } />
         <Route exact path="/receitas-feitas" component={ ReceitasFeitas } />
         <Route exact path="/receitas-favoritas" component={ ReceitasFavoritas } />
-        <Route exact path="/comidas/:id-da-receita" component={ DetalhesComidas } />
-        <Route exact path="/bebidas/:id-da-receita" component={ DetalhesBebida } />
+        <Route exact path="/comidas/:idDaReceita" component={ DetalhesComidas } />
+        <Route exact path="/bebidas/:idDaReceita" component={ DetalhesBebida } />
         <Route
           exact
           path="/comidas/:id-da-receita/in-progress"
