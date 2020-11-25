@@ -8,10 +8,8 @@ import RecipeCard from './RecipeCard';
 import './RecipeList.css';
 
 function RecipeList() {
-  const { categories } = useContext(MealsContext);
-  const { drinkCategories } = useContext(MealsContext);
-
-  const [cardsRecipe, setCardsRecipe] = useState([]);
+  const { drinkCategories, cardsRecipe, setCardsRecipe, categories } = useContext(MealsContext);
+  // const [cardsRecipe, setCardsRecipe] = useState([]);
   const [cardCategories, setCardCategories] = useState([]);
   const [categorySelected, setcategorySelected] = useState([]);
 
@@ -35,11 +33,9 @@ function RecipeList() {
     if (location.pathname === '/comidas') {
       if (category === 'All' || category === categorySelected) {
         result = await getRecipesMealsApi();
-        console.log(result);
       } else {
         result = await getRecipesMealsByCategoryApi(category);
       }
-      console.log(category);
       myCards = result.map((item) => {
         const myCategoriesMeal = {
           id: item.idMeal, strName: item.strMeal, strThumb: item.strMealThumb,
@@ -64,7 +60,9 @@ function RecipeList() {
   }
 
   useEffect(() => {
-    getCards('All');
+    if (cardsRecipe[0] === undefined) {
+      getCards('All');
+    }
   }, []);
 
   const numberZero = 0;

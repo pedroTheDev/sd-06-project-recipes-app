@@ -15,6 +15,7 @@ function MyProvider({ children }) {
   const [disable, setDisable] = useState(true);
   const [user, setUser] = useState({ email: '' });
   const [showSearchBar, setSearchBar] = useState(false);
+  const [cardsRecipe, setCardsRecipe] = useState([]);
 
   useEffect(() => {
     async function fetchALL() {
@@ -53,6 +54,8 @@ function MyProvider({ children }) {
     setSearchBar,
     getFilteredRecipesApi,
     getFilteredDrinksApi,
+    cardsRecipe,
+    setCardsRecipe,
   };
 
   return (

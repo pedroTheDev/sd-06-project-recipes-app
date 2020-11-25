@@ -7,6 +7,7 @@ function RecipeCard({ cards }) {
   const location = useLocation();
   const inicio = 0;
   const fim = 12;
+
   return (
     cards && cards.slice(inicio, fim)
       .map((item, index) => (
@@ -35,7 +36,8 @@ function RecipeCard({ cards }) {
             </p>
           </div>
         </Link>
-      )));
+      ))
+  );
 }
 
 RecipeCard.propTypes = {

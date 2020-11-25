@@ -18,13 +18,11 @@ export async function getFilteredRecipesApi(type, value) {
   if (type === 'name') {
     const response = await fetch(`${URL_BASE}search.php?s=${value}`);
     const result = await response.json();
-    console.log(result.meals);
     return result.meals;
   }
   if (type === 'first') {
     const response = await fetch(`${URL_BASE}search.php?f=${value}`);
     const result = await response.json();
-    console.log(result.meals);
     return result.meals;
   }
   return [];
@@ -55,9 +53,6 @@ export default {
   getAllRecipeTypesApi,
   getRecipesMealsApi,
   getRecipesMealsByCategoryApi,
-<<<<<<< HEAD
   getFilteredRecipesApi,
-=======
   getRecipesMealsByRandomIngredients,
->>>>>>> f19f2e8a94ffb3328d331c25d0f777090de1eb9c
 };

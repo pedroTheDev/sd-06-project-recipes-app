@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
+import Header from '../components/Header';
 
 function Perfil() {
   const { email } = JSON.parse(localStorage.user);
@@ -11,7 +12,7 @@ function Perfil() {
 
   return (
     <div>
-      <h1 data-testid="page-title">Perfil</h1>
+      <Header />
       <span data-testid="profile-email">{ email }</span>
       <Link to="receitas-feitas">
         <button
