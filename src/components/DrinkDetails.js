@@ -13,6 +13,7 @@ export default function FoodsDetails(props) {
   const [recommendation, setRecommendation] = useState([]);
   const [disabled, setDisabled] = useState(true);
   const [btnStartValue, setBtnStartValue] = useState('Iniciar Receita');
+  const [copy, setCopy] = useState('');
 
   useEffect(() => {
     if (recipeId === '') {
@@ -43,6 +44,12 @@ export default function FoodsDetails(props) {
       setBtnStartValue('Continuar Receita');
     }
   }, []);
+
+  function handleCopy() {
+    const link = window.location.href;
+    navigator.clipboard.writeText(link);
+    setCopy('Link copiado!');
+  }
 
   useEffect(() => {
     if (recipe.drinks) {
@@ -94,7 +101,15 @@ export default function FoodsDetails(props) {
             className="item-img"
           />
           <p data-testid="recipe-title">{item.strDrink}</p>
-          <input type="button" data-testid="share-btn" value="Share" />
+          <button
+            type="button"
+            data-testid="share-btn"
+            value="Share"
+            onClick={ () => handleCopy() }
+          >
+            Share
+          </button>
+          {copy}
           <input type="button" data-testid="favorite-btn" value="favorite" />
           <p data-testid="recipe-category">{item.strAlcoholic}</p>
           <p data-testid="instructions">{item.strInstructions}</p>
