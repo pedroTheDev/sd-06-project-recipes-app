@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { requestApiFoodDetails } from '../services/requestFood';
+import { requestApiFoodDetails, requestApiFoodFilterIngredient } from '../services/requestFood';
 
 function DetalhesReceita(props) {
   const [detailsFood, setDetailsFood] = useState([]);
   const [arrayIngredients, setArrayIngredients] = useState([]);
   const [embed, setEmbed] = useState('');
+  const [recommendFood, setRecommendFood] = useState([]);
 
   useEffect(() =>{
     requestApiFoodDetails(props.match.params.id)
@@ -17,18 +18,19 @@ function DetalhesReceita(props) {
   useEffect(() => {
     ingredientsFunc();
     embedVideo();
+    recommendFoodFunction();
   }, [detailsFood])
 
   const embedVideo = () => {
     const youtubeVideo = detailsFood.strYoutube;
     if (youtubeVideo != undefined) {
       const newYoutube = youtubeVideo.split("=")
-      setEmbed(newYoutube[1]);
+      setEmbed(newYoutube[newYoutube.length-1]);
     }
   }
 
   const ingredientsFunc = () => {
-    if(detailsFood != []) {
+    if(detailsFood.length !== 0) {
       const array = []
       for(let i=1;i<=20;i++) {
         const ingredient = detailsFood[`strIngredient${i}`];
@@ -39,7 +41,14 @@ function DetalhesReceita(props) {
     } 
   }
 
-  if (detailsFood === [])  {
+  const recommendFoodFunction = async () => {
+    if (detailsFood.length !== 0) {
+      const response = await requestApiFoodFilterIngredient(detailsFood.strIngredient1);
+      setRecommendFood(response.slice(0,6));
+    }
+  }
+
+  if (detailsFood.length === 0)  {
     return <div>Loading...</div>
   }
   return (
@@ -72,9 +81,16 @@ function DetalhesReceita(props) {
         picture-in-picture"
         allowfullscreen>
       </iframe>
-      {/* <div data-testid="${index}-recomendation-card">
-        Recomendadas
-      </div> */}
+      <div>
+        {recommendFood.map((food, index) => {
+          return (
+            <div data-testid={`${index}-recomendation-card`}>
+              <img src={food.strMealThumb} />
+              <h3>{food.strMeal}</h3>
+            </div>
+          )
+        })}
+      </div> 
     </div>
   );
 }

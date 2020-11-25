@@ -1,24 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { requestApiDrinkDetails } from '../services/requestDrink';
+import { requestApiDrinkDetails, requestApiDrinkFilterIngredient } from '../services/requestDrink';
 
-function DetalhesReceita(props) {
-  const [detailsDrink, setdetailsDrink] = useState([]);
+function DetalhesBebida(props) {
+  const [detailsDrink, setDetailsDrink] = useState([]);
   const [arrayIngredients, setArrayIngredients] = useState([]);
+  const [recommendDrink, setRecommendDrink] = useState([]);
 
   useEffect(() =>{
     requestApiDrinkDetails(props.match.params.id)
       .then((response) => {
-        setdetailsDrink(response[0]);
-        console.log(response);
+        setDetailsDrink(response[0]);
       });
   }, []);
 
   useEffect(() => {
     ingredientsFunc();
+    recommendDrinkFunction();
   }, [detailsDrink])
 
   const ingredientsFunc = () => {
-    if(detailsDrink != []) {
+    if(detailsDrink.length !== 0) {
       const array = []
       for(let i=1;i<=20;i++) {
         const ingredient = detailsDrink[`strIngredient${i}`];
@@ -29,7 +30,15 @@ function DetalhesReceita(props) {
     } 
   }
 
-  if (detailsDrink === [])  {
+  const recommendDrinkFunction = async () => {
+    if (detailsDrink.length !== 0) {
+      const response = await requestApiDrinkFilterIngredient(detailsDrink.strIngredient1);
+      setRecommendDrink(response.slice(0,6));
+      console.log(response);
+    }
+  }
+
+  if (detailsDrink.length === 0)  {
     return <div>Loading...</div>
   }
   return (
@@ -50,12 +59,18 @@ function DetalhesReceita(props) {
           </h5>
         )
       })}
-      {/* <iframe data-testid="video" ></iframe>
-      <div data-testid="${index}-recomendation-card">
-        Recomendadas
-      </div> */}
+      <div data-testid={`0-recomendation-card`}>
+        {recommendDrink.map((drink, index) => {
+          return (
+            <div key={index} >
+              <img src={drink.strDrinkThumb} />
+              <h3>{drink.strDrink}</h3>
+            </div>
+          )
+        })}
+      </div> 
     </div>
   );
 }
 
-export default DetalhesReceita;
+export default DetalhesBebida;
