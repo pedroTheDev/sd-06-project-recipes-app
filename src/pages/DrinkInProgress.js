@@ -104,7 +104,7 @@ export default function DrinkInProgress(props) {
           { recipeDetails.filter((ingredient) => ingredient !== '')
             .map((ingredient, index) => (
               <p
-                data-testid={ `${index}-ingredient-name-and-measure` }
+                data-testid={ `${index}-ingredient-step` }
                 key={ ingredient[0] }
               >
                 { (ingredient[1] === null)
@@ -152,7 +152,7 @@ export default function DrinkInProgress(props) {
           <Link to={ `/bebidas/${props.match.params.id}/in-progress` }>
             <button
               type="button"
-              data-testid="start-recipe-btn"
+              data-testid="finish-recipe-btn"
               className="btnStart"
               disabled={ disabled }
             >

@@ -105,7 +105,7 @@ export default function FoodInProgress(props) {
             .map((ingredient, index) => (
               <p
                 key={ ingredient[0] }
-                data-testid={ `${index}-ingredient-name-and-measure` }
+                data-testid={ `${index}-ingredient-step` }
               >
                 {`${ingredient[0]}: ${ingredient[1]}`}
               </p>
