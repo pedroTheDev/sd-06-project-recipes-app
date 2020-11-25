@@ -1,10 +1,10 @@
 import React, { useContext, useState, useEffect } from 'react';
 import ContextAPI from '../../Context/ContextAPI';
 
-import { showAllFoodsCategories, showAllDrinksCategories } from '../../services/aPI';
+import { showAllFoodsCategories, showAllDrinksCategories, selectFoodItensCategories, selectDrinksItensCategories } from '../../services/aPI';
 
 const Categories = () => {
-  const { apiValueSearch } = useContext(ContextAPI);
+  const { setApiValueSearch } = useContext(ContextAPI);
 
   const [categories, setCategories] = useState([]);
 
@@ -23,17 +23,38 @@ const Categories = () => {
     categoriesDefined();
   }, []);
 
-  const filterApiValueSearch = (value) => {
-    console.log(value);
+  const filterApiValueSearch = async (value) => {
+    if (window.location.pathname === '/comidas') {
+      const result = await selectFoodItensCategories(value);
+      // setApiValueSearch(result.meals);
+      console.log(result);
+    }
+
+    if (window.location.pathname === '/bebidas') {
+      const result = await selectDrinksItensCategories(value);
+      // apiValueSearch(result.meals);
+      console.log(result);
+    }
   };
 
   return (
     <div>
       {categories.categories && categories.categories.map((element, index) => {
-        if (index <= 4) {
+        const number = 4;
+        if (index <= number) {
           return (
-            <button key={ element.idCategory } data-testid={ `${element.categoryName}-category-filter` } onClick={ (e) => filterApiValueSearch(e.target.name) } type="button">
-              <img name={ element.idCategory } width="100" src={ element.strCategoryThumb } alt={ element.strCategory } />
+            <button
+              key={ element.idCategory }
+              data-testid={ `${element.categoryName}-category-filter` }
+              onClick={ (e) => filterApiValueSearch(e.target.name) }
+              type="button"
+            >
+              <img
+                name={ element.strCategory }
+                width="100"
+                src={ element.strCategoryThumb }
+                alt={ element.strCategory }
+              />
             </button>
           );
         }
