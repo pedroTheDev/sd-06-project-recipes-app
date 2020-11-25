@@ -21,9 +21,10 @@ function DrinkDetails() {
   const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${itemId}`;
 
   function favoriteStatus(id) {
-    let favRecipes = JSON.parse(localStorage.getItem('favorites'));
+    let favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
     if (favRecipes === null) favRecipes = [];
-    if (favRecipes.includes(id)) {
+    const favorited = favRecipes.find((item) => (item.id === id));
+    if (favorited) {
       setIsFavorite(blackHeartIcon);
     } else {
       setIsFavorite(whiteHeartIcon);
