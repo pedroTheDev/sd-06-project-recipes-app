@@ -10,6 +10,8 @@ export default function FoodsDetails(props) {
   const [recipe, setRecipe] = useState('');
   const [recipeDetails, setRecipeDetails] = useState([]);
   const [recommendation, setRecommendation] = useState([]);
+  const [disabled, setDisabled] = useState(true);
+  const [btnStartValue, setBtnStartValue] = useState('Iniciar Receita');
 
   useEffect(() => {
     if (recipeId === '') {
@@ -30,6 +32,15 @@ export default function FoodsDetails(props) {
       setRecommendation(results);
     }
     fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (localStorage.getItem('doneRecipes') === null) {
+      setDisabled(false);
+    }
+    if (localStorage.getItem('inProgressRecipes') !== null) {
+      setBtnStartValue('Continuar Receita');
+    }
   }, []);
 
   useEffect(() => {
@@ -88,8 +99,13 @@ export default function FoodsDetails(props) {
           <p data-testid="instructions">{item.strInstructions}</p>
           {handle()}
           <p data-testid="video">{item.strYoutube}</p>
-          <button type="button" data-testid="start-recipe-btn" className="btnStart">
-            Iniciar Receita
+          <button
+            type="button"
+            data-testid="start-recipe-btn"
+            className="btnStart"
+            disabled={ disabled }
+          >
+            {btnStartValue}
           </button>
         </div>
         <div className="testimonials">
@@ -110,9 +126,6 @@ export default function FoodsDetails(props) {
             ))}
           </div>
         </div>
-        <button type="button" data-testid="start-recipe-btn" className="btnStart">
-          Iniciar Receita
-        </button>
       </div>
     );
   }
