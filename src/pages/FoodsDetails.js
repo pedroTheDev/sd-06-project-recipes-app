@@ -35,17 +35,6 @@ class FoodsDetails extends React.Component {
     const recommendedDrinks = await fetchRecommendedDrinks();
     this.setMealState(mealRecipe, recommendedDrinks);
     this.handleIngredients();
-
-    const emptyStorage = [{
-      id: '',
-      type: '',
-      area: '',
-      category: '',
-      alcoholicOrNot: '',
-      name: '',
-      image: '',
-    }];
-    localStorage.setItem('favoriteRecipes', JSON.stringify(emptyStorage));
   }
 
   handleYoutubeVideo(url) {
@@ -117,44 +106,47 @@ class FoodsDetails extends React.Component {
       name: recipe.strMeal,
       image: recipe.strMealThumb,
     }];
-
     if (!localStorage.getItem('favoriteRecipes')) {
       localStorage.setItem('favoriteRecipes', JSON.stringify(myObject));
     }
-
-    // Lógica para remoção
+    const { idMeal } = recipe;
     const isFavorite = JSON.parse(localStorage.getItem('isFav'));
     const myLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
-
-    if (isFavorite && myLocalStorage) {
-      const itemToRemove = myLocalStorage.find((element) => (element.id === '52819'));
+    const shareButton = document.querySelector('.fav-button');
+    const blackHeart = 'http://localhost:3000/static/media/blackHeartIcon.b8913346.svg';
+    
+    if (shareButton.src === blackHeart && myLocalStorage) {
+      const itemToRemove = myLocalStorage
+        .find((element) => (element.id === recipe.idMeal));
       const indexToRemove = myLocalStorage.indexOf(itemToRemove, 0);
-
-      myLocalStorage.splice(indexToRemove, 1);
-
-      localStorage.setItem('favoriteRecipes', JSON.stringify(myLocalStorage));
-
-      // const arrayteste = ['a', 'b', 'c', 'd'];
-      // const indexteste = arrayteste.indexOf('c');
-      // console.log(arrayteste.splice(indexteste, 1)); // esse eu removi
-      // console.log(arrayteste);// esse oq sobrou
+      if (indexToRemove !== -1) {
+        myLocalStorage.splice(indexToRemove, 1);
+        localStorage.setItem('favoriteRecipes', JSON.stringify(myLocalStorage));
+      }
+      localStorage.setItem('favoriteRecipes', JSON.stringify(myLocalStorage)); // assim remove
+    } else {
+      const MyLSObj = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      const combineObjects = MyLSObj.concat(myObject);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(combineObjects)); // assim add
     }
-    const MyLSObj = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    const combineObjects = MyLSObj.concat(myObject);
-
-    localStorage.setItem('favoriteRecipes', JSON.stringify(combineObjects));
-    this.changeFavIcon(recipe);
+    const favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const filteredStorage = favRecipes
+      .filter((v, i, a) => a.findIndex((t) => (t.id === v.id)) === i); // só registra um único id
+    localStorage.setItem('favoriteRecipes', JSON.stringify(filteredStorage));
+    const { Update } = this.state;
+    this.setState({ Update: !Update });
   }
 
-  changeFavIcon({ idMeal }) {
-    const { Update } = this.state;
-    const isFav = JSON.parse(localStorage.getItem('isFav'));
-    const favId = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    const filteredStorage = favId
-      .filter((v, i, a) => a.findIndex((t) => (t.id === v.id)) === i); // só registra um único id
-    localStorage.setItem('favoriteRecipes', JSON.stringify(favId));
-    this.setState({ Update: !Update });
-    localStorage.setItem('isFav', !isFav);
+  teste(recipe) {
+    if (localStorage.favoriteRecipes) {
+      const favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      const receitaAtual = favRecipes.find((element) => (element.id === recipe.idMeal));
+      if (favRecipes.includes(receitaAtual)) {
+        return blackHeartIcon;
+      }
+      return whiteHeartIcon;
+    }
+    return whiteHeartIcon;
   }
 
   goLeft() {
@@ -187,9 +179,6 @@ class FoodsDetails extends React.Component {
       Ingredients,
       Measures,
       Video } = this.state;
-
-    const isFav = JSON.parse(localStorage.getItem('isFav'));
-
     return (
       <div className="food-drink-detail-container">
         {Meal ? Meal.map((recipe, index) => (
@@ -215,7 +204,8 @@ class FoodsDetails extends React.Component {
                 <input
                   type="image"
                   data-testid="favorite-btn"
-                  src={ isFav ? blackHeartIcon : whiteHeartIcon }
+                  className="fav-button"
+                  src={ this.teste(recipe) }
                   onClick={ () => this.setLocalState(recipe) }
                   alt="whiteHeartIcon"
                 />
