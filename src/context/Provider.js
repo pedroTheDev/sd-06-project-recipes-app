@@ -29,8 +29,19 @@ function RecipesAppProvider({ children }) {
     const fifth = 5;
 
     categoriesList = categoriesList.slice(first, fifth);
-    console.log(categoriesList);
     setCategories(categoriesList);
+  };
+
+  const recipesToRenderByCategory = async (type, searchTerm) => {
+    let fetchedRecipes = await (type === 'meal'
+      ? fetchMeal('category', searchTerm)
+      : fetchDrink('category', searchTerm)
+    );
+    const first = 0;
+    const twelfth = 12;
+
+    fetchedRecipes = fetchedRecipes.slice(first, twelfth);
+    setRecipes(fetchedRecipes);
   };
 
   const contextValue = {
@@ -38,6 +49,7 @@ function RecipesAppProvider({ children }) {
     recipesToRender,
     categories,
     categoriesToRender,
+    recipesToRenderByCategory,
   };
 
   return (

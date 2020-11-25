@@ -13,6 +13,12 @@ async function fetchDrink(filter, searchTerm = '') {
     return nameResponse.drinks;
   }
 
+  case 'category': {
+    const fetchByCategory = await fetch(`${url}filter.php?c=${searchTerm}`);
+    const categoryResponse = await fetchByCategory.json();
+    return categoryResponse.drinks;
+  }
+
   case 'firstLetter': {
     const fetchByFirstLetter = await fetch(`${url}search.php?f=${searchTerm}`);
     const firstLetterResponse = await fetchByFirstLetter.json();

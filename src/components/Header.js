@@ -10,7 +10,8 @@ import Context from '../context/Context';
 function Header(props) {
   const { title, search } = props;
   const [hide, setHide] = useState(true);
-  const { categories } = useContext(Context);
+  const { categories, recipesToRender, recipesToRenderByCategory } = useContext(Context);
+  const type = title === 'Comidas' ? 'meal' : 'drink';
 
   const filterButtons = () => (
     categories.map(({ strCategory }, index) => {
@@ -19,10 +20,10 @@ function Header(props) {
           <>
             <button
               key="All"
-              data-testid="all-category-filter"
+              data-testid="All-category-filter"
               type="button"
               value=""
-              onClick={ (e) => console.log(e.target.value) }
+              onClick={ () => recipesToRender(type) }
             >
               All
             </button>
@@ -31,7 +32,7 @@ function Header(props) {
               data-testid={ `${strCategory}-category-filter` }
               type="button"
               value={ strCategory }
-              onClick={ (e) => console.log(e.target.value) }
+              onClick={ (e) => recipesToRenderByCategory(type, e.target.value) }
             >
               {strCategory}
             </button>
@@ -44,7 +45,7 @@ function Header(props) {
           data-testid={ `${strCategory}-category-filter` }
           type="button"
           value={ strCategory }
-          onClick={ (e) => console.log(e.target.value) }
+          onClick={ (e) => recipesToRenderByCategory(type, e.target.value) }
         >
           {strCategory}
         </button>
