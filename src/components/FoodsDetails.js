@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { fetchDetail, fetchRecommendation } from '../helpers/Helper';
 import '../css/scroller.css';
@@ -6,7 +7,6 @@ import '../css/itemDetails.css';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeart from '../images/whiteHeartIcon.svg';
 import blackHeart from '../images/blackHeartIcon.svg';
-import history from '../helpers/History';
 
 export default function FoodsDetails(props) {
   const [recipeId, setRecipeId] = useState('');
@@ -147,17 +147,16 @@ export default function FoodsDetails(props) {
           <p data-testid="instructions">{item.strInstructions}</p>
           {renderIngredients()}
           <p data-testid="video">{item.strYoutube}</p>
-          <button
-            type="button"
-            data-testid="start-recipe-btn"
-            className="btnStart"
-            onClick={
-              () => history.push(`/comidas/${props.match.params.id}/in-progress`)
-            }
-            disabled={ disabled }
-          >
-            {btnStartValue}
-          </button>
+          <Link to={ `/comidas/${props.match.params.id}/in-progress` }>
+            <button
+              type="button"
+              data-testid="start-recipe-btn"
+              className="btnStart"
+              disabled={ disabled }
+            >
+              {btnStartValue}
+            </button>
+          </Link>
         </div>
         <div className="testimonials">
           <div className="scroller">
