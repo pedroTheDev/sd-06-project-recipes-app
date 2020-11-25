@@ -49,6 +49,7 @@ function FoodDetails() {
       {(isFetching) ? <div>Loading recipe...</div>
         : (
           <section className="body-recipe">
+            {console.log(data)}
             <h1 data-testid="recipe-title">
               { strMeal }
             </h1>
