@@ -37,6 +37,16 @@
   animation: shake 1.5s infinite ease;
 }
 
+.StartRecipe {
+  position: fixed;
+  bottom: 0px;
+}
+
+.recomendation {
+  overflow-x: scroll;
+  display: flex;
+}
+
 @keyframes shake {
   0% {
     transform: rotate(5deg);

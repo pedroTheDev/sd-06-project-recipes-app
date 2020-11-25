@@ -8,7 +8,12 @@ function Cards({ info, recipe, index, recomendation }) {
 
   return (
     <Link to={ recipe === 'comidas' ? `/comidas/${idMeal}` : `/bebidas/${idDrink}` }>
-      <div className="recipe-card" data-testid={ `${index}-recipe-card` }>
+      <div
+        className="recipe-card" 
+        data-testid={
+          recomendation ? `${index}-recomendation-card` : `${index}-recipe-card`
+        }
+      >
         <img
           src={ recipe === 'comidas' ? strMealThumb : strDrinkThumb }
           className="thumbnail"

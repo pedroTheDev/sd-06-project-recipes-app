@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import '../App.css';
 import Context from '../context/Context';
 import Cards from '../components/Cards';
 import shareIcon from '../images/shareIcon.svg';
@@ -99,9 +100,9 @@ function RecipeDetails(props) {
                 </div>
               )}
             <h2>Recomendadas</h2>
-            { !random ? <p>LOADING...</p>
-              : random.slice(ZERO, SIX).map((info, index) => (
-                <div key={ index } data-testid={ `${index}-recomendation-card` }>
+            <div className="recomendation">
+              { !random ? <p>LOADING...</p>
+                : random.slice(ZERO, SIX).map((info, index) => (
                   <Cards
                     key={ index }
                     recipe={ path === '/comidas/:id' ? 'bebidas' : 'comidas' }
@@ -109,10 +110,11 @@ function RecipeDetails(props) {
                     index={ index }
                     recomendation
                   />
-                </div>
-              ))}
+                ))}
+            </div>
             <button
               type="button"
+              className="StartRecipe"
               data-testid="start-recipe-btn"
             >
               Iniciar Receita
