@@ -10,11 +10,13 @@ function DetalhesComida() {
   const history = useHistory();
   const idMeal = history.location.pathname.split('/')[2];
   const SEIS = 6;
+
   let continuar = false;
   if (localStorage.inProgressRecipes) {
     const ids = Object.keys(JSON.parse(localStorage.inProgressRecipes).meals);
     continuar = ids.includes(idMeal);
   }
+
   useEffect(() => {
     async function fetchAPI() {
       const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`);
@@ -91,7 +93,7 @@ function DetalhesComida() {
                 data-testid="start-recipe-btn"
                 type="button"
               >
-                {continuar ? 'Continuar Receita' : 'Iniciar Receita'}
+                { continuar ? 'Continuar Receita' : 'Iniciar Receita' }
               </button>
             </Link>
           </div>) }
