@@ -24,8 +24,16 @@ export function requestApiFoodFilterArea(area) {
   return randomRequestApiFood(`filter.php?a=${area}`);
 }
 
+export function requestApiFoodFilterCategories(category) {
+  return randomRequestApiFood(`filter.php?c=${category}`);
+}
+
 export function requestApiFoodDetails(id) {
   return randomRequestApiFood(`lookup.php?i=${id}`);
+}
+
+export function requestApiFoodListCategories() {
+  return randomRequestApiFood('list.php?c=list');
 }
 
 export function requestApiFoodListIngredients() {

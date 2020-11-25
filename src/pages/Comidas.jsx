@@ -4,6 +4,7 @@ import Header from '../components/Header';
 import RecipesAppContext from '../hooks/RecipesAppContext';
 import Footer from '../components/Footer';
 import CardsFood from '../components/CardsFood';
+import ButtonCategoriesFood from '../components/ButtonCategoriesFood';
 
 function Comidas({ history }) {
   const {
@@ -17,11 +18,13 @@ function Comidas({ history }) {
     history.push(`/comidas/${idMeal}`);
   }
 
+  const namePage = 'Comidas';
   const buttonIs = true;
 
   return (
     <div>
-      <Header name="Comidas" button={ buttonIs } />
+      <Header name={ namePage } button={ buttonIs } />
+      <ButtonCategoriesFood />
       <CardsFood />
       <Footer />
     </div>

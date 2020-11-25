@@ -1,7 +1,9 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import RecipesAppContext from '../hooks/RecipesAppContext';
-import { requestApiFoodFilterName } from '../services/requestFood';
+import {
+  requestApiFoodFilterName,
+} from '../services/requestFood';
 
 function CardsFood() {
   const {

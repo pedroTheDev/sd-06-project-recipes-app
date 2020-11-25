@@ -20,8 +20,16 @@ export function requestApiDrinkFilterFirstLetter(firstLetter) {
   return randomRequestApiDrink(`search.php?f=${firstLetter}`);
 }
 
+export function requestApiDrinkFilterCategories(category) {
+  return randomRequestApiDrink(`filter.php?c=${category}`);
+}
+
 export function requestApiDrinkDetails(id) {
   return randomRequestApiDrink(`lookup.php?i=${id}`);
+}
+
+export function requestApiDrinkListCategories() {
+  return randomRequestApiDrink('list.php?c=list');
 }
 
 export function requestApiDrinkListIngredients() {
