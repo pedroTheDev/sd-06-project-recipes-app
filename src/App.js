@@ -11,6 +11,7 @@ import DrinkDetails from './pages/DrinkDetails';
 import ContextProvider from './context/ContextProvider';
 import ExploreFood from './pages/ExploreFood';
 import ExploreDrink from './pages/ExploreDrink';
+import ExploreFoodIngredient from './pages/ExploreFoodIngredient';
 
 function App() {
   return (
@@ -23,7 +24,11 @@ function App() {
           <Route path="/comidas/:id" component={ FoodDetails } />
           <Route path="/comidas" component={ Food } />
           <Route path="/perfil" component={ Perfil } />
-          <Route path="/explorar/comidas/ingrediente" component={ ExploreFood } />
+          <Route
+            exact
+            path="/explorar/comidas/ingredientes"
+            component={ ExploreFoodIngredient }
+          />
           <Route path="/explorar/comidas" component={ ExploreFood } />
           <Route path="/explorar/bebidas" component={ ExploreDrink } />
           <Route path="/explorar" component={ Explore } />
