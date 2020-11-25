@@ -1,12 +1,25 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import { fetchMealCategoryList, fetchDrinkCategoryList } from '../services';
+import {
+  fetchMealCategoryList,
+  fetchDrinkCategoryList,
+  fetchMealByCategory,
+  fetchDrinkByCategory,
+  getDrinksStart,
+  initialRecipes,
+} from '../services';
 import RecipesContext from '../context/RecipesAppContext';
 
 function CategoryList({ title }) {
   const ZERO = 0;
   const CINCO = 5;
-  const { categoryList, setCategoryList } = useContext(RecipesContext);
+  const {
+    categoryList,
+    setCategoryList,
+    setRecipes,
+  } = useContext(RecipesContext);
+
+  const [category, setCategory] = useState('all');
 
   const renderCategoryList = async (callback) => {
     const response = await callback();
@@ -20,30 +33,56 @@ function CategoryList({ title }) {
     setCategoryList(list);
   };
 
+  const fetchMealOrDrink = async (actualCategory) => {
+    if (title === 'Comidas') {
+      if (actualCategory === 'all') await initialRecipes(setRecipes);
+      else {
+        const response = await fetchMealByCategory(actualCategory);
+        setRecipes(response);
+      }
+    }
+    if (title === 'Bebidas') {
+      if (actualCategory === 'all') await getDrinksStart(setRecipes);
+      else {
+        const response = await fetchDrinkByCategory(actualCategory);
+        setRecipes(response);
+      }
+    }
+  };
+
+  const onClick = (selectedCategory) => {
+    if (selectedCategory === category) setCategory('all');
+    else setCategory(selectedCategory);
+  };
+
   useEffect(() => {
     setBase();
   }, []);
 
-  const divStyle = {
-    width: '10rem',
-  };
+  useEffect(() => {
+    fetchMealOrDrink(category);
+  }, [category]);
 
   return (
     <>
       {categoryList.slice(ZERO, CINCO).map((cat) => (
-        <div
+        <button
+          type="button"
           key={ cat.strCategory }
-          className="card"
-          style={ divStyle }
+          data-testid={ `${cat.strCategory}-category-filter` }
+          onClick={ () => onClick(cat.strCategory) }
         >
-          <p
-            data-testid={ `${cat.strCategory}-category-filter` }
-            className="card-text"
-          >
-            { cat.strCategory }
-          </p>
-        </div>))}
-      {' '}
+          {' '}
+          { cat.strCategory }
+        </button>))}
+      <button
+        type="button"
+        data-testid="All-category-filter"
+        onClick={ () => setCategory('all') }
+      >
+        ALL
+      </button>
+
     </>
   );
 }
