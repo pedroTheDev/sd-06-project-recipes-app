@@ -11,7 +11,7 @@ function ExploreByOrigin() {
     if (location.includes('comidas')) {
       const apiRequest = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?a=list');
       const response = await apiRequest.json();
-      console.log(response.meals)
+      console.log(response.meals);
       setData(response.meals);
     } else {
       const apiRequest = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?a=list');
@@ -24,7 +24,7 @@ function ExploreByOrigin() {
     apiOrigin();
   }, []);
 
-  return(
+  return (
     <div>
       <Header title="Explorar Origem" showSearchIcon />
       { location.includes('comidas') ? (
@@ -58,7 +58,7 @@ function ExploreByOrigin() {
       ) }
       <Footer />
     </div>
-  )
+  );
 }
 
 export default ExploreByOrigin;

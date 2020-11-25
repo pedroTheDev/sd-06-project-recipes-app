@@ -37,9 +37,10 @@ function SearchBar(props) {
     setSearchText(inputSearch);
     setSelectedRadio(selectedRadio);
     renderCards(recipesApi);
-    if(recipesApi !== null) {
+    if (recipesApi !== null) {
       setRecipes(recipesApi);
-    };
+    }
+  };
 
   return (
     <div>

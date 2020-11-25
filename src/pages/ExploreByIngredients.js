@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext } from 'react';
-import PropTypes from 'prop-types';
 import { useLocation, useHistory } from 'react-router-dom';
 import ContextRecipes from '../context/ContextRecipes';
 import { fetchAPIDrinks, fetchAPIRecipes } from '../services';
@@ -46,7 +45,8 @@ function ExploreByIngredients() {
       <Header title="Explorar Ingredientes" />
       { location.includes('comidas') ? (
         data.map((meals, index) => (
-          <div
+          <button
+            type="button"
             key={ index }
             data-testid={ `${index}-ingredient-card` }
             onClick={ () => handleClick(meals.strIngredient) }
@@ -61,11 +61,12 @@ function ExploreByIngredients() {
             >
               { meals.strIngredient }
             </h3>
-          </div>
+          </button>
         )).filter((_, index) => index < MAX_NUMBER_OF_CARDS)
       ) : (
         data.map((drinks, index) => (
-          <div
+          <button
+            type="button"
             key={ index }
             data-testid={ `${index}-ingredient-card` }
             onClick={ () => handleClick(drinks.strIngredient) }
@@ -80,16 +81,12 @@ function ExploreByIngredients() {
             >
               { drinks.strIngredient1 }
             </h3>
-          </div>
+          </button>
         )).filter((_, index) => index < MAX_NUMBER_OF_CARDS)
       ) }
       <Footer />
     </div>
   );
 }
-
-ExploreByIngredients.propTypes = {
-  fetchApi: PropTypes.func.isRequired,
-};
 
 export default ExploreByIngredients;
