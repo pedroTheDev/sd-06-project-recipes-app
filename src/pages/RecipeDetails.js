@@ -99,6 +99,15 @@ function RecipeDetails(props) {
                 index={ index }
               />
           )}
+          { !random ? <p>LOADING...</p> :
+            random.map((info, index) =>
+              <Cards
+                data-testid={`${ index }-recomendation-card`}
+                recipe={ path === "/comidas/:id" ? 'bebidas' : 'comidas' }
+                info={ info }
+                index={ index }
+              />
+          )}
           <button
             type="button"
             data-testid="start-recipe-btn"
