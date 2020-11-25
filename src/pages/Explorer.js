@@ -35,16 +35,18 @@ const Explorer = (props) => {
       </Link>
       {
         pathname === '/explorar/comidas'
-        && <Link to={ `${pathname}/area` }>
-          <button
-            type="button"
-            value="https://www.themealdb.com/api/json/v1/1/list.php?a=list"
-            onClick={ ({ target: { value } }) => handleClick(value) }
-            data-testid="explore-by-area"
-          >
-            Por Local de Origem
-          </button>
-        </Link>
+        && (
+          <Link to={ `${pathname}/area` }>
+            <button
+              type="button"
+              value="https://www.themealdb.com/api/json/v1/1/list.php?a=list"
+              onClick={ ({ target: { value } }) => handleClick(value) }
+              data-testid="explore-by-area"
+            >
+              Por Local de Origem
+            </button>
+          </Link>
+        )
       }
       <button
         type="button"
