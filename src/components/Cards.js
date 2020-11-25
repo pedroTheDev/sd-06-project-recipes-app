@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-function Cards({ info, recipe, index }) {
+function Cards({ info, recipe, index, recomendation }) {
   const { idMeal, strMeal, strMealThumb } = info;
   const { idDrink, strDrink, strDrinkThumb } = info;
 
@@ -17,8 +17,9 @@ function Cards({ info, recipe, index }) {
         />
         <p
           className="recipe-card-name"
-          data-testid={ `${index}-card-name` }
-          data-testid={ `${index}-recomendation-title` }
+          data-testid={
+            recomendation ? `${index}-recomendation-title` : `${index}-card-name`
+          }
         >
           { recipe === 'comidas' ? strMeal : strDrink }
         </p>
@@ -31,6 +32,7 @@ Cards.propTypes = {
   info: PropTypes.objectOf(PropTypes.string).isRequired,
   index: PropTypes.number.isRequired,
   recipe: PropTypes.string.isRequired,
+  recomendation: PropTypes.bool.isRequired,
 };
 
 export default Cards;

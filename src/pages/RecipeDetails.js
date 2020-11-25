@@ -17,6 +17,8 @@ function RecipeDetails(props) {
   } = useContext(Context);
   const { match: { path, params } } = props;
   const [fav, setFav] = useState('white');
+  const ZERO = 0;
+  const SIX = 6;
 
   useEffect(() => {
     if (path === '/comidas/:id') {
@@ -98,16 +100,17 @@ function RecipeDetails(props) {
               )}
             <h2>Recomendadas</h2>
             { !random ? <p>LOADING...</p>
-              : random.slice(0, 6).map((info, index) => (
-                <div data-testid={ `${index}-recomendation-card` }>
+              : random.slice(ZERO, SIX).map((info, index) => (
+                <div key={ index } data-testid={ `${index}-recomendation-card` }>
                   <Cards
                     key={ index }
                     recipe={ path === '/comidas/:id' ? 'bebidas' : 'comidas' }
                     info={ info }
                     index={ index }
+                    recomendation
                   />
                 </div>
-                ))}
+              ))}
             <button
               type="button"
               data-testid="start-recipe-btn"
