@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import '../style/Detalhes.css';
 
@@ -10,6 +10,12 @@ function DetalhesBebida() {
   const history = useHistory();
   const idDrink = history.location.pathname.split('/')[2];
   const SEIS = 6;
+
+  let continuar = false;
+  if (localStorage.inProgressRecipes) {
+    const ids = Object.keys(JSON.parse(localStorage.inProgressRecipes).cocktails);
+    continuar = ids.includes(idDrink);
+  }
 
   useEffect(() => {
     async function fetchAPI() {
@@ -75,14 +81,15 @@ function DetalhesBebida() {
                   </div>
                 ))
             }
-
-            <button
-              className="start-recipe"
-              data-testid="start-recipe-btn"
-              type="button"
-            >
-              Iniciar receita
-            </button>
+            <Link to={ `/bebidas/${idDrink}/in-progress` }>
+              <button
+                className="start-recipe"
+                data-testid="start-recipe-btn"
+                type="button"
+              >
+                { continuar ? 'Continuar Receita' : 'Iniciar Receita' }
+              </button>
+            </Link>
           </div>) }
     </div>
   );

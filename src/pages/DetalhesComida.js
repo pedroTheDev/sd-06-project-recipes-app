@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import '../style/Detalhes.css';
 
@@ -10,7 +10,11 @@ function DetalhesComida() {
   const history = useHistory();
   const idMeal = history.location.pathname.split('/')[2];
   const SEIS = 6;
-
+  let continuar = false;
+  if (localStorage.inProgressRecipes) {
+    const ids = Object.keys(JSON.parse(localStorage.inProgressRecipes).meals);
+    continuar = ids.includes(idMeal);
+  }
   useEffect(() => {
     async function fetchAPI() {
       const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`);
@@ -81,13 +85,15 @@ function DetalhesComida() {
                 ))
             }
 
-            <button
-              className="start-recipe"
-              data-testid="start-recipe-btn"
-              type="button"
-            >
-              Iniciar receita
-            </button>
+            <Link to={ `/comidas/${idMeal}/in-progress` }>
+              <button
+                className="start-recipe"
+                data-testid="start-recipe-btn"
+                type="button"
+              >
+                {continuar ? 'Continuar Receita' : 'Iniciar Receita'}
+              </button>
+            </Link>
           </div>) }
     </div>
   );
