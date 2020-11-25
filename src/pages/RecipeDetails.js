@@ -18,12 +18,12 @@ function RecipeDetails(props) {
   }, [params.id]);
 
   const getIngredients = (obj, filter) => {
-    let key, keys = [];
-    for (key in obj) {
-      if (obj.hasOwnProperty(key) && filter.test(key) && obj[key] !== "" && obj[key] !== null) {
+    const keys = [];
+    Object.keys(obj).forEach((key) => {
+      if (key && filter.test(key) && obj[key] !== "" && obj[key] !== null) {
         keys.push(obj[key]);
       } 
-    }
+    });
     return keys;
   }
 
@@ -90,15 +90,6 @@ function RecipeDetails(props) {
             </button>
           </div>}
           <h2>Recomendadas</h2>
-          { !random ? <p>LOADING...</p> :
-            random.map((info, index) =>
-              <Cards
-                data-testid={`${ index }-recomendation-card`}
-                recipe={ path === "/comidas/:id" ? 'bebidas' : 'comidas' }
-                info={ info }
-                index={ index }
-              />
-          )}
           { !random ? <p>LOADING...</p> :
             random.map((info, index) =>
               <Cards
