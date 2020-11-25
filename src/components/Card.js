@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import RecipesAppContext from '../context/RecipesAppContext';
 
 function Card({ title }) {
@@ -41,12 +41,17 @@ function Card({ title }) {
         className="card"
         style={ divStyle }
       >
-        <img
-          src={ recipe[`str${recipeType}Thumb`] }
-          alt={ recipe[`str${recipeType}`] }
-          data-testid={ `${index}-card-img` }
-          className="card-img-top"
-        />
+        <Link
+          to={ recipe[`id${recipeType}`] }
+          type="button"
+        >
+          <img
+            src={ recipe[`str${recipeType}Thumb`] }
+            alt={ recipe[`str${recipeType}`] }
+            data-testid={ `${index}-card-img` }
+            className="card-img-top"
+          />
+        </Link>
         <p
           data-testid={ `${index}-card-name` }
           className="card-text"
