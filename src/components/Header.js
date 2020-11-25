@@ -30,6 +30,7 @@ function Header({ title }) {
 
   const searchRadioButton = async () => {
     if (valueRadioButton === '3' && searchBar.length > 1) {
+      // eslint-disable-next-line no-alert
       alert('Sua busca deve conter somente 1 (um) caracter');
     }
 

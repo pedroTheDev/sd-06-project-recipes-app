@@ -13,6 +13,7 @@ function Provider({ children }) {
   const [searchBar, setSearchBar] = useState('');
   const [retornoApiComidas, setRetornoApiComidas] = useState([]);
   const [retornoApiBebidas, setRetornoApiBebidas] = useState([]);
+  const [categoriaAtual, setCategoriaAtual] = useState('');
 
   const fetchComida = async () => {
     const response = await FetchApiComidas('1', '');
@@ -57,6 +58,8 @@ function Provider({ children }) {
     setRetornoApiComidas,
     retornoApiBebidas,
     setRetornoApiBebidas,
+    categoriaAtual,
+    setCategoriaAtual,
   };
   return (
     <RecipeContext.Provider value={ contextValue }>
