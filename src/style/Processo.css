@@ -1,0 +1,7 @@
+.container-progress {
+  position: relative;
+}
+
+.container-progress img{
+  width: 200px;
+}

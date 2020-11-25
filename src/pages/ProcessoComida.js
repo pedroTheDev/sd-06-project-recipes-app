@@ -1,15 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import copyToClipboard from 'clipboard-copy';
 import RecipesContext from '../context/RecipesContext';
 import { shareIcon, whiteHeartIcon, blackHeartIcon } from '../images';
+import '../style/Processo.css';
 
 function ProcessoComida() {
   const { foodIngredients } = useContext(RecipesContext);
+  const [dataMeal, setDataMeal] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const [isDisable] = useState(true);
   const [isShare, setShare] = useState();
   const [checked, setChecked] = useState({});
+  const history = useHistory();
+  const idMeal = history.location.pathname.split('/')[2];
 
   const handleChange = ({ target }) => {
     setChecked({ ...checked, [target.name]: target.checked });
@@ -21,10 +26,47 @@ function ProcessoComida() {
     );
   }, [checked]);
 
+  useEffect(() => {
+    async function fetchAPI() {
+      const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`);
+      const responseJson = await response.json();
+      setDataMeal(responseJson.meals[0]);
+      setIsLoading(false);
+    }
+    fetchAPI();
+  }, [idMeal]);
+
+  useEffect(() => {
+    if (localStorage.favoriteRecipes) {
+      setIsFavorite(true);
+    }
+  }, []);
+
+  const handleClick = () => {
+    setIsFavorite(!isFavorite);
+    if (!isFavorite) {
+      localStorage.favoriteRecipes = JSON.stringify([{
+        id: dataMeal.idMeal,
+        type: 'comida',
+        area: dataMeal.strArea,
+        category: dataMeal.strCategory,
+        alcoholicOrNot: '',
+        name: dataMeal.strMeal,
+        image: dataMeal.strMealThumb,
+      }]);
+    } else {
+      localStorage.removeItem('favoriteRecipes');
+    }
+  };
+
   return (
-    <div>
-      <img data-testid="recipe-photo" src="" alt="Foto da receita" />
-      <h2 data-testid="recipe-title">Nome da Receita</h2>
+    <div className="container-progress">
+      <img
+        data-testid="recipe-photo"
+        src={ dataMeal.strMealThumb }
+        alt="Foto da receita"
+      />
+      <h1 data-testid="recipe-title">{ dataMeal.strMeal }</h1>
       <div>
         <button
           type="button"
@@ -40,10 +82,10 @@ function ProcessoComida() {
       </div>
       <button
         type="button"
-        data-testid="favorite-btn"
-        onClick={ () => setIsFavorite(!isFavorite) }
+        onClick={ handleClick }
       >
         <img
+          data-testid="favorite-btn"
           src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
           alt="Botão de Favorito"
         />

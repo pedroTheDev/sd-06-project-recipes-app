@@ -83,12 +83,11 @@ function DetalhesComida() {
               {isShare}
             </span>
             <button
-              data-testid="favorite-btn"
               type="button"
               onClick={ handleClick }
-              src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
             >
               <img
+                data-testid="favorite-btn"
                 src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
                 alt="Botão de Favorito"
               />
