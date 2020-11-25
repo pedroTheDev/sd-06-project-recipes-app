@@ -38,13 +38,13 @@ function RecipeDetails() {
         });
       }
 
-      // if (localStorageProgress) {
-      //   localStorageProgress.forEach((item) => {
-      //     if (item.id === mealRecipe[0].idMeal) {
-      //       setRecipeStart(true);
-      //     }
-      //   });
-      // }
+      if (localStorageProgress) {
+        Object.keys(localStorageProgress.meals).forEach((item) => {
+          if (item === mealRecipe[0].idMeal) {
+            setRecipeStart(true);
+          }
+        });
+      }
     } else {
       const data = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idRecipe}`);
       const responseJSON = await data.json();
@@ -60,14 +60,13 @@ function RecipeDetails() {
         });
       }
 
-      // if (localStorageProgress.cocktails) {
-      //   console.log(localStorageProgress);
-      //   localStorageProgress.cocktails.forEach((item) => {
-      //     if (item.id === drinkRecipe[0].idDrink) {
-      //       setRecipeStart(true);
-      //     }
-      //   });
-      // }
+      if (localStorageProgress.cocktails) {
+        Object.keys(localStorageProgress.cocktails).forEach((item) => {
+          if (item === drinkRecipe[0].idDrink) {
+            setRecipeStart(true);
+          }
+        });
+      }
     }
   };
 
@@ -118,29 +117,6 @@ function RecipeDetails() {
     }
   };
 
-  const handleProgressRecipes = () => {
-    if (!recipeStarted) {
-      if (location.includes('comidas')) {
-        if (!localStorageProgress) {
-          localStorage.setItem('inProgressRecipes',
-            JSON.stringify({ meals: { id: singleRecipe.idMeal } }));
-        } else {
-          localStorage.setItem('inProgressRecipes',
-            JSON.stringify({ ...localStorageProgress,
-              meals: { id: singleRecipe.idMeal } }));
-        }
-      } else if (!localStorageProgress) {
-        localStorage.setItem('inProgressRecipes',
-          JSON.stringify({ cocktails: { id: singleRecipe.idDrink } }));
-      } else {
-        localStorage.setItem('inProgressRecipes',
-          JSON.stringify({ ...localStorageProgress,
-            cocktails: { id: singleRecipe.idDrink } }));
-      }
-    }
-    history.push(`${location}/in-progress`);
-  };
-
   const renderIngredients = (recipeData) => {
     const arrayIngredients = [];
     const maxIngredients = 20;
@@ -162,6 +138,55 @@ function RecipeDetails() {
   const maxCards = 6;
   const allIngredients = renderIngredients(singleRecipe);
 
+  const handleProgressRecipes = () => {
+    if (!recipeStarted) {
+      if (location.includes('comidas')) {
+        if (!localStorageProgress) {
+          localStorage.setItem('inProgressRecipes',
+            JSON.stringify({ meals: { [singleRecipe.idMeal]: allIngredients } }));
+        } else {
+          localStorage.setItem('inProgressRecipes',
+            JSON.stringify({ ...localStorageProgress,
+              meals: { ...localStorageProgress.meals,
+                [singleRecipe.idMeal]: allIngredients } }));
+        }
+      } else if (!localStorageProgress) {
+        localStorage.setItem('inProgressRecipes',
+          JSON.stringify({ cocktails: { [singleRecipe.idDrink]: allIngredients } }));
+      } else {
+        localStorage.setItem('inProgressRecipes',
+          JSON.stringify({ ...localStorageProgress,
+            cocktails: { ...localStorageProgress.cocktails,
+              [singleRecipe.idDrink]: allIngredients } }));
+      }
+    }
+    history.push(`${location}/in-progress`);
+  };
+
+  const handleShareIcon = () => {
+    const zero = 0;
+    const menosUm = -1;
+    let fullPath = '';
+    if (location.substr(location.length - 1) === '/') {
+      fullPath = `http://localhost:3000${location.slice(zero, menosUm)}`;
+    } else {
+      fullPath = `http://localhost:3000${location}`;
+    }
+    const tempElement = document.createElement('textarea');
+    tempElement.value = fullPath;
+    console.log(fullPath);
+    tempElement.setAttribute('readonly', '');
+    tempElement.style.position = 'absolute';
+    tempElement.style.left = '-9999px';
+    document.body.appendChild(tempElement);
+    tempElement.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempElement);
+    const linkCopy = document.createElement('p');
+    linkCopy.innerHTML = 'Link copiado!';
+    document.querySelector('.icons-area').appendChild(linkCopy);
+  };
+
   return (
     <div>
       {(isFetching) ? <h2>Carregando receita...</h2>
@@ -176,8 +201,14 @@ function RecipeDetails() {
                   data-testid="recipe-photo"
                   width="200px"
                 />
-                <section>
-                  <img src={ shareIcon } alt="Share" data-testid="share-btn" />
+                <section className="icons-area">
+                  <img
+                    src={ shareIcon }
+                    alt="Share"
+                    data-testid="share-btn"
+                    onClick={ handleShareIcon }
+                    aria-hidden="true"
+                  />
                   <img
                     src={ favoriteRecipe ? blackHeartIcon : whiteHeartIcon }
                     alt="Favorite"
@@ -234,8 +265,14 @@ function RecipeDetails() {
                   data-testid="recipe-photo"
                   width="200px"
                 />
-                <section>
-                  <img src={ shareIcon } alt="Share" data-testid="share-btn" />
+                <section className="icons-area">
+                  <img
+                    src={ shareIcon }
+                    alt="Share"
+                    data-testid="share-btn"
+                    onClick={ handleShareIcon }
+                    aria-hidden="true"
+                  />
                   <img
                     src={ favoriteRecipe ? blackHeartIcon : whiteHeartIcon }
                     alt="Favorite"
