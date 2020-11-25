@@ -13,6 +13,7 @@ class FoodsRecipesInProgress extends React.Component {
       Ingredients: [],
       Measures: [],
       checkedItems: [],
+      disabledButton: false,
     };
     this.handleIngredients = this.handleIngredients.bind(this);
     this.setIngredients = this.setIngredients.bind(this);
@@ -20,18 +21,18 @@ class FoodsRecipesInProgress extends React.Component {
     this.checked = this.checked.bind(this);
     this.checkedItems = this.checkedItems.bind(this);
     this.test = this.test.bind(this);
-    this.getLocalStorage = this.getLocalStorage.bind(this);
+    // this.getLocalStorage = this.getLocalStorage.bind(this);
+    // this.handleButton = this.handleButton.bind(this);
   }
 
   async componentDidMount() {
     const { history: { location: { pathname } } } = this.props;
     const endpoint = pathname.split('/')[2];
     const mealRecipe = await fetchMealsById(Number(endpoint));
-    console.log(mealRecipe);
     this.setMealState(mealRecipe);
     this.handleIngredients();
     this.checkedItems();
-    this.getLocalStorage();
+    // this.getLocalStorage();
   }
 
   // componentDidUpdate() {
@@ -79,6 +80,17 @@ class FoodsRecipesInProgress extends React.Component {
     document.body.removeChild(el);
   }
 
+  handleButton() {
+    const { checkedItems, Ingredients } = this.state;
+    if (Ingredients.length === Object.keys(checkedItems).length + 1) {
+      this.setState({ disabledButton: true });
+    } else {
+      this.setState({ disabledButton: false });
+    }
+    // console.log('checkedItems', Ingredients.length);
+    // console.log('Ingredients', Object.keys(checkedItems).length + 1);
+  }
+
   setMealState(Meal) {
     this.setState({
       Meal,
@@ -92,13 +104,13 @@ class FoodsRecipesInProgress extends React.Component {
     });
   }
 
-  getLocalStorage() {
-    const getRecipesInProgress = localStorage.getItem('storedRecipe');
-    if (getRecipesInProgress) {
-      const recipesInProgress = JSON.parse(getRecipesInProgress);
-      this.state({ checkedItems: recipesInProgress });
-    }
-  }
+  // getLocalStorage() {
+  //   const getRecipesInProgress = localStorage.getItem('storedRecipe');
+  //   if (getRecipesInProgress) {
+  //     const recipesInProgress = JSON.parse(getRecipesInProgress);
+  //     this.state({ checkedItems: recipesInProgress });
+  //   }
+  // }
 
   checkedItems() {
     const checked = {};
@@ -146,7 +158,7 @@ class FoodsRecipesInProgress extends React.Component {
   }
 
   render() {
-    const { Meal, Ingredients, Measures, checkedItems } = this.state;
+    const { Meal, Ingredients, Measures, checkedItems, disabledButton } = this.state;
     const { history } = this.props;
     return (
       <div className="food-drink-detail-container">
@@ -195,6 +207,7 @@ class FoodsRecipesInProgress extends React.Component {
                       id={ `ingredient ${i}` }
                       name={ `ingredient ${i}` }
                       type="checkbox"
+                      onChange={ () => this.handleButton() }
                       onClick={ (e) => this.checked(e) }
                       value={ recipes }
                       checked={ checkedItems.recipes }
@@ -214,6 +227,7 @@ class FoodsRecipesInProgress extends React.Component {
                 data-testid="finish-recipe-btn"
                 type="button"
                 onClick={ () => history.push('/receitas-feitas') }
+                disabled={ !disabledButton }
               >
                 Finalizar Receita
               </button>
