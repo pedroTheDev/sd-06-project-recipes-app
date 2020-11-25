@@ -103,51 +103,6 @@ class FoodsRecipesInProgress extends React.Component {
     }
   }
 
-  checkedItems() {
-    const checked = {};
-    const { Ingredients } = this.state;
-    const getCheckedItems = localStorage.getItem('storedRecipe');
-    // const zero = 0;
-    if (!getCheckedItems) {
-      Ingredients.forEach((item) => {
-        checked[item] = false;
-      });
-      this.setState({ checkedItems: checked });
-      // localStorage.setItem('storedRecipe', JSON.stringify(checked));
-    }
-  }
-
-  checked(e) {
-    const { checkedItems } = this.state;
-    const { value, checked } = e.target;
-    this.setState({
-      checkedItems: { ...checkedItems, [value]: checked },
-    });
-    const inputsList = document.querySelectorAll('input');
-    inputsList.forEach((item) => {
-      if (item.checked === true) {
-        item.parentNode.className = 'styled';
-      } else {
-        item.parentNode.className = 'not-styled';
-      }
-    });
-  }
-
-  test(e) {
-    const { idCurrent } = this.props;
-    console.log(idCurrent);
-    const object = {
-      meals: {
-        idCurrent,
-        ingredients: [
-          e.target.value,
-        ],
-      },
-    };
-    const test = localStorage.setItem('inProgressRecipes', JSON.stringify(object));
-    console.log(test);
-  }
-
   setLocalStorage(recipe) {
     const myObject = [{
       id: recipe.idMeal,
@@ -186,6 +141,51 @@ class FoodsRecipesInProgress extends React.Component {
     localStorage.setItem('favoriteRecipes', JSON.stringify(filteredStorage));
     const { Update } = this.state;
     this.setState({ Update: !Update });
+  }
+
+  checked(e) {
+    const { checkedItems } = this.state;
+    const { value, checked } = e.target;
+    this.setState({
+      checkedItems: { ...checkedItems, [value]: checked },
+    });
+    const inputsList = document.querySelectorAll('input');
+    inputsList.forEach((item) => {
+      if (item.checked === true) {
+        item.parentNode.className = 'styled';
+      } else {
+        item.parentNode.className = 'not-styled';
+      }
+    });
+  }
+
+  test(e) {
+    const { idCurrent } = this.props;
+    console.log(idCurrent);
+    const object = {
+      meals: {
+        idCurrent,
+        ingredients: [
+          e.target.value,
+        ],
+      },
+    };
+    const test = localStorage.setItem('inProgressRecipes', JSON.stringify(object));
+    console.log(test);
+  }
+
+  checkedItems() {
+    const checked = {};
+    const { Ingredients } = this.state;
+    const getCheckedItems = localStorage.getItem('storedRecipe');
+    // const zero = 0;
+    if (!getCheckedItems) {
+      Ingredients.forEach((item) => {
+        checked[item] = false;
+      });
+      this.setState({ checkedItems: checked });
+      // localStorage.setItem('storedRecipe', JSON.stringify(checked));
+    }
   }
 
   teste(recipe) {

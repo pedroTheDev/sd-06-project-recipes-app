@@ -294,7 +294,6 @@ DrinksDetails.propTypes = {
   history: PropTypes.shape().isRequired,
   dispatchID: PropTypes.func.isRequired,
   idCurrent: PropTypes.string.isRequired,
-  dispatchFavorite: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DrinksDetails);
