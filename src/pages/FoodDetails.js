@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, Redirect, useLocation } from 'react-router-dom';
 import clipboardCopy from 'clipboard-copy';
 import Recommended from '../components/Recommended';
 import { fetchRecipe } from '../services/api';
@@ -95,7 +95,6 @@ function FoodDetails() {
       {(isFetching) ? <div>Loading recipe...</div>
         : (
           <section className="body-recipe">
-            {console.log(data)}
             <h1 data-testid="recipe-title">
               { strMeal }
             </h1>
@@ -146,13 +145,15 @@ function FoodDetails() {
               {strInstructions}
             </p>
             <Recommended />
-            <button
-              type="button"
-              className="start-recipe-btn"
-              data-testid="start-recipe-btn"
-            >
-              Iniciar Receita
-            </button>
+            <Link to={`${itemUrl}/in-progress`}>
+              <button
+                type="button"
+                className="start-recipe-btn"
+                data-testid="start-recipe-btn"
+              >
+                Iniciar Receita
+              </button>
+            </Link>
           </section>
         )}
     </main>

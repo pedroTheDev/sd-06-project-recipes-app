@@ -14,6 +14,7 @@ import FavoriteRecipes from './pages/FavoriteRecipes';
 import ExploreFood from './pages/ExploreFood';
 import ExploreDrink from './pages/ExploreDrink';
 import ExploreFoodIngredient from './pages/ExploreFoodIngredient';
+import InProgress from './pages/InProgress';
 
 function App() {
   return (
@@ -21,8 +22,10 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={ Login } />
+          <Route path="/bebidas/:id/in-progress" component={ InProgress } />
           <Route path="/bebidas/:id" component={ DrinkDetails } />
           <Route path="/bebidas" component={ Drink } />
+          <Route path="/comidas/:id/in-progress" component={ InProgress } />
           <Route path="/comidas/:id" component={ FoodDetails } />
           <Route path="/comidas" component={ Food } />
           <Route path="/perfil" component={ Perfil } />
