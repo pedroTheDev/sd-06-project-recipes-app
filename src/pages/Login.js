@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import ContextRecipes from '../context/ContextRecipes';
+import '../styles/login.css';
 
 function Login() {
   const {
@@ -30,37 +31,50 @@ function Login() {
   };
 
   return (
-    <div>
-      <label htmlFor="email-input">
-        Email:
-        <input
-          type="email"
-          data-testid="email-input"
-          name="email-input"
-          id="email-input"
-          onChange={ validateInputs }
-        />
-      </label>
-      <label htmlFor="password-input">
-        Password:
-        <input
-          type="password"
-          data-testid="password-input"
-          name="password-input"
-          id="password-input"
-          onChange={ validateInputs }
-        />
-      </label>
-      <Link to="/comidas">
-        <button
-          type="button"
-          data-testid="login-submit-btn"
-          disabled={ btnDisable }
-          onClick={ handleClick }
-        >
-          Entrar
-        </button>
-      </Link>
+    <div clssName="container">
+      <div>
+        <div className="name-login">
+          <h2>Recives Group 15</h2>
+        </div>
+        <div className="login-box">
+          <h1>Login</h1>
+          <label htmlFor="email-input" className="textbox">
+            <i className="fas fa-user" />
+            Email:
+            <input
+              type="email"
+              data-testid="email-input"
+              name="email-input"
+              id="email-input"
+              onChange={ validateInputs }
+            />
+          </label>
+          <label htmlFor="password-input" className="textbox">
+            <i className="fas fa-user" />
+            Password:
+            <input
+              type="password"
+              data-testid="password-input"
+              name="password-input"
+              id="password-input"
+              onChange={ validateInputs }
+            />
+          </label>
+          <Link to="/comidas">
+            <button
+              type="button"
+              className="btn"
+              data-testid="login-submit-btn"
+              disabled={ btnDisable }
+              onClick={ handleClick }
+            >
+              Entrar
+            </button>
+          </Link>
+
+        </div>
+
+      </div>
     </div>
   );
 }

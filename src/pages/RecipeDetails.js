@@ -68,7 +68,7 @@ function RecipeDetails() {
     <div>
       {(isFetching) ? <h2>Carregando receita...</h2>
         : (
-          <div>
+          <div className="container">
             <h2>Detalhes da Receita</h2>
             {(location.includes('comidas')) ? (
               <div>
@@ -76,6 +76,7 @@ function RecipeDetails() {
                   src={ singleRecipe.strMealThumb }
                   alt="food"
                   data-testid="recipe-photo"
+                  className="box-card"
                   width="200px"
                 />
                 <h3 data-testid="recipe-title">{ singleRecipe.strMeal }</h3>
@@ -121,6 +122,7 @@ function RecipeDetails() {
             ) : (
               <div>
                 <img
+                  className="img-grink"
                   src={ singleRecipe.strDrinkThumb }
                   alt="drink"
                   data-testid="recipe-photo"
@@ -150,6 +152,7 @@ function RecipeDetails() {
                         { recipe.strMeal }
                       </h4>
                       <img
+                        className="recipe-food"
                         src={ recipe.strMealThumb }
                         alt="food"
                         width="50px"
