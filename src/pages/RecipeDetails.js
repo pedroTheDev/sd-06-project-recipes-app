@@ -71,6 +71,7 @@ function RecipeDetails() {
   };
 
   useEffect(() => {
+    setFetching(true);
     fetchDetailedRecipe();
     setFetching(false);
   }, []);
@@ -174,7 +175,6 @@ function RecipeDetails() {
     }
     const tempElement = document.createElement('textarea');
     tempElement.value = fullPath;
-    console.log(fullPath);
     tempElement.setAttribute('readonly', '');
     tempElement.style.position = 'absolute';
     tempElement.style.left = '-9999px';
@@ -185,6 +185,14 @@ function RecipeDetails() {
     const linkCopy = document.createElement('p');
     linkCopy.innerHTML = 'Link copiado!';
     document.querySelector('.icons-area').appendChild(linkCopy);
+  };
+
+  const handleRecomendatioNRecipes = async ({ target }) => {
+    if (target.alt === 'food') {
+      history.push(`/comidas/${target.id}`);
+    } else {
+      history.push(`/bebidas/${target.id}`);
+    }
   };
 
   return (
@@ -206,6 +214,7 @@ function RecipeDetails() {
                     src={ shareIcon }
                     alt="Share"
                     data-testid="share-btn"
+                    id="share-btn"
                     onClick={ handleShareIcon }
                     aria-hidden="true"
                   />
@@ -252,6 +261,9 @@ function RecipeDetails() {
                         src={ recipe.strDrinkThumb }
                         alt="drink"
                         width="50px"
+                        id={ recipe.idDrink }
+                        onClick={ handleRecomendatioNRecipes }
+                        aria-hidden="true"
                       />
                     </div>
                   )).filter((_, index) => index < maxCards)}
@@ -270,6 +282,7 @@ function RecipeDetails() {
                     src={ shareIcon }
                     alt="Share"
                     data-testid="share-btn"
+                    id="share-btn"
                     onClick={ handleShareIcon }
                     aria-hidden="true"
                   />
@@ -307,7 +320,10 @@ function RecipeDetails() {
                       <img
                         src={ recipe.strMealThumb }
                         alt="food"
+                        id={ recipe.idMeal }
                         width="50px"
+                        onClick={ handleRecomendatioNRecipes }
+                        aria-hidden="true"
                       />
                     </div>
                   )).filter((_, index) => index < maxCards)}
