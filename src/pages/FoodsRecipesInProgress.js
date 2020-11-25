@@ -23,6 +23,8 @@ class FoodsRecipesInProgress extends React.Component {
     this.checked = this.checked.bind(this);
     this.checkedItems = this.checkedItems.bind(this);
     this.handleButton = this.handleButton.bind(this);
+    this.setRecipesLocalStorage = this.setRecipesLocalStorage.bind(this);
+    this.check = this.check.bind(this);
   }
 
   async componentDidMount() {
@@ -32,6 +34,10 @@ class FoodsRecipesInProgress extends React.Component {
     this.setMealState(mealRecipe);
     this.handleIngredients();
     this.checkedItems();
+  }
+
+  componentDidUpdate() {
+    this.setRecipesLocalStorage();
   }
 
   handleIngredients() {
@@ -83,6 +89,14 @@ class FoodsRecipesInProgress extends React.Component {
       this.setState({ disabledButton: true });
     } else {
       this.setState({ disabledButton: false });
+    }
+  }
+
+  setRecipesLocalStorage() {
+    const { checkedItems } = this.state;
+    const zero = 0;
+    if (checkedItems.length > zero) {
+      localStorage.setItem('inProgressRecipes', JSON.stringify(checkedItems));
     }
   }
 
@@ -150,30 +164,33 @@ class FoodsRecipesInProgress extends React.Component {
     return fullDate;
   }
 
-  checkedItems() {
-    const checked = {};
-    const { Ingredients } = this.state;
-    const getCheckedItems = localStorage.getItem('storedRecipe');
-    // const zero = 0;
-    if (!getCheckedItems) {
-      Ingredients.forEach((item) => {
-        checked[item] = false;
-      });
-      this.setState({ checkedItems: checked });
-      // localStorage.setItem('storedRecipe', JSON.stringify(checked));
+  async checkedItems() {
+    const getCheckedItems = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (getCheckedItems) {
+      this.setState({ checkedItems: await getCheckedItems });
     }
   }
 
   checked(e) {
     const { checkedItems } = this.state;
     const { value, checked } = e.target;
-    this.setState({
-      checkedItems: { ...checkedItems, [value]: checked },
-    });
+    const searchIndex = checkedItems.includes(value);
+    console.log(searchIndex);
+    if (!searchIndex) {
+      const updateCheck = checkedItems.concat(value);
+      this.setState({ checkedItems: updateCheck });
+    } else if (!checked) {
+      const positionCheck = checkedItems.indexOf(value);
+      const originalChecked = checkedItems;
+      originalChecked.splice(positionCheck, 1);
+      this.setState({ checkedItems: originalChecked });
+    }
     const inputsList = document.querySelectorAll('input');
     inputsList.forEach((item) => {
       if (item.checked === true) {
         item.parentNode.className = 'styled';
+        item.parentNode.checked = true;
+        item.parentNode.checked = 'check';
       } else {
         item.parentNode.className = 'not-styled';
       }
@@ -219,8 +236,19 @@ class FoodsRecipesInProgress extends React.Component {
     history.push('/receitas-feitas');
   }
 
+  check() {
+    const { checkedItems } = this.state;
+    const verifyLocalStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (checkedItems.length === 0 && verifyLocalStorage) {
+      const getCheckedItems = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      return getCheckedItems;
+    }
+    return checkedItems;
+  }
+
   render() {
     const { Meal, Ingredients, Measures, checkedItems, disabledButton } = this.state;
+    const getChecked = this.check();
     return (
       <div className="food-drink-detail-container">
         {Meal ? Meal.map((recipe, index) => (
@@ -270,10 +298,13 @@ class FoodsRecipesInProgress extends React.Component {
                       id={ `ingredient ${i}` }
                       name={ `ingredient ${i}` }
                       type="checkbox"
-                      onChange={ () => this.handleButton() }
-                      onClick={ (e) => this.checked(e) }
-                      value={ recipes }
-                      checked={ checkedItems.recipes }
+                      // onChange={ () =>  }
+                      onClick={ (e) => {
+                        this.checked(e);
+                        this.handleButton();
+                      } }
+                      value={ i }
+                      checked={ getChecked.includes(String(i)) }
                     />
                     {recipes}
                     -
