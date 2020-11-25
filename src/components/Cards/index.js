@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import ContextAPI from '../../Context/ContextAPI';
+import ContextAPI from '../../../Context/ContextAPI';
 
 const Cards = () => {
   const { apiValueSearch } = useContext(ContextAPI);
@@ -29,10 +29,10 @@ const Cards = () => {
 
   const showDrinkResearch = () => (
     apiValueSearch.drinks && (
-      apiValueSearch.drinks.drinks.map((res) => (
-        <li key={ res.idDrink }>
-          <p>{res.strDrink}</p>
-          <img width="200" src={ res.strDrinkThumb } alt={ res.strMeal } />
+      apiValueSearch.drinks.drinks.map((res, index) => (
+        <li data-testid={ `${index}-recipe-card` } key={ res.idDrink }>
+          <p data-testid={ `${index}-card-name` }>{res.strDrink}</p>
+          <img data-testid={ `${index}-card-img` } width="200" src={ res.strDrinkThumb } alt={ res.strMeal } />
         </li>
       ))
     )

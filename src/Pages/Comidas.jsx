@@ -3,6 +3,7 @@ import React, { useEffect, useContext } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Cards from '../components/Cards';
+import Categories from '../components/Categories';
 
 import { showAllFoodsCategories,
 } from '../services/aPI';
@@ -13,7 +14,6 @@ const Comidas = () => {
 
   const getFoodCategories = async () => {
     const foods = await showAllFoodsCategories();
-    console.log(foods);
     setApiValueSearch({
       ...apiValueSearch,
       foods,
@@ -26,6 +26,7 @@ const Comidas = () => {
   return (
     <div>
       <Header />
+      <Categories />
       <Cards />
       <Footer />
     </div>
