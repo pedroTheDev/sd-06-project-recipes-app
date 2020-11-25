@@ -5,14 +5,17 @@ import Footer from '../components/Footer';
 import '../style/Perfil.css';
 
 const Perfil = () => {
-  const [storageEmail, setStorageEmail] = useState('');
+  const [storageEmail, setStorageEmail] = useState([]);
 
-  const localStorageEmail = JSON.parse(localStorage.getItem('user'));
-  const email = Object.values(localStorageEmail);
+  const localStorageEmail = localStorage.getItem('user');
 
   useEffect(() => {
-    setStorageEmail(email);
-  }, []);
+    if (localStorageEmail !== null) {
+      const emailJSON = JSON.parse(localStorageEmail);
+      const emailObject = Object.values(emailJSON);
+      setStorageEmail(emailObject);
+    }
+  }, [localStorageEmail]);
 
   const handleClick = () => {
     localStorage.clear();
