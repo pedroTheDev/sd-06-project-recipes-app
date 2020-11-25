@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import {
-  Login, Foods, Drinks, Explore, Profile, DoneRecipes,
+  Login, Foods, Drink, Explore, Profile, DoneRecipes,
   FavoriteRecipes, FoodsDetails, DrinksDetails,
   FoodsRecipesInProgress, DrinksRecipesInProgress,
   ExploreDrinks, ExploreFoods,
@@ -27,7 +27,7 @@ function App() {
           path="/bebidas/:id/in-progress"
           component={ DrinksRecipesInProgress }
         />
-        <Route path="/bebidas" component={ Drinks } />
+        <Route path="/bebidas" component={ Drink } />
         <Route path="/explorar" component={ Explore } />
         <Route exact path="/explorar/comidas" component={ ExploreFoods } />
         <Route exact path="/explorar/bebidas" component={ ExploreDrinks } />

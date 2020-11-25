@@ -1,7 +1,7 @@
 export function fetchMeal(endPoint, value) {
   let variavel;
   if (endPoint.length < 1) {
-    variavel = fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=cheese')
+    variavel = fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=')
       .then((response) => response.json())
       .then((response) => response.meals);
   } else if (value === 'ingrediente') {
@@ -23,7 +23,7 @@ export function fetchMeal(endPoint, value) {
 export function fetchDrinks(endPoint, value) {
   let variavel;
   if (endPoint.length < 1) {
-    variavel = fetch('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=lemon')
+    variavel = fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=')
       .then((response) => response.json())
       .then((response) => response.drinks);
   } else if (value === 'ingrediente') {
@@ -75,5 +75,59 @@ export function fetchRecommendedMeals() {
   const variavel = fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=')
     .then((response) => response.json())
     .then((response) => response.meals.slice(INITIAL_LENGTH, MAX_LENGTH));
+  return variavel;
+}
+
+export function foodsOnRender() {
+  const INITIAL_LENGTH = 0;
+  const MAX_LENGTH = 12;
+  const variavel = fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=')
+    .then((response) => response.json())
+    .then((response) => response.meals.slice(INITIAL_LENGTH, MAX_LENGTH));
+  return variavel;
+}
+
+export function drinksOnRender() {
+  const INITIAL_LENGTH = 0;
+  const MAX_LENGTH = 12;
+  const variavel = fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=')
+    .then((response) => response.json())
+    .then((response) => response.drinks.slice(INITIAL_LENGTH, MAX_LENGTH));
+  return variavel;
+}
+
+export function foodsCategoriesOnRender() {
+  const INITIAL_LENGTH = 0;
+  const MAX_LENGTH = 5;
+  const variavel = fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list')
+    .then((response) => response.json())
+    .then((response) => response.meals.slice(INITIAL_LENGTH, MAX_LENGTH));
+  return variavel;
+}
+
+export function drinksCategoriesOnRender() {
+  const INITIAL_LENGTH = 0;
+  const MAX_LENGTH = 5;
+  const variavel = fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list')
+    .then((response) => response.json())
+    .then((response) => response.drinks.slice(INITIAL_LENGTH, MAX_LENGTH));
+  return variavel;
+}
+
+export function filterFoodsByCategory(endPoint) {
+  const INITIAL_LENGTH = 0;
+  const MAX_LENGTH = 12;
+  const variavel = fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${endPoint}`)
+    .then((response) => response.json())
+    .then((response) => response.meals.slice(INITIAL_LENGTH, MAX_LENGTH));
+  return variavel;
+}
+
+export function filterDrinksByCategory(endPoint) {
+  const INITIAL_LENGTH = 0;
+  const MAX_LENGTH = 12;
+  const variavel = fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${endPoint}`)
+    .then((response) => response.json())
+    .then((response) => response.drinks.slice(INITIAL_LENGTH, MAX_LENGTH));
   return variavel;
 }

@@ -178,7 +178,6 @@ class DrinksRecipesInProgress extends React.Component {
     const { checkedItems } = this.state;
     const { value, checked } = e.target;
     const searchIndex = checkedItems.includes(value);
-    console.log(searchIndex);
     if (!searchIndex) {
       const updateCheck = checkedItems.concat(value);
       this.setState({ checkedItems: updateCheck });
@@ -224,8 +223,9 @@ class DrinksRecipesInProgress extends React.Component {
       name: recipe.strDrink,
       image: recipe.strDrinkThumb,
       doneDate: fullDate,
-      tags: recipe.strTags,
+      tags: [],
     }];
+
     if (!localStorage.getItem('doneRecipes')) {
       localStorage.setItem('doneRecipes', JSON.stringify(myObject));
     }
@@ -234,7 +234,6 @@ class DrinksRecipesInProgress extends React.Component {
     localStorage.setItem('doneRecipes', JSON.stringify(combinedObjects)); // assim add
     const filteredStorage = combinedObjects
       .filter((v, i, a) => a.findIndex((t) => (t.id === v.id)) === i); // só registra um único id
-    console.log(filteredStorage);
     localStorage.setItem('doneRecipes', JSON.stringify(filteredStorage));
     history.push('/receitas-feitas');
   }

@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Footer, Header } from '../components';
-import { foodsOnRender, foodsCategoriesOnRender,
-  filterFoodsByCategory } from '../services';
+import { drinksCategoriesOnRender,
+  drinksOnRender, filterDrinksByCategory } from '../services';
 
-class Foods extends React.Component {
+class Drink extends React.Component {
   constructor() {
     super();
     this.state = {
-      Meals: [],
+      Drinks: [],
       Categories: [],
       CategoryFilter: '',
     };
@@ -20,34 +20,34 @@ class Foods extends React.Component {
   }
 
   async componentDidMount() {
-    const mealsRender = await foodsOnRender();
-    const Categories = await foodsCategoriesOnRender();
-    this.setInitialState(mealsRender, Categories);
+    const drinksRender = await drinksOnRender();
+    const Categories = await drinksCategoriesOnRender();
+    this.setInitialState(drinksRender, Categories);
   }
 
   async setCategory({ strCategory }) {
     const { CategoryFilter } = this.state;
     if (CategoryFilter !== strCategory) {
-      const filteredFoods = await filterFoodsByCategory(strCategory);
-      this.setState({ Meals: filteredFoods, CategoryFilter: strCategory });
+      const drinksCategory = await filterDrinksByCategory(strCategory);
+      this.setState({ Drinks: drinksCategory, CategoryFilter: strCategory });
     } else {
-      const initialMeals = await foodsOnRender();
-      this.setState({ Meals: initialMeals, CategoryFilter: '' });
+      const initialDrinks = await drinksOnRender();
+      this.setState({ Drinks: initialDrinks, CategoryFilter: '' });
     }
   }
 
-  setInitialState(mealsRender, Categories) {
-    this.setState({ Meals: mealsRender, Categories });
+  setInitialState(drinksRender, Categories) {
+    this.setState({ Drinks: drinksRender, Categories });
   }
 
   async allButtonHandler() {
-    const initialMeals = await foodsOnRender();
-    this.setState({ Meals: initialMeals, CategoryFilter: '' });
+    const initialDrinks = await drinksOnRender();
+    this.setState({ Drinks: initialDrinks, CategoryFilter: '' });
   }
 
   render() {
     const { history } = this.props;
-    const { Meals, Categories } = this.state;
+    const { Drinks, Categories } = this.state;
     return (
       <div className="food-drink-container">
         <Header history={ history } />
@@ -65,16 +65,16 @@ class Foods extends React.Component {
         >
           All
         </button>
-        {Meals ? Meals.map((recipe, index) => (
+        {Drinks ? Drinks.map((recipe, index) => (
           <div className="card" key={ index } data-testid={ `${index}-recipe-card` }>
-            <Link to={ `/comidas/${recipe.idMeal}` }>
+            <Link to={ `/bebidas/${recipe.idDrink}` }>
               <img
-                src={ recipe.strMealThumb }
+                src={ recipe.strDrinkThumb }
                 data-testid={ `${index}-card-img` }
                 alt="recipe"
               />
               <hr className="card-hr" />
-              <p data-testid={ `${index}-card-name` }>{recipe.strMeal}</p>
+              <p data-testid={ `${index}-card-name` }>{recipe.strDrink}</p>
               <hr className="card-hr" />
             </Link>
           </div>
@@ -85,12 +85,12 @@ class Foods extends React.Component {
   }
 }
 
-Foods.propTypes = {
+Drink.propTypes = {
   history: PropTypes.shape().isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  stateMeals: state.menu.meals,
+  stateDrinks: state.menu.drinks,
 });
 
-export default connect(mapStateToProps, null)(Foods);
+export default connect(mapStateToProps, null)(Drink);
