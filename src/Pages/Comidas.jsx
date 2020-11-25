@@ -5,22 +5,24 @@ import Footer from '../components/Footer';
 import Cards from '../components/Cards';
 import Categories from '../components/Categories';
 
-import { showAllFoodsCategories,
+import { showSugestedFoods,
 } from '../services/aPI';
 import ContextAPI from '../Context/ContextAPI';
 
 const Comidas = () => {
   const { setApiValueSearch, apiValueSearch } = useContext(ContextAPI);
-
   const getFoodCategories = async () => {
     const foods = await showAllFoodsCategories();
+  const getSugestedFoods = async () => {
+    const foods = await showSugestedFoods();
+    console.log(foods);
     setApiValueSearch({
       ...apiValueSearch,
       foods,
     });
   };
   useEffect(() => {
-    getFoodCategories();
+    getSugestedFoods();
   }, []);
 
   return (
