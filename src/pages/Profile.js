@@ -1,8 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Header from '../components/header';
 
 function Profile() {
+  const history = useHistory();
+
+  if (!JSON.parse(localStorage.getItem('user'))) {
+    history.push('/');
+    return (<span>Você não está logado!</span>);
+  }
+
   const getEmailFromLocalStorage = () => {
     const { email } = JSON.parse(localStorage.getItem('user'));
     return email;
