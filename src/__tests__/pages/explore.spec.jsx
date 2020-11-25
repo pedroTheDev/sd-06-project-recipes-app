@@ -51,9 +51,9 @@ describe('explore page structure testing', () => {
     );
 
     const exploreFoods = screen.getByTestId('explore-food');
-    const exploreFoodsRef = 'http://localhost/explorar/comidas';
+    const exploreFoodsRef = '/explorar/comidas';
     const exploreDrinks = screen.getByTestId('explore-drinks');
-    const exploreDrinksRef = 'http://localhost/explorar/bebidas';
+    const exploreDrinksRef = '/explorar/bebidas';
 
     expect(exploreFoods).toBeInTheDocument();
     expect(exploreFoods).toHaveAttribute('href', exploreFoodsRef);

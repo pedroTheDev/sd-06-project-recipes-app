@@ -248,6 +248,8 @@ describe('food details page structure testing', () => {
 
     const expectedDate = new Date(fakeNow);
 
+    const expectedTags = mealRendered.strTags.split(',');
+
     const expectedRecipeFormat = {
       alcoholicOrNot: '',
       area: mealRendered.strArea,
@@ -256,7 +258,7 @@ describe('food details page structure testing', () => {
       id: mealRendered.idMeal,
       image: mealRendered.strMealThumb,
       name: mealRendered.strMeal,
-      tags: mealRendered.strTags,
+      tags: expectedTags,
       type: 'comida',
     };
 
