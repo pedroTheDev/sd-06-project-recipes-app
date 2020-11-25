@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import shareIcon from '../images/shareIcon.svg';
-import { fetchDrinksById } from '../services';
 
 class DrinkCard extends React.Component {
   constructor() {
@@ -15,15 +14,17 @@ class DrinkCard extends React.Component {
   }
 
   async componentDidMount() {
-    // pegando uma comida e uma bebida como exemplo
-    // estas comidas/bebidas vão vir de outra tela
-    // basta pegar do estado
-    const drinks = await fetchDrinksById('178319');
-    this.setDrinkState(drinks);
+    const drinks = JSON.parse(localStorage.getItem('doneRecipes'));
+    if (drinks) {
+      const filteredDrink = drinks.filter((element) => element.type === 'bebida');
+      console.log(filteredDrink.length, 'tamanho das bebidas');
+      console.log(drinks.length, 'tamanho total');
+      this.setDrinkState(filteredDrink);
+    }
   }
 
-  handleShareDrink({ idDrink }) {
-    const url = `http://localhost:3000/bebidas/${idDrink}`;
+  handleShareDrink({ id }) {
+    const url = `http://localhost:3000/bebidas/${id}`;
     window.alert('Link copiado!');
     //  https://www.30secondsofcode.org/blog/s/copy-text-to-clipboard-with-javascript
     const el = document.createElement('textarea');
@@ -45,36 +46,38 @@ class DrinkCard extends React.Component {
 
   render() {
     const { Drink } = this.state;
-    const { history } = this.props;
+    const { history, indexAcc } = this.props;
     return (
       <div>
         {Drink.map((element, index) => (
-          <div key={ index }>
+          <div key={ index + indexAcc }>
             <input
               type="image"
-              data-testid={ `${index}-horizontal-image` }
-              src={ element.strDrinkThumb }
+              data-testid={ `${index + indexAcc}-horizontal-image` }
+              src={ element.image }
               width="200px"
               alt="horizontal"
-              onClick={ () => history.push(`/bebidas/${element.idDrink}`) }
+              onClick={ () => history.push(`/bebidas/${element.id}`) }
             />
 
-            <p data-testid={ `${index}-horizontal-top-text` }>
-              {element.strAlcoholic}
+            <p data-testid={ `${index + indexAcc}-horizontal-top-text` }>
+              {element.alcoholicOrNot}
             </p>
-            <input
+            <button
               type="button"
-              data-testid={ `${index}-horizontal-name` }
-              onClick={ () => history.push(`/bebidas/${element.idDrink}`) }
-              value={ element.strDrink }
-            />
-            <p data-testid={ `${index}-horizontal-done-date` }>
-              {element.dateModified}
+              data-testid={ `${index + indexAcc}-horizontal-name` }
+              onClick={ () => history.push(`/bebidas/${element.id}`) }
+              value={ element.name }
+            >
+              { element.name }
+            </button>
+            <p data-testid={ `${index + indexAcc}-horizontal-done-date` }>
+              {element.doneDate}
             </p>
 
             <input
               type="image"
-              data-testid={ `${index}-horizontal-share-btn` }
+              data-testid={ `${index + indexAcc}-horizontal-share-btn` }
               src={ shareIcon }
               alt="share"
               onClick={ () => this.handleShareDrink(element) }
@@ -88,6 +91,7 @@ class DrinkCard extends React.Component {
 
 DrinkCard.propTypes = {
   history: PropTypes.shape().isRequired,
+  indexAcc: PropTypes.number.isRequired,
 };
 
 export default connect(null, null)(DrinkCard);

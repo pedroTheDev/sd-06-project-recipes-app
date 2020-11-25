@@ -9,9 +9,25 @@ class DoneRecipes extends React.Component {
 
     this.state = {
       type: 'all',
+      drinkIndex: 0,
     };
 
     this.setFilterState = this.setFilterState.bind(this);
+    this.setFilterIndex = this.setFilterIndex.bind(this);
+  }
+
+  componentDidMount() {
+    const recipes = JSON.parse(localStorage.getItem('doneRecipes'));
+    if (recipes) {
+      const foods = recipes.filter((element) => element.type === 'comida').length;
+      this.setFilterIndex(foods);
+    }
+  }
+
+  setFilterIndex(foods) {
+    this.setState({
+      drinkIndex: foods,
+    });
   }
 
   setFilterState({ target: { id } }) {
@@ -22,7 +38,7 @@ class DoneRecipes extends React.Component {
 
   render() {
     const { history } = this.props;
-    const { type } = this.state;
+    const { type, drinkIndex } = this.state;
     return (
       <div>
         <Header history={ history } />
@@ -56,13 +72,13 @@ class DoneRecipes extends React.Component {
           Drinks
         </button>
 
-        {type === 'food' ? <FoodCard history={ history } /> : null }
-        {type === 'drink' ? <DrinkCard history={ history } /> : null }
+        {type === 'food' ? <FoodCard history={ history } indexAcc={ 0 } /> : null }
+        {type === 'drink' ? <DrinkCard history={ history } indexAcc={ 0 } /> : null }
         {type === 'all'
           ? (
             <div>
-              <DrinkCard history={ history } />
-              <FoodCard history={ history } />
+              <FoodCard history={ history } indexAcc={ 0 } />
+              <DrinkCard history={ history } indexAcc={ drinkIndex } />
             </div>)
           : null }
 

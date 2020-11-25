@@ -22,11 +22,6 @@ class FoodsRecipesInProgress extends React.Component {
     this.setMealState = this.setMealState.bind(this);
     this.checked = this.checked.bind(this);
     this.checkedItems = this.checkedItems.bind(this);
-    this.test = this.test.bind(this);
-    // this.getLocalStorage = this.getLocalStorage.bind(this);
-    // this.handleButton = this.handleButton.bind(this);
-    // this.test = this.test.bind(this);
-    this.getLocalStorage = this.getLocalStorage.bind(this);
   }
 
   async componentDidMount() {
@@ -254,7 +249,7 @@ class FoodsRecipesInProgress extends React.Component {
   }
 
   render() {
-    const { Meal, Ingredients, Measures, checkedItems, disabledButton } = this.state;
+    const { Meal, Ingredients, Measures, checkedItems } = this.state;
     const { history } = this.props;
     return (
       <div className="food-drink-detail-container">
@@ -295,7 +290,6 @@ class FoodsRecipesInProgress extends React.Component {
               {Ingredients.map((recipes, i) => (
                 <div
                   key={ i }
-                  // onChange={ (i) => this.test(i) }
                 >
                   <label
                     className="detail-ingredients"
