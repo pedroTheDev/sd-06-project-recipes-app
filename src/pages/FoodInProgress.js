@@ -9,7 +9,7 @@ import shareIcon from '../images/shareIcon.svg';
 import whiteHeart from '../images/whiteHeartIcon.svg';
 import blackHeart from '../images/blackHeartIcon.svg';
 
-export default function FoodInProgress() {
+export default function FoodInProgress(props) {
   const [recipeId, setRecipeId] = useState('');
   const [recipe, setRecipe] = useState('');
   const [recipeDetails, setRecipeDetails] = useState([]);
@@ -185,6 +185,6 @@ export default function FoodInProgress() {
   );
 }
 
-FoodsDetails.propTypes = {
+FoodInProgress.propTypes = {
   match: PropTypes.objectOf(PropTypes.any).isRequired,
 };

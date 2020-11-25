@@ -9,7 +9,7 @@ import blackHeart from '../images/blackHeartIcon.svg';
 import '../css/itemDetails.css';
 import '../css/scroller.css';
 
-export default function DrinkInProgress() {
+export default function DrinkInProgress(props) {
   const [recipeId, setRecipeId] = useState('');
   const [recipe, setRecipe] = useState('');
   const [recipeDetails, setRecipeDetails] = useState([]);
@@ -186,6 +186,6 @@ export default function DrinkInProgress() {
   );
 }
 
-FoodsDetails.propTypes = {
+DrinkInProgress.propTypes = {
   match: PropTypes.objectOf(PropTypes.any).isRequired,
 };
