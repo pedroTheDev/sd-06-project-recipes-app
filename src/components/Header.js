@@ -1,29 +1,23 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable no-alert */
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link, useHistory } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import RecipesContext from '../context/RecipesContext';
 import '../style/Header.css';
-import RecipesCards from './RecipesCards';
 
 function Header({ title }) {
+  const { data, setData } = useContext(RecipesContext);
   const [searchBar, setSearchBar] = useState(false);
-  const [loading, setLoading] = useState(true);
   const [inputRecipe, setInputRecipe] = useState('');
   const [radioValue, setRadioValue] = useState('i');
-  const [data, setData] = useState([]);
   const history = useHistory();
-  const DOZE = 12;
-
-  useEffect(() => {
-    if (data.meals || data.drinks) {
-      setLoading(false);
-    }
-  }, [data]);
 
   const onlyOne = (recipe) => {
     if (title === 'Comidas') {
       if (recipe.meals.length === 1) {
+        setData([recipe, data[1]]);
         return history.push(
           {
             pathname: `/comidas/${recipe.meals[0].idMeal}`,
@@ -54,7 +48,7 @@ function Header({ title }) {
           );
         }
         onlyOne(responseJson);
-        return setData(responseJson);
+        return setData([responseJson, data[1]]);
       }
       if (radioValue === 'f' && inputRecipe.length !== 1) {
         return alert('Sua busca deve conter somente 1 (um) caracter');
@@ -67,7 +61,7 @@ function Header({ title }) {
         );
       }
       onlyOne(responseJson);
-      return setData(responseJson);
+      return setData([responseJson, data[1]]);
     }
 
     if (radioValue === 'i') {
@@ -79,7 +73,7 @@ function Header({ title }) {
         );
       }
       onlyOne(responseJson);
-      return setData(responseJson);
+      return setData([data[0], responseJson]);
     }
     if (radioValue === 'f' && inputRecipe.length !== 1) {
       return alert('Sua busca deve conter somente 1 (um) caracter');
@@ -92,7 +86,7 @@ function Header({ title }) {
       );
     }
     onlyOne(responseJson);
-    return setData(responseJson);
+    return setData([data[0], responseJson]);
   };
 
   return (
@@ -166,26 +160,6 @@ function Header({ title }) {
             </button>
           </div>)
       }
-      {!loading && title === 'Comidas' && data.meals.filter((_, index) => index < DOZE)
-        .map((recipe, index) => (
-          <RecipesCards
-            key={ index }
-            title={ title }
-            recipe={ recipe }
-            index={ index }
-          />
-        )) }
-
-      {!loading && title === 'Bebidas' && data.drinks.filter((_, index) => index < DOZE)
-        .map((recipe, index) => (
-          <RecipesCards
-            key={ index }
-            title={ title }
-            recipe={ recipe }
-            index={ index }
-          />
-        )) }
-
     </header>
   );
 }
