@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { fetchDetail } from '../helpers/Helper';
+import { fetchDetail, fetchRecommendation } from '../helpers/Helper';
 
 import '../css/itemDetails.css';
 
@@ -8,6 +8,7 @@ export default function FoodsDetails(props) {
   const [recipeId, setRecipeId] = useState('');
   const [recipe, setRecipe] = useState('');
   const [recipeDetails, setRecipeDetails] = useState([]);
+  const [, setRecommendation] = useState([]);
 
   useEffect(() => {
     if (recipeId === '') {
@@ -21,6 +22,14 @@ export default function FoodsDetails(props) {
       fetchData();
     }
   }, [recipeId]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const results = await fetchRecommendation('bebidas');
+      setRecommendation(results);
+    }
+    fetchData();
+  }, []);
 
   useEffect(() => {
     if (recipe.drinks) {
