@@ -1,16 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import searchRecipe2 from '../hooks/searchRecipe2';
+import { fetchDetail } from '../helpers/Helper';
 
 import '../css/itemDetails.css';
 
 export default function FoodsDetails(props) {
-  const [recipe, recipeId, setRecipeId] = searchRecipe2();
+  const [recipeId, setRecipeId] = useState('');
+  const [recipe, setRecipe] = useState('');
   const [recipeDetails, setRecipeDetails] = useState([]);
 
   useEffect(() => {
     if (recipeId === '') {
       setRecipeId(props.match.params.id);
+    }
+    async function fetchData() {
+      const result = await fetchDetail('bebidas', recipeId);
+      setRecipe(result);
+    }
+    if (recipeId === props.match.params.id) {
+      fetchData();
     }
   }, [recipeId]);
 
@@ -35,7 +43,6 @@ export default function FoodsDetails(props) {
   function handle() {
     const empty = 0;
     if (recipeDetails.length > empty) {
-      console.log(recipeDetails);
       return (
         <div>
           { recipeDetails.filter((ingredient) => ingredient !== '')
@@ -53,7 +60,6 @@ export default function FoodsDetails(props) {
       );
     }
   }
-
   if (recipe.drinks) {
     const item = recipe.drinks[0];
     return (

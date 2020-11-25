@@ -1,16 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import searchRecipe from '../hooks/searchRecipe';
+import { fetchDetail } from '../helpers/Helper';
 
 import '../css/itemDetails.css';
 
 export default function FoodsDetails(props) {
-  const [recipe, recipeId, setRecipeId] = searchRecipe();
+  const [recipeId, setRecipeId] = useState('');
+  const [recipe, setRecipe] = useState('');
   const [recipeDetails, setRecipeDetails] = useState([]);
 
   useEffect(() => {
     if (recipeId === '') {
       setRecipeId(props.match.params.id);
+    }
+    async function fetchData() {
+      const result = await fetchDetail('comidas', recipeId);
+      setRecipe(result);
+    }
+    if (recipeId === props.match.params.id) {
+      fetchData();
     }
   }, [recipeId]);
 
