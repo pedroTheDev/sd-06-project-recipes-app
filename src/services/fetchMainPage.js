@@ -31,8 +31,9 @@ export const fetchNewSelectedCategory = (category, foodOrDrink, currentCategory)
   if (category === 'All' && foodOrDrink === '/comidas') return fetchMainPage(foodOrDrink);
   if (category === 'All' && foodOrDrink === '/bebidas') return fetchMainPage(foodOrDrink);
   if (foodOrDrink === '/comidas') {
-    return (
-      fetch(foodURL).then((response) => (response.json())));
+    return fetch(foodURL).then(
+      (response) => (response.json()),
+    );
   }
 
   return fetch(drinkURL).then((response) => (response.json()));

@@ -18,7 +18,8 @@ function successCategories(response) {
   let categories = [];
   const cinco = 5;
   const um = 1;
-  for (let i = 0; i < cinco; i += um) {
+  const zero = 0;
+  for (let i = zero; i < cinco; i += um) {
     categories.push(categoriesApi[i]);
   }
   categories = categories.map((category) => (category.strCategory));

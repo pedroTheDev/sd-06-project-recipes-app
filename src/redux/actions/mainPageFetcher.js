@@ -13,13 +13,11 @@ export function success(data) {
   const processing = data.meals || data.drinks;
   let list = [];
   if (processing) {
-    const maximumLength = 12;
+    const maxLength = 12;
     const increment = 1;
-    const initialIndex = 0;
-    const lengthLimit = processing.length > maximumLength
-      ? maximumLength
-      : processing.length;
-    for (let i = initialIndex; i < lengthLimit; i += increment) {
+    const zero = 0;
+    const lengthLimit = processing.length > maxLength ? maxLength : processing.length;
+    for (let i = zero; i < lengthLimit; i += increment) {
       list.push(processing[i]);
     }
     list = list.map((recipe) => (apiDataProcessor(recipe)));

@@ -9,20 +9,21 @@ import Header from '../components/Header';
 import RecipeCard from '../components/RecipeCard';
 
 const MainPage = (props) => {
-  const { recipeList, location: { pathname }, isLoading } = props;
-
-  const checkRequestSize = (recipes) => {
+  const { recipeList, location: { pathname }, isLoading, currentCategory } = props;
+  const checkRequestSize = (recipesToRender) => {
     const noLength = 0;
-    if (recipes === null) {
+    if (recipesToRender === null) {
       alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
-    } else if (recipes.length === noLength) {
+    } else if (recipesToRender.length === noLength) {
       return null;
-    } else if (recipes.length === 1) {
-      const { id } = recipes[0];
-      return <Redirect to={ `${pathname}/${id}` } />;
+    } else if (recipesToRender.length === 1 && currentCategory === 'All') {
+      const { id } = recipesToRender[0];
+      return (
+        <Redirect to={ `${pathname}/${id}` } />
+      );
     } else {
       return (
-        recipes.map(({ name, image, id }, index) => (
+        recipesToRender.map(({ name, image, id }, index) => (
           <RecipeCard
             key={ id }
             recipeName={ name }
@@ -56,12 +57,13 @@ const MainPage = (props) => {
 };
 
 const mapStateToProps = (state) => ({
+  currentCategory: state.categoryReducer.currentCategory,
   recipeList: state.mainPageReducer.recipeList,
   isLoading: state.mainPageReducer.loading,
-  retrievedFood: state.searchReducer.meals,
 });
 
 MainPage.propTypes = {
+  currentCategory: PropTypes.string.isRequired,
   recipeList: PropTypes.instanceOf(Array).isRequired,
   location: PropTypes.shape({ pathname: PropTypes.string }).isRequired,
   isLoading: PropTypes.bool.isRequired,
