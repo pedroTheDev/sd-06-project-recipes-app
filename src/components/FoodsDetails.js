@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { fetchDetail, fetchRecommendation } from '../helpers/Helper';
-
+import '../css/scroller.css';
 import '../css/itemDetails.css';
 
 export default function FoodsDetails(props) {
   const [recipeId, setRecipeId] = useState('');
   const [recipe, setRecipe] = useState('');
   const [recipeDetails, setRecipeDetails] = useState([]);
-  const [, setRecommendation] = useState([]);
+  const [recommendation, setRecommendation] = useState([]);
 
   useEffect(() => {
     if (recipeId === '') {
@@ -86,8 +86,25 @@ export default function FoodsDetails(props) {
           <p data-testid="instructions">{item.strInstructions}</p>
           {renderIngredients()}
           <p data-testid="video">{item.strYoutube}</p>
-          <div data-testid="0-recomendation-card"> recomendação</div>
           <input type="button" data-testid="start-recipe-btn" value="Começar receita" />
+        </div>
+        <div className="testimonials">
+          <div className="scroller">
+            {recommendation.map((rec, index) => (
+              <div
+                key={ index }
+                data-testid={ `${index}-recomendation-card` }
+                className="item"
+              >
+                <p data-testid={ `${index}-recomendation-title` }>{rec.strDrink}</p>
+                <img
+                  alt="foto da receita"
+                  className="item-img"
+                  src={ rec.strDrinkThumb }
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     );

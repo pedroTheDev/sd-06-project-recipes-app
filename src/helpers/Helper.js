@@ -40,9 +40,11 @@ export async function fetchRecommendation(type) {
 
   const firstCategory = 0;
   const maxCategories = 6;
+  console.log(data);
 
   const slicedResults = (type === 'comidas')
     ? data.drinks.slice(firstCategory, maxCategories)
     : data.meals.slice(firstCategory, maxCategories);
+  console.log(slicedResults);
   return slicedResults;
 }
