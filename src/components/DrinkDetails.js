@@ -136,7 +136,7 @@ export default function FoodsDetails(props) {
           >
             <img alt="Share" src={ shareIcon } />
           </button>
-          {copy}
+          <span>{copy}</span>
           <button
             type="button"
             data-testid="favorite-btn"
