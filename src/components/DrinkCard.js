@@ -17,8 +17,6 @@ class DrinkCard extends React.Component {
     const drinks = JSON.parse(localStorage.getItem('doneRecipes'));
     if (drinks) {
       const filteredDrink = drinks.filter((element) => element.type === 'bebida');
-      console.log(filteredDrink.length, 'tamanho das bebidas');
-      console.log(drinks.length, 'tamanho total');
       this.setDrinkState(filteredDrink);
     }
   }
