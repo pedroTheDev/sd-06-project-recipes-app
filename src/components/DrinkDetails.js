@@ -88,7 +88,9 @@ export default function FoodsDetails(props) {
           <p data-testid="instructions">{item.strInstructions}</p>
           {handle()}
           <p data-testid="video">{item.strYoutube}</p>
-          <input type="button" data-testid="start-recipe-btn" value="Começar receita" />
+          <button type="button" data-testid="start-recipe-btn" className="btnStart">
+            Iniciar Receita
+          </button>
         </div>
         <div className="testimonials">
           <div className="scroller">
@@ -108,6 +110,9 @@ export default function FoodsDetails(props) {
             ))}
           </div>
         </div>
+        <button type="button" data-testid="start-recipe-btn" className="btnStart">
+          Iniciar Receita
+        </button>
       </div>
     );
   }

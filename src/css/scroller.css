@@ -12,3 +12,8 @@
    min-height: 200px; /* To start with */
    background-color: #EDF2F7; /* For demo */
 }
+
+.btnStart {
+  position: fixed;
+  bottom: 0;
+}
