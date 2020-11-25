@@ -18,7 +18,12 @@ function Meals() {
       <Header title="Comidas" search={ TRUE } />
       <div className="recipes-cards">
         {recipes.map((meal, index) => (
-          <MealRecipeCard key={ meal.strMeal } info={ meal } recipe="comidas" index={ index } />
+          <MealRecipeCard
+            key={ meal.strMeal }
+            info={ meal }
+            recipe="comidas"
+            index={ index }
+          />
         ))}
       </div>
       <Footer />

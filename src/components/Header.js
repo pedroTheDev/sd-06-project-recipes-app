@@ -1,16 +1,56 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import './Components.css';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
+import Context from '../context/Context';
 
 function Header(props) {
   const { title, search } = props;
   const [hide, setHide] = useState(true);
+  const { categories } = useContext(Context);
 
-  const space = '';
+  const filterButtons = () => (
+    categories.map(({ strCategory }, index) => {
+      if (!index) {
+        return (
+          <>
+            <button
+              key="All"
+              data-testid="all-category-filter"
+              type="button"
+              value=""
+              onClick={ (e) => console.log(e.target.value) }
+            >
+              All
+            </button>
+            <button
+              key={ strCategory }
+              data-testid={ `${strCategory}-category-filter` }
+              type="button"
+              value={ strCategory }
+              onClick={ (e) => console.log(e.target.value) }
+            >
+              {strCategory}
+            </button>
+          </>
+        );
+      }
+      return (
+        <button
+          key={ strCategory }
+          data-testid={ `${strCategory}-category-filter` }
+          type="button"
+          value={ strCategory }
+          onClick={ (e) => console.log(e.target.value) }
+        >
+          {strCategory}
+        </button>
+      );
+    })
+  );
 
   return (
     <header>
@@ -25,7 +65,7 @@ function Header(props) {
         </Link>
         <h1 data-testid="page-title">{title}</h1>
         {
-          (!search) ? <p>{ space }</p> : <input
+          (!search) ? <p>{' '}</p> : <input
             type="image"
             src={ searchIcon }
             alt="icone de pesquisa"
@@ -34,7 +74,7 @@ function Header(props) {
           />
         }
       </div>
-      {(hide === true) ? '' : <SearchBar title={ title } />}
+      {(hide === true) ? <div>{filterButtons()}</div> : <SearchBar title={ title } />}
     </header>
   );
 }
