@@ -16,7 +16,7 @@ const MainPage = (props) => {
       alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
     } else if (recipesToRender.length === noLength) {
       return null;
-    } else if (recipesToRender.length === 1 && currentCategory !== 'Goat') {
+    } else if (recipesToRender.length === 1 && currentCategory === 'All') {
       const { id } = recipesToRender[0];
       return (
         <Redirect to={ `${pathname}/${id}` } />
