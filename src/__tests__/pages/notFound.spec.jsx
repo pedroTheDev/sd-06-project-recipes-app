@@ -7,7 +7,7 @@ import NotFound from '../../pages/NotFound';
 let screen;
 
 describe('not found testings', () => {
-  it('should have the correct header', () => {
+  it('should have the correct test', () => {
     screen = render(
       <MemoryRouter>
         <NotFound />

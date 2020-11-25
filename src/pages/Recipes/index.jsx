@@ -10,7 +10,7 @@ import { useRecipes } from '../../hooks/recipes';
 import Header from '../../components/Header';
 import Navbar from '../../components/Navbar';
 
-function Foods({ pageType }) {
+function Recipes({ pageType }) {
   const [filterSelected, setFilterSelected] = useState('all');
 
   const { infoSearched, appSearch } = useSearch();
@@ -19,19 +19,19 @@ function Foods({ pageType }) {
   } = useRecipes();
 
   useEffect(() => {
-    const foodsToSearch = infoSearched[pageType];
+    const recipesToSearch = infoSearched[pageType];
 
-    appSearch(pageType, foodsToSearch);
-  }, []);
+    appSearch(pageType, recipesToSearch);
+  }, [pageType]);
 
   const handleFilterChange = useCallback(({ target }) => {
     const { value: category } = target;
 
-    if (category === filterSelected) {
+    if (category === filterSelected || category === 'all') {
       const categoryToLoad = 'all';
-      const foodsToSearch = infoSearched[pageType];
+      const recipesToSearch = infoSearched[pageType];
 
-      appSearch(pageType, foodsToSearch);
+      appSearch(pageType, recipesToSearch);
 
       setFilterSelected(categoryToLoad);
       return;
@@ -41,7 +41,7 @@ function Foods({ pageType }) {
     setFilterSelected(category);
   }, [updateFilteredRecipes, pageType, infoSearched, appSearch, filterSelected]);
 
-  const currentFoodRecipes = useMemo(() => {
+  const loadedRecipes = useMemo(() => {
     if (filterSelected === 'all') {
       return currentRecipes[pageType];
     }
@@ -49,7 +49,7 @@ function Foods({ pageType }) {
     return currentFilteredRecipes[pageType];
   }, [currentRecipes, currentFilteredRecipes, filterSelected, pageType]);
 
-  const currentFoodFilters = useMemo(
+  const currentRecipeFilters = useMemo(
     () => currentFilters[pageType],
     [currentFilters, pageType],
   );
@@ -64,6 +64,7 @@ function Foods({ pageType }) {
             type="checkbox"
             name="filter"
             id="all"
+            value="all"
             checked={ filterSelected === 'all' }
             onChange={ handleFilterChange }
             data-testid="All-category-filter"
@@ -71,7 +72,7 @@ function Foods({ pageType }) {
           Todos
         </label>
 
-        {currentFoodFilters.map((filter) => (
+        {currentRecipeFilters.map((filter) => (
           <React.Fragment key={ filter }>
             <label
               data-testid={ `${filter}-category-filter` }
@@ -94,20 +95,22 @@ function Foods({ pageType }) {
       </div>
 
       <div className="foods-container">
-        {currentFoodRecipes.map((meal, index) => (
+        {loadedRecipes.map((recipe, index) => (
           <Link
-            to={ `/${pageType}/${meal.idMeal}` }
+            to={ `/${pageType}/${recipe.idMeal || recipe.idDrink}` }
             className="recipe-card"
             data-testid={ `${index}-recipe-card` }
-            key={ meal.idMeal }
+            key={ recipe.idMeal || recipe.idDrink }
           >
             <img
-              src={ meal.strMealThumb }
-              alt={ meal.strMeal }
+              src={ recipe.strMealThumb || recipe.strDrinkThumb }
+              alt={ recipe.strMeal || recipe.strDrink }
               data-testid={ `${index}-card-img` }
-
             />
-            <strong data-testid={ `${index}-card-name` }>{meal.strMeal}</strong>
+
+            <strong data-testid={ `${index}-card-name` }>
+              {recipe.strMeal || recipe.strDrink }
+            </strong>
           </Link>
         ))}
       </div>
@@ -117,8 +120,8 @@ function Foods({ pageType }) {
   );
 }
 
-Foods.propTypes = {
+Recipes.propTypes = {
   pageType: PropTypes.string.isRequired,
 };
 
-export default Foods;
+export default Recipes;

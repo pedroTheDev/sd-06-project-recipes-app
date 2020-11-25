@@ -4,10 +4,10 @@ import React, {
 import PropTypes from 'prop-types';
 
 import { useRecipes } from './recipes';
+import { useAuth } from './auth';
 
 import { fetchMealsSearch } from '../services/foodApi';
 import { fetchDrinksSearch } from '../services/drinksApi';
-import { useAuth } from './auth';
 
 const getID = {
   comidas: 'idMeal',

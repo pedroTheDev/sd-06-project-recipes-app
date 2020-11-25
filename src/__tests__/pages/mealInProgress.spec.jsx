@@ -3,7 +3,7 @@ import { Router, Route } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { render, fireEvent, waitForElement } from '@testing-library/react';
 
-import FoodInProgress from '../../pages/FoodInProgress';
+import RecipeInProgress from '../../pages/RecipeInProgress';
 import AppProvider from '../../hooks';
 
 import LocalStorageFake from '../../fakes/localStorage';
@@ -44,7 +44,7 @@ describe('food details page structure testing', () => {
         <AppProvider>
           <Route
             path="/comidas/:id/in-progress"
-            render={ () => <FoodInProgress pageType="comidas" /> }
+            render={ () => <RecipeInProgress pageType="comidas" /> }
           />
         </AppProvider>
       </Router>,

@@ -7,7 +7,7 @@ import { render,
   wait,
 } from '@testing-library/react';
 
-import Drinks from '../../pages/Drinks';
+import RecipeDetails from '../../pages/Recipes';
 import AppProvider from '../../hooks';
 
 import mockedFetch from '../../fakes/mocks_copy/fetch';
@@ -41,7 +41,7 @@ describe('foods page structure and logic testing', () => {
       screen = render(
         <MemoryRouter>
           <AppProvider>
-            <Drinks pageType="bebidas" />
+            <RecipeDetails pageType="bebidas" />
           </AppProvider>
         </MemoryRouter>,
       );
@@ -315,7 +315,7 @@ describe('food details navigation', () => {
       screen = render(
         <Router history={ history }>
           <AppProvider>
-            <Drinks pageType="bebidas" />
+            <RecipeDetails pageType="bebidas" />
           </AppProvider>
         </Router>,
       );
