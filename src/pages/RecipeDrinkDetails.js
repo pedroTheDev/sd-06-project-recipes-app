@@ -1,6 +1,10 @@
 import React, { useContext, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 import RecipesContext from '../context/RecipesAppContext';
+
+const ZERO = 0;
+const TWENTY = 20;
 
 function RecipeDrinkDetails({ match }) {
   const { id } = match.params;
@@ -19,9 +23,9 @@ function RecipeDrinkDetails({ match }) {
     fetchDetailRecipeDrinkByID();
   }, []);
 
-  if (recipes.length !== 0) {
+  if (recipes.length !== ZERO) {
     const renderIngredients = () => {
-      for (let i = 1; i <= 20; i++) {
+      for (let i = 1; i <= TWENTY; i += 1) {
         if (recipes[0][`strIngredient${i}`]) {
           arrIngredient = arrIngredient.concat(recipes[0][`strIngredient${i}`]);
         } else {
@@ -31,7 +35,7 @@ function RecipeDrinkDetails({ match }) {
     };
 
     const renderMeasure = () => {
-      for (let i = 1; i <= 20; i++) {
+      for (let i = 1; i <= TWENTY; i += 1) {
         if (recipes[0][`strMeasure${i}`]) {
           arrMeasure = arrMeasure.concat(recipes[0][`strMeasure${i}`]);
         } else {
@@ -79,12 +83,16 @@ function RecipeDrinkDetails({ match }) {
           ))}
         </ul>
         <p data-testid="instructions">{recipes[0].strInstructions}</p>
-        <div data-testid={ `${0}-recomendation-card` } />
+        <div data-testid={ `${ZERO}-recomendation-card` } />
         <button type="button" data-testid="start-recipe-btn">Iniciar Receita</button>
       </div>
     );
   }
   return <span>teste</span>;
 }
+
+RecipeDrinkDetails.propTypes = {
+  match: PropTypes.objectOf(Object).isRequired,
+};
 
 export default RecipeDrinkDetails;

@@ -1,5 +1,10 @@
 import React, { useContext, useEffect } from 'react';
+import PropTypes from 'prop-types';
+
 import RecipesContext from '../context/RecipesAppContext';
+
+const ZERO = 0;
+const TWENTY = 20;
 
 function RecipeFoodDetails({ match }) {
   const { id } = match.params;
@@ -18,9 +23,9 @@ function RecipeFoodDetails({ match }) {
     fetchDetailRecipeFoodByID();
   }, []);
 
-  if (recipes.length !== 0) {
+  if (recipes.length !== ZERO) {
     const renderIngredients = () => {
-      for (let i = 1; i <= 20; i++) {
+      for (let i = 1; i <= TWENTY; i += 1) {
         if (recipes[0][`strIngredient${i}`]) {
           arrIngredient = arrIngredient.concat(recipes[0][`strIngredient${i}`]);
         } else {
@@ -30,7 +35,7 @@ function RecipeFoodDetails({ match }) {
     };
 
     const renderMeasure = () => {
-      for (let i = 1; i <= 20; i++) {
+      for (let i = 1; i <= TWENTY; i += 1) {
         if (recipes[0][`strMeasure${i}`]) {
           arrMeasure = arrMeasure.concat(recipes[0][`strMeasure${i}`]);
         } else {
@@ -88,7 +93,7 @@ function RecipeFoodDetails({ match }) {
           allow="accelerometer; autoplay; clipboard-write; encrypted-media"
           allowFullScreen
         />
-        <div data-testid={ `${0}-recomendation-card` } />
+        <div data-testid={ `${ZERO}-recomendation-card` } />
         <button type="button" data-testid="start-recipe-btn">Iniciar Receita</button>
 
       </div>
@@ -97,5 +102,9 @@ function RecipeFoodDetails({ match }) {
 
   return <span>teste</span>;
 }
+
+RecipeFoodDetails.propTypes = {
+  match: PropTypes.objectOf(Object).isRequired,
+};
 
 export default RecipeFoodDetails;
