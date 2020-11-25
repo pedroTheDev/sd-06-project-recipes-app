@@ -16,10 +16,10 @@ jobs:
 #           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Evaluator step
         id: evaluator
-        uses: betrybe/cypress-evaluator-action@v5
+        uses: betrybe/cypress-evaluator-action@jeanpsv-patch-1
         with:
           repository-test-name: 'betrybe/sd-0x-recipes-app-n-tests'
-          repository-test-branch: 'disable-dev-shm-usage'
+          repository-test-branch: 'master' #disable-dev-shm-usage
           npm-start: true
           headless: false
       - name: Store evaluation step
