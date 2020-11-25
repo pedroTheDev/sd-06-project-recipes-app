@@ -6,7 +6,7 @@ import Card from '../components/Card';
 import ContextRecipes from '../context/ContextRecipes';
 
 function Foods() {
-  const { setRecipes, showCard, setShowCard } = useContext(ContextRecipes);
+  const { setRecipes, showCard, setShowCard, recipes } = useContext(ContextRecipes);
 
   const fetchRecipes = async () => {
     const recipesApi = await fetchAPIRecipes('name', '');

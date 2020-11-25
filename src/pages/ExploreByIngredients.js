@@ -2,17 +2,16 @@ import React, { useEffect, useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useLocation, useHistory } from 'react-router-dom';
 import ContextRecipes from '../context/ContextRecipes';
+import { fetchAPIDrinks, fetchAPIRecipes } from '../services';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 
-function ExploreByIngredients(props) {
+function ExploreByIngredients() {
   const location = useLocation().pathname;
   const history = useHistory();
   const [data, setData] = useState([]);
   const MAX_NUMBER_OF_CARDS = 12;
-  const { setSelectedRadio,
-    setIdRecipe, setRecipes, setSearchText } = useContext(ContextRecipes);
-  const { fetchApi } = props;
+  const { setRecipes } = useContext(ContextRecipes);
 
   const apiIngredients = async () => {
     if (location.includes('comidas')) {
@@ -26,37 +25,15 @@ function ExploreByIngredients(props) {
     }
   };
 
-  // const renderCards = (recipeApi) => {
-  //   if (!recipeApi) {
-  //     alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
-  //   } else if (recipeApi.length === 1) {
-  //     if (location === '/comidas') {
-  //       const idRecipe = recipeApi[0].idMeal;
-  //       setIdRecipe(idRecipe);
-  //       history.push(`/comidas/${idRecipe}`);
-  //     } else {
-  //       const idRecipe = recipeApi[0].idDrink;
-  //       setIdRecipe(idRecipe);
-  //       history.push(`/bebidas/${idRecipe}`);
-  //     }
-  //   }
-  // };
-
   const handleClick = async (selectIngredient) => {
     if (location.includes('comidas')) {
+      const recipesApi = await fetchAPIRecipes('ingredient', selectIngredient);
+      setRecipes(recipesApi);
       history.push('/comidas');
-      // setSelectedRadio('ingredient');
-      // setSearchText(selectIngredient);
-      // const recipesApi = await fetchApi('ingredient', selectIngredient);
-      // setRecipes(recipesApi);
-      // renderCards(recipesApi);
     } else {
+      const recipesApi = await fetchAPIDrinks('ingredient', selectIngredient);
+      setRecipes(recipesApi);
       history.push('/bebidas');
-      // setSelectedRadio('ingredient');
-      // setSearchText(selectIngredient);
-      // const recipesApi = await fetchApi('ingredient', selectIngredient);
-      // setRecipes(recipesApi);
-      // renderCards(recipesApi);
     }
   };
 
