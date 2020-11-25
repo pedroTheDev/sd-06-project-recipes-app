@@ -59,9 +59,9 @@ class DrinksRecipesInProgress extends React.Component {
     });
   }
 
-  handleShareFood({ idDrink }) {
+  handleShareDrink({ idDrink }) {
     const shareBtn = document.querySelector('.share-btn');
-    const url = `http://localhost:3000/bebidas/${idDrink}`;
+    const url = `http://localhost:3000/bebidas/${idDrink}/in-progress`;
     shareBtn.value = 'Link copiado!';
     window.alert('Link copiado!');
     const el = document.createElement('textarea');
