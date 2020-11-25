@@ -1,14 +1,66 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import './style/recipesCard.css';
 
 class RecipesCardDrinks extends Component {
+  constructor() {
+    super();
+
+    this.saveArrayToState = this.saveArrayToState.bind(this);
+    this.requestFromApi = this.requestFromApi.bind(this);
+
+    this.state = {
+      drinksState: [],
+      selectedFilter: 'All',
+    };
+  }
+
+  componentDidUpdate(prevProps) {
+    const { drinks } = this.props;
+    if (prevProps.drinks !== drinks) {
+      this.saveArrayToState(drinks);
+    }
+  }
+
+  saveArrayToState(drinks) {
+    this.setState({ drinksState: drinks });
+  }
+
+  async requestFromApi({ target: { id } }) {
+    const { drinks: drinksProps } = this.props;
+    const { selectedFilter } = this.state;
+    const buttonsElements = document.querySelectorAll('button');
+    buttonsElements.forEach((item) => item.classList.remove('selected'));
+
+    if (id !== 'All' && id !== selectedFilter) {
+      const endPoint = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${id}`;
+      const drinksApi = await fetch(endPoint);
+      const { drinks } = await drinksApi.json();
+
+      return this.setState({
+        drinksState: drinks,
+        selectedFilter: id,
+      });
+    }
+
+    return this.setState({
+      drinksState: drinksProps,
+      selectedFilter: 'All',
+    });
+  }
+
   filter(index, strCategory) {
     return (
       <div key={ index }>
-        <button type="button" data-testid={ `${strCategory}-category-filter` }>
+        <button
+          id={ strCategory }
+          type="button"
+          data-testid={ `${strCategory}-category-filter` }
+          onClick={ this.requestFromApi }
+        >
           {strCategory}
         </button>
       </div>
@@ -21,16 +73,18 @@ class RecipesCardDrinks extends Component {
     const drinksArray = drinks.slice(zero, twelve);
 
     return drinksArray.map((item, index) => {
-      const { strDrinkThumb, strDrink } = item;
+      const { strDrinkThumb, strDrink, idDrink } = item;
       return (
-        <div key={ index } data-testid={ `${index}-recipe-card` }>
-          <img
-            className="recipe-thumb"
-            data-testid={ `${index}-card-img` }
-            alt={ strDrink }
-            src={ strDrinkThumb }
-          />
-          <p data-testid={ `${index}-card-name` }>{ strDrink }</p>
+        <div key={ index }>
+          <Link data-testid={ `${index}-recipe-card` } to={ `/bebidas/${idDrink}` }>
+            <img
+              className="recipe-thumb"
+              data-testid={ `${index}-card-img` }
+              alt={ strDrink }
+              src={ strDrinkThumb }
+            />
+            <p data-testid={ `${index}-card-name` }>{ strDrink }</p>
+          </Link>
         </div>
       );
     });
@@ -41,6 +95,7 @@ class RecipesCardDrinks extends Component {
     const five = 5;
 
     const drinksCategoriesArray = drinksCategories.slice(zero, five);
+    drinksCategoriesArray.push({ strCategory: 'All' });
     return drinksCategoriesArray.map((item, index) => {
       const { strCategory } = item;
       return this.filter(index, strCategory);
@@ -48,14 +103,15 @@ class RecipesCardDrinks extends Component {
   }
 
   render() {
-    const { drinks, drinksCategories } = this.props;
+    const { drinksCategories } = this.props;
+    const { drinksState } = this.state;
     return (
       <div>
         <div>
           { drinksCategories && this.renderFilterButtons(drinksCategories) }
         </div>
         <div>
-          { drinks && this.renderDrinks(drinks) }
+          { drinksState && this.renderDrinks(drinksState) }
         </div>
       </div>
     );
@@ -68,8 +124,8 @@ const mapStateToProps = (state) => ({
 });
 
 RecipesCardDrinks.propTypes = {
-  drinksCategories: PropTypes.func.isRequired,
   drinks: PropTypes.objectOf.isRequired,
+  drinksCategories: PropTypes.objectOf.isRequired,
 };
 
 export default connect(mapStateToProps, null)(RecipesCardDrinks);
