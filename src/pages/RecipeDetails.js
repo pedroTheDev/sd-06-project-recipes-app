@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import splitPathname from '../utils/splitPathname';
 import fetchRecipeDetails from '../services/fetchRecipeDetails';
 import apiDataProcessor from '../services/apiDataProcessor';
-import { processRecipeObject } from '../utils/processRecipeObject'
+import { processRecipeObject } from '../utils/processRecipeObject';
 
 function RecipeDetails({ location: { pathname } }) {
   const [path, id] = splitPathname(pathname);
@@ -29,7 +29,6 @@ function RecipeDetails({ location: { pathname } }) {
 
   console.log(recipe);
 
-
   return (
     <main>
       <img data-testid="recipe-photo" src={ image } alt={ name } />
@@ -45,18 +44,17 @@ function RecipeDetails({ location: { pathname } }) {
       <p data-testid="recipe-category">{ category }</p>
       <ul>
         { ingredients.map((ingredient, index) => (
-          <li data-testid={ `${index}-ingredient-name-and-measure` }>
+          <li key={ ingredient } data-testid={ `${index}-ingredient-name-and-measure` }>
             { `${ingredient} - ${measures[index]}` }
           </li>
         )) }
       </ul>
       <h4>Instructions</h4>
-        <p data-testid="instructions">{ instructions }</p>
+      <p data-testid="instructions">{ instructions }</p>
       <h4>Video</h4>
       { path === 'comidas'
-        ? <iframe src={ video }/>
-        : null
-      }
+        ? <iframe src={ video } />
+        : null}
       <div>
         Recomendadas
         <div data-testid={ `${0}-recomendation-card` } />
