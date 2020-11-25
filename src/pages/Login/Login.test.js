@@ -20,8 +20,8 @@ describe('Test Login page', () => {
     const { history, getByText } = renderWithRouter(<Login />);
     const { pathname } = history.location;
     const loginBtn = getByText(/Entrar/i);
+    expect(loginBtn).toBeInTheDocument();
     fireEvent.click(loginBtn);
     expect(pathname).toBe('/comidas');
-    expect(loginBtn).toBeInTheDocument();
   });
 });
