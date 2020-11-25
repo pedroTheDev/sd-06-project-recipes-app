@@ -107,7 +107,11 @@ function DrinkInProgress(props) {
 }
 
 DrinkInProgress.propTypes = {
-  match: PropTypes.func.isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }),
+  }).isRequired,
 };
 
 export default DrinkInProgress;

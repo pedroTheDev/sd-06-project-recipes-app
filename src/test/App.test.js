@@ -1,7 +1,6 @@
 import React from 'react';
 import renderWithRouter from './renderWithRouter';
 import App from '../App';
-import AppProvider from '../provider/AppProvider';
 
 describe('App:', () => {
   beforeAll(() => {
@@ -9,6 +8,6 @@ describe('App:', () => {
     localStorage.user = JSON.stringify({ email });
   });
   it('Renders the home page on the path "/"', () => {
-    renderWithRouter(<AppProvider><App /></AppProvider>);
+    renderWithRouter(<App />);
   });
 });

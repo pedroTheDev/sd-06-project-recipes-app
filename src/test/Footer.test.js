@@ -16,7 +16,6 @@ import DrinkDetails from '../pages/DrinkDetails';
 import FoodDetails from '../pages/FoodDetails';
 import FoodInProgress from '../pages/FoodInProgress';
 import DrinkInProgress from '../pages/DrinkInProgress';
-import AppProvider from '../provider/AppProvider';
 
 describe('testando os elementos do footer na tela principal de receitas', () => {
   beforeAll(() => {
@@ -24,11 +23,7 @@ describe('testando os elementos do footer na tela principal de receitas', () => 
     localStorage.user = JSON.stringify({ email });
   });
   it('O footer tem os ícones corretos na tela de principal de receitas de comida', () => {
-    const { getByTestId } = renderWithRouter(
-      <AppProvider>
-        <Food />
-      </AppProvider>,
-    );
+    const { getByTestId } = renderWithRouter(<Food />);
     const drinks = getByTestId('drinks-bottom-btn');
     const explore = getByTestId('explore-bottom-btn');
     const food = getByTestId('food-bottom-btn');
@@ -39,11 +34,7 @@ describe('testando os elementos do footer na tela principal de receitas', () => 
 });
 describe('testando um ícone para a tela de perfil', () => {
   it('Não tem footer na tela de login;', () => {
-    const { queryByTestId } = renderWithRouter(
-      <AppProvider>
-        <Login />
-      </AppProvider>,
-    );
+    const { queryByTestId } = renderWithRouter(<Login />);
     const drinks = queryByTestId('drinks-bottom-btn');
     const explore = queryByTestId('explore-bottom-btn');
     const food = queryByTestId('food-bottom-btn');
@@ -52,11 +43,7 @@ describe('testando um ícone para a tela de perfil', () => {
     expect(explore).not.toBeInTheDocument();
   });
   it('O footer tem os ícones corretos na tela;', () => {
-    const { queryByTestId } = renderWithRouter(
-      <AppProvider>
-        <Drink />
-      </AppProvider>,
-    );
+    const { queryByTestId } = renderWithRouter(<Drink />);
     const drinks = queryByTestId('drinks-bottom-btn');
     const explore = queryByTestId('explore-bottom-btn');
     const food = queryByTestId('food-bottom-btn');
@@ -66,9 +53,7 @@ describe('testando um ícone para a tela de perfil', () => {
   });
   it('Não tem footer na tela de detalhes de uma receita de comida;', () => {
     const { queryByTestId } = renderWithRouter(
-      <AppProvider>
-        <FoodDetails match={ { params: { id: '52977' } } } />
-      </AppProvider>,
+      <FoodDetails match={ { params: { id: '52977' } } } />,
     );
     const drinks = queryByTestId('drinks-bottom-btn');
     const explore = queryByTestId('explore-bottom-btn');
@@ -79,9 +64,7 @@ describe('testando um ícone para a tela de perfil', () => {
   });
   it('Não tem footer na tela de detalhes de uma receita de bebida;', () => {
     const { queryByTestId } = renderWithRouter(
-      <AppProvider>
-        <DrinkDetails match={ { params: { id: '15997' } } } />
-      </AppProvider>,
+      <DrinkDetails match={ { params: { id: '15997' } } } />,
     );
     const drinks = queryByTestId('drinks-bottom-btn');
     const explore = queryByTestId('explore-bottom-btn');
@@ -92,9 +75,7 @@ describe('testando um ícone para a tela de perfil', () => {
   });
   it('Não tem footer na tela de receita em processo de comida', () => {
     const { queryByTestId } = renderWithRouter(
-      <AppProvider>
-        <FoodInProgress />
-      </AppProvider>,
+      <FoodInProgress match={ { params: { id: '15997' } } } />,
     );
     const drinks = queryByTestId('drinks-bottom-btn');
     const explore = queryByTestId('explore-bottom-btn');
@@ -105,9 +86,7 @@ describe('testando um ícone para a tela de perfil', () => {
   });
   it('Não tem footer na tela de receita em processo de bebida;', () => {
     const { queryByTestId } = renderWithRouter(
-      <AppProvider>
-        <DrinkInProgress />
-      </AppProvider>,
+      <DrinkInProgress match={ { params: { id: '15997' } } } />,
     );
     const drinks = queryByTestId('drinks-bottom-btn');
     const explore = queryByTestId('explore-bottom-btn');
@@ -117,11 +96,7 @@ describe('testando um ícone para a tela de perfil', () => {
     expect(explore).not.toBeInTheDocument();
   });
   it('O footer tem os ícones corretos na tela de explorar;', () => {
-    const { queryByTestId } = renderWithRouter(
-      <AppProvider>
-        <Explore />
-      </AppProvider>,
-    );
+    const { queryByTestId } = renderWithRouter(<Explore />);
     const drinks = queryByTestId('drinks-bottom-btn');
     const explore = queryByTestId('explore-bottom-btn');
     const food = queryByTestId('food-bottom-btn');
@@ -130,11 +105,7 @@ describe('testando um ícone para a tela de perfil', () => {
     expect(explore).toBeInTheDocument();
   });
   it('O footer tem os ícones corretos na tela de perfil;', () => {
-    const { queryByTestId } = renderWithRouter(
-      <AppProvider>
-        <Profile />
-      </AppProvider>,
-    );
+    const { queryByTestId } = renderWithRouter(<Profile />);
     const drinks = queryByTestId('drinks-bottom-btn');
     const explore = queryByTestId('explore-bottom-btn');
     const food = queryByTestId('food-bottom-btn');
@@ -143,11 +114,7 @@ describe('testando um ícone para a tela de perfil', () => {
     expect(explore).toBeInTheDocument();
   });
   it('O footer tem os ícones corretos na tela de explorar comidas;', () => {
-    const { queryByTestId } = renderWithRouter(
-      <AppProvider>
-        <ExploreFoods />
-      </AppProvider>,
-    );
+    const { queryByTestId } = renderWithRouter(<ExploreFoods />);
     const drinks = queryByTestId('drinks-bottom-btn');
     const explore = queryByTestId('explore-bottom-btn');
     const food = queryByTestId('food-bottom-btn');
@@ -156,11 +123,7 @@ describe('testando um ícone para a tela de perfil', () => {
     expect(explore).toBeInTheDocument();
   });
   it('O footer tem os ícones corretos na tela de explorar bebidas;', () => {
-    const { queryByTestId } = renderWithRouter(
-      <AppProvider>
-        <ExploreDrinks />
-      </AppProvider>,
-    );
+    const { queryByTestId } = renderWithRouter(<ExploreDrinks />);
     const drinks = queryByTestId('drinks-bottom-btn');
     const explore = queryByTestId('explore-bottom-btn');
     const food = queryByTestId('food-bottom-btn');
@@ -169,11 +132,7 @@ describe('testando um ícone para a tela de perfil', () => {
     expect(explore).toBeInTheDocument();
   });
   it('O footer tem os ícones corretos na tela;', () => {
-    const { queryByTestId } = renderWithRouter(
-      <AppProvider>
-        <ExploreFoodIngredients />
-      </AppProvider>,
-    );
+    const { queryByTestId } = renderWithRouter(<ExploreFoodIngredients />);
     const drinks = queryByTestId('drinks-bottom-btn');
     const explore = queryByTestId('explore-bottom-btn');
     const food = queryByTestId('food-bottom-btn');
@@ -182,11 +141,7 @@ describe('testando um ícone para a tela de perfil', () => {
     expect(explore).toBeInTheDocument();
   });
   it('O footer tem os ícones corretos na tela;', () => {
-    const { queryByTestId } = renderWithRouter(
-      <AppProvider>
-        <ExploreDrinkIngredients />
-      </AppProvider>,
-    );
+    const { queryByTestId } = renderWithRouter(<ExploreDrinkIngredients />);
     const drinks = queryByTestId('drinks-bottom-btn');
     const explore = queryByTestId('explore-bottom-btn');
     const food = queryByTestId('food-bottom-btn');
@@ -195,11 +150,7 @@ describe('testando um ícone para a tela de perfil', () => {
     expect(explore).toBeInTheDocument();
   });
   it('O footer tem os ícones corretos na tela;', () => {
-    const { queryByTestId } = renderWithRouter(
-      <AppProvider>
-        <ExploreByArea />
-      </AppProvider>,
-    );
+    const { queryByTestId } = renderWithRouter(<ExploreByArea />);
     const drinks = queryByTestId('drinks-bottom-btn');
     const explore = queryByTestId('explore-bottom-btn');
     const food = queryByTestId('food-bottom-btn');
@@ -208,11 +159,7 @@ describe('testando um ícone para a tela de perfil', () => {
     expect(explore).toBeInTheDocument();
   });
   it('O footer tem os ícones corretos na tela de perfil;', () => {
-    const { queryByTestId } = renderWithRouter(
-      <AppProvider>
-        <Profile />
-      </AppProvider>,
-    );
+    const { queryByTestId } = renderWithRouter(<Profile />);
     const drinks = queryByTestId('drinks-bottom-btn');
     const explore = queryByTestId('explore-bottom-btn');
     const food = queryByTestId('food-bottom-btn');
@@ -221,11 +168,7 @@ describe('testando um ícone para a tela de perfil', () => {
     expect(explore).toBeInTheDocument();
   });
   it('O footer não tem os ícones na tela de receitas feitas;', () => {
-    const { queryByTestId } = renderWithRouter(
-      <AppProvider>
-        <FinishedRecipes />
-      </AppProvider>,
-    );
+    const { queryByTestId } = renderWithRouter(<FinishedRecipes />);
     const drinks = queryByTestId('drinks-bottom-btn');
     const explore = queryByTestId('explore-bottom-btn');
     const food = queryByTestId('food-bottom-btn');
@@ -234,11 +177,7 @@ describe('testando um ícone para a tela de perfil', () => {
     expect(explore).not.toBeInTheDocument();
   });
   it('O footer não tem os ícones na tela de receitas favoritas;', () => {
-    const { queryByTestId } = renderWithRouter(
-      <AppProvider>
-        <FavoritesRecipes />
-      </AppProvider>,
-    );
+    const { queryByTestId } = renderWithRouter(<FavoritesRecipes />);
     const drinks = queryByTestId('drinks-bottom-btn');
     const explore = queryByTestId('explore-bottom-btn');
     const food = queryByTestId('food-bottom-btn');

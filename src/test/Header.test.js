@@ -17,7 +17,6 @@ import DrinkDetails from '../pages/DrinkDetails';
 import FoodDetails from '../pages/FoodDetails';
 import FoodInProgress from '../pages/FoodInProgress';
 import DrinkInProgress from '../pages/DrinkInProgress';
-import AppProvider from '../provider/AppProvider';
 
 describe('testando os elementos do header na tela principal de receitas', () => {
   beforeAll(() => {
@@ -25,11 +24,7 @@ describe('testando os elementos do header na tela principal de receitas', () => 
     localStorage.user = JSON.stringify({ email });
   });
   it('O header tem os ícones corretos na tela de principal de receitas de comida', () => {
-    const { getByTestId } = renderWithRouter(
-      <AppProvider>
-        <Food />
-      </AppProvider>,
-    );
+    const { getByTestId } = renderWithRouter(<Food />);
     const profile = getByTestId('profile-top-btn');
     const page = getByTestId('page-title');
     const search = getByTestId('search-top-btn');
@@ -42,11 +37,7 @@ describe('testando os elementos do header na tela principal de receitas', () => 
 
 describe('testando um ícone para a tela de perfil', () => {
   it('Não tem header na tela de login;', () => {
-    const { queryByTestId } = renderWithRouter(
-      <AppProvider>
-        <Login />
-      </AppProvider>,
-    );
+    const { queryByTestId } = renderWithRouter(<Login />);
     const profile = queryByTestId('profile-top-btn');
     const page = queryByTestId('page-title');
     const search = queryByTestId('search-top-btn');
@@ -56,11 +47,7 @@ describe('testando um ícone para a tela de perfil', () => {
   });
 
   it('O header tem os ícones corretos na tela;', () => {
-    const { queryByTestId } = renderWithRouter(
-      <AppProvider>
-        <Drink />
-      </AppProvider>,
-    );
+    const { queryByTestId } = renderWithRouter(<Drink />);
     const profile = queryByTestId('profile-top-btn');
     const page = queryByTestId('page-title');
     const search = queryByTestId('search-top-btn');
@@ -72,9 +59,7 @@ describe('testando um ícone para a tela de perfil', () => {
 
   it('Não tem header na tela de detalhes de uma receita de comida;', () => {
     const { queryByTestId } = renderWithRouter(
-      <AppProvider>
-        <FoodDetails match={ { params: { id: '52977' } } } />
-      </AppProvider>,
+      <FoodDetails match={ { params: { id: '52977' } } } />,
     );
     const profile = queryByTestId('profile-top-btn');
     const page = queryByTestId('page-title');
@@ -86,9 +71,7 @@ describe('testando um ícone para a tela de perfil', () => {
 
   it('Não tem header na tela de detalhes de uma receita de bebida;', () => {
     const { queryByTestId } = renderWithRouter(
-      <AppProvider>
-        <DrinkDetails match={ { params: { id: '15997' } } } />
-      </AppProvider>,
+      <DrinkDetails match={ { params: { id: '15997' } } } />,
     );
     const profile = queryByTestId('profile-top-btn');
     const page = queryByTestId('page-title');
@@ -100,9 +83,7 @@ describe('testando um ícone para a tela de perfil', () => {
 
   it('Não tem header na tela de receita em processo de comida', () => {
     const { queryByTestId } = renderWithRouter(
-      <AppProvider>
-        <FoodInProgress />
-      </AppProvider>,
+      <FoodInProgress match={ { params: { id: '52977' } } } />,
     );
     const profile = queryByTestId('profile-top-btn');
     const page = queryByTestId('page-title');
@@ -114,9 +95,7 @@ describe('testando um ícone para a tela de perfil', () => {
 
   it('Não tem header na tela de receita em processo de bebida;', () => {
     const { queryByTestId } = renderWithRouter(
-      <AppProvider>
-        <DrinkInProgress />
-      </AppProvider>,
+      <DrinkInProgress match={ { params: { id: '52977' } } } />,
     );
     const profile = queryByTestId('profile-top-btn');
     const page = queryByTestId('page-title');
@@ -127,11 +106,7 @@ describe('testando um ícone para a tela de perfil', () => {
   });
 
   it('O header tem os ícones corretos na tela de explorar;', () => {
-    const { queryByTestId } = renderWithRouter(
-      <AppProvider>
-        <Explore />
-      </AppProvider>,
-    );
+    const { queryByTestId } = renderWithRouter(<Explore />);
     const profile = queryByTestId('profile-top-btn');
     const page = queryByTestId('page-title');
     const search = queryByTestId('search-top-btn');
@@ -142,11 +117,7 @@ describe('testando um ícone para a tela de perfil', () => {
   });
 
   it('O header tem os ícones corretos na tela de explorar comidas;', () => {
-    const { queryByTestId } = renderWithRouter(
-      <AppProvider>
-        <ExploreFoods />
-      </AppProvider>,
-    );
+    const { queryByTestId } = renderWithRouter(<ExploreFoods />);
     const profile = queryByTestId('profile-top-btn');
     const page = queryByTestId('page-title');
     const search = queryByTestId('search-top-btn');
@@ -157,11 +128,7 @@ describe('testando um ícone para a tela de perfil', () => {
   });
 
   it('O header tem os ícones corretos na tela de explorar bebidas;', () => {
-    const { queryByTestId } = renderWithRouter(
-      <AppProvider>
-        <ExploreDrinks />
-      </AppProvider>,
-    );
+    const { queryByTestId } = renderWithRouter(<ExploreDrinks />);
     const profile = queryByTestId('profile-top-btn');
     const page = queryByTestId('page-title');
     const search = queryByTestId('search-top-btn');
@@ -172,11 +139,7 @@ describe('testando um ícone para a tela de perfil', () => {
   });
 
   it('O header tem os ícones corretos na tela;', () => {
-    const { queryByTestId } = renderWithRouter(
-      <AppProvider>
-        <ExploreFoodIngredients />
-      </AppProvider>,
-    );
+    const { queryByTestId } = renderWithRouter(<ExploreFoodIngredients />);
     const profile = queryByTestId('profile-top-btn');
     const page = queryByTestId('page-title');
     const search = queryByTestId('search-top-btn');
@@ -187,11 +150,7 @@ describe('testando um ícone para a tela de perfil', () => {
   });
 
   it('O header tem os ícones corretos na tela;', () => {
-    const { queryByTestId } = renderWithRouter(
-      <AppProvider>
-        <ExploreDrinkIngredients />
-      </AppProvider>,
-    );
+    const { queryByTestId } = renderWithRouter(<ExploreDrinkIngredients />);
     const profile = queryByTestId('profile-top-btn');
     const page = queryByTestId('page-title');
     const search = queryByTestId('search-top-btn');
@@ -202,11 +161,7 @@ describe('testando um ícone para a tela de perfil', () => {
   });
 
   it('O header tem os ícones corretos na tela;', () => {
-    const { queryByTestId } = renderWithRouter(
-      <AppProvider>
-        <ExploreByArea />
-      </AppProvider>,
-    );
+    const { queryByTestId } = renderWithRouter(<ExploreByArea />);
     const profile = queryByTestId('profile-top-btn');
     const page = queryByTestId('page-title');
     const search = queryByTestId('search-top-btn');
@@ -217,11 +172,7 @@ describe('testando um ícone para a tela de perfil', () => {
   });
 
   it('O header tem os ícones corretos na tela de perfil;', () => {
-    const { queryByTestId } = renderWithRouter(
-      <AppProvider>
-        <Profile />
-      </AppProvider>,
-    );
+    const { queryByTestId } = renderWithRouter(<Profile />);
     const profile = queryByTestId('profile-top-btn');
     const page = queryByTestId('page-title');
     const search = queryByTestId('search-top-btn');
@@ -232,11 +183,7 @@ describe('testando um ícone para a tela de perfil', () => {
   });
 
   it('O header tem os ícones corretos na tela de receitas feitas;', () => {
-    const { queryByTestId } = renderWithRouter(
-      <AppProvider>
-        <FinishedRecipes />
-      </AppProvider>,
-    );
+    const { queryByTestId } = renderWithRouter(<FinishedRecipes />);
     const profile = queryByTestId('profile-top-btn');
     const page = queryByTestId('page-title');
     const search = queryByTestId('search-top-btn');
@@ -247,11 +194,7 @@ describe('testando um ícone para a tela de perfil', () => {
   });
 
   it('O header tem os ícones corretos na tela de receitas favoritas;', () => {
-    const { queryByTestId } = renderWithRouter(
-      <AppProvider>
-        <FavoritesRecipes />
-      </AppProvider>,
-    );
+    const { queryByTestId } = renderWithRouter(<FavoritesRecipes />);
     const profile = queryByTestId('profile-top-btn');
     const page = queryByTestId('page-title');
     const search = queryByTestId('search-top-btn');
@@ -264,11 +207,7 @@ describe('testando um ícone para a tela de perfil', () => {
 
 describe('testando o botão de busca', () => {
   it('ao ser clicado, a barra de busca deve aparecer', () => {
-    const { queryByTestId } = renderWithRouter(
-      <AppProvider>
-        <Food />
-      </AppProvider>,
-    );
+    const { queryByTestId } = renderWithRouter(<Food />);
     const searchButton = queryByTestId('search-top-btn');
     fireEvent.click(searchButton);
     const input = queryByTestId('search-input');
