@@ -13,7 +13,6 @@ function Provider({ children }) {
   const [idRecipe, setIdRecipe] = useState('');
   const [typeRecipe, setTypeRecipe] = useState('');
   const [recipeStarted, setRecipeStart] = useState(false);
-  const [favoriteRecipe, setFavoriteRecipe] = useState(false);
   const [showCard, setShowCard] = useState(false);
 
   const contextValue = {
@@ -37,8 +36,6 @@ function Provider({ children }) {
     setTypeRecipe,
     recipeStarted,
     setRecipeStart,
-    favoriteRecipe,
-    setFavoriteRecipe,
     showCard,
     setShowCard,
   };

@@ -11,12 +11,16 @@ function RecipeDetails() {
     recipes,
     setRecipes,
     recipeStarted,
-    favoriteRecipe,
+    setRecipeStart,
   } = useContext(ContextRecipes);
   const [singleRecipe, setSingleRecipe] = useState([]);
   const [isFetching, setFetching] = useState(true);
+  const [favoriteRecipe, setFavoriteRecipe] = useState(false);
   const location = useLocation().pathname;
+  const history = useHistory();
   const { idRecipe } = useParams();
+  const localStorageFavs = JSON.parse(localStorage.getItem('favoriteRecipes'));
+  const localStorageProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
 
   const fetchDetailedRecipe = async () => {
     if (location.includes('comidas')) {
@@ -26,6 +30,21 @@ function RecipeDetails() {
       setSingleRecipe(mealRecipe[0]);
       const recipesRecomend = await fetchAPIDrinks('name', '');
       setRecipes(recipesRecomend);
+      if (localStorageFavs) {
+        localStorageFavs.forEach((item) => {
+          if (item.id === mealRecipe[0].idMeal) {
+            setFavoriteRecipe(true);
+          }
+        });
+      }
+
+      if (localStorageProgress) {
+        Object.keys(localStorageProgress.meals).forEach((item) => {
+          if (item === mealRecipe[0].idMeal) {
+            setRecipeStart(true);
+          }
+        });
+      }
     } else {
       const data = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idRecipe}`);
       const responseJSON = await data.json();
@@ -33,14 +52,71 @@ function RecipeDetails() {
       setSingleRecipe(drinkRecipe[0]);
       const recipesRecomend = await fetchAPIRecipes('name', '');
       setRecipes(recipesRecomend);
+      if (localStorageFavs) {
+        localStorageFavs.forEach((item) => {
+          if (item.id === drinkRecipe[0].idDrink) {
+            setFavoriteRecipe(true);
+          }
+        });
+      }
+
+      if (localStorageProgress.cocktails) {
+        Object.keys(localStorageProgress.cocktails).forEach((item) => {
+          if (item === drinkRecipe[0].idDrink) {
+            setRecipeStart(true);
+          }
+        });
+      }
     }
   };
 
   useEffect(() => {
+    setFetching(true);
     fetchDetailedRecipe();
     setFetching(false);
-    console.log(location);
   }, []);
+
+  const handleFavoriteRecipes = () => {
+    let newFavRecipe = {};
+    if (location.includes('comidas')) {
+      newFavRecipe = {
+        id: singleRecipe.idMeal,
+        type: 'comida',
+        area: singleRecipe.strArea,
+        category: singleRecipe.strCategory,
+        alcoholicOrNot: '',
+        name: singleRecipe.strMeal,
+        image: singleRecipe.strMealThumb,
+      };
+    } else {
+      newFavRecipe = {
+        id: singleRecipe.idDrink,
+        type: 'bebida',
+        area: '',
+        category: singleRecipe.strCategory,
+        alcoholicOrNot: singleRecipe.strAlcoholic,
+        name: singleRecipe.strDrink,
+        image: singleRecipe.strDrinkThumb,
+      };
+    }
+    if (!favoriteRecipe) {
+      if (!localStorageFavs) {
+        localStorage.setItem('favoriteRecipes', JSON.stringify([newFavRecipe]));
+      } else {
+        localStorage.setItem('favoriteRecipes',
+          JSON.stringify([...localStorageFavs, newFavRecipe]));
+      }
+      setFavoriteRecipe(true);
+    } else {
+      localStorageFavs.forEach((item, index) => {
+        if (item.id === newFavRecipe.id) {
+          localStorageFavs.splice(index, 1);
+          localStorage.setItem('favoriteRecipes', JSON.stringify(localStorageFavs));
+        }
+      });
+      setFavoriteRecipe(false);
+    }
+  };
 
   const renderIngredients = (recipeData) => {
     const arrayIngredients = [];
@@ -62,7 +138,62 @@ function RecipeDetails() {
 
   const maxCards = 6;
   const allIngredients = renderIngredients(singleRecipe);
-  const history = useHistory();
+
+  const handleProgressRecipes = () => {
+    if (!recipeStarted) {
+      if (location.includes('comidas')) {
+        if (!localStorageProgress) {
+          localStorage.setItem('inProgressRecipes',
+            JSON.stringify({ meals: { [singleRecipe.idMeal]: allIngredients } }));
+        } else {
+          localStorage.setItem('inProgressRecipes',
+            JSON.stringify({ ...localStorageProgress,
+              meals: { ...localStorageProgress.meals,
+                [singleRecipe.idMeal]: allIngredients } }));
+        }
+      } else if (!localStorageProgress) {
+        localStorage.setItem('inProgressRecipes',
+          JSON.stringify({ cocktails: { [singleRecipe.idDrink]: allIngredients } }));
+      } else {
+        localStorage.setItem('inProgressRecipes',
+          JSON.stringify({ ...localStorageProgress,
+            cocktails: { ...localStorageProgress.cocktails,
+              [singleRecipe.idDrink]: allIngredients } }));
+      }
+    }
+    history.push(`${location}/in-progress`);
+  };
+
+  const handleShareIcon = () => {
+    const zero = 0;
+    const menosUm = -1;
+    let fullPath = '';
+    if (location.substr(location.length - 1) === '/') {
+      fullPath = `http://localhost:3000${location.slice(zero, menosUm)}`;
+    } else {
+      fullPath = `http://localhost:3000${location}`;
+    }
+    const tempElement = document.createElement('textarea');
+    tempElement.value = fullPath;
+    tempElement.setAttribute('readonly', '');
+    tempElement.style.position = 'absolute';
+    tempElement.style.left = '-9999px';
+    document.body.appendChild(tempElement);
+    tempElement.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempElement);
+    const linkCopy = document.createElement('p');
+    linkCopy.innerHTML = 'Link copiado!';
+    document.querySelector('.icons-area').appendChild(linkCopy);
+  };
+
+  const handleRecomendatioNRecipes = async ({ target }) => {
+    if (target.alt === 'food') {
+      history.push(`/comidas/${target.id}`);
+    } else {
+      history.push(`/bebidas/${target.id}`);
+    }
+  };
 
   return (
     <div>
@@ -79,6 +210,23 @@ function RecipeDetails() {
                   className="box-card"
                   width="200px"
                 />
+                <section className="icons-area">
+                  <img
+                    src={ shareIcon }
+                    alt="Share"
+                    data-testid="share-btn"
+                    id="share-btn"
+                    onClick={ handleShareIcon }
+                    aria-hidden="true"
+                  />
+                  <img
+                    src={ favoriteRecipe ? blackHeartIcon : whiteHeartIcon }
+                    alt="Favorite"
+                    data-testid="favorite-btn"
+                    onClick={ handleFavoriteRecipes }
+                    aria-hidden="true"
+                  />
+                </section>
                 <h3 data-testid="recipe-title">{ singleRecipe.strMeal }</h3>
                 <h4 data-testid="recipe-category">{ singleRecipe.strCategory }</h4>
                 {allIngredients.map((ingredient, index) => (
@@ -114,6 +262,9 @@ function RecipeDetails() {
                         src={ recipe.strDrinkThumb }
                         alt="drink"
                         width="50px"
+                        id={ recipe.idDrink }
+                        onClick={ handleRecomendatioNRecipes }
+                        aria-hidden="true"
                       />
                     </div>
                   )).filter((_, index) => index < maxCards)}
@@ -128,6 +279,23 @@ function RecipeDetails() {
                   data-testid="recipe-photo"
                   width="200px"
                 />
+                <section className="icons-area">
+                  <img
+                    src={ shareIcon }
+                    alt="Share"
+                    data-testid="share-btn"
+                    id="share-btn"
+                    onClick={ handleShareIcon }
+                    aria-hidden="true"
+                  />
+                  <img
+                    src={ favoriteRecipe ? blackHeartIcon : whiteHeartIcon }
+                    alt="Favorite"
+                    data-testid="favorite-btn"
+                    onClick={ handleFavoriteRecipes }
+                    aria-hidden="true"
+                  />
+                </section>
                 <h3 data-testid="recipe-title">{ singleRecipe.strDrink }</h3>
                 <h4 data-testid="recipe-category">{ singleRecipe.strAlcoholic }</h4>
                 {allIngredients.map((ingredient, index) => (
@@ -155,7 +323,10 @@ function RecipeDetails() {
                         className="recipe-food"
                         src={ recipe.strMealThumb }
                         alt="food"
+                        id={ recipe.idMeal }
                         width="50px"
+                        onClick={ handleRecomendatioNRecipes }
+                        aria-hidden="true"
                       />
                     </div>
                   )).filter((_, index) => index < maxCards)}
@@ -166,20 +337,11 @@ function RecipeDetails() {
               <button
                 type="button"
                 data-testid="start-recipe-btn"
-                onClick={ () => history.push(`${location}/in-progress`) }
+                className="footer"
+                onClick={ handleProgressRecipes }
               >
                 {recipeStarted ? 'Continuar Receita' : 'Iniciar Receita'}
               </button>
-              <button type="button" data-testid="share-btn">Compartilhar</button>
-              <button type="button" data-testid="favorite-btn">Favoritar</button>
-            </section>
-            <section>
-              <img src={ shareIcon } alt="Share" data-testid="share-btn" />
-              <img
-                src={ favoriteRecipe ? blackHeartIcon : whiteHeartIcon }
-                alt="Favorite"
-                data-testid="favorite-btn"
-              />
             </section>
           </div>
         )}

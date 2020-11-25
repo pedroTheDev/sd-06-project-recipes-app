@@ -21,7 +21,7 @@ function Header(props) {
   };
 
   useEffect(() => {
-    if (location === '/comidas') {
+    if (location.includes('comidas')) {
       setTypeRecipe('food');
     } else {
       setTypeRecipe('drink');
