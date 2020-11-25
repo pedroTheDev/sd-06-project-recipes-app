@@ -5,13 +5,14 @@ const Cards = () => {
   const { apiValueSearch } = useContext(ContextAPI);
 
   const showFoodResearch = () => {
+    const number = 11;
     if (apiValueSearch.foods.meals && apiValueSearch.foods.meals.length === 1) {
       const foodID = apiValueSearch.foods.meals[0].idMeal;
       window.location.href = `http://localhost:3000/comidas/${foodID}`;
     } else {
       return (
         apiValueSearch.foods.meals && apiValueSearch.foods.meals.map((meal, index) => {
-          if (index <= 11) {
+          if (index <= number) {
             if (apiValueSearch.foods.meals === null) { console.log('null'); }
             return (
               <div key={ meal.strMeal }>
@@ -20,6 +21,7 @@ const Cards = () => {
               </div>
             );
           }
+          return '';
         })
       );
     }

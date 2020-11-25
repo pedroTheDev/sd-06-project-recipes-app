@@ -1,10 +1,10 @@
-import React, { useContext, useState, useEffect } from 'react';
-import ContextAPI from '../../Context/ContextAPI';
+import React, { useState, useEffect } from 'react';
+// import ContextAPI from '../../Context/ContextAPI';
 
 import { showAllDrinksCategories, selectDrinksItensCategories } from '../../services/aPI';
 
 const CategoriesBebidas = () => {
-    const { apiValueSearch, setApiValueSearch } = useContext(ContextAPI);
+//   const { apiValueSearch, setApiValueSearch } = useContext(ContextAPI);
 
   const [categories, setCategories] = useState([]);
 
@@ -22,11 +22,11 @@ const CategoriesBebidas = () => {
   const filterApiValueSearch = async (value) => {
     if (window.location.pathname === '/bebidas') {
       const result = await selectDrinksItensCategories(value);
-    //   setApiValueSearch({
-    //     ...apiValueSearch,
-    //     drinks.drinks,
-    //   });
-    console.log(result);
+      //   setApiValueSearch({
+      //     ...apiValueSearch,
+      //     drinks.drinks,
+      //   });
+      console.log(result);
     }
   };
 
@@ -45,10 +45,13 @@ const CategoriesBebidas = () => {
               <p
                 width="100"
                 alt={ element.strCategory }
-              >{ element.strCategory }</p>
+              >
+                { element.strCategory }
+              </p>
             </button>
           );
         }
+        return '';
       })}
     </div>);
 };

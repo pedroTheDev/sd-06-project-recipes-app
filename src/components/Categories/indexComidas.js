@@ -1,7 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react';
 import ContextAPI from '../../Context/ContextAPI';
 
-import { showAllFoodsCategories, showAllDrinksCategories, selectFoodItensCategories, selectDrinksItensCategories } from '../../services/aPI';
+import { showAllFoodsCategories,
+  showAllDrinksCategories,
+  selectFoodItensCategories,
+  selectDrinksItensCategories,
+} from '../../services/aPI';
 
 const CategoriesComidas = () => {
   const { apiValueSearch, setApiValueSearch } = useContext(ContextAPI);
@@ -60,6 +64,7 @@ const CategoriesComidas = () => {
             </button>
           );
         }
+        return '';
       })}
     </div>);
 };
