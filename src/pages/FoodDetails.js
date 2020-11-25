@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import useRequestDrink from '../hooks/useRequestDrink';
@@ -7,14 +7,24 @@ import FavoriteBtn from '../components/FavoriteBtn';
 import ShareBtn from '../components/ShareBtn';
 
 function FoodDetails(props) {
-  const { match: { params: { id } } } = props;
+  const { match: { params: { id } }, location: { pathname } } = props;
   const history = useHistory();
   const [requestDetails, setrequestDetails] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [apiResponse, setFilter] = useRequestDrink([]);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [copied, setCopied] = useState('none');
+  const textArea = useRef(null);
   const maxShow = 6;
   const zero = 0;
+
+  const copyToClipboard = (e) => {
+    textArea.current.select();
+    document.execCommand('copy');
+    e.target.focus();
+    setCopied('block');
+  };
+
   const requestDetailsAPI = async () => {
     const response = await fetchRecipes(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
     setrequestDetails(response.meals[0]);
@@ -39,13 +49,13 @@ function FoodDetails(props) {
   const handleInitRecipe = () => {
     history.push(`/comidas/${id}/in-progress`);
   };
+
   const removeIdLocalSotrage = () => {
     const readLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    const idFavorito = readLocalStorage !== null
-      ? readLocalStorage.find((element) => element.id === id)
-      : undefined;
-
+    const newArray = readLocalStorage.filter((element) => element.id !== id);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(newArray));
   };
+
   const getLocalStorage = () => {
     const readLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
     const idFavorito = readLocalStorage !== null
@@ -62,9 +72,10 @@ function FoodDetails(props) {
     const readLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
     const favoriteRecipes = readLocalStorage !== null ? readLocalStorage : [];
     const newRecipe = { id: requestDetails.idMeal,
-      area: 'area',
+      type: 'comida',
+      area: requestDetails.strArea,
       category: requestDetails.strCategory,
-      alcoholicOrNot: requestDetails.strDrinkAlternate,
+      alcoholicOrNot: '',
       name: requestDetails.strMeal,
       image: requestDetails.strMealThumb,
     };
@@ -73,9 +84,15 @@ function FoodDetails(props) {
   };
 
   const changesFavorites = () => {
-    setLocalStorage();
-    setIsFavorite(!isFavorite);
+    if (isFavorite) {
+      removeIdLocalSotrage();
+      setIsFavorite(!isFavorite);
+    } else {
+      setLocalStorage();
+      setIsFavorite(!isFavorite);
+    }
   };
+
   useEffect(() => {
     getLocalStorage();
   }, []);
@@ -89,6 +106,7 @@ function FoodDetails(props) {
   }, []);
   return (
     <div data-testid="food-details" className="food-details">
+      <p style={ { display: copied } }>Link copiado!</p>
       <img
         className="pictureDetail"
         src={ requestDetails.strMealThumb }
@@ -96,7 +114,7 @@ function FoodDetails(props) {
         data-testid="recipe-photo"
       />
       <h1 data-testid="recipe-title">{requestDetails.strMeal}</h1>
-      <ShareBtn />
+      <ShareBtn copy={ copyToClipboard } />
       <FavoriteBtn isFavorite={ isFavorite } changesFavorites={ changesFavorites } />
       <p data-testid="recipe-category">{requestDetails.strCategory}</p>
       {ingredients.map((ingredient, index) => (
@@ -136,6 +154,10 @@ function FoodDetails(props) {
             />
           </div>))}
       </div>
+      <textarea
+        ref={ textArea }
+        value={ `http://localhost:3000${pathname}` }
+      />
       <button
         onClick={ handleInitRecipe }
         style={ { position: 'fixed', bottom: '0px' } }
@@ -150,6 +172,7 @@ function FoodDetails(props) {
 
 FoodDetails.propTypes = {
   match: PropTypes.func.isRequired,
+  location: PropTypes.func.isRequired,
 };
 
 export default FoodDetails;

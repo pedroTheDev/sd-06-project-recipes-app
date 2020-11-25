@@ -5,13 +5,29 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 function FavoriteBtn({ isFavorite, changesFavorites }) {
   return (
-    <button data-testid="favorite-btn" type="button" onClick={ changesFavorites }>
-      { isFavorite
-        ? <img src={ blackHeartIcon } alt="shareButton" />
-        : <img src={ whiteHeartIcon } alt="shareButton" />}
-
-    </button>
-
+    isFavorite
+      ? (
+        <button
+          className="button-favorite"
+          data-testid="favorite-btn"
+          type="button"
+          onClick={ changesFavorites }
+          src={ blackHeartIcon }
+        >
+          <img src={ blackHeartIcon } alt="shareButton" />
+        </button>
+      )
+      : (
+        <button
+          className="button-favorite"
+          data-testid="favorite-btn"
+          type="button"
+          onClick={ changesFavorites }
+          src={ whiteHeartIcon }
+        >
+          <img src={ whiteHeartIcon } alt="shareButton" />
+        </button>
+      )
   );
 }
 
