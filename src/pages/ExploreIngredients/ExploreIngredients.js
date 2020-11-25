@@ -1,4 +1,5 @@
 import React from 'react';
+import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 
 function ExploreIngredients() {
@@ -8,6 +9,9 @@ function ExploreIngredients() {
         className="header"
         pageTitle="Explorar Ingredientes"
       />
+      <div className="footer">
+        <Footer />
+      </div>
     </div>
   );
 }

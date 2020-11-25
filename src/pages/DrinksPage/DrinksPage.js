@@ -6,12 +6,15 @@ import BtnSearchBar from '../../components/BtnSearchBar';
 export default function DrinksPage() {
   return (
     <div>
+      <h1> Página principal de Drinks</h1>
       <Header
         className="header"
         pageTitle="Explorar Bebidas"
         BtnSearchBar={ BtnSearchBar }
       />
-      <Footer />
+      <div className="footer">
+        <Footer />
+      </div>
     </div>
   );
 }

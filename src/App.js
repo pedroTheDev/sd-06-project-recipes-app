@@ -1,5 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+import RecipesAppProvider from './context/RecipesAppProvider';
 import './App.css';
 import Login from './pages/Login/Login';
 import MealsPage from './pages/MealsPage/MealsPage';
@@ -14,7 +15,6 @@ import ExploreIngredients from './pages/ExploreIngredients/ExploreIngredients';
 import ExploreByArea from './pages/ExploreByArea/ExploreByArea';
 import CompletedRecipes from './pages/CompletedRecipes/CompletedRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes/FavoriteRecipes';
-import RecipesAppProvider from './context/RecipesAppProvider';
 
 function App() {
   return (

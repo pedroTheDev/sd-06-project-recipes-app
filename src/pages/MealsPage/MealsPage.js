@@ -6,12 +6,15 @@ import Footer from '../../components/Footer';
 export default function MealsPage() {
   return (
     <div>
+      <h1> Página principal de Comidas</h1>
       <Header
         className="header"
         pageTitle="Comidas"
         BtnSearchBar={ BtnSearchBar }
       />
-      <Footer />
+      <div className="footer">
+        <Footer />
+      </div>
     </div>
   );
 }
