@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { fetchDetail, fetchRecommendation } from '../helpers/Helper';
+import history from '../helpers/History';
 
 import '../css/itemDetails.css';
 import '../css/scroller.css';
@@ -103,6 +104,9 @@ export default function FoodsDetails(props) {
             type="button"
             data-testid="start-recipe-btn"
             className="btnStart"
+            onClick={
+              () => history.push(`/bebidas/${props.match.params.id}/in-progress`)
+            }
             disabled={ disabled }
           >
             {btnStartValue}

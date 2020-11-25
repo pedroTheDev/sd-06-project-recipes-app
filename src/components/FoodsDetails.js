@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { fetchDetail, fetchRecommendation } from '../helpers/Helper';
 import '../css/scroller.css';
 import '../css/itemDetails.css';
+import history from '../helpers/History';
 
 export default function FoodsDetails(props) {
   const [recipeId, setRecipeId] = useState('');
@@ -101,6 +102,9 @@ export default function FoodsDetails(props) {
             type="button"
             data-testid="start-recipe-btn"
             className="btnStart"
+            onClick={
+              () => history.push(`/comidas/${props.match.params.id}/in-progress`)
+            }
             disabled={ disabled }
           >
             {btnStartValue}

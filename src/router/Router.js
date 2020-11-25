@@ -6,6 +6,8 @@ import Drinks from '../pages/Drinks';
 import Profile from '../pages/Profile';
 import FoodsDetails from '../components/FoodsDetails';
 import DrinksDetails from '../components/DrinkDetails';
+import FoodInProgress from '../components/FoodInProgress';
+import DrinkInProgress from '../components/DrinkInProgress';
 
 export default class Router extends React.Component {
   render() {
@@ -36,16 +38,16 @@ export default class Router extends React.Component {
           path="/bebidas/:id"
           render={ (props) => <DrinksDetails { ...props } /> }
         />
-        {/* <Route
+        <Route
           exact
-          path="/comidas/:id-da-receita/in-progress"
-          component={ Foods }
-        /> */}
-        {/* <Route
+          path="/comidas/:id/in-progress"
+          render={ (props) => <FoodInProgress { ...props } /> }
+        />
+        <Route
           exact
-          path="/bebidas/:id-da-receita/in-progress"
-          component={ Drinks }
-        /> */}
+          path="/bebidas/:id/in-progress"
+          render={ (props) => <DrinkInProgress { ...props } /> }
+        />
         {/* <Route
           exact
           path="/explorar"
