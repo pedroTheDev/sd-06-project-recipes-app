@@ -19,6 +19,7 @@ import MadeRecipes from './pages/MadeRecipes';
 import FavoritesRecipes from './pages/FavoritesRecipes';
 import FoodDetails from './pages/FoodDetails';
 import DrinkDetails from './pages/DrinkDetails';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
           <Route exact path="/explorar/comidas/area" component={ ExploreFoodOrigin } />
           <Route exact path="/receitas-feitas" component={ MadeRecipes } />
           <Route exact path="/receitas-favoritas" component={ FavoritesRecipes } />
+          <Route component={ NotFound } />
         </RecipesProvider>
       </Switch>
     </BrowserRouter>

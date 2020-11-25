@@ -22,6 +22,7 @@ export default function RecipesProvider({ children }) {
   const [searchBar, setSearchBar] = useState('');
   const [listIngredients, setListIngredients] = useState([]);
   const [effectOnLoad, setEffectOnLoad] = useState(true);
+  const [areaDropdown, setAreaDropdown] = useState([]);
 
   useEffect(() => {
     if (fetchFood && fetchFood.length === 1) {
@@ -70,6 +71,8 @@ export default function RecipesProvider({ children }) {
     listIngredients,
     effectOnLoad,
     setEffectOnLoad,
+    areaDropdown,
+    setAreaDropdown,
   };
 
   return (
