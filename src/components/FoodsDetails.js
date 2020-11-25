@@ -57,6 +57,26 @@ export default function FoodsDetails(props) {
     setCopy('Link copiado!');
   }
 
+  function handleFav(item) {
+    const favObj = [{
+      id: item.idMeal,
+      type: 'comida',
+      area: item.strArea,
+      category: item.strCategory,
+      alcoholicOrNot: '',
+      name: item.strMeal,
+      image: item.strMealThumb,
+    }];
+    if (fav === blackHeart) {
+      setFav(whiteHeart);
+      localStorage.removeItem('favoriteRecipes');
+    }
+    if (fav === whiteHeart) {
+      setFav(blackHeart);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(favObj));
+    }
+  }
+
   useEffect(() => {
     if (recipe.meals) {
       const currRecipe = { ...recipe.meals[0] };
@@ -119,6 +139,7 @@ export default function FoodsDetails(props) {
             type="button"
             data-testid="favorite-btn"
             src={ fav }
+            onClick={ () => handleFav(item) }
           >
             <img alt="fav" src={ fav } />
           </button>

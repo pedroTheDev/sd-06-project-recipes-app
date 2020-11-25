@@ -471,7 +471,7 @@ describe('44 - Implemente o ícone do coração (favorito) de maneira que, deve 
   });
 });
 
-describe.skip('45 - Ao clicar no botão de favoritar, o ícone do coração deve mudar de seu estado atual, caso esteja preenchido deve mudar para "despreenchido" e vice-versa', () => {
+describe('45 - Ao clicar no botão de favoritar, o ícone do coração deve mudar de seu estado atual, caso esteja preenchido deve mudar para "despreenchido" e vice-versa', () => {
   it('Favorita a comida', () => {
     cy.visit('http://localhost:3000/comidas/52771', {
       onBeforeLoad(win) {
@@ -563,7 +563,7 @@ describe.skip('45 - Ao clicar no botão de favoritar, o ícone do coração deve
   });
 });
 
-describe.skip('46 - Salve as receitas favoritas no `localStorage` na chave `favoriteRecipes`', () => {
+describe('46 - Salve as receitas favoritas no `localStorage` na chave `favoriteRecipes`', () => {
   it('Verifica se após favoritar receita de uma comida, ela é salva corretamente no localStorage', () => {
     cy.visit('http://localhost:3000/comidas/52771', {
       onBeforeLoad(win) {
