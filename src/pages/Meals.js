@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import MealRecipeCard from '../components/MealRecipeCard';
+import MealRecipeCard from '../components/Cards';
 import Context from '../context/Context';
 
 function Meals() {
@@ -18,7 +18,7 @@ function Meals() {
       <Header title="Comidas" search={ TRUE } />
       <div className="recipes-cards">
         {recipes.map((meal, index) => (
-          <MealRecipeCard key={ meal.strMeal } mealInfo={ meal } index={ index } />
+          <MealRecipeCard key={ meal.strMeal } info={ meal } recipe="comidas" index={ index } />
         ))}
       </div>
       <Footer />
