@@ -46,7 +46,7 @@ function App() {
           <Route exact path="/explorar/comidas/area" component={ ExploreFoodOrigin } />
           <Route exact path="/receitas-feitas" component={ MadeRecipes } />
           <Route exact path="/receitas-favoritas" component={ FavoritesRecipes } />
-          <Route component={ NotFound } />
+          <Route exatt path="/explorar/bebidas/area" component={ NotFound } />
         </RecipesProvider>
       </Switch>
     </BrowserRouter>
