@@ -37,17 +37,17 @@ function DrinksRecipesPage() {
   async function handleClickAll() {
     const response = await requestDrinks();
     setApiResult(response);
-    return null
+    return null;
   }
 
   return (
     <div>
       <Header pageName="Bebidas" />
-
       <div>
-      <button
+        <button
           data-testid="All-category-filter"
-          type="button" value="all"
+          type="button"
+          value="all"
           onClick={() => handleClickAll()}
         >
           All

@@ -37,7 +37,7 @@ function FoodRecipesPage() {
   async function handleClickAll() {
     const response = await requestFoods();
     setApiResult(response);
-    return null
+    return null;
   }
 
   return (
@@ -48,7 +48,8 @@ function FoodRecipesPage() {
       <div>
         <button
           data-testid="All-category-filter"
-          type="button" value="all"
+          type="button"
+          value="all"
           onClick={() => handleClickAll()}
         >
           All
