@@ -15,6 +15,7 @@ import ExploreFood from './pages/ExploreFood';
 import ExploreDrink from './pages/ExploreDrink';
 import ExploreFoodIngredient from './pages/ExploreFoodIngredient';
 import AreaNotFound from './pages/AreaNotFound';
+import ExploreDrinkIngredient from './pages/ExploreDrinkIngredient';
 
 function App() {
   return (
@@ -31,6 +32,10 @@ function App() {
             exact
             path="/explorar/comidas/ingredientes"
             component={ ExploreFoodIngredient }
+          />
+          <Route
+            path="/explorar/bebidas/ingredientes"
+            component={ ExploreDrinkIngredient }
           />
           <Route exact path="/explorar" component={ Explore } />
           <Route exact path="/explorar/comidas" component={ ExploreFood } />

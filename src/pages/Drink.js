@@ -6,7 +6,7 @@ import RecipeContext from '../context/RecipeContext';
 import './Drink.css';
 
 function Drink() {
-  const { setDrinkAPI } = useContext(RecipeContext);
+  const { setDrinkAPI, drinkCategories } = useContext(RecipeContext);
 
   const [drinks, setDrinks] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -15,7 +15,7 @@ function Drink() {
 
   const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
   const urlCategories = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
-  const urlDrinksCategories = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${currentCategories}`;
+  const urlDrinksCategories = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${currentCategories}`;
 
   useEffect(() => {
     const fecthDrinks = async () => {
@@ -27,6 +27,10 @@ function Drink() {
       }
     };
     fecthDrinks();
+
+    if (drinkCategories) {
+      setCurrentCategories(drinkCategories);
+    }
 
     const fecthCategory = async () => {
       const APIRequestCategory = await fetch(urlCategories);
