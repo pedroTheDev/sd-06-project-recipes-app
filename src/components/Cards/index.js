@@ -4,43 +4,46 @@ import ContextAPI from '../../Context/ContextAPI';
 const Cards = () => {
   const { apiValueSearch } = useContext(ContextAPI);
 
-  const showFoodResearch = () => (
-    apiValueSearch.foods.meals && apiValueSearch.foods.meals.map((meal) => (
-      <div key={ meal.strMeal }>
-        <p>{meal.strMeal}</p>
-        <img width="200" src={ meal.strMealThumb } alt={ meal.strMeal } />
-      </div>
-    ))
-  );
+  const showFoodResearch = () => {
+    if (apiValueSearch.foods.meals && apiValueSearch.foods.meals.length === 1) {
+      const foodID = apiValueSearch.foods.meals[0].idMeal;
+      window.location.href = `http://localhost:3000/comidas/${foodID}`;
+    } else {
+      return (
+        apiValueSearch.foods.meals && apiValueSearch.foods.meals.map((meal, index) => {
+          if (index <= 11) {
+            if (apiValueSearch.foods.meals === null) { console.log('null'); }
+            return (
+              <div key={ meal.strMeal }>
+                <p>{meal.strMeal}</p>
+                <img width="200" src={ meal.strMealThumb } alt={ meal.strMeal } />
+              </div>
+            );
+          }
+        })
+      );
+    }
+  };
 
-  const showFoodCategories = () => (
-    apiValueSearch.foods.categories && apiValueSearch.foods.categories
-      .map((category) => (
-        <div key={ category.idCategory }>
-          <p>{category.strCategory}</p>
-          <img
-            width="200"
-            src={ category.strCategoryThumb }
-            alt={ category.strCategory }
-          />
-        </div>
-      ))
-  );
-
-  const showDrinkResearch = () => (
-    apiValueSearch.drinks && (
-      apiValueSearch.drinks.drinks.map((res) => (
-        <div key={ res.idDrink }>
-          <p>{res.strDrink}</p>
-          <img width="200" src={ res.strDrinkThumb } alt={ res.strMeal } />
-        </div>
-      ))
-    )
-  );
+  const showDrinkResearch = () => {
+    if (apiValueSearch.drinks.drinks && apiValueSearch.drinks.drinks.length === 1) {
+      const drinkID = apiValueSearch.drinks.drinks[0].idDrink;
+      window.location.href = `http://localhost:3000/bebidas/${drinkID}`;
+    } else {
+      return (
+        apiValueSearch.drinks.drinks && apiValueSearch.drinks.drinks.map((res) => (
+          <div key={ res.idDrink }>
+            <p>{res.strDrink}</p>
+            <img width="200" src={ res.strDrinkThumb } alt={ res.strDrink } />
+          </div>
+        ))
+      );
+    }
+  };
 
   return window.location.pathname === '/comidas' ? (
     <div>
-      {apiValueSearch.foods.meals ? (showFoodResearch()) : (showFoodCategories()) }
+      {showFoodResearch() }
     </div>
   ) : (
     <div>
