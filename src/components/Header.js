@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchInput from './SearchInput';
+import Filters from './Filters';
+import RecipesContext from '../context/RecipesContext';
 
 function Header(props) {
-  const [hiddenInput, setHiddenInput] = useState(false);
+  const { hiddenInput, setHiddenInput } = useContext(RecipesContext);
 
   const { pageName } = props;
 
@@ -35,6 +37,7 @@ function Header(props) {
           onClick={() => setHiddenInput(!hiddenInput)}
         />
         { hiddenInput ? <SearchInput /> : null }
+        { hiddenInput ? <Filters /> : null }
       </header>
     </div>
   );
