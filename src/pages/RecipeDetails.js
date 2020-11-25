@@ -26,6 +26,7 @@ function RecipeDetails({ location: { pathname }, recommendations }) {
     async function request() {
       const data = await fetchRecipeDetails(id, path);
       const requestType = data.meals || data.drinks;
+      console.log(requestType);
       const treatedRecipe = apiDataProcessor(requestType[0]);
       const processedRecipeObject = processRecipeObject(treatedRecipe);
       setRecipe(processedRecipeObject);
@@ -36,11 +37,11 @@ function RecipeDetails({ location: { pathname }, recommendations }) {
   useEffect(() => {
     const newPath = invertPathName(path);
     dispatch(recomendationsThunk(`/${newPath}`));
-  });
+  }, []);
 
   return (
     <main>
-      <img data-testid="recipe-photo" src={ image } alt={ name } />
+      <img data-testid="recipe-photo" src={ image } alt={ name } className="main-photo" />
       <h1 data-testid="recipe-title">{ name }</h1>
       <div>
         <button data-testid="share-btn" type="button">
@@ -70,15 +71,17 @@ function RecipeDetails({ location: { pathname }, recommendations }) {
         : null}
       <div>
         <h4>Recommendations</h4>
-        <div className="recommendation-container">
+        <div className="recomendation-container">
           {recommendations.map((recommendation, index) => (
             <div
               data-testid={ `${index}-recomendation-card` }
               key={ recommendation.name }
-              className="recommendation-card"
+              className="recomendation-card"
             >
               <img src={ recommendation.image } alt={ recommendation.name } />
-              <h4>{recommendation.name}</h4>
+              <h4 data-testid={ `${index}-recomendation-title` }>
+                {recommendation.name}
+              </h4>
             </div>
 
           ))}
@@ -101,6 +104,6 @@ const mapStateToProps = (state) => ({
   recommendations: state.recommendationsReducer.recommendations,
 });
 
-export default connect(mapStateToProps, null)(RecipeDetails);
+export default connect(mapStateToProps)(RecipeDetails);
 
 // export default RecipeDetails;

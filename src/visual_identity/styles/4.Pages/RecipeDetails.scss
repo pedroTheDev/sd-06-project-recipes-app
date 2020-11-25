@@ -1,20 +1,28 @@
 @import '../0.helpers/mixins';
 
-.recommendation-container {
+.main-photo {
   width: 100%;
-  height: 200px;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-  align-items: center;
-  overflow-y: scroll;
+}
 
-  & .recommendation-card {
-    width: 50%;
-    height: 200px;
+.recomendation-container {
+  display: flex;
+  flex-flow: row nowrap;
+  overflow-x: scroll;
+  margin: auto;
+
+  
+  & .recomendation-card {
+    align-self: flex-start;
+    min-width: 55%;
+    padding: 0;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+    // height: 200px;
 
     & img {
-      height: 160px;
+      width: 100%;
     }
   }
 }

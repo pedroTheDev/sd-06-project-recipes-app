@@ -1,5 +1,6 @@
 export function discardEmptyEntries(array) {
-  const processedArray = array.filter((element) => element !== '' && element !== ' ');
+  const processedArray = array.filter((element) => (
+    element !== '' && element !== ' ' && element !== null));
   return processedArray;
 }
 
