@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import shareIcon from '../images/shareIcon.svg';
-import { fetchMealsById } from '../services';
 
 class FoodCard extends React.Component {
   constructor() {
@@ -15,15 +14,15 @@ class FoodCard extends React.Component {
   }
 
   async componentDidMount() {
-    // pegando uma comida e uma bebida como exemplo
-    // estas comidas/bebidas vão vir de outra tela
-    // basta pegar do estado
-    const foods = await fetchMealsById('52771');
-    this.setFoodState(foods);
+    const foods = JSON.parse(localStorage.getItem('doneRecipes'));
+    if (foods) {
+      const filteredFood = foods.filter((element) => element.type === 'comida');
+      this.setFoodState(filteredFood);
+    }
   }
 
-  handleShareFood({ idMeal }) {
-    const url = `http://localhost:3000/comidas/${idMeal}`;
+  handleShareFood({ id }) {
+    const url = `http://localhost:3000/comidas/${id}`;
     window.alert('Link copiado!');
     //  https://www.30secondsofcode.org/blog/s/copy-text-to-clipboard-with-javascript
     const el = document.createElement('textarea');
@@ -45,46 +44,70 @@ class FoodCard extends React.Component {
 
   render() {
     const { Food } = this.state;
-    const { history } = this.props;
+    const { history, indexAcc } = this.props;
     return (
       <div>
-        {Food.map((element, index) => (
-          <div key={ index }>
+        {Food.map((element, i) => (
+          <div key={ i + indexAcc }>
             <input
               type="image"
-              data-testid={ `${index}-horizontal-image` }
-              src={ element.strMealThumb }
+              data-testid={ `${i + indexAcc}-horizontal-image` }
+              src={ element.image }
               width="200px"
               alt="horizontal"
-              onClick={ () => history.push(`/comidas/${element.idMeal}`) }
+              onClick={ () => history.push(`/comidas/${element.id}`) }
             />
-
-            <p id="area">
-              {element.strArea}
+            <p data-testid={ `${i + indexAcc}-horizontal-top-text` }>
+              {`${element.area} - ${element.category}`}
             </p>
-
-            <p data-testid={ `${index}-horizontal-top-text` }>
-              {element.strCategory}
-            </p>
-            <input
+            <button
               type="button"
-              data-testid={ `${index}-horizontal-name` }
-              onClick={ () => history.push(`/comidas/${element.idMeal}`) }
-              value={ element.strMeal }
-            />
-            <p data-testid={ `${index}-horizontal-done-date` }>
-              {element.dateModified}
+              data-testid={ `${i + indexAcc}-horizontal-name` }
+              onClick={ () => history.push(`/comidas/${element.id}`) }
+              value={ element.name }
+            >
+              { element.name }
+            </button>
+            <p data-testid={ `${i + indexAcc}-horizontal-done-date` }>
+              {element.doneDate}
             </p>
-
-            {element.strTags.split(',').map((tag, i) => (
-              <span key={ i } data-testid={ `${index}-${tag}-horizontal-tag` }>
-                { `${tag} `}
-              </span>
-            ))}
+            {typeof element.tags === 'string'
+              ? (
+                <div>
+                  <p
+                    key="tag0"
+                    data-testid={ `${i}-${element.tags.split(',')[0]}-horizontal-tag` }
+                  >
+                    { `${element.tags.split(',')[0]}`}
+                  </p>
+                  <p
+                    key="tag1"
+                    data-testid={ `${i}-${element.tags.split(',')[1]}-horizontal-tag` }
+                  >
+                    { `${element.tags.split(',')[1]}`}
+                  </p>
+                </div>
+              )
+              : (
+                <div>
+                  <p
+                    key="tag0"
+                    data-testid={ `${i}-${element.tags[0]}-horizontal-tag` }
+                  >
+                    { `${element.tags[0]}`}
+                  </p>
+                  <p
+                    key="tag1"
+                    data-testid={ `${i}-${element.tags[1]}-horizontal-tag` }
+                  >
+                    { `${element.tags[1]}`}
+                  </p>
+                </div>
+              )}
 
             <input
               type="image"
-              data-testid={ `${index}-horizontal-share-btn` }
+              data-testid={ `${i + indexAcc}-horizontal-share-btn` }
               src={ shareIcon }
               alt="share"
               onClick={ () => this.handleShareFood(element) }
@@ -98,6 +121,7 @@ class FoodCard extends React.Component {
 
 FoodCard.propTypes = {
   history: PropTypes.shape().isRequired,
+  indexAcc: PropTypes.number.isRequired,
 };
 
 export default connect(null, null)(FoodCard);
