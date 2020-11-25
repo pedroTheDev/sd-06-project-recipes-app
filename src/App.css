@@ -78,15 +78,29 @@
 .searchBar {
   align-items: center;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   padding: 10px;
   width: 100%;
 }
 
+.inputForm {
+  display: flex;
+  justify-content: space-around;
+  margin-right: 10px;
+  width: 100%;
+}
+
 .radioBtns {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  flex-wrap: wrap;
   margin-right: 10px;
+  width: 50%;
+}
+
+.btnForm {
+  display: flex;
   width: 20%;
 }
 

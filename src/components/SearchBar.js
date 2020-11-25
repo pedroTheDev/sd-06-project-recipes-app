@@ -26,63 +26,73 @@ export default function SearchBar() {
   };
 
   return (
-    <div className="form-group searchBar">
-      <div className="col-sm-8">
+    <form className="form-group searchBar">
+      <div className="col-sm-6 inputForm">
         <input
           className="form-control"
           data-testid="search-input"
           type="text"
+          required
           onChange={ (e) => setProduct(e.target.value) }
         />
       </div>
-      <div className="form-check radioBtns">
-        <label className="form-check-label" htmlFor="ingredient">
-          <input
-            data-testid="ingredient-search-radio"
-            className="form-check-input"
-            type="radio"
-            id="ingredient"
-            name="filter-info"
-            value="ingredient"
-            onChange={ (e) => setFilterType(e.target.value) }
-          />
-          Ingrediente
-        </label>
-        <label className="form-check-label" htmlFor="name">
-          <input
-            data-testid="name-search-radio"
-            className="form-check-input"
-            type="radio"
-            id="name"
-            name="filter-info"
-            value="name"
-            onChange={ (e) => setFilterType(e.target.value) }
-          />
-          Nome
-        </label>
-        <label className="form-check-label" htmlFor="firstLetter">
-          <input
-            data-testid="first-letter-search-radio"
-            className="form-check-input"
-            type="radio"
-            id="firstLetter"
-            name="filter-info"
-            value="firstLetter"
-            onChange={ (e) => setFilterType(e.target.value) }
-          />
-          Primeira Letra
-        </label>
+      <div className="radioBtns">
+        <div>
+          <label className="form-check-label" htmlFor="ingredient">
+            <input
+              data-testid="ingredient-search-radio"
+              className="form-check-input"
+              type="radio"
+              id="ingredient"
+              name="filter-info"
+              value="ingredient"
+              required
+              onChange={ (e) => setFilterType(e.target.value) }
+            />
+            Ingrediente
+          </label>
+        </div>
+        <div>
+          <label className="form-check-label" htmlFor="name">
+            <input
+              data-testid="name-search-radio"
+              className="form-check-input"
+              type="radio"
+              id="name"
+              name="filter-info"
+              value="name"
+              required
+              onChange={ (e) => setFilterType(e.target.value) }
+            />
+            Nome
+          </label>
+        </div>
+        <div>
+          <label className="form-check-label" htmlFor="firstLetter">
+            <input
+              data-testid="first-letter-search-radio"
+              className="form-check-input"
+              type="radio"
+              id="firstLetter"
+              name="filter-info"
+              value="firstLetter"
+              required
+              onChange={ (e) => setFilterType(e.target.value) }
+            />
+            Primeira Letra
+          </label>
+        </div>
       </div>
-      <div>
+      <div className="btnForm">
         <button
           data-testid="exec-search-btn"
           className="btn btn-primary"
-          type="button"
+          type="submit"
           onClick={ () => handleSearch(filterType, product) }
         >
           Buscar
         </button>
       </div>
-    </div>
+    </form>
   );
 }

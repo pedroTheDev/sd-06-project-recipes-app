@@ -12,6 +12,7 @@ const endpoints = {
 };
 
 export async function fetchMeal(type, key) {
+  key = type === 'firstLetter' ? key[0] : key;
   const url = `${MEAL_API}${endpoints[type]}${key}`;
   const result = await fetch(url);
   const data = await result.json();
