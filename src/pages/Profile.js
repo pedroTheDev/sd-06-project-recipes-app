@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Header from '../components/header';
+import Footer from '../components/Footer';
 
 function Profile() {
   const history = useHistory();
@@ -49,6 +50,7 @@ function Profile() {
           Sair
         </Link>
       </section>
+      <Footer />
     </>
   );
 }
