@@ -69,7 +69,7 @@ function RecipeDetails({ location: { pathname }, recommendations }) {
         ? <iframe data-testid="video" src={ video } title="Recipe Video" />
         : null}
       <div>
-        {/* <h4>Recommendations</h4>
+        <h4>Recommendations</h4>
         <div className="recommendation-container">
           {recommendations.map((recommendation, index) => (
             <div
@@ -82,7 +82,7 @@ function RecipeDetails({ location: { pathname }, recommendations }) {
             </div>
 
           ))}
-        </div> */}
+        </div>
       </div>
 
       <button type="button" data-testid="start-recipe-btn">Iniciar Receita</button>
@@ -102,3 +102,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, null)(RecipeDetails);
+
+// export default RecipeDetails;
