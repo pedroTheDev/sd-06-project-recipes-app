@@ -1,42 +1,56 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import * as cocktailAPI from '../../services/cocktailAPI';
 import * as mealAPI from '../../services/mealAPI';
 
 function RecipesPage() {
-  const [type, setType] = useState('');
-  const [recipes, setRecipes] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [filter, setFilter] = useState('');
-  const [newFilter, setNewFilter] = useState('');
+  const [state, changeState] = useState({
+    type: '',
+    recipes: [],
+    categories: [],
+    filter: '',
+    newFilter: '',
+  });
   const [wLocation] = useState(window.location.href);
+  let localState = state;
   const zero = 0;
   const five = 5;
   const twelve = 12;
 
+  async function setState(newState) {
+    console.log('stateChange', newState);
+    changeState({ ...localState, ...newState });
+    localState = { ...localState, ...newState };
+    console.log(localState);
+  }
+
   async function loadRecipes() {
+    const { newFilter, type } = localState;
     if (newFilter !== zero) {
       let temp = {};
-      console.log('tipo de receita', type);
       if (type === 'cocktails') {
-        if (filter !== '') {
-          temp = await cocktailAPI.filterByCategory(filter);
+        if (newFilter !== (zero || '')) {
+          temp = await cocktailAPI.filterByCategory(newFilter);
         } else {
           temp = await cocktailAPI.searchByName('');
         }
-        setRecipes(temp.drinks);
-        setFilter(newFilter);
-        setNewFilter(zero);
+        setState({
+          filter: newFilter,
+          recipes: temp.drinks,
+          newFilter: zero,
+        });
       } else if (type === 'meals') {
-        if (filter !== '') {
-          temp = await mealAPI.filterByCategory(filter);
+        if (newFilter !== (zero || '')) {
+          temp = await mealAPI.filterByCategory(newFilter);
         } else {
           temp = await mealAPI.searchByName('');
         }
-        setRecipes(temp.meals);
-        setFilter(newFilter);
-        setNewFilter(zero);
+        setState({
+          filter: newFilter,
+          recipes: temp.meals,
+          newFilter: zero,
+        });
       }
     }
   }
@@ -44,40 +58,54 @@ function RecipesPage() {
   async function loadCategories(arg) {
     if (arg === 'cocktails') {
       const temp = await cocktailAPI.listCategories();
-      setCategories(temp.drinks);
+      setState({ categories: temp.drinks });
     }
     if (arg === 'meals') {
       const temp = await mealAPI.listCategories();
-      setCategories(temp.meals);
-    }
-
-    console.log('cat', categories);
-  }
-
-  async function changeFilter({ target }) {
-    if (filter !== target.value) {
-      setNewFilter(target.value);
-      setRecipes([]);
-    } else {
-      setNewFilter('');
-      setRecipes([]);
+      setState({ categories: temp.meals });
     }
 
     loadRecipes();
   }
 
-  if (type === '') {
+  async function changeFilter({ target }) {
+    const { filter } = localState;
+    if (target.value === 'All') {
+      setState({
+        newFilter: '',
+        recipes: [],
+      });
+
+      loadRecipes();
+
+      return;
+    }
+    if (filter !== target.value) {
+      setState({
+        newFilter: target.value,
+        recipes: [],
+      });
+    } else {
+      setState({
+        newFilter: '',
+        recipes: [],
+      });
+    }
+
+    loadRecipes();
+  }
+
+  if (localState.type === '') {
     if (wLocation === 'http://localhost:3000/comidas') {
-      setType('meals');
+      setState({ type: 'meals' });
       loadCategories('meals');
-      console.log('categorias', type);
     } else if (wLocation === 'http://localhost:3000/bebidas') {
-      setType('cocktails');
+      setState({ type: 'cocktails' });
       loadCategories('cocktails');
     }
   }
 
-  loadRecipes();
+  const { recipes, categories, type } = localState;
 
   if (recipes.length === zero || categories.length === zero) {
     return <h2>Carregando...</h2>;
@@ -91,7 +119,7 @@ function RecipesPage() {
             type="button"
             data-testid="All-category-filter"
             value="All"
-            onClick={ () => setNewFilter('') }
+            onClick={ changeFilter }
           />
         </div>
         {categories.map((category, index) => {
