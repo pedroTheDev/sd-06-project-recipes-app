@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import copyToClipboard from 'clipboard-copy';
 import { shareIcon, whiteHeartIcon, blackHeartIcon } from '../images';
 
 function DetalhesBebida() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [isShare, setShare] = useState();
   const history = useHistory();
   const idDrink = history.location.pathname.split('/')[2];
 
@@ -24,7 +26,11 @@ function DetalhesBebida() {
       setIsFavorite(true);
     }
   }, []);
-console.log(data);
+
+  // useEffect(() => {
+  //   copyToClipboard(`http://localhost:3000/bebidas/${idDrink}`);
+  // }, [setShare]);
+
   const handleClick = () => {
     setIsFavorite(!isFavorite);
     if (!isFavorite) {
@@ -36,8 +42,6 @@ console.log(data);
         alcoholicOrNot: data.strAlcoholic,
         name: data.strDrink,
         image: data.strDrinkThumb,
-        // doneDate: ,
-        tags: [data.strTags],
       }]);
     } else {
       localStorage.removeItem('favoriteRecipes');
@@ -57,15 +61,19 @@ console.log(data);
             />
             <h1 data-testid="recipe-title">{ data.strDrink }</h1>
             <p data-testid="recipe-category">{ data.strAlcoholic }</p>
-            <button
-              data-testid="share-btn"
-              type="button"
-            >
-              <img
-                src={ shareIcon }
-                alt="Botão de Compartilhar"
-              />
-            </button>
+            <span>
+              <button
+                data-testid="share-btn"
+                type="button"
+                onClick={ () => setShare('Link copiado!') }
+              >
+                <img
+                  src={ shareIcon }
+                  alt="Botão de Compartilhar"
+                />
+              </button>
+              {isShare}
+            </span>
             <button
               data-testid="favorite-btn"
               type="button"
