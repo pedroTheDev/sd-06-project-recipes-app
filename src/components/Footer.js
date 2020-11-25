@@ -16,7 +16,7 @@ function Footer() {
           <img
             className="image"
             src={ drinkIcon }
-            alt="Ícone bebibdas"
+            alt="Ícone bebidas"
           />
         </button>
       </Link>
