@@ -8,6 +8,11 @@ import SearchBar from './SearchBar';
 export default function Header({ pageName, renderSearch }) {
   const [showSearchBar, setShowSearchBar] = useState(false);
 
+  let title;
+
+  title = pageName === '/bebidas' ? 'Bebidas' : pageName;
+  title = pageName === '/comidas' ? 'Comidas' : title;
+
   const renderSearchIcon = () => (
     <button
       type="button"
@@ -32,10 +37,9 @@ export default function Header({ pageName, renderSearch }) {
           data-testid="profile-top-btn"
         />
       </Link>
-
-      <h2 data-testid="page-title">{ pageName }</h2>
+      <h2 data-testid="page-title">{ title }</h2>
       { renderSearch ? renderSearchIcon() : null }
-      { showSearchBar && <SearchBar page={ pageName } /> }
+      { showSearchBar && <SearchBar page={ title } /> }
     </header>
   );
 }

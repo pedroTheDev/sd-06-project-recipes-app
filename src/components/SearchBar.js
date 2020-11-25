@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchMealAPI, fetchDrinkAPI } from '../services/foodAPI';
-import { saveFoodSearch, saveDrinksSearch } from '../redux/actions';
+import { success } from '../redux/actions/mainPageFetcher';
+import { fetchMealAPI, fetchDrinkAPI } from '../services/searchAPI';
 
-function SearchBar({ page, dispatchSaveFood, dispatchSaveDrinks }) {
+function SearchBar({ page, dispatchSuccess }) {
   const [searchInput, setSearchInput] = useState('');
   const [option, setOption] = useState('');
 
   async function pageCheckSwitch(pageName) {
     if (pageName === 'Bebidas') {
       const API_RESPONSE = await fetchDrinkAPI(option, searchInput);
-      dispatchSaveDrinks(API_RESPONSE);
+      dispatchSuccess(API_RESPONSE);
     } else {
       const API_RESPONSE = await fetchMealAPI(option, searchInput);
-      dispatchSaveFood(API_RESPONSE);
+      dispatchSuccess(API_RESPONSE);
     }
   }
 
@@ -80,13 +80,11 @@ function SearchBar({ page, dispatchSaveFood, dispatchSaveDrinks }) {
 
 SearchBar.propTypes = {
   page: PropTypes.string.isRequired,
-  dispatchSaveFood: PropTypes.func.isRequired,
-  dispatchSaveDrinks: PropTypes.func.isRequired,
+  dispatchSuccess: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchSaveFood: (payload) => dispatch(saveFoodSearch(payload)),
-  dispatchSaveDrinks: (payload) => dispatch(saveDrinksSearch(payload)),
+  dispatchSuccess: (list) => dispatch(success(list)),
 });
 
 export default connect(null, mapDispatchToProps)(SearchBar);
