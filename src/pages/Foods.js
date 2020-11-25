@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import RevenueContext from '../context/RevenueContext';
 
 export default function Foods() {
@@ -23,12 +23,13 @@ export default function Foods() {
         ? <Redirect to={ `/${foodOrDrink}/${idFirstPosition}` } /> : null}
       {foods.map((food, index) => {
         const id = food[`id${searchParam}`];
-        const linkRecipeAPI = (searchParam === 'Meal')
-          ? `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
-          : `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
+        // const linkRecipeAPI = (searchParam === 'Meal')
+        //   ? `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
+        //   : `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
         if (index < DOZE) {
           return (
-            <a href onClick={ () => fetchApi(linkRecipeAPI) }>
+            // <a href onClick={ () => fetchApi(linkRecipeAPI) }>
+            <Link to={ `/${foodOrDrink}/${id}` }>
               <div key={ id } data-testid={ `${index}-recipe-card` }>
                 <img
                   src={ food[`str${searchParam}Thumb`] }
@@ -40,7 +41,8 @@ export default function Foods() {
                   {food[`str${searchParam}`]}
                 </div>
               </div>
-            </a>
+            </Link>
+            // </a>
           );
         }
         return '';

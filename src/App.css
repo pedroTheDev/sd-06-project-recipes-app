@@ -62,17 +62,25 @@
 }
 
 .width360 {
-  border: 1px solid black;
   width: 360px;
   margin: 0 auto;
 }
 
 header, footer {
   background-color: darkgray;
+  width: 360px;
+  position: fixed;
+}
+
+main {
+  padding-top: 56px;
+  padding-bottom: 40px;
+}
+
+header {
+  top: 0px;
 }
 
 footer {
-  width: 360px;
-  position: fixed;
   bottom: 0px;
 }

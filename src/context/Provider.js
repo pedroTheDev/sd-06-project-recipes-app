@@ -16,7 +16,6 @@ const Provider = ({ children }) => {
     const response = await fetch(URL);
     const json = await response.json();
     setisLoading(false);
-    console.log(json);
     if (searchParam === 'Drink') {
       if (json.drinks) {
         setFoods(json.drinks);
