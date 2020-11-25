@@ -1,18 +1,82 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import searchRecipe2 from '../hooks/searchRecipe2';
+import { Link } from 'react-router-dom';
+import { fetchDetail, fetchRecommendation } from '../helpers/Helper';
+import shareIcon from '../images/shareIcon.svg';
+import whiteHeart from '../images/whiteHeartIcon.svg';
+import blackHeart from '../images/blackHeartIcon.svg';
 
 import '../css/itemDetails.css';
+import '../css/scroller.css';
 
 export default function FoodsDetails(props) {
-  const [recipe, recipeId, setRecipeId] = searchRecipe2();
+  const [recipeId, setRecipeId] = useState('');
+  const [recipe, setRecipe] = useState('');
   const [recipeDetails, setRecipeDetails] = useState([]);
+  const [recommendation, setRecommendation] = useState([]);
+  const [disabled, setDisabled] = useState(true);
+  const [btnStartValue, setBtnStartValue] = useState('Iniciar Receita');
+  const [copy, setCopy] = useState('');
+  const [fav, setFav] = useState(whiteHeart);
 
   useEffect(() => {
     if (recipeId === '') {
       setRecipeId(props.match.params.id);
     }
+    async function fetchData() {
+      const result = await fetchDetail('bebidas', recipeId);
+      setRecipe(result);
+    }
+    if (recipeId === props.match.params.id) {
+      fetchData();
+    }
   }, [recipeId]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const results = await fetchRecommendation('bebidas');
+      setRecommendation(results);
+    }
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (localStorage.getItem('doneRecipes') === null) {
+      setDisabled(false);
+    }
+    if (localStorage.getItem('inProgressRecipes') !== null) {
+      setBtnStartValue('Continuar Receita');
+    }
+    if (localStorage.getItem('favoriteRecipes') !== null) {
+      setFav(blackHeart);
+    }
+  }, []);
+
+  function handleCopy() {
+    const link = window.location.href;
+    navigator.clipboard.writeText(link);
+    setCopy('Link copiado!');
+  }
+
+  function handleFav(item) {
+    const favObj = [{
+      id: item.idDrink,
+      type: 'bebida',
+      area: '',
+      category: item.strCategory,
+      alcoholicOrNot: item.strAlcoholic,
+      name: item.strDrink,
+      image: item.strDrinkThumb,
+    }];
+    if (fav === blackHeart) {
+      setFav(whiteHeart);
+      localStorage.removeItem('favoriteRecipes');
+    }
+    if (fav === whiteHeart) {
+      setFav(blackHeart);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(favObj));
+    }
+  }
 
   useEffect(() => {
     if (recipe.drinks) {
@@ -35,7 +99,6 @@ export default function FoodsDetails(props) {
   function handle() {
     const empty = 0;
     if (recipeDetails.length > empty) {
-      console.log(recipeDetails);
       return (
         <div>
           { recipeDetails.filter((ingredient) => ingredient !== '')
@@ -53,8 +116,7 @@ export default function FoodsDetails(props) {
       );
     }
   }
-
-  if (recipe.drinks) {
+  if (recipe.drinks && recommendation) {
     const item = recipe.drinks[0];
     return (
       <div>
@@ -66,14 +128,55 @@ export default function FoodsDetails(props) {
             className="item-img"
           />
           <p data-testid="recipe-title">{item.strDrink}</p>
-          <input type="button" data-testid="share-btn" value="Share" />
-          <input type="button" data-testid="favorite-btn" value="favorite" />
+          <button
+            type="button"
+            data-testid="share-btn"
+            value="Share"
+            onClick={ () => handleCopy() }
+          >
+            <img alt="Share" src={ shareIcon } />
+          </button>
+          <span>{copy}</span>
+          <button
+            type="button"
+            data-testid="favorite-btn"
+            src={ fav }
+            onClick={ () => handleFav(item) }
+          >
+            <img alt="fav" src={ fav } />
+          </button>
           <p data-testid="recipe-category">{item.strAlcoholic}</p>
           <p data-testid="instructions">{item.strInstructions}</p>
           {handle()}
           <p data-testid="video">{item.strYoutube}</p>
-          <div data-testid="0-recomendation-card"> recomendação</div>
-          <input type="button" data-testid="start-recipe-btn" value="Começar receita" />
+          <Link to={ `/bebidas/${props.match.params.id}/in-progress` }>
+            <button
+              type="button"
+              data-testid="start-recipe-btn"
+              className="btnStart"
+              disabled={ disabled }
+            >
+              {btnStartValue}
+            </button>
+          </Link>
+        </div>
+        <div className="testimonials">
+          <div className="scroller">
+            {recommendation.map((rec, index) => (
+              <div
+                key={ index }
+                data-testid={ `${index}-recomendation-card` }
+                className="item"
+              >
+                <p data-testid={ `${index}-recomendation-title` }>{rec.strMeal}</p>
+                <img
+                  alt="foto da receita"
+                  className="item-img"
+                  src={ rec.strMealThumb }
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     );
