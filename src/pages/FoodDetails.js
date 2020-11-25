@@ -12,7 +12,7 @@ import './FoodDetails.css';
 function FoodDetails() {
   const [recipe, setRecipe] = useState({ recipe: { } });
   const [isFetching, setIsFetching] = useState(true);
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(whiteHeartIcon);
   const [copied, setCopied] = useState(false);
   const sliceNumber = 9;
   const itemId = useLocation().pathname.slice(sliceNumber);
@@ -23,9 +23,9 @@ function FoodDetails() {
     let favRecipes = JSON.parse(localStorage.getItem('favorites'));
     if (favRecipes === null) favRecipes = [];
     if (favRecipes.includes(id)) {
-      setIsFavorite(true);
+      setIsFavorite(blackHeartIcon);
     } else {
-      setIsFavorite(false);
+      setIsFavorite(whiteHeartIcon);
     }
   }
 
@@ -122,7 +122,7 @@ function FoodDetails() {
             >
               <img
                 data-testid="favorite-btn"
-                src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+                src={ isFavorite }
                 alt="Favoritar"
               />
               Favoritar
