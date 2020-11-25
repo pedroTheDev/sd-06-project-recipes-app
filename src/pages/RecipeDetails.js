@@ -16,6 +16,7 @@ function RecipeDetails({ location: { pathname } }) {
     instructions,
     video,
   } = recipe;
+
   useEffect(() => {
     async function request() {
       const data = await fetchRecipeDetails(id, path);
@@ -27,7 +28,9 @@ function RecipeDetails({ location: { pathname } }) {
     request();
   }, []);
 
-  console.log(recipe);
+  useEffect(() => {
+
+  });
 
   return (
     <main>
@@ -53,10 +56,10 @@ function RecipeDetails({ location: { pathname } }) {
       <p data-testid="instructions">{ instructions }</p>
       <h4>Video</h4>
       { path === 'comidas'
-        ? <iframe src={ video } />
+        ? <iframe data-testid="video" src={ video } title="Recipe Video" />
         : null}
       <div>
-        Recomendadas
+        <h4>Recomendations</h4>
         <div data-testid={ `${0}-recomendation-card` } />
       </div>
 

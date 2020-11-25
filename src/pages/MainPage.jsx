@@ -9,20 +9,20 @@ import Header from '../components/Header';
 import RecipeCard from '../components/RecipeCard';
 
 const MainPage = (props) => {
-  const { recipeList, location: { pathname }, isLoading, retrievedFood } = props;
+  const { recipeList, location: { pathname }, isLoading } = props;
 
-  const checkRequestSize = (recipeList) => {
+  const checkRequestSize = (recipes) => {
     const noLength = 0;
-    if (recipeList === null) {
+    if (recipes === null) {
       alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
-    } else if (recipeList.length === noLength) {
+    } else if (recipes.length === noLength) {
       return null;
-    } else if (recipeList.length === 1) {
-      const { id } = recipeList[0];
-      return <Redirect to={ `${ pathname }/${ id }` } />;
+    } else if (recipes.length === 1) {
+      const { id } = recipes[0];
+      return <Redirect to={ `${pathname}/${id}` } />;
     } else {
       return (
-        recipeList.map(({ name, image, id }, index) => (
+        recipes.map(({ name, image, id }, index) => (
           <RecipeCard
             key={ id }
             recipeName={ name }
@@ -34,7 +34,7 @@ const MainPage = (props) => {
         ))
       );
     }
-  }
+  };
 
   const dispatch = useDispatch();
 
@@ -64,7 +64,7 @@ const mapStateToProps = (state) => ({
 MainPage.propTypes = {
   recipeList: PropTypes.instanceOf(Array).isRequired,
   location: PropTypes.shape({ pathname: PropTypes.string }).isRequired,
-  isLoading: PropTypes.bool,
+  isLoading: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps)(MainPage);

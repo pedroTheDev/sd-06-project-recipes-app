@@ -15,8 +15,11 @@ export function success(data) {
   if (processing) {
     const maximumLength = 12;
     const increment = 1;
-    const lengthLimit = processing.length > maximumLength ? maximumLength : processing.length;
-    for (let i = 0; i < lengthLimit; i += increment) {
+    const initialIndex = 0;
+    const lengthLimit = processing.length > maximumLength
+      ? maximumLength
+      : processing.length;
+    for (let i = initialIndex; i < lengthLimit; i += increment) {
       list.push(processing[i]);
     }
     list = list.map((recipe) => (apiDataProcessor(recipe)));
