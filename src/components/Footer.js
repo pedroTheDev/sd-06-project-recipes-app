@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { drinkIcon, mealIcon, exploreIcon } from '../images';
 
 function Footer() {
-
   return (
     <footer data-testid="footer" className="footerComponent">
       <nav>
