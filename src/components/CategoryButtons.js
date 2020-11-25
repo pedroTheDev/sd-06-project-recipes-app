@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
+import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesContext';
 import fetchCategories from '../services/categoriesAPI';
 import getRecipesInformation from '../services/recipesAPI';
-
 
 function CategoryButtons({ type }) {
   const { setFetchedResults, setIsFetching } = useContext(RecipesContext);
@@ -27,14 +27,16 @@ function CategoryButtons({ type }) {
     setFetchedResults(recipes);
     setIsFetching(false);
   };
-  
+
   const handleCategorySelection = async ({ target: { name } }) => {
     let endpoint = '';
-    
+
     if (selectedCategory === name) {
       setSelectedCategory('none');
       return defaultRecipes();
-    } else if (type === 'meals') {
+    }
+
+    if (type === 'meals') {
       endpoint = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${name}`;
       setSelectedCategory(name);
     } else if (type === 'drinks') {
@@ -72,5 +74,9 @@ function CategoryButtons({ type }) {
     </div>
   );
 }
+
+CategoryButtons.propTypes = {
+  type: PropTypes.string.isRequired,
+};
 
 export default CategoryButtons;
