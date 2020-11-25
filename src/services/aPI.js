@@ -20,7 +20,7 @@ export async function searchDrink(drink, radioButton) {
 
   const response = await fetch(`${URL}${endpoint}`);
   const json = response.json();
-
+  // console.log(json);
   return json;
 }
 

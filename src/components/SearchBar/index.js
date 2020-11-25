@@ -21,7 +21,7 @@ const SearchBar = () => {
 
     if (window.location.pathname === '/bebidas') {
       const drinks = await searchDrink(nome, radioButton);
-      console.log(drinks);
+      // console.log(drinks);
       if (drinks.drinks === null) {
         alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
       } else {
