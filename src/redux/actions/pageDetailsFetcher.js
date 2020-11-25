@@ -19,7 +19,7 @@ function error(failed) {
   return { type: ERROR_RECOMMENDATIONS, error: failed };
 }
 
-export function recomendationsThunk(foodOrDrink) {
+export default function recomendationsThunk(foodOrDrink) {
   return (dispatch) => {
     dispatch(loading);
     return fetchMainPage(foodOrDrink)

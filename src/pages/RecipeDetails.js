@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import splitPathname from '../utils/splitPathname';
 import fetchRecipeDetails from '../services/fetchRecipeDetails';
 import apiDataProcessor from '../services/apiDataProcessor';
 import { processRecipeObject } from '../utils/processRecipeObject';
+import recomendationsThunk from '../redux/actions/pageDetailsFetcher';
 
 function RecipeDetails({ location: { pathname } }) {
   const [path, id] = splitPathname(pathname);
@@ -16,6 +18,7 @@ function RecipeDetails({ location: { pathname } }) {
     instructions,
     video,
   } = recipe;
+  const dispatch = useDispatch();
 
   useEffect(() => {
     async function request() {
@@ -29,7 +32,7 @@ function RecipeDetails({ location: { pathname } }) {
   }, []);
 
   useEffect(() => {
-
+    dispatch(recomendationsThunk(`/${path}`));
   });
 
   return (
