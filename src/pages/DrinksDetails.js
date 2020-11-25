@@ -24,6 +24,7 @@ class DrinksDetails extends React.Component {
     this.handleIngredients = this.handleIngredients.bind(this);
     this.setIngredients = this.setIngredients.bind(this);
     this.handleYoutubeVideo = this.handleYoutubeVideo.bind(this);
+    this.checkRecipesDone = this.checkRecipesDone.bind(this);
     this.redirectFromState = this.redirectFromState.bind(this);
   }
 
@@ -153,6 +154,17 @@ class DrinksDetails extends React.Component {
     else this.setState({ x: x - additionalX });
   }
 
+  checkRecipesDone({ idDrink }) {
+    if (localStorage.doneRecipes) {
+      const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+      const isDone = doneRecipes.find((element) => (element.id === idDrink));
+      if (isDone) {
+        return true;
+      }
+      return false;
+    }
+  }
+
   redirectFromState() {
     const { idCurrent } = this.props;
     const { history } = this.props;
@@ -266,14 +278,16 @@ class DrinksDetails extends React.Component {
                 <i className="fas fa-chevron-right" />
               </button>
             </div>
-            <button
-              type="button"
-              data-testid="start-recipe-btn"
-              className="start-recipe"
-              onClick={ this.redirectFromState }
-            >
-              Iniciar Receita
-            </button>
+            {(!this.checkRecipesDone(recipe))
+              && (
+                <button
+                  type="button"
+                  data-testid="start-recipe-btn"
+                  className="start-recipe"
+                  onClick={ () => this.redirectFromState(recipe) }
+                >
+                  Iniciar Receita
+                </button>)}
           </div>
         )) : null}
       </div>

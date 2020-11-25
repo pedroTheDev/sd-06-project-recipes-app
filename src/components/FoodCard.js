@@ -77,7 +77,7 @@ class FoodCard extends React.Component {
             </p>
 
             {element.strTags.split(',').map((tag, i) => (
-              <span key={ i } data-testid={ `${i}-${tag}-horizontal-tag` }>
+              <span key={ i } data-testid={ `${index}-${tag}-horizontal-tag` }>
                 { `${tag} `}
               </span>
             ))}

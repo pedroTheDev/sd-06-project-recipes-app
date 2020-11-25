@@ -122,7 +122,19 @@ class DrinksRecipesInProgress extends React.Component {
     this.setState({ Update: !Update });
   }
 
-  teste(recipe) {
+  getFullDate() {
+    // 25/11/2020 00:31 ;
+    const day = new Date().getDate();
+    const month = new Date().getMonth();
+    const year = new Date().getFullYear();
+    const hours = new Date().getHours();
+    const minutes = new Date().getMinutes();
+    const seconds = new Date().getSeconds();
+    const fullDate = `${day}/${month + 1}/${year} ${hours}:${minutes}:${seconds}`;
+    return fullDate;
+  }
+
+  changeFavoriteIcon(recipe) {
     if (localStorage.favoriteRecipes) {
       const favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
       const receitaAtual = favRecipes.find((element) => (element.id === recipe.idDrink));
@@ -134,9 +146,35 @@ class DrinksRecipesInProgress extends React.Component {
     return whiteHeartIcon;
   }
 
+  recipeDone(recipe) {
+    const { history } = this.props;
+    const fullDate = this.getFullDate();
+    const myObject = [{
+      id: recipe.idDrink,
+      type: 'bebida',
+      area: '',
+      category: recipe.strCategory,
+      alcoholicOrNot: recipe.strAlcoholic,
+      name: recipe.strDrink,
+      image: recipe.strDrinkThumb,
+      doneDate: fullDate,
+      tags: recipe.strTags,
+    }];
+    if (!localStorage.getItem('doneRecipes')) {
+      localStorage.setItem('doneRecipes', JSON.stringify(myObject));
+    }
+    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+    const combinedObjects = doneRecipes.concat(myObject);
+    localStorage.setItem('doneRecipes', JSON.stringify(combinedObjects)); // assim add
+    const filteredStorage = combinedObjects
+      .filter((v, i, a) => a.findIndex((t) => (t.id === v.id)) === i); // só registra um único id
+    console.log(filteredStorage);
+    localStorage.setItem('doneRecipes', JSON.stringify(filteredStorage));
+    history.push('/receitas-feitas');
+  }
+
   render() {
     const { Drink, Ingredients, Measures } = this.state;
-    const { history } = this.props;
     return (
       <div className="food-drink-detail-container">
         {Drink ? Drink.map((recipe, index) => (
@@ -164,7 +202,7 @@ class DrinksRecipesInProgress extends React.Component {
                   type="image"
                   data-testid="favorite-btn"
                   className="fav-button"
-                  src={ this.teste(recipe) }
+                  src={ this.changeFavoriteIcon(recipe) }
                   onClick={ () => this.setLocalState(recipe) }
                   alt="whiteHeartIcon"
                 />
@@ -198,7 +236,8 @@ class DrinksRecipesInProgress extends React.Component {
               <button
                 data-testid="finish-recipe-btn"
                 type="button"
-                onClick={ () => history.push('/receitas-feitas') }
+                onClick={ () => this.recipeDone(recipe) }
+                className="start-recipe"
               >
                 Finalizar Receita
               </button>
