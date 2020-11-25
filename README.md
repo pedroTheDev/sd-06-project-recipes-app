@@ -941,7 +941,7 @@ A verificação será feita a partir dos atributos data-testids:
   * A foto deve possuir o atributo `data-testid="recipe-photo"`;
   * O título deve possuir o atributo `data-testid="recipe-title"`;
   * O botão de compartilhar deve possuir o atributo `data-testid="share-btn"`;
-  * O botão de compartilhar deve possuir o atributo `data-testid="favorite-btn"`;
+  * O botão de favoritar deve possuir o atributo `data-testid="favorite-btn"`;
   * O texto da categoria deve possuir o atributo `data-testid="recipe-category"`;
   * Os ingredientes devem possuir o atributo `data-testid="${index}-ingredient-name-and-measure"`;
   * O texto de instruções deve possuir o atributo `data-testid="instructions"`;
@@ -1262,7 +1262,7 @@ Os nomes dos botões devem ser "Food", "Drinks" e "All", respectivamente
 
 ### 68 - Desenvolva a tela de maneira que tenha 2 botões: um para explorar comidas e o outro para explorar bebidas
 
-Verifica se o atributo `data-testid="explore-drinks"` possui o texto "Explorar Comidas" e se o `data-testid="explore-drinks"` possui o texto "Explorar Bebidas".
+Verifica se o atributo `data-testid="explore-food"` possui o texto "Explorar Comidas" e se o `data-testid="explore-drinks"` possui o texto "Explorar Bebidas".
 
   **Observações técnicas**
 
@@ -1298,8 +1298,8 @@ Obs: se a opção escolhida for explorar bebidas, o botão para explorar por loc
 
   **Observações técnicas**
 
-  * Ao clicar no botão "Por Ingredientes" da tela de explorar comidas a rota muda para a página de explorar comidas por ingrediente;
-  * Ao clicar no botão "Explorar Bebidas" da tela de explorar bebidas a rota muda para a página de explorar bebidas por ingrediente.
+  * Ao clicar no botão "Por Ingredientes" da tela de *explorar comidas* a rota muda para a página de explorar comidas por ingrediente;
+  * Ao clicar no botão "Por Ingredientes" da tela de *explorar bebidas* a rota muda para a página de explorar bebidas por ingrediente.
 
 ### 73 - Redirecione a pessoa usuária ao clicar em "Por Local de Origem", a rota deve mudar para tela de explorar por local de origem
 
@@ -1307,8 +1307,8 @@ Obs: se a opção escolhida for explorar bebidas, o botão para explorar por loc
 
   **Observações técnicas**
 
-  * Ao clicar no botão "Por Ingredientes" da tela de explorar comidas a rota muda para a página de detalhes de uma comida aleatória obtida através do endpoint `https://www.themealdb.com/api/json/v1/1/random.php`;
-  * Ao clicar no botão "Explorar Bebidas" da tela de explorar bebidas a rota muda para a página de detalhes de uma bebida aleatória obtida através do endpoint `https://www.thecocktaildb.com/api/json/v1/1/random.php`.
+  * Ao clicar no botão "Por Ingredientes" da tela de *explorar comidas* a rota muda para a página de detalhes de uma comida aleatória obtida através do endpoint `https://www.themealdb.com/api/json/v1/1/random.php`;
+  * Ao clicar no botão "Por Ingredientes" da tela de *explorar bebidas* a rota muda para a página de detalhes de uma bebida aleatória obtida através do endpoint `https://www.thecocktaildb.com/api/json/v1/1/random.php`.
 
 ## Tela de explorar ingredientes
 
