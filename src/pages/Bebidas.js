@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Header from '../components/Header';
 import MenuInferior from '../components/MenuInferior';
 import RecipeContext from '../context/RecipeContext';
@@ -6,6 +6,7 @@ import CardBebida from '../components/CardBebida';
 import FetchApiBebidas, { fetchApiBebidasByCategory } from '../services/FetchApiBebidas';
 
 function Bebidas() {
+  const [categoriaAtual, setCategoriaAtual] = useState('');
   const {
     retornoApiBebidas,
     categoriesBebida,
@@ -30,14 +31,35 @@ function Bebidas() {
     <div>
       <Header title="Bebidas" />
       <div>
-        <button type="button" onClick={ renderAll }>All</button>
+        <button
+          type="button"
+          data-testid="All-category-filter"
+          onClick={ renderAll }
+        >
+          All
+        </button>
         {categoriesBebida
           && categoriesBebida.slice(zero, cinco).map((category, index) => (
             <button
               key={ index }
               type="button"
+              id="filterButton"
+              value={ category.strCategory }
               data-testid={ `${category.strCategory}-category-filter` }
-              onClick={ () => renderCategory(category.strCategory) }
+              onClick={ () => {
+                if (categoriaAtual === '') {
+                  renderCategory(category.strCategory);
+                  setCategoriaAtual(category.strCategory);
+                }
+                if (categoriaAtual === category.strCategory) {
+                  renderAll();
+                  setCategoriaAtual(category.strCategory);
+                }
+                if (categoriaAtual !== category.strCategory) {
+                  renderCategory(category.strCategory);
+                  setCategoriaAtual(category.strCategory);
+                }
+              } }
             >
               { category.strCategory }
             </button>
@@ -49,7 +71,9 @@ function Bebidas() {
             return CardBebida(bebida, index);
           }
           return undefined;
-        }) : alert('Sinto muito, não encontramos nenhuma receita para esses filtros.')
+        })
+        // eslint-disable-next-line no-alert
+          : alert('Sinto muito, não encontramos nenhuma receita para esses filtros.')
       }
       <MenuInferior />
     </div>
