@@ -100,11 +100,13 @@ class DrinksDetails extends React.Component {
     const myLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
     const shareButton = document.querySelector('.fav-button');
     const blackHeart = 'http://localhost:3000/static/media/blackHeartIcon.b8913346.svg';
+    const zero = 0;
+    const minusOne = -1;
     if (shareButton.src === blackHeart && myLocalStorage) {
       const itemToRemove = myLocalStorage
         .find((element) => (element.id === recipe.idDrink));
-      const indexToRemove = myLocalStorage.indexOf(itemToRemove, 0);
-      if (indexToRemove !== -1) {
+      const indexToRemove = myLocalStorage.indexOf(itemToRemove, zero);
+      if (indexToRemove !== minusOne) {
         myLocalStorage.splice(indexToRemove, 1);
         localStorage.setItem('favoriteRecipes', JSON.stringify(myLocalStorage));
       }
@@ -126,7 +128,6 @@ class DrinksDetails extends React.Component {
     if (localStorage.favoriteRecipes) {
       const favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
       const receitaAtual = favRecipes.find((element) => (element.id === recipe.idDrink));
-      console.log(receitaAtual)
       if (favRecipes.includes(receitaAtual)) {
         return blackHeartIcon;
       }
@@ -175,8 +176,7 @@ class DrinksDetails extends React.Component {
       x,
       Ingredients,
       Measures,
-      Video,
-      favorite } = this.state;
+      Video } = this.state;
     return (
       <div className="food-drink-detail-container">
         {Drink ? Drink.map((recipe, index) => (

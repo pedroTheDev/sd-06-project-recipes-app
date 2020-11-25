@@ -112,12 +112,13 @@ class FoodsDetails extends React.Component {
     const myLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
     const shareButton = document.querySelector('.fav-button');
     const blackHeart = 'http://localhost:3000/static/media/blackHeartIcon.b8913346.svg';
-    
+    const zero = 0;
+    const minusOne = -1;
     if (shareButton.src === blackHeart && myLocalStorage) {
       const itemToRemove = myLocalStorage
         .find((element) => (element.id === recipe.idMeal));
-      const indexToRemove = myLocalStorage.indexOf(itemToRemove, 0);
-      if (indexToRemove !== -1) {
+      const indexToRemove = myLocalStorage.indexOf(itemToRemove, zero);
+      if (indexToRemove !== minusOne) {
         myLocalStorage.splice(indexToRemove, 1);
         localStorage.setItem('favoriteRecipes', JSON.stringify(myLocalStorage));
       }
@@ -301,7 +302,6 @@ const mapDispatchToProps = (dispatch) => ({
 FoodsDetails.propTypes = {
   history: PropTypes.shape().isRequired,
   dispatchID: PropTypes.func.isRequired,
-  favorite: PropTypes.shape().isRequired,
   idCurrent: PropTypes.string.isRequired,
 };
 
