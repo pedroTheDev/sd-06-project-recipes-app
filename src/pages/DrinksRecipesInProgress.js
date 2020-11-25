@@ -23,6 +23,8 @@ class DrinksRecipesInProgress extends React.Component {
     this.checked = this.checked.bind(this);
     this.checkedItems = this.checkedItems.bind(this);
     this.handleButton = this.handleButton.bind(this);
+    this.setRecipesLocalStorage = this.setRecipesLocalStorage.bind(this);
+    this.check = this.check.bind(this);
   }
 
   async componentDidMount() {
@@ -32,6 +34,10 @@ class DrinksRecipesInProgress extends React.Component {
     this.setDrinkState(drinkRecipe);
     this.handleIngredients();
     this.checkedItems();
+  }
+
+  componentDidUpdate() {
+    this.setRecipesLocalStorage();
   }
 
   handleIngredients() {
@@ -59,11 +65,14 @@ class DrinksRecipesInProgress extends React.Component {
     });
   }
 
-  handleShareFood({ idDrink }) {
+  handleShareDrink({ idDrink }) {
     const shareBtn = document.querySelector('.share-btn');
-    const url = `http://localhost:3000/bebidas/${idDrink}`;
+    const url = `http://localhost:3000/bebidas/${idDrink}/in-progress`;
     shareBtn.value = 'Link copiado!';
-    window.alert('Link copiado!');
+    const recipeButtons = document.querySelector('.recipe-buttons');
+    const span = document.createElement('span');
+    recipeButtons.appendChild(span);
+    span.innerHTML = 'Link copiado!';
     const el = document.createElement('textarea');
     el.value = url;
     el.setAttribute('readonly', '');
@@ -83,6 +92,14 @@ class DrinksRecipesInProgress extends React.Component {
       this.setState({ disabledButton: true });
     } else {
       this.setState({ disabledButton: false });
+    }
+  }
+
+  setRecipesLocalStorage() {
+    const { checkedItems } = this.state;
+    const zero = 0;
+    if (checkedItems.length > zero) {
+      localStorage.setItem('inProgressRecipes', JSON.stringify(checkedItems));
     }
   }
 
@@ -150,30 +167,33 @@ class DrinksRecipesInProgress extends React.Component {
     return fullDate;
   }
 
-  checkedItems() {
-    const checked = {};
-    const { Ingredients } = this.state;
-    const getCheckedItems = localStorage.getItem('storedRecipe');
-    // const zero = 0;
-    if (!getCheckedItems) {
-      Ingredients.forEach((item) => {
-        checked[item] = false;
-      });
-      this.setState({ checkedItems: checked });
-      // localStorage.setItem('storedRecipe', JSON.stringify(checked));
+  async checkedItems() {
+    const getCheckedItems = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (getCheckedItems) {
+      this.setState({ checkedItems: await getCheckedItems });
     }
   }
 
   checked(e) {
     const { checkedItems } = this.state;
     const { value, checked } = e.target;
-    this.setState({
-      checkedItems: { ...checkedItems, [value]: checked },
-    });
+    const searchIndex = checkedItems.includes(value);
+    console.log(searchIndex);
+    if (!searchIndex) {
+      const updateCheck = checkedItems.concat(value);
+      this.setState({ checkedItems: updateCheck });
+    } else if (!checked) {
+      const positionCheck = checkedItems.indexOf(value);
+      const originalChecked = checkedItems;
+      originalChecked.splice(positionCheck, 1);
+      this.setState({ checkedItems: originalChecked });
+    }
     const inputsList = document.querySelectorAll('input');
     inputsList.forEach((item) => {
       if (item.checked === true) {
         item.parentNode.className = 'styled';
+        item.parentNode.checked = true;
+        item.parentNode.checked = 'check';
       } else {
         item.parentNode.className = 'not-styled';
       }
@@ -219,8 +239,20 @@ class DrinksRecipesInProgress extends React.Component {
     history.push('/receitas-feitas');
   }
 
+  check() {
+    const { checkedItems } = this.state;
+    const verifyLocalStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const length = 0;
+    if (checkedItems.length === length && verifyLocalStorage) {
+      const getCheckedItems = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      return getCheckedItems;
+    }
+    return checkedItems;
+  }
+
   render() {
-    const { Drink, Ingredients, Measures, checkedItems, disabledButton } = this.state;
+    const { Drink, Ingredients, Measures, disabledButton } = this.state;
+    const getChecked = this.check();
     return (
       <div className="food-drink-detail-container">
         {Drink ? Drink.map((recipe, index) => (
@@ -268,10 +300,12 @@ class DrinksRecipesInProgress extends React.Component {
                       id={ `ingredient ${i}` }
                       name={ `ingredient ${i}` }
                       type="checkbox"
-                      onChange={ () => this.handleButton() }
-                      onClick={ (e) => this.checked(e) }
-                      value={ recipes }
-                      checked={ checkedItems.recipes }
+                      onClick={ (e) => {
+                        this.checked(e);
+                        this.handleButton();
+                      } }
+                      value={ i }
+                      checked={ getChecked.includes(String(i)) }
                     />
                     {recipes}
                     -
@@ -290,7 +324,6 @@ class DrinksRecipesInProgress extends React.Component {
                 onClick={ () => this.recipeDone(recipe) }
                 className="start-recipe"
                 disabled={ !disabledButton }
-
               >
                 Finalizar Receita
               </button>

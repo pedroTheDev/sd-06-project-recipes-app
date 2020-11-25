@@ -18,16 +18,26 @@ class Profile extends React.Component {
 
   render() {
     const { history, userEmail } = this.props;
+    const localStorageEmail = JSON.parse(localStorage.getItem('user'));
 
     return (
       <div className="profile-container">
         <Header history={ history } />
-        <span
-          data-testid="profile-email"
-        >
-          {JSON.parse(localStorage.getItem('user')).email}
-          {userEmail}
-        </span>
+        {localStorageEmail
+          ? (
+            <span
+              data-testid="profile-email"
+            >
+              {localStorageEmail.email}
+            </span>
+          )
+          : (
+            <span
+              data-testid="profile-email"
+            >
+              {userEmail}
+            </span>
+          )}
         <button
           type="button"
           data-testid="profile-done-btn"

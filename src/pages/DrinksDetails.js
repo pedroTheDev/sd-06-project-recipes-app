@@ -45,6 +45,20 @@ class DrinksDetails extends React.Component {
     }
   }
 
+  handleShareDrink({ idDrink }) {
+    const url = `http://localhost:3000/comidas/${idDrink}`;
+    window.alert('Link copiado!');
+    const el = document.createElement('textarea');
+    el.value = url;
+    el.setAttribute('readonly', '');
+    el.style.position = 'absolute';
+    el.style.left = '-9999px';
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+  }
+
   handleIngredients() {
     const ingredientArray = [];
     const measureArray = [];
@@ -197,7 +211,7 @@ class DrinksDetails extends React.Component {
                   type="image"
                   data-testid="share-btn"
                   src={ shareIcon }
-                  onClick={ () => this.handleShareFood(recipe) }
+                  onClick={ () => this.handleShareDrink(recipe) }
                   alt="shareIcon"
                 />
                 <input

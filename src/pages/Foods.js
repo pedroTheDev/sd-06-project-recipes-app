@@ -15,6 +15,7 @@ class Foods extends React.Component {
       CategoryFilter: '',
     };
     this.setCategory = this.setCategory.bind(this);
+    this.allButtonHandler = this.allButtonHandler.bind(this);
   }
 
   async componentDidMount() {
@@ -34,6 +35,11 @@ class Foods extends React.Component {
     }
   }
 
+  async allButtonHandler() {
+    const Meals = await foodsOnRender();
+    this.setState({ Meals: Meals, CategoryFilter: '' });
+  }
+
   render() {
     const { history } = this.props;
     const { Meals, Categories } = this.state;
@@ -47,6 +53,9 @@ class Foods extends React.Component {
             </button>
           </div>
         )) : ''}
+        <button type="button" data-testid="All-category-filter" onClick={ () => this.allButtonHandler() }>
+          All
+        </button>
         {Meals ? Meals.map((recipe, index) => (
           <div className="card" key={ index } data-testid={ `${index}-recipe-card` }>
             <Link to={ `/comidas/${recipe.idMeal}` }>
