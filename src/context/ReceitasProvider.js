@@ -5,6 +5,9 @@ import ReceitasContext from './ReceitasContext';
 const ReceitasProvider = ({ children }) => {
   const [meals, setMeals] = useState([]);
   const [drinks, setDrinks] = useState([]);
+  const [ingredientList, setIngredientList] = useState([]);
+  const [stopApi, setStopApi] = useState([]);
+  const [drinksIngredientList, setDrinksIngredientList] = useState([]);
   const [searchBox, setSearchBox] = useState(false);
   const [fetching, setFetching] = useState(true);
   const [filtersData, setFiltersData] = useState(['All']);
@@ -29,6 +32,12 @@ const ReceitasProvider = ({ children }) => {
     setRandomDrink,
     randomMealID,
     setRandomMeal,
+    stopApi,
+    setStopApi,
+    ingredientList,
+    setIngredientList,
+    drinksIngredientList,
+    setDrinksIngredientList,
   };
 
   return (
