@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Footer, Header } from '../components';
-import { foodsOnRender, foodsCategoriesOnRender, filterFoodsByCategory } from '../services';
 import { Link } from 'react-router-dom';
+import { Footer, Header } from '../components';
+import { foodsOnRender, foodsCategoriesOnRender,
+  filterFoodsByCategory } from '../services';
 
 class Foods extends React.Component {
   constructor() {
@@ -11,17 +12,17 @@ class Foods extends React.Component {
     this.state = {
       Meals: [],
       Categories: [],
-      FilteredMeal: [],
       CategoryFilter: '',
     };
     this.setCategory = this.setCategory.bind(this);
     this.allButtonHandler = this.allButtonHandler.bind(this);
+    this.setInitialState = this.setInitialState.bind(this);
   }
 
   async componentDidMount() {
-    const Meals = await foodsOnRender();
+    const mealsRender = await foodsOnRender();
     const Categories = await foodsCategoriesOnRender();
-    this.setState({ Meals, Categories });
+    this.setInitialState(mealsRender, Categories);
   }
 
   async setCategory({ strCategory }) {
@@ -30,14 +31,18 @@ class Foods extends React.Component {
       const filteredFoods = await filterFoodsByCategory(strCategory);
       this.setState({ Meals: filteredFoods, CategoryFilter: strCategory });
     } else {
-      const Meals = await foodsOnRender();
-      this.setState({ Meals: Meals, CategoryFilter: '' });
+      const initialMeals = await foodsOnRender();
+      this.setState({ Meals: initialMeals, CategoryFilter: '' });
     }
   }
 
+  setInitialState(mealsRender, Categories) {
+    this.setState({ Meals: mealsRender, Categories });
+  }
+
   async allButtonHandler() {
-    const Meals = await foodsOnRender();
-    this.setState({ Meals: Meals, CategoryFilter: '' });
+    const initialMeals = await foodsOnRender();
+    this.setState({ Meals: initialMeals, CategoryFilter: '' });
   }
 
   render() {
@@ -53,7 +58,11 @@ class Foods extends React.Component {
             </button>
           </div>
         )) : ''}
-        <button type="button" data-testid="All-category-filter" onClick={ () => this.allButtonHandler() }>
+        <button
+          type="button"
+          data-testid="All-category-filter"
+          onClick={ () => this.allButtonHandler() }
+        >
           All
         </button>
         {Meals ? Meals.map((recipe, index) => (

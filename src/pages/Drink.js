@@ -1,43 +1,48 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Footer, Header } from '../components';
-import { drinksCategoriesOnRender, drinksOnRender, filterDrinksByCategory } from '../services';
 import { Link } from 'react-router-dom';
+import { Footer, Header } from '../components';
+import { drinksCategoriesOnRender,
+  drinksOnRender, filterDrinksByCategory } from '../services';
 
-class Drinks extends React.Component {
+class Drink extends React.Component {
   constructor() {
     super();
     this.state = {
       Drinks: [],
       Categories: [],
-      FilteredDrinks: [],
       CategoryFilter: '',
     };
     this.setCategory = this.setCategory.bind(this);
     this.allButtonHandler = this.allButtonHandler.bind(this);
+    this.setInitialState = this.setInitialState.bind(this);
   }
 
   async componentDidMount() {
-    const Drinks = await drinksOnRender();
+    const drinksRender = await drinksOnRender();
     const Categories = await drinksCategoriesOnRender();
-    this.setState({ Drinks, Categories });
+    this.setInitialState(drinksRender, Categories);
   }
 
   async setCategory({ strCategory }) {
     const { CategoryFilter } = this.state;
     if (CategoryFilter !== strCategory) {
-      const filteredFoods = await filterDrinksByCategory(strCategory);
-      this.setState({ Drinks: filteredFoods, CategoryFilter: strCategory });
+      const drinksCategory = await filterDrinksByCategory(strCategory);
+      this.setState({ Drinks: drinksCategory, CategoryFilter: strCategory });
     } else {
-      const Drinks = await drinksOnRender();
-      this.setState({ Drinks: Drinks, CategoryFilter: '' });
+      const initialDrinks = await drinksOnRender();
+      this.setState({ Drinks: initialDrinks, CategoryFilter: '' });
     }
   }
 
+  setInitialState(drinksRender, Categories) {
+    this.setState({ Drinks: drinksRender, Categories });
+  }
+
   async allButtonHandler() {
-    const Drinks = await drinksOnRender();
-    this.setState({ Drinks: Drinks, CategoryFilter: '' });
+    const initialDrinks = await drinksOnRender();
+    this.setState({ Drinks: initialDrinks, CategoryFilter: '' });
   }
 
   render() {
@@ -53,7 +58,11 @@ class Drinks extends React.Component {
             </button>
           </div>
         )) : ''}
-        <button type="button" data-testid="All-category-filter" onClick={ () => this.allButtonHandler() }>
+        <button
+          type="button"
+          data-testid="All-category-filter"
+          onClick={ () => this.allButtonHandler() }
+        >
           All
         </button>
         {Drinks ? Drinks.map((recipe, index) => (
@@ -76,7 +85,7 @@ class Drinks extends React.Component {
   }
 }
 
-Drinks.propTypes = {
+Drink.propTypes = {
   history: PropTypes.shape().isRequired,
 };
 
@@ -84,4 +93,4 @@ const mapStateToProps = (state) => ({
   stateDrinks: state.menu.drinks,
 });
 
-export default connect(mapStateToProps, null)(Drinks);
+export default connect(mapStateToProps, null)(Drink);
