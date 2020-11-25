@@ -2,26 +2,63 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Footer, Header } from '../components';
+import { drinksCategoriesOnRender, drinksOnRender, filterDrinksByCategory } from '../services';
+import { Link } from 'react-router-dom';
 
 class Drinks extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      Drinks: [],
+      Categories: [],
+      FilteredDrinks: [],
+      CategoryFilter: '',
+    };
+    this.setCategory = this.setCategory.bind(this);
+  }
+
+  async componentDidMount() {
+    const Drinks = await drinksOnRender();
+    const Categories = await drinksCategoriesOnRender();
+    this.setState({ Drinks, Categories });
+  }
+
+  async setCategory({ strCategory }) {
+    const { CategoryFilter } = this.state;
+    if (CategoryFilter !== strCategory) {
+      const filteredFoods = await filterDrinksByCategory(strCategory);
+      this.setState({ Drinks: filteredFoods, CategoryFilter: strCategory });
+    } else {
+      const Drinks = await drinksOnRender();
+      this.setState({ Drinks: Drinks, CategoryFilter: '' });
+    }
+  }
+
   render() {
-    const { history, stateDrinks } = this.props;
-    const INITIAL_LENGTH = 0;
-    const MAX_LENGTH = 12;
-    const newArray = stateDrinks.slice(INITIAL_LENGTH, MAX_LENGTH);
+    const { history } = this.props;
+    const { Drinks, Categories } = this.state;
     return (
       <div className="food-drink-container">
         <Header history={ history } />
-        {stateDrinks ? newArray.map((recipe, index) => (
+        {Categories ? Categories.map((element, index) => (
+          <div key={ index } data-testid={ `${element.strCategory}-category-filter` }>
+            <button type="button" onClick={ () => this.setCategory(element) }>
+              {element.strCategory}
+            </button>
+          </div>
+        )) : ''}
+        {Drinks ? Drinks.map((recipe, index) => (
           <div className="card" key={ index } data-testid={ `${index}-recipe-card` }>
-            <img
-              src={ recipe.strDrinkThumb }
-              data-testid={ `${index}-card-img` }
-              alt="recipe"
-            />
-            <hr className="card-hr" />
-            <p data-testid={ `${index}-card-name` }>{recipe.strDrink}</p>
-            <hr className="card-hr" />
+            <Link to={ `/bebidas/${recipe.idDrink}` }>
+              <img
+                src={ recipe.strDrinkThumb }
+                data-testid={ `${index}-card-img` }
+                alt="recipe"
+              />
+              <hr className="card-hr" />
+              <p data-testid={ `${index}-card-name` }>{recipe.strDrink}</p>
+              <hr className="card-hr" />
+            </Link>
           </div>
         )) : null}
         <Footer history={ history } />
@@ -32,7 +69,6 @@ class Drinks extends React.Component {
 
 Drinks.propTypes = {
   history: PropTypes.shape().isRequired,
-  stateDrinks: PropTypes.shape().isRequired,
 };
 
 const mapStateToProps = (state) => ({
