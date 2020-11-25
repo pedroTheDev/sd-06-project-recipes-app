@@ -1,11 +1,13 @@
 import React from 'react';
 import ExploreButton from '../components/explore/ExploreButton';
+import Header from '../components/header';
 import Footer from '../components/Footer';
 
 function Explore() {
   return (
     <>
       <main>
+        <Header title="Explorar" />
         <nav>
           <ExploreButton
             title="Explorar Comidas"

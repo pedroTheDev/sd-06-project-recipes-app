@@ -8,7 +8,9 @@ const endPointMealIngredient = ('filter.php?i=');
 const endPointMealName = ('search.php?s=');
 const endPointMealFirstLetter = ('search.php?f=');
 const endPointCategoryList = ('list.php?c=list');
+const endPointRandom = ('random.php');
 const endPointCategory = ('filter.php?c=');
+
 
 export const fetchDrinkAPIByIngredient = async (ingredient) => {
   const response = await fetch(`${baseAPIDrinks}${endPointDrinkIngredient}${ingredient}`);
@@ -71,6 +73,18 @@ export const fetchDrinkCategoryList = async () => {
   return json.drinks;
 };
 
+
+export const fetchRandomMealId = async () => {
+  const response = await fetch(`${baseAPIMeal}${endPointRandom}`);
+  const { meals } = await response.json();
+  return meals[0].idMeal;
+};
+
+export const fetchRandomDrinkId = async () => {
+  const response = await fetch(`${baseAPIDrinks}${endPointRandom}`);
+  const { drinks } = await response.json();
+  return drinks[0].idDrink;
+
 export const fetchMealByCategory = async (category) => {
   const response = await fetch(`${baseAPIMeal}${endPointCategory}${category}`);
   const json = await response.json();
@@ -81,4 +95,5 @@ export const fetchDrinkByCategory = async (category) => {
   const response = await fetch(`${baseAPIDrinks}${endPointCategory}${category}`);
   const json = await response.json();
   return json.drinks;
+
 };
