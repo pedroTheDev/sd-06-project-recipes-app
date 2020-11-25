@@ -5,18 +5,19 @@ import RecipesContext from '../context/RecipesContext';
 
 function MainDrinkCard() {
   const {
-    // DrinkApi,
     fetchDrink,
     DrinkBtn,
     setDrinkBtn,
     filterDrink,
     setFetchDrink,
+    effectOnLoad,
     setFilterDrink } = useContext(RecipesContext);
 
   useEffect(() => {
-    // DrinkApi();
-    FetchApiDrink('2', setFetchDrink);
-    FetchApiDrink('4', setDrinkBtn);
+    if (effectOnLoad) {
+      FetchApiDrink('2', setFetchDrink);
+      FetchApiDrink('4', setDrinkBtn);
+    }
   }, []);
 
   const [targetName, setTargetName] = useState('');
