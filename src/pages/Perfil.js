@@ -13,6 +13,10 @@ const Perfil = () => {
     setStorageEmail(email);
   }, []);
 
+  const handleClick = () => {
+    localStorage.clear();
+  };
+
   return (
     <section>
       <Header title="Perfil" />
@@ -40,6 +44,7 @@ const Perfil = () => {
         <Link to="/">
           <button
             type="button"
+            onClick={ handleClick }
             data-testid="profile-logout-btn"
           >
             Sair
