@@ -2,14 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Recommended from '../components/Recommended';
 import { fetchRecipe } from '../services/api';
+import handleFavorite from '../services/storageFunctions';
+import shareIcon from '../images/shareIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import clipboardCopy from 'clipboard-copy';
 
 import './DrinkDetails.css';
 
 function DrinkDetails() {
   const [recipe, setRecipe] = useState({ recipe: { } });
   const [isFetching, setIsFetching] = useState(true);
+  const [isFavorite, setIsFavorite] = useState(false);
   const sliceNumber = 9;
   const itemId = useLocation().pathname.slice(sliceNumber);
+  const itemUrl = useLocation().pathname;
   const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${itemId}`;
 
   useEffect(() => {
@@ -18,6 +25,7 @@ function DrinkDetails() {
       setRecipe(recipeObj.drinks);
       setIsFetching(false);
     })();
+    favoriteStatus(itemId);
   }, []);
 
   // lógica dessa função adaptada de https://stackoverflow.com/questions/49580528/
@@ -45,6 +53,32 @@ function DrinkDetails() {
     strAlcoholic } = data[0];
   const ingredients = ingredientsFunc(data[0]);
 
+  const favoriteObj = {
+    id: itemId,
+    type: 'bebida',
+    category: strCategory,
+    area: '',
+    alcoholicOrNot: strAlcoholic,
+    name: strDrink,
+    image: strDrinkThumb,
+  }
+
+  function handleFavoriteClick() {
+    handleFavorite(favoriteObj);
+    favoriteStatus(itemId);
+  }
+
+  function favoriteStatus(itemId) {
+    let favoriteStatus = JSON.parse(localStorage.getItem('favorites'));
+    if (favoriteStatus === null) favoriteStatus = [];
+    (favoriteStatus.includes(itemId)) ? setIsFavorite(true) : setIsFavorite(false);
+  }
+
+  function handleShareClick() {
+    clipboardCopy(`http://localhost:3000/${itemUrl}`);
+    window.alert('Link copiado!');
+  }
+
   return (
     <main>
       {(isFetching) ? <div>Loading recipe...</div>
@@ -62,10 +96,16 @@ function DrinkDetails() {
               src={ strDrinkThumb }
               alt={ `${strDrink}` }
             />
-            <button type="button" data-testid="share-btn">
+            <button type="button" data-testid="share-btn" onClick={ handleShareClick }>
+              <img src={ shareIcon } alt="Compartilhar"/>
               Compartilhar
             </button>
-            <button type="button" data-testid="favorite-btn">
+            <button
+              type="button"
+              data-testid="favorite-btn"
+              onClick={ handleFavoriteClick }
+            >
+              <img src={ isFavorite ? blackHeartIcon : whiteHeartIcon } alt="Favoritar"/>
               Favoritar
             </button>
             <div>
