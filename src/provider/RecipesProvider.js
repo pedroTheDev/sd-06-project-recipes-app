@@ -23,6 +23,12 @@ export default function RecipesProvider({ children }) {
   // state para foodDetails
   const [foodDetail, setFoodDetail] = useState([]);
 
+  // state para drinkDetails
+  const [drinkDetail, setDrinkDetail] = useState([]);
+
+  const [recomendedFood, setRecomendedFood] = useState([]);
+  const [recomendedDrink, setRecomendedDrink] = useState([]);
+
   useEffect(() => {
     if (fetchFood && fetchFood.length === 1) {
       const { idMeal } = fetchFood[0];
@@ -66,6 +72,12 @@ export default function RecipesProvider({ children }) {
     setFetchDrink,
     foodDetail,
     setFoodDetail,
+    drinkDetail,
+    setDrinkDetail,
+    recomendedFood,
+    setRecomendedFood,
+    recomendedDrink,
+    setRecomendedDrink,
   };
 
   return (

@@ -1,10 +1,19 @@
 import React, { useContext, useEffect } from 'react';
 import RecipesContext from '../context/RecipesContext';
 import FetchApiFood from '../services/FetchApiFood';
+import FetchApiDrink from '../services/FetchApiDrink';
+
+import '../App.css';
 
 function FoodDetails() {
   // state que guarda o retorno da requisição
-  const { foodDetail, setFoodDetail } = useContext(RecipesContext);
+  const {
+    foodDetail,
+    setFoodDetail,
+    recomendedDrink,
+    setRecomendedDrink } = useContext(RecipesContext);
+
+  const maxRecomended = 6;
 
   useEffect(() => {
     // código esperto para pegar somente o id no final da url
@@ -12,10 +21,31 @@ function FoodDetails() {
     const magickNumber = 9;
     const RecipeID = location.slice(magickNumber, location.length);
     FetchApiFood('6', setFoodDetail, RecipeID);
+    FetchApiDrink('2', setRecomendedDrink, foodDetail.strMeal);
   }, []);
 
-  // Os ingredientes devem possuir o atributo data-testid="${index}-ingredient-name-and-measure";
-  // O vídeo, presente somente na tela de comidas, deve possuir o atributo data-testid="video";
+  function renderIngredients() {
+    const ingredientArray = [];
+    const vinte = 20;
+    for (let i = 1; i <= vinte; i += 1) {
+      if (foodDetail[0][`strIngredient${i}`] === '') {
+        break;
+      }
+      ingredientArray.push({
+        ingredientes: foodDetail[0][`strIngredient${i}`],
+        medidas: foodDetail[0][`strMeasure${i}`] });
+    }
+
+    return ingredientArray.map((ingredient, index) => (
+      <p
+        key={ index }
+        data-testid={ `${index}-ingredient-name-and-measure` }
+      >
+        {`Ingredient: ${ingredient.ingredientes} Measure: ${ingredient.medidas}`}
+        {}
+      </p>
+    ));
+  }
 
   // O card de receitas recomendadas deve possuir o atributo data-testid="${index}-recomendation-card";
   // O botão de iniciar receita deve possuir o atributo data-testid="start-recipe-btn";
@@ -26,11 +56,13 @@ function FoodDetails() {
         <div>
           <div>
             <p data-testid="recipe-title">{food.strMeal}</p>
-            <span data-testid="recipe-category">{food.Category}</span>
+            {food.Cateogry !== 'Vegetarian'
+              ? <span data-testid="recipe-category">Vegetarian: no</span>
+              : <span data-testid="recipe-category">Vegetarian: yes</span>}
           </div>
           <img src={ food.strMealThumb } alt="recipe" data-testid="recipe-photo" />
           <div>
-            <p data-testid="recipe-instructions">{food.strInstructions}</p>
+            <p data-testid="instructions">{food.strInstructions}</p>
           </div>
           <div>
             <iframe
@@ -40,18 +72,40 @@ function FoodDetails() {
               data-testid="video"
               src={ food.strYoutube }
             />
-            <ul>
-              {food.strIngredient.map((foodIngredient, indice) => (
-                <div key={ indice }>{foodIngredient}</div>
-              ))}
-            </ul>
           </div>
-
+          <div>
+            {foodDetail.length === 1 ? renderIngredients() : null}
+          </div>
+          <div>
+            <p>Receitas Recomendads:</p>
+            {foodDetail.map((commendedFood, index3) => (
+              <span
+                key={ index3 }
+                data-testid={ `${index3}-recomendation-card` }
+              >
+                {commendedFood.strTags}
+              </span>
+            ))}
+            <p>Bebidas Recomendadas:</p>
+            {recomendedDrink.length >= maxRecomended
+              ? recomendedDrink.map((recomendation, index4) => (
+                <div key={ index4 }>
+                  <span
+                    data-testid={ `${index4}-recomendation-card` }
+                  >
+                    {recomendation.strDrink}
+                  </span>
+                </div>
+              )).slice(1, maxRecomended) : null}
+          </div>
           <button type="button" data-testid="share-btn">
             Botão compartilhar
           </button>
           <button type="button" data-testid="favorite-btn">
             Botão favoritar
+          </button>
+          <button type="button" data-testid="start-recipe-btn">
+            Botão iniciar receita
           </button>
         </div>
       </div>
