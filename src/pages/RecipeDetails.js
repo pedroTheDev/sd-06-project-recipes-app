@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import YouTube from 'react-youtube';
 import Context from '../context/Context';
 import Cards from '../components/Cards';
 import shareIcon from '../images/shareIcon.svg';
@@ -17,7 +16,6 @@ function RecipeDetails(props) {
     random,
   } = useContext(Context);
   const { match: { path, params } } = props;
-  const [change, setChange] = useState(true);
   const [fav, setFav] = useState('white');
 
   useEffect(() => {
@@ -91,43 +89,25 @@ function RecipeDetails(props) {
               : (
                 <div>
                   <h2>Video</h2>
-                  {
-                    !change
-                      ? <YouTube videoId={ getVideoId(recipe.strYoutube) } />
-                      : (
-                        <iframe
-                          src={ recipe.strYoutube }
-                          title="Recipe_video"
-                          data-testid="video"
-                        />)
-                  }
-                  <button
-                    type="button"
-                    onClick={ () => (change ? setChange(false) : setChange(true)) }
-                  >
-                    Trocar fonte
-                  </button>
+                  <iframe
+                    src={ `https://www.youtube.com/embed/${getVideoId(recipe.strYoutube)}` }
+                    title="Recipe_video"
+                    data-testid="video"
+                  />
                 </div>
               )}
             <h2>Recomendadas</h2>
             { !random ? <p>LOADING...</p>
-              : random.map((info, index) => (
-                <Cards
-                  key={ index }
-                  data-testid={ `${index}-recomendation-card` }
-                  recipe={ path === '/comidas/:id' ? 'bebidas' : 'comidas' }
-                  info={ info }
-                  index={ index }
-                />))}
-            { !random ? <p>LOADING...</p>
-              : random.map((info, index) => (
-                <Cards
-                  key={ index }
-                  data-testid={ `${index}-recomendation-card` }
-                  recipe={ path === '/comidas/:id' ? 'bebidas' : 'comidas' }
-                  info={ info }
-                  index={ index }
-                />))}
+              : random.slice(0, 6).map((info, index) => (
+                <div data-testid={ `${index}-recomendation-card` }>
+                  <Cards
+                    key={ index }
+                    recipe={ path === '/comidas/:id' ? 'bebidas' : 'comidas' }
+                    info={ info }
+                    index={ index }
+                  />
+                </div>
+                ))}
             <button
               type="button"
               data-testid="start-recipe-btn"

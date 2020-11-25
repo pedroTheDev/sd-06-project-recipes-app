@@ -15,7 +15,11 @@ function Cards({ info, recipe, index }) {
           alt={ recipe === 'comidas' ? strMeal : strDrink }
           data-testid={ `${index}-card-img` }
         />
-        <p className="recipe-card-name" data-testid={ `${index}-card-name` }>
+        <p
+          className="recipe-card-name"
+          data-testid={ `${index}-card-name` }
+          data-testid={ `${index}-recomendation-title` }
+        >
           { recipe === 'comidas' ? strMeal : strDrink }
         </p>
       </div>

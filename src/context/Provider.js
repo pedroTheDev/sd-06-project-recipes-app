@@ -19,12 +19,12 @@ function RecipesAppProvider({ children }) {
   };
 
   const getRandomDrink = async () => {
-    const api = await fetchDrink();
+    const api = await fetchDrink('name', '');
     setRandom(api);
   };
 
   const getRandomMeal = async () => {
-    const api = await fetchMeal();
+    const api = await fetchMeal('name', '');
     setRandom(api);
   };
 
