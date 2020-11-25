@@ -8,7 +8,7 @@ import RecipesContext from '../context/RecipesContext';
 function DrinksRecipesPage() {
   const [apiResult, setApiResult] = useState([]);
   const [drinkCategory, setDrinkCategory] = useState([]);
-  const [curcategory, setCurcategory] = useState([]);
+  const [curCategory, setCurcategory] = useState([]);
   const { hiddenInput } = useContext(RecipesContext);
 
   useEffect(() => {
@@ -23,22 +23,35 @@ function DrinksRecipesPage() {
 
   async function handleClick(e) {
     const category = e.target.value;
-    if (curcategory === category) {
+    if (category === curCategory) {
+      const response = await requestDrinks();
       setCurcategory(category);
+      setApiResult(response);
+    } else {
+      const filteredCategory = await filterCategoryDrinks(category);
+      setCurcategory(category);
+      setApiResult(filteredCategory);
     }
-
-    const filteredCategory = await filterCategoryDrinks(category);
-
-    setApiResult(filteredCategory);
   }
-  console.log(drinkCategory);
+
+  async function handleClickAll() {
+    const response = await requestDrinks();
+    setApiResult(response);
+    return null
+  }
+
   return (
     <div>
       <Header pageName="Bebidas" />
 
       <div>
-        <button type="button">All</button>
-
+      <button
+          data-testid="All-category-filter"
+          type="button" value="all"
+          onClick={() => handleClickAll()}
+        >
+          All
+        </button>
         {drinkCategory.drinks && drinkCategory.drinks.slice(0, 5).map((element) => (
           <button onClick={(e) => handleClick(e)} value={element.strCategory} type="button" data-testid={`${element.strCategory}-category-filter`}>{element.strCategory}</button>
         ))}

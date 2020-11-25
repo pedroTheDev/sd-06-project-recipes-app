@@ -8,6 +8,7 @@ import RecipesContext from '../context/RecipesContext';
 function FoodRecipesPage() {
   const [apiResult, setApiResult] = useState([]);
   const [foodCategory, setFoodCategory] = useState([]);
+  const [curCategory, setCurcategory] = useState([]);
   const { hiddenInput } = useContext(RecipesContext);
 
   useEffect(() => {
@@ -22,18 +23,36 @@ function FoodRecipesPage() {
 
   async function handleClick(e) {
     const category = e.target.value;
-
-    const filteredCategory = await filterCategoryFood(category);
-
-    setApiResult(filteredCategory);
+    if (category === curCategory) {
+      const response = await requestFoods();
+      setCurcategory(category);
+      setApiResult(response);
+    } else {
+      const filteredCategory = await filterCategoryFood(category);
+      setCurcategory(category);
+      setApiResult(filteredCategory);
+    }
   }
+
+  async function handleClickAll() {
+    const response = await requestFoods();
+    setApiResult(response);
+    return null
+  }
+
   return (
     <div>
       <Header pageName="Comidas" />
       <div />
 
       <div>
-        <button type="button">All</button>
+        <button
+          data-testid="All-category-filter"
+          type="button" value="all"
+          onClick={() => handleClickAll()}
+        >
+          All
+        </button>
         {foodCategory.meals && foodCategory.meals.slice(0, 5).map((element) => (
           <button onClick={(e) => handleClick(e)} value={element.strCategory} type="button" data-testid={`${element.strCategory}-category-filter`}>{element.strCategory}</button>
         ))}
