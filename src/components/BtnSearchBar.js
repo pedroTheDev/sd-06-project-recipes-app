@@ -12,6 +12,7 @@ export default function BtnSearchBar() {
   return (
     <button
       type="button"
+      className="btn-header"
       src={ searchIcon }
       data-testid="search-top-btn"
       onClick={ handleSearchBar }
