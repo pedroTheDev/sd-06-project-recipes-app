@@ -16,7 +16,7 @@ function Footer() {
           alt="drinkIcon"
         />
       </Link>
-      <Link to="/explorar">
+      <Link data-testid="explore-bottom-link" to="/explorar">
         <img
           data-testid="explore-bottom-btn"
           src={ exploreIcon }
