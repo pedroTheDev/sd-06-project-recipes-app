@@ -1,0 +1,31 @@
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 400px; 
+  margin: 0 auto; 
+}
+
+.login label {
+  font-size: 20px;
+  margin: 7%;
+  text-align: center;
+}
+
+.login input {
+  width: 95%;
+  margin-top: 4px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #b2b2b2;
+}
+
+.login Button {
+  border-radius: 8px;
+  font-size: 20px;
+}
+
+.logo {
+  align-self: center;
+  width: 25%;
+}

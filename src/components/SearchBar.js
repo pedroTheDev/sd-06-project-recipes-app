@@ -2,8 +2,8 @@ import React, { useState, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 import { foodAPI } from '../services/foodAPI';
 import { drinkAPI } from '../services/drinkAPI';
-
 import ReceitasContext from '../context/ReceitasContext';
+import '../style/Search.css';
 
 function SearchBar() {
   const [searchValue, setSearchValue] = useState('');
@@ -45,11 +45,12 @@ function SearchBar() {
   return (
     url.length ? <Redirect to={ url } /> : (
       <form onSubmit={ (e) => e.preventDefault() }>
-        <div>
+        <div className="container">
           <input
             type="text"
             data-testid="search-input"
             placeholder="Buscar Receita"
+            className="search-input"
             value={ searchValue }
             onChange={ ({ target }) => setSearchValue(target.value) }
           />
@@ -59,6 +60,7 @@ function SearchBar() {
                 type="radio"
                 id="ingredient"
                 name="searchInputRadio"
+                className="search-radio"
                 value={ radioValue }
                 onChange={ ({ target }) => setRadioValue(target.id) }
                 data-testid="ingredient-search-radio"
@@ -70,6 +72,7 @@ function SearchBar() {
                 type="radio"
                 id="name"
                 name="searchInputRadio"
+                className="search-radio"
                 value={ radioValue }
                 onChange={ ({ target }) => setRadioValue(target.id) }
                 data-testid="name-search-radio"
@@ -81,6 +84,7 @@ function SearchBar() {
                 type="radio"
                 id="first-letter"
                 name="searchInputRadio"
+                className="search-radio"
                 value={ radioValue }
                 onChange={ ({ target }) => setRadioValue(target.id) }
                 data-testid="first-letter-search-radio"
