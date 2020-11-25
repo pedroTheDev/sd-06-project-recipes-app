@@ -6,46 +6,46 @@ const Cards = () => {
 
   const showFoodResearch = () => (
     apiValueSearch.foods.meals && apiValueSearch.foods.meals.map((meal) => (
-      <div key={ meal.strMeal }>
+      <li key={ meal.strMeal }>
         <p>{meal.strMeal}</p>
         <img width="200" src={ meal.strMealThumb } alt={ meal.strMeal } />
-      </div>
+      </li>
     ))
   );
 
   const showFoodCategories = () => (
     apiValueSearch.foods.categories && apiValueSearch.foods.categories
       .map((category) => (
-        <div key={ category.idCategory }>
+        <li key={ category.idCategory }>
           <p>{category.strCategory}</p>
           <img
             width="200"
             src={ category.strCategoryThumb }
             alt={ category.strCategory }
           />
-        </div>
+        </li>
       ))
   );
 
   const showDrinkResearch = () => (
     apiValueSearch.drinks && (
       apiValueSearch.drinks.drinks.map((res) => (
-        <div key={ res.idDrink }>
+        <li key={ res.idDrink }>
           <p>{res.strDrink}</p>
           <img width="200" src={ res.strDrinkThumb } alt={ res.strMeal } />
-        </div>
+        </li>
       ))
     )
   );
 
   return window.location.pathname === '/comidas' ? (
-    <div>
+    <ul>
       {apiValueSearch.foods.meals ? (showFoodResearch()) : (showFoodCategories()) }
-    </div>
+    </ul>
   ) : (
-    <div>
+    <ul>
       {showDrinkResearch()}
-    </div>
+    </ul>
   );
 };
 
