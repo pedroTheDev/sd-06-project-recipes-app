@@ -1,13 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Header from '../components/header';
 import Footer from '../components/Footer';
 import ExploreButton from '../components/explore/ExploreButton';
+import { fetchRandomMealId, fetchRandomDrinkId } from '../services';
+import capitalizeFirstLetter from '../libs/capitilizeFirstLetter';
 
 function ExploreMealsOrDrinks({ type }) {
+  const [randomRecipeId, setRandomRecipeId] = useState();
+
+  const getRandomRecipeId = async () => {
+    const id = (type === 'comidas')
+      ? await fetchRandomMealId()
+      : await fetchRandomDrinkId();
+    setRandomRecipeId(id);
+  };
+
+  useEffect(() => {
+    getRandomRecipeId(type);
+  }, []);
+
   return (
     <>
-      <Header title={ type.toUpperCase() } />
+      <Header
+        title={ `Explorar ${capitalizeFirstLetter(type)}` }
+      />
       <nav>
         <ExploreButton
           title="Por Ingredientes"
@@ -22,10 +39,9 @@ function ExploreMealsOrDrinks({ type }) {
             testId="explore-by-area"
           />
         }
-        {/* REQ.74 Precisa da pagina de detalhes */}
         <ExploreButton
           title="Me Surpreenda!"
-          url=""
+          url={ `/${type}/${randomRecipeId}` }
           testId="explore-surprise"
         />
       </nav>

@@ -98,7 +98,7 @@ function Home({ title }) {
     <div>
       <Header
         title={ title }
-        enableSearchBar
+        enableSearch
         setSearch={ setSearch }
         isSearching={ isSearching }
       />

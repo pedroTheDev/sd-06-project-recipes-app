@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import SearchButton from './SearchButton';
 import profileIcon from '../../images/profileIcon.svg';
 
-function Header({ title, setSearch, isSearching, enableSearchBar = false }) {
+function Header({ title, setSearch, isSearching, enableSearch = false }) {
   return (
     <header>
       {
-        enableSearchBar
+        enableSearch
         && <SearchButton setSearch={ setSearch } isSearching={ isSearching } />
       }
       <h2 data-testid="page-title">{ title }</h2>
@@ -30,7 +30,7 @@ Header.propTypes = {
   title: PropTypes.string.isRequired,
   isSearching: PropTypes.bool.isRequired,
   setSearch: PropTypes.func.isRequired,
-  enableSearchBar: PropTypes.bool.isRequired,
+  enableSearch: PropTypes.bool.isRequired,
 };
 
 export default Header;
