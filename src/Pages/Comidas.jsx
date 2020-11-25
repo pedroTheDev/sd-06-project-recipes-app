@@ -3,9 +3,9 @@ import React, { useEffect, useContext } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Cards from '../components/Cards';
+import Categories from '../components/Categories/indexComidas';
 
-import { showSugestedFoods,
-} from '../services/aPI';
+import { showSugestedFoods } from '../services/aPI';
 import ContextAPI from '../Context/ContextAPI';
 
 const Comidas = () => {
@@ -19,6 +19,7 @@ const Comidas = () => {
       foods,
     });
   };
+
   useEffect(() => {
     getSugestedFoods();
   }, []);
@@ -26,6 +27,7 @@ const Comidas = () => {
   return (
     <div>
       <Header />
+      <Categories />
       <Cards />
       <Footer />
     </div>

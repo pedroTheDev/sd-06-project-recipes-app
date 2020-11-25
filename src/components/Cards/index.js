@@ -5,13 +5,14 @@ const Cards = () => {
   const { apiValueSearch } = useContext(ContextAPI);
 
   const showFoodResearch = () => {
+    const number = 11;
     if (apiValueSearch.foods.meals && apiValueSearch.foods.meals.length === 1) {
       const foodID = apiValueSearch.foods.meals[0].idMeal;
       window.location.href = `http://localhost:3000/comidas/${foodID}`;
     } else {
       return (
         apiValueSearch.foods.meals && apiValueSearch.foods.meals.map((meal, index) => {
-          if (index <= 11) {
+          if (index <= number) {
             return (
               <div key={ meal.strMeal }>
                 <p>{meal.strMeal}</p>
@@ -19,19 +20,21 @@ const Cards = () => {
               </div>
             );
           }
+          return '';
         })
       );
     }
   };
 
   const showDrinkResearch = () => {
+    const number = 11;
     if (apiValueSearch.drinks.drinks && apiValueSearch.drinks.drinks.length === 1) {
       const drinkID = apiValueSearch.drinks.drinks[0].idDrink;
       window.location.href = `http://localhost:3000/bebidas/${drinkID}`;
     } else {
       return (
         apiValueSearch.drinks.drinks && apiValueSearch.drinks.drinks.map((res, index) => {
-          if (index <= 11) {
+          if (index <= number) {
             return (
               <div key={ res.idDrink }>
                 <p>{res.strDrink}</p>
@@ -39,6 +42,7 @@ const Cards = () => {
               </div>
             );
           }
+          return '';
         })
       );
     }
@@ -49,9 +53,9 @@ const Cards = () => {
       {showFoodResearch() }
     </div>
   ) : (
-    <div>
+    <ul>
       {showDrinkResearch()}
-    </div>
+    </ul>
   );
 };
 
