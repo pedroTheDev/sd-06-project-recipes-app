@@ -14,9 +14,14 @@ const Cards = () => {
         apiValueSearch.foods.meals && apiValueSearch.foods.meals.map((meal, index) => {
           if (index <= number) {
             return (
-              <div key={ meal.strMeal }>
-                <p>{meal.strMeal}</p>
-                <img width="200" src={ meal.strMealThumb } alt={ meal.strMeal } />
+              <div key={ meal.strMeal } data-testid={ `${index}-recipe-card` }>
+                <p data-testid={ `${index}-card-name` }>{meal.strMeal}</p>
+                <img
+                  width="200"
+                  src={ meal.strMealThumb }
+                  alt={ meal.strMeal }
+                  data-testid={ `${index}-card-img` }
+                />
               </div>
             );
           }
@@ -36,9 +41,14 @@ const Cards = () => {
         apiValueSearch.drinks.drinks && apiValueSearch.drinks.drinks.map((res, index) => {
           if (index <= number) {
             return (
-              <div key={ res.idDrink }>
-                <p>{res.strDrink}</p>
-                <img width="200" src={ res.strDrinkThumb } alt={ res.strDrink } />
+              <div key={ res.idDrink } data-testid={ `${index}-recipe-card` }>
+                <p data-testid={ `${index}-card-name` }>{res.strDrink}</p>
+                <img
+                  width="200"
+                  src={ res.strDrinkThumb }
+                  alt={ res.strDrink }
+                  data-testid={ `${index}-card-img` }
+                />
               </div>
             );
           }
