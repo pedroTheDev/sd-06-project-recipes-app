@@ -10,7 +10,7 @@ function Cards({ info, recipe, index, recomendation }) {
   return (
     <Link to={ recipe === 'comidas' ? `/comidas/${idMeal}` : `/bebidas/${idDrink}` }>
       <div
-        className="recipe-card" 
+        className="recipe-card"
         data-testid={
           recomendation ? `${index}-recomendation-card` : `${index}-recipe-card`
         }
