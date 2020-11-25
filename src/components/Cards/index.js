@@ -5,10 +5,10 @@ const Cards = () => {
   const { apiValueSearch } = useContext(ContextAPI);
 
   const showFoodResearch = () => (
-    apiValueSearch.foods.meals && apiValueSearch.foods.meals.map((meal) => (
-      <li key={ meal.strMeal }>
-        <p>{meal.strMeal}</p>
-        <img width="200" src={ meal.strMealThumb } alt={ meal.strMeal } />
+    apiValueSearch.foods.meals && apiValueSearch.foods.meals.map((meal, index) => (
+      <li data-testid={ `${index}-recipe-card` } key={ meal.strMeal }>
+        <p data-testid={ `${index}-card-name` }>{meal.strMeal}</p>
+        <img data-testid={ `${index}-card-img` } width="200" src={ meal.strMealThumb } alt={ meal.strMeal } />
       </li>
     ))
   );
