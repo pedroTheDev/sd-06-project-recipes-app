@@ -21,10 +21,8 @@ function RecipesPage() {
   const twelve = 12;
 
   async function setState(newState) {
-    console.log('stateChange', newState);
     changeState({ ...localState, ...newState });
     localState = { ...localState, ...newState };
-    console.log(localState);
   }
 
   async function loadRecipes() {
