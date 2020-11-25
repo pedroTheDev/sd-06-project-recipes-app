@@ -5,17 +5,17 @@ import {
 } from '../actions/pageDetailsFetcher';
 
 const INITIAL_STATE = {
-  recomendations: [],
+  recommendations: [],
   error: '',
   loading: false,
 };
 
-export default function recomendationsReducer(state = INITIAL_STATE, action) {
+export default function recommendationsReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
   case LOADING_RECOMMENDATIONS:
     return { ...state, loading: true };
   case SUCCESS_RECOMMENDATIONS:
-    return { ...state, recomendations: action.payload };
+    return { ...state, recommendations: action.payload };
   case ERROR_RECOMMENDATIONS:
     return { ...state, error: action.failed };
   default:

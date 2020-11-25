@@ -11,7 +11,7 @@ function ingredientMapper(recipe, type) {
 const apiDataProcessor = (recipe) => {
   const {
     idMeal, strMeal, strArea, strCategory, strInstructions, strMealThumb,
-    strSource, strYoutube, strTags, idDrink, strDrink, strDrinkThumb,
+    strSource, strYoutube, strTags, idDrink, strDrink, strDrinkThumb, strAlcoholic,
   } = recipe;
 
   if (idMeal) {
@@ -31,6 +31,7 @@ const apiDataProcessor = (recipe) => {
   }
   return ({
     id: idDrink,
+    isAlcoholic: strAlcoholic,
     category: strCategory,
     name: strDrink,
     image: strDrinkThumb,
