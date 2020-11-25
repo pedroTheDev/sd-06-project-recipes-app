@@ -56,3 +56,17 @@ export const foodByCategoryApi = (category) => ( // requisito 28
         .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json)))
     ))
 );
+
+export const foodApi = () => ( // requisito 26
+  fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=')
+    .then((response) => (
+      response
+        .json()
+        .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json)))
+    ))
+);
+
+export const listIngredients = () => fetch('https://www.themealdb.com/api/json/v1/1/list.php?i=list')
+  .then((response) => response.json())
+  .then((data) => data.meals)
+  .catch((error) => console.error(error));
