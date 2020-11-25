@@ -48,10 +48,11 @@ export default function ExplorarComidasingredientes({ history }) {
         : (
           ingredients.filter((ingredient, index) => ingredient && index < twelve)
             .map((ingredient, index) => (
-              <div
+              <button
                 data-testid={ `${index}-ingredient-card` }
-                key={ index }
                 onClick={ () => handleClick(ingredient.strIngredient) }
+                key={ index }
+                type="button"
               >
                 <p
                   data-testid={ `${index}-card-name` }
@@ -63,7 +64,7 @@ export default function ExplorarComidasingredientes({ history }) {
                   src={ `https://www.themealdb.com/images/ingredients/${ingredient.strIngredient}-Small.png` }
                   alt={ `${ingredient.strIngredient}-pic` }
                 />
-              </div>
+              </button>
             ))
         )}
       <Footer />

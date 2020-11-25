@@ -48,9 +48,10 @@ export default function ExplorarBebidasingredientes({ history }) {
         : (
           ingredients.filter((ingredient, index) => ingredient && index < twelve)
             .map((ingredient, index) => (
-              <div
+              <button
                 data-testid={ `${index}-ingredient-card` }
                 key={ index }
+                type="button"
                 onClick={ () => handleClick(ingredient.strIngredient1) }
               >
                 <p
@@ -63,7 +64,7 @@ export default function ExplorarBebidasingredientes({ history }) {
                   src={ `https://www.thecocktaildb.com/images/ingredients/${ingredient.strIngredient1}-Small.png` }
                   alt={ `${ingredient.strIngredient1}-pic` }
                 />
-              </div>
+              </button>
             ))
         )}
       <Footer />

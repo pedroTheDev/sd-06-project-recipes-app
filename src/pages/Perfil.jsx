@@ -6,7 +6,7 @@ import Context from '../context/Context';
 import Footer from '../Components/Footer';
 
 export default function Perfil({ history }) {
-  const { titulo, setTitulo, email } = useContext(Context);
+  const { titulo, setTitulo } = useContext(Context);
 
   useEffect(() => {
     setTitulo('Perfil');
