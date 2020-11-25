@@ -10,10 +10,12 @@ import ExplorarBebidas from './pages/ExplorarBebidas';
 import ExplorarComidas from './pages/ExplorarComidas';
 import ComidaPorOrigem from './pages/ComidasPorOrigem';
 import Explorar from './pages/Explorar';
+import DetalhesReceita from './pages/DetalhesReceita';
 import ReceitasFeitas from './pages/ReceitasFeitas';
 import ReceitasFavoritas from './pages/ReceitasFavoritas';
 import Perfil from './pages/Perfil';
 import Provider from './hooks/Provider';
+import DetalhesBebida from './pages/DetalhesBebida';
 
 function App() {
   return (
@@ -22,8 +24,8 @@ function App() {
         <Route path="/" exact component={ Home } />
         <Route path="/comidas" exact component={ Comidas } />
         <Route path="/bebidas" exact component={ Bebidas } />
-        <Route path="/comidas/:id" exact component={ App } />
-        <Route path="/bebidas/:id" exact component={ App } />
+        <Route path="/comidas/:id" exact component={ DetalhesReceita } />
+        <Route path="/bebidas/:id" exact component={ DetalhesBebida } />
         <Route path="/comidas/:id/in-progress" exact component={ App } />
         <Route path="/bebidas/:id/in-progress" exact component={ App } />
         <Route path="/explorar" exact component={ Explorar } />
