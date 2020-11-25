@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
@@ -19,26 +20,32 @@ const Perfil = () => {
         <span data-testid="profile-email">{storageEmail}</span>
       </div>
       <div>
-        <button
-          type="button"
-          data-testid="profile-done-btn"
-        >
-          Receitas Feitas
-        </button>
-        <button
-          type="button"
-          data-testid="profile-favorite-btn"
-        >
-          Receitas Favoritas
-        </button>
+        <Link to="/receitas-feitas">
+          <button
+            type="button"
+            data-testid="profile-done-btn"
+          >
+            Receitas Feitas
+          </button>
+        </Link>
+        <Link to="/receitas-favoritas">
+          <button
+            type="button"
+            data-testid="profile-favorite-btn"
+          >
+            Receitas Favoritas
+          </button>
 
-        <button
-          type="button"
-          data-testid="profile-logout-btn"
-        >
-          Sair
-        </button>
+        </Link>
+        <Link to="/">
+          <button
+            type="button"
+            data-testid="profile-logout-btn"
+          >
+            Sair
+          </button>
 
+        </Link>
       </div>
       <Footer />
     </section>
