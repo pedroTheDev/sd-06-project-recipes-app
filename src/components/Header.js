@@ -31,7 +31,12 @@ function Header(props) {
   return (
     <div className="container">
       <Link to="/perfil">
-        <img src={ profileIcon } alt="Profile" data-testid="profile-top-btn" className="icon-perfil" />
+        <img
+          src={ profileIcon }
+          alt="Profile"
+          data-testid="profile-top-btn"
+          className="icon-perfil"
+        />
       </Link>
       <h2 data-testid="page-title">{title}</h2>
       { showSearchIcon
