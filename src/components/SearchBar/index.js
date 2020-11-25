@@ -1,6 +1,13 @@
 import React, { useContext, useState } from 'react';
 import ContextAPI from '../../Context/ContextAPI';
 
+import { searchFoodIngredients,
+  searchFoodName,
+  searchFoodFirstLetter,
+  searchDrinkIngredients,
+  searchDrinkName,
+} from '../../services/aPI';
+
 const SearchBar = () => {
   const { searchComponent, setApiValueSearch } = useContext(ContextAPI);
   const [nome, setNome] = useState('');
@@ -12,10 +19,53 @@ const SearchBar = () => {
     if (target.name === 'text') setNome(target.value);
   };
 
-  const setValuesApi = () => {
-    const value = [nome];
-    value.push(radioButton);
-    setApiValueSearch(value);
+  const apiOfIngredients = async () => {
+    let results = await searchFoodIngredients(nome);
+    if (results.meals === null) {
+      results = await searchDrinkIngredients(nome);
+    }
+    console.log(results);
+    setApiValueSearch({
+      results,
+    });
+  };
+
+  const apiOfName = async () => {
+    let results = await searchFoodName(nome);
+    if (results.meals === null && window.location.pathname === '/bebidas') {
+      results = await searchDrinkName(nome);
+      console.log(results);
+    } else {
+      setApiValueSearch({
+        results,
+      });
+    }
+  };
+
+  const apiOfFirstLetter = async () => {
+    if (nome.length > 1) {
+      return alert('Sua busca deve conter somente 1 (um) caracter');
+    }
+    let results = await searchFoodFirstLetter(nome);
+    if (results.meals === null) {
+      results = await searchFoodFirstLetter(nome);
+    }
+    setApiValueSearch({
+      results,
+    });
+  };
+
+  const handleChangeButton = () => {
+    switch (radioButton) {
+    case 'ingrediente':
+      return apiOfIngredients();
+    case 'nome':
+      return apiOfName();
+    case 'primeira-letra':
+      return apiOfFirstLetter();
+    default:
+      return '';
+    }
   };
 
   return searchComponent && (
@@ -66,7 +116,7 @@ const SearchBar = () => {
       <button
         id="primeira-letra"
         type="button"
-        onClick={ () => setValuesApi() }
+        onClick={ handleChangeButton }
         data-testid="exec-search-btn"
       >
         Buscar
@@ -74,4 +124,5 @@ const SearchBar = () => {
     </div>
   );
 };
+
 export default SearchBar;
