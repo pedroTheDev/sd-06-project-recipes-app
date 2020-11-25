@@ -47,6 +47,11 @@
   display: flex;
 }
 
+.thumbnail {
+  width: 180px;
+  height: 180px;
+}
+
 @keyframes shake {
   0% {
     transform: rotate(5deg);
