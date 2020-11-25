@@ -21,6 +21,8 @@ export default function Login({ history }) {
 
   const handleEmail = ({ target }) => {
     setEmail(target.value);
+    const emailStorage = { email };
+    localStorage.setItem('user', JSON.stringify(emailStorage));
     validadeLogin();
   };
 
