@@ -1,15 +1,13 @@
 import React from 'react';
-import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import Header from '../../components/Header';
 
-function ExplorePage() {
+function ExploreIngredients() {
   return (
     <div>
-      <h1> Página principal de Explorar</h1>
-
       <Header
         className="header"
-        pageTitle="Explorar"
+        pageTitle="Explorar Ingredientes"
       />
       <div className="footer">
         <Footer />
@@ -18,4 +16,4 @@ function ExplorePage() {
   );
 }
 
-export default ExplorePage;
+export default ExploreIngredients;

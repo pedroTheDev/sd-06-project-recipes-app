@@ -5,13 +5,6 @@ import renderWithRouter from '../renderWithRouter';
 import { drinkIcon, mealIcon, exploreIcon } from '../images';
 
 describe('renders footer correctly', () => {
-  // afterEach(cleanup);
-  it('expect data-testid="footer" to be in the document', () => {
-    const { getByTestId } = renderWithRouter(<Footer />);
-    const FOOTER = getByTestId('footer');
-    expect(FOOTER).toBeInTheDocument();
-  });
-
   it('expect "drinkIcon.svg, exploreIcon.svg and mealIcon.svg" in the document', () => {
     const { getAllByRole } = renderWithRouter(<Footer />);
     const FOOTER_PICS = getAllByRole('img');
@@ -33,14 +26,14 @@ describe('renders footer correctly', () => {
 
   it('expect meal link to redirect correctly', () => {
     const { history, getByText } = renderWithRouter(<Footer />);
-    const MEAL = getByText(/Alimento/i);
+    const MEAL = getByText(/Comidas/i);
     expect(MEAL).toBeInTheDocument();
     fireEvent.click(MEAL);
     const { pathname } = history.location;
     expect(pathname).toBe('/comidas');
   });
 
-  it('expect meal link to redirect correctly', async () => {
+  it('expect meal link to redirect correctly', () => {
     const { history, getByText } = renderWithRouter(<Footer />);
     const EXPLORE = getByText(/Explore/i);
     expect(EXPLORE).toBeInTheDocument();
