@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import ContextAPI from '../../../Context/ContextAPI';
+import ContextAPI from '../../Context/ContextAPI';
 
 const Cards = () => {
   const { apiValueSearch } = useContext(ContextAPI);

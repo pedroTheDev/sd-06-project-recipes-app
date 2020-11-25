@@ -1,18 +1,14 @@
 import React, { useContext, useState, useEffect } from 'react';
 import ContextAPI from '../../Context/ContextAPI';
 
-import { showAllFoodsCategories, showAllDrinksCategories, selectFoodItensCategories, selectDrinksItensCategories } from '../../services/aPI';
+import { showAllDrinksCategories, selectDrinksItensCategories } from '../../services/aPI';
 
-const Categories = () => {
-  const { setApiValueSearch } = useContext(ContextAPI);
+const CategoriesBebidas = () => {
+    const { apiValueSearch, setApiValueSearch } = useContext(ContextAPI);
 
   const [categories, setCategories] = useState([]);
 
   const categoriesDefined = async () => {
-    if (window.location.pathname === '/comidas') {
-      const result = await showAllFoodsCategories();
-      setCategories(result);
-    }
     if (window.location.pathname === '/bebidas') {
       const result = await showAllDrinksCategories();
       setCategories(result);
@@ -24,22 +20,19 @@ const Categories = () => {
   }, []);
 
   const filterApiValueSearch = async (value) => {
-    if (window.location.pathname === '/comidas') {
-      const result = await selectFoodItensCategories(value);
-      // setApiValueSearch(result.meals);
-      console.log(result);
-    }
-
     if (window.location.pathname === '/bebidas') {
       const result = await selectDrinksItensCategories(value);
-      // apiValueSearch(result.meals);
-      console.log(result);
+    //   setApiValueSearch({
+    //     ...apiValueSearch,
+    //     drinks.drinks,
+    //   });
+    console.log(result);
     }
   };
 
   return (
     <div>
-      {categories.categories && categories.categories.map((element, index) => {
+      {categories.drinks && categories.drinks.map((element, index) => {
         const number = 4;
         if (index <= number) {
           return (
@@ -49,12 +42,10 @@ const Categories = () => {
               onClick={ (e) => filterApiValueSearch(e.target.name) }
               type="button"
             >
-              <img
-                name={ element.strCategory }
+              <p
                 width="100"
-                src={ element.strCategoryThumb }
                 alt={ element.strCategory }
-              />
+              >{ element.strCategory }</p>
             </button>
           );
         }
@@ -62,4 +53,4 @@ const Categories = () => {
     </div>);
 };
 
-export default Categories;
+export default CategoriesBebidas;
