@@ -6,22 +6,35 @@ import fetchDrink from '../services/fetchDrink';
 
 function RecipesAppProvider({ children }) {
   const [details, setDetails] = useState('');
+  const [random, setRandom] = useState('');
 
-
-  const getMealDetail = async() => {
-    const api = await fetchMeal('details', '52771');
+  const getMealDetail = async(id) => {
+    const api = await fetchMeal('details', id);
     setDetails(api);
   };
 
-  const getDrinkDetail = async() => {
-    const api = await fetchDrink('details', '178319');
+  const getDrinkDetail = async(id) => {
+    const api = await fetchDrink('details', id);
     setDetails(api);
+  }
+
+  const getRandomDrink = async() => {
+    const api = await fetchDrink();
+    setRandom(api);
+  }
+
+  const getRandomMeal = async() => {
+    const api = await fetchMeal();
+    setRandom(api);
   }
 
   const contextValue = {
     getMealDetail,
     getDrinkDetail,
+    getRandomDrink,
+    getRandomMeal,
     details,
+    random,
   };
 
   return (

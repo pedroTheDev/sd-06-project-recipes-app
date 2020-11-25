@@ -1,19 +1,21 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Context from '../context/Context';
-import YouTube from 'react-youtube'
+import YouTube from 'react-youtube';
+import Cards from '../components/Cards';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import blackHeartIcon from '../images/blackHeartIcon.svg'
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 function RecipeDetails(props) {
-  const { getMealDetail, getDrinkDetail, details } = useContext(Context);
-  const { path } = props.match;
+  const { getMealDetail, getDrinkDetail, getRandomDrink, getRandomMeal, details, random } = useContext(Context);
+  const { path, params } = props.match;
   const [change, setChange] = useState(true);
   const [fav, setFav] = useState('white');
 
   useEffect(() => {
-    path === "/comidas/:id" ? getMealDetail() :getDrinkDetail();
-  }, []);
+    path === "/comidas/:id" ? getMealDetail(params.id) :getDrinkDetail(params.id);
+    path === "/comidas/:id" ? getRandomDrink() : getRandomMeal();
+  }, [params.id]);
 
   const getIngredients = (obj, filter) => {
     let key, keys = [];
@@ -32,9 +34,8 @@ function RecipeDetails(props) {
   return (
     <div>
       <h1>Página de Details</h1>
-      {console.log(details)}
       {!details ? <p>LOADING...</p> 
-      : details.map((recipe) =>
+      : details.map((recipe, index) =>
         <div>
           <img
             src={path === '/comidas/:id' ? recipe.strMealThumb : recipe.strDrinkThumb}
@@ -58,7 +59,7 @@ function RecipeDetails(props) {
             {path === '/comidas/:id' ? recipe.strCategory : recipe.strAlcoholic}
           </p>
           <h2>Ingredients</h2>
-          {getIngredients(recipe, /strIngredient/, /strMeasure/).map((item, index) => {
+          {getIngredients(recipe, /strIngredient/).map((item, index) => {
             const measure = getIngredients(recipe, /strMeasure/);
             return (
               <p data-testid={`${index}-ingredient-name-and-measure`}>
@@ -89,6 +90,15 @@ function RecipeDetails(props) {
             </button>
           </div>}
           <h2>Recomendadas</h2>
+          { !random ? <p>LOADING...</p> :
+            random.map((info, index) =>
+              <Cards
+                data-testid={`${ index }-recomendation-card`}
+                recipe={ path === "/comidas/:id" ? 'bebidas' : 'comidas' }
+                info={ info }
+                index={ index }
+              />
+          )}
           <button
             type="button"
             data-testid="start-recipe-btn"
