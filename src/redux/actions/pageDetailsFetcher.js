@@ -22,7 +22,7 @@ function error(failed) {
 export default function recomendationsThunk(foodOrDrink) {
   return (dispatch) => {
     dispatch(loading);
-    return fetchMainPage(foodOrDrink)
+    fetchMainPage(foodOrDrink)
       .then(
         (response) => dispatch(success(response)),
         (failed) => dispatch(error(failed)),
