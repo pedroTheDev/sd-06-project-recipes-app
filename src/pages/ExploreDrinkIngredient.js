@@ -4,7 +4,7 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import RecipeContext from '../context/RecipeContext';
 
-function ExploreFoodIngredient() {
+function ExploreDrinkIngredient() {
   const [ingredients, setIngredients] = useState([]);
   const { setMealCategories } = useContext(RecipeContext);
 
@@ -16,7 +16,6 @@ function ExploreFoodIngredient() {
       const APIResponse = await APIRequest.json();
       if (APIResponse !== null) {
         setIngredients(APIResponse.meals);
-        console.log(APIResponse.meals);
       }
     };
     fecthMeals();
@@ -25,14 +24,15 @@ function ExploreFoodIngredient() {
   const incial = 0;
   const final = 12;
 
-  const handleClickSetCategories = ({ target: { value } }) => {
-    setMealCategories(value);
+  const handleClickSetCategories = ({ target }) => {
+    setMealCategories(target.value);
+    console.log(target);
   };
 
   return (
     <>
-      <Header title="Explorar Comidas" />
-      <h1>ExploreFoodIngredient</h1>
+      <Header title="Explorar Bebidas" />
+      <h1>ExploreDrinkIngredient</h1>
       {
         ingredients.slice(incial, final)
           .map((ingredient, index) => (
@@ -71,4 +71,4 @@ function ExploreFoodIngredient() {
   );
 }
 
-export default ExploreFoodIngredient;
+export default ExploreDrinkIngredient;

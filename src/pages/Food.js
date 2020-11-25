@@ -14,8 +14,8 @@ function Food() {
   const [currentMeals, setCurrentMeals] = useState([]);
   const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
   const urlCategories = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
-  const urlMealsCategories = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${currentCategories}`;
-
+  const urlMealsCategories = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${currentCategories}`;
+  console.log(currentCategories);
   useEffect(() => {
     const fecthMeals = async () => {
       const APIRequest = await fetch(url);
@@ -39,7 +39,7 @@ function Food() {
       }
     };
     fecthCategory();
-  }, []);
+  }, [mealCategories]);
 
   useEffect(() => {
     const fecthMealsCategory = async () => {
@@ -47,7 +47,6 @@ function Food() {
       const APIResponseMealsCategory = await APIRequestMealsCategory.json();
       if (APIResponseMealsCategory !== null) {
         setCurrentMeals(APIResponseMealsCategory.meals);
-        console.log('vc esta aqui');
       }
     };
     fecthMealsCategory();
@@ -108,7 +107,6 @@ function Food() {
       setCurrentCategories('');
     }
   };
-  console.log(mealCategories);
   return (
     <div className="food-container">
       <Header title="Comidas" />
