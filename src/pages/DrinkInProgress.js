@@ -103,14 +103,16 @@ export default function DrinkInProgress(props) {
         <div>
           { recipeDetails.filter((ingredient) => ingredient !== '' && ingredient !== null)
             .map((ingredient, index) => (
-              <p
-                data-testid={ `${index}-ingredient-step` }
+              <label
+                htmlFor={ ingredient[0] }
                 key={ ingredient[0] }
+                data-testid={ `${index}-ingredient-step` }
               >
+                <input type="checkbox" id={ ingredient[0] } />
                 { (ingredient[1] === null)
                   ? `${ingredient[0]}`
                   : `${ingredient[0]}: ${(ingredient[1]) && ingredient[1]}` }
-              </p>
+              </label>
             )) }
         </div>
       );
