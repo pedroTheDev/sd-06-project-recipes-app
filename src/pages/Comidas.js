@@ -11,7 +11,6 @@ import { foodAPI, foodCategoryApi } from '../services/foodAPI';
 const Comidas = (history) => {
   const {
     searchBox, meals, setMeals, setFiltersData,
-    // stopApi, setStopApi,
   } = useContext(ReceitasContext);
 
   const location = useLocation();

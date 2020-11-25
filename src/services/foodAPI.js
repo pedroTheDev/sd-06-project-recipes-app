@@ -12,7 +12,7 @@ export async function foodAPI(type, endpoint) {
     url = `https://www.themealdb.com/api/json/v1/1/search.php?f=${endpoint}`;
     break;
   default:
-    url = 'https://www.themealdb.com/api/json/v1/1/filter.php?i=';
+    url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
   }
 
   const fetchAPI = await fetch(url)

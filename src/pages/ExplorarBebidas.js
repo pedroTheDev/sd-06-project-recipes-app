@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import ReceitasContext from '../context/ReceitasContext';
 import { fetchRandomDrink } from '../services/drinkAPI';
 
 const ExplorarBebidas = () => {
-  const [randomDrinkID, setRandomDrink] = useState();
+  const { randomDrinkID, setRandomDrink } = useContext(ReceitasContext);
 
   useEffect(() => {
     fetchRandomDrink().then((response) => {

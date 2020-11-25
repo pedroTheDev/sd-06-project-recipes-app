@@ -10,7 +10,7 @@ import { drinkAPI, drinkCategoryApi } from '../services/drinkAPI';
 
 function Bebidas() {
   const {
-    searchBox, meals, setMeals, setFiltersData,
+    searchBox, drinks, setDrinks, setFiltersData,
   } = useContext(ReceitasContext);
 
   const location = useLocation();
@@ -22,13 +22,13 @@ function Bebidas() {
       const responseDrinksAPI = await drinkAPI();
 
       setFiltersData(data);
-      setMeals(responseDrinksAPI);
+      setDrinks(responseDrinksAPI);
     }
 
     fetchDrink();
   }, []);
 
-  return ((!meals.length)
+  return ((!drinks.length)
     ? <div>Carregando...</div>
     : (
       <section>
@@ -36,7 +36,7 @@ function Bebidas() {
         {searchBox && <SearchBar />}
         <DrinkFilters />
         <div>
-          {meals
+          {drinks
             .filter((x, index) => index < doze)
             .map((drink, i) => (
               <DrinksCard key={ drink } drink={ drink } index={ i } />
