@@ -73,7 +73,6 @@ export const fetchDrinkCategoryList = async () => {
   return json.drinks;
 };
 
-
 export const fetchRandomMealId = async () => {
   const response = await fetch(`${baseAPIMeal}${endPointRandom}`);
   const { meals } = await response.json();
@@ -84,6 +83,7 @@ export const fetchRandomDrinkId = async () => {
   const response = await fetch(`${baseAPIDrinks}${endPointRandom}`);
   const { drinks } = await response.json();
   return drinks[0].idDrink;
+}
 
 export const fetchMealByCategory = async (category) => {
   const response = await fetch(`${baseAPIMeal}${endPointCategory}${category}`);
