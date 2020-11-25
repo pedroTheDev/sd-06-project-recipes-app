@@ -22,6 +22,10 @@ class FoodsRecipesInProgress extends React.Component {
     this.setMealState = this.setMealState.bind(this);
     this.checked = this.checked.bind(this);
     this.checkedItems = this.checkedItems.bind(this);
+<<<<<<< HEAD
+=======
+    this.handleButton = this.handleButton.bind(this);
+>>>>>>> 6c74f06fabff135bc21126d9ba99cdf8a3859db1
   }
 
   async componentDidMount() {
@@ -31,14 +35,7 @@ class FoodsRecipesInProgress extends React.Component {
     this.setMealState(mealRecipe);
     this.handleIngredients();
     this.checkedItems();
-    // this.getLocalStorage();
   }
-
-  // componentDidUpdate() {
-  //   const { checkedItems} = this.state;
-  //   if(checkedItems.length > 0)
-  //   const getRecipesInProgress = localStorage.getItem('storedRecipe', );
-  // }
 
   handleIngredients() {
     const ingredientArray = [];
@@ -90,8 +87,6 @@ class FoodsRecipesInProgress extends React.Component {
     } else {
       this.setState({ disabledButton: false });
     }
-    // console.log('checkedItems', Ingredients.length);
-    // console.log('Ingredients', Object.keys(checkedItems).length + 1);
   }
 
   setMealState(Meal) {
@@ -106,14 +101,6 @@ class FoodsRecipesInProgress extends React.Component {
       Measures,
     });
   }
-
-  // getLocalStorage() {
-  //   const getRecipesInProgress = localStorage.getItem('storedRecipe');
-  //   if (getRecipesInProgress) {
-  //     const recipesInProgress = JSON.parse(getRecipesInProgress);
-  //     this.state({ checkedItems: recipesInProgress });
-  //   }
-  // }
 
   setLocalStorage(recipe) {
     const myObject = [{
@@ -156,7 +143,6 @@ class FoodsRecipesInProgress extends React.Component {
   }
 
   getFullDate() {
-    // 25/11/2020 00:31 ;
     const day = new Date().getDate();
     const month = new Date().getMonth();
     const year = new Date().getFullYear();
@@ -166,30 +152,6 @@ class FoodsRecipesInProgress extends React.Component {
     const fullDate = `${day}/${month + 1}/${year} ${hours}:${minutes}:${seconds}`;
     return fullDate;
   }
-
-  changeFavoriteIcon(recipe) {
-    if (localStorage.favoriteRecipes) {
-      const favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-      const receitaAtual = favRecipes.find((element) => (element.id === recipe.idMeal));
-      if (favRecipes.includes(receitaAtual)) {
-        return blackHeartIcon;
-      }
-      return whiteHeartIcon;
-    }
-    return whiteHeartIcon;
-  }
-
-  // test(e) {
-  //   const { idCurrent } = this.props;
-  //   const object = {
-  //     meals: {
-  //       idCurrent,
-  //       ingredients: [
-  //         e.target.value,
-  //       ],
-  //     },
-  //   };
-  // }
 
   checkedItems() {
     const checked = {};
@@ -221,6 +183,18 @@ class FoodsRecipesInProgress extends React.Component {
     });
   }
 
+  changeFavoriteIcon(recipe) {
+    if (localStorage.favoriteRecipes) {
+      const favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      const receitaAtual = favRecipes.find((element) => (element.id === recipe.idMeal));
+      if (favRecipes.includes(receitaAtual)) {
+        return blackHeartIcon;
+      }
+      return whiteHeartIcon;
+    }
+    return whiteHeartIcon;
+  }
+
   recipeDone(recipe) {
     const { history } = this.props;
     const fullDate = this.getFullDate();
@@ -249,8 +223,12 @@ class FoodsRecipesInProgress extends React.Component {
   }
 
   render() {
+<<<<<<< HEAD
     const { Meal, Ingredients, Measures, checkedItems } = this.state;
     const { history } = this.props;
+=======
+    const { Meal, Ingredients, Measures, checkedItems, disabledButton } = this.state;
+>>>>>>> 6c74f06fabff135bc21126d9ba99cdf8a3859db1
     return (
       <div className="food-drink-detail-container">
         {Meal ? Meal.map((recipe, index) => (
@@ -321,6 +299,7 @@ class FoodsRecipesInProgress extends React.Component {
                 type="button"
                 onClick={ () => this.recipeDone(recipe) }
                 className="start-recipe"
+                disabled={ !disabledButton }
               >
                 Finalizar Receita
               </button>
