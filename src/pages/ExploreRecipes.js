@@ -25,7 +25,7 @@ function ExploreRecipes() {
 
   return (
     <div>
-      { (location.includes('comidas')) ? (
+      { location.includes('comidas') ? (
         <div>
           <Header title="Explorar Comidas" />
           <button

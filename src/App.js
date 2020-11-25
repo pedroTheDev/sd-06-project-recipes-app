@@ -11,6 +11,7 @@ import RecipeDetails from './pages/RecipeDetails';
 import Explore from './pages/Explore';
 import ExploreRecipes from './pages/ExploreRecipes';
 import ExploreByIngredients from './pages/ExploreByIngredients';
+import ExploreByOrigin from './pages/ExploreByOrigin';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route exact path="/explorar" component={ Explore } />
         <Route exact path="/explorar/:id" component={ ExploreRecipes } />
         <Route path="/explorar/:id/ingredientes" component={ ExploreByIngredients } />
+        <Route path="/explorar/:id/area" component={ ExploreByOrigin } />
       </Switch>
     </Provider>
   );

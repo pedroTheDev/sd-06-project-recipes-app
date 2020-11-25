@@ -1,12 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useEffect, useState, useContext } from 'react';
+import PropTypes from 'prop-types';
+import { useLocation, useHistory } from 'react-router-dom';
+import ContextRecipes from '../context/ContextRecipes';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 
-function ExploreByIngredients() {
+function ExploreByIngredients(props) {
   const location = useLocation().pathname;
+  const history = useHistory();
   const [data, setData] = useState([]);
   const MAX_NUMBER_OF_CARDS = 12;
+  const { setSelectedRadio,
+    setIdRecipe, setRecipes, setSearchText } = useContext(ContextRecipes);
+  const { fetchApi } = props;
 
   const apiIngredients = async () => {
     if (location.includes('comidas')) {
@@ -20,6 +26,40 @@ function ExploreByIngredients() {
     }
   };
 
+  // const renderCards = (recipeApi) => {
+  //   if (!recipeApi) {
+  //     alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+  //   } else if (recipeApi.length === 1) {
+  //     if (location === '/comidas') {
+  //       const idRecipe = recipeApi[0].idMeal;
+  //       setIdRecipe(idRecipe);
+  //       history.push(`/comidas/${idRecipe}`);
+  //     } else {
+  //       const idRecipe = recipeApi[0].idDrink;
+  //       setIdRecipe(idRecipe);
+  //       history.push(`/bebidas/${idRecipe}`);
+  //     }
+  //   }
+  // };
+
+  const handleClick = async (selectIngredient) => {
+    if (location.includes('comidas')) {
+      history.push('/comidas');
+      // setSelectedRadio('ingredient');
+      // setSearchText(selectIngredient);
+      // const recipesApi = await fetchApi('ingredient', selectIngredient);
+      // setRecipes(recipesApi);
+      // renderCards(recipesApi);
+    } else {
+      history.push('/bebidas');
+      // setSelectedRadio('ingredient');
+      // setSearchText(selectIngredient);
+      // const recipesApi = await fetchApi('ingredient', selectIngredient);
+      // setRecipes(recipesApi);
+      // renderCards(recipesApi);
+    }
+  };
+
   useEffect(() => {
     apiIngredients();
   }, []);
@@ -27,9 +67,13 @@ function ExploreByIngredients() {
   return (
     <div>
       <Header title="Explorar Ingredientes" />
-      { (location.includes('comidas')) ? (
+      { location.includes('comidas') ? (
         data.map((meals, index) => (
-          <div key={ index } data-testid={ `${index}-ingredient-card` }>
+          <div
+            key={ index }
+            data-testid={ `${index}-ingredient-card` }
+            onClick={ () => handleClick(meals.strIngredient) }
+          >
             <img
               data-testid={ `${index}-card-img` }
               alt="food"
@@ -44,7 +88,11 @@ function ExploreByIngredients() {
         )).filter((_, index) => index < MAX_NUMBER_OF_CARDS)
       ) : (
         data.map((drinks, index) => (
-          <div key={ index } data-testid={ `${index}-ingredient-card` }>
+          <div
+            key={ index }
+            data-testid={ `${index}-ingredient-card` }
+            onClick={ () => handleClick(drinks.strIngredient) }
+          >
             <img
               data-testid={ `${index}-card-img` }
               alt="drink"
@@ -62,5 +110,9 @@ function ExploreByIngredients() {
     </div>
   );
 }
+
+ExploreByIngredients.propTypes = {
+  fetchApi: PropTypes.func.isRequired,
+};
 
 export default ExploreByIngredients;
