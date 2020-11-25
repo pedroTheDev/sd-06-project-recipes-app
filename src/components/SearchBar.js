@@ -33,13 +33,13 @@ function SearchBar(props) {
     const selectedRadio = document.querySelector('input[name="search"]:checked').value;
     const inputSearch = document.querySelector('#search-input').value;
     const recipesApi = await fetchApi(selectedRadio, inputSearch);
+    console.log(recipesApi);
     setSearchText(inputSearch);
     setSelectedRadio(selectedRadio);
     renderCards(recipesApi);
     if(recipesApi !== null) {
       setRecipes(recipesApi);
     };
-  };
 
   return (
     <div>
