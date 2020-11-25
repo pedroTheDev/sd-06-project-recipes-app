@@ -8,25 +8,25 @@ function RecipesAppProvider({ children }) {
   const [details, setDetails] = useState('');
   const [random, setRandom] = useState('');
 
-  const getMealDetail = async(id) => {
+  const getMealDetail = async (id) => {
     const api = await fetchMeal('details', id);
     setDetails(api);
   };
 
-  const getDrinkDetail = async(id) => {
+  const getDrinkDetail = async (id) => {
     const api = await fetchDrink('details', id);
     setDetails(api);
-  }
+  };
 
-  const getRandomDrink = async() => {
+  const getRandomDrink = async () => {
     const api = await fetchDrink();
     setRandom(api);
-  }
+  };
 
-  const getRandomMeal = async() => {
+  const getRandomMeal = async () => {
     const api = await fetchMeal();
     setRandom(api);
-  }
+  };
 
   const contextValue = {
     getMealDetail,
