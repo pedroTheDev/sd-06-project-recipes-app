@@ -40,7 +40,7 @@ function Footer() {
           type="button"
         >
           <img
-            alt="food section"
+            alt="meals section"
             data-testid="food-bottom-btn"
             src={ mealIcon }
           />

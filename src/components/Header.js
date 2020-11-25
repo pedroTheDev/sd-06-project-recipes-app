@@ -61,9 +61,7 @@ function Header({ pageTitle, searchAbled }) {
         <h1 data-testid="page-title">{ pageTitle }</h1>
         { handleSearchIcon() }
       </header>
-      <nav>
-        { handleSearchBar() }
-      </nav>
+      { handleSearchBar() }
     </div>
   );
 }

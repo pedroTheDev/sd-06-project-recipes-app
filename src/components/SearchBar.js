@@ -27,7 +27,7 @@ function SearchBar() {
   };
 
   return (
-    <div className="search-bar-container">
+    <nav className="search-bar-container">
       <div className="search-input-container">
         <label htmlFor="search-input">
           <input
@@ -90,7 +90,7 @@ function SearchBar() {
       >
         Pesquisar
       </button>
-    </div>
+    </nav>
   );
 }
 

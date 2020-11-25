@@ -1,8 +1,7 @@
 import React, { useContext, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesContext';
 
-function FoodFilterCategories({ categories }) {
+function FoodFilterCategories() {
   const {
     filteredCategories,
     getFoodCategories,
@@ -25,7 +24,7 @@ function FoodFilterCategories({ categories }) {
     }
   };
 
-  return categories !== null && (
+  return filteredCategories !== null && (
     <div>
       <button
         data-testid="All-category-filter"
@@ -51,7 +50,3 @@ function FoodFilterCategories({ categories }) {
 }
 
 export default FoodFilterCategories;
-
-FoodFilterCategories.propTypes = {
-  categories: PropTypes.arrayOf().isRequired,
-};
