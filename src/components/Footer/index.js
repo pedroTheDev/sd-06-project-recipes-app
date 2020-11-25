@@ -11,21 +11,21 @@ const Footer = () => (
     <Link to="/bebidas">
       <img
         data-testid="drinks-bottom-btn"
-        src={drinkIcon}
+        src={ drinkIcon }
         alt="drinkIcon"
       />
     </Link>
     <Link to="/explorar">
       <img
         data-testid="explore-bottom-btn"
-        src={exploreIcon}
+        src={ exploreIcon }
         alt="exploreIcon"
       />
     </Link>
     <Link to="/comidas">
       <img
         data-testid="food-bottom-btn"
-        src={mealIcon}
+        src={ mealIcon }
         alt="mealIcon"
       />
     </Link>

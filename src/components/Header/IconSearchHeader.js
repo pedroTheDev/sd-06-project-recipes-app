@@ -14,12 +14,12 @@ const IconSearch = () => {
 
   return (
     <button
-      onClick={() => searchBarDisplay()}
+      onClick={ () => searchBarDisplay() }
       type="button"
     >
       <img
         data-testid="search-top-btn"
-        src={searchIcon}
+        src={ searchIcon }
         alt="IconSearch"
       />
     </button>
