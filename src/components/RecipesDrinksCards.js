@@ -13,7 +13,7 @@ function RecipesDrinksCards({ categories }) {
     if (innerText === 'All' || innerText === selectedCategorie) {
       const responseDrinks = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
       const responseDrinksJson = await responseDrinks.json();
-      return setData([responseDrinksJson]);
+      return setData([data[0], responseDrinksJson]);
     }
 
     const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${innerText}`);
@@ -21,6 +21,10 @@ function RecipesDrinksCards({ categories }) {
     setSelectedCategorie(innerText);
     return setData([data[0], responseJson]);
   };
+
+  if (!categories) {
+    return <h2>Loading...</h2>;
+  }
 
   return (
     <div>

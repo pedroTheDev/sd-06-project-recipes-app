@@ -22,6 +22,10 @@ function RecipesMealsCards({ categories }) {
     return setData([responseJson, data[1]]);
   };
 
+  if (!categories) {
+    return <h2>Loading...</h2>;
+  }
+
   return (
     <div>
       <button
@@ -67,7 +71,7 @@ function RecipesMealsCards({ categories }) {
 }
 
 RecipesMealsCards.propTypes = {
-  categories: PropTypes.arrayOf(PropTypes.object).isRequired,
+  categories: PropTypes.arrayOf(Object).isRequired,
 };
 
 export default RecipesMealsCards;

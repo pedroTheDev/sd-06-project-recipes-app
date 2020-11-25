@@ -1,0 +1,15 @@
+.container-details {
+  position: relative;
+}
+
+.container-details img{
+  width: 200px;
+}
+
+.start-recipe {
+  background: #6CE34F;
+  width: 20%;
+  padding: 10px;
+  position: fixed;
+  bottom: 0px;
+}
