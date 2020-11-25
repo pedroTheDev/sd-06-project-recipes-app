@@ -6,7 +6,7 @@ function Card(props) {
   const { element, idx } = props;
   const { strMeal, strMealThumb } = element;
   return (
-    <Link to={`/comidas/${element.idMeal}`}>
+    <Link to={{ pathname: `/comidas/${element.idMeal}`, state: { dataRecipes: element } }}>
       <div data-testid={`${idx}-recipe-card`}>
         <h2 data-testid={`${idx}-card-name`}>{ strMeal }</h2>
         <img src={strMealThumb} alt={`${strMeal} photograph`} data-testid={`${idx}-card-img`} />
