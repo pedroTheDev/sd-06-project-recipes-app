@@ -4,6 +4,7 @@ import Footer from '../components/Footer';
 import { fetchAPIDrinks } from '../services';
 import Card from '../components/Card';
 import ContextRecipes from '../context/ContextRecipes';
+import CategoryButtons from '../components/CategoryButtons';
 
 function Drinks() {
   const { setRecipes, showCard, setShowCard } = useContext(ContextRecipes);
@@ -21,6 +22,7 @@ function Drinks() {
   return (
     <div>
       <Header title="Bebidas" fetchApi={ fetchAPIDrinks } showSearchIcon />
+      <CategoryButtons resetFilter={ fetchRecipes } />
       {showCard && <Card />}
       <Footer />
     </div>
