@@ -12,7 +12,6 @@ const Cards = () => {
       return (
         apiValueSearch.foods.meals && apiValueSearch.foods.meals.map((meal, index) => {
           if (index <= 11) {
-            if (apiValueSearch.foods.meals === null) { console.log('null'); }
             return (
               <div key={ meal.strMeal }>
                 <p>{meal.strMeal}</p>
@@ -31,12 +30,16 @@ const Cards = () => {
       window.location.href = `http://localhost:3000/bebidas/${drinkID}`;
     } else {
       return (
-        apiValueSearch.drinks.drinks && apiValueSearch.drinks.drinks.map((res) => (
-          <div key={ res.idDrink }>
-            <p>{res.strDrink}</p>
-            <img width="200" src={ res.strDrinkThumb } alt={ res.strDrink } />
-          </div>
-        ))
+        apiValueSearch.drinks.drinks && apiValueSearch.drinks.drinks.map((res, index) => {
+          if (index <= 11) {
+            return (
+              <div key={ res.idDrink }>
+                <p>{res.strDrink}</p>
+                <img width="200" src={ res.strDrinkThumb } alt={ res.strDrink } />
+              </div>
+            );
+          }
+        })
       );
     }
   };

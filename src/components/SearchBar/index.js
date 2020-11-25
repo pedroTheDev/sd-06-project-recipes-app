@@ -21,16 +21,26 @@ const SearchBar = () => {
 
     if (window.location.pathname === '/bebidas') {
       const drinks = await searchDrink(nome, radioButton);
-      return setApiValueSearch({
-        ...apiValueSearch,
-        drinks,
-      });
+      console.log(drinks);
+      if (drinks.drinks === null) {
+        alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+      } else {
+        return setApiValueSearch({
+          ...apiValueSearch,
+          drinks,
+        });
+      }
     }
     const foods = await searchFood(nome, radioButton);
-    return setApiValueSearch({
-      ...apiValueSearch,
-      foods,
-    });
+    // console.log(foods);
+    if (foods.meals === null) {
+      alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+    } else {
+      return setApiValueSearch({
+        ...apiValueSearch,
+        foods,
+      });
+    }
   };
 
   return searchComponent && (
