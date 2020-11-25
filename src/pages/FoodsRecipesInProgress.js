@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { fetchMealsById } from '../services';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 class FoodsRecipesInProgress extends React.Component {
   constructor() {
@@ -14,6 +15,7 @@ class FoodsRecipesInProgress extends React.Component {
       Measures: [],
       checkedItems: [],
       disabledButton: false,
+      Update: false,
     };
     this.handleIngredients = this.handleIngredients.bind(this);
     this.setIngredients = this.setIngredients.bind(this);
@@ -23,6 +25,8 @@ class FoodsRecipesInProgress extends React.Component {
     this.test = this.test.bind(this);
     // this.getLocalStorage = this.getLocalStorage.bind(this);
     // this.handleButton = this.handleButton.bind(this);
+    // this.test = this.test.bind(this);
+    this.getLocalStorage = this.getLocalStorage.bind(this);
   }
 
   async componentDidMount() {
@@ -67,7 +71,9 @@ class FoodsRecipesInProgress extends React.Component {
   }
 
   handleShareFood({ idMeal }) {
-    const url = `http://localhost:3000/comidas/${idMeal}/in-progress`;
+    const shareBtn = document.querySelector('.share-btn');
+    const url = `http://localhost:3000/comidas/${idMeal}`;
+    shareBtn.value = 'Link copiado!';
     window.alert('Link copiado!');
     const el = document.createElement('textarea');
     el.value = url;
@@ -114,6 +120,82 @@ class FoodsRecipesInProgress extends React.Component {
   //   }
   // }
 
+  setLocalStorage(recipe) {
+    const myObject = [{
+      id: recipe.idMeal,
+      type: 'comida',
+      area: recipe.strArea,
+      category: recipe.strCategory,
+      alcoholicOrNot: '',
+      name: recipe.strMeal,
+      image: recipe.strMealThumb,
+    }];
+    if (!localStorage.getItem('favoriteRecipes')) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify(myObject));
+    }
+    const myLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const shareButton = document.querySelector('.fav-button');
+    const blackHeart = 'http://localhost:3000/static/media/blackHeartIcon.b8913346.svg';
+    const zero = 0;
+    const minusOne = -1;
+    if (shareButton.src === blackHeart && myLocalStorage) {
+      const itemToRemove = myLocalStorage
+        .find((element) => (element.id === recipe.idMeal));
+      const indexToRemove = myLocalStorage.indexOf(itemToRemove, zero);
+      if (indexToRemove !== minusOne) {
+        myLocalStorage.splice(indexToRemove, 1);
+        localStorage.setItem('favoriteRecipes', JSON.stringify(myLocalStorage));
+      }
+      localStorage.setItem('favoriteRecipes', JSON.stringify(myLocalStorage)); // assim remove
+    } else {
+      const MyLSObj = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      const combineObjects = MyLSObj.concat(myObject);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(combineObjects)); // assim add
+    }
+    const favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const filteredStorage = favRecipes
+      .filter((v, i, a) => a.findIndex((t) => (t.id === v.id)) === i); // só registra um único id
+    localStorage.setItem('favoriteRecipes', JSON.stringify(filteredStorage));
+    const { Update } = this.state;
+    this.setState({ Update: !Update });
+  }
+
+  getFullDate() {
+    // 25/11/2020 00:31 ;
+    const day = new Date().getDate();
+    const month = new Date().getMonth();
+    const year = new Date().getFullYear();
+    const hours = new Date().getHours();
+    const minutes = new Date().getMinutes();
+    const seconds = new Date().getSeconds();
+    const fullDate = `${day}/${month + 1}/${year} ${hours}:${minutes}:${seconds}`;
+    return fullDate;
+  }
+
+  changeFavoriteIcon(recipe) {
+    if (localStorage.favoriteRecipes) {
+      const favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      const receitaAtual = favRecipes.find((element) => (element.id === recipe.idMeal));
+      if (favRecipes.includes(receitaAtual)) {
+        return blackHeartIcon;
+      }
+      return whiteHeartIcon;
+    }
+    return whiteHeartIcon;
+  }
+
+  // test(e) {
+  //   const { idCurrent } = this.props;
+  //   const object = {
+  //     meals: {
+  //       idCurrent,
+  //       ingredients: [
+  //         e.target.value,
+  //       ],
+  //     },
+  //   };
+  // }
+
   checkedItems() {
     const checked = {};
     const { Ingredients } = this.state;
@@ -144,19 +226,31 @@ class FoodsRecipesInProgress extends React.Component {
     });
   }
 
-  test(e) {
-    const { idCurrent } = this.props;
-    console.log(idCurrent);
-    const object = {
-      meals: {
-        idCurrent,
-        ingredients: [
-          e.target.value,
-        ],
-      },
-    };
-    const test = localStorage.setItem('inProgressRecipes', JSON.stringify(object));
-    console.log(test);
+  recipeDone(recipe) {
+    const { history } = this.props;
+    const fullDate = this.getFullDate();
+    const myObject = [{
+      id: recipe.idMeal,
+      type: 'comida',
+      area: recipe.strArea,
+      category: recipe.strCategory,
+      alcoholicOrNot: '',
+      name: recipe.strMeal,
+      image: recipe.strMealThumb,
+      doneDate: fullDate,
+      tags: recipe.strTags,
+    }];
+
+    if (!localStorage.getItem('doneRecipes')) {
+      localStorage.setItem('doneRecipes', JSON.stringify(myObject));
+    }
+    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+    const combinedObjects = doneRecipes.concat(myObject);
+    localStorage.setItem('doneRecipes', JSON.stringify(combinedObjects)); // assim add
+    const filteredStorage = combinedObjects
+      .filter((v, i, a) => a.findIndex((t) => (t.id === v.id)) === i); // só registra um único id
+    localStorage.setItem('doneRecipes', JSON.stringify(filteredStorage));
+    history.push('/receitas-feitas');
   }
 
   render() {
@@ -180,6 +274,7 @@ class FoodsRecipesInProgress extends React.Component {
                 <input
                   type="image"
                   data-testid="share-btn"
+                  className="share-btn"
                   src={ shareIcon }
                   alt="shareIcon"
                   onClick={ () => this.handleShareFood(recipe) }
@@ -187,7 +282,9 @@ class FoodsRecipesInProgress extends React.Component {
                 <input
                   type="image"
                   data-testid="favorite-btn"
-                  src={ whiteHeartIcon }
+                  className="fav-button"
+                  src={ this.changeFavoriteIcon(recipe) }
+                  onClick={ () => this.setLocalStorage(recipe) }
                   alt="whiteHeartIcon"
                 />
               </div>
@@ -228,8 +325,8 @@ class FoodsRecipesInProgress extends React.Component {
               <button
                 data-testid="finish-recipe-btn"
                 type="button"
-                onClick={ () => history.push('/receitas-feitas') }
-                disabled={ !disabledButton }
+                onClick={ () => this.recipeDone(recipe) }
+                className="start-recipe"
               >
                 Finalizar Receita
               </button>
@@ -246,7 +343,6 @@ const mapStateToProps = (state) => ({
 
 FoodsRecipesInProgress.propTypes = {
   history: PropTypes.shape().isRequired,
-  idCurrent: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, null)(FoodsRecipesInProgress);
