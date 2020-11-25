@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Footer from '../../components/Footer';
+import Header from '../../components/Header';
 
 import * as cocktailAPI from '../../services/cocktailAPI';
 import * as mealAPI from '../../services/mealAPI';
@@ -113,6 +115,7 @@ function RecipesPage() {
 
   return (
     <div className="recipes-page">
+      <Header />
       <div className="categories">
         <div className="category-button">
           <input
@@ -205,6 +208,7 @@ function RecipesPage() {
           return (null);
         })}
       </div>
+      <Footer />
     </div>
   );
 }
