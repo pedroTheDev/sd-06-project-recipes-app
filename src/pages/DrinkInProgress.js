@@ -88,7 +88,7 @@ export default function DrinkInProgress(props) {
       }
       const recipeArray = array.map((number) => (
         (currRecipe[`strIngredient${number}`] !== null
-          || currRecipe[`strIngredient${number}`])
+          && currRecipe[`strIngredient${number}`] !== '')
           ? [currRecipe[`strIngredient${number}`], currRecipe[`strMeasure${number}`]]
           : ''
       ));
@@ -96,12 +96,12 @@ export default function DrinkInProgress(props) {
     }
   }, [recipe]);
 
-  function handle() {
+  function renderIngredients() {
     const empty = 0;
     if (recipeDetails.length > empty) {
       return (
         <div>
-          { recipeDetails.filter((ingredient) => ingredient !== '')
+          { recipeDetails.filter((ingredient) => ingredient !== '' && ingredient !== null)
             .map((ingredient, index) => (
               <p
                 data-testid={ `${index}-ingredient-step` }
@@ -147,7 +147,7 @@ export default function DrinkInProgress(props) {
           </button>
           <p data-testid="recipe-category">{item.strAlcoholic}</p>
           <p data-testid="instructions">{item.strInstructions}</p>
-          {handle()}
+          {renderIngredients()}
           <p data-testid="video">{item.strYoutube}</p>
           <Link to={ `/bebidas/${props.match.params.id}/in-progress` }>
             <button

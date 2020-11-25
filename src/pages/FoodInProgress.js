@@ -88,7 +88,7 @@ export default function FoodInProgress(props) {
       }
       const recipeArray = array.map((number) => (
         (currRecipe[`strIngredient${number}`] !== ''
-          || currRecipe[`strIngredient${number}`])
+          && currRecipe[`strIngredient${number}`] !== null)
           ? [currRecipe[`strIngredient${number}`], currRecipe[`strMeasure${number}`]]
           : ''
       ));
@@ -101,7 +101,7 @@ export default function FoodInProgress(props) {
     if (recipeDetails.length > empty) {
       return (
         <div>
-          { recipeDetails.filter((ingredient) => ingredient !== '')
+          { recipeDetails.filter((ingredient) => ingredient !== '' && ingredient !== null)
             .map((ingredient, index) => (
               <p
                 key={ ingredient[0] }
@@ -151,7 +151,7 @@ export default function FoodInProgress(props) {
           <Link to={ `/comidas/${props.match.params.id}/in-progress` }>
             <button
               type="button"
-              data-testid="start-recipe-btn"
+              data-testid="finish-recipe-btn"
               className="btnStart"
               disabled={ disabled }
             >
