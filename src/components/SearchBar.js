@@ -10,11 +10,9 @@ export default function SearchBar() {
 
   // const { pathname } = useLocation();
   const fetchApi = () => {
-    // Checar as rotas do pathname
     fetchMeal('garlic');
   };
-  console.log(fetchApi);
-
+  
   return (
     <div className="form-group searchBar">
       <div className="col-sm-8">
