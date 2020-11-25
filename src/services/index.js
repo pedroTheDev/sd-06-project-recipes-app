@@ -29,7 +29,11 @@ export function fetchDrinks(endPoint, value) {
   } else if (value === 'ingrediente') {
     variavel = fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${endPoint}`)
       .then((response) => response.json())
-      .then((response) => response.drinks);
+      .then((response) => response.drinks)
+      .catch(() => {
+        alert('item não encontrado');
+        return [];
+      });
   } else if (value === 'nome') {
     variavel = fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${endPoint}`)
       .then((response) => response.json())

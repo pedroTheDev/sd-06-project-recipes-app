@@ -109,8 +109,6 @@ class FoodsDetails extends React.Component {
     if (!localStorage.getItem('favoriteRecipes')) {
       localStorage.setItem('favoriteRecipes', JSON.stringify(myObject));
     }
-    const { idMeal } = recipe;
-    const isFavorite = JSON.parse(localStorage.getItem('isFav'));
     const myLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
     const shareButton = document.querySelector('.fav-button');
     const blackHeart = 'http://localhost:3000/static/media/blackHeartIcon.b8913346.svg';
