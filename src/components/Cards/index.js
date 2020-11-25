@@ -10,12 +10,17 @@ const Cards = () => {
       window.location.href = `http://localhost:3000/comidas/${foodID}`;
     } else {
       return (
-        apiValueSearch.foods.meals && apiValueSearch.foods.meals.map((meal) => (
-          <div key={ meal.strMeal }>
-            <p>{meal.strMeal}</p>
-            <img width="200" src={ meal.strMealThumb } alt={ meal.strMeal } />
-          </div>
-        ))
+        apiValueSearch.foods.meals && apiValueSearch.foods.meals.map((meal, index) => {
+          if (index <= 11) {
+            if (apiValueSearch.foods.meals === null) { console.log('null'); }
+            return (
+              <div key={ meal.strMeal }>
+                <p>{meal.strMeal}</p>
+                <img width="200" src={ meal.strMealThumb } alt={ meal.strMeal } />
+              </div>
+            );
+          }
+        })
       );
     }
   };
