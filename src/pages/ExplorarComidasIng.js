@@ -12,14 +12,14 @@ const ExplorarComidasIng = () => {
   useEffect(() => {
     listIngredients().then((response) => setIngredientList(response));
   }, []);
-
+  console.log(ingredientList);
   const zero = 0;
   const twelve = 12;
 
   return (
     <div>
       <Header title="Explorar por Ingredientes" />
-      {ingredientList.slice(zero, twelve).map((ingred, index) => (
+      {ingredientList && ingredientList.slice(zero, twelve).map((ingred, index) => (
         <Link
           to="/comidas"
           data-testid={ `${index}-ingredient-card` }

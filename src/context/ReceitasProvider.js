@@ -7,6 +7,7 @@ const ReceitasProvider = ({ children }) => {
   const [foods, setFoods] = useState([]);
   const [drinks, setDrinks] = useState([]);
   const [ingredientList, setIngredientList] = useState([]);
+  const [drinksIngredientList, setDrinksIngredientList] = useState([]);
   const [searchBox, setSearchBox] = useState(false);
   const [fetching, setFetching] = useState(true);
   const [filtersData, setFiltersData] = useState(['All']);
@@ -32,6 +33,8 @@ const ReceitasProvider = ({ children }) => {
     setStopApi,
     ingredientList,
     setIngredientList,
+    drinksIngredientList,
+    setDrinksIngredientList,
   };
 
   return (

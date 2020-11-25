@@ -6,20 +6,21 @@ import ReceitasContext from '../context/ReceitasContext';
 import { listIngredients, drinkAPI } from '../services/drinkAPI';
 
 const ExplorarBebidasIng = () => {
-  const { setMeals, ingredientList,
-    setIngredientList, setStopApi } = useContext(ReceitasContext);
+  const { setMeals, drinksIngredientList,
+    setDrinksIngredientList, setStopApi } = useContext(ReceitasContext);
 
   useEffect(() => {
-    listIngredients().then((response) => setIngredientList(response));
+    listIngredients().then((response) => setDrinksIngredientList(response));
   }, []);
-
+  console.log(drinksIngredientList);
   const zero = 0;
   const twelve = 12;
 
   return (
     <div>
       <Header title="Explorar por Ingredientes" />
-      {ingredientList.slice(zero, twelve).map((ingred, index) => (
+      {drinksIngredientList
+      && drinksIngredientList.slice(zero, twelve).map((ingred, index) => (
         <Link
           to="/bebidas"
           data-testid={ `${index}-ingredient-card` }
