@@ -2,10 +2,13 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import copyToClipboard from 'clipboard-copy';
 import RecipesContext from '../context/RecipesContext';
-import { shareIcon, whiteHeartIcon } from '../images';
+import { shareIcon, whiteHeartIcon, blackHeartIcon } from '../images';
 
 function ProcessoComida() {
   const { foodIngredients } = useContext(RecipesContext);
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [isDisable, setIsDisable] = useState(true);
+  const [isShare, setShare] = useState();
   const [checked, setChecked] = useState({});
 
   const handleChange = ({ target }) => {
@@ -22,22 +25,26 @@ function ProcessoComida() {
     <div>
       <img data-testid="recipe-photo" src="" alt="Foto da receita" />
       <h2 data-testid="recipe-title">Nome da Receita</h2>
-      <button
-        type="button"
-        data-testid="share-btn"
-        onClick={ () => copyToClipboard('Link copiado!') }
-      >
-        <img
-          src={ shareIcon }
-          alt="Botão de Compartilhar"
-        />
-      </button>
+      <div>
+        <button
+          type="button"
+          data-testid="share-btn"
+          onClick={ () => setShare('Link copiado!') && copyToClipboard('http://localhost:3000/comidas/52771') }
+        >
+          <img
+            src={ shareIcon }
+            alt="Botão de Compartilhar"
+          />
+        </button>
+        {isShare}
+      </div>
       <button
         type="button"
         data-testid="favorite-btn"
+        onClick={ () => setIsFavorite(!isFavorite) }
       >
         <img
-          src={ whiteHeartIcon }
+          src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
           alt="Botão de Favorito"
         />
       </button>
@@ -65,6 +72,7 @@ function ProcessoComida() {
         <button
           type="button"
           data-testid="finish-recipe-btn"
+          disabled={ isDisable }
         >
           Finalizar Receita
         </button>

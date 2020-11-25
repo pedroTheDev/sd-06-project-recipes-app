@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { shareIcon, whiteHeartIcon, blackHeartIcon } from '../images';
 
 function DetalhesComida() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isFavorite, setIsFavorite] = useState(false);
   const history = useHistory();
   const idMeal = history.location.pathname.split('/')[2];
 
@@ -17,7 +19,31 @@ function DetalhesComida() {
     fetchAPI();
   }, [idMeal]);
 
-  console.log(data);
+  useEffect(() => {
+    if (localStorage.favoriteRecipes) {
+      setIsFavorite(true);
+    }
+  }, []);
+
+  const handleClick = () => {
+    setIsFavorite(!isFavorite);
+    if (!isFavorite) {
+      localStorage.favoriteRecipes = JSON.stringify([{
+        id: data.idMeal,
+        type: 'comida',
+        area: data.strArea,
+        category: data.strCategory,
+        alcoholicOrNot: '',
+        name: data.strMeal,
+        image: data.strMealThumb,
+        // doneDate: ,
+        tags: [data.strTags],
+      }]);
+    } else {
+      localStorage.removeItem('favoriteRecipes');
+    }
+  };
+
   return (
     <div>
       {(isLoading)
@@ -31,8 +57,26 @@ function DetalhesComida() {
             />
             <h1 data-testid="recipe-title">{ data.strMeal }</h1>
             <p data-testid="recipe-category">{ data.strCategory }</p>
-            <button data-testid="share-btn" type="button">Compartilhar</button>
-            <button data-testid="favorite-btn" type="button">Favoritar</button>
+            <button
+              data-testid="share-btn"
+              type="button"
+            >
+              <img
+                src={ shareIcon }
+                alt="Botão de Compartilhar"
+              />
+            </button>
+            <button
+              data-testid="favorite-btn"
+              type="button"
+              onClick={ handleClick }
+              src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+            >
+              <img
+                src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+                alt="Botão de Favorito"
+              />
+            </button>
             <h2>Ingredientes</h2>
             <ul>
               {
@@ -72,4 +116,5 @@ function DetalhesComida() {
     </div>
   );
 }
+
 export default DetalhesComida;
