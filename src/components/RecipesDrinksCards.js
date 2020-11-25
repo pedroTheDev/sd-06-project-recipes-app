@@ -13,7 +13,7 @@ function RecipesDrinksCards({ categories }) {
     if (innerText === 'All' || innerText === selectedCategorie) {
       const responseDrinks = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
       const responseDrinksJson = await responseDrinks.json();
-      return setData([responseDrinksJson]);
+      return setData([data[0], responseDrinksJson]);
     }
 
     const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${innerText}`);
@@ -67,7 +67,7 @@ function RecipesDrinksCards({ categories }) {
 }
 
 RecipesDrinksCards.propTypes = {
-  categories: PropTypes.arrayOf(PropTypes.object).isRequired,
+    categories: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default RecipesDrinksCards;
