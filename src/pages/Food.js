@@ -6,7 +6,7 @@ import RecipeContext from '../context/RecipeContext';
 import './Food.css';
 
 function Food() {
-  const { setFoodAPI } = useContext(RecipeContext);
+  const { setFoodAPI, mealCategories } = useContext(RecipeContext);
 
   const [meals, setMeals] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -27,6 +27,10 @@ function Food() {
     };
     fecthMeals();
 
+    if (mealCategories) {
+      setCurrentCategories(mealCategories);
+    }
+
     const fecthCategory = async () => {
       const APIRequestCategory = await fetch(urlCategories);
       const APIResponseCategory = await APIRequestCategory.json();
@@ -43,6 +47,7 @@ function Food() {
       const APIResponseMealsCategory = await APIRequestMealsCategory.json();
       if (APIResponseMealsCategory !== null) {
         setCurrentMeals(APIResponseMealsCategory.meals);
+        console.log('vc esta aqui');
       }
     };
     fecthMealsCategory();
@@ -103,7 +108,7 @@ function Food() {
       setCurrentCategories('');
     }
   };
-
+  console.log(mealCategories);
   return (
     <div className="food-container">
       <Header title="Comidas" />
