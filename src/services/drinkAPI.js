@@ -33,22 +33,20 @@ export const fetchRandomDrink = () => fetch('https://www.thecocktaildb.com/api/j
       .catch((error) => error)
   ));
 
-export const drinkApi = () => ( // requisito 26
-  fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=')
-    .then((response) => (
-      response
-        .json()
-        .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json)))
-    ))
-);
-
 export const drinkCategoryApi = () => ( // requisito 27
   fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list')
-    .then((response) => (
-      response
-        .json()
-        .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json)))
-    ))
+    .then((response) => response.json())
+    .then((response) => {
+      const data = ['All'];
+      const cinco = 5;
+      const zero = 0;
+
+      for (let i = zero; i < cinco; i += 1) {
+        data.push(response.drinks[i].strCategory);
+      }
+
+      return data;
+    })
 );
 
 export const drinkByCategoryApi = (category) => ( // requisito 28

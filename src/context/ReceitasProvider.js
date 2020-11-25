@@ -12,7 +12,6 @@ const ReceitasProvider = ({ children }) => {
   const [fetching, setFetching] = useState(true);
   const [filtersData, setFiltersData] = useState(['All']);
   const [selectedFilter, setSelectedFilter] = useState('All');
-  const [stopApi, setStopApi] = useState(false);
 
   const state = {
     meals,

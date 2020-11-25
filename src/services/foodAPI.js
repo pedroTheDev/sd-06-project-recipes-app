@@ -35,11 +35,17 @@ export const fetchRandomMeal = () => fetch('https://www.themealdb.com/api/json/v
 
 export const foodCategoryApi = () => ( // requisito 27
   fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list')
-    .then((response) => (
-      response
-        .json()
-        .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json)))
-    ))
+    .then((response) => response.json())
+    .then((response) => {
+      const data = ['All'];
+      const cinco = 5;
+      const zero = 0;
+
+      for (let i = zero; i < cinco; i += 1) {
+        data.push(response.meals[i].strCategory);
+      }
+      return data;
+    })
 );
 
 export const foodByCategoryApi = (category) => ( // requisito 28

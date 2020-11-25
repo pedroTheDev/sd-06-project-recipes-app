@@ -6,44 +6,46 @@ import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
 import ReceitasContext from '../context/ReceitasContext';
 import FoodFilters from '../components/FoodFilters';
-
-import { foodApi } from '../services/foodAPI';
+import { foodAPI, foodCategoryApi } from '../services/foodAPI';
 
 const Comidas = (history) => {
   const {
-    searchBox, meals, setMeals, stopApi, setStopApi,
+    searchBox, meals, setMeals, setFiltersData,
+    // stopApi, setStopApi,
   } = useContext(ReceitasContext);
 
   const location = useLocation();
-
-  useEffect(() => {
-    if (stopApi) {
-      return '';
-    }
-    foodApi().then((response) => {
-      setMeals(response.meals);
-    });
-    return setStopApi(false);
-  }, []);
-
-  if (!meals.length) return <div>Carregando...</div>;
   const doze = 12;
 
-  return (
-    <section>
-      <Header title="Comidas" searchBtn />
-      {searchBox && <SearchBar history={ history } /> }
-      <FoodFilters />
-      <div>
-        {meals
-          .filter((x, index) => index < doze)
-          .map((food, i) => (
-            <MealsCard key={ food } food={ food } index={ i } />
-          )) }
-      </div>
-      {location.pathname === '/comidas' && <Footer />}
-    </section>
+  useEffect(() => {
+    async function fetchFood() {
+      const data = await foodCategoryApi();
+      const responseFoodsAPI = await foodAPI();
 
+      setFiltersData(data);
+      setMeals(responseFoodsAPI);
+    }
+
+    fetchFood();
+  }, []);
+
+  return ((!meals.length)
+    ? <div>Carregando...</div>
+    : (
+      <section>
+        <Header title="Comidas" searchBtn />
+        {searchBox && <SearchBar history={ history } />}
+        <FoodFilters />
+        <div>
+          {meals.length && (meals
+            .filter((x, index) => index < doze)
+            .map((food, i) => (
+              <MealsCard key={ food } food={ food } index={ i } />
+            )))}
+        </div>
+        {location.pathname === '/comidas' && <Footer />}
+      </section>
+    )
   );
 };
 

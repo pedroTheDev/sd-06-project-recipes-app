@@ -1,38 +1,36 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import ReceitasContext from '../context/ReceitasContext';
-import { foodCategoryApi, foodByCategoryApi, foodApi } from '../services/foodAPI';
+import { foodByCategoryApi, foodAPI } from '../services/foodAPI';
 
 function FoodFilters() {
   const {
-    filtersData, setFiltersData, setMeals, selectedFilter, setSelectedFilter,
+    filtersData, setMeals, selectedFilter, setSelectedFilter,
   } = useContext(ReceitasContext);
 
-  useEffect(() => {
-    foodCategoryApi().then((response) => {
-      const data = ['All'];
-      const cinco = 5;
-      const zero = 0;
+  async function fetchFood() {
+    const responseFoodApi = await foodAPI();
+    setMeals(responseFoodApi);
+  }
 
-      for (let i = zero; i < cinco; i += 1) {
-        data.push(response.meals[i].strCategory);
-      }
-      setFiltersData(data);
-    });
-  }, []);
-
-  const filterByCategory = (category) => {
-    if (category === selectedFilter || category === 'All') {
-      setSelectedFilter('All');
-      foodApi().then((response) => {
-        setMeals(response.meals);
-      });
+  const filters = (category) => {
+    if (category === 'All') {
+      fetchFood();
     } else {
-      setSelectedFilter(category);
       foodByCategoryApi(category).then((response) => {
         setMeals(response.meals);
       });
     }
   };
+
+  const filterByCategory = (category) => {
+    if (category !== selectedFilter) {
+      filters(category);
+      setSelectedFilter(category);
+    } else {
+      fetchFood();
+    }
+  };
+
   return (
     <div>
       {filtersData.map((filter) => (

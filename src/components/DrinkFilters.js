@@ -1,38 +1,36 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import ReceitasContext from '../context/ReceitasContext';
-import { drinkCategoryApi, drinkByCategoryApi, drinkApi } from '../services/drinkAPI';
+import { drinkByCategoryApi, drinkAPI } from '../services/drinkAPI';
 
 function DrinkFilters() {
   const {
-    filtersData, setFiltersData, setMeals, selectedFilter, setSelectedFilter,
+    filtersData, setMeals, selectedFilter, setSelectedFilter,
   } = useContext(ReceitasContext);
 
-  useEffect(() => {
-    drinkCategoryApi().then((response) => {
-      const data = ['All'];
-      const cinco = 5;
-      const zero = 0;
+  async function fetchDrink() {
+    const responseDrinksAPI = await drinkAPI();
+    setMeals(responseDrinksAPI);
+  }
 
-      for (let i = zero; i < cinco; i += 1) {
-        data.push(response.drinks[i].strCategory);
-      }
-      setFiltersData(data);
-    });
-  }, []);
-
-  const filterByCategory = (category) => {
-    if (category === selectedFilter || category === 'All') {
-      setSelectedFilter('All');
-      drinkApi().then((response) => {
-        setMeals(response.drinks);
-      });
+  const filters = (category) => {
+    if (category === 'All') {
+      fetchDrink();
     } else {
-      setSelectedFilter(category);
       drinkByCategoryApi(category).then((response) => {
         setMeals(response.drinks);
       });
     }
   };
+
+  const filterByCategory = (category) => {
+    if (category !== selectedFilter) {
+      filters(category);
+      setSelectedFilter(category);
+    } else {
+      fetchDrink();
+    }
+  };
+
   return (
     <div>
       {filtersData.map((filter) => (
