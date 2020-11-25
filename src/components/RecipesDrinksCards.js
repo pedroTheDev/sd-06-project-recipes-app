@@ -22,6 +22,10 @@ function RecipesDrinksCards({ categories }) {
     return setData([data[0], responseJson]);
   };
 
+  if (!categories) {
+    return <h2>Loading...</h2>;
+  }
+
   return (
     <div>
       <button

@@ -1,21 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import copyToClipboard from 'clipboard-copy';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+// import copyToClipboard from 'clipboard-copy';
+import RecipesContext from '../context/RecipesContext';
 import { shareIcon, whiteHeartIcon, blackHeartIcon } from '../images';
+import '../style/Detalhes.css';
 
 function DetalhesComida() {
-  const [data, setData] = useState([]);
+  const { data } = useContext(RecipesContext);
+  const [dataMeal, setDataMeal] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const [isShare, setShare] = useState();
   const history = useHistory();
   const idMeal = history.location.pathname.split('/')[2];
-
+  const SEIS = 6;
+  let continuar = false;
+  if (localStorage.inProgressRecipes) {
+    const ids = Object.keys(JSON.parse(localStorage.inProgressRecipes).meals);
+    continuar = ids.includes(idMeal);
+  }
   useEffect(() => {
     async function fetchAPI() {
       const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`);
       const responseJson = await response.json();
-      setData(responseJson.meals[0]);
+      setDataMeal(responseJson.meals[0]);
       setIsLoading(false);
     }
     fetchAPI();
@@ -35,13 +43,13 @@ function DetalhesComida() {
     setIsFavorite(!isFavorite);
     if (!isFavorite) {
       localStorage.favoriteRecipes = JSON.stringify([{
-        id: data.idMeal,
+        id: dataMeal.idMeal,
         type: 'comida',
-        area: data.strArea,
-        category: data.strCategory,
+        area: dataMeal.strArea,
+        category: dataMeal.strCategory,
         alcoholicOrNot: '',
-        name: data.strMeal,
-        image: data.strMealThumb,
+        name: dataMeal.strMeal,
+        image: dataMeal.strMealThumb,
       }]);
     } else {
       localStorage.removeItem('favoriteRecipes');
@@ -53,14 +61,14 @@ function DetalhesComida() {
       {(isLoading)
         ? <p>Loading</p>
         : (
-          <div>
+          <div className="container-details">
             <img
               data-testid="recipe-photo"
-              src={ data.strMealThumb }
-              alt={ data.strMeal }
+              src={ dataMeal.strMealThumb }
+              alt={ dataMeal.strMeal }
             />
-            <h1 data-testid="recipe-title">{ data.strMeal }</h1>
-            <p data-testid="recipe-category">{ data.strCategory }</p>
+            <h1 data-testid="recipe-title">{ dataMeal.strMeal }</h1>
+            <p data-testid="recipe-category">{ dataMeal.strCategory }</p>
             <span>
               <button
                 data-testid="share-btn"
@@ -88,19 +96,19 @@ function DetalhesComida() {
             <h2>Ingredientes</h2>
             <ul>
               {
-                Object.keys(data)
+                Object.keys(dataMeal)
                   .filter((keys) => keys.includes('Ingredient'))
                   .map((ingredient, index) => {
-                    const measure = Object.keys(data)
+                    const measure = Object.keys(dataMeal)
                       .filter((keys) => keys.includes('Measure'));
                     const measureIndex = measure[index];
-                    if (data[ingredient] !== '' && data[ingredient] !== null) {
+                    if (dataMeal[ingredient] !== '' && dataMeal[ingredient] !== null) {
                       return (
                         <li
                           key={ index }
                           data-testid={ `${index}-ingredient-name-and-measure` }
                         >
-                          { `${data[ingredient]} - ${data[measureIndex]} ` }
+                          { `${dataMeal[ingredient]} - ${dataMeal[measureIndex]} ` }
                         </li>
                       );
                     }
@@ -110,16 +118,35 @@ function DetalhesComida() {
             </ul>
             <br />
             <h2>Instruções</h2>
-            <p data-testid="instructions">{ data.strInstructions }</p>
+            <p data-testid="instructions">{ dataMeal.strInstructions }</p>
             <br />
             <h2>Vídeo</h2>
             <video data-testid="video" width="300" height="250" controls>
-              <source src={ data.strYoutube } type="video/mp4" />
+              <source src={ dataMeal.strYoutube } type="video/mp4" />
               <track src="" kind="captions" />
             </video>
-            <h2>Recomendadas</h2>
 
-            <button data-testid="start-recipe-btn" type="button">Iniciar receita</button>
+            <h2>Recomendadas</h2>
+            {
+              data[1] && data[1].drinks
+                .filter((_, index) => index < SEIS)
+                .map(({ strDrink, strDrinkThumb }, index) => (
+                  <div key={ strDrink } data-testid={ `${index}-recomendation-card` }>
+                    <img src={ strDrinkThumb } alt={ strDrink } />
+                    <h2 data-testid={ `${index}-recomendation-title` }>{ strDrink }</h2>
+                  </div>
+                ))
+            }
+
+            <Link to={ `/comidas/${idMeal}/in-progress` }>
+              <button
+                className="start-recipe"
+                data-testid="start-recipe-btn"
+                type="button"
+              >
+                {continuar ? 'Continuar Receita' : 'Iniciar Receita'}
+              </button>
+            </Link>
           </div>) }
     </div>
   );

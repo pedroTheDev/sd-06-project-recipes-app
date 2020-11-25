@@ -7,7 +7,7 @@ import { shareIcon, whiteHeartIcon, blackHeartIcon } from '../images';
 function ProcessoComida() {
   const { foodIngredients } = useContext(RecipesContext);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [isDisable, setIsDisable] = useState(true);
+  const [isDisable] = useState(true);
   const [isShare, setShare] = useState();
   const [checked, setChecked] = useState({});
 
