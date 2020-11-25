@@ -4,7 +4,7 @@ import { foodByCategoryApi, foodAPI } from '../services/foodAPI';
 
 function FoodFilters() {
   const {
-    filtersData, setMeals, selectedFilter, setSelectedFilter
+    filtersData, setMeals, selectedFilter, setSelectedFilter,
   } = useContext(ReceitasContext);
 
   async function fetchFood() {
@@ -20,7 +20,7 @@ function FoodFilters() {
         setMeals(response.meals);
       });
     }
-  }
+  };
 
   const filterByCategory = (category) => {
     if (category !== selectedFilter) {
@@ -35,10 +35,10 @@ function FoodFilters() {
     <div>
       {filtersData.map((filter) => (
         <button
-          key={filter}
+          key={ filter }
           type="button"
-          data-testid={`${filter}-category-filter`}
-          onClick={(event) => filterByCategory(event.target.innerHTML)}
+          data-testid={ `${filter}-category-filter` }
+          onClick={ (event) => filterByCategory(event.target.innerHTML) }
         >
           {filter}
         </button>

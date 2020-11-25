@@ -17,7 +17,6 @@ const Comidas = (history) => {
   const location = useLocation();
   const doze = 12;
 
-
   useEffect(() => {
     async function fetchFood() {
       const data = await foodCategoryApi();
@@ -30,18 +29,18 @@ const Comidas = (history) => {
     fetchFood();
   }, []);
 
-  return ( (!meals.length)
+  return ((!meals.length)
     ? <div>Carregando...</div>
     : (
       <section>
         <Header title="Comidas" searchBtn />
-        {searchBox && <SearchBar history={history} />}
+        {searchBox && <SearchBar history={ history } />}
         <FoodFilters />
         <div>
           {meals.length && (meals
             .filter((x, index) => index < doze)
             .map((food, i) => (
-              <MealsCard key={food} food={food} index={i} />
+              <MealsCard key={ food } food={ food } index={ i } />
             )))}
         </div>
         {location.pathname === '/comidas' && <Footer />}

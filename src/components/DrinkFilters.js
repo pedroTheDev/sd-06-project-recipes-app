@@ -20,7 +20,7 @@ function DrinkFilters() {
         setMeals(response.drinks);
       });
     }
-  }
+  };
 
   const filterByCategory = (category) => {
     if (category !== selectedFilter) {
@@ -35,10 +35,10 @@ function DrinkFilters() {
     <div>
       {filtersData.map((filter) => (
         <button
-          key={filter}
+          key={ filter }
           type="button"
-          data-testid={`${filter}-category-filter`}
-          onClick={(event) => filterByCategory(event.target.innerHTML)}
+          data-testid={ `${filter}-category-filter` }
+          onClick={ (event) => filterByCategory(event.target.innerHTML) }
         >
           {filter}
         </button>

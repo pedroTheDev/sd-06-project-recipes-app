@@ -2,17 +2,17 @@ export async function foodAPI(type, endpoint) {
   let url;
 
   switch (type) {
-    case 'ingredient':
-      url = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${endpoint}`;
-      break;
-    case 'name':
-      url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${endpoint}`;
-      break;
-    case 'first-letter':
-      url = `https://www.themealdb.com/api/json/v1/1/search.php?f=${endpoint}`;
-      break;
-    default:
-      url = 'https://www.themealdb.com/api/json/v1/1/filter.php?i=';
+  case 'ingredient':
+    url = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${endpoint}`;
+    break;
+  case 'name':
+    url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${endpoint}`;
+    break;
+  case 'first-letter':
+    url = `https://www.themealdb.com/api/json/v1/1/search.php?f=${endpoint}`;
+    break;
+  default:
+    url = 'https://www.themealdb.com/api/json/v1/1/filter.php?i=';
   }
 
   const fetchAPI = await fetch(url)

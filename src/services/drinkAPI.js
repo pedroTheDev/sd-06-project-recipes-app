@@ -44,7 +44,7 @@ export const drinkCategoryApi = () => ( // requisito 27
       for (let i = zero; i < cinco; i += 1) {
         data.push(response.drinks[i].strCategory);
       }
-      
+
       return data;
     })
 );
