@@ -21,7 +21,6 @@ function Header({ title }) {
         return history.push(
           {
             pathname: `/comidas/${recipe.meals[0].idMeal}`,
-            state: { recipe: recipe.meals[0] },
           },
         );
       }

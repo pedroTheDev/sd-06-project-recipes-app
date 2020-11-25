@@ -73,10 +73,7 @@ function RecipesCards({ title }) {
             .map(({ idMeal, strMeal, strMealThumb }, index) => (
               <Link
                 key={ idMeal }
-                to={ {
-                  pathname: `/comidas/${idMeal}`,
-                  state: { recipe: { strMeal, strMealThumb } },
-                } }
+                to={ `/comidas/${idMeal}` }
               >
                 <div
                   data-testid={ `${index}-recipe-card` }
@@ -119,10 +116,7 @@ function RecipesCards({ title }) {
           .map(({ idDrink, strDrink, strDrinkThumb }, index) => (
             <Link
               key={ idDrink }
-              to={ {
-                pathname: `/bebidas/${idDrink}`,
-                state: { recipe: { strDrink, strDrinkThumb } },
-              } }
+              to={ `/bebidas/${idDrink}` }
             >
               <div
                 data-testid={ `${index}-recipe-card` }
