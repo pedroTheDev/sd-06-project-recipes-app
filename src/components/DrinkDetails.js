@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { fetchDetail, fetchRecommendation } from '../helpers/Helper';
+import shareIcon from '../images/shareIcon.svg';
+import whiteHeart from '../images/whiteHeartIcon.svg';
+import blackHeart from '../images/blackHeartIcon.svg';
 import history from '../helpers/History';
 
 import '../css/itemDetails.css';
@@ -14,6 +17,7 @@ export default function FoodsDetails(props) {
   const [disabled, setDisabled] = useState(true);
   const [btnStartValue, setBtnStartValue] = useState('Iniciar Receita');
   const [copy, setCopy] = useState('');
+  const [fav, setFav] = useState(whiteHeart);
 
   useEffect(() => {
     if (recipeId === '') {
@@ -42,6 +46,9 @@ export default function FoodsDetails(props) {
     }
     if (localStorage.getItem('inProgressRecipes') !== null) {
       setBtnStartValue('Continuar Receita');
+    }
+    if (localStorage.getItem('favoriteRecipes') !== null) {
+      setFav(blackHeart);
     }
   }, []);
 
@@ -107,10 +114,16 @@ export default function FoodsDetails(props) {
             value="Share"
             onClick={ () => handleCopy() }
           >
-            Share
+            <img alt="Share" src={ shareIcon } />
           </button>
           {copy}
-          <input type="button" data-testid="favorite-btn" value="favorite" />
+          <button
+            type="button"
+            data-testid="favorite-btn"
+            src={ fav }
+          >
+            <img alt="fav" src={ fav } />
+          </button>
           <p data-testid="recipe-category">{item.strAlcoholic}</p>
           <p data-testid="instructions">{item.strInstructions}</p>
           {handle()}
