@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import propTypes from 'prop-types';
 import RecipesAppContext from '../hooks/RecipesAppContext';
 import {
@@ -17,6 +18,8 @@ function HeaderSearch({ name }) {
     cards: {
       setCardFood,
       setCardDrink,
+      cardFood,
+      cardDrink,
     },
     searchHeader,
   } = useContext(RecipesAppContext);
@@ -34,6 +37,7 @@ function HeaderSearch({ name }) {
       return requestApiFoodFilterFirstLetter(textSearch);
     }
     if (radioValue === 'primeira-letra') {
+      // eslint-disable-next-line no-alert
       alert('Sua busca deve conter somente 1 (um) caracter');
     }
   };
@@ -49,12 +53,14 @@ function HeaderSearch({ name }) {
       return requestApiDrinkFilterFirstLetter(textSearch);
     }
     if (radioValue === 'primeira-letra') {
+      // eslint-disable-next-line no-alert
       alert('Sua busca deve conter somente 1 (um) caracter');
     }
   };
 
   const alertFilterNotExist = (answerApi) => {
     if (answerApi === null) {
+      // eslint-disable-next-line no-alert
       alert('Sinto muito, não encontramos '
       + 'nenhuma receita para esses filtros.');
     }
@@ -84,6 +90,19 @@ function HeaderSearch({ name }) {
     return (
       <div />
     );
+  }
+
+  if (name === 'Comidas') {
+    if (cardFood.length === 1) {
+      const { idMeal } = cardFood[0];
+      return (<Redirect to={ `/comidas/${idMeal}` } />);
+    }
+  }
+  if (name === 'Bebidas') {
+    if (cardDrink.length === 1) {
+      const { idDrink } = cardDrink[0];
+      return (<Redirect to={ `/bebidas/${idDrink}` } />);
+    }
   }
 
   return (
