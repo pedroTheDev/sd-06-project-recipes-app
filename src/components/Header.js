@@ -5,6 +5,7 @@ import ProfileIcon from '../images/profileIcon.svg';
 import SearchIcon from '../images/searchIcon.svg';
 import RevenueContext from '../context/RevenueContext';
 import SearchBar from './Search';
+import CategoryButton from './CategoryButton';
 
 export default function Header(props) {
   const { title } = props;
@@ -32,6 +33,7 @@ export default function Header(props) {
           </div>
         </div>
         {search && <SearchBar title={ title } />}
+        {!search && <CategoryButton />}
       </header>
     </div>
   );

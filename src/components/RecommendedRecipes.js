@@ -1,52 +1,86 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import Carousel from 'react-bootstrap/Carousel';
+import RevenueContext from '../context/RevenueContext';
 // TIREI O BOOTSTRAP DO CAROUSEL DAQUI
 // https://getbootstrap.com/docs/4.0/components/carousel/#with-controls
 // O MAP QUE FORMOS FAZER TEM QUE PEGAR AS PRIMEIRAS 6 RECEITAS QUE ENCONTRAR DA API
 
 export default function RecommendedRecipes() {
-  return (
-    <div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
-      <div className="carousel-inner">
-        <div className="carousel-item active">
-          <img
-            src="meals[0].strMealThumb"
-            alt="{...strMeal} recipe"
-          />
-          {/* NO CASO DE BEBIDAS A CATEGORIA VAI SER
-          SUBSTITUIDA P ALCOOLICO OU NAO strAlcoholic */}
-          <h6 data-testid="recipe-category">.strCategory</h6>
-          <h1>...strMeal</h1>
-        </div>
+  const { recommendations, fetchRecommendations,
+    searchParam } = useContext(RevenueContext);
+  const ZERO = 0;
+  const SETE = 7;
+
+  const [index, setIndex] = useState(ZERO);
+
+  const handleSelect = (selectedIndex) => {
+    setIndex(selectedIndex);
+  };
+
+  const linkRecommendationsAPI = (searchParam === 'Meal')
+    ? 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s='
+    : 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+
+  useEffect(() => {
+    fetchRecommendations(linkRecommendationsAPI);
+  }, []);
+
+  const renderRecommendations = () => {
+    const recommendParam = (searchParam === 'Meal') ? 'Drink' : 'Meal';
+    return (
+      <div>
+        <Carousel activeIndex={ index } onSelect={ handleSelect }>
+          {recommendations.map((recommendedItem, i) => {
+            if (i < SETE) {
+              return (
+                <Carousel.Item>
+                  <img
+                    width="350px"
+                    src={ recommendedItem[`str${recommendParam}Thumb`] }
+                    alt={ recommendedItem[`str${recommendParam}`] }
+                  />
+                  <h6 data-testid="recipe-category">
+                    { searchParam === 'Drink'
+                      ? recommendedItem.strCategory
+                      : recommendedItem.strAlcoholic }
+                  </h6>
+                  <h1>{ recommendedItem[`str${recommendParam}`] }</h1>
+                </Carousel.Item>
+              );
+            }
+            return null;
+          })}
+        </Carousel>
         {/* TALVEZ AQUI TEM QUE SER ITEM-ATCTIVE PARA MOSTRAR OS 2 DOIS NA TELA */}
-        <div className="carousel-item">
-          <img
-            src="meals[1].strMealThumb"
-            alt="{...strMeal} recipe"
-          />
-          {/* NO CASO DE BEBIDAS A CATEGORIA VAI SER
-          SUBSTITUIDA P ALCOOLICO OU NAO strAlcoholic */}
-          <h6 data-testid="recipe-category">.strCategory</h6>
-          <h1>...strMeal</h1>
-        </div>
+
+        {/* NO CASO DE BEBIDAS A CATEGORIA VAI SER
+            SUBSTITUIDA P ALCOOLICO OU NAO strAlcoholic */}
+
+        <a
+          className="carousel-control-prev"
+          href="#carouselExampleControls"
+          role="button"
+          data-slide="prev"
+        >
+          <span className="carousel-control-prev-icon" aria-hidden="true" />
+          <span className="sr-only">Previous</span>
+        </a>
+        <a
+          className="carousel-control-next"
+          href="#carouselExampleControls"
+          role="button"
+          data-slide="next"
+        >
+          <span className="carousel-control-next-icon" aria-hidden="true" />
+          <span className="sr-only">Next</span>
+        </a>
       </div>
-      <a
-        className="carousel-control-prev"
-        href="#carouselExampleControls"
-        role="button"
-        data-slide="prev"
-      >
-        <span className="carousel-control-prev-icon" aria-hidden="true" />
-        <span className="sr-only">Previous</span>
-      </a>
-      <a
-        className="carousel-control-next"
-        href="#carouselExampleControls"
-        role="button"
-        data-slide="next"
-      >
-        <span className="carousel-control-next-icon" aria-hidden="true" />
-        <span className="sr-only">Next</span>
-      </a>
+    );
+  };
+
+  return (
+    <div>
+      {(recommendations) ? renderRecommendations() : 'Loading...'}
     </div>
   );
 }
