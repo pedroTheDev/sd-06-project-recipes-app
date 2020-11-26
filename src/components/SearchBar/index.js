@@ -22,7 +22,7 @@ const SearchBar = () => {
     if (window.location.pathname === '/bebidas') {
       const drinks = await searchDrink(nome, radioButton);
       // console.log(drinks);
-      if (drinks.drinks === null) {
+      if (drinks === null || drinks === undefined) {
         alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
       } else {
         return setApiValueSearch({

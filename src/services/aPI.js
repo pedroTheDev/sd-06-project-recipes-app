@@ -19,7 +19,10 @@ export async function searchDrink(drink, radioButton) {
   else if (radioButton === 'primeira-letra') endpoint = `search.php?f=${drink}`;
 
   const response = await fetch(`${URL}${endpoint}`);
-  const json = response.json();
+  console.log(response);
+  const json = response.json().catch(() => {
+    console.log('Erro');
+  });
 
   return json;
 }
