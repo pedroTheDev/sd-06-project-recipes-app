@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import ContextAPI from '../../Context/ContextAPI';
+import './styles.css';
 
 const Cards = () => {
   const { apiValueSearch } = useContext(ContextAPI);
@@ -14,7 +15,7 @@ const Cards = () => {
         apiValueSearch.foods.meals && apiValueSearch.foods.meals.map((meal, index) => {
           if (index <= number) {
             return (
-              <div className="card-comida" key={ meal.strMeal } data-testid={ `${index}-recipe-card` }>
+              <div className="card" key={ meal.strMeal } data-testid={ `${index}-recipe-card` }>
                 <p data-testid={ `${index}-card-name` }>{meal.strMeal}</p>
                 <img
                   width="200"
@@ -41,7 +42,7 @@ const Cards = () => {
         apiValueSearch.drinks.drinks && apiValueSearch.drinks.drinks.map((res, index) => {
           if (index <= number) {
             return (
-              <div key={ res.idDrink } data-testid={ `${index}-recipe-card` }>
+              <div className="card" key={ res.idDrink } data-testid={ `${index}-recipe-card` }>
                 <p data-testid={ `${index}-card-name` }>{res.strDrink}</p>
                 <img
                   width="200"
@@ -59,11 +60,11 @@ const Cards = () => {
   };
 
   return window.location.pathname === '/comidas' ? (
-    <div>
+    <div className="main-cards">
       {showFoodResearch() }
     </div>
   ) : (
-    <ul>
+    <ul className="main-cards">
       {showDrinkResearch()}
     </ul>
   );

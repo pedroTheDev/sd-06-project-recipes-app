@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import ContextAPI from '../../Context/ContextAPI';
+import './styles.css';
 
 import { showAllFoodsCategories,
   showAllDrinksCategories,
@@ -44,29 +45,32 @@ const CategoriesComidas = () => {
   };
 
   return (
-    <div>
-      {categories.categories && categories.categories.map((element, index) => {
-        const number = 4;
-        if (index <= number) {
-          return (
-            <button
-              key={ element.idCategory }
-              data-testid={ `${element.categoryName}-category-filter` }
-              onClick={ (e) => filterApiValueSearch(e.target.name) }
-              type="button"
-            >
-              <img
-                name={ element.strCategory }
-                width="100"
-                src={ element.strCategoryThumb }
-                alt={ element.strCategory }
-              />
-            </button>
-          );
-        }
-        return '';
-      })}
-    </div>);
+    <div className="main-categories">
+      <span>Selecione uma categoria</span>
+      <div className="categories">
+        {categories.categories && categories.categories.map((element, index) => {
+          const number = 4;
+          if (index <= number) {
+            return (
+              <button
+                key={ element.idCategory }
+                data-testid={ `${element.categoryName}-category-filter` }
+                onClick={ (e) => filterApiValueSearch(e.target.name) }
+                type="button"
+              >
+                <img
+                  name={ element.strCategory }
+                  src={ element.strCategoryThumb }
+                  alt={ element.strCategory }
+                />
+              </button>
+            );
+          }
+          return '';
+        })}
+      </div>
+    </div>
+  );
 };
 
 export default CategoriesComidas;

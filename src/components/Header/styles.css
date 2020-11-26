@@ -9,3 +9,11 @@
   align-items: center;
   justify-content: space-around;
 }
+.title {
+  color: black;
+}
+
+.search-header {
+  background: none;
+  border: none;
+}

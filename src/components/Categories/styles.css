@@ -1,0 +1,45 @@
+.main-categories {
+  width: 100%;
+  text-align: center;
+  margin-top: 10px;
+  font-size: 30px;
+}
+
+.main-categories span {
+}
+
+.categories {
+  margin-top: 10px;
+  margin-bottom: 5px;
+
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  
+}
+
+.categories img {
+  width: 150px;
+}
+
+.categories button {
+  margin-bottom: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+  border: none;
+  border-radius: 7px;
+  box-shadow: 0 0 7px;
+}
+
+@media (max-width: 500px) {
+
+  .main-categories span{
+    font-size: 24px;
+  }
+
+  .categories img {
+    width: 70px;
+  }
+
+}
