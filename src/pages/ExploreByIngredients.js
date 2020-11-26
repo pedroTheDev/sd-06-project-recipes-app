@@ -52,6 +52,7 @@ function ExploreByIngredients() {
             onClick={ () => handleClick(meals.strIngredient) }
             onKeyPress={ handleClick }
             role="button"
+            tabIndex="0"
           >
             <img
               data-testid={ `${index}-card-img` }
@@ -74,6 +75,7 @@ function ExploreByIngredients() {
             onClick={ () => handleClick(drinks.strIngredient) }
             onKeyPress={ handleClick }
             role="button"
+            tabIndex="0"
           >
             <img
               data-testid={ `${index}-card-img` }

@@ -8,15 +8,17 @@ function ExploreByOrigin() {
   const location = useLocation().pathname;
   const history = useHistory();
   const [data, setData] = useState([]);
-  const { setRecipes, recipes, setIdRecipe } = useContext(ContextRecipes);
+  const { setRecipes, recipes } = useContext(ContextRecipes);
   const MAX_NUMBER_OF_CARDS = 12;
 
   const fetchRecipes = async () => {
-      const apiRequest = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?a=Canadian`);
-      const response = await apiRequest.json();
-      const recipesApi = response.meals;
-      setRecipes(recipesApi);
+    const apiRequest = await fetch('https://www.themealdb.com/api/json/v1/1/filter.php?a=Canadian');
+    const response = await apiRequest.json();
+    const recipesApi = response.meals;
+    setRecipes(recipesApi);
   };
+
+  // https://www.themealdb.com/api/json/v1/1/filter.php?a=Canadian - como fazer o acesso ao valor específico do valor selecionado na option?? sem quebrar o código?
 
   const apiOrigin = async () => {
     if (location.includes('comidas')) {
@@ -25,11 +27,9 @@ function ExploreByOrigin() {
       console.log(response.meals);
       setData(response.meals);
     } else {
-      history.push('/explorar/bebidas/area')
+      history.push('/explorar/bebidas/area');
     }
   };
-
-  // const fetchRecipesArea
 
   useEffect(() => {
     apiOrigin();
@@ -53,7 +53,6 @@ function ExploreByOrigin() {
                 <option
                   key={ index }
                   value={ foodsArea.strArea }
-                  //onClick={ () => fetchRecipesArea(foodsArea.strArea) }
                   data-testid={ `${foodsArea.strArea}-option` }
                 >
                   { foodsArea.strArea }
@@ -67,7 +66,9 @@ function ExploreByOrigin() {
               id={ recipe.idMeal }
               data-testid={ `${index}-recipe-card` }
               onClick={ () => history.push(`/comidas/${recipe.idMeal}`) }
+              onKeyPress={ () => history.push(`/comidas/${recipe.idMeal}`) }
               role="button"
+              tabIndex="0"
             >
               <p data-testid={ `${index}-card-name` }>{ recipe.strMeal }</p>
               <img
@@ -78,8 +79,7 @@ function ExploreByOrigin() {
                 width="100px"
               />
             </div>
-          )).filter((_, index) => index < MAX_NUMBER_OF_CARDS)
-          }
+          )).filter((_, index) => index < MAX_NUMBER_OF_CARDS) }
           <Footer />
         </div>
       ) : (
@@ -88,7 +88,7 @@ function ExploreByOrigin() {
         </div>
       )}
     </div>
-  )
+  );
 }
 
 export default ExploreByOrigin;
