@@ -99,7 +99,9 @@ class Header extends React.Component {
               onClick={ () => history.push('/perfil') }
             />
           </div>
-          <h1 id="header-h1" data-testid="page-title">{h1}</h1>
+          <h1 id="header-h1" data-testid="page-title" className="global-h1">
+            {h1}
+          </h1>
           <div className="search-input-div">
             {(pathname !== ('/explorar')
               && pathname !== ('/explorar/comidas')

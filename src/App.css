@@ -642,6 +642,10 @@ a {
     margin: 7px 15px 15px 7px;
     padding-left: 15px;
   }
+
+  .food-or-drink-done-card {
+    flex-direction: column;
+  }
 }
 
 .not-styled {

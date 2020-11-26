@@ -17,6 +17,13 @@ class DoneRecipes extends React.Component {
   }
 
   componentDidMount() {
+    const fourHundred = 450;
+    if (window.screen.availWidth < fourHundred) {
+      const h1 = document.querySelector('.global-h1');
+      h1.style.fontSize = '35px';
+      const bla = document.querySelector('.search-input-div');
+      bla.style.width = '70px';
+    }
     const recipes = JSON.parse(localStorage.getItem('doneRecipes'));
     if (recipes) {
       const foods = recipes.filter((element) => element.type === 'comida').length;
