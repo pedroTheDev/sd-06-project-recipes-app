@@ -1,16 +1,17 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 import RecipeCard from './RecipeCard';
 import findMatchInKeys from '../helpers/assets';
 
-export default function RecipesList(props) {
+function RecipesList(props) {
   const { pathname, recipes, title, recipeConfig, isLoading } = props;
   const { type } = recipeConfig;
+  console.log(pathname, recipes, 'recipeslist');
 
   const renderRecipesResults = () => {
-    console.log('recipesType', recipes[type]);
     const maxRecipesNumber = 12;
-    if (recipes[type]) {
+    if (recipes && recipes[type] && recipes[type].length > 1) {
       if (recipes[type].length > 1) {
         return (
           recipes[type].filter((_recipe, index) => index < maxRecipesNumber)
@@ -26,10 +27,9 @@ export default function RecipesList(props) {
   };
 
   const renderRedirectToSingleResult = () => {
-    const results = recipes[type];
-    const recipe = results[0];
-    if (recipes[type]) {
-      console.log('recipe:', recipe, 'recipes:', recipes, 'results:', results);
+    if (recipes && recipes[type]) {
+      const results = recipes[type];
+      const recipe = results[0];
       if (recipes[type].length === 1) {
         const id = findMatchInKeys('id', recipe);
         return <Redirect to={ `${title.toLowerCase()}/${recipe[id]}` } />;
@@ -37,12 +37,16 @@ export default function RecipesList(props) {
     }
   };
 
-  const renderSearchResults = () => (
-    <>
-      {renderRedirectToSingleResult()}
-      {renderRecipesResults()}
-    </>
-  );
+  const renderSearchResults = () => {
+
+    return (
+      <>
+        {renderRedirectToSingleResult()}
+        {renderRecipesResults()}
+      </>
+
+    );
+  };
 
   const render = () => {
     if (!isLoading) {
@@ -53,3 +57,9 @@ export default function RecipesList(props) {
 
   return render();
 }
+
+const mapStateToProps = (state) => ({
+  recipes: state.searchRecipes.recipes,
+});
+
+export default connect(mapStateToProps, null)(RecipesList);

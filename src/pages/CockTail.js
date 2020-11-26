@@ -9,16 +9,16 @@ import useFetch from '../helpers/effects/useFetch';
 import { fetchAPI } from '../helpers/APIRequests';
 
 function CockTail(props) {
-  const { history: { location: { pathname } }, recipes,
+  const { history: { location: { pathname } },
     pageConfig, fetchmap, dispatchRecipes, data,
     isFetchin, dispatchFetching } = props;
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const { header, recipe } = pageConfig;
   const { title } = header;
   const { inputText, radioSearchSelection } = data;
-  console.log('page:', title, 'varRecipeType:', recipe.type);
+  console.log('isLoading cocktail', isLoading);
   useFetch(
     title,
     inputText,
@@ -29,11 +29,9 @@ function CockTail(props) {
     fetchmap,
     recipe,
   );
-  console.log(title);
 
   const allFoodRecipesEndPoint = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
   const allDrinkRecipesEndPoint = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
-
   useEffect(() => {
     async function fetchData() {
       let initialRecipes;
@@ -48,6 +46,9 @@ function CockTail(props) {
       setIsLoading(false);
     }
     fetchData();
+    return () => {
+      dispatchRecipes({ meals: [], drinks: [] });
+    };
   }, []);
 
   return (
@@ -58,7 +59,6 @@ function CockTail(props) {
       />
       <RecipesList
         title={ title }
-        recipes={ recipes }
         fetchmap={ fetchmap }
         dispatchRecipes={ dispatchRecipes }
         recipeConfig={ recipe }

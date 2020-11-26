@@ -9,11 +9,12 @@ import { fetchAPI } from '../helpers/APIRequests';
 import Footer from '../components/Footer';
 
 function Food(props) {
-  const { history: { location: { pathname } }, recipes,
+  const { history: { location: { pathname } },
     pageConfig,
     fetchmap,
     dispatchRecipes, data, isFetchin, dispatchFetching } = props;
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  console.log(isLoading, 'food page');
 
   const { header, recipe } = pageConfig;
   const { title } = header;
@@ -23,6 +24,8 @@ function Food(props) {
   const allDrinkRecipesEndPoint = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
   useEffect(() => {
     async function fetchData() {
+      dispatchRecipes({ meals: [], drinks: [] });
+
       let initialRecipes;
       setIsLoading(true);
       if (pathname === '/comidas') {
@@ -47,7 +50,6 @@ function Food(props) {
     fetchmap,
     recipe,
   );
-  console.log('page:', title, 'varRecipeType:', recipe.type);
 
   // useFetchOnMount(fetchmap, title, dispatchRecipes);
 
@@ -59,7 +61,6 @@ function Food(props) {
       />
       <RecipesList
         title={ title }
-        recipes={ recipes }
         fetchmap={ fetchmap }
         dispatchRecipes={ dispatchRecipes }
         recipeConfig={ recipe }
