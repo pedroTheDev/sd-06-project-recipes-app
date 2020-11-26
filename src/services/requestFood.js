@@ -48,4 +48,7 @@ export async function recommendFoodsList() {
   const recomendFoods = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
   const response = await recomendFoods.json();
   return response;
+
+export function requestApiMealSurprise() {
+  return randomRequestApiFood('random.php');
 }

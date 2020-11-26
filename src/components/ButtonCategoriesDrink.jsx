@@ -33,11 +33,12 @@ function ButtonCategoriesDrink() {
     if (category === 'All' || categorySelectPreviously === category) {
       const arrayApiName = await requestApiDrinkFilterName();
       setCardDrink(arrayApiName);
+      setCategorySelectPreviously('All');
     } else {
       const arrayApiCategory = await requestApiDrinkFilterCategories(category);
       setCardDrink(arrayApiCategory);
+      setCategorySelectPreviously(category);
     }
-    setCategorySelectPreviously(category);
   };
 
   const arrayVoid = 0;

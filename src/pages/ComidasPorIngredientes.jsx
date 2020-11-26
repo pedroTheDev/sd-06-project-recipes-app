@@ -2,13 +2,13 @@ import React from 'react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 
-function ComidaPorOrigem() {
+function ComidaPorIngredientes() {
   return (
     <>
-      <Header name="Comida por Origem" button={ false } />
+      <Header name="Comida por Ingredientes" button={ false } />
       <Footer />
     </>
   );
 }
 
-export default ComidaPorOrigem;
+export default ComidaPorIngredientes;
