@@ -120,12 +120,11 @@ input {
 
 .main__page__recipe-container {
   margin-top: 7em;
-  max-height: 200px;
-  max-width: 1vw;
+  max-width: 200px;
 }
 
 .main__page__recipe-card {
-  display:flex;
+  width: 150px;
   margin-bottom: 10px;
 }
 

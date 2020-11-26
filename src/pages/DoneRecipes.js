@@ -1,17 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { connect } from 'react-redux';
 import Header from '../components/Header';
 
-export default function DoneRecipes(props) {
-  const { history: { location: { pathname } } } = props;
+function DoneRecipes(props) {
+  const { history: { location: { pathname } }, pageConfig } = props;
+  const { header } = pageConfig;
   return (
-    <Header pathname={ pathname } />
+    <Header pathname={ pathname } componentConfig={ header } />
   );
 }
 
-DoneRecipes.propTypes = {
+const mapStateToProps = (state) => ({
+  pageConfig: state.sitemap.receitasFeitas,
+});
 
+export default connect(mapStateToProps, null)(DoneRecipes);
+
+DoneRecipes.propTypes = {
+  pageConfig: PropTypes.shape({
+    header: PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      profileButton: PropTypes.bool.isRequired,
+      searchButton: PropTypes.bool.isRequired,
+    }),
+  }).isRequired,
   history: PropTypes.shape({
     location: PropTypes.shape({
       pathname: PropTypes.string.isRequired,
