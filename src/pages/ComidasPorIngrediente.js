@@ -1,11 +1,66 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
 import { Footer, Header } from '../components';
 
 function ComidasPorIngrediente() {
+  const [ingredientsMeal, setIngredientsMeal] = useState([]);
+  const [redirect, setRedirect] = useState(false);
+  const [setDataMeal] = useState([]);
+  const zero = 0;
+  const twelve = 12;
+
+  const getMealsByIngredients = (ingredient) => {
+    const URL = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredient}`;
+    return fetch(URL).then((response) => response.json().then((json) => (
+      response.ok ? Promise.resolve(json) : Promise.reject(json)
+    )));
+  };
+
+  const getMealsIngredients = () => {
+    const URL = 'https://www.themealdb.com/api/json/v1/1/list.php?i=list';
+    return fetch(URL).then((response) => response.json().then((json) => (
+      response.ok ? Promise.resolve(json) : Promise.reject(json)
+    )));
+  };
+
+  const clickOn = (ingrediente) => {
+    getMealsByIngredients(ingrediente).then((data) => {
+      setDataMeal(data.meals);
+      setRedirect(true);
+    });
+  };
+
+  useEffect(() => {
+    getMealsIngredients().then((data) => setIngredientsMeal(data.meals));
+  }, []);
+
+  if (ingredientsMeal.length > twelve) {
+    return setIngredientsMeal(ingredientsMeal.slice(zero, twelve));
+  }
+  if (redirect) return <Redirect to="/comidas" />;
+
   return (
-    <div className="food">
+    <div>
       <Header title="Explorar Ingredientes" />
-      <span>Aqui vão estar as comidas por ingrediente...</span>
+      { ingredientsMeal.map((ingredients, index) => (
+        <button
+          key={ ingredients.strIngredient }
+          type="button"
+          data-testid={ `${index}-ingredient-card` }
+          onClick={ () => clickOn(ingredients.strIngredient) }
+        >
+          <img
+            data-testid={ `${index}-card-img` }
+            src={ `https://www.themealdb.com/images/ingredients/${ingredients.strIngredient}-Small.png` }
+            alt={ ingredients.strIngredient }
+          />
+          <p
+            data-testid={ `${index}-card-name` }
+          >
+            { ingredients.strIngredient }
+          </p>
+        </button>
+      ))}
       <Footer />
     </div>
   );
