@@ -30,11 +30,11 @@
 }
 
 #meals > span {
+  animation: shake 1.5s infinite ease;
   color: aliceblue;
   font-weight: 900;
   font-family: 'Montserrat', sans-serif;
   font-size: 3em;
-  animation: shake 1.5s infinite ease;
 }
 
 .carousel {
