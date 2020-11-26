@@ -6,7 +6,7 @@ import RecipeContext from '../context/RecipeContext';
 
 function ExploreDrinkIngredient() {
   const [drinkIngredients, setDrinkIngredients] = useState([]);
-  const { setDrinkCategories } = useContext(RecipeContext);
+  const { setDrinkCategories, setCurrentDrinkExplore } = useContext(RecipeContext);
 
   const url = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list';
 
@@ -27,6 +27,7 @@ function ExploreDrinkIngredient() {
 
   const handleClickSetCategories = ({ target }) => {
     setDrinkCategories(target.value);
+    setCurrentDrinkExplore(true);
   };
 
   return (

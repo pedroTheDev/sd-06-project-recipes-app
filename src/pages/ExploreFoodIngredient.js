@@ -6,7 +6,7 @@ import RecipeContext from '../context/RecipeContext';
 
 function ExploreFoodIngredient() {
   const [ingredients, setIngredients] = useState([]);
-  const { setMealCategories } = useContext(RecipeContext);
+  const { setMealCategories, setCurrentMealsExplore } = useContext(RecipeContext);
 
   const url = 'https://www.themealdb.com/api/json/v1/1/list.php?i=list';
 
@@ -26,6 +26,7 @@ function ExploreFoodIngredient() {
 
   const handleClickSetCategories = ({ target }) => {
     setMealCategories(target.value);
+    setCurrentMealsExplore(true);
     console.log(target);
   };
 

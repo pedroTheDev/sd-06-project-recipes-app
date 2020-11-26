@@ -6,8 +6,7 @@ import RecipeContext from '../context/RecipeContext';
 import './Drink.css';
 
 function Drink() {
-  const { setDrinkAPI, drinkCategories } = useContext(RecipeContext);
-
+  const { setDrinkAPI, drinkCategories, currentDrinkExplore } = useContext(RecipeContext);
   const [drinks, setDrinks] = useState([]);
   const [categories, setCategories] = useState([]);
   const [currentCategories, setCurrentCategories] = useState('');
@@ -15,7 +14,8 @@ function Drink() {
 
   const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
   const urlCategories = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
-  const urlDrinksCategories = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${currentCategories}`;
+  const urlDrinksCategories = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${currentCategories}`;
+  const urlDrinksCategories2 = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${currentCategories}`;
 
   useEffect(() => {
     const fecthDrinks = async () => {
@@ -47,8 +47,13 @@ function Drink() {
       if (currentCategories !== '') {
         const APIRequestDrinksCategory = await fetch(urlDrinksCategories);
         const APIResponseDrinksCategory = await APIRequestDrinksCategory.json();
+        const APIRequestDrinksCategory2 = await fetch(urlDrinksCategories2);
+        const APIResponseDrinksCategory2 = await APIRequestDrinksCategory2.json();
         console.log(APIResponseDrinksCategory);
-        if (APIResponseDrinksCategory !== null) {
+        if (APIResponseDrinksCategory !== null && currentDrinkExplore) {
+          setCurrentDrinks(APIResponseDrinksCategory2.drinks);
+        }
+        if (APIResponseDrinksCategory !== null && !currentDrinkExplore) {
           setCurrentDrinks(APIResponseDrinksCategory.drinks);
         }
       }
@@ -63,11 +68,14 @@ function Drink() {
   const renderDrinks = () => {
     if (currentCategories === '') {
       return drinks.slice(firstDrink, limitDrink).map((drink, id) => (
-        <Link to={ `/bebidas/${drink.idDrink}` } key={ id }>
+        <Link
+          to={ `/bebidas/${drink.idDrink}` }
+          key={ id }
+        >
           <div
             className="recipe-card"
-            data-testid={ `${id}-recipe-card` }
             value={ drink.strCategory }
+            data-testid={ `${id}-recipe-card` }
           >
             <img
               className="card-img"
@@ -82,12 +90,15 @@ function Drink() {
     } if (currentDrinks) {
       return currentDrinks
         .slice(firstDrink, limitDrink).map((drink, id) => (
-          <Link to={ `/bebidas/${drink.idDrink}` } key={ id }>
+          <Link
+            to={ `/bebidas/${drink.idDrink}` }
+            key={ id }
+          >
             <div
               key={ id }
               className="recipe-card"
-              data-testid={ `${id}-recipe-card` }
               value={ drink.strCategory }
+              data-testid={ `${id}-recipe-card` }
             >
               <img
                 className="card-img"
