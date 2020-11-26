@@ -6,7 +6,7 @@ import { fetchDrink } from '../services/cocktailAPI';
 
 function RecipesAppProvider({ children }) {
   const [searchBar, setSearchBar] = useState(false);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({});
   const [control, setControl] = useState(false);
 
   const setFetchMeal = async (type, key) => {
@@ -30,21 +30,19 @@ function RecipesAppProvider({ children }) {
   const setFetchDrink = async (type, key) => {
     const result = await fetchDrink(type, key);
     setData(result);
-    console.log('Result:', result);
-    // const resultReturn = {
-    //   result,
-    //   redirect: false,
-    // };
-    // if (result === null) {
-    //   return null;
-    // }
-    // if (result.drinks.length === 1) {
-    //   resultReturn.redirect = true;
-    //   return resultReturn;
-    // }
-    // setControl(true);
-    // return resultReturn;
-    return result;
+    const resultReturn = {
+      result,
+      redirect: false,
+    };
+    if (result.drinks === null) {
+      return alert('Sinto muito, não encontramos nenhuma receita para esses filtros');
+    }
+    if (result.drinks.length === 1) {
+      resultReturn.redirect = true;
+      return resultReturn;
+    }
+    setControl(true);
+    return resultReturn;
   };
 
   const contextValue = {

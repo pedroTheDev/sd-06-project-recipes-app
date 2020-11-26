@@ -12,19 +12,10 @@ const endpoints = {
 };
 
 export async function fetchDrink(type, key) {
-  console.log('filterType:', type);
-  console.log('product:', key);
   key = type === 'firstLetter' ? key[0] : key;
   const url = `${COCKTAIL_API}${endpoints[type]}${key}`;
-  console.log('url:', url);
   const result = await fetch(url);
-  console.log('Result aqi', result);
-  if (result === undefined) {
-    console.log('entrou aqui', result.length);
-    return null;
-  }
   const data = await result.json();
-  console.log(data);
   return data;
 }
 

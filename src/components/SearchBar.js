@@ -17,11 +17,7 @@ export default function SearchBar() {
 
   const searchDrink = async () => {
     const drink = await setFetchDrink(filterType, product);
-    console.log('drink:', drink);
-    if (drink === undefined) {
-      return alert('Sinto muito, não encontramos nenhuma receita para esses filtros');
-    }
-    const id = drink.drinks[0].idDrink;
+    const id = drink.result.drinks[0].idDrink;
     if (drink.redirect) {
       return window.location.replace(`/bebidas/${id}`);
     }
