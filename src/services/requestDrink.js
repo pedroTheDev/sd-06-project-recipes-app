@@ -12,7 +12,7 @@ export function requestApiDrinkFilterIngredient(ingredient) {
   return randomRequestApiDrink(`filter.php?i=${ingredient}`);
 }
 
-export function requestApiDrinkFilterName(name) {
+export function requestApiDrinkFilterName(name = '') {
   return randomRequestApiDrink(`search.php?s=${name}`);
 }
 
@@ -20,8 +20,16 @@ export function requestApiDrinkFilterFirstLetter(firstLetter) {
   return randomRequestApiDrink(`search.php?f=${firstLetter}`);
 }
 
+export function requestApiDrinkFilterCategories(category) {
+  return randomRequestApiDrink(`filter.php?c=${category}`);
+}
+
 export function requestApiDrinkDetails(id) {
   return randomRequestApiDrink(`lookup.php?i=${id}`);
+}
+
+export function requestApiDrinkListCategories() {
+  return randomRequestApiDrink('list.php?c=list');
 }
 
 export function requestApiDrinkListIngredients() {

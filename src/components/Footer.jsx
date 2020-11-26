@@ -4,7 +4,7 @@ import mealIcon from '../styles/images/mealIcon.svg';
 import drinkIcon from '../styles/images/drinkIcon.svg';
 import exploreIcon from '../styles/images/exploreIcon.svg';
 
-import './components.css';
+import '../styles/components.css';
 
 function Footer() {
   return (

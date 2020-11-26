@@ -1,62 +1,21 @@
-import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import Header from '../components/Header';
-import RecipesAppContext from '../hooks/RecipesAppContext';
 import Footer from '../components/Footer';
+import CardsFood from '../components/CardsFood';
+import ButtonCategoriesFood from '../components/ButtonCategoriesFood';
 
-function Comidas({ history }) {
-  const {
-    cards: {
-      cardFood,
-    },
-  } = useContext(RecipesAppContext);
-
-  if (cardFood.length === 1) {
-    const { idMeal } = cardFood[0];
-    history.push(`/comidas/${idMeal}`);
-  }
-
+function Comidas() {
+  const namePage = 'Comidas';
   const buttonIs = true;
-  const ofTheFirstParameter = 0;
-  const upToParameter12 = 12;
 
   return (
     <div>
-      <Header name="Comidas" button={ buttonIs } />
-      <div>
-        {cardFood.slice(ofTheFirstParameter, upToParameter12).map(({
-          idMeal,
-          strMeal,
-          strMealThumb,
-        }, index) => (
-          <Link
-            key={ idMeal }
-            to={ `/comidas/${idMeal}` }
-            data-testid={ `${index}-recipe-card` }
-          >
-            <img
-              src={ strMealThumb }
-              alt={ strMeal }
-              data-testid={ `${index}-card-img` }
-            />
-            <h4
-              data-testid={ `${index}-card-name` }
-            >
-              { strMeal }
-            </h4>
-          </Link>
-        ))}
-      </div>
+      <Header name={ namePage } button={ buttonIs } />
+      <ButtonCategoriesFood />
+      <CardsFood />
       <Footer />
     </div>
   );
 }
-
-Comidas.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
-};
 
 export default Comidas;
