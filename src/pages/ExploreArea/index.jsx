@@ -11,6 +11,8 @@ import { useSearch } from '../../hooks/search';
 import Header from '../../components/Header';
 import Navbar from '../../components/Navbar';
 
+import './styles.css';
+
 const noFilterOption = {
   option: 'name',
   value: '',
@@ -32,7 +34,7 @@ function ExploreArea({ pageType }) {
 
   useEffect(() => {
     if (!loadingAreas) {
-      if (areaSelected === 'all') {
+      if (areaSelected === 'All') {
         appSearch(pageType, noFilterOption);
       } else {
         loadFoodsByArea(areaSelected);
@@ -59,7 +61,7 @@ function ExploreArea({ pageType }) {
   // }
 
   return (
-    <div className="explore-ingredients-page">
+    <div className="explore-ingredients-area-page">
       <Header pageName="Explorar Origem" showSearch />
       <Navbar />
 
@@ -71,7 +73,8 @@ function ExploreArea({ pageType }) {
           onChange={ handleAreaChange }
           data-testid="explore-by-area-dropdown"
         >
-          <option value="all" data-testid="All-option">All</option>
+          <option value="All" data-testid="All-option">All</option>
+
           {foodAreas.map((area) => (
             <option
               key={ area }
@@ -89,7 +92,7 @@ function ExploreArea({ pageType }) {
         ? (
           <p>Loading...</p>
         ) : (
-          <div className="foods-container">
+          <div className="recipes-container">
             {currentRecipesByArea.map((meal, index) => (
               <Link
                 to={ `/${pageType}/${meal.idMeal}` }

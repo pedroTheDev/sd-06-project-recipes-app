@@ -48,14 +48,21 @@ function Profile() {
           Receitas Favoritas
         </Link>
 
-        <button
-          data-testid="profile-logout-btn"
-          type="button"
-          onClick={ handleLogOut }
-        >
-          <FiLogOut />
-          Logout
-        </button>
+        <div className="logout-container">
+
+          <div className="logout-icon">
+            <FiLogOut />
+          </div>
+
+          <button
+            data-testid="profile-logout-btn"
+            type="button"
+            onClick={ handleLogOut }
+          >
+            Logout
+          </button>
+
+        </div>
       </div>
 
       <Navbar />

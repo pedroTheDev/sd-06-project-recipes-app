@@ -10,4 +10,6 @@
   border-top: 1px solid black;
   padding: 8px;
   background-color: white;
+
+  z-index: 9999;
 }
