@@ -35,3 +35,7 @@ export function requestApiDrinkListCategories() {
 export function requestApiDrinkListIngredients() {
   return randomRequestApiDrink('list.php?i=list');
 }
+
+export function requestApiDrinkSurprise() {
+  return randomRequestApiDrink('random.php');
+}

@@ -43,3 +43,7 @@ export function requestApiFoodListIngredients() {
 export function requestApiFoodListArea() {
   return randomRequestApiFood('list.php?a=list');
 }
+
+export function requestApiMealSurprise() {
+  return randomRequestApiFood('random.php');
+}
