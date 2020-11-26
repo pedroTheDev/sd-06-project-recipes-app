@@ -12,12 +12,17 @@ function Header({ title }) {
   return (
     <header>
       <nav>
-        <Link className="profile" to="/perfil">
-          <img
-            data-testid="profile-top-btn"
-            src={ profileIcon }
-            alt="Icone de perfil"
-          />
+        <Link to="/perfil">
+          <button 
+            className="bttn-profile"
+            type="button"
+          >
+            <img
+              data-testid="profile-top-btn"
+              src={ profileIcon }
+              alt="Icone de perfil"
+            />
+          </button>
         </Link>
         <h1
           data-testid="page-title"
@@ -29,7 +34,7 @@ function Header({ title }) {
           (title === 'Comidas' || title === 'Explorar Origem' || title === 'Bebidas')
           && (
             <button
-              className="searchButton"
+              className="bttn-search-header"
               type="button"
               onClick={ () => { setSearchBar(!searchBar); } }
             >

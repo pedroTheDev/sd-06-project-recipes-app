@@ -5,7 +5,7 @@ import '../style/Footer.css';
 
 function Footer() {
   return (
-    <div className="footer" data-testid="footer">
+    <footer data-testid="footer">
       <Link to="/bebidas">
         <button
           className="button-drink"
@@ -48,7 +48,7 @@ function Footer() {
           />
         </button>
       </Link>
-    </div>
+    </footer>
   );
 }
 

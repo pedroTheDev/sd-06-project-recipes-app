@@ -1,0 +1,59 @@
+.div-bttn-category-drink {
+  align-items: center;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  margin: auto;
+  margin-top: 20%;
+}
+
+.bttn-category-drink {
+  background-color: #f1e510;
+  border: none;
+  border-radius: 5px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  margin: 5px;
+  padding: 10px;
+}
+
+.bttn-category-drink:hover {
+  background-color: #e4cd03;
+  cursor: pointer;
+}
+
+.card-div {
+  align-items: center;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  margin: auto;
+  margin-bottom: 100px;
+}
+
+.card-recipe-div {
+  align-items: center;
+  border: 1px solid #960051;
+  display: flex;
+  flex-direction: column;
+  margin: 5px auto;
+  max-width: 70%;
+}
+
+.card-recipe-img {
+  width: 100%;
+}
+
+.card-recipe-title {
+  color: #960051;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  text-decoration: none !important;
+}
+
+.card-recipe-title:hover {
+  color: #bd0165;
+  text-decoration: none !important;
+}
