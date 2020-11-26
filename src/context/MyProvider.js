@@ -15,6 +15,7 @@ function MyProvider({ children }) {
   const [disable, setDisable] = useState(true);
   const [user, setUser] = useState({ email: '' });
   const [showSearchBar, setSearchBar] = useState(false);
+  const [recommendedRecipe, setRecommendedRecipe] = useState([]);
 
   useEffect(() => {
     async function fetchALL() {
@@ -51,6 +52,8 @@ function MyProvider({ children }) {
     setUser,
     showSearchBar,
     setSearchBar,
+    recommendedRecipe,
+    setRecommendedRecipe,
   };
 
   return (

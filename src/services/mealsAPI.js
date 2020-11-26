@@ -21,8 +21,16 @@ export async function getRecipesMealsByCategoryApi(category) {
   return result.meals;
 }
 
+// Lista de receitas de comidas por categoria
+export async function getRecipeMealByIdApi(id) {
+  const response = await fetch(`${URL_BASE}lookup.php?i=${id}`);
+  const result = await response.json();
+  return result.meals;
+}
+
 export default {
   getAllRecipeTypesApi,
   getRecipesMealsApi,
   getRecipesMealsByCategoryApi,
+  getRecipeMealByIdApi,
 };

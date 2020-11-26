@@ -9,6 +9,7 @@ import NotFound from './pages/NotFound';
 import Explore from './pages/Explore';
 import ReceitasFavoritas from './pages/ReceitasFavoritas';
 import ReceitasFeitas from './pages/ReceitasFeitas';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
