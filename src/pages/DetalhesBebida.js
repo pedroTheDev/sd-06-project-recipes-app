@@ -1,25 +1,27 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
-// import copyToClipboard from 'clipboard-copy';
+import useCopyToClipboard from '../hooks/useCopyToClipboard';
 import { shareIcon, whiteHeartIcon, blackHeartIcon } from '../images';
 import '../style/Detalhes.css';
 
 function DetalhesBebida() {
+  const timeoutTextCopy = 3000;
   const { data } = useContext(RecipesContext);
+  const [isCopied, handleCopy] = useCopyToClipboard(timeoutTextCopy);
   const [dataDrinks, setDataDrinks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [isShare, setShare] = useState();
   const history = useHistory();
   const idDrink = history.location.pathname.split('/')[2];
   const SEIS = 6;
+  const { location: { pathname } } = history;
 
-  let continuar = false;
-  if (localStorage.inProgressRecipes) {
-    const ids = Object.keys(JSON.parse(localStorage.inProgressRecipes).cocktails);
-    continuar = ids.includes(idDrink);
-  }
+  // let continuar = false;
+  // if (localStorage.inProgressRecipes) {
+  //   const ids = Object.keys(JSON.parse(localStorage.inProgressRecipes).cocktails);
+  //   continuar = ids.includes(idDrink);
+  // }
 
   useEffect(() => {
     async function fetchAPI() {
@@ -36,10 +38,6 @@ function DetalhesBebida() {
       setIsFavorite(true);
     }
   }, []);
-
-  // useEffect(() => {
-  //   copyToClipboard(`http://localhost:3000/bebidas/${idDrink}`);
-  // }, [setShare]);
 
   const handleClick = () => {
     setIsFavorite(!isFavorite);
@@ -75,22 +73,21 @@ function DetalhesBebida() {
               <button
                 data-testid="share-btn"
                 type="button"
-                onClick={ () => setShare('Link copiado!') }
+                onClick={ () => handleCopy(pathname) }
               >
                 <img
                   src={ shareIcon }
                   alt="Botão de Compartilhar"
                 />
               </button>
-              {isShare}
+              { isCopied ? <p>Link copiado!</p> : true }
             </span>
             <button
-              data-testid="favorite-btn"
               type="button"
               onClick={ handleClick }
-              src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
             >
               <img
+                data-testid="favorite-btn"
                 src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
                 alt="Botão de Favorito"
               />
@@ -140,7 +137,7 @@ function DetalhesBebida() {
                 data-testid="start-recipe-btn"
                 type="button"
               >
-                { continuar ? 'Continuar Receita' : 'Iniciar Receita' }
+                {/* { continuar ? 'Continuar Receita' : 'Iniciar Receita' } */}
               </button>
             </Link>
           </div>) }

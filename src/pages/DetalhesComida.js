@@ -1,16 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-// import copyToClipboard from 'clipboard-copy';
 import RecipesContext from '../context/RecipesContext';
+import useCopyToClipboard from '../hooks/useCopyToClipboard';
 import { shareIcon, whiteHeartIcon, blackHeartIcon } from '../images';
 import '../style/Detalhes.css';
 
 function DetalhesComida() {
+  const timeoutTextCopy = 3000;
   const { data } = useContext(RecipesContext);
+  const [isCopied, handleCopy] = useCopyToClipboard(timeoutTextCopy);
   const [dataMeal, setDataMeal] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [isShare, setShare] = useState();
   const history = useHistory();
   const idMeal = history.location.pathname.split('/')[2];
   const SEIS = 6;
@@ -36,10 +37,6 @@ function DetalhesComida() {
       setIsFavorite(true);
     }
   }, []);
-
-  // useEffect(() => {
-  //   copyToClipboard(`http://localhost:3000/comidas/${idMeal}`);
-  // }, [isShare]);
 
   const handleClick = () => {
     setIsFavorite(!isFavorite);
@@ -75,22 +72,21 @@ function DetalhesComida() {
               <button
                 data-testid="share-btn"
                 type="button"
-                onClick={ () => setShare('Link copiado!') }
+                onClick={ () => handleCopy(`/comidas/${idMeal}`) }
               >
                 <img
                   src={ shareIcon }
                   alt="Botão de Compartilhar"
                 />
               </button>
-              {isShare}
+              {isCopied ? <p>Link copiado!</p> : true}
             </span>
             <button
-              data-testid="favorite-btn"
               type="button"
               onClick={ handleClick }
-              src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
             >
               <img
+                data-testid="favorite-btn"
                 src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
                 alt="Botão de Favorito"
               />
