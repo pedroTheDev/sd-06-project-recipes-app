@@ -11,6 +11,8 @@ import NotFound from './pages/NotFound';
 import Explore from './pages/Explore';
 import ReceitasFavoritas from './pages/ReceitasFavoritas';
 import ReceitasFeitas from './pages/ReceitasFeitas';
+import ExpComIngr from './pages/ExplorarComidasIngredientes';
+import ExpBebIngr from './pages/ExplorarBebidasIngredientes';
 
 function App() {
   return (
@@ -27,6 +29,8 @@ function App() {
           <Route exact path="/bebidas/:id" component={ MenuDetails } />
           <Route exact path="/receitas-feitas" component={ ReceitasFeitas } />
           <Route exact path="/receitas-favoritas" component={ ReceitasFavoritas } />
+          <Route exact path="/explorar/comidas/ingredientes" component={ ExpComIngr } />
+          <Route exact path="/explorar/bebidas/ingredientes" component={ ExpBebIngr } />
           <Route exact path="/" component={ Login } />
           <Route component={ NotFound } />
         </Switch>
