@@ -1,8 +1,10 @@
 import React from 'react';
-import { cleanup, fireEvent, render } from '@testing-library/react';
+import { cleanup, fireEvent } from '@testing-library/react';
 import renderWithRouter from './helpers/renderWithRouter';
-import Login from './Pages/Login';
 import App from './App';
+import Header from './components/Header';
+import Provider from './Context/Provider';
+import Comidas from './Pages/Comidas';
 
 describe('2 - Crie todos os elementos que devem respeitar os atributos descritos no protótipo para a tela de login', () => {
   it('Tem os data-testids email-input, password-input e login-submit-btn', () => {
@@ -129,14 +131,33 @@ describe('8 - Redirecione a pessoa usuária para a tela principal de receitas de
 });
 
 describe('9 - Implemente os elementos do header na tela principal de receitas, respeitando os atributos descritos no protótipo', () => {
-  it('Tem os data-testids profile-top-btn, page-title e search-top-btn', () => {
-    const { getByTestId } = renderWithRouter(<App />);
+  it('Tem os data-testids profile-top-btn e page-title', () => {
+    const { getByTestId } = renderWithRouter(
+      <Provider>
+        <Comidas />
+      </Provider>,
+    );
+
     const profileTopBtn = getByTestId('profile-top-btn');
     const pageTitle = getByTestId('page-title');
     const searchTopBtn = getByTestId('search-top-btn');
-
+    
     expect(profileTopBtn).toBeInTheDocument();
     expect(pageTitle).toBeInTheDocument();
     expect(searchTopBtn).toBeInTheDocument();
   });
+});
+
+describe('10 - Implemente um ícone para a tela de perfil, um título e um ícone para a busca, caso exista no protótipo', () => {
+
+  it('Não tem que aparecer header na tela de loguin', () => {
+  const { getByTestId } = renderWithRouter(
+    <Provider>
+      <App />
+    </Provider>,
+  );
+  
+  expect(getByTestId('profile-top-btn')).should('not.exist')
+    
+  })
 });
