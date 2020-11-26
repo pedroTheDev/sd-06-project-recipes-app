@@ -2,8 +2,12 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   requestApiFoodDetails,
-  requestApiFoodFilterIngredient,
 } from '../services/requestFood';
+import {
+  recommendDrinksList,
+} from '../services/requestDrink';
+import '../styles/Detalhes.css'
+import buttonShare from '../styles/images/shareIcon.svg';
 
 function DetalhesReceita(props) {
   const [detailsFood, setDetailsFood] = useState([]);
@@ -21,8 +25,9 @@ function DetalhesReceita(props) {
 
   const recommendFoodFunction = async () => {
     if (detailsFood.length !== 0) {
-      const response = await requestApiFoodFilterIngredient(detailsFood.strIngredient1);
-      setRecommendFood(response.slice(0, 6));
+      const response = await recommendDrinksList();
+      console.log(response)
+      setRecommendFood(response.drinks.slice(0, 6));
     }
   };
 
@@ -44,7 +49,7 @@ function DetalhesReceita(props) {
     if (detailsFood.length !== 0) {
       const array = [];
       for (let i = 1; i <= 20; i += 1) {
-        const ingredient = detailsFood[`strIngredient${i}`];
+        const ingredient = `${detailsFood[`strIngredient${i}`]} ${detailsFood[`strMeasure${i}`]}`;
         array.push(ingredient);
       }
       const arrayReturn = array.filter((element) => element !== '');
@@ -61,9 +66,10 @@ function DetalhesReceita(props) {
       <h2 data-testid="recipe-title">{detailsFood.strMeal}</h2>
       <h3 data-testid="recipe-category">{detailsFood.strCategory}</h3>
       <h4 data-testid="instructions">{detailsFood.strInstructions}</h4>
-      <button type="button" data-testid="share-btn">Share</button>
+      <button type="button" data-testid="share-btn">
+        <img src={ buttonShare } />
+      </button>
       <button type="button" data-testid="favorite-btn">Favorite</button>
-      <button type="button" data-testid="start-recipe-btn">Iniciar receita</button>
       {arrayIngredients.map((element, index) => (
         <h5
           data-testid={ `${index}-ingredient-name-and-measure` }
@@ -85,13 +91,14 @@ function DetalhesReceita(props) {
       />
       {/* </iframe> */}
       <div>
-        {recommendFood.map((food, index) => (
+        {recommendFood.map((drink, index) => (
           <div key={ index } data-testid={ `${index}-recomendation-card` }>
-            <img src={ food.strMealThumb } alt="food-thumb" />
-            <h3>{food.strMeal}</h3>
+            <img src={ drink.strDrinkThumb } alt="drink-thumb" />
+            <h3>{drink.strDrink}</h3>
           </div>
         ))}
       </div>
+      <button type="button" data-testid="start-recipe-btn" className="btn-footer">Iniciar receita</button>
     </div>
   );
 }
