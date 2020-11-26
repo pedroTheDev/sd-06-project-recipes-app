@@ -1,7 +1,9 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { Login, Foods, Drinks, Profile,
-  FoodsDetails, DrinkDetails, FoodInProgress, DrinkInProgress } from '../pages';
+import { Login,
+  Foods, Drinks, Profile,
+  FoodsDetails, DrinkDetails,
+  FoodInProgress, DrinkInProgress, DoneRecipes } from '../pages';
 
 export default class AppRouter extends React.Component {
   render() {
@@ -77,11 +79,11 @@ export default class AppRouter extends React.Component {
           path="/perfil"
           component={ Profile }
         />
-        {/* <Route
+        <Route
           exact
           path="/receitas-feitas"
           component={ DoneRecipes }
-        /> */}
+        />
         {/* <Route
           exact
           path="/receitas-favoritas"

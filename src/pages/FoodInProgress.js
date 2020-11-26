@@ -17,7 +17,6 @@ export default function FoodInProgress(props) {
   const [checkedIngredients, setCheckedIngredients] = useState([]);
   const [recommendation, setRecommendation] = useState([]);
   const [disabled, setDisabled] = useState(true);
-  const [btnStartValue, setBtnStartValue] = useState('Iniciar Receita');
   const [copy, setCopy] = useState('');
   const [fav, setFav] = useState(whiteHeart);
   const { match: { params: { id } } } = props;
@@ -33,7 +32,6 @@ export default function FoodInProgress(props) {
       const inProgress = (storage) && storage.meals[id];
 
       if (inProgress) {
-        setBtnStartValue('Continuar Receita');
         setCheckedIngredients(inProgress);
       }
     }
@@ -41,9 +39,6 @@ export default function FoodInProgress(props) {
   }, []);
 
   useEffect(() => {
-    if (localStorage.getItem('doneRecipes') === null) {
-      setDisabled(false);
-    }
     if (localStorage.getItem('favoriteRecipes') !== null) {
       const tarefa = JSON.parse(localStorage.getItem('favoriteRecipes'));
       if (tarefa.some((item) => item.id === id)) {
@@ -62,6 +57,12 @@ export default function FoodInProgress(props) {
           checkbox.setAttribute('checked', '');
         }
       });
+      const inputLength = document.querySelectorAll('input[type=checkbox]').length;
+      if (inputLength === checkedIngredients.length) {
+        setDisabled(false);
+      } else if (inputLength > checkedIngredients.length) {
+        setDisabled(true);
+      }
     }
   }, [checkedIngredients]);
 
@@ -186,14 +187,14 @@ export default function FoodInProgress(props) {
           <p data-testid="instructions">{item.strInstructions}</p>
           {renderIngredients()}
           <p data-testid="video">{item.strYoutube}</p>
-          <Link to={ `/comidas/${id}/in-progress` }>
+          <Link to="/receitas-feitas">
             <button
               type="button"
               data-testid="finish-recipe-btn"
               className="btnStart"
               disabled={ disabled }
             >
-              {btnStartValue}
+              Finalizar receita
             </button>
           </Link>
         </div>
