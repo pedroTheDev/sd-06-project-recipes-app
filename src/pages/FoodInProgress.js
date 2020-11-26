@@ -188,7 +188,7 @@ function FoodInProgress(props) {
         <textarea
           className="text-area"
           ref={ textArea }
-          value={ `http://localhost:3000/${id}` }
+          value={ `http://localhost:3000/comidas/${id}` }
         />
         <button
           data-testid="finish-recipe-btn"

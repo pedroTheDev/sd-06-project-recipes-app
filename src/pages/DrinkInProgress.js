@@ -52,6 +52,12 @@ function DrinkInProgress(props) {
     setRecipe(response.drinks[0]);
   };
 
+  const verifyIngredientsChecked = () => {
+    const isAllChecked = !ingredients
+      .some((ingredient) => ingredient.isChecked === false);
+    setIsDisabled(!isAllChecked);
+  };
+
   const requestIngredients = () => {
     const twentyOne = 21;
     const TheIngredients = [];
@@ -71,12 +77,7 @@ function DrinkInProgress(props) {
       }
     }
     setIngredients(TheIngredients);
-  };
-
-  const verifyIngredientsChecked = () => {
-    const isAllChecked = !ingredients
-      .some((ingredient) => ingredient.isChecked === false);
-    setIsDisabled(!isAllChecked);
+    verifyIngredientsChecked();
   };
 
   const setLocalIngredients = () => {
@@ -189,7 +190,7 @@ function DrinkInProgress(props) {
         <textarea
           className="text-area"
           ref={ textArea }
-          value={ `http://localhost:3000/${id}` }
+          value={ `http://localhost:3000/bebidas/${id}` }
         />
         <button
           data-testid="finish-recipe-btn"
