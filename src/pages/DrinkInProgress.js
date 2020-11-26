@@ -189,7 +189,7 @@ function DrinkInProgress(props) {
         <textarea
           className="text-area"
           ref={ textArea }
-          value={ `http://localhost:3000${pathname}` }
+          value={ `http://localhost:3000/${id}` }
         />
         <button
           data-testid="finish-recipe-btn"

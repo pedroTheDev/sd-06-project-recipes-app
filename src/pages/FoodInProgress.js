@@ -51,6 +51,12 @@ function FoodInProgress(props) {
     setRecipe(response.meals[0]);
   };
 
+  const verifyIngredientsChecked = () => {
+    const isAllChecked = !ingredients
+      .some((ingredient) => ingredient.isChecked === false);
+    setIsDisabled(!isAllChecked);
+  };
+
   const requestIngredients = () => {
     const twentyOne = 21;
     const TheIngredients = [];
@@ -70,11 +76,7 @@ function FoodInProgress(props) {
       }
     }
     setIngredients(TheIngredients);
-  };
-  const verifyIngredientsChecked = () => {
-    const isAllChecked = !ingredients
-      .some((ingredient) => ingredient.isChecked === false);
-    setIsDisabled(!isAllChecked);
+    verifyIngredientsChecked();
   };
 
   const setLocalIngredients = () => {
@@ -186,7 +188,7 @@ function FoodInProgress(props) {
         <textarea
           className="text-area"
           ref={ textArea }
-          value={ `http://localhost:3000${pathname}` }
+          value={ `http://localhost:3000/${id}` }
         />
         <button
           data-testid="finish-recipe-btn"
