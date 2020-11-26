@@ -5,9 +5,18 @@ class ExploreDrinks extends React.Component {
   render() {
     return (
       <div className="exploredrinks-container">
-        <button type="button" data-testid="explore-by-ingredient">a</button>
-        <button type="button" data-testid="explore-by-ingredient">a</button>
-        <button type="button" data-testid="explore-by-ingredient">a</button>
+        <button
+          type="button"
+          data-testid="explore-by-ingredient"
+        >
+          Por Ingredientes
+        </button>
+        <button
+          type="button"
+          data-testid="explore-surprise"
+        >
+          Me Surpreenda!
+        </button>
       </div>
     );
   }

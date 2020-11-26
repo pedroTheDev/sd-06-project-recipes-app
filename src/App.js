@@ -27,10 +27,10 @@ function App() {
           path="/bebidas/:id/in-progress"
           component={ DrinksRecipesInProgress }
         />
-        <Route path="/bebidas" component={ Drink } />
-        <Route path="/explorar" component={ Explore } />
         <Route exact path="/explorar/comidas" component={ ExploreFoods } />
         <Route exact path="/explorar/bebidas" component={ ExploreDrinks } />
+        <Route path="/bebidas" component={ Drink } />
+        <Route path="/explorar" component={ Explore } />
         <Route path="/perfil" component={ Profile } />
         <Route path="/receitas-feitas" component={ DoneRecipes } />
         <Route path="/receitas-favoritas" component={ FavoriteRecipes } />
