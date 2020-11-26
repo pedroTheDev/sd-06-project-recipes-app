@@ -77,9 +77,10 @@ function DetalhesComida() {
                 <img
                   src={ shareIcon }
                   alt="Botão de Compartilhar"
+                  className="icons"
                 />
               </button>
-              {isCopied ? <p>Link copiado!</p> : true}
+              { isCopied ? <p>Link copiado!</p> : true }
             </span>
             <button
               type="button"
@@ -89,6 +90,7 @@ function DetalhesComida() {
                 data-testid="favorite-btn"
                 src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
                 alt="Botão de Favorito"
+                className="icons"
               />
             </button>
             <h2>Ingredientes</h2>
@@ -125,16 +127,28 @@ function DetalhesComida() {
             </video>
 
             <h2>Recomendadas</h2>
-            {
-              data[1] && data[1].drinks
-                .filter((_, index) => index < SEIS)
-                .map(({ strDrink, strDrinkThumb }, index) => (
-                  <div key={ strDrink } data-testid={ `${index}-recomendation-card` }>
-                    <img src={ strDrinkThumb } alt={ strDrink } />
-                    <h2 data-testid={ `${index}-recomendation-title` }>{ strDrink }</h2>
-                  </div>
-                ))
-            }
+            <div className="cards">
+              <div className="scroller">
+                {
+                  data[1] && data[1].drinks
+                    .filter((_, index) => index < SEIS)
+                    .map(({ strDrink, strDrinkThumb }, index) => (
+                      <div
+                        className="card"
+                        key={ strDrink }
+                        data-testid={ `${index}-recomendation-card` }
+                      >
+                        <img src={ strDrinkThumb } alt={ strDrink } />
+                        <h2
+                          data-testid={ `${index}-recomendation-title` }
+                        >
+                          { strDrink }
+                        </h2>
+                      </div>
+                    ))
+                }
+              </div>
+            </div>
 
             <Link to={ `/comidas/${idMeal}/in-progress` }>
               <button

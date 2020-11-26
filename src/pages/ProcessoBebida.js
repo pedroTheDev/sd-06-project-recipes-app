@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import useCopyToClipboard from '../hooks/useCopyToClipboard';
 import RecipesContext from '../context/RecipesContext';
 import { shareIcon, whiteHeartIcon, blackHeartIcon } from '../images';
+import '../style/Processo.css';
 
 function ProcessoBebida() {
   const timeoutTextCopy = 3000;
@@ -54,11 +55,12 @@ function ProcessoBebida() {
   };
 
   return (isLoading) ? <p>Loading</p> : (
-    <div>
+    <div className="container-progress">
       <img
         data-testid="recipe-photo"
         src={ dataDrinks.strDrinkThumb }
         alt="Foto da receita"
+        className="food-image"
       />
       <h1
         data-testid="recipe-title"

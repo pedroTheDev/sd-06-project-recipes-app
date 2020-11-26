@@ -66,6 +66,7 @@ function ProcessoComida() {
         data-testid="recipe-photo"
         src={ dataMeal.strMealThumb }
         alt="Foto da receita"
+        className="food-image"
       />
       <h1 data-testid="recipe-title">{ dataMeal.strMeal }</h1>
       <span>
