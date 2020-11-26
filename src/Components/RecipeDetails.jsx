@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import Clipboard from 'react-clipboard.js';
 import RecipeContext from '../hooks/RecipeContext';
 import recipeRequest from '../services/recipeRequest';
 
@@ -14,9 +15,9 @@ const RecipeDetails = () => {
     setDrinkRecommendation } = useContext(RecipeContext);
   const [recipeDetailFood, setRecipeDetailFood] = useState([]);
   const [recipeDetailDrink, setRecipeDetailDrink] = useState('foi');
+  const [copied, setCopied] = useState('');
   const { pathname } = history.location;
   const ids = pathname.split('/')[2];
-
   const NINE = 9;
   const TWENTY_NINE = 29;
   const FOURTY_NINE = 49;
@@ -60,6 +61,12 @@ const RecipeDetails = () => {
       ));
   };
 
+  const handleCopy = () => {
+    const TWO = 2000;
+    setCopied('Link copiado!');
+    setInterval(() => setCopied(''), TWO);
+  };
+
   const renderRecipe = () => {
     if (pathname === `/comidas/${ids}` && recipeDetailFood.length >= 1) {
       return recipeDetailFood.map((food, index) => (
@@ -70,7 +77,17 @@ const RecipeDetails = () => {
             src={ food.strMealThumb }
           />
           <h1 data-testid="recipe-title">{ food.strMeal }</h1>
-          <button type="button" data-testid="share-btn">Share</button>
+          <Clipboard
+            data-clipboard-text={ window.location.href }
+            onClick={ handleCopy }
+            type="button"
+            data-testid="share-btn"
+          >
+            Share
+
+          </Clipboard>
+
+          {copied}
           <button type="button" data-testid="favorite-btn">Favorite</button>
           <p data-testid="recipe-category">{ recipeDetailFood[0].strCategory }</p>
           {
@@ -130,7 +147,15 @@ const RecipeDetails = () => {
             src={ drink.strDrinkThumb }
           />
           <h1 data-testid="recipe-title">{ drink.strDrink }</h1>
-          <button type="button" data-testid="share-btn">Share</button>
+          <Clipboard
+            data-clipboard-text={ window.location.href }
+            onClick={ handleCopy }
+            type="button"
+            data-testid="share-btn"
+          >
+            Share
+          </Clipboard>
+          { copied }
           <button type="button" data-testid="favorite-btn">Favorite</button>
           <p data-testid="recipe-category">{drink.strAlcoholic}</p>
           {
