@@ -30,3 +30,11 @@ export async function fetchApiBebidasByCategory(category) {
   const responseJson = await response.json();
   return responseJson.drinks;
 }
+
+export async function fetchApiBebidasDetalhes(id) {
+  const endpoint = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
+  const response = await fetch(endpoint);
+  const responseJson = await response.json();
+  console.log(responseJson);
+  return responseJson.drinks;
+}

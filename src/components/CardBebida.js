@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import RecipeContext from '../context/RecipeContext';
 
 function CardBebida(elemento, index) {
+  const { setIdBebida } = useContext(RecipeContext);
   const history = useHistory();
   function redirectDetails(idDrinks) {
+    setIdBebida(idDrinks);
     history.push(`/bebidas/${idDrinks}`);
   }
   return (
@@ -16,6 +19,7 @@ function CardBebida(elemento, index) {
           alt={ elemento.strDrink }
         />
       </button>
+
     </div>
   );
 }

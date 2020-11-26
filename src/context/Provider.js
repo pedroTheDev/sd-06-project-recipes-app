@@ -13,11 +13,17 @@ function Provider({ children }) {
   const [searchBar, setSearchBar] = useState('');
   const [retornoApiComidas, setRetornoApiComidas] = useState([]);
   const [retornoApiBebidas, setRetornoApiBebidas] = useState([]);
-  const [categoriaAtual, setCategoriaAtual] = useState('');
+  const [retornoApi6Comidas, setRetornoApi6Comidas] = useState([]);
+  const [idBebida, setIdBebida] = useState('');
+  const [idComida, setIdComida] = useState('');
 
   const fetchComida = async () => {
     const response = await FetchApiComidas('1', '');
     setRetornoApiComidas(response);
+  };
+  const fetch6Comida = async () => {
+    const response = await FetchApiComidas('2', '');
+    setRetornoApi6Comidas(response);
   };
 
   const fetchCategoriesComidas = async () => {
@@ -40,6 +46,7 @@ function Provider({ children }) {
     fetchComida();
     fetchCategoriesBebidas();
     fetchBebida();
+    fetch6Comida();
   }, []);
 
   const contextValue = {
@@ -58,8 +65,12 @@ function Provider({ children }) {
     setRetornoApiComidas,
     retornoApiBebidas,
     setRetornoApiBebidas,
-    categoriaAtual,
-    setCategoriaAtual,
+    idBebida,
+    setIdBebida,
+    idComida,
+    setIdComida,
+    retornoApi6Comidas,
+    setRetornoApi6Comidas,
   };
   return (
     <RecipeContext.Provider value={ contextValue }>

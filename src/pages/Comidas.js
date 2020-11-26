@@ -26,7 +26,20 @@ function Comidas() {
     const response = await fetchApiComidasByCategory(category);
     setRetornoApiComidas(response);
   }
-
+  function changeCategory(category) {
+    if (categoriaAtual === '') {
+      renderCategory(category);
+      setCategoriaAtual(category);
+    }
+    if (categoriaAtual === category) {
+      renderAll();
+      setCategoriaAtual(category);
+    }
+    if (categoriaAtual !== category) {
+      renderCategory(category);
+      setCategoriaAtual(category);
+    }
+  }
   return (
     <div>
       <Header title="Comidas" />
@@ -44,20 +57,7 @@ function Comidas() {
                  key={ index }
                  type="button"
                  data-testid={ `${category.strCategory}-category-filter` }
-                 onClick={ () => {
-                   if (categoriaAtual === '') {
-                     renderCategory(category.strCategory);
-                     setCategoriaAtual(category.strCategory);
-                   }
-                   if (categoriaAtual === category.strCategory) {
-                     renderAll();
-                     setCategoriaAtual(category.strCategory);
-                   }
-                   if (categoriaAtual !== category.strCategory) {
-                     renderCategory(category.strCategory);
-                     setCategoriaAtual(category.strCategory);
-                   }
-                 } }
+                 onClick={ () => changeCategory(category.strCategory) }
                >
                  { category.strCategory }
                </button>
