@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
+import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import MealsContext from '../context/MealsContext';
+import './Login.css';
 
 function Login() {
   const {
@@ -30,37 +32,37 @@ function Login() {
   };
 
   return (
-    <div>
-      <form>
-        <label htmlFor="email-input">
-          Email:
-          <input
-            type="email"
-            name="email-input"
-            id="email-input"
-            data-testid="email-input"
-            onChange={ handleChangeWithValidation }
-          />
-        </label>
-        <label htmlFor="password-input">
-          Senha:
-          <input
-            type="password"
-            name="password-input"
-            id="password-input"
-            data-testid="password-input"
-            onChange={ handleChangeWithValidation }
-          />
-        </label>
+    <div className="login-container">
+      <h1 className="login-title">PROJECT TRYBE - RECIPE APP</h1>
+      <form className="form-container">
+        <input
+          className="input-form-login"
+          placeholder="Enter e-mail"
+          type="email"
+          name="email-input"
+          id="email-input"
+          data-testid="email-input"
+          onChange={ handleChangeWithValidation }
+        />
+        <input
+          className="input-form-login"
+          placeholder="Enter password"
+          type="password"
+          name="password-input"
+          id="password-input"
+          data-testid="password-input"
+          onChange={ handleChangeWithValidation }
+        />
         <Link to="/comidas">
-          <button
+          <Button
+            variant={ disable ? 'secondary' : 'success' }
             type="button"
             data-testid="login-submit-btn"
             disabled={ disable }
             onClick={ handleClick }
           >
             ENTRAR
-          </button>
+          </Button>
         </Link>
       </form>
     </div>

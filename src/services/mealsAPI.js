@@ -42,6 +42,13 @@ export async function getRecipesMealsByCategoryApi(category) {
   return result.meals;
 }
 
+// Lista de receitas de comidas por ID
+export async function getRecipeMealByIdApi(id) {
+  const response = await fetch(`${URL_BASE}lookup.php?i=${id}`);
+  const result = await response.json();
+  return result.meals;
+}
+
 // Lista de receitas de comidas por igredientes aleatorios
 export async function getRecipesMealsByRandomIngredients() {
   const response = await fetch(`${URL_BASE}random.php`);
@@ -53,6 +60,7 @@ export default {
   getAllRecipeTypesApi,
   getRecipesMealsApi,
   getRecipesMealsByCategoryApi,
+  getRecipeMealByIdApi,
   getFilteredRecipesApi,
   getRecipesMealsByRandomIngredients,
 };
