@@ -48,7 +48,7 @@ class DrinkCard extends React.Component {
     return (
       <div>
         {Drink.map((element, index) => (
-          <div key={ index + indexAcc }>
+          <div key={ index + indexAcc } className="food-drink-card">
             <input
               type="image"
               data-testid={ `${index + indexAcc}-horizontal-image` }
@@ -57,30 +57,37 @@ class DrinkCard extends React.Component {
               alt="horizontal"
               onClick={ () => history.push(`/bebidas/${element.id}`) }
             />
-
-            <p data-testid={ `${index + indexAcc}-horizontal-top-text` }>
-              {element.alcoholicOrNot}
-            </p>
-            <button
-              type="button"
-              data-testid={ `${index + indexAcc}-horizontal-name` }
-              onClick={ () => history.push(`/bebidas/${element.id}`) }
-              value={ element.name }
-            >
-              { element.name }
-            </button>
-            <p data-testid={ `${index + indexAcc}-horizontal-done-date` }>
-              {element.doneDate}
-            </p>
-
-            <input
-              type="image"
-              data-testid={ `${index + indexAcc}-horizontal-share-btn` }
-              src={ shareIcon }
-              alt="share"
-              onClick={ () => this.handleShareDrink(element) }
-            />
-
+            <div className="food-drink-top-div">
+              <div className="food-drink-titles">
+                <button
+                  type="button"
+                  data-testid={ `${index + indexAcc}-horizontal-name` }
+                  onClick={ () => history.push(`/bebidas/${element.id}`) }
+                  value={ element.name }
+                >
+                  { element.name }
+                </button>
+              </div>
+              <div className="food-drink-image">
+                <input
+                  type="image"
+                  data-testid={ `${index + indexAcc}-horizontal-share-btn` }
+                  src={ shareIcon }
+                  alt="share"
+                  onClick={ () => this.handleShareDrink(element) }
+                />
+              </div>
+            </div>
+            <aside className="food-drink-footer">
+              <div className="tags-div">
+                <p data-testid={ `${index + indexAcc}-horizontal-top-text` }>
+                  {element.alcoholicOrNot}
+                </p>
+                <p data-testid={ `${index + indexAcc}-horizontal-done-date` }>
+                  {element.doneDate}
+                </p>
+              </div>
+            </aside>
           </div>))}
       </div>
     );

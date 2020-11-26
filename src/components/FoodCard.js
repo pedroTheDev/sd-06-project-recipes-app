@@ -48,7 +48,7 @@ class FoodCard extends React.Component {
     return (
       <div>
         {Food.map((element, i) => (
-          <div key={ i + indexAcc }>
+          <div key={ i + indexAcc } className="food-drink-card">
             <input
               type="image"
               data-testid={ `${i + indexAcc}-horizontal-image` }
@@ -57,62 +57,68 @@ class FoodCard extends React.Component {
               alt="horizontal"
               onClick={ () => history.push(`/comidas/${element.id}`) }
             />
-            <p data-testid={ `${i + indexAcc}-horizontal-top-text` }>
-              {`${element.area} - ${element.category}`}
-            </p>
-            <button
-              type="button"
-              data-testid={ `${i + indexAcc}-horizontal-name` }
-              onClick={ () => history.push(`/comidas/${element.id}`) }
-              value={ element.name }
-            >
-              { element.name }
-            </button>
-            <p data-testid={ `${i + indexAcc}-horizontal-done-date` }>
-              {element.doneDate}
-            </p>
-            {typeof element.tags === 'string'
-              ? (
-                <div>
-                  <p
-                    key="tag0"
-                    data-testid={ `${i}-${element.tags.split(',')[0]}-horizontal-tag` }
-                  >
-                    { `${element.tags.split(',')[0]}`}
-                  </p>
-                  <p
-                    key="tag1"
-                    data-testid={ `${i}-${element.tags.split(',')[1]}-horizontal-tag` }
-                  >
-                    { `${element.tags.split(',')[1]}`}
-                  </p>
-                </div>
-              )
-              : (
-                <div>
-                  <p
-                    key="tag0"
-                    data-testid={ `${i}-${element.tags[0]}-horizontal-tag` }
-                  >
-                    { `${element.tags[0]}`}
-                  </p>
-                  <p
-                    key="tag1"
-                    data-testid={ `${i}-${element.tags[1]}-horizontal-tag` }
-                  >
-                    { `${element.tags[1]}`}
-                  </p>
-                </div>
-              )}
-
-            <input
-              type="image"
-              data-testid={ `${i + indexAcc}-horizontal-share-btn` }
-              src={ shareIcon }
-              alt="share"
-              onClick={ () => this.handleShareFood(element) }
-            />
-
+            <div className="food-drink-top-div">
+              <div className="food-drink-titles">
+                <button
+                  type="button"
+                  data-testid={ `${i + indexAcc}-horizontal-name` }
+                  onClick={ () => history.push(`/comidas/${element.id}`) }
+                  value={ element.name }
+                >
+                  { element.name }
+                </button>
+                <p data-testid={ `${i + indexAcc}-horizontal-top-text` }>
+                  {`${element.area} - ${element.category}`}
+                </p>
+              </div>
+              <div className="food-drink-image">
+                <input
+                  type="image"
+                  data-testid={ `${i + indexAcc}-horizontal-share-btn` }
+                  src={ shareIcon }
+                  alt="share"
+                  onClick={ () => this.handleShareFood(element) }
+                />
+              </div>
+            </div>
+            <aside className="food-drink-footer">
+              <p data-testid={ `${i + indexAcc}-horizontal-done-date` }>
+                {element.doneDate}
+              </p>
+              {typeof element.tags === 'string'
+                ? (
+                  <div className="tags-div">
+                    <p
+                      key="tag0"
+                      data-testid={ `${i}-${element.tags.split(',')[0]}-horizontal-tag` }
+                    >
+                      { `${element.tags.split(',')[0]}`}
+                    </p>
+                    <p
+                      key="tag1"
+                      data-testid={ `${i}-${element.tags.split(',')[1]}-horizontal-tag` }
+                    >
+                      { `${element.tags.split(',')[1]}`}
+                    </p>
+                  </div>
+                )
+                : (
+                  <div className="tags-div">
+                    <p
+                      key="tag0"
+                      data-testid={ `${i}-${element.tags[0]}-horizontal-tag` }
+                    >
+                      { `${element.tags[0]}`}
+                    </p>
+                    <p
+                      key="tag1"
+                      data-testid={ `${i}-${element.tags[1]}-horizontal-tag` }
+                    >
+                      { `${element.tags[1]}`}
+                    </p>
+                  </div>
+                )}
+            </aside>
           </div>))}
       </div>
     );

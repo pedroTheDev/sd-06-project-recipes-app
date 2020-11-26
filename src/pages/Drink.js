@@ -45,40 +45,50 @@ class Drink extends React.Component {
     this.setState({ Drinks: initialDrinks, CategoryFilter: '' });
   }
 
+  redirectOnImage(recipe) {
+    const { history } = this.props;
+    history.push(`/bebidas/${recipe.idDrink}`);
+  }
+
   render() {
     const { history } = this.props;
     const { Drinks, Categories } = this.state;
     return (
       <div className="food-drink-container">
-        <Header history={ history } />
-        {Categories ? Categories.map((element, index) => (
-          <div key={ index } data-testid={ `${element.strCategory}-category-filter` }>
-            <button type="button" onClick={ () => this.setCategory(element) }>
-              {element.strCategory}
-            </button>
-          </div>
-        )) : ''}
-        <button
-          type="button"
-          data-testid="All-category-filter"
-          onClick={ () => this.allButtonHandler() }
-        >
-          All
-        </button>
-        {Drinks ? Drinks.map((recipe, index) => (
-          <div className="card" key={ index } data-testid={ `${index}-recipe-card` }>
-            <Link to={ `/bebidas/${recipe.idDrink}` }>
-              <img
+        <div className="category-buttons">
+          <Header history={ history } />
+          {Categories ? Categories.map((element, index) => (
+            <div key={ index } data-testid={ `${element.strCategory}-category-filter` }>
+              <button type="button" onClick={ () => this.setCategory(element) }>
+                {element.strCategory}
+              </button>
+            </div>
+          )) : ''}
+          <button
+            type="button"
+            data-testid="All-category-filter"
+            onClick={ () => this.allButtonHandler() }
+          >
+            All
+          </button>
+        </div>
+        <div className="cards-container">
+          {Drinks ? Drinks.map((recipe, index) => (
+            <div className="card" key={ index } data-testid={ `${index}-recipe-card` }>
+              <input
+                type="image"
+                width="100%"
                 src={ recipe.strDrinkThumb }
                 data-testid={ `${index}-card-img` }
                 alt="recipe"
+                onClick={ () => this.redirectOnImage(recipe) }
               />
               <hr className="card-hr" />
               <p data-testid={ `${index}-card-name` }>{recipe.strDrink}</p>
               <hr className="card-hr" />
-            </Link>
-          </div>
-        )) : null}
+            </div>
+          )) : null}
+        </div>
         <Footer history={ history } />
       </div>
     );

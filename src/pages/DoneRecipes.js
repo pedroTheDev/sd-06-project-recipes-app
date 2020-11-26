@@ -40,43 +40,39 @@ class DoneRecipes extends React.Component {
     const { history } = this.props;
     const { type, drinkIndex } = this.state;
     return (
-      <div>
+      <div className="done-recipes-container">
         <Header history={ history } />
-        <h1>dentro do header</h1>
-        <h1>quase fora do header</h1>
-        <h1>fora do header</h1>
-        <button
-          id="all"
-          data-testid="filter-by-all-btn"
-          type="button"
-          onClick={ this.setFilterState }
-        >
-          All
-        </button>
-
-        <button
-          id="food"
-          data-testid="filter-by-food-btn"
-          type="button"
-          onClick={ this.setFilterState }
-        >
-          Food
-        </button>
-
-        <button
-          id="drink"
-          data-testid="filter-by-drink-btn"
-          type="button"
-          onClick={ this.setFilterState }
-        >
-          Drinks
-        </button>
-
+        <div className="category-buttons">
+          <button
+            id="all"
+            data-testid="filter-by-all-btn"
+            type="button"
+            onClick={ this.setFilterState }
+          >
+            All
+          </button>
+          <button
+            id="food"
+            data-testid="filter-by-food-btn"
+            type="button"
+            onClick={ this.setFilterState }
+          >
+            Food
+          </button>
+          <button
+            id="drink"
+            data-testid="filter-by-drink-btn"
+            type="button"
+            onClick={ this.setFilterState }
+          >
+            Drinks
+          </button>
+        </div>
         {type === 'food' ? <FoodCard history={ history } indexAcc={ 0 } /> : null }
         {type === 'drink' ? <DrinkCard history={ history } indexAcc={ 0 } /> : null }
         {type === 'all'
           ? (
-            <div>
+            <div className="food-or-drink-done-card">
               <FoodCard history={ history } indexAcc={ 0 } />
               <DrinkCard history={ history } indexAcc={ drinkIndex } />
             </div>)

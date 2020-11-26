@@ -25,14 +25,16 @@ class Foods extends React.Component {
     this.setInitialState(mealsRender, Categories);
   }
 
-  async setCategory({ strCategory }) {
+  async setCategory({ target }, { strCategory }) {
     const { CategoryFilter } = this.state;
     if (CategoryFilter !== strCategory) {
       const filteredFoods = await filterFoodsByCategory(strCategory);
       this.setState({ Meals: filteredFoods, CategoryFilter: strCategory });
+      target.style.background = '#ac5c22';
     } else {
       const initialMeals = await foodsOnRender();
       this.setState({ Meals: initialMeals, CategoryFilter: '' });
+      target.style.background = '#5a2d0c';
     }
   }
 
@@ -45,40 +47,52 @@ class Foods extends React.Component {
     this.setState({ Meals: initialMeals, CategoryFilter: '' });
   }
 
+  redirectOnImage(recipe) {
+    const { history } = this.props;
+    history.push(`/comidas/${recipe.idMeal}`);
+  }
+
   render() {
     const { history } = this.props;
     const { Meals, Categories } = this.state;
     return (
       <div className="food-drink-container">
         <Header history={ history } />
-        {Categories ? Categories.map((element, index) => (
-          <div key={ index } data-testid={ `${element.strCategory}-category-filter` }>
-            <button type="button" onClick={ () => this.setCategory(element) }>
-              {element.strCategory}
-            </button>
-          </div>
-        )) : ''}
-        <button
-          type="button"
-          data-testid="All-category-filter"
-          onClick={ () => this.allButtonHandler() }
-        >
-          All
-        </button>
-        {Meals ? Meals.map((recipe, index) => (
-          <div className="card" key={ index } data-testid={ `${index}-recipe-card` }>
-            <Link to={ `/comidas/${recipe.idMeal}` }>
-              <img
+        <div className="category-buttons">
+          {Categories ? Categories.map((element, index) => (
+            <div key={ index } data-testid={ `${element.strCategory}-category-filter` }>
+              <button type="button" onClick={ (event) => this.setCategory(event, element) }>
+                {element.strCategory}
+              </button>
+            </div>
+          )) : ''}
+          <button
+            type="button"
+            data-testid="All-category-filter"
+            onClick={ () => this.allButtonHandler() }
+          >
+            All
+          </button>
+        </div>
+        <div className="cards-container">
+          {Meals ? Meals.map((recipe, index) => (
+            <div className="card" key={ index } data-testid={ `${index}-recipe-card` }>
+              <input
+                type="image"
+                width="100%"
                 src={ recipe.strMealThumb }
                 data-testid={ `${index}-card-img` }
                 alt="recipe"
+                onClick={ () => this.redirectOnImage(recipe) }
               />
               <hr className="card-hr" />
-              <p data-testid={ `${index}-card-name` }>{recipe.strMeal}</p>
+              <p data-testid={ `${index}-card-name` } className="bla">
+                {recipe.strMeal}
+              </p>
               <hr className="card-hr" />
-            </Link>
-          </div>
-        )) : null}
+            </div>
+          )) : null}
+        </div>
         <Footer history={ history } />
       </div>
     );
