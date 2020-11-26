@@ -37,16 +37,13 @@ function RecipesList(props) {
     }
   };
 
-  const renderSearchResults = () => {
+  const renderSearchResults = () => (
+    <>
+      {renderRedirectToSingleResult()}
+      {renderRecipesResults()}
+    </>
 
-    return (
-      <>
-        {renderRedirectToSingleResult()}
-        {renderRecipesResults()}
-      </>
-
-    );
-  };
+  );
 
   const render = () => {
     if (!isLoading) {
