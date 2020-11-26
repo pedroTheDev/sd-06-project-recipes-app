@@ -8,7 +8,10 @@ import RecipeCard from './RecipeCard';
 import './RecipeList.css';
 
 function RecipeList() {
-  const { drinkCategories, cardsRecipe, setCardsRecipe, categories } = useContext(MealsContext);
+  const { drinkCategories,
+    cardsRecipe,
+    setCardsRecipe,
+    categories } = useContext(MealsContext);
   // const [cardsRecipe, setCardsRecipe] = useState([]);
   const [cardCategories, setCardCategories] = useState([]);
   const [categorySelected, setcategorySelected] = useState([]);
