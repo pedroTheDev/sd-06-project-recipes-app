@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import copy from 'clipboard-copy';
 import { connect } from 'react-redux';
 import { fetchDrinksById, fetchRecommendedMeals } from '../services';
 import { currentID, favRecipe } from '../actions';
@@ -45,18 +46,26 @@ class DrinksDetails extends React.Component {
     }
   }
 
-  handleShareDrink({ idDrink }) {
-    const url = `http://localhost:3000/comidas/${idDrink}`;
-    window.alert('Link copiado!');
-    const el = document.createElement('textarea');
-    el.value = url;
-    el.setAttribute('readonly', '');
-    el.style.position = 'absolute';
-    el.style.left = '-9999px';
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand('copy');
-    document.body.removeChild(el);
+  async handleShareDrink({ idDrink }) {
+    const url = `http://localhost:3000/bebidas/${idDrink}`;
+    await copy(url);
+    const shareBtn = document.querySelector('.share-btn');
+    shareBtn.value = 'Link copiado!';
+    const p = document.querySelector('.p');
+    const span = document.createElement('span');
+    p.appendChild(span);
+    span.innerHTML = 'Link copiado!';
+    // const url = `http://localhost:3000/comidas/${idDrink}`;
+    // window.alert('Link copiado!');
+    // const el = document.createElement('textarea');
+    // el.value = url;
+    // el.setAttribute('readonly', '');
+    // el.style.position = 'absolute';
+    // el.style.left = '-9999px';
+    // document.body.appendChild(el);
+    // el.select();
+    // document.execCommand('copy');
+    // document.body.removeChild(el);
   }
 
   handleIngredients() {
@@ -209,11 +218,13 @@ class DrinksDetails extends React.Component {
               <div className="recipe-buttons">
                 <input
                   type="image"
+                  className="share-btn"
                   data-testid="share-btn"
                   src={ shareIcon }
                   onClick={ () => this.handleShareDrink(recipe) }
                   alt="shareIcon"
                 />
+                <p className="p" />
                 <input
                   type="image"
                   data-testid="favorite-btn"

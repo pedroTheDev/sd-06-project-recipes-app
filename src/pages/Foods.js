@@ -55,13 +55,17 @@ class Foods extends React.Component {
   render() {
     const { history } = this.props;
     const { Meals, Categories } = this.state;
+    const INITIAL_VALUE = 0;
     return (
       <div className="food-drink-container">
         <Header history={ history } />
         <div className="category-buttons">
           {Categories ? Categories.map((element, index) => (
             <div key={ index } data-testid={ `${element.strCategory}-category-filter` }>
-              <button type="button" onClick={ (event) => this.setCategory(event, element) }>
+              <button
+                type="button"
+                onClick={ (event) => this.setCategory(event, element) }
+              >
                 {element.strCategory}
               </button>
             </div>

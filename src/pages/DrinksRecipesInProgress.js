@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import copy from 'clipboard-copy';
 import { connect } from 'react-redux';
 import { fetchDrinksById } from '../services';
 import shareIcon from '../images/shareIcon.svg';
@@ -65,23 +66,24 @@ class DrinksRecipesInProgress extends React.Component {
     });
   }
 
-  handleShareDrink({ idDrink }) {
+  async handleShareDrink({ idDrink }) {
+    const url = `http://localhost:3000/bebidas/${idDrink}`;
+    await copy(url);
     const shareBtn = document.querySelector('.share-btn');
-    const url = `http://localhost:3000/bebidas/${idDrink}/in-progress`;
     shareBtn.value = 'Link copiado!';
-    const recipeButtons = document.querySelector('.recipe-buttons');
+    const p = document.querySelector('.p');
     const span = document.createElement('span');
-    recipeButtons.appendChild(span);
+    p.appendChild(span);
     span.innerHTML = 'Link copiado!';
-    const el = document.createElement('textarea');
-    el.value = url;
-    el.setAttribute('readonly', '');
-    el.style.position = 'absolute';
-    el.style.left = '-9999px';
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand('copy');
-    document.body.removeChild(el);
+    // const el = document.createElement('textarea');
+    // el.value = url;
+    // el.setAttribute('readonly', '');
+    // el.style.position = 'absolute';
+    // el.style.left = '-9999px';
+    // document.body.appendChild(el);
+    // el.select();
+    // document.execCommand('copy');
+    // document.body.removeChild(el);
   }
 
   handleButton() {
@@ -275,6 +277,7 @@ class DrinksRecipesInProgress extends React.Component {
                   alt="shareIcon"
                   onClick={ () => this.handleShareDrink(recipe) }
                 />
+                <p className="p" />
                 <input
                   type="image"
                   data-testid="favorite-btn"

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import copy from 'clipboard-copy';
 import { connect } from 'react-redux';
 import shareIcon from '../images/shareIcon.svg';
 
@@ -21,19 +22,26 @@ class FoodCard extends React.Component {
     }
   }
 
-  handleShareFood({ id }) {
+  async handleShareFood({ id }) {
     const url = `http://localhost:3000/comidas/${id}`;
-    window.alert('Link copiado!');
-    //  https://www.30secondsofcode.org/blog/s/copy-text-to-clipboard-with-javascript
-    const el = document.createElement('textarea');
-    el.value = url;
-    el.setAttribute('readonly', '');
-    el.style.position = 'absolute';
-    el.style.left = '-9999px';
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand('copy');
-    document.body.removeChild(el);
+    await copy(url);
+    const shareBtn = document.querySelector('.share-btn');
+    shareBtn.value = 'Link copiado!';
+    const p = document.querySelector('.p');
+    const span = document.createElement('span');
+    p.appendChild(span);
+    span.innerHTML = 'Link copiado!';
+    // window.alert('Link copiado!');
+    // https://www.30secondsofcode.org/blog/s/copy-text-to-clipboard-with-javascript
+    // const el = document.createElement('textarea');
+    // el.value = url;
+    // el.setAttribute('readonly', '');
+    // el.style.position = 'absolute';
+    // el.style.left = '-9999px';
+    // document.body.appendChild(el);
+    // el.select();
+    // document.execCommand('copy');
+    // document.body.removeChild(el);
   }
 
   setFoodState(Food) {
