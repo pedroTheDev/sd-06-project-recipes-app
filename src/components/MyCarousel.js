@@ -11,7 +11,7 @@ function MyCarousel() {
       { console.log(recommendedRecipe) }
       <Carousel.Item>
         <div className="carousel-container">
-          <div>
+          <div data-testid="0-recomendation-card">
             <img
               className="d-block w-100"
               src={ recommendedRecipe[0].strThumb }
@@ -20,7 +20,7 @@ function MyCarousel() {
             <h6>{ recommendedRecipe[0].strCategory }</h6>
             <h4>{ recommendedRecipe[0].strName }</h4>
           </div>
-          <div>
+          <div data-testid="1-recomendation-card">
             <img
               className="d-block w-100"
               src={ recommendedRecipe[1].strThumb }
@@ -33,7 +33,7 @@ function MyCarousel() {
       </Carousel.Item>
       <Carousel.Item>
         <div className="carousel-container">
-          <div>
+          <div data-testid="2-recomendation-card">
             <img
               className="d-block w-100"
               src={ recommendedRecipe[2].strThumb }
@@ -42,7 +42,7 @@ function MyCarousel() {
             <h6>{ recommendedRecipe[2].strCategory }</h6>
             <h4>{ recommendedRecipe[2].strName }</h4>
           </div>
-          <div>
+          <div data-testid="3-recomendation-card">
             <img
               className="d-block w-100"
               src={ recommendedRecipe[3].strThumb }
@@ -55,7 +55,7 @@ function MyCarousel() {
       </Carousel.Item>
       <Carousel.Item>
         <div className="carousel-container">
-          <div>
+          <div data-testid="4-recomendation-card">
             <img
               className="d-block w-100"
               src={ recommendedRecipe[4].strThumb }
@@ -64,7 +64,7 @@ function MyCarousel() {
             <h6>{ recommendedRecipe[4].strCategory }</h6>
             <h4>{ recommendedRecipe[4].strName }</h4>
           </div>
-          <div>
+          <div data-testid="5-recomendation-card">
             <img
               className="d-block w-100"
               src={ recommendedRecipe[5].strThumb }

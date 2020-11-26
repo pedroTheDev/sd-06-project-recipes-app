@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import SearchBar from './SearchBar';
 import profileIcon from '../images/profileIcon.svg';
 import './Header.css';
+import { includes } from 'lodash';
 
 function Header() {
   const location = useLocation();
@@ -32,7 +33,7 @@ function Header() {
     case '/perfil':
       return 'Perfil';
     default:
-      return 'Not Found';
+      return 'Detalhes';
     }
   };
 

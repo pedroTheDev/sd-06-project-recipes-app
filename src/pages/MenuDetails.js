@@ -1,7 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import DrinkDetails from '../components/DrinkDetails';
-import Header from '../components/Header';
 import MealDetails from '../components/MealDetails';
 
 function MenuDetails() {
@@ -10,7 +9,6 @@ function MenuDetails() {
 
   return (
     <div>
-      <Header />
       { location.pathname.includes('comidas')
         ? <MealDetails />
         : <DrinkDetails />}

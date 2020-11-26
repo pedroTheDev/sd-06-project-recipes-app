@@ -26,7 +26,6 @@ function MealDetails() {
       const fim = 6;
       const resultDrinks = await getRecipeDrinksApi();
       const myDrinks = resultDrinks.slice(inicio, fim);
-      console.log('myDrinks', myDrinks);
       const myRecommendedDrinks = myDrinks.map((item) => {
         const myCard = {
           id: item.idDrink,
@@ -105,7 +104,7 @@ function MealDetails() {
         <h3>Instructions</h3>
         <p data-testid="instructions">{ recipeMeal.strInstructions }</p>
       </div>
-      <div>
+      <div data-testid="video">
         <h3>Video</h3>
         <YouTube
           videoId={ recipeMeal.strYoutube !== undefined ? getIdYoutube() : null }
@@ -114,7 +113,6 @@ function MealDetails() {
         />
       </div>
       <div>
-        {console.log('recomended', recommendedRecipe)}
         <h3>Recommended</h3>
         { recommendedRecipe.length !== itemZerado
           ? <MyCarousel />
