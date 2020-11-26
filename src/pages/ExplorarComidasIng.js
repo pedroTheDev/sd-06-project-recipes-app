@@ -18,7 +18,7 @@ const ExplorarComidasIng = () => {
 
   return (
     <div>
-      <Header title="Explorar por Ingredientes" />
+      <Header title="Explorar Ingredientes" />
       {ingredientList && ingredientList.slice(zero, twelve).map((ingred, index) => (
         <Link
           to="/comidas"

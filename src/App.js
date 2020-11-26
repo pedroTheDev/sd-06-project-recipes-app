@@ -20,10 +20,10 @@ function App() {
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={ Login } />
-        <Route path="/comidas" component={ Comidas } />
         <Route path="/comidas/:id" component={ DetalhesComida } />
-        <Route path="/bebidas" component={ Bebidas } />
+        <Route path="/comidas" component={ Comidas } />
         <Route path="/bebidas/:id" component={ DetalhesBebida } />
+        <Route path="/bebidas" component={ Bebidas } />
         <Route exact path="/explorar" component={ Explorar } />
         <Route exact path="/explorar/comidas" component={ ExplorarComidas } />
         <Route exact path="/explorar/bebidas" component={ ExplorarBebidas } />

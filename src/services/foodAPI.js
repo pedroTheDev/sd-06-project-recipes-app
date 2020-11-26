@@ -12,7 +12,7 @@ export async function foodAPI(type, endpoint) {
     url = `https://www.themealdb.com/api/json/v1/1/search.php?f=${endpoint}`;
     break;
   default:
-    url = 'https://www.themealdb.com/api/json/v1/1/filter.php?i=';
+    url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
   }
 
   const fetchAPI = await fetch(url)
@@ -70,3 +70,7 @@ export const listIngredients = () => fetch('https://www.themealdb.com/api/json/v
   .then((response) => response.json())
   .then((data) => data.meals)
   .catch((error) => console.error(error));
+
+export const fetchFoodAPI = (id) => fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
+  .then((response) => response.json())
+  .then((data) => data.meals);

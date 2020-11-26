@@ -18,7 +18,7 @@ const ExplorarBebidasIng = () => {
 
   return (
     <div>
-      <Header title="Explorar por Ingredientes" />
+      <Header title="Explorar Ingredientes" />
       {drinksIngredientList
       && drinksIngredientList.slice(zero, twelve).map((ingred, index) => (
         <Link

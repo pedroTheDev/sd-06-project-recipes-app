@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import ReceitasContext from '../context/ReceitasContext';
 import { fetchRandomMeal } from '../services/foodAPI';
 
 const ExplorarComidas = () => {
-  const [randomMealID, setRandomMeal] = useState();
+  const { randomMealID, setRandomMeal, setFetchById } = useContext(ReceitasContext);
 
   useEffect(() => {
     fetchRandomMeal().then((response) => {
@@ -15,7 +16,7 @@ const ExplorarComidas = () => {
 
   return (
     <div>
-      <Header />
+      <Header title="Explorar Comidas" />
       <Link to="/explorar/comidas/ingredientes">
         <button
           data-testid="explore-by-ingredient"
@@ -27,7 +28,7 @@ const ExplorarComidas = () => {
       <Link to="/explorar/comidas/area">
         <button data-testid="explore-by-area" type="button"> Por Local de Origem</button>
       </Link>
-      <Link to={ `/comidas/${randomMealID}` }>
+      <Link to={ `/comidas/${randomMealID}` } onClick={ () => setFetchById(false) }>
         <button data-testid="explore-surprise" type="button">Me Surpreenda!</button>
       </Link>
       <Footer />

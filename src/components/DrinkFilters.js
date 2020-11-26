@@ -4,12 +4,12 @@ import { drinkByCategoryApi, drinkAPI } from '../services/drinkAPI';
 
 function DrinkFilters() {
   const {
-    filtersData, setMeals, selectedFilter, setSelectedFilter,
+    filtersData, setDrinks, selectedFilter, setSelectedFilter,
   } = useContext(ReceitasContext);
 
   async function fetchDrink() {
     const responseDrinksAPI = await drinkAPI();
-    setMeals(responseDrinksAPI);
+    setDrinks(responseDrinksAPI);
   }
 
   const filters = (category) => {
@@ -17,7 +17,7 @@ function DrinkFilters() {
       fetchDrink();
     } else {
       drinkByCategoryApi(category).then((response) => {
-        setMeals(response.drinks);
+        setDrinks(response.drinks);
       });
     }
   };

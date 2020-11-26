@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import '../style/RecipesList.css';
 
-function MealsCard({ food, index }) {
+function RecipesCard({ food, index }) {
   return (
     <Link to={ `/comidas/${food.idMeal}` }>
       <div className="recipe-card" data-testid={ `${index}-recipe-card` }>
@@ -21,9 +21,9 @@ function MealsCard({ food, index }) {
   );
 }
 
-MealsCard.propTypes = {
+RecipesCard.propTypes = {
   food: PropTypes.instanceOf(Object).isRequired,
   index: PropTypes.number.isRequired,
 };
 
-export default MealsCard;
+export default RecipesCard;

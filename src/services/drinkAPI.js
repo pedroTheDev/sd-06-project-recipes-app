@@ -62,3 +62,7 @@ export const listIngredients = () => fetch('https://www.thecocktaildb.com/api/js
   .then((response) => response.json())
   .then((data) => data.drinks)
   .catch((error) => console.error(error));
+
+export const fetchDrinkAPI = (id) => fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
+  .then((response) => response.json())
+  .then((data) => data.drinks);

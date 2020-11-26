@@ -11,7 +11,6 @@ import { foodAPI, foodCategoryApi } from '../services/foodAPI';
 const Comidas = (history) => {
   const {
     searchBox, meals, setMeals, setFiltersData,
-    // stopApi, setStopApi,
   } = useContext(ReceitasContext);
 
   const location = useLocation();
@@ -40,7 +39,7 @@ const Comidas = (history) => {
           {meals.length && (meals
             .filter((x, index) => index < doze)
             .map((food, i) => (
-              <MealsCard key={ food } food={ food } index={ i } />
+              <MealsCard key={ i } food={ food } index={ i } />
             )))}
         </div>
         {location.pathname === '/comidas' && <Footer />}
