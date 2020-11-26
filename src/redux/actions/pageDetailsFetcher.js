@@ -1,4 +1,5 @@
 import { fetchMainPage } from '../../services/fetchMainPage';
+import invertPathName from '../../utils/invertPathName';
 import resizeFetchReturn from '../../utils/resizeFetchReturn';
 
 export const LOADING_RECOMMENDATIONS = 'LOADING_RECOMMENDATIONS';
@@ -22,10 +23,11 @@ function error(failed) {
   return { type: ERROR_RECOMMENDATIONS, error: failed };
 }
 
-export default function recomendationsThunk(foodOrDrink) {
+export default function recomendationsThunk(path) {
+  const newPath = invertPathName(path);
   return (dispatch) => {
     dispatch(loading());
-    fetchMainPage(foodOrDrink)
+    fetchMainPage(`/${newPath}`)
       .then(
         (response) => dispatch(success(response)),
         (failed) => dispatch(error(failed)),

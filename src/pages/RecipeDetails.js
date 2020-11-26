@@ -4,10 +4,12 @@ import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import splitPathname from '../utils/splitPathname';
 import recomendationsThunk from '../redux/actions/pageDetailsFetcher';
-import invertPathName from '../utils/invertPathName';
 import ShareButton from '../components/ShareButton';
 import FavButton from '../components/FavButton';
 import recipeDetailsProcessing from '../utils/recipeDetailsProcessing';
+import checkRecipeInProgress from '../utils/checkRecipeInProgress';
+import checkSavedRecipe from '../utils/checkSavedRecipe';
+import checkFavoriteRecipe from '../utils/checkFavoriteRecipe';
 
 function RecipeDetails(
   { location: { pathname }, recommendations },
@@ -17,6 +19,7 @@ function RecipeDetails(
   const [disableButton, setdisableButton] = useState('visible');
   const [wasStarted, setWasStarted] = useState(false);
   const [wasCopied, setWasCopied] = useState(false);
+  const [isFav, setIsFav] = useState(false);
 
   const history = useHistory();
   const { image,
@@ -32,30 +35,13 @@ function RecipeDetails(
 
   useEffect(() => {
     recipeDetailsProcessing(id, path, setRecipe);
-    const newPath = invertPathName(path);
-    dispatch(recomendationsThunk(`/${newPath}`));
+    dispatch(recomendationsThunk(path));
   }, []);
 
   useEffect(() => {
-    let savedRecipes = [];
-    savedRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
-    if (savedRecipes) {
-      savedRecipes.forEach((savedRecipe) => {
-        if (savedRecipe.id === recipe.id) {
-          setdisableButton('hidden');
-          return true;
-        }
-      });
-    }
-  }, [recipe]);
-
-  useEffect(() => {
-    const conditionalKey = path === 'comidas' ? 'meals' : 'cocktails';
-    const storedRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    if (storedRecipes) {
-      const inProgressIds = Object.keys(storedRecipes[conditionalKey]);
-      setWasStarted(inProgressIds.includes(recipe.id));
-    }
+    checkSavedRecipe(recipe, setdisableButton);
+    checkRecipeInProgress(path, recipe, setWasStarted);
+    setIsFav(checkFavoriteRecipe(id));
   }, [recipe]);
 
   return (
@@ -69,7 +55,7 @@ function RecipeDetails(
       <h1 data-testid="recipe-title">{ name }</h1>
       <div>
         <ShareButton setMessage={ setWasCopied } />
-        <FavButton />
+        <FavButton isFav={ isFav } id={ id } setIsFav={ setIsFav } recipe={ recipe } />
       </div>
       {wasCopied && 'Link copiado!'}
       <p data-testid="recipe-category">

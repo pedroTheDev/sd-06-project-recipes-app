@@ -2,10 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+import setRecipeAsFavorite from '../utils/setRecipeAsFavorite';
 
-function FavButton({ isFav }) {
+function FavButton({ isFav, setIsFav, id, recipe }) {
   function saveRecipe() {
-    console.log('teste');
+    setIsFav(!isFav);
+    setRecipeAsFavorite(id, recipe);
   }
 
   return (
@@ -13,7 +15,7 @@ function FavButton({ isFav }) {
       <img
         type="button"
         alt="shareIcon"
-        src={ !isFav ? whiteHeartIcon : blackHeartIcon }
+        src={ isFav ? blackHeartIcon : whiteHeartIcon }
         data-testid="favorite-btn"
       />
     </button>
@@ -22,6 +24,7 @@ function FavButton({ isFav }) {
 
 FavButton.propTypes = {
   isFav: PropTypes.bool.isRequired,
+  setIsFav: PropTypes.func.isRequired,
 };
 
 export default FavButton;
