@@ -60,7 +60,7 @@ function RecipeDetails() {
         });
       }
 
-      if (localStorageProgress.cocktails) {
+      if (localStorageProgress && localStorageProgress.cocktails) {
         Object.keys(localStorageProgress.cocktails).forEach((item) => {
           if (item === drinkRecipe[0].idDrink) {
             setRecipeStart(true);
