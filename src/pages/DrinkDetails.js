@@ -21,19 +21,6 @@ export default function DrinkDetails(props) {
   const [fav, setFav] = useState(whiteHeart);
   const { match: { params: { id } } } = props;
 
-  // useEffect(() => {
-  //   if (recipeId === '') {
-  //     setRecipeId(id);
-  //   }
-  //   async function fetchData() {
-  //     const result = await fetchDetail('bebidas', recipeId);
-  //     setRecipe(result);
-  //   }
-  //   if (recipeId === id) {
-  //     fetchData();
-  //   }
-  // }, [recipeId]);
-
   useEffect(() => {
     async function fetchData() {
       const currRecipe = await fetchDetail('bebidas', id);
