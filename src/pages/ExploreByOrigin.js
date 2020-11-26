@@ -2,32 +2,21 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import Card from '../components/Card';
-import { fetchAPIRecipes } from '../services';
 import ContextRecipes from '../context/ContextRecipes';
 
 function ExploreByOrigin() {
   const location = useLocation().pathname;
   const history = useHistory();
   const [data, setData] = useState([]);
-  const { setRecipes, showCard, setShowCard, recipes } = useContext(ContextRecipes);
-  const MAGIC_NUMBER_ZERO = 0;
+  const { setRecipes, recipes, setIdRecipe } = useContext(ContextRecipes);
+  const MAX_NUMBER_OF_CARDS = 12;
 
   const fetchRecipes = async () => {
       const apiRequest = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?a=Canadian`);
       const response = await apiRequest.json();
       const recipesApi = response.meals;
       setRecipes(recipesApi);
-      setShowCard(true);
   };
-
-  useEffect(() => {
-    if (recipes.length === MAGIC_NUMBER_ZERO) {
-      fetchRecipes();
-    } else {
-      setShowCard(true);
-    }
-  }, []);
 
   const apiOrigin = async () => {
     if (location.includes('comidas')) {
@@ -40,8 +29,14 @@ function ExploreByOrigin() {
     }
   };
 
+  // const fetchRecipesArea
+
   useEffect(() => {
     apiOrigin();
+  }, []);
+
+  useEffect(() => {
+    fetchRecipes();
   }, []);
 
   return (
@@ -58,6 +53,7 @@ function ExploreByOrigin() {
                 <option
                   key={ index }
                   value={ foodsArea.strArea }
+                  //onClick={ () => fetchRecipesArea(foodsArea.strArea) }
                   data-testid={ `${foodsArea.strArea}-option` }
                 >
                   { foodsArea.strArea }
@@ -65,7 +61,25 @@ function ExploreByOrigin() {
               ))}
             </select>
           </div>
-          {showCard && <Card />}
+          { recipes.map((recipe, index) => (
+            <div
+              key={ index }
+              id={ recipe.idMeal }
+              data-testid={ `${index}-recipe-card` }
+              onClick={ () => history.push(`/comidas/${recipe.idMeal}`) }
+              role="button"
+            >
+              <p data-testid={ `${index}-card-name` }>{ recipe.strMeal }</p>
+              <img
+                data-testid={ `${index}-card-img` }
+                src={ recipe.strMealThumb }
+                alt={ `${index}-food` }
+                aria-hidden="true"
+                width="100px"
+              />
+            </div>
+          )).filter((_, index) => index < MAX_NUMBER_OF_CARDS)
+          }
           <Footer />
         </div>
       ) : (
