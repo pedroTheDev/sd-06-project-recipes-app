@@ -9,7 +9,7 @@ import whiteHeart from '../images/whiteHeartIcon.svg';
 import blackHeart from '../images/blackHeartIcon.svg';
 
 export default function FoodsDetails(props) {
-  const [recipeId, setRecipeId] = useState('');
+  // const [recipeId, setRecipeId] = useState('');
   const [recipe, setRecipe] = useState('');
   const [recipeDetails, setRecipeDetails] = useState([]);
   const [recommendation, setRecommendation] = useState([]);
@@ -17,22 +17,25 @@ export default function FoodsDetails(props) {
   const [btnStartValue, setBtnStartValue] = useState('Iniciar Receita');
   const [copy, setCopy] = useState('');
   const [fav, setFav] = useState(whiteHeart);
+  const { match: { params: { id } } } = props;
+
+  // useEffect(() => {
+  //   if (recipeId === '') {
+  //     setRecipeId(id);
+  //   }
+  //   async function fetchData() {
+  //     const result = await fetchDetail('comidas', recipeId);
+  //     setRecipe(result);
+  //   }
+  //   if (recipeId === id) {
+  //     fetchData();
+  //   }
+  // }, [recipeId]);
 
   useEffect(() => {
-    if (recipeId === '') {
-      setRecipeId(props.match.params.id);
-    }
     async function fetchData() {
-      const result = await fetchDetail('comidas', recipeId);
-      setRecipe(result);
-    }
-    if (recipeId === props.match.params.id) {
-      fetchData();
-    }
-  }, [recipeId]);
-
-  useEffect(() => {
-    async function fetchData() {
+      const currRecipe = await fetchDetail('comidas', id);
+      setRecipe(currRecipe);
       const results = await fetchRecommendation('comidas');
       setRecommendation(results);
     }
@@ -100,7 +103,7 @@ export default function FoodsDetails(props) {
     if (recipeDetails.length > empty) {
       return (
         <div>
-          { recipeDetails.filter((ingredient) => ingredient !== '')
+          { recipeDetails.filter((ingredient) => ingredient !== '' && ingredient !== null)
             .map((ingredient, index) => (
               <p
                 key={ ingredient[0] }
@@ -147,7 +150,7 @@ export default function FoodsDetails(props) {
           <p data-testid="instructions">{item.strInstructions}</p>
           {renderIngredients()}
           <p data-testid="video">{item.strYoutube}</p>
-          <Link to={ `/comidas/${props.match.params.id}/in-progress` }>
+          <Link to={ `/comidas/${id}/in-progress` }>
             <button
               type="button"
               data-testid="start-recipe-btn"

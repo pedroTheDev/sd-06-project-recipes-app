@@ -1,3 +1,7 @@
 .item-img {
   width: 200px;
 }
+
+.strike-text {
+  text-decoration: line-through;
+}

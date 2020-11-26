@@ -1,15 +1,9 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Login from '../pages/Login';
-import Foods from '../pages/Foods';
-import Drinks from '../pages/Drinks';
-import Profile from '../pages/Profile';
-import FoodsDetails from '../components/FoodsDetails';
-import DrinksDetails from '../components/DrinkDetails';
-import FoodInProgress from '../components/FoodInProgress';
-import DrinkInProgress from '../components/DrinkInProgress';
+import { Login, Foods, Drinks, Profile,
+  FoodsDetails, DrinkDetails, FoodInProgress, DrinkInProgress } from '../pages';
 
-export default class Router extends React.Component {
+export default class AppRouter extends React.Component {
   render() {
     return (
       <Switch>
@@ -36,7 +30,7 @@ export default class Router extends React.Component {
         <Route
           exact
           path="/bebidas/:id"
-          render={ (props) => <DrinksDetails { ...props } /> }
+          render={ (props) => <DrinkDetails { ...props } /> }
         />
         <Route
           exact
