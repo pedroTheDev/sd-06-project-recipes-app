@@ -10,7 +10,7 @@ function RecipeDrinkDetails({ match }) {
   let arrIngredient = [];
   let arrMeasure = [];
   const ZERO = 0;
-  const VINTE = 20;
+  const TWENTY = 20;
   const SEIS = 6;
   const API = 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=';
 
@@ -33,7 +33,7 @@ function RecipeDrinkDetails({ match }) {
 
   if (recipes.length !== ZERO) {
     const renderIngredients = () => {
-      for (let i = 1; i <= VINTE; i += 1) {
+      for (let i = 1; i <= TWENTY; i += 1) {
         if (recipes[0][`strIngredient${i}`]) {
           arrIngredient = arrIngredient.concat(recipes[0][`strIngredient${i}`]);
         } else {
@@ -43,7 +43,7 @@ function RecipeDrinkDetails({ match }) {
     };
 
     const renderMeasure = () => {
-      for (let i = 1; i <= VINTE; i += 1) {
+      for (let i = 1; i <= TWENTY; i += 1) {
         if (recipes[0][`strMeasure${i}`]) {
           arrMeasure = arrMeasure.concat(recipes[0][`strMeasure${i}`]);
         } else {
@@ -90,6 +90,8 @@ function RecipeDrinkDetails({ match }) {
             </li>
           ))}
         </ul>
+        <p data-testid="instructions">{recipes[0].strInstructions}</p>
+        <div data-testid={ `${ZERO}-recomendation-card` } />
         <button type="button" data-testid="start-recipe-btn">Iniciar Receita</button>
 
         <div className="scrollmenu">
@@ -112,7 +114,7 @@ function RecipeDrinkDetails({ match }) {
 }
 
 RecipeDrinkDetails.propTypes = {
-  match: PropTypes.objectOf(PropTypes.object).isRequired,
+  match: PropTypes.objectOf(Object).isRequired,
 };
 
 export default RecipeDrinkDetails;
