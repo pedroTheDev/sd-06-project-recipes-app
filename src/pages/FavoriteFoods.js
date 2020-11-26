@@ -1,8 +1,11 @@
 import React from 'react';
+import Header from '../components/Header';
 
 function favoriteFoods() {
   return (
-    <h1>Comidas Favoritas</h1>
+    <div>
+      <Header title="Comidas Favoritas" />
+    </div>
   );
 }
 
