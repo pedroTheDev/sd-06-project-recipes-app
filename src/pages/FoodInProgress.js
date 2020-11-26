@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { fetchDetail, fetchRecommendation } from '../helpers/Helper';
+import saveInStorage from '../helpers/saveInStorage';
 
 import '../css/scroller.css';
 import '../css/itemDetails.css';
@@ -10,32 +11,30 @@ import whiteHeart from '../images/whiteHeartIcon.svg';
 import blackHeart from '../images/blackHeartIcon.svg';
 
 export default function FoodInProgress(props) {
-  const [recipeId, setRecipeId] = useState('');
   const [recipe, setRecipe] = useState('');
   const [recipeDetails, setRecipeDetails] = useState([]);
+  const [checkedIngredients, setCheckedIngredients] = useState([]);
   const [recommendation, setRecommendation] = useState([]);
   const [disabled, setDisabled] = useState(true);
   const [btnStartValue, setBtnStartValue] = useState('Iniciar Receita');
   const [copy, setCopy] = useState('');
   const [fav, setFav] = useState(whiteHeart);
-
-  useEffect(() => {
-    if (recipeId === '') {
-      setRecipeId(props.match.params.id);
-    }
-    async function fetchData() {
-      const result = await fetchDetail('comidas', recipeId);
-      setRecipe(result);
-    }
-    if (recipeId === props.match.params.id) {
-      fetchData();
-    }
-  }, [recipeId]);
+  const { match: { params: { id } } } = props;
 
   useEffect(() => {
     async function fetchData() {
+      const currRecipe = await fetchDetail('comidas', id);
+      setRecipe(currRecipe);
       const results = await fetchRecommendation('comidas');
       setRecommendation(results);
+
+      const storage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      const inProgress = (storage) && storage.meals[id];
+
+      if (inProgress) {
+        setBtnStartValue('Continuar Receita');
+        setCheckedIngredients(inProgress);
+      }
     }
     fetchData();
   }, []);
@@ -44,16 +43,24 @@ export default function FoodInProgress(props) {
     if (localStorage.getItem('doneRecipes') === null) {
       setDisabled(false);
     }
-    if (localStorage.getItem('inProgressRecipes') !== null) {
-      setBtnStartValue('Continuar Receita');
-    }
     if (localStorage.getItem('favoriteRecipes') !== null) {
       setFav(blackHeart);
     }
   }, []);
 
+  useEffect(() => {
+    const empty = 0;
+    if (checkedIngredients.length > empty) {
+      checkedIngredients.forEach((ingredient) => {
+        const checkbox = document.getElementById(ingredient);
+        console.log(checkbox);
+        if (checkbox) checkbox.checked = true;
+      });
+    }
+  }, [checkedIngredients]);
+
   function handleCopy() {
-    const link = window.location.href;
+    const link = `${window.location.origin}/comidas/${id}`;
     navigator.clipboard.writeText(link);
     setCopy('Link copiado!');
   }
@@ -96,6 +103,18 @@ export default function FoodInProgress(props) {
     }
   }, [recipe]);
 
+  function strikeIngredientText(target) {
+    if (target.checked) {
+      saveInStorage(id, target.id, 'meals', 'add');
+    } else if (!target.checked) {
+      saveInStorage(id, target.id, 'meals', 'remove');
+    }
+
+    return (target.checked)
+      ? target.parentNode.classList.add('strike-text')
+      : target.parentNode.classList.remove('strike-text');
+  }
+
   function renderIngredients() {
     const empty = 0;
     if (recipeDetails.length > empty) {
@@ -104,13 +123,19 @@ export default function FoodInProgress(props) {
           { recipeDetails.filter((ingredient) => ingredient !== '' && ingredient !== null)
             .map((ingredient, index) => (
               <label
-                htmlFor={ ingredient[0] }
+                htmlFor={ `${ingredient[0]}` }
                 key={ ingredient[0] }
                 data-testid={ `${index}-ingredient-step` }
+                className={ checkedIngredients.includes(ingredient[0])
+                  ? 'strike-text' : '' }
               >
-                <input type="checkbox" id={ ingredient[0] } />
+                <input
+                  type="checkbox"
+                  id={ `${ingredient[0]}` }
+                  onClick={ ({ target }) => strikeIngredientText(target) }
+                />
                 { (ingredient[1] === null)
-                  ? `${ingredient[0]}`
+                  ? ingredient[0]
                   : `${ingredient[0]}: ${(ingredient[1]) && ingredient[1]}` }
               </label>
             )) }
@@ -119,7 +144,7 @@ export default function FoodInProgress(props) {
     }
   }
 
-  if (recipe.meals) {
+  if (recipe.meals && recommendation) {
     const item = recipe.meals[0];
     return (
       <div>
@@ -152,7 +177,7 @@ export default function FoodInProgress(props) {
           <p data-testid="instructions">{item.strInstructions}</p>
           {renderIngredients()}
           <p data-testid="video">{item.strYoutube}</p>
-          <Link to={ `/comidas/${props.match.params.id}/in-progress` }>
+          <Link to={ `/comidas/${id}/in-progress` }>
             <button
               type="button"
               data-testid="finish-recipe-btn"

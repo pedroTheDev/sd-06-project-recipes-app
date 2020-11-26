@@ -9,31 +9,34 @@ import blackHeart from '../images/blackHeartIcon.svg';
 import '../css/itemDetails.css';
 import '../css/scroller.css';
 
-export default function FoodsDetails(props) {
-  const [recipeId, setRecipeId] = useState('');
-  const [recipe, setRecipe] = useState('');
+export default function DrinkDetails(props) {
+  // const [recipeId, setRecipeId] = useState('');
+  const [recipe, setRecipe] = useState({});
   const [recipeDetails, setRecipeDetails] = useState([]);
   const [recommendation, setRecommendation] = useState([]);
   const [disabled, setDisabled] = useState(true);
   const [btnStartValue, setBtnStartValue] = useState('Iniciar Receita');
   const [copy, setCopy] = useState('');
   const [fav, setFav] = useState(whiteHeart);
+  const { match: { params: { id } } } = props;
+
+  // useEffect(() => {
+  //   if (recipeId === '') {
+  //     setRecipeId(id);
+  //   }
+  //   async function fetchData() {
+  //     const result = await fetchDetail('bebidas', recipeId);
+  //     setRecipe(result);
+  //   }
+  //   if (recipeId === id) {
+  //     fetchData();
+  //   }
+  // }, [recipeId]);
 
   useEffect(() => {
-    if (recipeId === '') {
-      setRecipeId(props.match.params.id);
-    }
     async function fetchData() {
-      const result = await fetchDetail('bebidas', recipeId);
-      setRecipe(result);
-    }
-    if (recipeId === props.match.params.id) {
-      fetchData();
-    }
-  }, [recipeId]);
-
-  useEffect(() => {
-    async function fetchData() {
+      const currRecipe = await fetchDetail('bebidas', id);
+      setRecipe(currRecipe);
       const results = await fetchRecommendation('bebidas');
       setRecommendation(results);
     }
@@ -41,10 +44,14 @@ export default function FoodsDetails(props) {
   }, []);
 
   useEffect(() => {
+    const storage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+
+    const inProgress = (storage) && storage.cocktails[id];
+
     if (localStorage.getItem('doneRecipes') === null) {
       setDisabled(false);
     }
-    if (localStorage.getItem('inProgressRecipes') !== null) {
+    if (inProgress) {
       setBtnStartValue('Continuar Receita');
     }
     if (localStorage.getItem('favoriteRecipes') !== null) {
@@ -88,7 +95,7 @@ export default function FoodsDetails(props) {
       }
       const recipeArray = array.map((number) => (
         (currRecipe[`strIngredient${number}`] !== null
-          || currRecipe[`strIngredient${number}`])
+          && currRecipe[`strIngredient${number}`] !== '')
           ? [currRecipe[`strIngredient${number}`], currRecipe[`strMeasure${number}`]]
           : ''
       ));
@@ -116,6 +123,7 @@ export default function FoodsDetails(props) {
       );
     }
   }
+
   if (recipe.drinks && recommendation) {
     const item = recipe.drinks[0];
     return (
@@ -149,7 +157,7 @@ export default function FoodsDetails(props) {
           <p data-testid="instructions">{item.strInstructions}</p>
           {renderIngredients()}
           <p data-testid="video">{item.strYoutube}</p>
-          <Link to={ `/bebidas/${props.match.params.id}/in-progress` }>
+          <Link to={ `/bebidas/${id}/in-progress` }>
             <button
               type="button"
               data-testid="start-recipe-btn"
@@ -186,6 +194,6 @@ export default function FoodsDetails(props) {
   );
 }
 
-FoodsDetails.propTypes = {
+DrinkDetails.propTypes = {
   match: PropTypes.objectOf(PropTypes.any).isRequired,
 };

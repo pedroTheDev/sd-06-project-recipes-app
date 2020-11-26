@@ -1,31 +1,19 @@
 import React, { useContext } from 'react';
-import { PropTypes } from 'prop-types';
-import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { Link, Redirect } from 'react-router-dom';
 import RecipesContext from '../context/Context';
-import history from '../helpers/History';
 
 import '../css/Cards.css';
 
 export default function Cards({ id }) {
-  const { items } = useContext(RecipesContext);
-
-  function handleRedirect() {
-    if (items && items.meals) {
-      if (items.meals.length === 1) {
-        const itemId = items.meals[0].idMeal;
-        history.push(`/${id}/${itemId}`);
-      }
-    } else if (items && items.drinks) {
-      if (items.drinks.length === 1) {
-        const itemId = items.drinks[0].idDrink;
-        history.push(`/${id}/${itemId}`);
-      }
-    }
-  }
+  const { items, filters } = useContext(RecipesContext);
 
   if (items) {
-    handleRedirect();
     if (items.drinks) {
+      if (items.drinks.length === 1 && filters.searchType !== 'category') {
+        console.log(items.drinks[0]);
+        return <Redirect to={ `/${id}/${items.drinks[0].idDrink}` } />;
+      }
       return (
         <div className="cards-wrapper">
           {items.drinks.map((item, index) => (
@@ -46,8 +34,10 @@ export default function Cards({ id }) {
           ))}
         </div>
       );
-    }
-    if (items.meals) {
+    } if (items.meals) {
+      if (items.meals.length === 1 && filters.searchType !== 'category') {
+        return <Redirect to={ `/${id}/${items.meals[0].idMeal}` } />;
+      }
       return (
         <div className="cards-wrapper">
           {items.meals.map((item, index) => (
@@ -70,9 +60,7 @@ export default function Cards({ id }) {
       );
     }
   }
-  return (
-    <div>Faça uma busca</div>
-  );
+  return <div>Faça uma busca</div>;
 }
 
 Cards.propTypes = {

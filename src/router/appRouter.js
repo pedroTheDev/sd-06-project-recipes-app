@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import { Login, Foods, Drinks, Profile,
   FoodsDetails, DrinkDetails, FoodInProgress, DrinkInProgress } from '../pages';
 
-export default class Router extends React.Component {
+export default class AppRouter extends React.Component {
   render() {
     return (
       <Switch>

@@ -5,13 +5,13 @@ import useSearch from '../hooks/useSearch';
 
 export default function Foods() {
   document.title = 'Comidas';
-  const { items, filters, setFilters } = useContext(RecipesContext);
+  const { items, filters } = useContext(RecipesContext);
+  const setFilters = useSearch();
   useEffect(() => {
     if (filters.category === '') {
       setFilters({ ...filters, category: 'comidas' });
     }
   });
-  useSearch();
 
   function handleAlert() {
     if (items.meals === null) {

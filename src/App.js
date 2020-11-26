@@ -1,15 +1,15 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
+import AppRouter from './router/appRouter';
 import Provider from './context/Provider';
-import Router from './router/Router';
-import history from './helpers/History';
+// import history from './helpers/History';
 import './App.css';
 
 function App() {
   return (
     <Provider>
-      <BrowserRouter history={ history }>
-        <Router />
+      <BrowserRouter>
+        <AppRouter />
       </BrowserRouter>
     </Provider>
 
