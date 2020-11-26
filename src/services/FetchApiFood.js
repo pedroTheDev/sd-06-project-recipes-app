@@ -11,7 +11,7 @@ export default async function fetchApiFood(radioSelected, setData = '', value = 
   } else if (radioSelected === '5') {
     endpoint = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${value}`;
   } else if (radioSelected === '6') {
-    endpoint = 'https://www.themealdb.com/api/json/v1/1/list.php?i=list';
+    endpoint = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${value}`;
   } else if (radioSelected === '7') {
     endpoint = 'https://www.themealdb.com/api/json/v1/1/list.php?a=list';
   } else if (radioSelected === '8') {
@@ -20,6 +20,5 @@ export default async function fetchApiFood(radioSelected, setData = '', value = 
 
   const response = await fetch(endpoint);
   const responseJson = await response.json();
-  console.log(responseJson);
   setData(responseJson.meals);
 }

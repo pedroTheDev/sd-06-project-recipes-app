@@ -21,6 +21,10 @@ import FoodDetails from './pages/FoodDetails';
 import DrinkDetails from './pages/DrinkDetails';
 import NotFound from './pages/NotFound';
 
+// tela de bebidas e receitas em progresso
+import FoodInProgress from './pages/FoodInProgress';
+import DrinkInProgress from './pages/DrinkInProgress';
+
 function App() {
   return (
     <BrowserRouter>
@@ -31,6 +35,8 @@ function App() {
           <Route exact path="/comidas/:id" component={ FoodDetails } />
           <Route exact path="/bebidas" component={ MainDrink } />
           <Route exact path="/bebidas/:id" component={ DrinkDetails } />
+          <Route exact path="/comidas/:id/in-progress" component={ FoodInProgress } />
+          <Route exact path="/bebidas/:id/in-progress" component={ DrinkInProgress } />
           <Route exact path="/perfil" component={ Profile } />
           <Route exact path="/explorar" component={ Explore } />
           <Route exact path="/explorar/comidas" component={ ExploreFood } />
