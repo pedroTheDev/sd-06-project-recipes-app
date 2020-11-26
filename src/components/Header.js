@@ -31,8 +31,8 @@ export default function Header(props) {
             {!searchButton && searchButtonHidden()}
           </div>
         </div>
+        {search && <SearchBar title={ title } />}
       </header>
-      {search && <SearchBar title={ title } />}
     </div>
   );
 }
