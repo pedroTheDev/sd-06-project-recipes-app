@@ -14,6 +14,7 @@ function DrinkDetails(props) {
   const [apiResponse, setFilter] = useRequestFood([]);
   const [isFavorite, setIsFavorite] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [display, setDisplay] = useState('block');
   const [inProgress, setInProgress] = useState(false);
   const textArea = useRef(null);
   const maxShow = 6;
@@ -110,9 +111,12 @@ function DrinkDetails(props) {
     }
   };
 
-  useEffect(() => {
-    getLocalStorage();
-  }, []);
+  const verifyButton = () => {
+    const finished = JSON.parse(localStorage.getItem('doneRecipes'));
+    if (finished !== null && finished.some((e) => e.id === id)) {
+      setDisplay('none');
+    }
+  };
 
   useEffect(() => {
     requestIngredients();
@@ -121,6 +125,8 @@ function DrinkDetails(props) {
   useEffect(() => {
     requestDetailsAPI();
     setFilter({ text: '', option: '', category: '' });
+    getLocalStorage();
+    verifyButton();
   }, []);
   return (
     <div data-testid="drink-details" className="food-details">
@@ -162,7 +168,7 @@ function DrinkDetails(props) {
       </div>
       <button
         onClick={ handleInitRecipe }
-        style={ { position: 'fixed', bottom: '0px' } }
+        style={ { position: 'fixed', bottom: '0px', display } }
         data-testid="start-recipe-btn"
         type="button"
       >

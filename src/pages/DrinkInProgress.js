@@ -15,6 +15,7 @@ function DrinkInProgress(props) {
   const [isDisabled, setIsDisabled] = useState(true);
   const [copied, setCopied] = useState('none');
   const textArea = useRef(null);
+  const now = new Date();
   let progressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
   const zero = 0;
   if (progressRecipes === null) {
@@ -136,8 +137,21 @@ function DrinkInProgress(props) {
     getLocalStorage();
   }, []);
 
-  const handleFinishedRecipe = (event) => {
-    event.preventDefault();
+  const handleFinishedRecipe = () => {
+    const finishedRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+    const arrayFinished = finishedRecipes !== null ? finishedRecipes : [];
+    arrayFinished.push({
+      id,
+      type: 'bebida',
+      area: '',
+      category: '',
+      alcoholicOrNot: recipe.strAlcoholic,
+      name: recipe.strDrink,
+      image: recipe.strDrinkThumb,
+      doneDate: `Feita em: ${now.getDate()}/${now.getMonth()}/${now.getFullYear()}`,
+      tags: '',
+    });
+    localStorage.setItem('doneRecipes', JSON.stringify(arrayFinished));
     history.push('/receitas-feitas');
   };
 
