@@ -11,7 +11,6 @@ import Provider from './context/Provider';
 import Details from './pages/Details';
 import DoneRecipes from './pages/DoneRecipes/DoneRecipes';
 
-
 function App() {
   return (
     <Provider>
