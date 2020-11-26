@@ -75,7 +75,7 @@ function DrinkDetails(props) {
       type: 'bebida',
       area: '',
       category: requestDetails.strCategory,
-      alcoholicOrNot: requestDetails.strDrinkAlternate,
+      alcoholicOrNot: requestDetails.strAlcoholic,
       name: requestDetails.strDrink,
       image: requestDetails.strDrinkThumb,
     };
@@ -152,6 +152,7 @@ function DrinkDetails(props) {
         Iniciar Receita
       </button>
       <textarea
+        className="text-area"
         ref={ textArea }
         value={ `http://localhost:3000${pathname}` }
       />

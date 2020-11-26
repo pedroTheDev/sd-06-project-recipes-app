@@ -95,3 +95,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.text-area {
+  opacity: .01;
+  height:0;
+  position:absolute;
+  z-index: -1;
+}
