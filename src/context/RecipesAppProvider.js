@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import propTypes, { object} from 'prop-types';
+import propTypes from 'prop-types';
 import recipesAppContext from './recipesAppContext';
 import { fetchMeal } from '../services/mealAPI';
 import { fetchDrink } from '../services/cocktailAPI';
 
 function RecipesAppProvider({ children }) {
   const [searchBar, setSearchBar] = useState(false);
-  const [data, setData] = useState({});
+  const [data, setData] = useState([]);
   const [control, setControl] = useState(false);
 
   const setFetchMeal = async (type, key) => {
@@ -16,7 +16,7 @@ function RecipesAppProvider({ children }) {
       result,
       redirect: false,
     };
-    if (result.meals == null) {
+    if (result.meals === null) {
       return alert('Sinto muito, não encontramos nenhuma receita para esses filtros');
     }
     if (result.meals.length === 1) {
@@ -30,19 +30,21 @@ function RecipesAppProvider({ children }) {
   const setFetchDrink = async (type, key) => {
     const result = await fetchDrink(type, key);
     setData(result);
-    const resultReturn = {
-      result,
-      redirect: false,
-    };
-    if (result === null) {
-      return null;
-    }
-    if (result.drinks.length === 1) {
-      resultReturn.redirect = true;
-      return resultReturn;
-    }
-    setControl(true);
-    return resultReturn;
+    console.log('Result:', result);
+    // const resultReturn = {
+    //   result,
+    //   redirect: false,
+    // };
+    // if (result === null) {
+    //   return null;
+    // }
+    // if (result.drinks.length === 1) {
+    //   resultReturn.redirect = true;
+    //   return resultReturn;
+    // }
+    // setControl(true);
+    // return resultReturn;
+    return result;
   };
 
   const contextValue = {
