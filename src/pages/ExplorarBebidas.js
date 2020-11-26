@@ -6,7 +6,7 @@ import ReceitasContext from '../context/ReceitasContext';
 import { fetchRandomDrink } from '../services/drinkAPI';
 
 const ExplorarBebidas = () => {
-  const { randomDrinkID, setRandomDrink } = useContext(ReceitasContext);
+  const { randomDrinkID, setRandomDrink, setFetchById } = useContext(ReceitasContext);
 
   useEffect(() => {
     fetchRandomDrink().then((response) => {
@@ -16,7 +16,7 @@ const ExplorarBebidas = () => {
 
   return (
     <div>
-      <Header />
+      <Header title="Explorar Bebidas" />
       <Link to="/explorar/bebidas/ingredientes">
         <button
           data-testid="explore-by-ingredient"
@@ -25,7 +25,7 @@ const ExplorarBebidas = () => {
           Por Ingredientes
         </button>
       </Link>
-      <Link to={ `/bebidas/${randomDrinkID}` }>
+      <Link to={ `/bebidas/${randomDrinkID}` } onClick={ ()=> setFetchById(false) }>
         <button data-testid="explore-surprise" type="button">Me Surpreenda!</button>
       </Link>
       <Footer />

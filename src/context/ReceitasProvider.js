@@ -14,6 +14,7 @@ const ReceitasProvider = ({ children }) => {
   const [selectedFilter, setSelectedFilter] = useState('All');
   const [randomDrinkID, setRandomDrink] = useState();
   const [randomMealID, setRandomMeal] = useState();
+  const [fetchById, setFetchById] = useState();
 
   const state = {
     meals,
@@ -38,6 +39,8 @@ const ReceitasProvider = ({ children }) => {
     setIngredientList,
     drinksIngredientList,
     setDrinksIngredientList,
+    fetchById,
+    setFetchById,
   };
 
   return (

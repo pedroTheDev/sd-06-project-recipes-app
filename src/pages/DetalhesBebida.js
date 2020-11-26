@@ -3,18 +3,21 @@ import PropTypes from 'prop-types';
 import ReceitasContext from '../context/ReceitasContext';
 import MealsCard from '../components/MealsCard';
 import Header from '../components/Header';
+import { fetchDrinkAPI } from '../services/drinkAPI';
 import { foodAPI } from '../services/foodAPI';
 
 function DetalhesBebida(props) {
-  const { meals, drinks, setMeals } = useContext(ReceitasContext);
+  const { meals, setMeals, fetchById, setFetchById } = useContext(ReceitasContext);
   const { match: { params: { id } } } = props;
   const seis = 6;
 
   useEffect(() => {
     async function fetchFood() {
-      const responseFoodsAPI = await foodAPI();
+      const foodResponse = await foodAPI();
+      const responseAPI = await fetchDrinkAPI(id);
 
-      setMeals(responseFoodsAPI);
+      setMeals(foodResponse);
+      setFetchById(responseAPI);
     }
 
     fetchFood();
@@ -30,52 +33,50 @@ function DetalhesBebida(props) {
     return keys;
   };
 
-  return ((!meals.length)
+  return ((!fetchById)
     ? <div>carregando...</div>
     : (
       <section>
-        <Header title="Bebidas" />
+        <Header title="Detalhes Bebidas" />
         {
-          drinks.filter((item) => item.idDrink === id)
-            .map((drink, index) => (
-              <div key={ index }>
-                <img data-testid="recipe-photo" src={ drink.strDrinkThumb } alt="" />
-                <h2 data-testid="recipe-title">{drink.strDrink}</h2>
-                <button data-testid="share-btn" type="button">Compartilhar</button>
-                <button data-testid="favorite-btn" type="button">Favoritar</button>
-                <p data-testid="recipe-category">{drink.strCategory}</p>
-                <ul>
-                  {getIngredients(drink, /strIngredient/).map((item, indx) => {
-                    const measure = getIngredients(drink, /strMeasure/);
-                    return (
-                      <li key={ indx }>
-                        <p
-                          data-testid={ `${indx}-ingredient-name-and-measure` }
-                        >
-                          { `- ${item} - ${measure[indx]} ` }
-                        </p>
-                      </li>
-                    );
-                  })}
-                </ul>
-                <h3>Instruções</h3>
-                <p data-testid="instructions">{drink.strInstructions}</p>
-                <button
-                  data-testid="start-recipe-btn"
-                  type="button"
-                >
-                  Iniciar Receita
-                </button>
-                <h2>Receitas Recomendadas</h2>
-                <div>
-                  {meals.length && (meals
-                    .filter((_, indx) => indx < seis)
-                    .map((food, i) => (
-                      <MealsCard key={ food } food={ food } index={ i } />
-                    )))}
-                </div>
+          fetchById.map((drink, index) => (
+            <div key={index}>
+              <img data-testid="recipe-photo" src={drink.strDrinkThumb} alt="" />
+              <h2 data-testid="recipe-title">{drink.strDrink}</h2>
+              <button data-testid="share-btn" type="button">Compartilhar</button>
+              <button data-testid="favorite-btn" type="button">Favoritar</button>
+              <p data-testid="recipe-category">{drink.strAlcoholic}</p>
+              {getIngredients(drink, /strIngredient/).map((item, indx) => {
+                const measure = getIngredients(drink, /strMeasure/);
+                return (
+                  <p
+                    key={indx}
+                    data-testid={`${indx}-ingredient-name-and-measure`}
+                  >
+                    {`- ${item} - ${measure[indx]}`}
+                  </p>
+                );
+              })}
+              <h3>Instruções</h3>
+              <p data-testid="instructions">{drink.strInstructions}</p>
+              <h2>Receitas Recomendadas</h2>
+              <div>
+                {meals.length && (meals
+                  .filter((_, indx) => indx < seis)
+                  .map((food, i) => (
+                    <div data-testid={`${i}-recomendation-card`}>
+                      <MealsCard key={food} food={food} index={i} />
+                    </div>
+                  )))}
               </div>
-            ))
+              <button
+                data-testid="start-recipe-btn"
+                type="button"
+              >
+                Iniciar Receita
+              </button>
+            </div>
+          ))
         }
       </section>
     ));

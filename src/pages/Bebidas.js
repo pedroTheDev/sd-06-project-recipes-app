@@ -39,7 +39,7 @@ function Bebidas() {
           {drinks
             .filter((x, index) => index < doze)
             .map((drink, i) => (
-              <DrinksCard key={ drink } drink={ drink } index={ i } />
+              <DrinksCard key={ i } drink={ drink } index={ i } />
             ))}
         </div>
         {location.pathname === '/bebidas' && <Footer />}

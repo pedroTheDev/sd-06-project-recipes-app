@@ -2,17 +2,17 @@ export async function drinkAPI(type, endpoint) {
   let url;
 
   switch (type) {
-  case 'ingredient':
-    url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${endpoint}`;
-    break;
-  case 'name':
-    url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${endpoint}`;
-    break;
-  case 'first-letter':
-    url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${endpoint}`;
-    break;
-  default:
-    url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+    case 'ingredient':
+      url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${endpoint}`;
+      break;
+    case 'name':
+      url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${endpoint}`;
+      break;
+    case 'first-letter':
+      url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${endpoint}`;
+      break;
+    default:
+      url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
   }
 
   const fetchAPI = await fetch(url)
@@ -62,3 +62,7 @@ export const listIngredients = () => fetch('https://www.thecocktaildb.com/api/js
   .then((response) => response.json())
   .then((data) => data.drinks)
   .catch((error) => console.error(error));
+
+export const fetchDrinkAPI = (id) => fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
+  .then((response) => response.json())
+  .then((data) => data.drinks)

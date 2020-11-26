@@ -70,3 +70,7 @@ export const listIngredients = () => fetch('https://www.themealdb.com/api/json/v
   .then((response) => response.json())
   .then((data) => data.meals)
   .catch((error) => console.error(error));
+
+  export const fetchFoodAPI = (id) => fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
+  .then((response) => response.json())
+  .then((data) => data.meals)
