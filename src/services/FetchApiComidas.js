@@ -41,5 +41,5 @@ export async function fetchApiComidasExplorar() {
   const endpoint = 'https://www.themealdb.com/api/json/v1/1/random.php';
   const response = await fetch(endpoint);
   const responseJson = await response.json();
-  return responseJson.meals;
+  return responseJson.meals
 }
