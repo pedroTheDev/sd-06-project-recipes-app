@@ -32,8 +32,7 @@ function ExploreFoodIngredient() {
 
   return (
     <>
-      <Header title="Explorar Comidas" />
-      <h1>ExploreFoodIngredient</h1>
+      <Header title="Explorar Ingredientes" />
       {
         ingredients.slice(incial, final)
           .map((ingredient, index) => (
