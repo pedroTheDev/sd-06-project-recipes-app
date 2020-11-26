@@ -59,7 +59,7 @@ function Profile() {
             type="button"
             onClick={ handleLogOut }
           >
-            Logout
+            Sair
           </button>
 
         </div>
