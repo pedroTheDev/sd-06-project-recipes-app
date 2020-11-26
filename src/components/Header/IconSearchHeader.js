@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import searchIcon from '../../images/searchIcon.svg';
 import ContextAPI from '../../Context/ContextAPI';
+import './styles.css';
 
 const IconSearch = () => {
   const { searchComponent, setSearchComponent } = useContext(ContextAPI);
@@ -14,6 +15,7 @@ const IconSearch = () => {
 
   return (
     <button
+      className="search-header"
       onClick={ () => searchBarDisplay() }
       type="button"
     >

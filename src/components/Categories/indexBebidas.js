@@ -31,29 +31,33 @@ const CategoriesBebidas = () => {
   };
 
   return (
-    <div>
-      {categories.drinks && categories.drinks.map((element, index) => {
-        const number = 4;
-        if (index <= number) {
-          return (
-            <button
-              key={ element.idCategory }
-              data-testid={ `${element.categoryName}-category-filter` }
-              onClick={ (e) => filterApiValueSearch(e.target.name) }
-              type="button"
-            >
-              <p
-                width="100"
-                alt={ element.strCategory }
+    <div className="main-categories">
+      <span>Selecione uma categoria</span>
+      <div className="categories">
+        {categories.drinks && categories.drinks.map((element, index) => {
+          const number = 4;
+          if (index <= number) {
+            return (
+              <button
+                key={ element.idCategory }
+                data-testid={ `${element.categoryName}-category-filter` }
+                onClick={ (e) => filterApiValueSearch(e.target.name) }
+                type="button"
               >
-                { element.strCategory }
-              </p>
-            </button>
-          );
-        }
-        return '';
-      })}
-    </div>);
+                <p
+                  width="150"
+                  alt={ element.strCategory }
+                >
+                  { element.strCategory }
+                </p>
+              </button>
+            );
+          }
+          return '';
+        })}
+      </div>
+    </div>
+  );
 };
 
 export default CategoriesBebidas;

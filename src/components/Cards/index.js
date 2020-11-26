@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import ContextAPI from '../../Context/ContextAPI';
+import './styles.css';
 
 const Cards = () => {
   const { apiValueSearch } = useContext(ContextAPI);
@@ -13,11 +14,15 @@ const Cards = () => {
       return (
         apiValueSearch.foods.meals && apiValueSearch.foods.meals.map((meal, index) => {
           if (index <= number) {
-            if (apiValueSearch.foods.meals === null) { console.log('null'); }
             return (
-              <div key={ meal.strMeal }>
-                <p>{meal.strMeal}</p>
-                <img width="200" src={ meal.strMealThumb } alt={ meal.strMeal } />
+              <div className="card" key={ meal.strMeal } data-testid={ `${index}-recipe-card` }>
+                <p data-testid={ `${index}-card-name` }>{meal.strMeal}</p>
+                <img
+                  width="200"
+                  src={ meal.strMealThumb }
+                  alt={ meal.strMeal }
+                  data-testid={ `${index}-card-img` }
+                />
               </div>
             );
           }
@@ -28,27 +33,38 @@ const Cards = () => {
   };
 
   const showDrinkResearch = () => {
+    const number = 11;
     if (apiValueSearch.drinks.drinks && apiValueSearch.drinks.drinks.length === 1) {
       const drinkID = apiValueSearch.drinks.drinks[0].idDrink;
       window.location.href = `http://localhost:3000/bebidas/${drinkID}`;
     } else {
       return (
-        apiValueSearch.drinks.drinks && apiValueSearch.drinks.drinks.map((res) => (
-          <div key={ res.idDrink }>
-            <p>{res.strDrink}</p>
-            <img width="200" src={ res.strDrinkThumb } alt={ res.strDrink } />
-          </div>
-        ))
+        apiValueSearch.drinks.drinks && apiValueSearch.drinks.drinks.map((res, index) => {
+          if (index <= number) {
+            return (
+              <div className="card" key={ res.idDrink } data-testid={ `${index}-recipe-card` }>
+                <p data-testid={ `${index}-card-name` }>{res.strDrink}</p>
+                <img
+                  width="200"
+                  src={ res.strDrinkThumb }
+                  alt={ res.strDrink }
+                  data-testid={ `${index}-card-img` }
+                />
+              </div>
+            );
+          }
+          return '';
+        })
       );
     }
   };
 
   return window.location.pathname === '/comidas' ? (
-    <div>
+    <div className="main-cards">
       {showFoodResearch() }
     </div>
   ) : (
-    <ul>
+    <ul className="main-cards">
       {showDrinkResearch()}
     </ul>
   );

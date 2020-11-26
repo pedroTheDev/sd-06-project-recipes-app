@@ -13,7 +13,7 @@ const Comidas = () => {
 
   const getSugestedFoods = async () => {
     const foods = await showSugestedFoods();
-    console.log(foods);
+    // console.log(foods);
     setApiValueSearch({
       ...apiValueSearch,
       foods,
