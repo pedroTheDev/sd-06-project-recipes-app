@@ -16,6 +16,8 @@ import shareIcon from '../../images/shareIcon.svg';
 import blackHeart from '../../images/blackHeartIcon.svg';
 import whiteHeart from '../../images/whiteHeartIcon.svg';
 
+import './styles.css';
+
 function RecipeDetails({ pageType }) {
   const [copiedLink, setCopiedLink] = useState(false);
 

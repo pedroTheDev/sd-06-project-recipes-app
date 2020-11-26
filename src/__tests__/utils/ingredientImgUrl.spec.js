@@ -32,7 +32,9 @@ describe('getIngredientUrl function testing', () => {
   });
 
   it('should return null on any other type, cap-sensitive and typos included', () => {
-    const typos = ['BEBIDAS', 'Bebidas', 'bebida', 'comida', 'COMIDAS', 'Comidas', 'wrong'];
+    const typos = [
+      'BEBIDAS', 'Bebidas', 'bebida', 'comida', 'COMIDAS', 'Comidas', 'wrong',
+    ];
 
     const fakeIngredient = mealIngredientNames[0];
 

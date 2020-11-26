@@ -54,7 +54,9 @@ function RecipeProvider({ children }) {
       };
 
       setCurrentFilters(categories);
-      setLoadingFilters(false);
+
+      const API_DELAY = 1000;
+      setTimeout(() => setLoadingFilters(false), API_DELAY);
     }
 
     getCategories();

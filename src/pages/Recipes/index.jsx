@@ -14,7 +14,7 @@ import LoadingBook from '../../components/LoadingBook';
 import './styles.css';
 
 function Recipes({ pageType }) {
-  const [filterSelected, setFilterSelected] = useState('all');
+  const [filterSelected, setFilterSelected] = useState('All');
 
   const { infoSearched, appSearch, loadingRecipes } = useSearch();
 
@@ -36,13 +36,14 @@ function Recipes({ pageType }) {
   const handleFilterChange = useCallback(({ target }) => {
     const { value: category } = target;
 
-    if (category === filterSelected || category === 'all') {
-      const categoryToLoad = 'all';
+    const noFilterCategory = 'All';
+
+    if (category === filterSelected || category === noFilterCategory) {
       const recipesToSearch = infoSearched[pageType];
 
       appSearch(pageType, recipesToSearch);
 
-      setFilterSelected(categoryToLoad);
+      setFilterSelected(noFilterCategory);
       return;
     }
 
@@ -51,17 +52,20 @@ function Recipes({ pageType }) {
   }, [updateFilteredRecipes, pageType, infoSearched, appSearch, filterSelected]);
 
   const loadedRecipes = useMemo(() => {
-    if (filterSelected === 'all') {
+    if (filterSelected === 'All') {
       return currentRecipes[pageType];
     }
 
     return currentFilteredRecipes[pageType];
   }, [currentRecipes, currentFilteredRecipes, filterSelected, pageType]);
 
-  const currentRecipeFilters = useMemo(
-    () => currentFilters[pageType],
-    [currentFilters, pageType],
-  );
+  const currentRecipeFilters = useMemo(() => {
+    const apiFilters = currentFilters[pageType];
+
+    const desiredFilters = ['All', ...apiFilters];
+
+    return desiredFilters;
+  }, [currentFilters, pageType]);
 
   if (loadingFilters && loadingRecipes) {
     return (
@@ -72,28 +76,10 @@ function Recipes({ pageType }) {
   return (
     <div className="recipes-page">
       <Header pageName={ pageType } showSearch />
+      <Navbar />
 
       <section className="recipe-filters">
         <div className="filters-container">
-
-          <div className="label-container">
-            <input
-              type="checkbox"
-              name="filter"
-              id="all"
-              value="all"
-              checked={ filterSelected === 'all' }
-              onChange={ handleFilterChange }
-            />
-            {/* eslint-disable-next-line */}
-            <label
-              data-testid="All-category-filter"
-              htmlFor="all"
-            >
-              All
-            </label>
-
-          </div>
 
           {currentRecipeFilters.map((filter) => (
             <div className="label-container" key={ filter }>
@@ -148,7 +134,6 @@ function Recipes({ pageType }) {
           </div>
         )}
 
-      <Navbar />
     </div>
   );
 }
