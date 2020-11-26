@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
-import Proptypes from 'prop-types';
+// import Proptypes from 'prop-types';
 import fetchMeal from '../../services/mealAPI';
+import SecondaryHeader from '../../components/SecondaryHeader';
 
-function Detail({ id }) {
+function Detail({
+  match: {
+    params: { id },
+  },
+}) {
   const [recipes, setRecipes] = useState({});
 
   const fetchIngredients = async () => {
@@ -12,38 +17,20 @@ function Detail({ id }) {
 
   return (
     <div>
-      <div className="recipe-image-container">
-        <img
-          data-testid="recipe-photo"
-          src="requisicao-api"
-          alt="Recipe photo"
-        />
-      </div>
-      <div className="title-container">
-        <h1 data-testid="recipe-title">Titulo receita</h1>
-        <button
-          type="button"
-          data-testid="share-btn"
-        >
-          Compartilhar
-        </button>
-        <button
-          type="button"
-          data-testid="favorite-btn"
-        >
-          Favoritar
-        </button>
-        <p data-testid="recipe-category">Categoria</p>
-      </div>
+      <SecondaryHeader id={ id } />
       <div className="ingredients-container">
         <h3>Ingredientes</h3>
-        <ul>
-          <li data-testid="${index}-ingredient-name-and-measure">Limão</li>
-        </ul>
+        {
+          recipes.ingredientsAndMeasures.map((ingredient, index) => (
+            <div key={ index } data-testid={ `${index}-ingredient-name-and-measure` }>
+              {ingredient}
+            </div>
+          ))
+        }
       </div>
       <div className="instructions-container">
         <h3>Instruções</h3>
-        <p data-testid="instructions">Modo de fazer</p>
+        <p data-testid="instructions">{recipes.instruction}</p>
       </div>
       <div className="container-reccomended">
         <img data-testid="${index}-recomendation-card" />
@@ -57,9 +44,5 @@ function Detail({ id }) {
     </div>
   );
 }
-
-Detail.Proptypes = {
-  id: Proptypes.number.isRequired,
-};
 
 export default Detail;
