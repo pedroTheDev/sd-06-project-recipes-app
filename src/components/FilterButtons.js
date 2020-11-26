@@ -63,8 +63,12 @@ function FilterButtons({ show, type, shouldRenderButtons }) {
 
 FilterButtons.propTypes = {
   show: PropTypes.bool.isRequired,
-  type: PropTypes.string.isRequired,
+  type: PropTypes.string,
   shouldRenderButtons: PropTypes.bool.isRequired,
+};
+
+FilterButtons.defaultProps = {
+  type: '',
 };
 
 export default FilterButtons;
