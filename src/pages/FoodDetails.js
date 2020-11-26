@@ -171,7 +171,11 @@ function FoodDetails(props) {
 }
 
 FoodDetails.propTypes = {
-  match: PropTypes.func.isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }),
+  }).isRequired,
   location: PropTypes.func.isRequired,
 };
 

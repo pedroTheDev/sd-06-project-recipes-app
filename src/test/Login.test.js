@@ -3,7 +3,6 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import renderWithRouter from './renderWithRouter';
 import Login from '../pages/Login';
-import AppProvider from '../provider/AppProvider';
 
 describe('Página de Login', () => {
   beforeAll(() => {
@@ -11,16 +10,12 @@ describe('Página de Login', () => {
     localStorage.user = JSON.stringify({ email });
   });
   it('Renderiza a home page com o caminho "/"', () => {
-    const { history } = renderWithRouter(
-      <AppProvider>
-        <Login />
-      </AppProvider>,
-    );
+    const { history } = renderWithRouter(<Login />);
     const { pathname } = history.location;
     expect(pathname).toBe('/');
   });
   it('Desabilita login para email ou senha inválidos', () => {
-    renderWithRouter(<AppProvider><Login /></AppProvider>);
+    renderWithRouter(<Login />);
     const button = screen.getByTestId('login-submit-btn');
     expect(button).toBeDisabled();
     const email = screen.getByTestId('email-input');
@@ -39,11 +34,7 @@ describe('Página de Login', () => {
     expect(button).toBeEnabled();
   });
   it('Renderiza a página principal com o caminho "/comidas" no login', () => {
-    const { history } = renderWithRouter(
-      <AppProvider>
-        <Login />
-      </AppProvider>,
-    );
+    const { history } = renderWithRouter(<Login />);
     const email = screen.getByTestId('email-input');
     const senha = screen.getByTestId('password-input');
     const button = screen.getByTestId('login-submit-btn');
