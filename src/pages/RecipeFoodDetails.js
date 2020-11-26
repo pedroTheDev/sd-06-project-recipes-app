@@ -110,7 +110,7 @@ function RecipeFoodDetails({ match }) {
     );
   }
 
-  return <span>Ops...</span>;
+  return <span>Ops..</span>;
 }
 
 RecipeFoodDetails.propTypes = {
