@@ -1,3 +1,6 @@
+export const allFoodRecipesEndPoint = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+export const allDrinkRecipesEndPoint = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+
 export const fetchAPI = async (endpoint) => {
   let data = null;
   try {
@@ -9,35 +12,46 @@ export const fetchAPI = async (endpoint) => {
   return data;
 };
 
-const urlRecipeTypes = {
-  '/comidas': 'meal',
-  '/bebidas': 'cocktail',
+export const getIngredientsFoodEndPoint = (inputText) => (
+  `https://www.themealdb.com/api/json/v1/1/filter.php?i=${inputText}`
+);
+
+export const getNameFoodEndPoint = (inputText) => (
+  `https://www.themealdb.com/api/json/v1/1/search.php?s=${inputText}`
+);
+
+export const getFirstLetterFoodEndPoint = (inputText) => (
+  `https://www.themealdb.com/api/json/v1/1/search.php?f=${inputText}`
+);
+
+export const getIngredientsDrinkEndPoint = (inputText) => (
+  `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${inputText}`
+);
+
+export const getNameDrinkEndPoint = (inputText) => (
+  `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${inputText}`
+);
+
+export const getFirstLetterDrinkEndPoint = (inputText) => (
+  `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${inputText}`
+);
+
+const handleSucessAPIResponse = (recipesData, dispatchRecipes, type) => {
+  if (recipesData && recipesData[type] !== null) {
+    console.log('after response: ', recipesData);
+    const recipesResults = recipesData;
+    dispatchRecipes(recipesResults);
+  }
 };
 
-const checkInputlength = async (endPoint, text, fetchApi) => {
-  if (text.length === 1) fetchApi(endPoint);
+const handleNullAPIResponse = (recipesData, _dispatchRecipes, type) => {
+  console.log('testNull', recipesData, type);
+  if (recipesData === null || recipesData[type] === null) {
+    alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+  }
 };
 
-const fetchRecipesBySearchAttributes = (
-  async (inputText, inputRadioSelection, recipeType) => {
-    const ingredientsEndPoint = `https://www.the${recipeType}db.com/api/json/v1/1/filter.php?i=${inputText}`;
-    const nameEndPoint = `https://www.the${recipeType}db.com/api/json/v1/1/search.php?s=${inputText}`;
-    const firstLetterEndPoint = `https://www.the${recipeType}db.com/api/json/v1/1/search.php?f=${inputText}`;
-    const fetchTypes = {
-      ingredients: () => fetchAPI(ingredientsEndPoint),
-      name: () => fetchAPI(nameEndPoint),
-      firstLetter: () => checkInputlength(firstLetterEndPoint, inputText, fetchAPI),
-    };
-
-    const fetchBytype = fetchTypes[inputRadioSelection];
-    const response = await fetchBytype();
-
-    return response;
-  });
-
-const fetchRecipesByUrl = async (url, inputText, inputRadioSelection) => {
-  const recipeType = urlRecipeTypes[url];
-  return fetchRecipesBySearchAttributes(inputText, inputRadioSelection, recipeType);
+export const handleAPIResponse = (recipesData, dispatchRecipes, { type }) => {
+  handleNullAPIResponse(recipesData, dispatchRecipes, type);
+  handleSucessAPIResponse(recipesData, dispatchRecipes, type);
 };
-
-export default fetchRecipesByUrl;

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import findMatchInKeys from '../helpers/assets';
 
-export default function RecipeResults({ recipe, recipeIndex, pathname }) {
+export default function RecipeCard({ recipe, recipeIndex, pathname }) {
   const [thumbKey, setthumbKey] = useState();
   const [name, setName] = useState();
-  console.log(recipe);
 
   const getMatcherByUrl = () => {
     const nameByurl = {
