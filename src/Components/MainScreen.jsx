@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import RecipeContext from '../hooks/RecipeContext';
 import recipeRequest from '../services/recipeRequest';
 import '../Style/mainScreen.css';
@@ -13,86 +13,146 @@ export default function MainScreen() {
     foodFilter,
     drinkFilter,
     setDrinkRecipes,
+    setIds,
     setFoodRecipes } = useContext(RecipeContext);
   const twelve = 12;
   const five = 5;
   const { pathname } = history.location;
+  const [buttonClicked, setButtonClicked] = useState('');
 
   const handleFilters = async ({ target }) => {
     if (target.id === 'all' && pathname === '/comidas') {
       const data = await recipeRequest('https://www.themealdb.com/api/json/v1/1/search.php?s=');
       await setFoodRecipes(data.meals);
+      setButtonClicked('all');
     } else if (target.id === 'all' && pathname === '/bebidas') {
       const data = await recipeRequest('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
       await setDrinkRecipes(data.drinks);
+      setButtonClicked('all');
+    } else if (pathname === '/comidas' && buttonClicked === target.id) {
+      const data = await recipeRequest('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+      await setFoodRecipes(data.meals);
+      setButtonClicked('all');
     } else if (pathname === '/comidas') {
       const data = await recipeRequest(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${target.id}`);
       await setFoodRecipes(data.meals);
+      setButtonClicked(`${target.id}`);
+    } else if (pathname === '/bebidas' && buttonClicked === target.id) {
+      const data = await recipeRequest('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+      await setDrinkRecipes(data.drinks);
+      setButtonClicked('all');
     } else if (pathname === '/bebidas') {
       const data = await recipeRequest(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${target.id}`);
       await setDrinkRecipes(data.drinks);
+      setButtonClicked(`${target.id}`);
     }
   };
 
   const renderFilters = () => {
     if (pathname === '/comidas') {
-      return foodFilter.filter((_, index) => index < five)
-        .map((filter, index) => (
+      return (
+        <div>
           <button
             type="button"
-            data-testid={ `${filter.strCategory}-category-filter` }
-            key={ index }
-            id={ filter.strCategory }
             className="filter-button"
             onClick={ handleFilters }
+            id="all"
+            type="button"
+            data-testid="All-category-filter"
           >
-            {filter.strCategory}
+            All
           </button>
-        ));
+          {foodFilter.filter((_, index) => index < five)
+            .map((filter, index) => (
+              <button
+                type="button"
+                className="filter-button"
+                data-testid={ `${filter.strCategory}-category-filter` }
+                key={ index }
+                id={ filter.strCategory }
+                onClick={ handleFilters }
+              >
+                {filter.strCategory}
+              </button>
+
+            ))}
+        </div>
+      );
     }
     if (pathname === '/bebidas') {
-      return drinkFilter.filter((_, index) => index < five)
-        .map((filter, index) => (
+      return (
+        <div>
           <button
             type="button"
-            data-testid={ `${filter.strCategory}-category-filter` }
-            key={ index }
-            id={ filter.strCategory }
             className="filter-button"
             onClick={ handleFilters }
+            id="all"
+            type="button"
+            data-testid="All-category-filter"
           >
-            {filter.strCategory}
+            All
           </button>
-        ));
+          { drinkFilter.filter((_, index) => index < five)
+            .map((filter, index) => (
+              <button
+                type="button"
+                className="filter-button"
+                data-testid={ `${filter.strCategory}-category-filter` }
+                key={ index }
+                id={ filter.strCategory }
+                onClick={ handleFilters }
+              >
+                {filter.strCategory}
+              </button>
+            ))}
+        </div>
+      );
     }
+  };
+  const handleIds = (food) => {
+    setIds(food.idMeal);
   };
 
   const renderCards = () => {
     if (pathname === '/comidas' && foodRecipes) {
-      return foodRecipes.filter((food, index) => index < twelve)
+      return foodRecipes.filter((_, index) => index < twelve)
         .map((food, index) => (
-        <div data-testid={ `${index}-recipe-card` } key="index" className="card-container">
-            <img
-              src={ food.strMealThumb }
-              data-testid={ `${index}-card-img` }
-              alt={ food.strMeal }
-            />
-            <p data-testid={ `${index}-card-name` }>{food.strMeal}</p>
+          <div
+              data-testid={ `${index}-recipe-card` }
+              className="card-container"
+            >
+            <Link
+              to={ `/comidas/${food.idMeal}` }
+              onClick={ () => handleIds(food) }
+              key={ index }
+            >
+              <p data-testid={ `${index}-card-name` }>{food.strMeal}</p>
+              <img
+                src={ food.strMealThumb }
+                data-testid={ `${index}-card-img` }
+                alt={ food.strMeal }
+              />
+            </Link>
           </div>
         ));
     }
 
-    if (pathname === '/bebidas') {
-      return (drinkRecipes && drinkRecipes.length && drinkRecipes
-        .filter((drink, index) => index < twelve)
+    if (pathname === '/bebidas' && drinkRecipes) {
+      return (drinkRecipes.filter((_, index) => index < twelve)
         .map((drinks, index) => (
-          <div data-testid={ `${index}-recipe-card` } key="index" className="card-container">
-            <img
-              src={ drinks.strDrinkThumb }
-              data-testid={ `${index}-card-img` }
-              alt={ drinks.strDrink }
-            />
-            <p data-testid={ `${index}-card-name` }>{ drinks.strDrink}</p>
+          <div data-testid={ `${index}-recipe-card` } key={index} className="card-container">
+            <Link
+              onClick={ () => setIds(drinks.idDrink) }
+              to={ `/bebidas/${drinks.idDrink}` }
+              key={ index }
+            >
+              <p data-testid={ `${index}-card-name` }>{ drinks.strDrink}</p>
+              <img
+                src={ drinks.strDrinkThumb }
+                data-testid={ `${index}-card-img` }
+                alt={ drinks.strDrink }
+              />
+            </Link>
           </div>
         )));
     }
@@ -101,7 +161,6 @@ export default function MainScreen() {
   return (
     <div>
       <div className="filter-container">
-        <button onClick={ handleFilters } id="all" type="button" className="filter-button">All</button>
         {renderFilters()}
       </div>
       <div className="recipes-container">

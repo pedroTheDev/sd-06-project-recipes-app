@@ -9,6 +9,10 @@ const Provider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [foodFilter, setFoodFilter] = useState([]);
   const [drinkFilter, setDrinkFilter] = useState([]);
+  const [ids, setIds] = useState('');
+  const [foodRecommendation, setFoodRecommendation] = useState([]);
+  const [DrinkRecommendation, setDrinkRecommendation] = useState([]);
+  const [inProgressRecipes, setInProgressRecipes] = useState({});
 
   const getAPI = async () => {
     setIsLoading(true);
@@ -36,6 +40,14 @@ const Provider = ({ children }) => {
     drinkFilter,
     setFoodRecipes,
     setDrinkRecipes,
+    ids,
+    setIds,
+    foodRecommendation,
+    setFoodRecommendation,
+    DrinkRecommendation,
+    setDrinkRecommendation,
+    inProgressRecipes,
+    setInProgressRecipes,
   };
 
   return (
@@ -46,7 +58,7 @@ const Provider = ({ children }) => {
 };
 
 Provider.propTypes = {
-  children: propTypes.func.isRequired,
+  children: propTypes.node.isRequired,
 };
 
 export default Provider;

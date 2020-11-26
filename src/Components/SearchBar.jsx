@@ -74,7 +74,7 @@ const SearchBar = ({ className }) => {
   };
 
   return (
-    <div className={`search-bar ${className}`} id="shearBar">
+    <div className={`search-bar ${className}`} id="searchBar">
       <input
         value={ text }
         onChange={ handleSearch }
