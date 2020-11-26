@@ -61,7 +61,7 @@ const Recipes = () => {
                   key={ recipe.idMeal || recipe.idDrink }
                   recipe={ recipe }
                   index={ index }
-                   alt={ pageTitle }
+                  alt={ pageTitle }
                 />
               );
             }
