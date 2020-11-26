@@ -13,6 +13,12 @@ export default async function fetchApiFood(radioSelected, setData = '', value = 
   } else if (radioSelected === '6') {
     endpoint = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${value}`;
   } // procura pelo id da receita e mostra todos os detalhes da mesma
+    endpoint = 'https://www.themealdb.com/api/json/v1/1/list.php?i=list';
+  } else if (radioSelected === '7') {
+    endpoint = 'https://www.themealdb.com/api/json/v1/1/list.php?a=list';
+  } else if (radioSelected === '8') {
+    endpoint = `https://www.themealdb.com/api/json/v1/1/filter.php?a=${value}`;
+  }
 
   const response = await fetch(endpoint);
   const responseJson = await response.json();

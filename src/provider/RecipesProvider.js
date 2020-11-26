@@ -20,6 +20,7 @@ export default function RecipesProvider({ children }) {
   const [filterDrink, setFilterDrink] = useState([]);
   const [radioValue, setRadioValue] = useState('');
   const [searchBar, setSearchBar] = useState('');
+
   // state para foodDetails
   const [foodDetail, setFoodDetail] = useState([]);
 
@@ -35,6 +36,11 @@ export default function RecipesProvider({ children }) {
     ReceitaEmAndamento: false,
     ReceitaConcluida: false,
   });
+  
+  //
+  const [listIngredients, setListIngredients] = useState([]);
+  const [effectOnLoad, setEffectOnLoad] = useState(true);
+  const [areaDropdown, setAreaDropdown] = useState([]);
 
   useEffect(() => {
     if (fetchFood && fetchFood.length === 1) {
@@ -79,6 +85,7 @@ export default function RecipesProvider({ children }) {
     searchBar,
     setSearchBar,
     setFetchDrink,
+
     foodDetail,
     setFoodDetail,
     drinkDetail,
@@ -89,6 +96,14 @@ export default function RecipesProvider({ children }) {
     setRecomendedDrink,
     recipeState,
     setRecipeState,
+
+    setListIngredients,
+    listIngredients,
+    effectOnLoad,
+    setEffectOnLoad,
+    areaDropdown,
+    setAreaDropdown,
+
   };
 
   return (
