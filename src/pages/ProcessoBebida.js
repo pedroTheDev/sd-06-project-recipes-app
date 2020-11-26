@@ -1,16 +1,17 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import copyToClipboard from 'clipboard-copy';
+import useCopyToClipboard from '../hooks/useCopyToClipboard';
 import RecipesContext from '../context/RecipesContext';
 import { shareIcon, whiteHeartIcon, blackHeartIcon } from '../images';
 
 function ProcessoBebida() {
+  const timeoutTextCopy = 3000;
   const { drinkIngredients } = useContext(RecipesContext);
+  const [isCopied, handleCopy] = useCopyToClipboard(timeoutTextCopy);
   const [dataDrinks, setDataDrinks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const [isDisable] = useState(true);
-  const [isShare, setShare] = useState();
   const [checked, setChecked] = useState({});
   const history = useHistory();
   const idDrink = history.location.pathname.split('/')[2];
@@ -52,7 +53,7 @@ function ProcessoBebida() {
     }
   };
 
-  return (
+  return (isLoading) ? <p>Loading</p> : (
     <div>
       <img
         data-testid="recipe-photo"
@@ -64,19 +65,19 @@ function ProcessoBebida() {
       >
         Nome da Receita
       </h1>
-      <div>
+      <span>
         <button
           type="button"
           data-testid="share-btn"
-          onClick={ () => setShare('Link copiado!') && copyToClipboard('http://localhost:3000/bebidas/178319') }
+          onClick={ () => handleCopy(`/bebidas/${idDrink}`) }
         >
           <img
             src={ shareIcon }
             alt="Botão de Compartilhar"
           />
         </button>
-        {isShare}
-      </div>
+        { isCopied ? <p>Link copiado!</p> : true }
+      </span>
       <button
         type="button"
         onClick={ handleClick }
