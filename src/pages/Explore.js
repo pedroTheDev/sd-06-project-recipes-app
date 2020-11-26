@@ -12,7 +12,7 @@ class Explore extends React.Component {
         <button
           type="button"
           data-testid="explore-food"
-          onClick={ () => history.push('/explorar/bebidas') }
+          onClick={ () => history.push('/explorar/comidas') }
         >
           <h1>Explorar Comidas</h1>
         </button>
