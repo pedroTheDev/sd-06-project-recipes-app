@@ -84,24 +84,24 @@ const RecipeDetails = () => {
           <div>
             {
               DrinkRecommendation && DrinkRecommendation.length && DrinkRecommendation
-                .filter((_, index) => index < six)
-                .map((drinks, index) => (
+                .filter((_, indexs) => indexs < six)
+                .map((drinks, indx) => (
                   <Link
                     onClick={ () => setIds(drinks.idDrink) }
                     to={ `/bebidas/${drinks.idDrink}` }
-                    key={ index }
+                    key={ indx }
                   >
                     <div
-                      data-testid={ `${index}-recomendation-card` }
+                      data-testid={ `${indx}-recomendation-card` }
                       key="index"
                     >
                       <img
                         src={ drinks.strDrinkThumb }
-                        data-testid={ `${index}-card-img` }
+                        data-testid={ `${indx}-card-img` }
                         alt={ drinks.strDrink }
                       />
                       <p
-                        data-testid={ `${index}-recomendation-title` }
+                        data-testid={ `${indx}-recomendation-title` }
                       >
                         { drinks.strDrink}
                       </p>
