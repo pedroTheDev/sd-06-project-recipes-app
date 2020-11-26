@@ -17,11 +17,11 @@ function DetalhesBebida() {
   const SEIS = 6;
   const { location: { pathname } } = history;
 
-  // let continuar = false;
-  // if (localStorage.inProgressRecipes) {
-  //   const ids = Object.keys(JSON.parse(localStorage.inProgressRecipes).cocktails);
-  //   continuar = ids.includes(idDrink);
-  // }
+  let continuar = false;
+  if (localStorage.inProgressRecipes) {
+    const ids = Object.keys(JSON.parse(localStorage.inProgressRecipes).cocktails);
+    continuar = ids.includes(idDrink);
+  }
 
   useEffect(() => {
     async function fetchAPI() {
@@ -137,7 +137,7 @@ function DetalhesBebida() {
                 data-testid="start-recipe-btn"
                 type="button"
               >
-                {/* { continuar ? 'Continuar Receita' : 'Iniciar Receita' } */}
+                { continuar ? 'Continuar Receita' : 'Iniciar Receita' }
               </button>
             </Link>
           </div>) }
