@@ -1,70 +1,16 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import './Components.css';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
-import Context from '../context/Context';
+import FilterButtons from './FilterButtons';
 
 function Header(props) {
-  const { title, search } = props;
+  const { title, search = false } = props;
   const [hide, setHide] = useState(true);
-  const [currentFilter, setCurrentFilter] = useState();
-  const { categories, recipesToRender, recipesToRenderByCategory } = useContext(Context);
-  const type = title === 'Comidas' ? 'meal' : 'drink';
-  // const showFilterButtons = title === 'Comidas' || title === 'Bebidas';
-
-  const handleClick = ({ target }) => {
-    if (target.value === currentFilter) {
-      setCurrentFilter('');
-      recipesToRender(type);
-    } else {
-      setCurrentFilter(target.value);
-      recipesToRenderByCategory(type, target.value);
-    }
-  };
-
-  const filterButtons = () => (
-    categories.map(({ strCategory }, index) => {
-      if (!index) {
-        return (
-          <>
-            <button
-              key="All"
-              data-testid="All-category-filter"
-              type="button"
-              value=""
-              onClick={ () => recipesToRender(type) }
-            >
-              All
-            </button>
-            <button
-              key={ strCategory }
-              data-testid={ `${strCategory}-category-filter` }
-              type="button"
-              value={ strCategory }
-              onClick={ (e) => handleClick(e) }
-            >
-              {strCategory}
-            </button>
-          </>
-        );
-      }
-
-      return (
-        <button
-          key={ strCategory }
-          data-testid={ `${strCategory}-category-filter` }
-          type="button"
-          value={ strCategory }
-          onClick={ (e) => handleClick(e) }
-        >
-          {strCategory}
-        </button>
-      );
-    })
-  );
+  const showFilterButtons = title === 'Comidas' || title === 'Bebidas';
 
   return (
     <header>
@@ -88,7 +34,9 @@ function Header(props) {
           />
         }
       </div>
-      {(hide === true) ? <div>{filterButtons()}</div> : <SearchBar title={ title } />}
+      {(hide === true) ? (
+        <FilterButtons show={ hide } shouldRenderButtons={ showFilterButtons } />
+      ) : <SearchBar title={ title } />}
     </header>
   );
 }
