@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 function ExploreFoodByArea(props) {
   const { history: { location: { pathname } }, pageConfig } = props;
@@ -9,10 +10,13 @@ function ExploreFoodByArea(props) {
   const { header } = pageConfig;
 
   return (
-    <Header
-      componentConfig={ header }
-      pathname={ pathname }
-    />
+    <>
+      <Header
+        componentConfig={ header }
+        pathname={ pathname }
+      />
+      <Footer />
+    </>
   );
 }
 
