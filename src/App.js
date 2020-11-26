@@ -12,6 +12,7 @@ import Explore from './pages/Explore';
 import ReceitasFavoritas from './pages/ReceitasFavoritas';
 import ReceitasFeitas from './pages/ReceitasFeitas';
 import MealsPerIngredients from './pages/MealsPerIngredients';
+import MealsPerArea from './pages/MealsPerArea';
 import DrinksPerIngredients from './pages/DrinksPerIngredients';
 
 function App() {
@@ -34,6 +35,11 @@ function App() {
             exact
             path="/explorar/comidas/ingredientes"
             component={ MealsPerIngredients }
+          />
+          <Route
+            exact
+            path="/explorar/comidas/area"
+            component={ MealsPerArea }
           />
           <Route
             exact
