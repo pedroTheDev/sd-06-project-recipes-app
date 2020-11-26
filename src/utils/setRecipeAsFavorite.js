@@ -1,17 +1,20 @@
 import setMockedLocalStorage from '../setup/localStorage';
+import formatFavToStorage from './formatFavToStorage';
 
-export default function setRecipeAsFavorite(id, recipe) {
+export default function setRecipeAsFavorite(id, recipe, type) {
+  const formatedRecipe = {...recipe, type: type.slice(0, -1)};
   const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-  const idAsNumber = Number(id);
-  const mappedRecipes = favoriteRecipes.map((savedRecipe) => savedRecipe.id);
-  const isSaved = mappedRecipes.includes(idAsNumber);
-  let newFavoriteRecipes = [];
+  const mappedIdRecipes = favoriteRecipes.map((savedRecipe) => savedRecipe.id);
+  const isSaved = mappedIdRecipes.includes(id);
   if (isSaved) {
-    newFavoriteRecipes = mappedRecipes.filter((recipeId) => !(recipeId === idAsNumber));
-    console.log('already saved');
+    const newFavoriteRecipes = favoriteRecipes.filter((recipe) => (
+      !(recipe.id === id)
+    ));
+    const favsToStorage = formatFavToStorage(newFavoriteRecipes);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favsToStorage));
   } else {
-    console.log('not saved yet');
-    newFavoriteRecipes = [...mappedRecipes, idAsNumber];
+    favoriteRecipes.push(formatedRecipe);
+    const favsToStorage = formatFavToStorage(favoriteRecipes);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favsToStorage));
   }
-  console.log(newFavoriteRecipes);
 }

@@ -4,10 +4,10 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import setRecipeAsFavorite from '../utils/setRecipeAsFavorite';
 
-function FavButton({ isFav, setIsFav, id, recipe }) {
+function FavButton({ isFav, setIsFav, id, recipe, type }) {
   function saveRecipe() {
     setIsFav(!isFav);
-    setRecipeAsFavorite(id, recipe);
+    setRecipeAsFavorite(id, recipe, type);
   }
 
   return (

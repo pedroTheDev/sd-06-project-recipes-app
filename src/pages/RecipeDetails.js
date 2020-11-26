@@ -55,7 +55,13 @@ function RecipeDetails(
       <h1 data-testid="recipe-title">{ name }</h1>
       <div>
         <ShareButton setMessage={ setWasCopied } />
-        <FavButton isFav={ isFav } id={ id } setIsFav={ setIsFav } recipe={ recipe } />
+        <FavButton
+          type={ path }
+          isFav={ isFav }
+          id={ id }
+          setIsFav={ setIsFav }
+          recipe={ recipe }
+        />
       </div>
       {wasCopied && 'Link copiado!'}
       <p data-testid="recipe-category">
