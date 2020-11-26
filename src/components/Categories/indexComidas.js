@@ -1,67 +1,33 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import ContextAPI from '../../Context/ContextAPI';
 
-import { showAllFoodsCategories,
-  showAllDrinksCategories,
-  selectFoodItensCategories,
-  selectDrinksItensCategories,
-} from '../../services/aPI';
-
 const CategoriesComidas = () => {
-  const { apiValueSearch, setApiValueSearch } = useContext(ContextAPI);
+  const { apiValueSearch, setApiValueSearch, categories } = useContext(ContextAPI);
 
-  const [categories, setCategories] = useState([]);
+  const filterApiValueSearch = async (value) => fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${value}`)
+    .then((foods) => foods.json())
+    .then((foods) => setApiValueSearch({ ...apiValueSearch, foods }));
 
-  const categoriesDefined = async () => {
-    if (window.location.pathname === '/comidas') {
-      const result = await showAllFoodsCategories();
-      setCategories(result);
-    }
-    if (window.location.pathname === '/bebidas') {
-      const result = await showAllDrinksCategories();
-      setCategories(result);
-    }
-  };
-
-  useEffect(() => {
-    categoriesDefined();
-  }, []);
-
-  const filterApiValueSearch = async (value) => {
-    if (window.location.pathname === '/comidas') {
-      const foods = await selectFoodItensCategories(value);
-      setApiValueSearch({
-        ...apiValueSearch,
-        foods,
-      });
-    }
-
-    if (window.location.pathname === '/bebidas') {
-      const result = await selectDrinksItensCategories(value);
-      // apiValueSearch(result.meals);
-      console.log(result);
-    }
-  };
-
-  return (
+  return !categories.meals ? (
+    <p>loading</p>
+  ) : (
     <div>
-      {categories.categories && categories.categories.map((element, index) => {
+      {categories.meals.map((element, index) => {
         const number = 4;
         if (index <= number) {
           return (
-            <button
-              key={ element.idCategory }
-              data-testid={ `${element.categoryName}-category-filter` }
-              onClick={ (e) => filterApiValueSearch(e.target.name) }
-              type="button"
-            >
-              <img
+            <div>
+              <button
+                key={ element.idCategory }
+                type="button"
                 name={ element.strCategory }
-                width="100"
-                src={ element.strCategoryThumb }
-                alt={ element.strCategory }
-              />
-            </button>
+                data-testid={ `${element.strCategory}-category-filter` }
+                onClick={ (e) => filterApiValueSearch(e.target.name) }
+              >
+                { element.strCategory }
+              </button>
+            </div>
+
           );
         }
         return '';

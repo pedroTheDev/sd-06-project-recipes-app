@@ -15,7 +15,6 @@ const Bebidas = () => {
 
   const getSugestedDrinks = async () => {
     const drinks = await showSugestedDrinks();
-    console.log(drinks);
     setApiValueSearch({
       ...apiValueSearch,
       drinks,
