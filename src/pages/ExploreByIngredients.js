@@ -45,11 +45,14 @@ function ExploreByIngredients() {
       <Header title="Explorar Ingredientes" />
       { location.includes('comidas') ? (
         data.map((meals, index) => (
-          <button
+          <div
             type="button"
             key={ index }
             data-testid={ `${index}-ingredient-card` }
             onClick={ () => handleClick(meals.strIngredient) }
+            onKeyPress={ handleClick }
+            role="button"
+            tabIndex="0"
           >
             <img
               data-testid={ `${index}-card-img` }
@@ -61,15 +64,18 @@ function ExploreByIngredients() {
             >
               { meals.strIngredient }
             </h3>
-          </button>
+          </div>
         )).filter((_, index) => index < MAX_NUMBER_OF_CARDS)
       ) : (
         data.map((drinks, index) => (
-          <button
+          <div
             type="button"
             key={ index }
             data-testid={ `${index}-ingredient-card` }
-            onClick={ () => handleClick(drinks.strIngredient) }
+            onClick={ () => handleClick(drinks.strIngredient1) }
+            onKeyPress={ handleClick }
+            role="button"
+            tabIndex="0"
           >
             <img
               data-testid={ `${index}-card-img` }
@@ -81,7 +87,7 @@ function ExploreByIngredients() {
             >
               { drinks.strIngredient1 }
             </h3>
-          </button>
+          </div>
         )).filter((_, index) => index < MAX_NUMBER_OF_CARDS)
       ) }
       <Footer />
