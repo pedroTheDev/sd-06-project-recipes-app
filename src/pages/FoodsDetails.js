@@ -185,9 +185,10 @@ class FoodsDetails extends React.Component {
     }
   }
 
-  redirectFromState() {
+  redirectFromState(recipe) {
     const { idCurrent } = this.props;
     const { history } = this.props;
+    localStorage.setItem('ReceitaIniciada', JSON.stringify(recipe.idMeal));
     history.push(`/comidas/${idCurrent}/in-progress`);
   }
 

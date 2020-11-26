@@ -26,6 +26,7 @@ class FoodsRecipesInProgress extends React.Component {
     this.handleButton = this.handleButton.bind(this);
     this.setRecipesLocalStorage = this.setRecipesLocalStorage.bind(this);
     this.check = this.check.bind(this);
+    this.getRecipesLocalStorage = this.getRecipesLocalStorage.bind(this);
   }
 
   async componentDidMount() {
@@ -35,10 +36,6 @@ class FoodsRecipesInProgress extends React.Component {
     this.setMealState(mealRecipe);
     this.handleIngredients();
     this.checkedItems();
-  }
-
-  componentDidUpdate() {
-    this.setRecipesLocalStorage();
   }
 
   handleIngredients() {
@@ -75,15 +72,6 @@ class FoodsRecipesInProgress extends React.Component {
     const span = document.createElement('span');
     p.appendChild(span);
     span.innerHTML = 'Link copiado!';
-    // const el = document.createElement('textarea');
-    // el.value = url;
-    // el.setAttribute('readonly', '');
-    // el.style.position = 'absolute';
-    // el.style.left = '-9999px';
-    // document.body.appendChild(el);
-    // el.select();
-    // document.execCommand('copy');
-    // document.body.removeChild(el);
   }
 
   handleButton() {
@@ -97,12 +85,13 @@ class FoodsRecipesInProgress extends React.Component {
     }
   }
 
-  setRecipesLocalStorage() {
-    const { checkedItems } = this.state;
-    const length = 0;
-    if (checkedItems.length > length) {
-      localStorage.setItem('inProgressRecipes', JSON.stringify(checkedItems));
-    }
+  setRecipesLocalStorage(updateCheck) {
+    localStorage.setItem('inProgressRecipes', JSON.stringify(updateCheck));
+  }
+
+  getRecipesLocalStorage() {
+    const verifyLocalStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    return verifyLocalStorage;
   }
 
   setMealState(Meal) {
@@ -184,11 +173,13 @@ class FoodsRecipesInProgress extends React.Component {
     if (!searchIndex) {
       const updateCheck = checkedItems.concat(value);
       this.setState({ checkedItems: updateCheck });
+      this.setRecipesLocalStorage(updateCheck);
     } else if (!checked) {
       const positionCheck = checkedItems.indexOf(value);
       const originalChecked = checkedItems;
       originalChecked.splice(positionCheck, 1);
       this.setState({ checkedItems: originalChecked });
+      this.setRecipesLocalStorage(originalChecked);
     }
     const inputsList = document.querySelectorAll('input');
     inputsList.forEach((item) => {
@@ -217,6 +208,10 @@ class FoodsRecipesInProgress extends React.Component {
   recipeDone(recipe) {
     const { history } = this.props;
     const fullDate = this.getFullDate();
+    let myTags = recipe.strTags;
+    if (myTags === null) {
+      myTags = 'No Tags';
+    }
     const myObject = [{
       id: recipe.idMeal,
       type: 'comida',
@@ -226,8 +221,9 @@ class FoodsRecipesInProgress extends React.Component {
       name: recipe.strMeal,
       image: recipe.strMealThumb,
       doneDate: fullDate,
-      tags: recipe.strTags,
+      tags: myTags,
     }];
+
     if (!localStorage.getItem('doneRecipes')) {
       localStorage.setItem('doneRecipes', JSON.stringify(myObject));
     }
@@ -237,15 +233,16 @@ class FoodsRecipesInProgress extends React.Component {
     const filteredStorage = combinedObjects
       .filter((v, i, a) => a.findIndex((t) => (t.id === v.id)) === i); // só registra um único id
     localStorage.setItem('doneRecipes', JSON.stringify(filteredStorage));
+    localStorage.removeItem('inProgressRecipes');
     history.push('/receitas-feitas');
   }
 
   check() {
     const { checkedItems } = this.state;
     const length = 0;
-    const verifyLocalStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const verifyLocalStorage = this.getRecipesLocalStorage();
     if (checkedItems.length === length && verifyLocalStorage) {
-      const getCheckedItems = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      const getCheckedItems = this.getRecipesLocalStorage();
       return getCheckedItems;
     }
     return checkedItems;

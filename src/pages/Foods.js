@@ -48,6 +48,7 @@ class Foods extends React.Component {
   render() {
     const { history } = this.props;
     const { Meals, Categories } = this.state;
+    const INITIAL_VALUE = 0;
     return (
       <div className="food-drink-container">
         <Header history={ history } />
@@ -58,13 +59,16 @@ class Foods extends React.Component {
             </button>
           </div>
         )) : ''}
-        <button
-          type="button"
-          data-testid="All-category-filter"
-          onClick={ () => this.allButtonHandler() }
-        >
-          All
-        </button>
+        {Categories.length > INITIAL_VALUE
+        && (
+          <button
+            type="button"
+            data-testid="All-category-filter"
+            onClick={ () => this.allButtonHandler() }
+          >
+            All
+          </button>
+        )}
         {Meals ? Meals.map((recipe, index) => (
           <div className="card" key={ index } data-testid={ `${index}-recipe-card` }>
             <Link to={ `/comidas/${recipe.idMeal}` }>
