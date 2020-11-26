@@ -1,12 +1,19 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import StartButton from '../components/StartButton';
 import RecipesContext from '../context/RecipesAppContext';
 
-function RecipeFoodDetails({ match }) {
+function RecipeFoodDetails({ match, title }) {
   const { id } = match.params;
   const { recipes, setRecipes } = useContext(RecipesContext);
+  const [recomendation, setRecomendation] = useState([]);
   let arrIngredient = [];
   let arrMeasure = [];
+  const ZERO = 0;
+  const TWENTY = 20;
+  const SEIS = 6;
   const API = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=';
+  const positionButton = { position: 'fixed' };
 
   const fetchDetailRecipeFoodByID = async () => {
     const response = await fetch(`${API}${id}`);
@@ -14,13 +21,19 @@ function RecipeFoodDetails({ match }) {
     return setRecipes(json.meals);
   };
 
+  const fetchRecomendationsDrinks = async () => {
+    const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+    const json = await response.json();
+    return setRecomendation(json.drinks);
+  };
   useEffect(() => {
     fetchDetailRecipeFoodByID();
+    fetchRecomendationsDrinks();
   }, []);
 
-  if (recipes.length !== 0) {
+  if (recipes.length !== ZERO) {
     const renderIngredients = () => {
-      for (let i = 1; i <= 20; i++) {
+      for (let i = 1; i <= TWENTY; i += 1) {
         if (recipes[0][`strIngredient${i}`]) {
           arrIngredient = arrIngredient.concat(recipes[0][`strIngredient${i}`]);
         } else {
@@ -30,7 +43,7 @@ function RecipeFoodDetails({ match }) {
     };
 
     const renderMeasure = () => {
-      for (let i = 1; i <= 20; i++) {
+      for (let i = 1; i <= TWENTY; i += 1) {
         if (recipes[0][`strMeasure${i}`]) {
           arrMeasure = arrMeasure.concat(recipes[0][`strMeasure${i}`]);
         } else {
@@ -48,14 +61,6 @@ function RecipeFoodDetails({ match }) {
           src={ recipes[0].strMealThumb }
           alt={ recipes[0].strMeal }
         />
-        <h4 data-testid="recipe-title">
-          {' '}
-          { recipes[0].strMeal }
-          {' '}
-        </h4>
-        <button type="button" data-testid="share-btn">Compartilhar</button>
-        <button type="button" data-testid="favorite-btn">Favoritar</button>
-        <p data-testid="recipe-category">{recipes[0].strCategory}</p>
         <ul>
           {arrIngredient.map((ingredient, index) => (
             <li
@@ -78,24 +83,42 @@ function RecipeFoodDetails({ match }) {
         </ul>
         <p data-testid="instructions">{recipes[0].strInstructions}</p>
         <iframe
-          title="This is a unique title"
+          title="Este é um titulo unico"
           data-testid="video"
           width="280"
           height="150"
-          // src="https://www.youtube.com/watch?v=1IszT_guI08"
           src={ recipes[0].strYoutube }
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media"
           allowFullScreen
         />
-        <div data-testid={ `${0}-recomendation-card` } />
         <button type="button" data-testid="start-recipe-btn">Iniciar Receita</button>
 
+        <div>
+          {recomendation.slice(ZERO, SEIS).map((element, index) => (
+            <div key={ index } className="scrollmenu-child">
+              <img
+                data-testid={ `${index}-recomendation-card` }
+                src={ element.strDrinkThumb }
+                alt={ element.strDrink }
+              />
+              <p data-testid={ `${index}-recomendation-title` }>{ element.strDrink }</p>
+            </div>
+          ))}
+        </div>
+        <div style={ positionButton }>
+          <StartButton id={ id } title={ title } />
+        </div>
       </div>
     );
   }
 
-  return <span>teste</span>;
+  return <span>Ops...</span>;
 }
+
+RecipeFoodDetails.propTypes = {
+  match: PropTypes.objectOf(Object).isRequired,
+  title: PropTypes.string.isRequired,
+};
 
 export default RecipeFoodDetails;

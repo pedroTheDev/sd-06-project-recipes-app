@@ -42,7 +42,7 @@ function Card({ title }) {
         style={ divStyle }
       >
         <Link
-          to={ recipe[`id${recipeType}`] }
+          to={ `/${setRoute}/${recipe.id}` }
           type="button"
         >
           <img
