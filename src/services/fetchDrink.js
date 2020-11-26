@@ -1,4 +1,4 @@
-async function fetchDrink(filter, searchTerm) {
+async function fetchDrink(filter, searchTerm = '') {
   const url = 'https://www.thecocktaildb.com/api/json/v1/1/';
   switch (filter) {
   case 'ingredient': {
@@ -11,6 +11,12 @@ async function fetchDrink(filter, searchTerm) {
     const fetchByName = await fetch(`${url}search.php?s=${searchTerm}`);
     const nameResponse = await fetchByName.json();
     return nameResponse.drinks;
+  }
+
+  case 'category': {
+    const fetchByCategory = await fetch(`${url}filter.php?c=${searchTerm}`);
+    const categoryResponse = await fetchByCategory.json();
+    return categoryResponse.drinks;
   }
 
   case 'firstLetter': {
@@ -29,6 +35,12 @@ async function fetchDrink(filter, searchTerm) {
     const fetchDetails = await fetch(`${url}lookup.php?i=${searchTerm}`);
     const detailsResponse = await fetchDetails.json();
     return detailsResponse.drinks;
+  }
+  
+  case 'allCategories': {
+    const fetchAllCategories = await fetch(`${url}list.php?c=list`);
+    const allCategoriesResponse = await fetchAllCategories.json();
+    return allCategoriesResponse.drinks;
   }
 
   default: {

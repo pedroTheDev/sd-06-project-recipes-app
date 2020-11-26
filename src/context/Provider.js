@@ -8,6 +8,44 @@ function RecipesAppProvider({ children }) {
   const [details, setDetails] = useState('');
   const [recommended, setRecommended] = useState('');
   const [random, setRandom] = useState('');
+  const [recipes, setRecipes] = useState([]);
+  const [categories, setCategories] = useState([]);
+
+  const recipesToRender = async (type) => {
+    let fetchedRecipes = await (type === 'meal'
+      ? fetchMeal('name')
+      : fetchDrink('name')
+    );
+    const first = 0;
+    const twelfth = 12;
+
+    fetchedRecipes = fetchedRecipes.slice(first, twelfth);
+    setRecipes(fetchedRecipes);
+  };
+
+  const categoriesToRender = async (type) => {
+    let categoriesList = await (type === 'meal'
+      ? fetchMeal('allCategories')
+      : fetchDrink('allCategories')
+    );
+    const first = 0;
+    const fifth = 5;
+
+    categoriesList = categoriesList.slice(first, fifth);
+    setCategories(categoriesList);
+  };
+
+  const recipesToRenderByCategory = async (type, searchTerm) => {
+    let fetchedRecipes = await (type === 'meal'
+      ? fetchMeal('category', searchTerm)
+      : fetchDrink('category', searchTerm)
+    );
+    const first = 0;
+    const twelfth = 12;
+
+    fetchedRecipes = fetchedRecipes.slice(first, twelfth);
+    setRecipes(fetchedRecipes);
+  };
 
   const getMealDetail = async (id) => {
     const api = await fetchMeal('details', id);
@@ -49,6 +87,11 @@ function RecipesAppProvider({ children }) {
     details,
     recommended,
     random,
+    recipes,
+    recipesToRender,
+    categories,
+    categoriesToRender,
+    recipesToRenderByCategory,
   };
 
   return (

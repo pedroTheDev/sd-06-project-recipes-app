@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-function IngredientsOrigin() {
+function IngredientsArea() {
   const TRUE = true;
   return (
     <div>
@@ -12,4 +12,4 @@ function IngredientsOrigin() {
   );
 }
 
-export default IngredientsOrigin;
+export default IngredientsArea;

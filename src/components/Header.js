@@ -5,12 +5,12 @@ import './Components.css';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
+import FilterButtons from './FilterButtons';
 
 function Header(props) {
-  const { title, search } = props;
+  const { title, search = false } = props;
   const [hide, setHide] = useState(true);
-
-  const space = '';
+  const showFilterButtons = title === 'Comidas' || title === 'Bebidas';
 
   return (
     <header>
@@ -25,7 +25,7 @@ function Header(props) {
         </Link>
         <h1 data-testid="page-title">{title}</h1>
         {
-          (!search) ? <p>{ space }</p> : <input
+          (!search) ? <p>{' '}</p> : <input
             type="image"
             src={ searchIcon }
             alt="icone de pesquisa"
@@ -34,7 +34,9 @@ function Header(props) {
           />
         }
       </div>
-      {(hide === true) ? '' : <SearchBar title={ title } />}
+      {(hide === true) ? (
+        <FilterButtons show={ hide } shouldRenderButtons={ showFilterButtons } />
+      ) : <SearchBar title={ title } />}
     </header>
   );
 }

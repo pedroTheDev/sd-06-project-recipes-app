@@ -1,27 +1,27 @@
 import React, { useContext, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import DrinkRecipeCard from '../components/Cards';
+import MealRecipeCard from '../components/Cards';
 import Context from '../context/Context';
 
-function Drinks() {
+function Meals() {
   const TRUE = true;
   const { recipes, recipesToRender, categoriesToRender } = useContext(Context);
 
   useEffect(() => {
-    recipesToRender('drink');
-    categoriesToRender('drink');
+    recipesToRender('meal');
+    categoriesToRender('meal');
   }, []);
 
   return (
     <div>
-      <Header title="Bebidas" search={ TRUE } />
+      <Header title="Comidas" search={ TRUE } />
       <div className="recipes-cards">
-        {recipes.map((drink, index) => (
-          <DrinkRecipeCard
-            key={ drink.strDrink }
-            info={ drink }
-            recipe="bebidas"
+        {recipes.map((meal, index) => (
+          <MealRecipeCard
+            key={ meal.strMeal }
+            info={ meal }
+            recipe="comidas"
             index={ index }
           />
         ))}
@@ -31,4 +31,4 @@ function Drinks() {
   );
 }
 
-export default Drinks;
+export default Meals;
