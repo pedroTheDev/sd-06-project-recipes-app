@@ -6,6 +6,9 @@ function ContextProvider({ children }) {
   const [foodAPI, setFoodAPI] = useState([]);
   const [drinkAPI, setDrinkAPI] = useState([]);
   const [mealCategories, setMealCategories] = useState('');
+  const [drinkCategories, setDrinkCategories] = useState('');
+  const [currentMealsExplore, setCurrentMealsExplore] = useState(false);
+  const [currentDrinkExplore, setCurrentDrinkExplore] = useState(false);
 
   const ContextValue = {
     foodAPI,
@@ -14,6 +17,12 @@ function ContextProvider({ children }) {
     setDrinkAPI,
     mealCategories,
     setMealCategories,
+    drinkCategories,
+    setDrinkCategories,
+    currentMealsExplore,
+    setCurrentMealsExplore,
+    currentDrinkExplore,
+    setCurrentDrinkExplore,
   };
 
   return (
