@@ -33,11 +33,12 @@ function ButtonCategoriesFood() {
     if (category === 'All' || categorySelectPreviously === category) {
       const arrayApiName = await requestApiFoodFilterName();
       setCardFood(arrayApiName);
+      setCategorySelectPreviously('All');
     } else {
       const arrayApiCategory = await requestApiFoodFilterCategories(category);
       setCardFood(arrayApiCategory);
+      setCategorySelectPreviously(category);
     }
-    setCategorySelectPreviously(category);
   };
 
   const arrayVoid = 0;
