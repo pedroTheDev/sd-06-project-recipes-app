@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import SearchBar from './SearchBar';
 import profileIcon from '../images/profileIcon.svg';
-import './Header.css';
+import '../Css/Header.css';
 
 function Header() {
   const location = useLocation();

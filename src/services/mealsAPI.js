@@ -49,10 +49,18 @@ export async function getRecipesMealsByRandomIngredients() {
   return result.meals;
 }
 
+// Lista de ingredientes
+export async function getIngredients() {
+  const response = await fetch(`${URL_BASE}list.php?i=list`);
+  const result = await response.json();
+  return result.meals;
+}
+
 export default {
   getAllRecipeTypesApi,
   getRecipesMealsApi,
   getRecipesMealsByCategoryApi,
   getFilteredRecipesApi,
   getRecipesMealsByRandomIngredients,
+  getIngredients,
 };

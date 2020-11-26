@@ -5,7 +5,7 @@ import { getRecipeDrinksApi, getRecipeDrinksByCategoryApi } from '../services/dr
 
 import MealsContext from '../context/MealsContext';
 import RecipeCard from './RecipeCard';
-import './RecipeList.css';
+import '../Css/RecipeList.css';
 
 function RecipeList() {
   const { drinkCategories,

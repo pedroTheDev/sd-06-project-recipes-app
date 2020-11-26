@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import '../Css/RecipeCard.css';
+import '../Css/IngredientCard.css';
 
-function RecipeCard({ cards }) {
+function IngredientsCard({ cards }) {
   const location = useLocation();
   const inicio = 0;
   const fim = 12;
@@ -17,13 +17,13 @@ function RecipeCard({ cards }) {
           className="link-card"
         >
           <div
-            data-testid={ `${index}-recipe-card` }
-            className="recipe-card"
+            data-testid={ `${index}-ingredient-card` }
+            className="ingredient-card"
           >
             <div className="img-container">
               <img
                 className="card-img"
-                alt="Recipe Card"
+                alt="Ingredient Card"
                 data-testid={ `${index}-card-img` }
                 src={ item.strThumb }
               />
@@ -40,11 +40,11 @@ function RecipeCard({ cards }) {
   );
 }
 
-RecipeCard.propTypes = {
+IngredientsCard.propTypes = {
   cards: PropTypes.arrayOf(PropTypes.shape({
     strThumb: PropTypes.string.isRequired,
     strName: PropTypes.string.isRequired,
   })).isRequired,
 };
 
-export default RecipeCard;
+export default IngredientsCard;
