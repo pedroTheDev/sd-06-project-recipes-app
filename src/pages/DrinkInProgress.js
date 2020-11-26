@@ -209,7 +209,6 @@ DrinkInProgress.propTypes = {
       id: PropTypes.string,
     }),
   }).isRequired,
-  location: PropTypes.func.isRequired,
 };
 
 export default DrinkInProgress;
