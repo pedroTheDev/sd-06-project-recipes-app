@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { requestApiFoodDetails, requestApiFoodFilterIngredient } from '../services/requestFood';
+import {
+  requestApiFoodDetails,
+  requestApiFoodFilterIngredient,
+} from '../services/requestFood';
 
 function DetalhesReceita(props) {
   const [detailsFood, setDetailsFood] = useState([]);
@@ -8,7 +11,7 @@ function DetalhesReceita(props) {
   const [embed, setEmbed] = useState('');
   const [recommendFood, setRecommendFood] = useState([]);
 
-  useEffect(() =>{
+  useEffect(() => {
     requestApiFoodDetails(props.match.params.id)
       .then((response) => {
         setDetailsFood(response[0]);
@@ -40,7 +43,7 @@ function DetalhesReceita(props) {
   const ingredientsFunc = () => {
     if (detailsFood.length !== 0) {
       const array = [];
-      for(let i = 1; i <= 20; i += 1) {
+      for (let i = 1; i <= 20; i += 1) {
         const ingredient = detailsFood[`strIngredient${i}`];
         array.push(ingredient);
       }
@@ -54,22 +57,20 @@ function DetalhesReceita(props) {
   }
   return (
     <div>
-      <img data-testid="recipe-photo" src={ detailsFood.strMealThumb } alt="food-thumb"/>
+      <img data-testid="recipe-photo" src={ detailsFood.strMealThumb } alt="food-thumb" />
       <h2 data-testid="recipe-title">{detailsFood.strMeal}</h2>
       <h3 data-testid="recipe-category">{detailsFood.strCategory}</h3>
       <h4 data-testid="instructions">{detailsFood.strInstructions}</h4>
       <button type="button" data-testid="share-btn">Share</button>
       <button type="button" data-testid="favorite-btn">Favorite</button>
       <button type="button" data-testid="start-recipe-btn">Iniciar receita</button>
-      {arrayIngredients.map((element, index) => {
-        return (
-          <h5
-            data-testid={ `${index}-ingredient-name-and-measure` }
-            key={ index }>
-            { element }
-          </h5>
-        );
-      })}
+      {arrayIngredients.map((element, index) => (
+        <h5
+          data-testid={ `${index}-ingredient-name-and-measure` }
+          key={ index }>
+          { element }
+        </h5>
+      ))}
       <iframe
         data-testid="video"
         width="1042"
@@ -84,14 +85,12 @@ function DetalhesReceita(props) {
       />
       {/* </iframe> */}
       <div>
-        {recommendFood.map((food, index) => {
-          return (
-            <div key={ index } data-testid={ `${index}-recomendation-card` }>
-              <img src={ food.strMealThumb } alt="food-thumb" />
-              <h3>{food.strMeal}</h3>
-            </div>
-          );
-        })}
+        {recommendFood.map((food, index) => (
+          <div key={ index } data-testid={ `${index}-recomendation-card` }>
+            <img src={ food.strMealThumb } alt="food-thumb" />
+            <h3>{food.strMeal}</h3>
+          </div>
+        ))}
       </div>
     </div>
   );

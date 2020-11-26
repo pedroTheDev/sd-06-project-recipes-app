@@ -14,6 +14,7 @@ function DetalhesBebida(props) {
     requestApiDrinkDetails(props.match.params.id)
       .then((response) => {
         setDetailsDrink(response[0]);
+        console.log(response)
       });
   }, []);
 
@@ -33,7 +34,6 @@ function DetalhesBebida(props) {
     if (detailsDrink.length !== 0) {
       const response = await requestApiDrinkFilterIngredient(detailsDrink.strIngredient1);
       setRecommendDrink(response.slice(0, 6));
-      console.log(response);
     }
   };
 
@@ -49,6 +49,7 @@ function DetalhesBebida(props) {
     <div>
       <img data-testid="recipe-photo" src={detailsDrink.strDrinkThumb} alt="drink-photo" />
       <h2 data-testid="recipe-title">{detailsDrink.strDrink}</h2>
+      <h3>{detailsDrink.strAlcoholic}</h3>
       <h3 data-testid="recipe-category">{detailsDrink.strCategory}</h3>
       <h4 data-testid="instructions">{detailsDrink.strInstructions}</h4>
       <button type="button" data-testid="share-btn">Share</button>
@@ -64,14 +65,12 @@ function DetalhesBebida(props) {
         );
       })}
       <div data-testid={ `0-recomendation-card` }>
-        {recommendDrink.map((drink, index) => {
-          return (
-            <div key={ index }>
-              <img src={ drink.strDrinkThumb } alt="drink-thumb" />
-              <h3>{drink.strDrink}</h3>
-            </div>
-          );
-        })}
+        {recommendDrink.map((drink, index) => (
+          <div key={ index }>
+            <img src={ drink.strDrinkThumb } alt="drink-thumb" />
+            <h3>{drink.strDrink}</h3>
+          </div>
+        ))}
       </div>
     </div>
   );
