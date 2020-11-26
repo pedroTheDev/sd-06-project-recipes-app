@@ -4,7 +4,7 @@ import RecipesAppContext from '../hooks/RecipesAppContext';
 import profileIcon from '../styles/images/profileIcon.svg';
 import searchIcon from '../styles/images/searchIcon.svg';
 import HeaderSearch from './HeaderSearch';
-import './components.css';
+// import './components.css';
 
 function Header({ name, button }) {
   const {
@@ -21,8 +21,8 @@ function Header({ name, button }) {
   };
 
   return (
-    <div data-testid="header" className="header">
-      <header>
+    <div data-testid="header">
+      <header className="header">
         <button type="button" className="logo-profile" data-testid="profile-top-btn">
           <img src={ profileIcon } alt="profile icon" />
         </button>
