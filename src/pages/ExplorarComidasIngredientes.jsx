@@ -6,7 +6,13 @@ import Footer from '../Components/Footer';
 import * as api from '../services/Api';
 
 export default function ExplorarComidasingredientes({ history }) {
-  const { titulo, setTitulo, loading, setLoading, setMealsByIngredient } = useContext(Context);
+  const {
+    titulo,
+    setTitulo,
+    loading,
+    setLoading,
+    setMealsByIngredient,
+  } = useContext(Context);
   const [ingredients, setIngredients] = useState([]);
 
   const fetchIngredients = async () => {
@@ -26,39 +32,41 @@ export default function ExplorarComidasingredientes({ history }) {
     const response = await api.fetchFoodByIngredients(name);
     setMealsByIngredient(response);
     setLoading(false);
-    // history.push('/comidas');
   };
+
+  const handleClick = async (name) => {
+    await onClick(name);
+    history.push('/comidas');
+  };
+
+  const twelve = 12;
 
   return (
     <div>
       <Header titulo={ titulo } />
       {loading ? <p>Loading</p>
         : (
-          ingredients.map((ingredient, index) => (
-            <div
-              data-testid={ `${index}- ingredient-card` }
-              key={ index }
-            >
-              <p
-                data-testid={ `${index}-card-name` }
-              >
-                { ingredient.strIngredient }
-              </p>
-              <img
-                data-testid={ `${index}-card-img` }
-                src={ `https://www.themealdb.com/images/ingredients/${ingredient.strIngredient}-Small.png` }
-                alt={ `${ingredient.strIngredient}-pic` }
-              />
+          ingredients.filter((ingredient, index) => ingredient && index < twelve)
+            .map((ingredient, index) => (
               <button
+                data-testid={ `${index}-ingredient-card` }
+                onClick={ () => handleClick(ingredient.strIngredient) }
+                key={ index }
                 type="button"
-                onClick={ onClick(ingredient.strIngredient) }
               >
-                Receitas
+                <p
+                  data-testid={ `${index}-card-name` }
+                >
+                  { ingredient.strIngredient }
+                </p>
+                <img
+                  data-testid={ `${index}-card-img` }
+                  src={ `https://www.themealdb.com/images/ingredients/${ingredient.strIngredient}-Small.png` }
+                  alt={ `${ingredient.strIngredient}-pic` }
+                />
               </button>
-            </div>
-          ))
-        )
-      }
+            ))
+        )}
       <Footer />
     </div>
   );
