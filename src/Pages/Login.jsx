@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import propTypes from 'prop-types';
+import chef from '../images/chef.png';
+import arrow from '../images/right-arrow.png';
+import '../Style/Login.css';
 
 function Login({ history }) {
   const [buttonDisable, setButtonDisable] = useState(false);
@@ -23,33 +26,37 @@ function Login({ history }) {
   };
 
   return (
-    <div>
-      <label htmlFor="email-input">
-        Email:
-        <input
-          type="text"
-          data-testid="email-input"
-          id="email-input"
-          onChange={ checkButton }
-        />
-      </label>
-      <label htmlFor="password-input">
-        Password:
-        <input
-          type="password"
-          data-testid="password-input"
-          id="password-input"
-          onChange={ checkButton }
-        />
-      </label>
-      <button
-        type="submit"
-        data-testid="login-submit-btn"
-        disabled={ !buttonDisable }
-        onClick={ handleButton }
-      >
-        Entrar
-      </button>
+    <div className="login-container">
+      <header>
+        <h1>Login</h1>
+      </header>
+      <img src={chef} className="chef-img" alt="chef" />
+      <div className="input-container">
+          <input
+            type="text"
+            data-testid="email-input"
+            id="email-input"
+            className="email-input"
+            placeholder="email"
+            onChange={ checkButton }
+          />
+          <input
+            type="password"
+            data-testid="password-input"
+            id="password-input"
+            placeholder="password"
+            className="password-input"
+            onChange={ checkButton }
+          />
+        <button
+          type="submit"
+          data-testid="login-submit-btn"
+          disabled={ !buttonDisable }
+          onClick={ handleButton }
+        >
+          <img src={arrow} className="arrow-img" alt="log-in" />
+        </button>
+      </div>
     </div>
   );
 }

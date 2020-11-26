@@ -6,7 +6,6 @@ function Comidas() {
   return (
     <div>
       <Header pageName="Comidas" />
-      <h1>COmidas</h1>
       <MainScreen />
       <Footer />
     </div>

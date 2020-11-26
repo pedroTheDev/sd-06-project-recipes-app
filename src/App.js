@@ -19,6 +19,7 @@ import {
   ReceitasFeitas,
   ReceitasFavoritas,
 } from './Pages';
+import './App.css';
 
 function App() {
   return (

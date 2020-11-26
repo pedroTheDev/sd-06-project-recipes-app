@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import RecipeContext from '../hooks/RecipeContext';
 import recipeRequest from '../services/recipeRequest';
+import '../Style/mainScreen.css';
 
 export default function MainScreen() {
   const history = useHistory();
@@ -42,6 +43,7 @@ export default function MainScreen() {
             data-testid={ `${filter.strCategory}-category-filter` }
             key={ index }
             id={ filter.strCategory }
+            className="filter-button"
             onClick={ handleFilters }
           >
             {filter.strCategory}
@@ -56,6 +58,7 @@ export default function MainScreen() {
             data-testid={ `${filter.strCategory}-category-filter` }
             key={ index }
             id={ filter.strCategory }
+            className="filter-button"
             onClick={ handleFilters }
           >
             {filter.strCategory}
@@ -68,7 +71,7 @@ export default function MainScreen() {
     if (pathname === '/comidas' && foodRecipes) {
       return foodRecipes.filter((food, index) => index < twelve)
         .map((food, index) => (
-          <div data-testid={ `${index}-recipe-card` } key="index">
+        <div data-testid={ `${index}-recipe-card` } key="index" className="card-container">
             <img
               src={ food.strMealThumb }
               data-testid={ `${index}-card-img` }
@@ -83,7 +86,7 @@ export default function MainScreen() {
       return (drinkRecipes && drinkRecipes.length && drinkRecipes
         .filter((drink, index) => index < twelve)
         .map((drinks, index) => (
-          <div data-testid={ `${index}-recipe-card` } key="index">
+          <div data-testid={ `${index}-recipe-card` } key="index" className="card-container">
             <img
               src={ drinks.strDrinkThumb }
               data-testid={ `${index}-card-img` }
@@ -98,7 +101,7 @@ export default function MainScreen() {
   return (
     <div>
       <div className="filter-container">
-        <button onClick={ handleFilters } id="all" type="button">All</button>
+        <button onClick={ handleFilters } id="all" type="button" className="filter-button">All</button>
         {renderFilters()}
       </div>
       <div className="recipes-container">
