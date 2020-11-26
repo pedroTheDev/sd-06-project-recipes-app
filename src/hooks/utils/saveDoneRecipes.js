@@ -1,15 +1,20 @@
 function extractRecipeInfo(type, recipe) {
-  if (type === 'Comidas') {
+  if (type === 'comidas') {
     const {
       idMeal: id,
       strArea: area,
       strMeal: name,
       strCategory: category,
       strMealThumb: image,
-      strTags: tags,
+      strTags: stringTags,
     } = recipe;
 
     const alcoholicOrNot = '';
+
+    const tags = (stringTags
+      ? stringTags.split(',')
+      : []
+    );
 
     return {
       id,
@@ -17,7 +22,7 @@ function extractRecipeInfo(type, recipe) {
       name,
       category: (category || ''),
       image,
-      tags: (tags || []),
+      tags,
       alcoholicOrNot,
       type: 'comida',
     };
@@ -28,11 +33,16 @@ function extractRecipeInfo(type, recipe) {
     strDrink: name,
     strCategory: category,
     strDrinkThumb: image,
-    strTags: tags,
+    strTags: stringTags,
     strAlcoholic: alcoholicOrNot,
   } = recipe;
 
   const area = '';
+
+  const tags = (stringTags
+    ? stringTags.split(',')
+    : []
+  );
 
   return {
     id,
@@ -40,7 +50,7 @@ function extractRecipeInfo(type, recipe) {
     name,
     category: (category || ''),
     image,
-    tags: (tags || []),
+    tags,
     alcoholicOrNot,
     type: 'bebida',
   };
@@ -50,7 +60,7 @@ export default function saveDoneRecipe(type, recipe) {
   const previouslyDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
 
   const newRecipeInfoParsed = extractRecipeInfo(type, recipe);
-  const doneDate = new Date();
+  const doneDate = new Date(Date.now());
 
   const recipeToAdd = { ...newRecipeInfoParsed, doneDate };
 

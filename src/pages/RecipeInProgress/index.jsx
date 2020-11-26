@@ -8,11 +8,14 @@ import copy from 'clipboard-copy';
 import { useCook } from '../../hooks/cook';
 import { useRecipes } from '../../hooks/recipes';
 
+import parseRecipeToFavorite from '../../utils/parseFavoriteRecipeFormat';
+import parseIngredientAndMeasures from '../../utils/parseIngredientAndMeasures';
+
 import shareIcon from '../../images/shareIcon.svg';
 import blackHeart from '../../images/blackHeartIcon.svg';
 import whiteHeart from '../../images/whiteHeartIcon.svg';
 
-function DrinkInProgress({ pageType }) {
+function RecipeInProgress({ pageType }) {
   const [copiedLink, setCopiedLink] = useState(false);
 
   const {
@@ -29,6 +32,16 @@ function DrinkInProgress({ pageType }) {
 
   const { favoriteRecipes, updateFavoriteRecipes } = useRecipes();
 
+  useEffect(() => {
+    const recipeToCook = cookedRecipes[pageType].find(({ recipe }) => (
+      recipe.idMeal === id
+    ));
+
+    if (!recipeToCook) {
+      loadRecipeToCook(pageType, id);
+    }
+  }, []);
+
   const handleShareClick = useCallback(() => {
     const url = `http://localhost:3000/${pageType}/${id}`;
 
@@ -37,23 +50,15 @@ function DrinkInProgress({ pageType }) {
     setCopiedLink(true);
   }, [id, pageType]);
 
-  useEffect(() => {
-    const recipeToCook = cookedRecipes[pageType].find(({ recipe }) => (
-      recipe.idDrink === id
-    ));
-
-    if (!recipeToCook) {
-      loadRecipeToCook(pageType, id);
-    }
-  }, []);
-
   const currentlyCooking = useMemo(() => {
     const recipeToCook = cookedRecipes[pageType].find(({ recipe }) => (
-      recipe.idDrink === id
+      recipe.idMeal === id || recipe.idDrink === id
     ));
 
     if (!recipeToCook) {
-      return { error: 'You did not start this recipe yet' };
+      return {
+        error: 'Ocorreu um erro ao carregar sua recita. tente Novamente.',
+      };
     }
 
     return recipeToCook.recipe;
@@ -66,51 +71,13 @@ function DrinkInProgress({ pageType }) {
   }, [id, favoriteRecipes]);
 
   const handleFavoriteToggle = useCallback(() => {
-    const favoriteMeal = {
-      id,
-      type: 'bebida',
-      area: currentlyCooking.strArea || '',
-      category: currentlyCooking.strCategory,
-      alcoholicOrNot: currentlyCooking.strAlcoholic,
-      name: currentlyCooking.strDrink,
-      image: currentlyCooking.strDrinkThumb,
-    };
+    const favoriteRecipe = parseRecipeToFavorite(pageType, currentlyCooking);
 
-    updateFavoriteRecipes(favoriteMeal, recipeIsFavorited);
-  }, [id, currentlyCooking, pageType, updateFavoriteRecipes, recipeIsFavorited]);
+    updateFavoriteRecipes(favoriteRecipe, recipeIsFavorited);
+  }, [id, pageType, currentlyCooking, updateFavoriteRecipes, recipeIsFavorited]);
 
-  const drinkIngredients = useMemo(() => {
-    const ingredients = (
-      Object
-        .keys(currentlyCooking)
-        .filter((detail) => {
-          const ingredientPattern = /strIngredient\d/i;
-
-          const detailIsIngredient = (
-            ingredientPattern.test(detail)
-          );
-
-          // makes sure we only have filled ingredients
-          if (detailIsIngredient) {
-            return currentlyCooking[detail];
-          }
-
-          return false;
-        })
-        .map((ingredientKey) => {
-          const everyNonDigitChar = /[^\d]/g;
-          const ingredientNumber = ingredientKey.replace(everyNonDigitChar, '');
-
-          const matchingMeasure = `strMeasure${ingredientNumber}`;
-
-          const ingredient = currentlyCooking[ingredientKey];
-          const measure = currentlyCooking[matchingMeasure];
-
-          const displayFormat = `${ingredient} - ${measure}`;
-
-          return displayFormat;
-        })
-    );
+  const recipeIngredients = useMemo(() => {
+    const ingredients = parseIngredientAndMeasures(currentlyCooking);
 
     return ingredients;
   }, [currentlyCooking]);
@@ -122,7 +89,7 @@ function DrinkInProgress({ pageType }) {
   }, [updateRecipeProgress, id, pageType]);
 
   const currentProgress = useMemo(() => {
-    const accessKey = 'cocktails';
+    const accessKey = (pageType === 'comidas') ? 'meals' : 'cocktails';
 
     const progressArray = recipesProgress[accessKey][id];
 
@@ -136,12 +103,12 @@ function DrinkInProgress({ pageType }) {
   }, [recipesProgress, id]);
 
   const canFinalizeRecipe = useMemo(() => {
-    const everythingChecked = drinkIngredients.every((_, index) => (
-      currentProgress.includes(`${index}`)
-    ));
+    const everyIngredientChecked = recipeIngredients.every(
+      (_, index) => currentProgress.includes(`${index}`),
+    );
 
-    return everythingChecked;
-  }, [currentProgress, drinkIngredients]);
+    return everyIngredientChecked;
+  }, [recipeIngredients, currentProgress]);
 
   const handleFinalizeRecipe = useCallback(() => {
     finalizeRecipe(pageType, id);
@@ -161,13 +128,21 @@ function DrinkInProgress({ pageType }) {
     <div className="recipe-details-page">
       <img
         data-testid="recipe-photo"
-        src={ currentlyCooking.strDrinkThumb }
-        alt={ currentlyCooking.strDrink }
+        src={ currentlyCooking.strMealThumb || currentlyCooking.strDrinkThumb }
+        alt={ currentlyCooking.strMeal || currentlyCooking.strDrink }
       />
 
-      <h2 data-testid="recipe-title">{currentlyCooking.strDrink}</h2>
-      <p data-testid="recipe-category">{currentlyCooking.strCategory}</p>
-      <p>{currentlyCooking.strAlcoholic}</p>
+      <h2 data-testid="recipe-title">
+        {currentlyCooking.strMeal || currentlyCooking.strDrink}
+      </h2>
+
+      <p data-testid="recipe-category">
+        {currentlyCooking.strAlcoholic || currentlyCooking.strCategory}
+      </p>
+
+      {(pageType === 'comidas') && (
+        <p>{currentlyCooking.strArea}</p>
+      )}
 
       <div className="share-btn-container">
         <button
@@ -182,7 +157,7 @@ function DrinkInProgress({ pageType }) {
         </button>
 
         {copiedLink && (
-          <span className="copied-item">Link copiado!</span>
+          <span>Link copiado!</span>
         )}
       </div>
 
@@ -197,10 +172,10 @@ function DrinkInProgress({ pageType }) {
       </div>
 
       <div className="recipe-ingredients in-progress-ingredients">
-        {drinkIngredients.map((ingredient, index) => (
+        {recipeIngredients.map((ingredient, index) => (
           <div
-            key={ ingredient }
             className="ingredients-checkbox-container"
+            key={ ingredient }
           >
 
             <label
@@ -217,6 +192,7 @@ function DrinkInProgress({ pageType }) {
                 checked={ currentProgress.includes(`${index}`) }
                 onChange={ handleIngredientClick }
               />
+
               {ingredient}
 
             </label>
@@ -243,8 +219,8 @@ function DrinkInProgress({ pageType }) {
   );
 }
 
-DrinkInProgress.propTypes = {
+RecipeInProgress.propTypes = {
   pageType: PropTypes.string.isRequired,
 };
 
-export default DrinkInProgress;
+export default RecipeInProgress;

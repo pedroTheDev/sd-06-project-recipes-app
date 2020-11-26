@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { FiSearch } from 'react-icons/fi';
 
 import { useAuth } from '../../hooks/auth';
 import { useSearch } from '../../hooks/search';
@@ -69,29 +70,43 @@ function Header({ pageName, showSearch = false }) {
   }, [pageName]);
 
   return (
-    <header className="app-header">
-      <Link to="/perfil">
-        <img data-testid="profile-top-btn" src={ userIcon } alt="user info" />
-      </Link>
+    <div className="header-container">
+      <header className="app-header">
+        <Link className="profile-link" to="/perfil">
+          <img data-testid="profile-top-btn" src={ userIcon } alt="user info" />
+        </Link>
 
-      <span data-testid="page-title">{ parsedTitle }</span>
+        <span data-testid="page-title">{ parsedTitle }</span>
 
-      {showSearch
-        ? (
-          <button type="button" onClick={ handleSearchIconClick }>
-            <img data-testid="search-top-btn" src={ searchIcon } alt="search icon" />
-          </button>
-        ) : (<div />)}
+        {showSearch
+          ? (
+            <button type="button" onClick={ handleSearchIconClick }>
+              <img data-testid="search-top-btn" src={ searchIcon } alt="search icon" />
+            </button>
+          ) : (<div />)}
+      </header>
 
       {searchBarShowing && (
         <div className="search-bar-container">
           <form onSubmit={ handleRecipeSearch }>
-            <input
-              type="text"
-              data-testid="search-input"
-              placeholder="Palavra-chave"
-              ref={ searchInputRef }
-            />
+
+            <div className="search-input-container">
+
+              <input
+                type="text"
+                data-testid="search-input"
+                placeholder="Palavra-chave"
+                ref={ searchInputRef }
+              />
+
+              <button
+                type="submit"
+                data-testid="exec-search-btn"
+              >
+                <FiSearch />
+              </button>
+
+            </div>
 
             <div className="radio-type-container">
               <div className="radio-container">
@@ -133,19 +148,12 @@ function Header({ pageName, showSearch = false }) {
                   Primeira Letra
                 </label>
               </div>
-
-              <button
-                type="submit"
-                data-testid="exec-search-btn"
-              >
-                Buscar
-
-              </button>
             </div>
+
           </form>
         </div>
       )}
-    </header>
+    </div>
   );
 }
 

@@ -33,7 +33,7 @@ const oneMeal = {
       strMeasure1: '1 pound',
       strMeasure2: '1/4 cup',
       strMeasure3: '3 cloves',
-      strMeasure4: '1 tin ',
+      strMeasure4: '1 tin',
       strMeasure5: '1/2 teaspoon',
       strMeasure6: '1/2 teaspoon',
       strMeasure7: '6 leaves',
@@ -56,9 +56,11 @@ const oneMeal = {
   ],
 };
 
+const meal = oneMeal.meals[0]
+
 export const mealIngredientsAndMeasure = (
   Object
-    .keys(oneMeal)
+    .keys(meal)
     .filter((detail) => {
       const ingredientPattern = /strIngredient\d/i;
 
@@ -66,9 +68,10 @@ export const mealIngredientsAndMeasure = (
         ingredientPattern.test(detail)
       );
 
+
       // makes sure we only have filled ingredients
       if (detailIsIngredient) {
-        return oneMeal[detail];
+        return meal[detail];
       }
 
       return false;
@@ -79,8 +82,8 @@ export const mealIngredientsAndMeasure = (
 
       const matchingMeasure = `strMeasure${ingredientNumber}`;
 
-      const ingredient = oneMeal[ingredientKey];
-      const measure = oneMeal[matchingMeasure];
+      const ingredient = meal[ingredientKey];
+      const measure = meal[matchingMeasure];
 
       const displayFormat = `${ingredient} - ${measure}`;
 

@@ -3,7 +3,7 @@ import { Router, Route } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { render, fireEvent, waitForElement } from '@testing-library/react';
 
-import FoodDetails from '../../pages/FoodDetails';
+import RecipeDetails from '../../pages/RecipeDetails';
 import AppProvider from '../../hooks';
 
 import LocalStorageFake from '../../fakes/localStorage';
@@ -33,7 +33,7 @@ describe('food details page structure testing', () => {
         <AppProvider>
           <Route
             path="/comidas/:id"
-            render={ () => <FoodDetails pageType="comidas" /> }
+            render={ () => <RecipeDetails pageType="comidas" /> }
           />
         </AppProvider>
       </Router>,
@@ -83,7 +83,7 @@ describe('food details logic testing', () => {
         <AppProvider>
           <Route
             path="/comidas/:id"
-            render={ () => <FoodDetails pageType="comidas" /> }
+            render={ () => <RecipeDetails pageType="comidas" /> }
           />
         </AppProvider>
       </Router>,
@@ -221,7 +221,7 @@ describe('continue recipe test', () => {
         <AppProvider>
           <Route
             path="/comidas/:id"
-            render={ () => <FoodDetails pageType="comidas" /> }
+            render={ () => <RecipeDetails pageType="comidas" /> }
           />
         </AppProvider>
       </Router>,
@@ -276,7 +276,7 @@ describe('start/continue hidden test', () => {
         <AppProvider>
           <Route
             path="/comidas/:id"
-            render={ () => <FoodDetails pageType="comidas" /> }
+            render={ () => <RecipeDetails pageType="comidas" /> }
           />
         </AppProvider>
       </Router>,
@@ -314,7 +314,7 @@ describe('food details navigation', () => {
         <AppProvider>
           <Route
             path="/comidas/:id"
-            render={ () => <FoodDetails pageType="comidas" /> }
+            render={ () => <RecipeDetails pageType="comidas" /> }
           />
         </AppProvider>
       </Router>,
@@ -362,7 +362,7 @@ describe('food details navigation', () => {
         <AppProvider>
           <Route
             path="/comidas/:id"
-            render={ () => <FoodDetails pageType="comidas" /> }
+            render={ () => <RecipeDetails pageType="comidas" /> }
           />
         </AppProvider>
       </Router>,

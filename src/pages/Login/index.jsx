@@ -1,7 +1,15 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
+import { FiAlertCircle, FiUser, FiLock } from 'react-icons/fi';
 
 import { useAuth } from '../../hooks/auth';
+
+import Input from '../../components/Input';
+
+import loginLogo from '../../images/login-logo.png';
+import appLogo from '../../images/app-icon.png';
+
+import './styles.css';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -44,34 +52,56 @@ function Login() {
 
   return (
     <div className="login-page">
-      <form onSubmit={ handleSubmit }>
-        <h1>Faça seu login</h1>
+      <div className="login-content">
+        <img src={ appLogo } alt="Recipes app logo" />
 
-        <input
-          placeholder="Seu E-mail"
-          name="email"
-          data-testid="email-input"
-          value={ email }
-          onChange={ handleEmailChange }
-        />
+        <form onSubmit={ handleSubmit }>
+          <h1>Faça seu login</h1>
 
-        <input
-          data-testid="password-input"
-          type="password"
-          name="password"
-          placeholder="Sua senha"
-          value={ password }
-          onChange={ handlePasswordChange }
-        />
+          <Input
+            placeholder="Seu e-mail"
+            name="email"
+            data-testid="email-input"
+            icon={ FiUser }
+            value={ email }
+            onChange={ handleEmailChange }
+          />
 
-        <button
-          type="submit"
-          data-testid="login-submit-btn"
-          disabled={ !userDataIsValid }
+          <Input
+            data-testid="password-input"
+            type="password"
+            name="password"
+            placeholder="Sua senha"
+            icon={ FiLock }
+            value={ password }
+            onChange={ handlePasswordChange }
+          />
+
+          <button
+            type="submit"
+            data-testid="login-submit-btn"
+            disabled={ !userDataIsValid }
+          >
+            Entrar
+          </button>
+        </form>
+
+        <Link
+          to="/register"
+          className="register-fake"
+          data-testid="register-link"
         >
-          Entrar
-        </button>
-      </form>
+          <FiAlertCircle />
+          Cadastre-se
+        </Link>
+      </div>
+
+      <div className="login-bg">
+        <div className="bg">
+          <img src={ loginLogo } alt="alternative recipes logo" />
+          <h1>Seu app de receitas</h1>
+        </div>
+      </div>
     </div>
   );
 }

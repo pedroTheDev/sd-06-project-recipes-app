@@ -17,4 +17,11 @@ const mealCategories = {
   ],
 };
 
-module.exports = mealCategories;
+export const categoriesToRender = (
+  mealCategories
+    .meals
+    .map(c => c.strCategory)
+    .filter((_, index) => index < 5)
+)
+
+export default mealCategories

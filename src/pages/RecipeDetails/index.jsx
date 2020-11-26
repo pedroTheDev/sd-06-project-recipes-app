@@ -9,11 +9,16 @@ import { useSingleRecipe } from '../../hooks/singleRecipe';
 import { useCook } from '../../hooks/cook';
 import { useRecipes } from '../../hooks/recipes';
 
+import parseRecipeToFavorite from '../../utils/parseFavoriteRecipeFormat';
+import parseIngredientAndMeasures from '../../utils/parseIngredientAndMeasures';
+
 import shareIcon from '../../images/shareIcon.svg';
 import blackHeart from '../../images/blackHeartIcon.svg';
 import whiteHeart from '../../images/whiteHeartIcon.svg';
 
-function FoodDetails({ pageType }) {
+import './styles.css';
+
+function RecipeDetails({ pageType }) {
   const [copiedLink, setCopiedLink] = useState(false);
 
   const {
@@ -42,59 +47,29 @@ function FoodDetails({ pageType }) {
     setCopiedLink(true);
   }, [id, pageType]);
 
-  const foodDetails = useMemo(
+  const recipeDetails = useMemo(
     () => currentFocusedRecipes[pageType].recipe,
     [currentFocusedRecipes, pageType],
   );
 
-  const foodRecommendations = useMemo(
+  const recipeRecommendations = useMemo(
     () => currentFocusedRecipes[pageType].recommendations,
     [currentFocusedRecipes, pageType],
   );
 
-  const foodIngredients = useMemo(() => {
-    const ingredients = (
-      Object
-        .keys(foodDetails)
-        .filter((detail) => {
-          const ingredientPattern = /strIngredient\d/i;
-
-          const detailIsIngredient = (
-            ingredientPattern.test(detail)
-          );
-
-          // makes sure we only have filled ingredients
-          if (detailIsIngredient) {
-            return foodDetails[detail];
-          }
-
-          return false;
-        })
-        .map((ingredientKey) => {
-          const everyNonDigitChar = /[^\d]/g;
-          const ingredientNumber = ingredientKey.replace(everyNonDigitChar, '');
-
-          const matchingMeasure = `strMeasure${ingredientNumber}`;
-
-          const ingredient = foodDetails[ingredientKey];
-          const measure = foodDetails[matchingMeasure];
-
-          const displayFormat = `${ingredient} - ${measure}`;
-
-          return displayFormat;
-        })
-    );
+  const recipeIngredients = useMemo(() => {
+    const ingredients = parseIngredientAndMeasures(recipeDetails);
 
     return ingredients;
-  }, [foodDetails]);
+  }, [recipeDetails]);
 
   const recipeHasBeenStarted = useMemo(() => {
-    const accessKey = 'meals';
+    const accessKey = (pageType === 'comidas') ? 'meals' : 'cocktails';
 
     const recipeStarted = recipesProgress[accessKey][id];
 
     return recipeStarted;
-  }, [id, recipesProgress]);
+  }, [id, recipesProgress, pageType]);
 
   const recipeHasBeenFinished = useMemo(() => {
     const recipeHasFinished = doneRecipes.find((recipe) => recipe.id === id);
@@ -103,8 +78,8 @@ function FoodDetails({ pageType }) {
   }, [doneRecipes, id]);
 
   const handleStartCooking = useCallback(() => {
-    startCooking(pageType, foodDetails);
-  }, [startCooking, foodDetails, pageType]);
+    startCooking(pageType, recipeDetails);
+  }, [startCooking, recipeDetails, pageType]);
 
   const recipeIsFavorited = useMemo(() => {
     const recipeInFavorites = favoriteRecipes.find((recipe) => recipe.id === id);
@@ -113,18 +88,10 @@ function FoodDetails({ pageType }) {
   }, [id, favoriteRecipes]);
 
   const handleFavoriteToggle = useCallback(() => {
-    const favoriteMeal = {
-      id,
-      type: 'comida',
-      area: foodDetails.strArea,
-      category: foodDetails.strCategory,
-      alcoholicOrNot: '',
-      name: foodDetails.strMeal,
-      image: foodDetails.strMealThumb,
-    };
+    const favoriteRecipe = parseRecipeToFavorite(pageType, recipeDetails);
 
-    updateFavoriteRecipes(favoriteMeal, recipeIsFavorited);
-  }, [id, pageType, foodDetails, updateFavoriteRecipes, recipeIsFavorited]);
+    updateFavoriteRecipes(favoriteRecipe, recipeIsFavorited);
+  }, [id, pageType, recipeDetails, updateFavoriteRecipes, recipeIsFavorited]);
 
   if (loadingSingleRecipe) {
     return (
@@ -136,13 +103,21 @@ function FoodDetails({ pageType }) {
     <div className="recipe-details-page">
       <img
         data-testid="recipe-photo"
-        src={ foodDetails.strMealThumb }
-        alt={ foodDetails.strMeal }
+        src={ recipeDetails.strMealThumb || recipeDetails.strDrinkThumb }
+        alt={ recipeDetails.strMeal || recipeDetails.strDrink }
       />
 
-      <h2 data-testid="recipe-title">{foodDetails.strMeal}</h2>
-      <p data-testid="recipe-category">{foodDetails.strCategory}</p>
-      <p>{foodDetails.strArea}</p>
+      <h2 data-testid="recipe-title">
+        {recipeDetails.strMeal || recipeDetails.strDrink }
+      </h2>
+
+      <p data-testid="recipe-category">
+        {recipeDetails.strAlcoholic || recipeDetails.strCategory}
+      </p>
+
+      {(pageType === 'comidas') && (
+        <p>{recipeDetails.strArea}</p>
+      )}
 
       <div className="share-btn-container">
         <button
@@ -172,7 +147,7 @@ function FoodDetails({ pageType }) {
       </div>
 
       <div className="recipe-ingredients">
-        {foodIngredients.map((ingredients, index) => (
+        {recipeIngredients.map((ingredients, index) => (
           <p
             key={ ingredients }
             data-testid={ `${index}-ingredient-name-and-measure` }
@@ -182,42 +157,44 @@ function FoodDetails({ pageType }) {
         ))}
       </div>
 
-      <div className="video-container">
-        <iframe
-          width="560"
-          height="315"
-          data-testid="video"
-          title={ foodDetails.strMeal }
-          src={ foodDetails.strYoutube }
-          frameBorder="0"
-          allow="accelerometer; clipboard-write; encrypted-media; picture-in-picture"
-          allowFullScreen
-        />
-      </div>
+      {(pageType === 'comidas') && (
+        <div className="video-container">
+          <iframe
+            width="560"
+            height="315"
+            data-testid="video"
+            title={ recipeDetails.strMeal }
+            src={ recipeDetails.strYoutube }
+            frameBorder="0"
+            allow="accelerometer; clipboard-write; encrypted-media; picture-in-picture"
+            allowFullScreen
+          />
+        </div>
+      )}
 
       <div data-testid="instructions" className="recipe-instructions">
         <p>
-          {foodDetails.strInstructions}
+          {recipeDetails.strInstructions}
         </p>
       </div>
 
       <div className="recommendations-container">
-        {foodRecommendations.map((recommendation, index) => (
+        {recipeRecommendations.map((recommendation, index) => (
           <Link
-            key={ recommendation.idDrink }
+            key={ recommendation.idDrink || recommendation.idMeal }
             to={ `/bebidas/${recommendation.idDrink}` }
             className="recommendation-card"
             data-testid={ `${index}-recomendation-card` }
           >
             <img
-              src={ recommendation.strDrinkThumb }
-              alt={ recommendation.strDrink }
+              src={ recommendation.strDrinkThumb || recommendation.strMealThumb }
+              alt={ recommendation.strDrink || recommendation.strMeal }
               data-testid={ `${index}-recomendation-image` }
             />
             <strong
               data-testid={ `${index}-recomendation-title` }
             >
-              {recommendation.strDrink}
+              {recommendation.strDrink || recommendation.strMeal}
             </strong>
           </Link>
         ))}
@@ -238,8 +215,8 @@ function FoodDetails({ pageType }) {
   );
 }
 
-FoodDetails.propTypes = {
+RecipeDetails.propTypes = {
   pageType: PropTypes.string.isRequired,
 };
 
-export default FoodDetails;
+export default RecipeDetails;

@@ -25,6 +25,8 @@ import drinksByIngredient from './drinksByIngredient';
 import areas from './areas';
 import japaneseMeals from './japaneseMeals';
 import italianMeals from './italianMeals';
+import anotherOneDrink from './anotherOneDrink';
+import anotherOneMeal from './anotherOneMeal';
 
 const fetch = (url) => Promise.resolve({
   status: 200,
@@ -89,6 +91,10 @@ const fetch = (url) => Promise.resolve({
     if (url === 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=xablau') { return Promise.resolve(emptyDrinks); }
 
     if (url === 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=') { return Promise.resolve(drinks); }
+
+    if (url === 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=52929') { return Promise.resolve(anotherOneMeal) }
+
+    if (url === 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=17837') { return Promise.resolve(anotherOneDrink) }
 
     return Promise.resolve(meals);
   },
