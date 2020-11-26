@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import renderWithRouter from './renderWithRouter';
 // import FoodInProgress from '../pages/FoodInProgress';
 import DrinkInProgress from '../pages/DrinkInProgress';
-import drinks from '../../cypress/mocks/drinks';
+// import drinks from '../../cypress/mocks/drinks';
 
 describe('Tela de Receita de Comida em progresso:', () => {
   // console.log(drinks.drinks[0]);
