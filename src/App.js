@@ -33,6 +33,12 @@ function App() {
         />
 
         <Route
+          exact
+          path="/explorar/bebidas/ingredientes"
+          component={ ExploreFoodByIngredients }
+        />
+
+        <Route
           path="/explorar/comidas/area"
           component={ ExploreFoodByArea }
         />
