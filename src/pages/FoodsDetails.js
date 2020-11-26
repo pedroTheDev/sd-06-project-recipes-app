@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import copy from 'clipboard-copy';
 import { connect } from 'react-redux';
 import { fetchMealsById, fetchRecommendedDrinks } from '../services';
 import { currentID, favRecipe } from '../actions';
@@ -43,18 +44,25 @@ class FoodsDetails extends React.Component {
     this.setState({ Video });
   }
 
-  handleShareFood({ idMeal }) {
+  async handleShareFood({ idMeal }) {
     const url = `http://localhost:3000/comidas/${idMeal}`;
-    window.alert('Link copiado!');
-    const el = document.createElement('textarea');
-    el.value = url;
-    el.setAttribute('readonly', '');
-    el.style.position = 'absolute';
-    el.style.left = '-9999px';
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand('copy');
-    document.body.removeChild(el);
+    await copy(url);
+    const shareBtn = document.querySelector('.share-btn');
+    shareBtn.value = 'Link copiado!';
+    const p = document.querySelector('.p');
+    const span = document.createElement('span');
+    p.appendChild(span);
+    span.innerHTML = 'Link copiado!';
+    // window.alert('Link copiado!');
+    // const el = document.createElement('textarea');
+    // el.value = url;
+    // el.setAttribute('readonly', '');
+    // el.style.position = 'absolute';
+    // el.style.left = '-9999px';
+    // document.body.appendChild(el);
+    // el.select();
+    // document.execCommand('copy');
+    // document.body.removeChild(el);
   }
 
   handleIngredients() {
@@ -207,11 +215,13 @@ class FoodsDetails extends React.Component {
               <div className="recipe-buttons">
                 <input
                   type="image"
+                  className="share-btn"
                   data-testid="share-btn"
                   src={ shareIcon }
                   onClick={ () => this.handleShareFood(recipe) }
                   alt="shareIcon"
                 />
+                <p className="p" />
                 <input
                   type="image"
                   data-testid="favorite-btn"
