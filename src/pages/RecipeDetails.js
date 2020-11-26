@@ -11,10 +11,10 @@ function RecipeDetails(props) {
   const {
     getMealDetail,
     getDrinkDetail,
-    getRandomDrink,
-    getRandomMeal,
+    getRecommendedDrink,
+    getRecommendedMeal,
     details,
-    random,
+    recommended,
   } = useContext(Context);
   const { match: { path, params } } = props;
   const [fav, setFav] = useState('white');
@@ -24,10 +24,10 @@ function RecipeDetails(props) {
   useEffect(() => {
     if (path === '/comidas/:id') {
       getMealDetail(params.id);
-      getRandomDrink();
+      getRecommendedDrink();
     } else {
       getDrinkDetail(params.id);
-      getRandomMeal();
+      getRecommendedMeal();
     }
   }, [params.id]);
 
@@ -52,6 +52,7 @@ function RecipeDetails(props) {
             <img
               src={ path === '/comidas/:id' ? recipe.strMealThumb : recipe.strDrinkThumb }
               alt="recipe_image"
+              className="recipeImage"
               data-testid="recipe-photo"
             />
             <h1 data-testid="recipe-title">
@@ -101,8 +102,8 @@ function RecipeDetails(props) {
               )}
             <h2>Recomendadas</h2>
             <div className="recomendation">
-              { !random ? <p>LOADING...</p>
-                : random.slice(ZERO, SIX).map((info, index) => (
+              { !recommended ? <p>LOADING...</p>
+                : recommended.slice(ZERO, SIX).map((info, index) => (
                   <Cards
                     key={ index }
                     recipe={ path === '/comidas/:id' ? 'bebidas' : 'comidas' }

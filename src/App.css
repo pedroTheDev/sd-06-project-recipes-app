@@ -52,6 +52,11 @@
   height: 180px;
 }
 
+.recipeImage {
+  width: 360px;
+  height: 360px;
+}
+
 @keyframes shake {
   0% {
     transform: rotate(5deg);
