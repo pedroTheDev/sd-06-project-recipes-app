@@ -16,7 +16,6 @@ function ExploreDrinkIngredient() {
       const APIResponse = await APIRequest.json();
       if (APIResponse !== null) {
         setDrinkIngredients(APIResponse.drinks);
-        console.log(APIResponse.drinks);
       }
     };
     fecthDrinks();
