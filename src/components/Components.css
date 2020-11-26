@@ -46,3 +46,8 @@
   margin: 5px auto;
 }
 
+.recipe-card-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

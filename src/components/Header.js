@@ -10,8 +10,20 @@ import Context from '../context/Context';
 function Header(props) {
   const { title, search } = props;
   const [hide, setHide] = useState(true);
+  const [currentFilter, setCurrentFilter] = useState();
   const { categories, recipesToRender, recipesToRenderByCategory } = useContext(Context);
   const type = title === 'Comidas' ? 'meal' : 'drink';
+  // const showFilterButtons = title === 'Comidas' || title === 'Bebidas';
+
+  const handleClick = ({ target }) => {
+    if (target.value === currentFilter) {
+      setCurrentFilter('');
+      recipesToRender(type);
+    } else {
+      setCurrentFilter(target.value);
+      recipesToRenderByCategory(type, target.value);
+    }
+  };
 
   const filterButtons = () => (
     categories.map(({ strCategory }, index) => {
@@ -32,20 +44,21 @@ function Header(props) {
               data-testid={ `${strCategory}-category-filter` }
               type="button"
               value={ strCategory }
-              onClick={ (e) => recipesToRenderByCategory(type, e.target.value) }
+              onClick={ (e) => handleClick(e) }
             >
               {strCategory}
             </button>
           </>
         );
       }
+
       return (
         <button
           key={ strCategory }
           data-testid={ `${strCategory}-category-filter` }
           type="button"
           value={ strCategory }
-          onClick={ (e) => recipesToRenderByCategory(type, e.target.value) }
+          onClick={ (e) => handleClick(e) }
         >
           {strCategory}
         </button>
