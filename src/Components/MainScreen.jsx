@@ -12,6 +12,7 @@ export default function MainScreen() {
     foodFilter,
     drinkFilter,
     setDrinkRecipes,
+    setIds,
     setFoodRecipes } = useContext(RecipeContext);
   const twelve = 12;
   const five = 5;
@@ -101,13 +102,22 @@ export default function MainScreen() {
       );
     }
   };
+  const handleIds = (food) => {
+    setIds(food.idMeal);
+  };
 
   const renderCards = () => {
     if (pathname === '/comidas' && foodRecipes) {
       return foodRecipes.filter((_, index) => index < twelve)
         .map((food, index) => (
-          <Link to={ `/comidas/${food.idMeal}` } key="index">
-            <div data-testid={ `${index}-recipe-card` }>
+          <Link
+            to={ `/comidas/${food.idMeal}` }
+            onClick={ () => handleIds(food) }
+            key={ index }
+          >
+            <div
+              data-testid={ `${index}-recipe-card` }
+            >
               <img
                 src={ food.strMealThumb }
                 data-testid={ `${index}-card-img` }
@@ -119,11 +129,14 @@ export default function MainScreen() {
         ));
     }
 
-    if (pathname === '/bebidas') {
-      return (drinkRecipes && drinkRecipes.length && drinkRecipes
-        .filter((_, index) => index < twelve)
+    if (pathname === '/bebidas' && drinkRecipes) {
+      return (drinkRecipes.filter((_, index) => index < twelve)
         .map((drinks, index) => (
-          <Link to={ `/bebidas/${drinks.idDrink}` } key="index">
+          <Link
+            onClick={ () => setIds(drinks.idDrink) }
+            to={ `/bebidas/${drinks.idDrink}` }
+            key={ index }
+          >
             <div data-testid={ `${index}-recipe-card` } key="index">
               <img
                 src={ drinks.strDrinkThumb }
