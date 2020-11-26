@@ -1,9 +1,19 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import ContextAPI from '../../Context/ContextAPI';
 import './styles.css';
 
 const Cards = () => {
   const { apiValueSearch } = useContext(ContextAPI);
+  const { stateIdDetails, setIdDetails } = useContext(ContextAPI);
+
+  const recipesDetails = (idMeal) => {
+    setIdDetails({
+      ...stateIdDetails,
+      id: idMeal,
+    });
+    // window.location.href = `http://localhost:3000/comidas/${idMeal}`;
+  };
 
   const showFoodResearch = () => {
     const number = 11;
@@ -17,12 +27,20 @@ const Cards = () => {
             return (
               <div className="card" key={ meal.strMeal } data-testid={ `${index}-recipe-card` }>
                 <p data-testid={ `${index}-card-name` }>{meal.strMeal}</p>
-                <img
-                  width="200"
-                  src={ meal.strMealThumb }
-                  alt={ meal.strMeal }
-                  data-testid={ `${index}-card-img` }
-                />
+                <button
+                  type="button"
+                  className="button"
+                  onClick={ () => recipesDetails(meal.idMeal) }
+                >
+                  <Link to={ `/comidas/${meal.idMeal}` }>
+                    <img
+                      width="200"
+                      src={ meal.strMealThumb }
+                      alt={ meal.strMeal }
+                      data-testid={ `${index}-card-img` }
+                    />
+                  </Link>
+                </button>
               </div>
             );
           }

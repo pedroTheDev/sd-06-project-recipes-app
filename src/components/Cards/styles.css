@@ -12,7 +12,12 @@
   border-radius: 10px;
 }
 
+.button {
+  background: none;
+  border: none;
+}
+
 .card img {
   margin-bottom: 10px;
-  border: 5px solid rgba(0, 0, 0, 0);
+  border: 2px solid rgba(0, 0, 0, 0);
 }

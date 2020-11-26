@@ -79,3 +79,21 @@ export async function showSugestedDrinks() {
 
   return json;
 }
+
+export async function detailsFoodById(idFood) {
+  const URL = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idFood}`;
+
+  const response = await fetch(`${URL}`);
+  const json = response.json();
+
+  return json;
+}
+
+export async function detailsDrinkById(idDrink) {
+  const URL = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idDrink}`;
+
+  const response = await fetch(`${URL}`);
+  const json = response.json();
+
+  return json;
+}

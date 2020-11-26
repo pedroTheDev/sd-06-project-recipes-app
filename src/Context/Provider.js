@@ -6,6 +6,7 @@ const RecipesProvider = ({ children }) => {
   const [email, setEmail] = useState([]);
   const [searchComponent, setSearchComponent] = useState(false);
   const [pageName, setPageName] = useState(false);
+  const [stateIdDetails, setIdDetails] = useState({ id: '' });
   const [apiValueSearch, setApiValueSearch] = useState({
     foods: [],
     drinks: [],
@@ -20,6 +21,8 @@ const RecipesProvider = ({ children }) => {
     setApiValueSearch,
     pageName,
     setPageName,
+    stateIdDetails,
+    setIdDetails,
   };
   return (
     <ContextAPI.Provider value={ contextState }>
