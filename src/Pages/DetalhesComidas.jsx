@@ -46,16 +46,30 @@ const DetalhesComida = () => {
     return ingredients;
   };
 
+  const amountIngredients = () => {
+    const objectIngredients = stateLocal.food.meals[0];
+
+    const keysIngredients = Object.keys(objectIngredients)
+      .filter((key) => key.includes('strMeasure1')
+        && objectIngredients[key] !== '');
+
+    const ingredients = keysIngredients
+      .map((key) => objectIngredients[key]);
+
+    return ingredients;
+  };
+
   const number = 5;
 
   return (
-    <div>
+    <div className="main-principal">
       {stateLocal ? (
-        <div className="main-details">
-          <div className="container-img">
+        <div className="container-main">
+          {console.log(stateLocal)}
+          <div className="container-initial">
             <img
               data-testid="recipe-photo"
-              className="img-details"
+              className="img-initial"
               src={ stateLocal.food.meals[0].strMealThumb }
               alt={ stateLocal.food.meals[0].strMeal }
             />
@@ -108,12 +122,13 @@ const DetalhesComida = () => {
                 />
               </a>
             </div>
-            <div>
+            <div className="main-scroll">
+              <span>Recomendadas</span>
               { stateSugestions && stateSugestions.meals.map((meal, index) => {
                 if (index <= number) {
                   return (
                     <div
-                      className="card"
+                      className="card-details"
                       key={ meal.strMeal }
                       data-testid={ `${index}-recomendation-card` }
                     >
@@ -125,6 +140,7 @@ const DetalhesComida = () => {
                       >
                         <Link to={ `/comidas/${meal.idMeal}` }>
                           <img
+                            className="img-recomendations"
                             width="200"
                             src={ meal.strMealThumb }
                             alt={ meal.strMeal }

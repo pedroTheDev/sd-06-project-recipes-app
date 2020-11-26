@@ -119,6 +119,7 @@ const DetalhesBebidas = () => {
                       data-testid={ `${index}-recomendation-card` }
                     >
                       <p data-testid={ `${index}-card-name` }>{drink.strDrink}</p>
+                      <span>{drink.strAlcoholic}</span>
                       <button
                         type="button"
                         className="button"
