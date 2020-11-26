@@ -62,12 +62,20 @@ const Cards = () => {
             return (
               <div className="card" key={ res.idDrink } data-testid={ `${index}-recipe-card` }>
                 <p data-testid={ `${index}-card-name` }>{res.strDrink}</p>
-                <img
-                  width="200"
-                  src={ res.strDrinkThumb }
-                  alt={ res.strDrink }
-                  data-testid={ `${index}-card-img` }
-                />
+                <button
+                  type="button"
+                  className="button"
+                  onClick={ () => recipesDetails(res.idDrink) }
+                >
+                  <Link to={ `/bebidas/${res.idDrink}` }>
+                    <img
+                      width="200"
+                      src={ res.strDrinkThumb }
+                      alt={ res.strDrink }
+                      data-testid={ `${index}-card-img` }
+                    />
+                  </Link>
+                </button>
               </div>
             );
           }
