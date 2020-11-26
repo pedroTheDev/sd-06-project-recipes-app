@@ -16,6 +16,8 @@ import ExploreDrinks from './pages/ExploreDrinks';
 import Explore from './pages/Explore';
 import OriginFoods from './pages/OriginFoods';
 import Footer from './components/Footer';
+import FoodsDetails from './pages/FoodsDetails';
+import DrinksDetails from './pages/DrinksDetails';
 
 const Routes = () => {
   const { title } = useContext(HeaderContext);
@@ -24,6 +26,7 @@ const Routes = () => {
       title === 'Login'
       || title === 'Detalhe da Receita'
       || title === 'Receita em Processo'
+      || title === 'Food Details'
     ) {
       return false;
     }
@@ -46,11 +49,12 @@ const Routes = () => {
         <Route exact path="/" component={ Login } />
         <Route path="/explorar/comidas/ingredientes" component={ IngredientFoods } />
         <Route path="/explorar/bebidas/ingredientes" component={ IngredientDrinks } />
-        <Route path="/comidas/{id-da-receita}/in-progress" component={ Foods } />
+        <Route path="/comidas/:id-da-receita/in-progress" component={ Foods } />
         <Route path="/explorar/comidas/area" component={ OriginFoods } />
         <Route path="/explorar/comidas" component={ ExploreFoods } />
         <Route path="/explorar/bebidas" component={ ExploreDrinks } />
-        <Route path="/bebidas/{id-da-receita}" component={ Drinks } />
+        <Route path="/bebidas/:id" render={ (props) => <DrinksDetails { ...props } /> } />
+        <Route path="/comidas/:id" render={ (props) => <FoodsDetails { ...props } /> } />
         <Route path="/comidas" component={ Foods } />
         <Route path="/bebidas" component={ Drinks } />
         <Route path="/explorar" component={ Explore } />
