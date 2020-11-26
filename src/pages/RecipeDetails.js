@@ -10,6 +10,7 @@ import recipeDetailsProcessing from '../utils/recipeDetailsProcessing';
 import checkRecipeInProgress from '../utils/checkRecipeInProgress';
 import checkSavedRecipe from '../utils/checkSavedRecipe';
 import checkFavoriteRecipe from '../utils/checkFavoriteRecipe';
+import DetailAndProgressBody from '../components/DetailAndProgressBody';
 
 function RecipeDetails(
   { location: { pathname }, recommendations },
@@ -20,6 +21,14 @@ function RecipeDetails(
   const [wasStarted, setWasStarted] = useState(false);
   const [wasCopied, setWasCopied] = useState(false);
   const [isFav, setIsFav] = useState(false);
+  const buttonsProps = {
+    path,
+    id,
+    isFav,
+    wasCopied,
+    setIsFav,
+    setWasCopied,
+  };
 
   const history = useHistory();
   const { image,
@@ -46,64 +55,11 @@ function RecipeDetails(
 
   return (
     <main>
-      <img
-        data-testid="recipe-photo"
-        src={ image }
-        alt={ name }
-        className="main-photo"
+      <DetailAndProgressBody
+        recipe={ recipe }
+        buttonsProps={ buttonsProps }
+        recommendations={ recommendations }
       />
-      <h1 data-testid="recipe-title">{ name }</h1>
-      <div>
-        <ShareButton setMessage={ setWasCopied } />
-        <FavButton
-          type={ path }
-          isFav={ isFav }
-          id={ id }
-          setIsFav={ setIsFav }
-          recipe={ recipe }
-        />
-      </div>
-      {wasCopied && 'Link copiado!'}
-      <p data-testid="recipe-category">
-        { isAlcoholic === 'Alcoholic'
-          ? isAlcoholic
-          : category}
-      </p>
-      <ul>
-        { ingredients.map((ingredient, index) => (
-          <li
-            key={ ingredient }
-            data-testid={ `${index}-ingredient-name-and-measure` }
-          >
-            { `${ingredient} - ${measures[index]}` }
-          </li>
-        )) }
-      </ul>
-      <h4>Instructions</h4>
-      <p data-testid="instructions">{ instructions }</p>
-      <h4>Video</h4>
-      { path === 'comidas'
-        ? <iframe data-testid="video" src={ video } title="Recipe Video" />
-        : null}
-      <div>
-        <h4>Recommendations</h4>
-        <div className="recomendation-container">
-          {recommendations.map((recommendation, index) => (
-            <div
-              data-testid={ `${index}-recomendation-card` }
-              key={ recommendation.name }
-              className="recomendation-card"
-            >
-              <img src={ recommendation.image } alt={ recommendation.name } />
-              <h4 data-testid={ `${index}-recomendation-title` }>
-                {recommendation.name}
-              </h4>
-            </div>
-
-          ))}
-        </div>
-      </div>
-
       <button
         type="button"
         data-testid="start-recipe-btn"
