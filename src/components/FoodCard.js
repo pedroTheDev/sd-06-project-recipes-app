@@ -101,13 +101,17 @@ class FoodCard extends React.Component {
                     <div className="tags-div">
                       <p
                         key="tag0"
-                        data-testid={ `${i}-${element.tags.split(',')[0]}-horizontal-tag` }
+                        data-testid={
+                          `${i}-${element.tags.split(',')[0]}-horizontal-tag`
+                        }
                       >
                         { `${element.tags.split(',')[0]}`}
                       </p>
                       <p
                         key="tag1"
-                        data-testid={ `${i}-${element.tags.split(',')[1]}-horizontal-tag` }
+                        data-testid={
+                          `${i}-${element.tags.split(',')[1]}-horizontal-tag`
+                        }
                       >
                         { `${element.tags.split(',')[1]}`}
                       </p>
