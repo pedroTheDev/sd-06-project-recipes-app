@@ -14,18 +14,16 @@ const DetalhesBebidas = () => {
   const idDrink = useParams().id;
 
   const handleIdDetails = async () => {
-    const recipeById = await detailsDrinkById(idDrink);
-    // console.log(recipeById);
+    const drink = await detailsDrinkById(idDrink);
 
     setStatelocal({
       ...stateLocal,
-      drink: recipeById,
+      drink,
     });
   };
 
   const getSugestedDrinks = async () => {
     const drinks = await showSugestedDrinks();
-    // console.log(foods);
 
     setSugestions(drinks);
   };
@@ -115,7 +113,11 @@ const DetalhesBebidas = () => {
               { stateSugestions && stateSugestions.drinks.map((drink, index) => {
                 if (index <= number) {
                   return (
-                    <div className="card" key={ drink.strDrink } data-testid={ `${index}-recomendation-card` }>
+                    <div
+                      className="card"
+                      key={ drink.strDrink }
+                      data-testid={ `${index}-recomendation-card` }
+                    >
                       <p data-testid={ `${index}-card-name` }>{drink.strDrink}</p>
                       <button
                         type="button"

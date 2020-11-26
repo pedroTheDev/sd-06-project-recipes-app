@@ -20,12 +20,10 @@ const DetalhesComida = () => {
       ...stateLocal,
       food: recipeById,
     });
-    // console.log(recipeById);
   };
 
   const getSugestedFoods = async () => {
     const foods = await showSugestedFoods();
-    // console.log(foods);
 
     setSugestions(foods);
   };
@@ -54,7 +52,6 @@ const DetalhesComida = () => {
     <div>
       {stateLocal ? (
         <div className="main-details">
-          {/* {console.log(stateLocal.food.meals)} */}
           <div className="container-img">
             <img
               data-testid="recipe-photo"
@@ -115,7 +112,11 @@ const DetalhesComida = () => {
               { stateSugestions && stateSugestions.meals.map((meal, index) => {
                 if (index <= number) {
                   return (
-                    <div className="card" key={ meal.strMeal } data-testid={ `${index}-recomendation-card` }>
+                    <div
+                      className="card"
+                      key={ meal.strMeal }
+                      data-testid={ `${index}-recomendation-card` }
+                    >
                       <p data-testid={ `${index}-card-name` }>{meal.strMeal}</p>
                       <button
                         type="button"
