@@ -41,7 +41,14 @@ function DetalhesComida(props) {
   };
 
   const startRecipe = (recipeName) => { 
-    localStorage.setItem('inProgressRecipes', JSON.stringify({ meals: { [recipeName]: fetchById } }))
+    localStorage.setItem('inProgressRecipes', JSON.stringify({
+      ...startedRecipes,
+      meals: {
+        ...startedRecipes.meals,
+        [recipeName]: fetchById 
+      }
+    }));
+
     if (!beganRecipes.includes(recipeName)) setBeganRecipes([ ...beganRecipes, recipeName ]);
   };
 
@@ -99,7 +106,7 @@ function DetalhesComida(props) {
                     type="button"
                     onClick={ () => startRecipe(meal.idMeal) }
                   >
-                    {!startedRecipes ? 'Iniciar Receita' : verifyState(meal.idMeal)}
+                    {!startedRecipes.meals ? 'Iniciar Receita' : verifyState(meal.idMeal)}
                   </button>
                 </Link>
               )}

@@ -39,9 +39,18 @@ function DetalhesBebida(props) {
   };
 
   const startRecipe = (recipeName) => { 
-    localStorage.setItem('inProgressRecipes', JSON.stringify({ cocktails: { [recipeName]: fetchById } }))
+    localStorage.setItem('inProgressRecipes', JSON.stringify({
+      ...startedRecipes,
+      cocktails: {
+        ...startedRecipes.cocktails,
+        [recipeName]: fetchById 
+      }
+    }));
+
     if (!beganRecipes.includes(recipeName)) setBeganRecipes([ ...beganRecipes, recipeName ]);
   };
+
+  console.log(startedRecipes);
 
   const verifyState = (idDrink) => {
     return !startedRecipes.cocktails[idDrink] ? 'Iniciar Receita' : 'Continuar Receita'; 
@@ -93,7 +102,7 @@ function DetalhesBebida(props) {
                     type="button"
                     onClick={ () => startRecipe(drink.idDrink) }
                   >
-                    {!startedRecipes ? 'Iniciar Receita' : verifyState(drink.idDrink)}
+                    {!startedRecipes.cocktails ? 'Iniciar Receita' : verifyState(drink.idDrink)}
                   </button>
                 </Link>
               )}
