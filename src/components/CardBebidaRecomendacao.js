@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import RecipeContext from '../context/RecipeContext';
 import './Card.css';
 
-function CardBebida(elemento, index) {
+function CardBebidaRecomendacao(elemento, index) {
   const { setIdBebida } = useContext(RecipeContext);
   const history = useHistory();
   function redirectDetails(idDrinks) {
@@ -14,7 +14,7 @@ function CardBebida(elemento, index) {
     <div key={ elemento.idDrink } data-testid={ `${index}-recipe-card` } className="Card">
       <button type="button" onClick={ () => redirectDetails(elemento.idDrink) }>
         <h4
-          data-testid={ `${index}-card-name` }
+          data-testid={ `${index}-recomendation-title` }
           className="Title"
         >
           { elemento.strDrink }
@@ -30,4 +30,4 @@ function CardBebida(elemento, index) {
   );
 }
 
-export default CardBebida;
+export default CardBebidaRecomendacao;

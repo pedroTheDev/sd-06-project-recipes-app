@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import CardComida from '../components/CardComida';
+import CardComidaRecomendacao from '../components/CardComidaRecomendacao';
 import RecipeContext from '../context/RecipeContext';
 import { fetchApiBebidasDetalhes } from '../services/FetchApiBebidas';
+import '../components/MenuInferior.css';
 
 function DetalhesBebida() {
   const { idDaReceita } = useParams();
@@ -91,22 +92,45 @@ function DetalhesBebida() {
           </p>
         </div>
         <p data-testid="instructions">{bebida.strInstructions}</p>
-        <button
+        {/* <button
           type="button"
           data-testid={ `${index}-recomendation-card` }
         >
           Card receitas Recomendadas
-        </button>
+        </button> */}
         <button type="button" data-testid="share-btn">Compartilhar</button>
         <button type="button" data-testid="favorite-btn">Favoritar</button>
-        <button type="button" data-testid="start-recipe-btn">Favoritar</button>
-        <div data-testid={ `${index}-recomendation-card` }>
+        <button
+          data-testid="start-recipe-btn"
+          className="IniciarReceita"
+          type="button"
+        >
+          Iniciar Receita
+        </button>
+        <div className="recomendacao">
+
           {
             retornoApi6Comidas
             && retornoApi6Comidas.slice(zero, seis)
-              .map((food, indice) => CardComida(food, indice))
+              .map((food, indice) => (
+                <button
+                  data-testid={ `${indice}-recomendation-card` }
+                  type="button"
+                  key={ indice }
+                  className="img-recomendacao"
+                >
+                  {CardComidaRecomendacao(food, indice)}
+                </button>))
           }
+
         </div>
+        <button
+          data-testid="start-recipe-btn"
+          className="IniciarReceita"
+          type="button"
+        >
+          Iniciar Receita
+        </button>
       </div>
     )));
 }

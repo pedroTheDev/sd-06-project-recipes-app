@@ -1,0 +1,35 @@
+.ComidasPage {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 30px;
+    
+}
+.Buttons {
+    background-color: #4CAF50;
+    padding: 15px 32px;
+    text-align: center;
+    font-size: 16px;
+    color: #fff;
+
+}
+.Card {
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 3px solid;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    
+}
+.Title {
+    background-color: #fff;
+    font-size: 26px;
+    color: #4CAF50;
+    padding: 5px 0px;
+    display: flex;
+    justify-content: center;    
+}
+.bodyRender {
+    margin-bottom: 20%;
+}

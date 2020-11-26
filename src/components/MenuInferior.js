@@ -20,6 +20,7 @@ function MenuInferior() {
     <div data-testid="footer" className="MenuInferior">
 
       <button
+        className="buttonFooter"
         type="button"
         data-testid="drinks-bottom-btn"
         onClick={ redirectBebidas }
@@ -30,6 +31,7 @@ function MenuInferior() {
       </button>
 
       <button
+        className="buttonFooter"
         type="button"
         data-testid="explore-bottom-btn"
         onClick={ redirectExplorar }
@@ -40,6 +42,7 @@ function MenuInferior() {
       </button>
 
       <button
+        className="buttonFooter"
         type="button"
         data-testid="food-bottom-btn"
         onClick={ redirectComidas }
