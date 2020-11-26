@@ -15,32 +15,25 @@ const ReceitasProvider = ({ children }) => {
   const [randomDrinkID, setRandomDrink] = useState();
   const [randomMealID, setRandomMeal] = useState();
   const [fetchById, setFetchById] = useState();
+  const [beganRecipes, setBeganRecipes] = useState([]);
+  const [doneRecipes, setDoneRecipes] = useState([]);
+
 
   const state = {
-    meals,
-    setMeals,
-    drinks,
-    setDrinks,
-    searchBox,
-    setSearchBox,
-    fetching,
-    setFetching,
-    filtersData,
-    setFiltersData,
-    selectedFilter,
-    setSelectedFilter,
-    randomDrinkID,
-    setRandomDrink,
-    randomMealID,
-    setRandomMeal,
-    stopApi,
-    setStopApi,
-    ingredientList,
-    setIngredientList,
-    drinksIngredientList,
-    setDrinksIngredientList,
-    fetchById,
-    setFetchById,
+    meals, setMeals,
+    drinks, setDrinks,
+    searchBox, setSearchBox,
+    fetching, setFetching,
+    filtersData, setFiltersData,
+    selectedFilter, setSelectedFilter,
+    randomDrinkID, setRandomDrink,
+    randomMealID, setRandomMeal,
+    stopApi, setStopApi,
+    ingredientList, setIngredientList,
+    drinksIngredientList, setDrinksIngredientList,
+    fetchById, setFetchById,
+    beganRecipes, setBeganRecipes,
+    doneRecipes, setDoneRecipes,
   };
 
   return (
