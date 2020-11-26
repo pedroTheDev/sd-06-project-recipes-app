@@ -33,15 +33,15 @@ const DetalhesComida = () => {
     getSugestedFoods();
   }, []);
 
-  const getIngredients = () => {
-    const objectIngredients = stateLocal.food.meals[0];
+  const getIngredientsOrMeasure = (param) => {
+    const dataObject = stateLocal.food.meals[0];
 
-    const keysIngredients = Object.keys(objectIngredients)
-      .filter((key) => key.includes('strIngredient')
-        && objectIngredients[key] !== '');
+    const dataKeys = Object.keys(dataObject)
+      .filter((key) => key.includes(param)
+        && dataObject[key] !== '' && dataObject[key] !== ' ');
 
-    const ingredients = keysIngredients
-      .map((key) => objectIngredients[key]);
+    const ingredients = dataKeys
+      .map((key) => dataObject[key]);
 
     return ingredients;
   };
@@ -80,12 +80,12 @@ const DetalhesComida = () => {
             <div className="ingredients">
               <span>Ingredients</span>
               <ul>
-                {getIngredients().map((ingred, i) => (
+                {getIngredientsOrMeasure('strIngredient').map((ingred, i) => (
                   <li
                     data-testid={ `${i}-ingredient-name-and-measure` }
                     key={ i }
                   >
-                    {ingred}
+                    {`${ingred} - ${getIngredientsOrMeasure('strMeasure')[i]}`}
                   </li>
                 ))}
               </ul>
