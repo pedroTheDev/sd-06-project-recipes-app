@@ -2,43 +2,69 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import DrinkCard from '../components/DrinkCard';
+import MealCard from '../components/MealCard';
 
 class Details extends Component {
   constructor() {
     super();
     this.state = {
-      mealsDetails: [],
-      drinksRecommendations: [],
+      details: [],
+      recomendations: [],
       isLoading: true,
+      isMeal: false,
+      isDrink: false,
     };
     this.requestDetails = this.requestDetails.bind(this);
     this.renderCardDetails = this.renderCardDetails.bind(this);
   }
 
   componentDidMount() {
-    this.requestDetails();
+    const { match: { path } } = this.props;
+    const pathname = path;
+    this.requestDetails(pathname);
   }
 
-  requestDetails() {
-    this.setState({ isLoading: true }, async () => {
+  requestDetails(pathname) {
+    this.setState(() => {
+      if (pathname.includes('comidas')) {
+        return { isLoading: true, isMeal: true };
+      }
+      return { isLoading: true, isDrink: true };
+    }, async () => {
       const {
         match: {
           params: { id },
         },
       } = this.props;
-      const endPoint = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
-      const endPointRecomendations = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
-      const mealsApi = await fetch(endPoint);
+      const { isMeal, isDrink } = this.state;
+      let endPointMeal;
+      let endPointDrink;
+      if (isMeal) {
+        endPointMeal = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
+        endPointDrink = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+      } else {
+        endPointDrink = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
+        endPointMeal = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+      }
+      const mealsApi = await fetch(endPointMeal);
       const { meals } = await mealsApi.json();
-      const drinksApi = await fetch(endPointRecomendations);
+      const drinksApi = await fetch(endPointDrink);
       const { drinks } = await drinksApi.json();
       const zero = 0;
       const six = 6;
-      this.setState({
-        mealsDetails: meals,
-        drinksRecommendations: drinks.slice(zero, six),
-        isLoading: false,
-      });
+      if (isDrink) {
+        this.setState({
+          details: drinks,
+          recomendations: meals.slice(zero, six),
+          isLoading: false,
+        });
+      } else {
+        this.setState({
+          details: meals,
+          recomendations: drinks.slice(zero, six),
+          isLoading: false,
+        });
+      }
     });
   }
 
@@ -70,38 +96,51 @@ class Details extends Component {
   }
 
   renderCardDetails() {
-    const { mealsDetails, drinksRecommendations } = this.state;
-    const ingredientsAndMeasures = this.parseIngredientsAndMeasures(mealsDetails);
-    console.log('1', mealsDetails);
-    console.log('1', drinksRecommendations);
+    const { details, recomendations, isMeal } = this.state;
+    const ingredientsAndMeasures = this.parseIngredientsAndMeasures(details);
+    console.log('1', details);
+    console.log('1', recomendations);
+    console.log('1', ingredientsAndMeasures);
     const {
       strMeal,
       strMealThumb,
+      strDrink,
+      strDrinkThumb,
       strCategory,
+      strAlcoholic,
       strInstructions,
       strYoutube,
-    } = mealsDetails[0];
+    } = details[0];
     return (
       <div>
-        <h3 data-testid="recipe-title">{strMeal}</h3>
-        <img data-testid="recipe-photo" src={ strMealThumb } alt={ `${strMeal}` } />
+        <h3 data-testid="recipe-title">{strMeal || strDrink}</h3>
+        <img
+          data-testid="recipe-photo"
+          src={ strMealThumb || strDrinkThumb }
+          alt={ `${strMeal || strDrink}` }
+          width={ 100 }
+        />
         <button type="button" data-testid="share-btn">
           share
         </button>
         <button type="button" data-testid="favorite-btn">
           favorite
         </button>
-        <p data-testid="recipe-category">{strCategory}</p>
+        <p data-testid="recipe-category">{strCategory || strAlcoholic}</p>
         {ingredientsAndMeasures.map((item, idx) => (
           <p key={ `${idx}` } data-testid={ `${idx}-ingredient-name-and-measure` }>
             {item}
           </p>
         ))}
         <p data-testid="instructions">{strInstructions}</p>
-        <p data-testid="video">{strYoutube}</p>
-        {drinksRecommendations.map((item, idx) => (
+        { isMeal && (<p data-testid="video">{strYoutube}</p>) }
+        {recomendations.map((item, idx) => (
           <div key={ idx } data-testid={ `${idx}-recomendation-card` }>
-            <DrinkCard drink={ item } idx={ idx } />
+            {isMeal ? (
+              <DrinkCard drink={ item } idx={ idx } />
+            ) : (
+              <MealCard meal={ item } idx={ idx } />
+            )}
           </div>
         ))}
         <button type="button" data-testid="start-recipe-btn">
@@ -132,6 +171,7 @@ class Details extends Component {
 Details.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.objectOf,
+    path: PropTypes.string,
   }).isRequired,
 };
 
