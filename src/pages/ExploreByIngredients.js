@@ -72,7 +72,7 @@ function ExploreByIngredients() {
             type="button"
             key={ index }
             data-testid={ `${index}-ingredient-card` }
-            onClick={ () => handleClick(drinks.strIngredient) }
+            onClick={ () => handleClick(drinks.strIngredient1) }
             onKeyPress={ handleClick }
             role="button"
             tabIndex="0"

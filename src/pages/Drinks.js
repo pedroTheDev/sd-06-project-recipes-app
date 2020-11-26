@@ -7,7 +7,8 @@ import ContextRecipes from '../context/ContextRecipes';
 import CategoryButtons from '../components/CategoryButtons';
 
 function Drinks() {
-  const { setRecipes, showCard, setShowCard } = useContext(ContextRecipes);
+  const { setRecipes, showCard, setShowCard, recipes } = useContext(ContextRecipes);
+  const MAGIC_NUMBER_ZERO = 0;
 
   const fetchRecipes = async () => {
     const recipesApi = await fetchAPIDrinks('name', '');
@@ -16,7 +17,11 @@ function Drinks() {
   };
 
   useEffect(() => {
-    fetchRecipes();
+    if (recipes.length === MAGIC_NUMBER_ZERO) {
+      fetchRecipes();
+    } else {
+      setShowCard(true);
+    }
   }, []);
 
   return (
