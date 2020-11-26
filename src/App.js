@@ -1,14 +1,18 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import MyProvider from './context/MyProvider';
 import Login from './pages/Login';
 import Menu from './pages/Menu';
 import Perfil from './pages/Perfil';
+import ExploreBebidas from './pages/ExploreBebidas';
+import ExploreComidas from './pages/ExploreComidas';
+import MyProvider from './context/MyProvider';
 import MenuDetails from './pages/MenuDetails';
 import NotFound from './pages/NotFound';
 import Explore from './pages/Explore';
 import ReceitasFavoritas from './pages/ReceitasFavoritas';
 import ReceitasFeitas from './pages/ReceitasFeitas';
+import MealsPerIngredients from './pages/MealsPerIngredients';
+import DrinksPerIngredients from './pages/DrinksPerIngredients';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -16,6 +20,8 @@ function App() {
     <MyProvider>
       <BrowserRouter>
         <Switch>
+          <Route exact path="/explorar/comidas" component={ ExploreComidas } />
+          <Route exact path="/explorar/bebidas" component={ ExploreBebidas } />
           <Route exact path="/comidas" component={ Menu } />
           <Route exact path="/bebidas" component={ Menu } />
           <Route exact path="/explorar" component={ Explore } />
@@ -25,6 +31,16 @@ function App() {
           <Route exact path="/receitas-feitas" component={ ReceitasFeitas } />
           <Route exact path="/receitas-favoritas" component={ ReceitasFavoritas } />
           <Route exact path="/" component={ Login } />
+          <Route
+            exact
+            path="/explorar/comidas/ingredientes"
+            component={ MealsPerIngredients }
+          />
+          <Route
+            exact
+            path="/explorar/bebidas/ingredientes"
+            component={ DrinksPerIngredients }
+          />
           <Route component={ NotFound } />
         </Switch>
       </BrowserRouter>

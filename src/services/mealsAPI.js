@@ -7,6 +7,27 @@ export async function getAllRecipeTypesApi(type) {
   return result.meals;
 }
 
+// Lista de receitas de comidas filtradas
+export async function getFilteredRecipesApi(type, value) {
+  if (type === 'ingredients') {
+    const response = await fetch(`${URL_BASE}filter.php?i=${value}`);
+    const result = await response.json();
+    console.log(result.meals);
+    return result.meals;
+  }
+  if (type === 'name') {
+    const response = await fetch(`${URL_BASE}search.php?s=${value}`);
+    const result = await response.json();
+    return result.meals;
+  }
+  if (type === 'first') {
+    const response = await fetch(`${URL_BASE}search.php?f=${value}`);
+    const result = await response.json();
+    return result.meals;
+  }
+  return [];
+}
+
 // Lista de receitas de comidas
 export async function getRecipesMealsApi() {
   const response = await fetch(`${URL_BASE}search.php?s=`);
@@ -28,9 +49,18 @@ export async function getRecipeMealByIdApi(id) {
   return result.meals;
 }
 
+// Lista de receitas de comidas por igredientes aleatorios
+export async function getRecipesMealsByRandomIngredients() {
+  const response = await fetch(`${URL_BASE}random.php`);
+  const result = await response.json();
+  return result.meals;
+}
+
 export default {
   getAllRecipeTypesApi,
   getRecipesMealsApi,
   getRecipesMealsByCategoryApi,
   getRecipeMealByIdApi,
+  getFilteredRecipesApi,
+  getRecipesMealsByRandomIngredients,
 };

@@ -8,10 +8,11 @@ import RecipeCard from './RecipeCard';
 import './RecipeList.css';
 
 function RecipeList() {
-  const { categories } = useContext(MealsContext);
-  const { drinkCategories } = useContext(MealsContext);
-
-  const [cardsRecipe, setCardsRecipe] = useState([]);
+  const { drinkCategories,
+    cardsRecipe,
+    setCardsRecipe,
+    categories } = useContext(MealsContext);
+  // const [cardsRecipe, setCardsRecipe] = useState([]);
   const [cardCategories, setCardCategories] = useState([]);
   const [categorySelected, setcategorySelected] = useState([]);
 
@@ -62,7 +63,9 @@ function RecipeList() {
   }
 
   useEffect(() => {
-    getCards('All');
+    if (cardsRecipe[0] === undefined) {
+      getCards('All');
+    }
   }, []);
 
   const numberZero = 0;
