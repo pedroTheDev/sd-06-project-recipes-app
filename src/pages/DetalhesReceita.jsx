@@ -6,7 +6,7 @@ import {
 import {
   recommendDrinksList,
 } from '../services/requestDrink';
-import '../styles/Detalhes.css'
+import '../styles/Detalhes.css';
 import buttonShare from '../styles/images/shareIcon.svg';
 
 function DetalhesReceita(props) {
@@ -14,6 +14,7 @@ function DetalhesReceita(props) {
   const [arrayIngredients, setArrayIngredients] = useState([]);
   const [embed, setEmbed] = useState('');
   const [recommendFood, setRecommendFood] = useState([]);
+  const zero = 0;
 
   useEffect(() => {
     requestApiFoodDetails(props.match.params.id)
@@ -24,10 +25,10 @@ function DetalhesReceita(props) {
   }, []);
 
   const recommendFoodFunction = async () => {
-    if (detailsFood.length !== 0) {
+    if (detailsFood.length !== zero) {
       const response = await recommendDrinksList();
       console.log(response)
-      setRecommendFood(response.drinks.slice(0, 6));
+      setRecommendFood(response.drinks.slice(zero, 6));
     }
   };
 
@@ -46,7 +47,7 @@ function DetalhesReceita(props) {
   }, [detailsFood]);
 
   const ingredientsFunc = () => {
-    if (detailsFood.length !== 0) {
+    if (detailsFood.length !== zero) {
       const array = [];
       for (let i = 1; i <= 20; i += 1) {
         const ingredient = `${detailsFood[`strIngredient${i}`]} ${detailsFood[`strMeasure${i}`]}`;
@@ -57,7 +58,7 @@ function DetalhesReceita(props) {
     }
   };
 
-  if (detailsFood.length === 0) {
+  if (detailsFood.length === zero) {
     return <div>Loading...</div>;
   }
   return (
