@@ -101,7 +101,7 @@ function ExploreByArea() {
 
   return (
     <>
-      <Header title="Explorar Por Area" />
+      <Header title="Explorar Origem" />
       <select
         data-testid="explore-by-area-dropdown"
         onChange={ handleClickArea }
