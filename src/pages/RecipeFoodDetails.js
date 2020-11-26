@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesAppContext';
@@ -60,6 +61,19 @@ function RecipeFoodDetails({ match }) {
           src={ recipes[0].strMealThumb }
           alt={ recipes[0].strMeal }
         />
+=======
+import React, { useContext } from 'react';
+import RecipesContext from '../context/RecipesAppContext';
+
+function RecipeFoodDetails({ match }) {
+  const { id } = match.params;
+  const { recipes } = useContext(RecipesContext);
+
+  if (recipes.length !== 0) {
+    return (
+      <div>
+        <img data-testid="recipe-photo" src={ recipes[0].strMealThumb } alt="..." />
+>>>>>>> 5fcd7fbd8958c92bd3970527cd1d48baf1866dbe
         <h4 data-testid="recipe-title">
           {' '}
           { recipes[0].strMeal }
@@ -68,6 +82,7 @@ function RecipeFoodDetails({ match }) {
         <button type="button" data-testid="share-btn">Compartilhar</button>
         <button type="button" data-testid="favorite-btn">Favoritar</button>
         <p data-testid="recipe-category">{recipes[0].strCategory}</p>
+<<<<<<< HEAD
         <ul>
           {arrIngredient.map((ingredient, index) => (
             <li
@@ -115,11 +130,26 @@ function RecipeFoodDetails({ match }) {
           ))}
         </div>
 
+=======
+        <p data-testid="instructions">{recipes[0].strInstructions}</p>
+        <span data-testid="video">
+          {' '}
+          https://www.youtube.com/watch?v=1IszT_guI08
+          {' '}
+        </span>
+        <div data-testid={ `${id}-recomendation-card` } />
+        <button type="button" data-testid="start-recipe-btn">Iniciar Receita</button>
+
+>>>>>>> 5fcd7fbd8958c92bd3970527cd1d48baf1866dbe
       </div>
     );
   }
 
+<<<<<<< HEAD
   return <span>Ops...</span>;
+=======
+  return <span>teste</span>;
+>>>>>>> 5fcd7fbd8958c92bd3970527cd1d48baf1866dbe
 }
 
 RecipeFoodDetails.propTypes = {
