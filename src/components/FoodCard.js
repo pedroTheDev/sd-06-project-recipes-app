@@ -5,7 +5,7 @@ import '../css/Cards.css';
 
 function FoodCard({ recipe, index, idMeal }) {
   return (
-    <Link to={ `/comidas/${idMeal}` }>
+    <Link className="Link" to={ `/comidas/${idMeal}` }>
       <div
         className="card-container"
         data-testid={ `${index}-recipe-card` }

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesContext';
+import '../css/CategoryFilters.css';
 
 function DrinkFilterCategories({ categories }) {
   const {
@@ -18,7 +19,7 @@ function DrinkFilterCategories({ categories }) {
   const onClick = (value) => {
     if (value === 'All' || activeFilter === value) {
       getDrinkAPI('name-filter', '');
-      setActiveFilter(value);
+      setActiveFilter('All');
     } else {
       getDrinkAPI('category-filter', value);
       setActiveFilter(value);
@@ -26,8 +27,9 @@ function DrinkFilterCategories({ categories }) {
   };
 
   return categories !== null && (
-    <div>
+    <div className="category-filter-container">
       <button
+        className="btn-filter"
         data-testid="All-category-filter"
         type="button"
         value="All"
@@ -37,6 +39,7 @@ function DrinkFilterCategories({ categories }) {
       </button>
       {filteredCategories !== null && filteredCategories.map((category, index) => (
         <button
+          className="btn-filter"
           data-testid={ `${category}-category-filter` }
           onClick={ ({ target: { value } }) => onClick(value) }
           type="button"
