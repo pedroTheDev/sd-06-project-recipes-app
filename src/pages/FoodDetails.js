@@ -37,7 +37,7 @@ function FoodDetails() {
   }, []);
 
   function handleClick() {
-    localStorage.setItem('hiddenButton', true);
+    localStorage.setItem('hiddenButtonFood', true);
   }
 
   return (
@@ -65,7 +65,10 @@ function FoodDetails() {
       <button type="button" data-testid="share-btn">Compartilhar</button>
       <button type="button" data-testid="favorite-btn">Favorito</button>
       <Link to={`/comidas/${foodDetails.meals && foodDetails.meals[0].idMeal}/in-progress`}>
-        <button type="button" className="start-btn" data-testid="start-recipe-btn" hidden={localStorage.getItem('hiddenButton')} onClick={handleClick}>Iniciar Receita</button>
+        <button type="button" className="start-btn" data-testid="start-recipe-btn" hidden={localStorage.getItem('hiddenButtonFood')} onClick={handleClick}>Iniciar Receita</button>
+      </Link>
+      <Link to={`/comidas/${foodDetails.meals && foodDetails.meals[0].idMeal}/in-progress`}>
+        <button type="button" className="start-btn" data-testid="start-recipe-btn" hidden={!localStorage.getItem('hiddenButtonFood')} onClick={handleClick}>Continuar Receita</button>
       </Link>
     </div>
   );

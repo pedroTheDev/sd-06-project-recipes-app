@@ -10,7 +10,7 @@ function DrinkDetails() {
   const [drinkDetails, setDrinkDetails] = useState([]);
   const [ingredients, setIngredients] = useState('');
   const [apiResult, setApiResult] = useState([]);
-
+  const [buttonText, setButtonText] = useState('Iniciar Receita');
   console.log(drinkDetails.meals);
 
   useEffect(() => {
@@ -35,9 +35,27 @@ function DrinkDetails() {
     fetchData();
   }, []);
 
+  // useEffect(() => {
+  //   if (buttonText === 'Iniciar Receita') {
+  //     setButtonText('Continuar Receita');
+  //   } setButtonText('Iniciar Receita');
+  // }, [buttonText]);
+
   function handleClick() {
-    localStorage.setItem('hiddenButton', true);
+    localStorage.setItem('iniciou?', true);
+    console.log(buttonText);
+    if (localStorage.getItem('hiddenButtonDrink') === true) {
+      console.log('entrou');
+      setButtonText('Continuar Receita');
+      // localStorage.setItem('hiddenButtonDrink', false);
+    } setButtonText('Iniciar Receita');
   }
+
+  // function ttt() {
+  //   if (localStorage.getItem('hiddenButtonDrink') === true) {
+  //     setButtonText('Iniciar Receita');
+  //   } setButtonText('Continuar Receita');
+  // }
 
   return (
     <div>
@@ -54,10 +72,6 @@ function DrinkDetails() {
         {ingredients && ingredients.map((item, index) => (<p data-testid={`${index}-ingredient-name-and-measure`}>{`${index + 1} ${item.ingredient} - ${item.measure}`}</p>))}
       </div>
       <p data-testid="instructions">{drinkDetails.drinks && drinkDetails.drinks[0].strInstructions}</p>
-      <video data-testid="video" width="750" height="500" controls>
-        <source src={drinkDetails.drinks && drinkDetails.drinks[0].strYoutube} type="video/mp4" />
-        <track src="" kind="captions" />
-      </video>
       <div>
         { apiResult.meals && apiResult.meals.slice(12, 18).map((element, idx) => (
           <FoodRecomendCard element={element} idx={idx} key={element.idMeal} />)) }
@@ -65,7 +79,7 @@ function DrinkDetails() {
       <button type="button" data-testid="share-btn">Compartilhar</button>
       <button type="button" data-testid="favorite-btn">Favorito</button>
       <Link to={`/bebidas/${drinkDetails.drinks && drinkDetails.drinks[0].idDrink}/in-progress`}>
-        <button type="button" className="start-btn" data-testid="start-recipe-btn" hidden={localStorage.getItem('hiddenButton')} onClick={handleClick}>Iniciar Receita</button>
+        <button type="button" className="start-btn" data-testid="start-recipe-btn" hidden={localStorage.getItem('hiddenButtonDrink')} onClick={handleClick}>{buttonText}</button>
       </Link>
     </div>
   );
