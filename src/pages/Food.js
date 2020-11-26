@@ -6,8 +6,7 @@ import RecipeContext from '../context/RecipeContext';
 import './Food.css';
 
 function Food() {
-  const { setFoodAPI, mealCategories } = useContext(RecipeContext);
-
+  const { setFoodAPI, mealCategories, currentMealsExplore } = useContext(RecipeContext);
   const [meals, setMeals] = useState([]);
   const [categories, setCategories] = useState([]);
   const [currentCategories, setCurrentCategories] = useState('');
@@ -15,6 +14,7 @@ function Food() {
   const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
   const urlCategories = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
   const urlMealsCategories = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${currentCategories}`;
+  const urlMealsCategories2 = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${currentCategories}`;
 
   useEffect(() => {
     const fecthMeals = async () => {
@@ -45,9 +45,13 @@ function Food() {
     const fecthMealsCategory = async () => {
       const APIRequestMealsCategory = await fetch(urlMealsCategories);
       const APIResponseMealsCategory = await APIRequestMealsCategory.json();
-      if (APIResponseMealsCategory !== null) {
+      const APIRequestMealsCategory2 = await fetch(urlMealsCategories2);
+      const APIResponseMealsCategory2 = await APIRequestMealsCategory2.json();
+      if (APIResponseMealsCategory2 !== null && currentMealsExplore) {
+        setCurrentMeals(APIResponseMealsCategory2.meals);
+      }
+      if (APIResponseMealsCategory !== null && !currentMealsExplore) {
         setCurrentMeals(APIResponseMealsCategory.meals);
-        console.log('vc esta aqui');
       }
     };
     fecthMealsCategory();
@@ -108,7 +112,7 @@ function Food() {
       setCurrentCategories('');
     }
   };
-  console.log(mealCategories);
+
   return (
     <div className="food-container">
       <Header title="Comidas" />

@@ -15,6 +15,8 @@ import ExploreFood from './pages/ExploreFood';
 import ExploreDrink from './pages/ExploreDrink';
 import ExploreFoodIngredient from './pages/ExploreFoodIngredient';
 import AreaNotFound from './pages/AreaNotFound';
+import ExploreDrinkIngredient from './pages/ExploreDrinkIngredient';
+import ExploreByArea from './pages/ExploreByArea';
 
 function App() {
   return (
@@ -32,8 +34,13 @@ function App() {
             path="/explorar/comidas/ingredientes"
             component={ ExploreFoodIngredient }
           />
+          <Route
+            path="/explorar/bebidas/ingredientes"
+            component={ ExploreDrinkIngredient }
+          />
           <Route exact path="/explorar" component={ Explore } />
           <Route exact path="/explorar/comidas" component={ ExploreFood } />
+          <Route exact path="/explorar/comidas/area" component={ ExploreByArea } />
           <Route exact path="/explorar/bebidas" component={ ExploreDrink } />
           <Route exact path="/explorar/bebidas/area" component={ AreaNotFound } />
           <Route path="/receitas-feitas" component={ DoneRecipes } />
