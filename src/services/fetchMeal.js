@@ -1,5 +1,6 @@
-async function fetchMeal(filter, searchTerm) {
+async function fetchMeal(filter, searchTerm = '') {
   const url = 'https://www.themealdb.com/api/json/v1/1/';
+
   switch (filter) {
   case 'ingredient': {
     const fetchByIngredient = await fetch(`${url}filter.php?i=${searchTerm}`);
@@ -11,6 +12,12 @@ async function fetchMeal(filter, searchTerm) {
     const fetchByName = await fetch(`${url}search.php?s=${searchTerm}`);
     const nameResponse = await fetchByName.json();
     return nameResponse.meals;
+  }
+
+  case 'category': {
+    const fetchCategory = await fetch(`${url}filter.php?c=${searchTerm}`);
+    const categoryResponse = await fetchCategory.json();
+    return categoryResponse.meals;
   }
 
   case 'firstLetter': {
