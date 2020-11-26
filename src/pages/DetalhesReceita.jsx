@@ -23,30 +23,30 @@ function DetalhesReceita(props) {
     }
   };
 
+  const embedVideo = () => {
+    const youtubeVideo = detailsFood.strYoutube;
+    if (youtubeVideo !== undefined) {
+      const newYoutube = youtubeVideo.split('=');
+      setEmbed(newYoutube[newYoutube.length - 1]);
+    }
+  };
+
   useEffect(() => {
     ingredientsFunc();
     embedVideo();
     recommendFoodFunction();
   }, [detailsFood]);
 
-  const embedVideo = () => {
-    const youtubeVideo = detailsFood.strYoutube;
-    if (youtubeVideo != undefined) {
-      const newYoutube = youtubeVideo.split('=');
-      setEmbed(newYoutube[newYoutube.length - 1]);
-    }
-  };
-
   const ingredientsFunc = () => {
     if (detailsFood.length !== 0) {
-      const array = []
-      for(let i = 1;i <= 20;i += 1) {
+      const array = [];
+      for(let i = 1; i <= 20; i += 1) {
         const ingredient = detailsFood[`strIngredient${i}`];
         array.push(ingredient);
       }
-      const arrayReturn = array.filter((element) => element !== '')
+      const arrayReturn = array.filter((element) => element !== '');
       setArrayIngredients(arrayReturn);
-    } 
+    }
   };
 
   if (detailsFood.length === 0) {
@@ -54,26 +54,27 @@ function DetalhesReceita(props) {
   }
   return (
     <div>
-      <img data-testid="recipe-photo" src={detailsFood.strMealThumb} />
+      <img data-testid="recipe-photo" src={ detailsFood.strMealThumb } alt="food-thumb"/>
       <h2 data-testid="recipe-title">{detailsFood.strMeal}</h2>
       <h3 data-testid="recipe-category">{detailsFood.strCategory}</h3>
       <h4 data-testid="instructions">{detailsFood.strInstructions}</h4>
-      <button data-testid="share-btn">Share</button>
-      <button data-testid="favorite-btn">Favorite</button>
+      <button type="button" data-testid="share-btn">Share</button>
+      <button type="button" data-testid="favorite-btn">Favorite</button>
       <button type="button" data-testid="start-recipe-btn">Iniciar receita</button>
       {arrayIngredients.map((element, index) => {
         return (
           <h5
-            data-testid={`${ index }-ingredient-name-and-measure`} 
-            key={index}>
+            data-testid={ `${index}-ingredient-name-and-measure` }
+            key={ index }>
             { element }
           </h5>
         );
       })}
-      <iframe 
-        data-testid="video" 
-        width="1042" height="586"
-        src={`https://www.youtube.com/embed/${embed}`}
+      <iframe
+        data-testid="video"
+        width="1042"
+        height="586"
+        src={ `https://www.youtube.com/embed/${embed}` }
         allow="accelerometer;
         autoplay;
         clipboard-write;
@@ -85,8 +86,8 @@ function DetalhesReceita(props) {
       <div>
         {recommendFood.map((food, index) => {
           return (
-            <div key={ index } data-testid={`${ index }-recomendation-card`}>
-              <img src={ food.strMealThumb } />
+            <div key={ index } data-testid={ `${index}-recomendation-card` }>
+              <img src={ food.strMealThumb } alt="food-thumb" />
               <h3>{food.strMeal}</h3>
             </div>
           );
