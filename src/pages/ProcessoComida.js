@@ -12,7 +12,7 @@ function ProcessoComida() {
   const [dataMeal, setDataMeal] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [isDisable] = useState(true);
+  // const [isDisable] = useState(true);
   const [checked, setChecked] = useState({});
   const history = useHistory();
   const idMeal = history.location.pathname.split('/')[2];
@@ -21,11 +21,11 @@ function ProcessoComida() {
     setChecked({ ...checked, [target.name]: target.checked });
   };
 
-  useEffect(() => {
-    localStorage.inProgressRecipes = JSON.stringify(
-      { meals: { [idMeal]: Object.keys(checked) } },
-    );
-  }, [checked]);
+  // useEffect(() => {
+  //   localStorage.inProgressRecipes = JSON.stringify(
+  //     { meals: { [idMeal]: Object.keys(checked) } },
+  //   );
+  // }, [checked]);
 
   useEffect(() => {
     async function fetchAPI() {
@@ -63,7 +63,8 @@ function ProcessoComida() {
   const saveDoneRecipes = () => {
     const date = new Date();
     const doneDate = date;
-    localStorage.doneRecipes = JSON.stringify([{
+    const doneRecipes = JSON.parse(localStorage.doneRecipes);
+    localStorage.doneRecipes = JSON.stringify([...doneRecipes, {
       id: dataMeal.idMeal,
       type: 'comida',
       area: dataMeal.strArea,

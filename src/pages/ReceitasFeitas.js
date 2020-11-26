@@ -3,6 +3,9 @@ import { Header } from '../components';
 import { shareIcon } from '../images';
 
 function ReceitasFeitas() {
+  const doneRecipes = JSON.parse(localStorage.doneRecipes);
+  console.log(doneRecipes);
+
   return (
     <div>
       <Header title="Receitas Feitas" />
@@ -25,42 +28,46 @@ function ReceitasFeitas() {
         Drinks
       </button>
       <div>
-        {/* {doneRecipes.map((image, index) => (
+        {doneRecipes.map(({ image, name, area, category, doneDate, tags }, index) => (
           <span
             key={ index }
           >
             <img
-              src=""
-              alt=""
+              src={ image }
+              alt={ name }
               data-testid={ `${index}-horizontal-image` }
             />
             <p
               data-testid={ `${index}-horizontal-top-text` }
             >
-              Categoria da receita
+              { `${area} - ${category}` }
             </p>
             <p
               data-testid={ `${index}-horizontal-name` }
             >
-              Nome da receita
+              { name }
             </p>
             <p
               data-testid={ `${index}-horizontal-done-date` }
             >
-              Data da Receita foi feita
+              { doneDate }
             </p>
             <img
               src={ shareIcon }
-              alt=""
+              alt="Compatilhar Receita"
               data-testid={ `${index}-horizontal-share-btn` }
             />
-            <p
-              data-testid={ `${index}-{tagName}-horizontal-tag` }
-            >
-              Tags da receita
-            </p>
+            {tags.map((tag) => (
+              <p
+                key={ tag }
+                data-testid={ `${index}-${tag}-horizontal-tag` }
+              >
+                {tag}
+              </p>
+            ))}
+
           </span>
-        ))} */}
+        ))}
       </div>
     </div>
   );
