@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+/* import React, { useEffect, useState, useContext } from "react";
 import MealsContext from "../context/MealsContext";
 import { useLocation } from 'react-router-dom';
 import { getIngredients } from "../services/mealsAPI";
@@ -27,3 +27,4 @@ function IngredientsList() {
 }
 
 export default IngredientsList;
+ */
