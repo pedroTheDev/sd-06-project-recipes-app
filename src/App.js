@@ -1,8 +1,14 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import { Login, Perfil, Explorar, ReceitasComidas, ReceitasBebidas } from './pages';
-import { RecipesCardDrinks, RecipesCardMeals } from './components';
+import {
+  Login,
+  Perfil,
+  Explorar,
+  ReceitasComidas,
+  ReceitasBebidas,
+  Details,
+} from './pages';
 import './App.css';
 
 // mudar componentes de rotas com parametros
@@ -13,10 +19,10 @@ function App() {
       <Switch>
         <Route exact path="/" component={ Login } />
         <Route path="/comidas/:id/in-progress" component={ ReceitasComidas } />
-        <Route path="/comidas/:id" component={ RecipesCardDrinks } />
+        <Route path="/comidas/:id" component={ Details } />
         <Route path="/comidas" component={ ReceitasComidas } />
         <Route path="/bebidas/:id/in-progress" component={ ReceitasBebidas } />
-        <Route path="/bebidas/:id" component={ RecipesCardMeals } />
+        <Route path="/bebidas/:id" component={ Details } />
         <Route path="/bebidas" component={ ReceitasBebidas } />
         <Route path="/explorar/comidas/area" component={ ReceitasBebidas } />
         <Route
