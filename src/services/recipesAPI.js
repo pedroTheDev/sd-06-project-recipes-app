@@ -8,7 +8,7 @@ const getRecipesInformation = async (endpoint) => {
   if (endpoint.match(/themealdb/i)) {
     if (recipesInformationJason.meals) {
       if (recipesInformationJason.meals.length > lastWantedIndex) {
-        firstTwelveRecipes.recipes = [...recipesInformationJason.meals.splice(
+        firstTwelveRecipes.recipes = [...recipesInformationJason.meals.slice(
           firstWantedIndex, lastWantedIndex,
         )];
       } else {
@@ -17,7 +17,7 @@ const getRecipesInformation = async (endpoint) => {
     }
   } else if (recipesInformationJason.drinks) {
     if (recipesInformationJason.drinks.length > lastWantedIndex) {
-      firstTwelveRecipes.recipes = [...recipesInformationJason.drinks.splice(
+      firstTwelveRecipes.recipes = [...recipesInformationJason.drinks.slice(
         firstWantedIndex, lastWantedIndex,
       )];
     } else {

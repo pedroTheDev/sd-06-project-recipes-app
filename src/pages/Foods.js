@@ -1,4 +1,5 @@
 import React, { useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import HeaderContext from '../context/HeaderContext';
 import RecipesContext from '../context/RecipesContext';
@@ -12,6 +13,7 @@ const Foods = ({ history }) => {
     isFetching,
     setFetchedResults,
     setIsFetching,
+    selectedCategory,
   } = useContext(RecipesContext);
 
   const defaultRecipes = async () => {
@@ -31,7 +33,7 @@ const Foods = ({ history }) => {
     if (fetchedResults.recipes.length) {
       const recipeId = fetchedResults.recipes[onlyIndex].idMeal;
 
-      if (fetchedResults.recipes.length === 1) {
+      if (fetchedResults.recipes.length === 1 && selectedCategory !== 'Goat') {
         const sendToDetailsPath = `/${title.toLowerCase()}/${recipeId}`;
         history.push(sendToDetailsPath);
       }
@@ -52,24 +54,25 @@ const Foods = ({ history }) => {
           ? <p>Faça uma Pesquisa</p>
           : fetchedResults.recipes
             .map((recipe, index) => (
-              <div
-                key={ recipe.idMeal }
-                className="meal-card"
-                data-testid={ `${index}-recipe-card` }
-              >
-                <p
-                  className="meal-title"
-                  data-testid={ `${index}-card-name` }
+              <Link to={ `/comidas/${recipe.idMeal}` } key={ recipe.idMeal }>
+                <div
+                  className="meal-card"
+                  data-testid={ `${index}-recipe-card` }
                 >
-                  { recipe.strMeal }
-                </p>
-                <img
-                  src={ recipe.strMealThumb }
-                  className="meal-img"
-                  data-testid={ `${index}-card-img` }
-                  alt={ recipe.strMeal }
-                />
-              </div>
+                  <p
+                    className="meal-title"
+                    data-testid={ `${index}-card-name` }
+                  >
+                    { recipe.strMeal }
+                  </p>
+                  <img
+                    src={ recipe.strMealThumb }
+                    className="meal-img"
+                    data-testid={ `${index}-card-img` }
+                    alt={ recipe.strMeal }
+                  />
+                </div>
+              </Link>
             ))
       }
     </div>

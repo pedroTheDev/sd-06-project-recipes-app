@@ -1,4 +1,5 @@
 import React, { useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import HeaderContext from '../context/HeaderContext';
 import RecipesContext from '../context/RecipesContext';
@@ -52,24 +53,25 @@ const Drinks = ({ history }) => {
           ? <p>Faça uma Pesquisa</p>
           : fetchedResults.recipes
             .map((recipe, index) => (
-              <div
-                key={ recipe.idDrink }
-                className="meal-card"
-                data-testid={ `${index}-recipe-card` }
-              >
-                <p
-                  className="meal-title"
-                  data-testid={ `${index}-card-name` }
+              <Link to={ `/bebidas/${recipe.idDrink}` } key={ recipe.idDrink }>
+                <div
+                  className="meal-card"
+                  data-testid={ `${index}-recipe-card` }
                 >
-                  { recipe.strDrink }
-                </p>
-                <img
-                  src={ recipe.strDrinkThumb }
-                  data-testid={ `${index}-card-img` }
-                  className="meal-img"
-                  alt={ recipe.strDrink }
-                />
-              </div>
+                  <p
+                    className="meal-title"
+                    data-testid={ `${index}-card-name` }
+                  >
+                    { recipe.strDrink }
+                  </p>
+                  <img
+                    src={ recipe.strDrinkThumb }
+                    data-testid={ `${index}-card-img` }
+                    className="meal-img"
+                    alt={ recipe.strDrink }
+                  />
+                </div>
+              </Link>
             ))
       }
     </div>

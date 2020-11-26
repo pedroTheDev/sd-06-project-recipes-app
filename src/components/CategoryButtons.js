@@ -5,11 +5,14 @@ import fetchCategories from '../services/categoriesAPI';
 import getRecipesInformation from '../services/recipesAPI';
 
 function CategoryButtons({ type }) {
-  const { setFetchedResults, setIsFetching } = useContext(RecipesContext);
+  const {
+    setFetchedResults,
+    setIsFetching,
+    selectedCategory,
+    setSelectedCategory,
+  } = useContext(RecipesContext);
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('all');
   const [isFetchingCategories, setIsFetchingCategories] = useState(true);
-
   const categoriesButtons = async () => {
     const fetchedCategories = await fetchCategories(type);
     setCategories(fetchedCategories);
