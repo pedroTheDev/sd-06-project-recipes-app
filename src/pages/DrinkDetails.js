@@ -11,28 +11,14 @@ import '../css/itemDetails.css';
 import '../css/scroller.css';
 
 export default function DrinkDetails(props) {
-  // const [recipeId, setRecipeId] = useState('');
   const [recipe, setRecipe] = useState({});
   const [recipeDetails, setRecipeDetails] = useState([]);
   const [recommendation, setRecommendation] = useState([]);
-  const [disabled, setDisabled] = useState(true);
+  const [disabled, setDisabled] = useState(false);
   const [btnStartValue, setBtnStartValue] = useState('Iniciar Receita');
   const [copy, setCopy] = useState('');
   const [fav, setFav] = useState(whiteHeart);
   const { match: { params: { id } } } = props;
-
-  // useEffect(() => {
-  //   if (recipeId === '') {
-  //     setRecipeId(id);
-  //   }
-  //   async function fetchData() {
-  //     const result = await fetchDetail('bebidas', recipeId);
-  //     setRecipe(result);
-  //   }
-  //   if (recipeId === id) {
-  //     fetchData();
-  //   }
-  // }, [recipeId]);
 
   useEffect(() => {
     async function fetchData() {
@@ -48,6 +34,13 @@ export default function DrinkDetails(props) {
     const storage = JSON.parse(localStorage.getItem('inProgressRecipes'));
 
     const inProgress = (storage) && storage.cocktails[id];
+
+    if (localStorage.getItem('doneRecipes') !== null) {
+      const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+      if (doneRecipes.some((item) => item.id === id)) {
+        setDisabled(true);
+      }
+    }
 
     if (localStorage.getItem('doneRecipes') === null) {
       setDisabled(false);
@@ -162,14 +155,18 @@ export default function DrinkDetails(props) {
           {renderIngredients()}
           <p data-testid="video">{item.strYoutube}</p>
           <Link to={ `/bebidas/${id}/in-progress` }>
-            <button
-              type="button"
-              data-testid="start-recipe-btn"
-              className="btnStart"
-              disabled={ disabled }
-            >
-              {btnStartValue}
-            </button>
+            { (!disabled)
+              ? (
+                <button
+                  type="button"
+                  data-testid="start-recipe-btn"
+                  className="btnStart"
+                  disabled={ disabled }
+                >
+                  {btnStartValue}
+                </button>
+              )
+              : null }
           </Link>
         </div>
         <div className="testimonials">

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { fetchDetail, fetchRecommendation } from '../helpers/Helper';
+
 import '../css/scroller.css';
 import '../css/itemDetails.css';
 import shareIcon from '../images/shareIcon.svg';
@@ -10,28 +11,13 @@ import blackHeart from '../images/blackHeartIcon.svg';
 import saveFavorite from '../helpers/saveFavorite';
 
 export default function FoodsDetails(props) {
-  // const [recipeId, setRecipeId] = useState('');
   const [recipe, setRecipe] = useState('');
   const [recipeDetails, setRecipeDetails] = useState([]);
   const [recommendation, setRecommendation] = useState([]);
-  const [disabled, setDisabled] = useState(true);
   const [btnStartValue, setBtnStartValue] = useState('Iniciar Receita');
   const [copy, setCopy] = useState('');
   const [fav, setFav] = useState(whiteHeart);
   const { match: { params: { id } } } = props;
-
-  // useEffect(() => {
-  //   if (recipeId === '') {
-  //     setRecipeId(id);
-  //   }
-  //   async function fetchData() {
-  //     const result = await fetchDetail('comidas', recipeId);
-  //     setRecipe(result);
-  //   }
-  //   if (recipeId === id) {
-  //     fetchData();
-  //   }
-  // }, [recipeId]);
 
   useEffect(() => {
     async function fetchData() {
@@ -44,12 +30,13 @@ export default function FoodsDetails(props) {
   }, []);
 
   useEffect(() => {
-    if (localStorage.getItem('doneRecipes') === null) {
-      setDisabled(false);
-    }
-    if (localStorage.getItem('inProgressRecipes') !== null) {
+    const storage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const inProgress = (storage) && storage.meals[id];
+
+    if (inProgress) {
       setBtnStartValue('Continuar Receita');
     }
+
     if (localStorage.getItem('favoriteRecipes') !== null) {
       const tarefa = JSON.parse(localStorage.getItem('favoriteRecipes'));
       if (tarefa.some((item) => item.id === id)) {
@@ -93,8 +80,8 @@ export default function FoodsDetails(props) {
         array.push(counter);
       }
       const recipeArray = array.map((number) => (
-        (currRecipe[`strIngredient${number}`] !== ''
-          || currRecipe[`strIngredient${number}`])
+        (currRecipe[`strIngredient${number}`] !== null
+          && currRecipe[`strIngredient${number}`] !== '')
           ? [currRecipe[`strIngredient${number}`], currRecipe[`strMeasure${number}`]]
           : ''
       ));
@@ -153,13 +140,17 @@ export default function FoodsDetails(props) {
           <p data-testid="recipe-category">{item.strCategory}</p>
           <p data-testid="instructions">{item.strInstructions}</p>
           {renderIngredients()}
-          <p data-testid="video">{item.strYoutube}</p>
+
+          <video data-testid="video" width="340" controls>
+            <source src={ item.strYoutube } type="video/mp4" />
+            <track src="" kind="captions" />
+          </video>
+
           <Link to={ `/comidas/${id}/in-progress` }>
             <button
               type="button"
               data-testid="start-recipe-btn"
               className="btnStart"
-              disabled={ disabled }
             >
               {btnStartValue}
             </button>

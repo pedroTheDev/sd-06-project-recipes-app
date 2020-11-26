@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { fetchDetail, fetchRecommendation } from '../helpers/Helper';
 import saveInStorage from '../helpers/saveInStorage';
 import saveFavorite from '../helpers/saveFavorite';
@@ -154,6 +153,28 @@ export default function DrinkInProgress(props) {
       );
     }
   }
+
+  function endRecipe(item) {
+    const now = new Date();
+    const newRecipe = {
+      id: item.idDrink,
+      type: 'bebida',
+      area: '',
+      category: item.strCategory,
+      alcoholicOrNot: item.strAlcoholic,
+      name: item.strDrink,
+      image: item.strDrinkThumb,
+      doneDate: `${now.getDate()}-${now.getMonth() + 1}-${now.getFullYear()}`,
+      tags: (item.strTags) && item.strTags.split(','),
+    };
+    const currStorage = JSON.parse(localStorage.getItem('doneRecipes'));
+    const newStorage = (currStorage)
+      ? [...currStorage, newRecipe]
+      : [newRecipe];
+    localStorage.setItem('doneRecipes', JSON.stringify(newStorage));
+    props.history.push('/receitas-feitas');
+  }
+
   if (recipe.drinks && recommendation) {
     const item = recipe.drinks[0];
     return (
@@ -187,16 +208,17 @@ export default function DrinkInProgress(props) {
           <p data-testid="instructions">{item.strInstructions}</p>
           {renderIngredients()}
           <p data-testid="video">{item.strYoutube}</p>
-          <Link to="/receitas-feitas">
-            <button
-              type="button"
-              data-testid="finish-recipe-btn"
-              className="btnStart"
-              disabled={ disabled }
-            >
-              Finalizar receita
-            </button>
-          </Link>
+
+          <button
+            type="button"
+            data-testid="finish-recipe-btn"
+            className="btnStart"
+            disabled={ disabled }
+            onClick={ () => endRecipe(item) }
+          >
+            Finalizar receita
+          </button>
+
         </div>
         <div className="testimonials">
           <div className="scroller">
@@ -226,4 +248,9 @@ export default function DrinkInProgress(props) {
 
 DrinkInProgress.propTypes = {
   match: PropTypes.objectOf(PropTypes.any).isRequired,
+};
+
+DrinkInProgress.propTypes = {
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
