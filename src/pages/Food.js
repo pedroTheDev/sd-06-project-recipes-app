@@ -21,8 +21,22 @@ function Food(props) {
 
   const allFoodRecipesEndPoint = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
   const allDrinkRecipesEndPoint = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+  useEffect(() => {
+    async function fetchData() {
+      let initialRecipes;
+      setIsLoading(true);
+      if (pathname === '/comidas') {
+        initialRecipes = await fetchAPI(allFoodRecipesEndPoint);
+        dispatchRecipes(initialRecipes);
+      } else {
+        initialRecipes = await fetchAPI(allDrinkRecipesEndPoint);
+        dispatchRecipes(initialRecipes);
+      }
+      setIsLoading(false);
+    }
+    fetchData();
+  }, []);
 
-  
   useFetch(
     title,
     inputText,
