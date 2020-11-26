@@ -1,6 +1,5 @@
 import React from 'react';
 import { fireEvent, screen } from '@testing-library/react';
-import AppProvider from '../provider/AppProvider';
 import renderWithRouter from './renderWithRouter';
 import ExploreFoods from '../pages/ExploreFoods';
 import ExploreDrinks from '../pages/ExploreDrinks';

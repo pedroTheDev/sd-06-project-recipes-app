@@ -7,7 +7,7 @@ import DrinkInProgress from '../pages/DrinkInProgress';
 import drinks from '../../cypress/mocks/drinks';
 
 describe('Tela de Receita de Comida em progresso:', () => {
-  console.log(drinks.drinks[0]);
+  // console.log(drinks.drinks[0]);
   it('Renderiza os items corretos', () => {
     renderWithRouter(
       <DrinkInProgress match={ { params: { id: '52977' } } } />,
@@ -17,7 +17,7 @@ describe('Tela de Receita de Comida em progresso:', () => {
     const shareBtn = screen.getByTestId('share-btn');
     const favoriteBtn = screen.getByTestId('favorite-btn');
     const category = screen.getByTestId('recipe-category');
-    //const ingredient = screen.getByTestId('0-ingredient-step');
+    // const ingredient = screen.getByTestId('0-ingredient-step');
     const instructions = screen.getByTestId('instructions');
     const finishRecipeBtn = screen.getByTestId('finish-recipe-btn');
     expect(photo).toBeInTheDocument();
@@ -25,7 +25,7 @@ describe('Tela de Receita de Comida em progresso:', () => {
     expect(shareBtn).toBeInTheDocument();
     expect(favoriteBtn).toBeInTheDocument();
     expect(category).toBeInTheDocument();
-    //expect(ingredient).toBeInTheDocument();
+    // expect(ingredient).toBeInTheDocument();
     expect(instructions).toBeInTheDocument();
     expect(finishRecipeBtn).toBeInTheDocument();
   });
@@ -46,5 +46,4 @@ describe('Tela de Receita de Comida em progresso:', () => {
     const { pathname } = history.location;
     expect(pathname).toBe('/receitas-feitas');
   });
-  
 });
