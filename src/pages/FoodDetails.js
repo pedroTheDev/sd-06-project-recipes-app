@@ -110,15 +110,13 @@ function FoodDetails(props) {
   };
 
   useEffect(() => {
-    getLocalStorage();
-  }, []);
-  useEffect(() => {
     requestIngredients();
   }, [requestDetails]);
 
   useEffect(() => {
     requestDetailsAPI();
     setFilter({ text: '', option: '', category: '' });
+    getLocalStorage();
   }, []);
   return (
     <div data-testid="food-details" className="food-details">
