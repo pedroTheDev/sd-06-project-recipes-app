@@ -5,6 +5,7 @@ import MenuInferior from '../components/MenuInferior';
 
 function ExplorarComidas() {
   const history = useHistory();
+  // const { idDaReceita, setIdDaReceita } = useParams();
 
   function redirectExplorarIngredientes() {
     history.push('/explorar/comidas/ingredientes');
@@ -12,6 +13,12 @@ function ExplorarComidas() {
   function redirectExplorarOrigem() {
     history.push('/explorar/comidas/area');
   }
+  // const response = await fetchApiComidasExplorar(idDaReceita);
+  // setIdDaReceita(response);
+  function redirectExplorarSurpresa() {
+    history.push('/comidas/:idDaReceita');
+  }
+
   return (
     <div>
       <Header2 title="Explorar Comidas" />
@@ -34,6 +41,7 @@ function ExplorarComidas() {
       <button
         type="button"
         data-testid="explore-surprise"
+        onClick={ redirectExplorarSurpresa }
       >
         Me Surpreenda!
       </button>

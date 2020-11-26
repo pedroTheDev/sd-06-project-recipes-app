@@ -38,3 +38,10 @@ export async function fetchApiBebidasDetalhes(id) {
   console.log(responseJson);
   return responseJson.drinks;
 }
+
+export async function fetchApiBebidasExplorar() {
+  const endpoint = 'https://www.thecocktaildb.com/api/json/v1/1/random.php';
+  const response = await fetch(endpoint);
+  const responseJson = await response.json();
+  return responseJson.drinks;
+}
