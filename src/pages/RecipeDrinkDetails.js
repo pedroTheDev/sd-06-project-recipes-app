@@ -1,16 +1,17 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-
 import RecipesContext from '../context/RecipesAppContext';
-
-const ZERO = 0;
-const TWENTY = 20;
+import './scroll.css';
 
 function RecipeDrinkDetails({ match }) {
   const { id } = match.params;
   const { recipes, setRecipes } = useContext(RecipesContext);
+  const [recomendation, setRecomendation] = useState([]);
   let arrIngredient = [];
   let arrMeasure = [];
+  const ZERO = 0;
+  const TWENTY = 20;
+  const SEIS = 6;
   const API = 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=';
 
   const fetchDetailRecipeDrinkByID = async () => {
@@ -19,8 +20,15 @@ function RecipeDrinkDetails({ match }) {
     return setRecipes(json.drinks);
   };
 
+  const fetchRecomendationsMeals = async () => {
+    const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+    const json = await response.json();
+    return setRecomendation(json.meals);
+  };
+
   useEffect(() => {
     fetchDetailRecipeDrinkByID();
+    fetchRecomendationsMeals();
   }, []);
 
   if (recipes.length !== ZERO) {
@@ -85,6 +93,20 @@ function RecipeDrinkDetails({ match }) {
         <p data-testid="instructions">{recipes[0].strInstructions}</p>
         <div data-testid={ `${ZERO}-recomendation-card` } />
         <button type="button" data-testid="start-recipe-btn">Iniciar Receita</button>
+
+        <div className="scrollmenu">
+          {recomendation.slice(ZERO, SEIS).map((element, index) => (
+            <div key={ index } className="scrollmenu-child">
+              <img
+                data-testid={ `${index}-recomendation-card` }
+                src={ element.strMealThumb }
+                alt={ element.strMeal }
+              />
+              <p data-testid={ `${index}-recomendation-title` }>{ element.strMeal }</p>
+            </div>
+          ))}
+        </div>
+
       </div>
     );
   }

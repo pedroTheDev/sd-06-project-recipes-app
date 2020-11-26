@@ -1,16 +1,17 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-
 import RecipesContext from '../context/RecipesAppContext';
-
-const ZERO = 0;
-const TWENTY = 20;
+import './scroll.css';
 
 function RecipeFoodDetails({ match }) {
   const { id } = match.params;
   const { recipes, setRecipes } = useContext(RecipesContext);
+  const [recomendation, setRecomendation] = useState([]);
   let arrIngredient = [];
   let arrMeasure = [];
+  const ZERO = 0;
+  const TWENTY = 20;
+  const SEIS = 6;
   const API = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=';
 
   const fetchDetailRecipeFoodByID = async () => {
@@ -19,8 +20,14 @@ function RecipeFoodDetails({ match }) {
     return setRecipes(json.meals);
   };
 
+  const fetchRecomendationsDrinks = async () => {
+    const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+    const json = await response.json();
+    return setRecomendation(json.drinks);
+  };
   useEffect(() => {
     fetchDetailRecipeFoodByID();
+    fetchRecomendationsDrinks();
   }, []);
 
   if (recipes.length !== ZERO) {
@@ -83,11 +90,10 @@ function RecipeFoodDetails({ match }) {
         </ul>
         <p data-testid="instructions">{recipes[0].strInstructions}</p>
         <iframe
-          title="This is a unique title"
+          title="Este é um titulo unico"
           data-testid="video"
           width="280"
           height="150"
-          // src="https://www.youtube.com/watch?v=1IszT_guI08"
           src={ recipes[0].strYoutube }
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media"
@@ -96,11 +102,24 @@ function RecipeFoodDetails({ match }) {
         <div data-testid={ `${ZERO}-recomendation-card` } />
         <button type="button" data-testid="start-recipe-btn">Iniciar Receita</button>
 
+        <div className="scrollmenu">
+          {recomendation.slice(ZERO, SEIS).map((element, index) => (
+            <div key={ index } className="scrollmenu-child">
+              <img
+                data-testid={ `${index}-recomendation-card` }
+                src={ element.strDrinkThumb }
+                alt={ element.strDrink }
+              />
+              <p data-testid={ `${index}-recomendation-title` }>{ element.strDrink }</p>
+            </div>
+          ))}
+        </div>
+
       </div>
     );
   }
 
-  return <span>teste</span>;
+  return <span>Ops...</span>;
 }
 
 RecipeFoodDetails.propTypes = {
