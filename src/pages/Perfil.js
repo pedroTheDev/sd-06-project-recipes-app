@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 function Perfil() {
   const getEmail = JSON.parse(localStorage.getItem('user'));
@@ -36,6 +37,7 @@ function Perfil() {
           Sair
         </button>
       </Link>
+      <Footer />
     </div>
   );
 }
