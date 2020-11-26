@@ -165,7 +165,7 @@ export default function DrinkInProgress(props) {
       name: item.strDrink,
       image: item.strDrinkThumb,
       doneDate: `${now.getDate()}-${now.getMonth() + 1}-${now.getFullYear()}`,
-      tags: item.strTags.split(','),
+      tags: (item.strTags) && item.strTags.split(','),
     };
     const currStorage = JSON.parse(localStorage.getItem('doneRecipes'));
     const newStorage = (currStorage)

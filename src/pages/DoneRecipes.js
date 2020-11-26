@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import '../css/Cards.css';
+import shareIcon from '../images/shareIcon.svg';
 
 export default function DoneRecipes() {
   const [recipes, setRecipes] = useState([]);
@@ -11,6 +12,15 @@ export default function DoneRecipes() {
       setRecipes(storage);
     }
   }, []);
+
+  function handleCopy() {
+    console.log('oi');
+    // const link = `${window.location.origin}/comidas/${id}`;
+    // navigator.clipboard.writeText(link);
+    // setCopy('Link copiado!');
+  }
+
+  const maxTags = 2;
 
   return (
     <section>
@@ -28,23 +38,37 @@ export default function DoneRecipes() {
                   data-testid={ `${index}-horizontal-image` }
                   alt="card"
                 />
-                <h4 data-testid={ `${index}-horizontal-top-text` }>{ recipe.category }</h4>
+                <h4 data-testid={ `${index}-horizontal-top-text` }>
+                  { (recipe.type === 'bebida')
+                    ? recipe.category
+                    : `${recipe.area} - ${recipe.category}` }
+                </h4>
                 <p data-testid={ `${index}-horizontal-name` }>{ recipe.name }</p>
                 <span data-testid={ `${index}-horizontal-done-date` }>
                   { recipe.doneDate }
                 </span>
-                <button type="button" data-testid={ `${index}-horizontal-share-btn` }>
-                  Compartilhar
+
+                <button
+                  type="button"
+                  data-testid={ `${index}-horizontal-share-btn` }
+                  value="Share"
+                  onClick={ () => handleCopy() }
+                  src={ shareIcon }
+                >
+                  <img alt="Share" src={ shareIcon } />
                 </button>
                 { (recipe.tags !== null)
                   && (Array.isArray(recipe.tags))
-                  ? recipe.tags.map((tag) => (
-                    <h4
-                      key={ tag }
-                      data-testid={ `${index}-${tag}-horizontal-tag` }
-                    >
-                      { tag }
-                    </h4>
+                  ? recipe.tags.map((tag, innerIndex) => (
+                    (innerIndex < maxTags) ? (
+                      <h4
+                        key={ tag }
+                        data-testid={ `${index}-${tag}-horizontal-tag` }
+                      >
+                        { tag }
+                      </h4>
+                    )
+                      : null
                   ))
                   : recipe.tags }
               </section>
