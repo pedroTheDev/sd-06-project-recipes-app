@@ -8,6 +8,30 @@ const RecipesProvider = ({ children }) => {
   const [fetchedResults, setFetchedResults] = useState([]);
   const [isFetching, setIsFetching] = useState(true);
 
+  const [recipeTitle, setRecipeTitle] = useState('');
+  const [recipeImage, setRecipeImage] = useState('');
+  const [recipeCategory, setRecipeCategory] = useState('');
+  const [recipeIngredients, setRecipeIngredients] = useState([]);
+  const [recipeInstructions, setRecipeInstructions] = useState('');
+  const [recipeVideo, setRecipeVideo] = useState('');
+  const [recipeRecomendations, setRecipeRecomendations] = useState([]);
+  const recipeObject = { recipeTitle,
+    setRecipeTitle,
+    recipeImage,
+    setRecipeImage,
+    recipeCategory,
+    setRecipeCategory,
+    recipeIngredients,
+    setRecipeIngredients,
+    recipeInstructions,
+    setRecipeInstructions,
+    recipeVideo,
+    setRecipeVideo,
+    recipeRecomendations,
+    setRecipeRecomendations,
+  };
+  const [recipesDone, setRecipesDone] = useState([]);
+
   const providerValue = {
     selectedApiEndpoint,
     setSelectedApiEndpoint,
@@ -17,6 +41,9 @@ const RecipesProvider = ({ children }) => {
     setFetchedResults,
     isFetching,
     setIsFetching,
+    recipeObject,
+    recipesDone,
+    setRecipesDone,
   };
   return (
     <RecipesContext.Provider value={ providerValue }>

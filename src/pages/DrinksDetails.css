@@ -1,0 +1,10 @@
+.start-recipe-btn {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  width: 30vh;
+}
+
+.image-display {
+  width: 100%;
+}
