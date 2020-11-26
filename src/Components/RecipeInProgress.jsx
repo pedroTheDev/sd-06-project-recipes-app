@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import RecipeContext from '../hooks/RecipeContext';
+// import RecipeContext from '../hooks/RecipeContext';
 import recipeRequest from '../services/recipeRequest';
 
 const RecipeInProgress = () => {
@@ -10,7 +10,7 @@ const RecipeInProgress = () => {
   const [recipeDetailDrink, setRecipeDetailDrink] = useState([]);
   const [recipeDetailFood, setRecipeDetailFood] = useState([]);
   const [disable, setDisable] = useState(true);
-  const { inProgressRecipes, setInProgressRecipes } = useContext(RecipeContext);
+  // const { inProgressRecipes, setInProgressRecipes } = useContext(RecipeContext);
   const getAPI = async () => {
     const food = await recipeRequest(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
     const recipeFood = await food.meals;
@@ -24,7 +24,7 @@ const RecipeInProgress = () => {
     getAPI();
   }, []);
 
-  const handleCheckbox = ({ target }) => {
+  const handleCheckbox = () => {
     /* if (target.checked === true) {
       const progress = {
         ...inProgressRecipes,
