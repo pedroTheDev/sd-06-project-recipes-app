@@ -11,6 +11,7 @@ function Header(props) {
   const { title, search = false } = props;
   const [hide, setHide] = useState(true);
   const showFilterButtons = title === 'Comidas' || title === 'Bebidas';
+  const type = title === 'Comidas' ? 'meal' : 'drink';
 
   return (
     <header>
@@ -35,7 +36,11 @@ function Header(props) {
         }
       </div>
       {(hide === true) ? (
-        <FilterButtons show={ hide } shouldRenderButtons={ showFilterButtons } />
+        <FilterButtons
+          show={ hide }
+          shouldRenderButtons={ showFilterButtons }
+          type={ type }
+        />
       ) : <SearchBar title={ title } />}
     </header>
   );
