@@ -11,6 +11,7 @@ class Explore extends React.Component {
         <Header history={ history } />
         <button
           type="button"
+          className="explore-buttons"
           data-testid="explore-food"
           onClick={ () => history.push('/explorar/comidas') }
         >
@@ -18,6 +19,7 @@ class Explore extends React.Component {
         </button>
         <button
           type="button"
+          className="explore-buttons"
           onClick={ () => history.push('/explorar/bebidas') }
           data-testid="explore-drinks"
         >

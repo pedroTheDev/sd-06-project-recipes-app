@@ -131,3 +131,17 @@ export function filterDrinksByCategory(endPoint) {
     .then((response) => response.drinks.slice(INITIAL_LENGTH, MAX_LENGTH));
   return variavel;
 }
+
+export function randomRecipeFoods() {
+  const API = fetch('https://www.themealdb.com/api/json/v1/1/random.php')
+    .then((response) => response.json())
+    .then((response) => response.meals);
+  return API;
+}
+
+export function randomRecipeDrinks() {
+  const API = fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php')
+    .then((response) => response.json())
+    .then((response) => response.drinks);
+  return API;
+}

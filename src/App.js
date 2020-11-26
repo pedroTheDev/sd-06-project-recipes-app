@@ -4,7 +4,8 @@ import {
   Login, Foods, Drink, Explore, Profile, DoneRecipes,
   FavoriteRecipes, FoodsDetails, DrinksDetails,
   FoodsRecipesInProgress, DrinksRecipesInProgress,
-  ExploreDrinks, ExploreFoods,
+  ExploreDrinks, ExploreFoods, ExploreFoodsByIngredient, ExploreDrinksByIngredient,
+  ExploreFoodsByArea,
 } from './pages';
 import './App.css';
 import './Slider.scss';
@@ -27,8 +28,23 @@ function App() {
           path="/bebidas/:id/in-progress"
           component={ DrinksRecipesInProgress }
         />
-        <Route exact path="/explorar/comidas" component={ ExploreFoods } />
-        <Route exact path="/explorar/bebidas" component={ ExploreDrinks } />
+        <Route
+          exact
+          path="/explorar/comidas/area"
+          component={ ExploreFoodsByArea }
+        />
+        <Route
+          exact
+          path="/explorar/comidas/ingredientes"
+          component={ ExploreFoodsByIngredient }
+        />
+        <Route
+          exact
+          path="/explorar/bebidas/ingredientes"
+          component={ ExploreDrinksByIngredient }
+        />
+        <Route path="/explorar/comidas" component={ ExploreFoods } />
+        <Route path="/explorar/bebidas" component={ ExploreDrinks } />
         <Route path="/bebidas" component={ Drink } />
         <Route path="/explorar" component={ Explore } />
         <Route path="/perfil" component={ Profile } />
