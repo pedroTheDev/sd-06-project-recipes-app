@@ -3,8 +3,17 @@ import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import '../styles/Explorar.css';
+import { requestApiMealSurprise } from '../services/requestFood';
 
-function ExplorarComidas() {
+function ExplorarComidas({ history }) {
+  async function handleRandomMealPage() {
+    const response = await requestApiMealSurprise();
+    const id = response[0].idMeal;
+    const randomMealEndpoint = `/comidas/${id}`;
+    console.log(randomMealEndpoint);
+    history.push(randomMealEndpoint);
+  }
+
   return (
     <>
       <Header name="Explorar Comidas" button={ false } />
@@ -25,14 +34,13 @@ function ExplorarComidas() {
             Por Local de Origem
           </button>
         </Link>
-        {/* <Link> */}
         <button
           type="button"
           data-testid="explore-surprise"
+          onClick={ () => handleRandomMealPage() }
         >
           Me Surpreenda!
         </button>
-        {/* </Link> */}
       </div>
       <Footer />
     </>

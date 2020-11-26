@@ -3,8 +3,17 @@ import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import '../styles/Explorar.css';
+import { requestApiDrinkSurprise } from '../services/requestDrink';
 
-function ExplorarBebidas() {
+function ExplorarBebidas({ history }) {
+  async function handleRandomDrinkPage() {
+    const response = await requestApiDrinkSurprise();
+    const id = response[0].idDrink;
+    const randomDrinkEndpoint = `/bebidas/${id}`;
+    console.log(randomDrinkEndpoint);
+    history.push(randomDrinkEndpoint);
+  }
+
   return (
     <>
       <Header name="Explorar Bebidas" button={ false } />
@@ -20,10 +29,10 @@ function ExplorarBebidas() {
         <button
           type="button"
           data-testid="explore-surprise"
+          onClick={ () => handleRandomDrinkPage() }
         >
           Me Surpreenda!
         </button>
-        {/* </Link> */}
       </div>
       <Footer />
     </>
