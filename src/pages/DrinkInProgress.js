@@ -58,7 +58,10 @@ export default function DrinkInProgress(props) {
     if (checkedIngredients.length > empty) {
       checkedIngredients.forEach((ingredient) => {
         const checkbox = document.getElementById(ingredient);
-        if (checkbox) checkbox.checked = true;
+        if (checkbox) {
+          checkbox.checked = true;
+          checkbox.setAttribute('checked', '');
+        }
       });
     }
   }, [checkedIngredients]);
@@ -109,14 +112,17 @@ export default function DrinkInProgress(props) {
 
   function strikeIngredientText(target) {
     if (target.checked) {
+      if (!checkedIngredients.includes(target.id)) {
+        setCheckedIngredients([...checkedIngredients, target.id]);
+      }
       saveInStorage(id, target.id, 'cocktails', 'add');
     } else if (!target.checked) {
+      if (checkedIngredients.includes(target.id)) {
+        setCheckedIngredients(checkedIngredients.filter((item) => item !== target.id));
+        target.removeAttribute('checked');
+      }
       saveInStorage(id, target.id, 'cocktails', 'remove');
     }
-
-    return (target.checked)
-      ? target.parentNode.classList.add('strike-text')
-      : target.parentNode.classList.remove('strike-text');
   }
 
   function renderIngredients() {

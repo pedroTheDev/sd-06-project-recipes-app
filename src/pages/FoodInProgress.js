@@ -57,8 +57,10 @@ export default function FoodInProgress(props) {
     if (checkedIngredients.length > empty) {
       checkedIngredients.forEach((ingredient) => {
         const checkbox = document.getElementById(ingredient);
-        console.log(checkbox);
-        if (checkbox) checkbox.checked = true;
+        if (checkbox) {
+          checkbox.checked = true;
+          checkbox.setAttribute('checked', '');
+        }
       });
     }
   }, [checkedIngredients]);
@@ -109,14 +111,17 @@ export default function FoodInProgress(props) {
 
   function strikeIngredientText(target) {
     if (target.checked) {
+      if (!checkedIngredients.includes(target.id)) {
+        setCheckedIngredients([...checkedIngredients, target.id]);
+      }
       saveInStorage(id, target.id, 'meals', 'add');
     } else if (!target.checked) {
+      if (checkedIngredients.includes(target.id)) {
+        setCheckedIngredients(checkedIngredients.filter((item) => item !== target.id));
+        target.removeAttribute('checked');
+      }
       saveInStorage(id, target.id, 'meals', 'remove');
     }
-
-    return (target.checked)
-      ? target.parentNode.classList.add('strike-text')
-      : target.parentNode.classList.remove('strike-text');
   }
 
   function renderIngredients() {
