@@ -40,7 +40,7 @@ export default function DoneRecipes() {
                 />
                 <h4 data-testid={ `${index}-horizontal-top-text` }>
                   { (recipe.type === 'bebida')
-                    ? recipe.category
+                    ? recipe.alcoholicOrNot
                     : `${recipe.area} - ${recipe.category}` }
                 </h4>
                 <p data-testid={ `${index}-horizontal-name` }>{ recipe.name }</p>

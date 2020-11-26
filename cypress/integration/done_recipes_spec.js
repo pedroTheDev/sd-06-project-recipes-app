@@ -77,7 +77,7 @@ describe('Done recipes screen', () => {
     });
   });
 
-  describe.skip('56 - Desenvolva a tela de maneira que, caso a receita do card seja uma bebida, ela deve possuir: a foto da receita, o nome, se é alcoólica, a data em que a pessoa fez a receita e um botão de compartilhar', () => {
+  describe('56 - Desenvolva a tela de maneira que, caso a receita do card seja uma bebida, ela deve possuir: a foto da receita, o nome, se é alcoólica, a data em que a pessoa fez a receita e um botão de compartilhar', () => {
     it('O card possui os atributos corretos de uma bebida', () => {
       cy.get('[data-testid="1-horizontal-image"]')
         .should('have.attr', 'src')
