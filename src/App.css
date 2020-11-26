@@ -63,6 +63,7 @@
 
 .recipes-page {
   align-items: center;
+  background-color: rgb(230,230,230);
   justify-content: center;
   margin: auto;
   width: 85%;
@@ -90,7 +91,7 @@
   grid-template-columns: repeat(auto-fit, minmax(270px, auto));
   justify-content: center;
   margin: auto;
-  width: 100%;
+  width: 90%;
 }
 
 .recipe-card {

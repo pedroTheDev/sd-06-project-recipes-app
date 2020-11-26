@@ -1,7 +1,7 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
 import renderWithRouter from '../../renderWithRouter';
-import RecipesPage from './RecipesPage';
+import RecipesPage from './MealsPage';
 
 describe('Test Recipes page', () => {
   it('tests if there is a Header with title "Comidas"', () => {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
@@ -6,8 +6,9 @@ import BtnSearchBar from '../../components/BtnSearchBar';
 
 import * as cocktailAPI from '../../services/cocktailAPI';
 import * as mealAPI from '../../services/mealAPI';
+import recipesAppContext from '../../context/recipesAppContext';
 
-function RecipesPage() {
+function MealsPage() {
   const [state, changeState] = useState({
     type: '',
     recipes: [],
@@ -16,6 +17,7 @@ function RecipesPage() {
     newFilter: '',
   });
   const [wLocation] = useState(window.location.href);
+  const { control, setControl, data } = useContext(recipesAppContext);
   let localState = state;
   const zero = 0;
   const five = 5;
@@ -33,6 +35,9 @@ function RecipesPage() {
       if (type === 'cocktails') {
         if (newFilter !== (zero || '')) {
           temp = await cocktailAPI.filterByCategory(newFilter);
+        } else if (control) {
+          temp = data;
+          setControl(false);
         } else {
           temp = await cocktailAPI.searchByName('');
         }
@@ -44,6 +49,9 @@ function RecipesPage() {
       } else if (type === 'meals') {
         if (newFilter !== (zero || '')) {
           temp = await mealAPI.filterByCategory(newFilter);
+        } else if (control) {
+          temp = data;
+          setControl(false);
         } else {
           temp = await mealAPI.searchByName('');
         }
@@ -218,4 +226,4 @@ function RecipesPage() {
   );
 }
 
-export default RecipesPage;
+export default MealsPage;

@@ -4,7 +4,7 @@ import RecipesAppProvider from './context/RecipesAppProvider';
 import './App.css';
 import Login from './pages/Login/Login';
 import RecipesDetails from './pages/RecipesDetails/RecipesDetails';
-import RecipesPage from './pages/RecipesPage/RecipesPage';
+import MealsPage from './pages/RecipesPage/MealsPage';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import ExplorePage from './pages/ExplorePage/ExplorePage';
 import InProgress from './pages/InProgress/InProgres';
@@ -14,15 +14,16 @@ import ExploreIngredients from './pages/ExploreIngredients/ExploreIngredients';
 import ExploreByArea from './pages/ExploreByArea/ExploreByArea';
 import CompletedRecipes from './pages/CompletedRecipes/CompletedRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes/FavoriteRecipes';
+import DrinksPage from './pages/DrinksPage/DrinksPage';
 
 function App() {
   return (
     <RecipesAppProvider>
       <Switch>
         <Route exact path="/" component={ Login } />
-        <Route exact path="/comidas" component={ RecipesPage } />
+        <Route exact path="/bebidas" component={ DrinksPage } />
+        <Route exact path="/comidas" component={ MealsPage } />
         <Route exact path="/perfil" component={ ProfilePage } />
-        <Route exact path="/bebidas" component={ RecipesPage } />
         <Route exact path="/comidas/:id" component={ RecipesDetails } />
         <Route exact path="/bebidas/:id" component={ RecipesDetails } />
         <Route exact path="/comidas/:id/in-progress" component={ InProgress } />
