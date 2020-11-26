@@ -40,8 +40,8 @@ function DetalhesBebida(props) {
         <Header title="Detalhes Bebidas" />
         {
           fetchById.map((drink, index) => (
-            <div key={index}>
-              <img data-testid="recipe-photo" src={drink.strDrinkThumb} alt="" />
+            <div key={ index }>
+              <img data-testid="recipe-photo" src={ drink.strDrinkThumb } alt="" />
               <h2 data-testid="recipe-title">{drink.strDrink}</h2>
               <button data-testid="share-btn" type="button">Compartilhar</button>
               <button data-testid="favorite-btn" type="button">Favoritar</button>
@@ -50,8 +50,8 @@ function DetalhesBebida(props) {
                 const measure = getIngredients(drink, /strMeasure/);
                 return (
                   <p
-                    key={indx}
-                    data-testid={`${indx}-ingredient-name-and-measure`}
+                    key={ indx }
+                    data-testid={ `${indx}-ingredient-name-and-measure` }
                   >
                     {`- ${item} - ${measure[indx]}`}
                   </p>
@@ -64,8 +64,8 @@ function DetalhesBebida(props) {
                 {meals.length && (meals
                   .filter((_, indx) => indx < seis)
                   .map((food, i) => (
-                    <div data-testid={`${i}-recomendation-card`}>
-                      <MealsCard key={food} food={food} index={i} />
+                    <div key={ i } data-testid={ `${i}-recomendation-card` }>
+                      <MealsCard food={ food } index={ i } />
                     </div>
                   )))}
               </div>

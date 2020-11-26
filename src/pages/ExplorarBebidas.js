@@ -25,7 +25,7 @@ const ExplorarBebidas = () => {
           Por Ingredientes
         </button>
       </Link>
-      <Link to={ `/bebidas/${randomDrinkID}` } onClick={ ()=> setFetchById(false) }>
+      <Link to={ `/bebidas/${randomDrinkID}` } onClick={ () => setFetchById(false) }>
         <button data-testid="explore-surprise" type="button">Me Surpreenda!</button>
       </Link>
       <Footer />

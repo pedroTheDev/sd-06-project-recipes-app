@@ -5,18 +5,21 @@ import '../style/RecipesList.css';
 
 function DrinkCard({ drink, index }) {
   return (
-    <Link to={ `/bebidas/${drink.idDrink}` }>
-      <div className="recipe-card" data-testid={ `${index}-recipe-card` }>
+    <Link
+      to={ `/bebidas/${drink.idDrink}` }
+      className="recipe-card"
+      data-testid={ `${index}-recipe-card` }
+    >
+      <div data-testid={ `${index}-card-img` }>
         <img
-          data-testid={ `${index}-card-img` }
           className="recipe-img"
           src={ drink.strDrinkThumb }
           alt={ drink.strDrink }
         />
-        <h3 data-testid={ `${index}-card-name` } className="recipe-name">
-          {drink.strDrink}
-        </h3>
       </div>
+      <h3 data-testid={ `${index}-card-name` } className="recipe-name">
+        {drink.strDrink}
+      </h3>
     </Link>
   );
 }

@@ -16,7 +16,7 @@ const ExplorarComidas = () => {
 
   return (
     <div>
-      <Header title="Explorar Comsidas" />
+      <Header title="Explorar Comidas" />
       <Link to="/explorar/comidas/ingredientes">
         <button
           data-testid="explore-by-ingredient"
@@ -28,7 +28,7 @@ const ExplorarComidas = () => {
       <Link to="/explorar/comidas/area">
         <button data-testid="explore-by-area" type="button"> Por Local de Origem</button>
       </Link>
-      <Link to={ `/comidas/${randomMealID}` } onClick={ ()=> setFetchById(false) }>
+      <Link to={ `/comidas/${randomMealID}` } onClick={ () => setFetchById(false) }>
         <button data-testid="explore-surprise" type="button">Me Surpreenda!</button>
       </Link>
       <Footer />

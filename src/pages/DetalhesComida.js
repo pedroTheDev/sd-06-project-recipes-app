@@ -39,8 +39,8 @@ function DetalhesComida(props) {
         <Header title="Detalhes Comidas" />
         {
           fetchById.map((meal, index) => (
-            <div key={index}>
-              <img data-testid="recipe-photo" src={meal.strMealThumb} alt="" />
+            <div key={ index }>
+              <img data-testid="recipe-photo" src={ meal.strMealThumb } alt="" />
               <h2 data-testid="recipe-title">{meal.strMeal}</h2>
               <button data-testid="share-btn" type="button">Compartilhar</button>
               <button data-testid="favorite-btn" type="button">Favoritar</button>
@@ -49,17 +49,17 @@ function DetalhesComida(props) {
                 const measure = getIngredients(meal, /strMeasure/);
                 return (
                   <p
-                    key={indx}
-                    data-testid={`${indx}-ingredient-name-and-measure`}
+                    key={ indx }
+                    data-testid={ `${indx}-ingredient-name-and-measure` }
                   >
-                    { `- ${item} - ${measure[indx]} `}
+                    {`- ${item} - ${measure[indx]} `}
                   </p>
                 );
               })}
               <p data-testid="instructions">{meal.strInstructions}</p>
               <iframe
                 data-testid="video"
-                src={meal.strYoutube.replace('watch?v=', 'embed/')}
+                src={ meal.strYoutube.replace('watch?v=', 'embed/') }
                 title="frame"
               />
               <h2>Receitas Recomendadas</h2>
@@ -67,8 +67,8 @@ function DetalhesComida(props) {
                 {drinks
                   .filter((_, indx) => indx < seis)
                   .map((drink, i) => (
-                    <div data-testid={`${i}-recomendation-card`}>
-                      <DrinksCard key={drink} drink={drink} index={i} />
+                    <div key={ i } data-testid={ `${i}-recomendation-card` }>
+                      <DrinksCard key={ drink } drink={ drink } index={ i } />
                     </div>
                   ))}
               </div>
