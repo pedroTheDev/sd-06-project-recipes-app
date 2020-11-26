@@ -14,7 +14,7 @@ const Cards = () => {
         apiValueSearch.foods.meals && apiValueSearch.foods.meals.map((meal, index) => {
           if (index <= number) {
             return (
-              <div key={ meal.strMeal } data-testid={ `${index}-recipe-card` }>
+              <div className="card-comida" key={ meal.strMeal } data-testid={ `${index}-recipe-card` }>
                 <p data-testid={ `${index}-card-name` }>{meal.strMeal}</p>
                 <img
                   width="200"
