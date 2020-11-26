@@ -56,7 +56,6 @@ class Foods extends React.Component {
     const INITIAL_VALUE = 0;
     const { history } = this.props;
     const { Meals, Categories } = this.state;
-    const INITIAL_VALUE = 0;
     return (
       <div className="food-drink-container">
         <Header history={ history } />

@@ -61,72 +61,76 @@ class FoodCard extends React.Component {
               type="image"
               data-testid={ `${i + indexAcc}-horizontal-image` }
               src={ element.image }
-              width="200px"
               alt="horizontal"
+              className="done-recipe-image"
               onClick={ () => history.push(`/comidas/${element.id}`) }
             />
-            <div className="food-drink-top-div">
-              <div className="food-drink-titles">
-                <button
-                  type="button"
-                  data-testid={ `${i + indexAcc}-horizontal-name` }
-                  onClick={ () => history.push(`/comidas/${element.id}`) }
-                  value={ element.name }
-                >
-                  { element.name }
-                </button>
-                <p data-testid={ `${i + indexAcc}-horizontal-top-text` }>
-                  {`${element.area} - ${element.category}`}
+            <div className="left-side-div">
+              <div className="food-drink-top-div">
+                <div className="food-drink-titles">
+                  <p data-testid={ `${i + indexAcc}-horizontal-top-text` }>
+                    {`${element.area} - ${element.category}`}
+                  </p>
+                  <button
+                    type="button"
+                    data-testid={ `${i + indexAcc}-horizontal-name` }
+                    onClick={ () => history.push(`/comidas/${element.id}`) }
+                    value={ element.name }
+                    className="button-title"
+                  >
+                    { element.name }
+                  </button>
+                </div>
+                <div className="food-drink-image">
+                  <input
+                    type="image"
+                    data-testid={ `${i + indexAcc}-horizontal-share-btn` }
+                    src={ shareIcon }
+                    alt="share"
+                    className="done-recipe-share-btn"
+                    onClick={ () => this.handleShareFood(element) }
+                  />
+                </div>
+              </div>
+              <aside className="food-drink-footer">
+                <p data-testid={ `${i + indexAcc}-horizontal-done-date` }>
+                  {element.doneDate}
                 </p>
-              </div>
-              <div className="food-drink-image">
-                <input
-                  type="image"
-                  data-testid={ `${i + indexAcc}-horizontal-share-btn` }
-                  src={ shareIcon }
-                  alt="share"
-                  onClick={ () => this.handleShareFood(element) }
-                />
-              </div>
+                {typeof element.tags === 'string'
+                  ? (
+                    <div className="tags-div">
+                      <p
+                        key="tag0"
+                        data-testid={ `${i}-${element.tags.split(',')[0]}-horizontal-tag` }
+                      >
+                        { `${element.tags.split(',')[0]}`}
+                      </p>
+                      <p
+                        key="tag1"
+                        data-testid={ `${i}-${element.tags.split(',')[1]}-horizontal-tag` }
+                      >
+                        { `${element.tags.split(',')[1]}`}
+                      </p>
+                    </div>
+                  )
+                  : (
+                    <div className="tags-div">
+                      <p
+                        key="tag0"
+                        data-testid={ `${i}-${element.tags[0]}-horizontal-tag` }
+                      >
+                        { `${element.tags[0]}`}
+                      </p>
+                      <p
+                        key="tag1"
+                        data-testid={ `${i}-${element.tags[1]}-horizontal-tag` }
+                      >
+                        { `${element.tags[1]}`}
+                      </p>
+                    </div>
+                  )}
+              </aside>
             </div>
-            <aside className="food-drink-footer">
-              <p data-testid={ `${i + indexAcc}-horizontal-done-date` }>
-                {element.doneDate}
-              </p>
-              {typeof element.tags === 'string'
-                ? (
-                  <div className="tags-div">
-                    <p
-                      key="tag0"
-                      data-testid={ `${i}-${element.tags.split(',')[0]}-horizontal-tag` }
-                    >
-                      { `${element.tags.split(',')[0]}`}
-                    </p>
-                    <p
-                      key="tag1"
-                      data-testid={ `${i}-${element.tags.split(',')[1]}-horizontal-tag` }
-                    >
-                      { `${element.tags.split(',')[1]}`}
-                    </p>
-                  </div>
-                )
-                : (
-                  <div className="tags-div">
-                    <p
-                      key="tag0"
-                      data-testid={ `${i}-${element.tags[0]}-horizontal-tag` }
-                    >
-                      { `${element.tags[0]}`}
-                    </p>
-                    <p
-                      key="tag1"
-                      data-testid={ `${i}-${element.tags[1]}-horizontal-tag` }
-                    >
-                      { `${element.tags[1]}`}
-                    </p>
-                  </div>
-                )}
-            </aside>
           </div>))}
       </div>
     );

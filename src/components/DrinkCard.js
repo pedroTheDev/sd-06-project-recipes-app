@@ -63,39 +63,44 @@ class DrinkCard extends React.Component {
               src={ element.image }
               width="200px"
               alt="horizontal"
+              className="done-recipe-image"
               onClick={ () => history.push(`/bebidas/${element.id}`) }
             />
-            <div className="food-drink-top-div">
-              <div className="food-drink-titles">
-                <button
-                  type="button"
-                  data-testid={ `${index + indexAcc}-horizontal-name` }
-                  onClick={ () => history.push(`/bebidas/${element.id}`) }
-                  value={ element.name }
-                >
-                  { element.name }
-                </button>
+            <div className="left-side-div">
+              <div className="food-drink-top-div">
+                <div className="food-drink-titles">
+                  <button
+                    type="button"
+                    data-testid={ `${index + indexAcc}-horizontal-name` }
+                    onClick={ () => history.push(`/bebidas/${element.id}`) }
+                    value={ element.name }
+                    className="button-title"
+                  >
+                    { element.name }
+                  </button>
+                </div>
+                <div className="food-drink-image">
+                  <input
+                    type="image"
+                    data-testid={ `${index + indexAcc}-horizontal-share-btn` }
+                    src={ shareIcon }
+                    alt="share"
+                    className="done-recipe-share-btn"
+                    onClick={ () => this.handleShareDrink(element) }
+                  />
+                </div>
               </div>
-              <div className="food-drink-image">
-                <input
-                  type="image"
-                  data-testid={ `${index + indexAcc}-horizontal-share-btn` }
-                  src={ shareIcon }
-                  alt="share"
-                  onClick={ () => this.handleShareDrink(element) }
-                />
-              </div>
-            </div>
-            <aside className="food-drink-footer">
-              <div className="tags-div">
-                <p data-testid={ `${index + indexAcc}-horizontal-top-text` }>
-                  {element.alcoholicOrNot}
-                </p>
+              <aside className="food-drink-footer">
                 <p data-testid={ `${index + indexAcc}-horizontal-done-date` }>
                   {element.doneDate}
                 </p>
-              </div>
-            </aside>
+                <div className="tags-div">
+                  <p data-testid={ `${index + indexAcc}-horizontal-top-text` }>
+                    {element.alcoholicOrNot}
+                  </p>
+                </div>
+              </aside>
+            </div>
           </div>))}
       </div>
     );

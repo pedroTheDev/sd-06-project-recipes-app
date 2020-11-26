@@ -49,7 +49,7 @@ class DoneRecipes extends React.Component {
     return (
       <div className="done-recipes-container">
         <Header history={ history } />
-        <div className="category-buttons">
+        <div className="category-buttons buttons-done">
           <button
             id="all"
             data-testid="filter-by-all-btn"
