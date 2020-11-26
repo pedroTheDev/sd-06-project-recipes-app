@@ -40,15 +40,13 @@ function Card() {
         tabIndex="0"
         data-testid={ `${index}-recipe-card` }
         key={ index }
-        // style={ { border: 'solid 3px black' } }
       >
-        <p data-testid={ `${index}-card-name` }>{recipe[name]}</p>
+        <p data-testid={ `${index}-card-name` } id={ recipe[id] }>{recipe[name]}</p>
         <img
           data-testid={ `${index}-card-img` }
           src={ recipe[thumb] }
           alt={ typeRecipe }
-          // onClick={ goToDetails }
-          // id={ recipe[id] }
+          id={ recipe[id] }
           aria-hidden="true"
           width="100px"
         />
