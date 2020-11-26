@@ -12,8 +12,8 @@ const RecipeDetails = () => {
     DrinkRecommendation,
     setIds,
     setDrinkRecommendation } = useContext(RecipeContext);
-  const [recipeDetailDrink, setRecipeDetailDrink] = useState([]);
   const [recipeDetailFood, setRecipeDetailFood] = useState([]);
+  const [recipeDetailDrink, setRecipeDetailDrink] = useState('foi');
   const { pathname } = history.location;
   const ids = pathname.split('/')[2];
 
@@ -22,8 +22,8 @@ const RecipeDetails = () => {
     const recipeFood = await food.meals;
     const drink = await recipeRequest(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${ids}`);
     const recipeDrink = await drink.drinks;
-    setRecipeDetailDrink(recipeDrink);
     setRecipeDetailFood(recipeFood);
+    setRecipeDetailDrink(recipeDrink);
   };
 
   const getRecommendation = async () => {
@@ -34,6 +34,11 @@ const RecipeDetails = () => {
     setFoodRecommendation(foodsData);
     setDrinkRecommendation(drinksData);
   };
+
+  useEffect(() => {
+    getAPI();
+    getRecommendation();
+  }, []);
 
   const handleIngredientsFood = () => {
     const NINE = 9;
@@ -54,7 +59,6 @@ const RecipeDetails = () => {
     const FIFTY_ONE = 51;
     const ingredients = Object.values(recipeDetailDrink[0]).slice(TWENTY_ONE, THIRTY_SIX);
     const measures = Object.values(recipeDetailDrink[0]).slice(THIRTY_SIX, FIFTY_ONE);
-    console.log(ingredients, measures);
     return ingredients
       .filter((drink) => drink !== null && drink !== '').map((ingredient, index) => (
         <li key={ index } data-testid={ `${index}-ingredient-name-and-measure` }>
@@ -62,10 +66,6 @@ const RecipeDetails = () => {
         </li>
       ));
   };
-  useEffect(() => {
-    getAPI();
-    getRecommendation();
-  }, []);
 
   const renderRecipe = () => {
     if (pathname === `/comidas/${ids}` && recipeDetailFood.length >= 1) {
@@ -96,7 +96,7 @@ const RecipeDetails = () => {
                   <Link
                     onClick={ () => setIds(drinks.idDrink) }
                     to={ `/bebidas/${drinks.idDrink}` }
-                    key="index"
+                    key={ index }
                   >
                     <div
                       data-testid={ `${index}-recomendation-card` }
@@ -128,22 +128,22 @@ const RecipeDetails = () => {
         </div>
       );
     }
-    if (pathname === `/bebidas/${ids}` && recipeDetailDrink.length >= 1) {
-      return (
-        <div>
+    if (recipeDetailDrink[0].strDrink) {
+      return recipeDetailDrink.map((drink) => (
+        <div key="1">
           <img
             alt="product"
             data-testid="recipe-photo"
-            src={ recipeDetailDrink[0].strDrinkThumb }
+            src={ drink.strDrinkThumb }
           />
-          <h1 data-testid="recipe-title">{ recipeDetailDrink[0].strDrink }</h1>
+          <h1 data-testid="recipe-title">{ drink.strDrink }</h1>
           <button type="button" data-testid="share-btn">Share</button>
           <button type="button" data-testid="favorite-btn">Favorite</button>
-          <p data-testid="recipe-category">{recipeDetailDrink[0].strAlcoholic}</p>
+          <p data-testid="recipe-category">{drink.strAlcoholic}</p>
           {
             handleIngredientsDrinks()
           }
-          <p data-testid="instructions">{ recipeDetailDrink[0].strInstructions }</p>
+          <p data-testid="instructions">{ drink.strInstructions }</p>
           <div>
             {
               foodRecommendation && foodRecommendation.length && foodRecommendation
@@ -152,7 +152,7 @@ const RecipeDetails = () => {
                   <Link
                     onClick={ () => setIds(meals.idMeal) }
                     to={ `/comidas/${meals.idMeal}` }
-                    key="index"
+                    key={ index }
                   >
                     <div
                       data-testid={ `${index}-recomendation-card` }
@@ -178,7 +178,7 @@ const RecipeDetails = () => {
             Start Recipe
           </button>
         </div>
-      );
+      ));
     }
   };
   return (

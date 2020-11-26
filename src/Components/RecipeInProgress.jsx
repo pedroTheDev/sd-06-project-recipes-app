@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-// import RecipeContext from '../hooks/RecipeContext';
+import RecipeContext from '../hooks/RecipeContext';
 import recipeRequest from '../services/recipeRequest';
 
 const RecipeInProgress = () => {
@@ -10,7 +10,7 @@ const RecipeInProgress = () => {
   const [recipeDetailDrink, setRecipeDetailDrink] = useState([]);
   const [recipeDetailFood, setRecipeDetailFood] = useState([]);
   const [disable, setDisable] = useState(true);
-  // const { inProgressRecipes, setInProgressRecipes } = useContext(RecipeContext);
+  const { inProgressRecipes } = useContext(RecipeContext);
   const getAPI = async () => {
     const food = await recipeRequest(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
     const recipeFood = await food.meals;
@@ -24,16 +24,17 @@ const RecipeInProgress = () => {
     getAPI();
   }, []);
 
-  const handleCheckbox = () => {
-    /* if (target.checked === true) {
-      const progress = {
-        ...inProgressRecipes,
-        meals: { ...inProgressRecipes.meals, [id]: [target.id] },
-      };
-      setInProgressRecipes(progress);
-      localStorage.inProgressRecipes = JSON.stringify(progress);
+  const handleCheckbox = ({ target }) => {
+    const progress = {
+      ...inProgressRecipes,
+      meals: { ...inProgressRecipes.meals, [id]: [target.id] },
+    };
+    localStorage.inProgressRecipes = JSON.stringify(progress);
+    const ingr = JSON.parse(localStorage.inProgressRecipes);
+    console.log(ingr.meals[id][0]);
+    if (target.id === ingr.meals[id][0]) {
+      target.checked = true;
     }
-    */
     const items = document.getElementsByClassName('checks');
     const arr = Array.from(items);
     if (arr.every((item) => item.checked === true)) {
@@ -43,40 +44,15 @@ const RecipeInProgress = () => {
     }
   };
 
-  const handleIngredientsFood = () => {
-    const NINE = 9;
-    const TWENTY_NINE = 29;
-    const FOURTY_NINE = 49;
-    const ingredients = Object.values(recipeDetailFood[0]).slice(NINE, TWENTY_NINE);
-    const measures = Object.values(recipeDetailFood[0]).slice(TWENTY_NINE, FOURTY_NINE);
-    return ingredients
-      .filter((food) => food !== null && food !== '').map((ingredient, index) => (
-        <div
-          key={ index }
-          data-testid={ `${index}-ingredient-step` }
-        >
-          <label htmlFor={ ingredient }>
-            <input
-              className="checks"
-              type="checkbox"
-              id={ ingredient }
-              onChange={ handleCheckbox }
-            />
-            { `${ingredient} - ${measures[index]}` }
-          </label>
-        </div>
-      ));
-  };
-
-  const handleIngredientsDrinks = () => {
+  const handleIngredients = (recipe) => {
     const THIRTY_SIX = 36;
     const TWENTY_ONE = 21;
     const FIFTY_ONE = 51;
-    const ingredients = Object.values(recipeDetailDrink[0]).slice(TWENTY_ONE, THIRTY_SIX);
-    const measures = Object.values(recipeDetailDrink[0]).slice(THIRTY_SIX, FIFTY_ONE);
-    console.log(ingredients, measures);
+    const ingredients = Object.values(recipe[0]).slice(TWENTY_ONE, THIRTY_SIX);
+    const measures = Object.values(recipe[0]).slice(THIRTY_SIX, FIFTY_ONE);
     return ingredients
-      .filter((drink) => drink !== null && drink !== '').map((ingredient, index) => (
+      .filter((recipes) => recipes !== null && recipes !== '')
+      .map((ingredient, index) => (
         <div
           key={ index }
           data-testid={ `${index}-ingredient-step` }
@@ -107,7 +83,7 @@ const RecipeInProgress = () => {
         <button type="button" data-testid="favorite-btn">Favorite</button>
         <p data-testid="recipe-category">{ food.strCategory }</p>
         {
-          handleIngredientsFood()
+          handleIngredients(recipeDetailFood)
         }
         <p data-testid="instructions">{ food.strInstructions }</p>
         <Link to="/receitas-feitas">
@@ -134,7 +110,7 @@ const RecipeInProgress = () => {
       <button type="button" data-testid="favorite-btn">Favorite</button>
       <p data-testid="recipe-category">{drink.strAlcoholic}</p>
       {
-        handleIngredientsDrinks()
+        handleIngredients(recipeDetailDrink)
       }
       <p data-testid="instructions">{ drink.strInstructions }</p>
       <Link to="/receitas-feitas">

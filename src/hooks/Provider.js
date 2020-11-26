@@ -12,8 +12,6 @@ const Provider = ({ children }) => {
   const [ids, setIds] = useState('');
   const [foodRecommendation, setFoodRecommendation] = useState([]);
   const [DrinkRecommendation, setDrinkRecommendation] = useState([]);
-  const [recipeDetailDrink, setRecipeDetailDrink] = useState([]);
-  const [recipeDetailFood, setRecipeDetailFood] = useState([]);
   const [inProgressRecipes, setInProgressRecipes] = useState({});
 
   const getAPI = async () => {
@@ -48,10 +46,6 @@ const Provider = ({ children }) => {
     setFoodRecommendation,
     DrinkRecommendation,
     setDrinkRecommendation,
-    recipeDetailDrink,
-    setRecipeDetailDrink,
-    recipeDetailFood,
-    setRecipeDetailFood,
     inProgressRecipes,
     setInProgressRecipes,
   };
@@ -64,7 +58,7 @@ const Provider = ({ children }) => {
 };
 
 Provider.propTypes = {
-  children: propTypes.func.isRequired,
+  children: propTypes.node.isRequired,
 };
 
 export default Provider;

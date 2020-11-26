@@ -113,7 +113,7 @@ export default function MainScreen() {
           <Link
             to={ `/comidas/${food.idMeal}` }
             onClick={ () => handleIds(food) }
-            key="index"
+            key={ index }
           >
             <div
               data-testid={ `${index}-recipe-card` }
@@ -129,14 +129,13 @@ export default function MainScreen() {
         ));
     }
 
-    if (pathname === '/bebidas') {
-      return (drinkRecipes && drinkRecipes.length && drinkRecipes
-        .filter((_, index) => index < twelve)
+    if (pathname === '/bebidas' && drinkRecipes) {
+      return (drinkRecipes.filter((_, index) => index < twelve)
         .map((drinks, index) => (
           <Link
             onClick={ () => setIds(drinks.idDrink) }
             to={ `/bebidas/${drinks.idDrink}` }
-            key="index"
+            key={ index }
           >
             <div data-testid={ `${index}-recipe-card` } key="index">
               <img
