@@ -171,6 +171,7 @@ function DrinkInProgress(props) {
             </li>
           ))}
         </ul>
+
         <p data-testid="instructions">{ recipe.strInstructions }</p>
         <textarea
           className="text-area"
