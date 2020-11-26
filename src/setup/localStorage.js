@@ -44,10 +44,10 @@ function setMockedLocalStorage() {
 
   const favoriteRecipes = [
     {
-      id: "15997",
+      id: '15997',
     },
     {
-      id: "17203",
+      id: '17203',
     },
   ];
   const mockedRecipesInprogress = {

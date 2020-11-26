@@ -25,6 +25,9 @@ function FavButton({ isFav, setIsFav, id, recipe, type }) {
 FavButton.propTypes = {
   isFav: PropTypes.bool.isRequired,
   setIsFav: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  recipe: PropTypes.shape.isRequired,
 };
 
 export default FavButton;
