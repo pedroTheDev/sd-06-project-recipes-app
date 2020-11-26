@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { fetchDetail, fetchRecommendation } from '../helpers/Helper';
+
 import '../css/scroller.css';
 import '../css/itemDetails.css';
 import shareIcon from '../images/shareIcon.svg';
