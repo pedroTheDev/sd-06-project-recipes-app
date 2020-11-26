@@ -9,6 +9,7 @@ function Profile() {
   if (!JSON.parse(localStorage.getItem('user'))) {
     return (
       <>
+        <Header title="Perfil" />
         <span>Você não está logado!</span>
         <Footer />
         {/* {  history.push('/') } */}
