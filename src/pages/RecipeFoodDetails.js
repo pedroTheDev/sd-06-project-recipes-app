@@ -91,7 +91,6 @@ function RecipeFoodDetails({ match }) {
           allow="accelerometer; autoplay; clipboard-write; encrypted-media"
           allowFullScreen
         />
-        <div data-testid={ `${ZERO}-recomendation-card` } />
         <button type="button" data-testid="start-recipe-btn">Iniciar Receita</button>
 
         <div className="scrollmenu">

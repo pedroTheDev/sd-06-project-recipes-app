@@ -91,7 +91,6 @@ function RecipeDrinkDetails({ match }) {
           ))}
         </ul>
         <p data-testid="instructions">{recipes[0].strInstructions}</p>
-        <div data-testid={ `${ZERO}-recomendation-card` } />
         <button type="button" data-testid="start-recipe-btn">Iniciar Receita</button>
 
         <div className="scrollmenu">
