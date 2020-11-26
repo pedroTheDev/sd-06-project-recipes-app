@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import copy from 'clipboard-copy';
 import '../App.css';
 import Context from '../context/Context';
 import Cards from '../components/Cards';
@@ -18,6 +19,7 @@ function RecipeDetails(props) {
   } = useContext(Context);
   const { match: { path, params } } = props;
   const [fav, setFav] = useState('white');
+  const [copied, setCopied] = useState('');
   const ZERO = 0;
   const SIX = 6;
 
@@ -43,6 +45,12 @@ function RecipeDetails(props) {
 
   const getVideoId = (link) => link.split('=').pop();
 
+  const share = () => {
+    copy(`http://localhost:3000${props.location.pathname}`);
+    setCopied('copy');
+    setTimeout(() => setCopied(false), 3000);
+  };
+
   return (
     <div>
       <h1>Página de Details</h1>
@@ -63,7 +71,9 @@ function RecipeDetails(props) {
               src={ shareIcon }
               data-testid="share-btn"
               alt="share-icon"
+              onClick={ () => share() }
             />
+            { copied ? <span>Link copiado!</span> : '' }
             <input
               type="image"
               src={ fav === 'white' ? whiteHeartIcon : blackHeartIcon }
