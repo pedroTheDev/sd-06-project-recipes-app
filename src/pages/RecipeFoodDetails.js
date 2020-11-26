@@ -60,14 +60,6 @@ function RecipeFoodDetails({ match }) {
           src={ recipes[0].strMealThumb }
           alt={ recipes[0].strMeal }
         />
-        <h4 data-testid="recipe-title">
-          {' '}
-          { recipes[0].strMeal }
-          {' '}
-        </h4>
-        <button type="button" data-testid="share-btn">Compartilhar</button>
-        <button type="button" data-testid="favorite-btn">Favoritar</button>
-        <p data-testid="recipe-category">{recipes[0].strCategory}</p>
         <ul>
           {arrIngredient.map((ingredient, index) => (
             <li
@@ -118,7 +110,7 @@ function RecipeFoodDetails({ match }) {
     );
   }
 
-  return <span>Ops...</span>;
+  return <span>Ops..</span>;
 }
 
 RecipeFoodDetails.propTypes = {
