@@ -1,7 +1,9 @@
 import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
+import { Link } from 'react-router-dom';
 import RecipesContext from '../context/RecipesAppContext';
+import RecipeDrinkProcess from './RecipeDrinkProcess';
 
 const ZERO = 0;
 const TWENTY = 20;
@@ -87,15 +89,15 @@ function RecipeFoodDetails({ match }) {
           data-testid="video"
           width="280"
           height="150"
-          // src="https://www.youtube.com/watch?v=1IszT_guI08"
           src={ recipes[0].strYoutube }
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media"
           allowFullScreen
         />
         <div data-testid={ `${ZERO}-recomendation-card` } />
-        <button type="button" data-testid="start-recipe-btn">Iniciar Receita</button>
-
+        <Link to={ `/comidas/${id}/in-progress` }>
+          <button type="button" data-testid="start-recipe-btn">Iniciar Receita</button>
+        </Link>
       </div>
     );
   }

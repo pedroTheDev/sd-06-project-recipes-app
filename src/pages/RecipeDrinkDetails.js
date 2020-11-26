@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import RecipesContext from '../context/RecipesAppContext';
+import { Link } from 'react-router-dom';
 
 const ZERO = 0;
 const TWENTY = 20;
@@ -84,7 +85,9 @@ function RecipeDrinkDetails({ match }) {
         </ul>
         <p data-testid="instructions">{recipes[0].strInstructions}</p>
         <div data-testid={ `${ZERO}-recomendation-card` } />
-        <button type="button" data-testid="start-recipe-btn">Iniciar Receita</button>
+        <Link to={ `/bebidas/${id}/in-progress` }>
+          <button type="button" data-testid="start-recipe-btn">Iniciar Receita</button>
+        </Link>
       </div>
     );
   }
