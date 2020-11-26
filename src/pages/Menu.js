@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import RecipeList from '../components/RecipeList';
 import Footer from '../components/Footer';
 
-function Comidas() {
+function Menu() {
   return (
     <div>
       <Header />
@@ -13,4 +13,4 @@ function Comidas() {
   );
 }
 
-export default Comidas;
+export default Menu;
