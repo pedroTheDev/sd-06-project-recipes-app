@@ -20,6 +20,14 @@ const RecipeInProgress = () => {
     setRecipeDetailFood(recipeFood);
   };
 
+  const NINE = 9;
+  const TWENTY_NINE = 29;
+  const FOURTY_NINE = 49;
+
+  const THIRTY_SIX = 36;
+  const TWENTY_ONE = 21;
+  const FIFTY_ONE = 51;
+
   useEffect(() => {
     getAPI();
   }, []);
@@ -44,12 +52,9 @@ const RecipeInProgress = () => {
     }
   };
 
-  const handleIngredients = (recipe) => {
-    const THIRTY_SIX = 36;
-    const TWENTY_ONE = 21;
-    const FIFTY_ONE = 51;
-    const ingredients = Object.values(recipe[0]).slice(TWENTY_ONE, THIRTY_SIX);
-    const measures = Object.values(recipe[0]).slice(THIRTY_SIX, FIFTY_ONE);
+  const handleIngredients = (recipe, initial, middle, end) => {
+    const ingredients = Object.values(recipe).slice(initial, middle);
+    const measures = Object.values(recipe).slice(middle, end);
     return ingredients
       .filter((recipes) => recipes !== null && recipes !== '')
       .map((ingredient, index) => (
@@ -83,7 +88,7 @@ const RecipeInProgress = () => {
         <button type="button" data-testid="favorite-btn">Favorite</button>
         <p data-testid="recipe-category">{ food.strCategory }</p>
         {
-          handleIngredients(recipeDetailFood)
+          handleIngredients(food, NINE, TWENTY_NINE, FOURTY_NINE)
         }
         <p data-testid="instructions">{ food.strInstructions }</p>
         <Link to="/receitas-feitas">
@@ -110,7 +115,7 @@ const RecipeInProgress = () => {
       <button type="button" data-testid="favorite-btn">Favorite</button>
       <p data-testid="recipe-category">{drink.strAlcoholic}</p>
       {
-        handleIngredients(recipeDetailDrink)
+        handleIngredients(drink, TWENTY_ONE, THIRTY_SIX, FIFTY_ONE)
       }
       <p data-testid="instructions">{ drink.strInstructions }</p>
       <Link to="/receitas-feitas">
