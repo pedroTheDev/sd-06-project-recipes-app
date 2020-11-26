@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import HeartIcon from '../images/blackHeartIcon.svg';
+import blackHeart from '../images/blackHeartIcon.svg';
+import whiteHeart from '../images/whiteHeartIcon.svg';
 import ShareIcon from '../images/shareIcon.svg';
 import '../Components/style/style.css';
 import * as api from '../services/Api';
@@ -18,6 +19,7 @@ export default function DetalhesBebidas() {
   } = useContext(Context);
   const [arrayIngredients, setArrayIngredients] = useState([]);
   const [recomendedMeals, setRecomendedMeals] = useState([]);
+  const [favoriteImg, setFavoriteImg] = useState(whiteHeart);
 
   const setarBebida = async () => {
     setLoading(true);
@@ -28,8 +30,15 @@ export default function DetalhesBebidas() {
     setLoading(false);
   };
 
+  const verifyFavorite = () => {
+    if (favoriteDrinks.includes(selectedDrink)) {
+      setFavoriteImg(blackHeart);
+    }
+  };
+
   useEffect(() => {
     setarBebida();
+    verifyFavorite();
   }, []);
 
   const collectIngredients = () => {
@@ -49,9 +58,28 @@ export default function DetalhesBebidas() {
     collectIngredients();
   }, [selectedDrink]);
 
+  /* Para salvar no LocalSotrage dessa forma:
+  localStorage.setItem('favoriteRecipes', JSON.stringfy(saveFavoriteRecipes)); */
+  // const saveFavoriteRecipe = {
+  //   id: selectedDrink.idDrink,
+  //   type: 'drinks',
+  //   area: '',
+  //   category: selectedDrink.strCategory,
+  //   alcoholicOrNot: selectedDrink.strAlcoholic,
+  //   name: selectedDrink.strDrink,
+  //   image: selectedDrink.strDrinkThumb,
+  // };
+
   const clickFavorite = () => {
-    setFavoriteDrinks(...favoriteDrinks, selectedDrink);
-    localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteDrinks));
+    if (favoriteImg === whiteHeart) {
+      setFavoriteDrinks(...favoriteDrinks, [selectedDrink]);
+      return setFavoriteImg(blackHeart);
+    }
+    const newDrinks = favoriteDrinks.filter(
+      (drink) => drink.strDrink !== selectedDrink.strDrink,
+    );
+    setFavoriteDrinks(newDrinks);
+    return setFavoriteImg(whiteHeart);
   };
 
   const seis = 6;
@@ -79,12 +107,12 @@ export default function DetalhesBebidas() {
             </button>
             <button
               type="button"
-              src={ HeartIcon }
+              src={ favoriteImg }
               alt="favoritar"
               data-testid="favorite-btn"
               onClick={ clickFavorite }
             >
-              Favoritar
+              <img src={ favoriteImg } alt="favoritar" />
             </button>
             <h3 data-testid="recipe-category">
               {selectedDrink.strCategory}

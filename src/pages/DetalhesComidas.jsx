@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import HeartIcon from '../images/blackHeartIcon.svg';
+import blackHeart from '../images/blackHeartIcon.svg';
+import whiteHeart from '../images/whiteHeartIcon.svg';
 import ShareIcon from '../images/shareIcon.svg';
 import '../Components/style/style.css';
 import * as api from '../services/Api';
@@ -18,6 +19,7 @@ export default function DetalhesComidas() {
   } = useContext(Context);
   const [arrayIngredients, setArrayIngredients] = useState([]);
   const [recomendedDrinks, setRecomendedDrinks] = useState([]);
+  const [favoriteImg, setFavoriteImg] = useState(whiteHeart);
 
   const setarComida = async () => {
     setLoading(true);
@@ -49,10 +51,30 @@ export default function DetalhesComidas() {
     collectIngredients();
   }, [selectedMeal]);
 
+  const saveFavoriteRecipe = {
+    id: selectedMeal.idMeal,
+    type: 'meal',
+    area: selectedMeal.strArea,
+    category: selectedMeal.strCategory,
+    alcoholicOrNot: '',
+    name: selectedMeal.strMeal,
+    image: selectedMeal.strMealThumb,
+  };
+
+  /*
+  const handleFavorite = (id) => {
+    const newFavorite =
+  }
+  */
+
   const clickFavorite = () => {
-    setFavoriteMeals(selectedMeal);
-    localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteMeals));
-    console.log(favoriteMeals);
+    setFavoriteMeals(...favoriteMeals, saveFavoriteRecipe);
+    console.log(selectedMeal);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(saveFavoriteRecipe));
+    if (favoriteImg === whiteHeart) {
+      return setFavoriteImg(blackHeart);
+    }
+    return setFavoriteImg(whiteHeart);
   };
 
   const seis = 6;
@@ -80,12 +102,12 @@ export default function DetalhesComidas() {
             </button>
             <button
               type="button"
-              src={ HeartIcon }
+              src={ favoriteImg }
               alt="favoritar"
               data-testid="favorite-btn"
               onClick={ clickFavorite }
             >
-              Favoritar
+              <img src={ favoriteImg } alt="favoritar" />
             </button>
             <h3 data-testid="recipe-category">{selectedMeal.strCategory}</h3>
             <h3>Ingredients</h3>
