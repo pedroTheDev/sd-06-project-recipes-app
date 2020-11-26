@@ -36,7 +36,6 @@ export default function RecipesProvider({ children }) {
     ReceitaEmAndamento: false,
     ReceitaConcluida: false,
   });
-  
   //
   const [listIngredients, setListIngredients] = useState([]);
   const [effectOnLoad, setEffectOnLoad] = useState(true);
@@ -72,6 +71,7 @@ export default function RecipesProvider({ children }) {
     fetchFood,
     setFetchFood,
     fetchDrink,
+    setFetchDrink,
     DrinkBtn,
     setDrinkBtn,
     FoodBtn,
@@ -84,8 +84,6 @@ export default function RecipesProvider({ children }) {
     setRadioValue,
     searchBar,
     setSearchBar,
-    setFetchDrink,
-
     foodDetail,
     setFoodDetail,
     drinkDetail,
@@ -96,7 +94,6 @@ export default function RecipesProvider({ children }) {
     setRecomendedDrink,
     recipeState,
     setRecipeState,
-
     setListIngredients,
     listIngredients,
     effectOnLoad,
