@@ -7,7 +7,7 @@ import getRecipesInformation from '../services/recipesAPI';
 function CategoryButtons({ type }) {
   const { setFetchedResults, setIsFetching } = useContext(RecipesContext);
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(['none']);
+  const [selectedCategory, setSelectedCategory] = useState('all');
   const [isFetchingCategories, setIsFetchingCategories] = useState(true);
 
   const categoriesButtons = async () => {
@@ -31,8 +31,8 @@ function CategoryButtons({ type }) {
   const handleCategorySelection = async ({ target: { name } }) => {
     let endpoint = '';
 
-    if (selectedCategory === name) {
-      setSelectedCategory('none');
+    if ((selectedCategory === name) || (selectedCategory !== name && name === 'all')) {
+      setSelectedCategory('all');
       return defaultRecipes();
     }
 
@@ -70,6 +70,20 @@ function CategoryButtons({ type }) {
               { category.strCategory }
             </button>
           ))
+      }
+      {
+        !isFetchingCategories
+        && (
+          <button
+            type="button"
+            onClick={ handleCategorySelection }
+            name="all"
+            key="all"
+            data-testid="All-category-filter"
+          >
+            All
+          </button>
+        )
       }
     </div>
   );
