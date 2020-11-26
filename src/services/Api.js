@@ -87,3 +87,9 @@ export const fetchMealsByArea = async () => {
   const result = await response.json();
   return result.meals;
 };
+
+export const fetchDrinkByCategory = async (cat) => {
+  const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${cat}`);
+  const result = await response.json();
+  return result.drinks;
+};
