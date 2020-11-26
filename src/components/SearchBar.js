@@ -7,21 +7,42 @@ export default function SearchBar() {
   const [product, setProduct] = useState('');
   const { setFetchMeal, setFetchDrink } = useContext(recipesAppContext);
 
-  const searchMeal = async (filterType, product) => {
-    setFetchMeal(filterType, product);
+  const searchMeal = async () => {
+    const meal = await setFetchMeal(filterType, product);
+    const id = meal.result.meals[0].idMeal;
+    if (meal.redirect) {
+      return window.location.replace(`/comidas/${id}`);
+    }
   };
 
-  const searchDrink = async (filterType, product) => {
-    setFetchDrink(filterType, product);
+  const searchDrink = async () => {
+    const drink = await setFetchDrink(filterType, product);
+    if (drink === null) {
+      return alert('Sinto muito, não encontramos nenhuma receita para esses filtros');
+    }
+    const id = drink.result.drinks[0].idDrink;
+    if (drink.redirect) {
+      return window.location.replace(`/bebidas/${id}`);
+    }
   };
 
   const { pathname } = useLocation();
 
-  const handleSearch = (filterType, product) => {
-    if (pathname === '/comidas') {
+  const handleSearch = () => {
+    if (filterType === 'firstLetter' && product.length > 1) {
+      alert('Sua busca deve conter somente 1 (um) caracter');
+    } else if (pathname === '/comidas') {
       searchMeal(filterType, product);
     } else if (pathname === '/bebidas') {
       searchDrink(filterType, product);
+    }
+  };
+
+  const validateForm = () => {
+    if (filterType && product) {
+      handleSearch(filterType, product);
+    } else {
+      alert('Preencha o campo de busca e o filtro');
     }
   };
 
@@ -87,8 +108,8 @@ export default function SearchBar() {
         <button
           data-testid="exec-search-btn"
           className="btn btn-primary"
-          type="submit"
-          onClick={ () => handleSearch(filterType, product) }
+          type="button"
+          onClick={ () => validateForm(filterType, product) }
         >
           Buscar
         </button>
