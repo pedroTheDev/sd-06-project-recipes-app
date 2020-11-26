@@ -31,7 +31,7 @@ function RecipeDrinkProcess(props) {
   };
 
   const markIngredient = (e) => {
-    if (recipeIngredient.length === 0) setRecipeIngredient([e]);
+    if (recipeIngredient.length === ZERO) setRecipeIngredient([e]);
     else {
       recipeIngredient.filter((ing) => (
         setRecipeIngredient((ing !== e) ? [...recipeIngredient, e] : [...recipeIngredient])

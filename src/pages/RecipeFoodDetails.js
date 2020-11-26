@@ -4,7 +4,7 @@ import RecipesContext from '../context/RecipesAppContext';
 import { Link } from 'react-router-dom';
 import './scroll.css';
 
-function RecipeFoodDetails({ match }) {
+function RecipeFoodDetails({ match, title }) {
   const { id } = match.params;
   const { recipes, setRecipes } = useContext(RecipesContext);
   const [recomendation, setRecomendation] = useState([]);
@@ -111,6 +111,7 @@ function RecipeFoodDetails({ match }) {
           <button
             type="button"
             data-testid="start-recipe-btn"
+            onClick={ () => console.log(title) }
           >
             Iniciar Receita
           </button>
