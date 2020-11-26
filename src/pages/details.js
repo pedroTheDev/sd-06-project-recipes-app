@@ -6,7 +6,9 @@ import MealCard from '../components/MealCard';
 
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-// import blackHeartIcon from '../images/blackHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+
+import './style/details.css';
 
 class Details extends Component {
   constructor() {
@@ -18,10 +20,14 @@ class Details extends Component {
       isMeal: false,
       isDrink: false,
       clipboard: '',
+      isFavorite: false,
+      isDone: false,
     };
     this.requestDetails = this.requestDetails.bind(this);
     this.renderCardDetails = this.renderCardDetails.bind(this);
     this.handleShare = this.handleShare.bind(this);
+    this.handleFavorite = this.handleFavorite.bind(this);
+    this.checkIsFavorite = this.checkIsFavorite.bind(this);
   }
 
   componentDidMount() {
@@ -38,6 +44,78 @@ class Details extends Component {
           clipboard: `http://localhost:3000${url}`,
         });
       });
+  }
+
+  handleFavorite() {
+    this.setState((prevState) => ({
+      isFavorite: !prevState.isFavorite,
+    }), () => {
+      const { isFavorite } = this.state;
+      if (isFavorite) this.saveToLocalStorage();
+      else this.deleteFromLocalStorage();
+    });
+  }
+
+  checkIsFavorite() {
+    const { details } = this.state;
+    const LS = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (LS && LS.find((recipe) => recipe.id === details[0].idMeal
+    || recipe.id === details[0].idDrink)) {
+      this.setState({
+        isFavorite: true,
+      });
+    }
+  }
+
+  checkIsDone() {
+    const { details } = this.state;
+    const LS = JSON.parse(localStorage.getItem('doneRecipes'));
+    if (LS && LS.find((recipe) => recipe.id === details[0].idMeal
+    || recipe.id === details[0].idDrink)) {
+      this.setState({
+        isDone: true,
+      });
+    }
+  }
+
+  saveToLocalStorage() {
+    const { isMeal, details } = this.state;
+    const LS = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    let obj;
+    if (isMeal) {
+      obj = {
+        id: details[0].idMeal,
+        type: 'comida',
+        area: details[0].strArea,
+        category: details[0].strCategory,
+        alcoholicOrNot: '',
+        name: details[0].strMeal,
+        image: details[0].strMealThumb,
+      };
+    } else {
+      obj = {
+        id: details[0].idDrink,
+        type: 'bebida',
+        area: '',
+        category: details[0].strCategory,
+        alcoholicOrNot: details[0].strAlcoholic,
+        name: details[0].strDrink,
+        image: details[0].strDrinkThumb,
+      };
+    }
+    if (!LS) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([obj]));
+    } else {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([...LS, obj]));
+    }
+  }
+
+  deleteFromLocalStorage() {
+    const { details } = this.state;
+    const LS = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const filteredLS = LS.filter((recipe) => !recipe.id
+      .includes(details[0].idMeal || details[0].idDrink));
+    localStorage.setItem('favoriteRecipes', JSON.stringify(filteredLS));
   }
 
   requestDetails(pathname) {
@@ -73,12 +151,18 @@ class Details extends Component {
           details: drinks,
           recomendations: meals.slice(zero, six),
           isLoading: false,
+        }, () => {
+          this.checkIsFavorite();
+          this.checkIsDone();
         });
       } else {
         this.setState({
           details: meals,
           recomendations: drinks.slice(zero, six),
           isLoading: false,
+        }, () => {
+          this.checkIsFavorite();
+          this.checkIsDone();
         });
       }
     });
@@ -112,12 +196,10 @@ class Details extends Component {
   }
 
   renderCardDetails() {
-    const { details, recomendations, isMeal, clipboard } = this.state;
+    const { details, recomendations, isMeal, clipboard, isFavorite, isDone } = this.state;
     const ingredientsAndMeasures = this.parseIngredientsAndMeasures(details);
     console.log('1', details);
     console.log('1', recomendations);
-    console.log('1', ingredientsAndMeasures);
-    console.log('1', this.props);
     const zero = 0;
     const {
       strMeal,
@@ -146,8 +228,20 @@ class Details extends Component {
         <button type="button" data-testid="share-btn" onClick={ this.handleShare }>
           <img src={ shareIcon } alt="Share Recipe" />
         </button>
-        <button type="button" data-testid="favorite-btn">
-          <img src={ whiteHeartIcon } alt="Favorite Recipe" />
+        <button type="button" onClick={ this.handleFavorite }>
+          {isFavorite ? (
+            <img
+              src={ blackHeartIcon }
+              data-testid="favorite-btn"
+              alt="Favorite Recipe"
+            />
+          ) : (
+            <img
+              src={ whiteHeartIcon }
+              data-testid="favorite-btn"
+              alt="Favorite Recipe"
+            />
+          )}
         </button>
         {isMeal ? (
           <p data-testid="recipe-category">{strCategory}</p>
@@ -175,9 +269,15 @@ class Details extends Component {
             )}
           </div>
         ))}
-        <button type="button" data-testid="start-recipe-btn">
-          Iniciar Receita
-        </button>
+        {!isDone && (
+          <button
+            type="button"
+            data-testid="start-recipe-btn"
+            className="start-recipe-btn"
+          >
+            Iniciar Receita
+          </button>
+        )}
       </div>
     );
   }
