@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 import RecipesContext from '../context/RecipesAppContext';
 
@@ -80,7 +81,16 @@ function RecipeDrinkDetails({ match }) {
         </ul>
         <p data-testid="instructions">{recipes[0].strInstructions}</p>
         <div data-testid={ `${0}-recomendation-card` } />
-        <button type="button" data-testid="start-recipe-btn">Iniciar Receita</button>
+        <Link
+          to={ `/bebidas/${id}/in-progress` }
+        >
+          <button
+            type="button"
+            data-testid="start-recipe-btn"
+          >
+            Iniciar Receita
+          </button>
+        </Link>
       </div>
     );
   }

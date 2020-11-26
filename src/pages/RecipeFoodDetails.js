@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import RecipesContext from '../context/RecipesAppContext';
+import { Link } from 'react-router-dom';
 
 function RecipeFoodDetails({ match }) {
   const { id } = match.params;
@@ -89,8 +90,16 @@ function RecipeFoodDetails({ match }) {
           allowFullScreen
         />
         <div data-testid={ `${0}-recomendation-card` } />
-        <button type="button" data-testid="start-recipe-btn">Iniciar Receita</button>
-
+        <Link
+          to={ `/comidas/${id}/in-progress` }
+        >
+          <button
+            type="button"
+            data-testid="start-recipe-btn"
+          >
+            Iniciar Receita
+          </button>
+        </Link>
       </div>
     );
   }

@@ -9,6 +9,7 @@ const endPointMealName = ('search.php?s=');
 const endPointMealFirstLetter = ('search.php?f=');
 const endPointCategoryList = ('list.php?c=list');
 const endPointCategory = ('filter.php?c=');
+const endPointId = ('lookup.php?i=');
 
 export const fetchDrinkAPIByIngredient = async (ingredient) => {
   const response = await fetch(`${baseAPIDrinks}${endPointDrinkIngredient}${ingredient}`);
@@ -79,6 +80,18 @@ export const fetchMealByCategory = async (category) => {
 
 export const fetchDrinkByCategory = async (category) => {
   const response = await fetch(`${baseAPIDrinks}${endPointCategory}${category}`);
+  const json = await response.json();
+  return json.drinks;
+};
+
+export const fetchMealById = async (id) => {
+  const response = await fetch(`${baseAPIMeal}${endPointId}${id}`);
+  const json = await response.json();
+  return json.meals;
+};
+
+export const fetchDrinkById = async (id) => {
+  const response = await fetch(`${baseAPIDrinks}${endPointId}${id}`);
   const json = await response.json();
   return json.drinks;
 };
