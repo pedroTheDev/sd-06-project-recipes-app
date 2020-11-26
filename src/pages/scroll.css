@@ -7,15 +7,11 @@ div.scrollmenu {
 }
 
 .scrollmenu-child {
-  display: inline-block;
   color: white;
+  display: inline-block;
   height: 100px;
-  text-align: center;
   padding: 14px;
+  text-align: center;
   text-decoration: none;
   width: 400px;
-}
-
-div.scrollmenu a:hover {
-  background-color: #777;
 }

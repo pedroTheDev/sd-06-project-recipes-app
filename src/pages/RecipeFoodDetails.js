@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesAppContext';
 import './scroll.css';
 
@@ -8,6 +9,9 @@ function RecipeFoodDetails({ match }) {
   const [recomendation, setRecomendation] = useState([]);
   let arrIngredient = [];
   let arrMeasure = [];
+  const ZERO = 0;
+  const VINTE = 20;
+  const SEIS = 6;
   const API = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=';
 
   const fetchDetailRecipeFoodByID = async () => {
@@ -18,7 +22,6 @@ function RecipeFoodDetails({ match }) {
 
   const fetchRecomendationsDrinks = async () => {
     const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
-    // https://www.thecocktaildb.com/api/json/v1/1/search.php?s=
     const json = await response.json();
     return setRecomendation(json.drinks);
   };
@@ -27,9 +30,9 @@ function RecipeFoodDetails({ match }) {
     fetchRecomendationsDrinks();
   }, []);
 
-  if (recipes.length !== 0) {
+  if (recipes.length !== ZERO) {
     const renderIngredients = () => {
-      for (let i = 1; i <= 20; i++) {
+      for (let i = 1; i <= VINTE; i += 1) {
         if (recipes[0][`strIngredient${i}`]) {
           arrIngredient = arrIngredient.concat(recipes[0][`strIngredient${i}`]);
         } else {
@@ -39,7 +42,7 @@ function RecipeFoodDetails({ match }) {
     };
 
     const renderMeasure = () => {
-      for (let i = 1; i <= 20; i++) {
+      for (let i = 1; i <= VINTE; i += 1) {
         if (recipes[0][`strMeasure${i}`]) {
           arrMeasure = arrMeasure.concat(recipes[0][`strMeasure${i}`]);
         } else {
@@ -99,7 +102,7 @@ function RecipeFoodDetails({ match }) {
         <button type="button" data-testid="start-recipe-btn">Iniciar Receita</button>
 
         <div className="scrollmenu">
-          {recomendation.slice(0, 6).map((element, index) => (
+          {recomendation.slice(ZERO, SEIS).map((element, index) => (
             <div key={ index } className="scrollmenu-child">
               <img
                 data-testid={ `${index}-recomendation-card` }
@@ -117,5 +120,9 @@ function RecipeFoodDetails({ match }) {
 
   return <span>Ops...</span>;
 }
+
+RecipeFoodDetails.propTypes = {
+  match: PropTypes.objectOf(PropTypes.object).isRequired,
+};
 
 export default RecipeFoodDetails;
