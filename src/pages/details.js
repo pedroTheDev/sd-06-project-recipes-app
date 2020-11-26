@@ -126,7 +126,11 @@ class Details extends Component {
         <button type="button" data-testid="favorite-btn">
           favorite
         </button>
-        <p data-testid="recipe-category">{strCategory || strAlcoholic}</p>
+        {isMeal ? (
+          <p data-testid="recipe-category">{strCategory}</p>
+        ) : (
+          <p data-testid="recipe-category">{strAlcoholic}</p>
+        )}
         {ingredientsAndMeasures.map((item, idx) => (
           <p key={ `${idx}` } data-testid={ `${idx}-ingredient-name-and-measure` }>
             {item}
@@ -134,6 +138,11 @@ class Details extends Component {
         ))}
         <p data-testid="instructions">{strInstructions}</p>
         { isMeal && (<p data-testid="video">{strYoutube}</p>) }
+        {/*
+          REQ 37:
+          TODO: Pegar Carousel de 'react-bootstrap/Carousel'
+          https://react-bootstrap.github.io/components/carousel/#carousel-props
+         */}
         {recomendations.map((item, idx) => (
           <div key={ idx } data-testid={ `${idx}-recomendation-card` }>
             {isMeal ? (
