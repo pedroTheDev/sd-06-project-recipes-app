@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import StartButton from '../components/StartButton';
 import RecipesContext from '../context/RecipesAppContext';
+import './scroll.css';
 
 function RecipeDrinkDetails({ match, title }) {
   const { id } = match.params;
@@ -92,7 +93,7 @@ function RecipeDrinkDetails({ match, title }) {
           ))}
         </ul>
         <p data-testid="instructions">{recipes[0].strInstructions}</p>
-        <div>
+        <div className="scrollmenu">
           {recomendation.slice(ZERO, SEIS).map((element, index) => (
             <div key={ index } className="scrollmenu-child">
               <img
@@ -116,7 +117,6 @@ function RecipeDrinkDetails({ match, title }) {
 RecipeDrinkDetails.propTypes = {
   match: PropTypes.objectOf(Object).isRequired,
   title: PropTypes.string.isRequired,
-
 };
 
 export default RecipeDrinkDetails;
