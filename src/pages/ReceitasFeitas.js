@@ -25,7 +25,7 @@ function ReceitasFeitas() {
         Drinks
       </button>
       <div>
-        {doneRecipes.map((image, index) => (
+        {/* {doneRecipes.map((image, index) => (
           <span
             key={ index }
           >
@@ -60,7 +60,7 @@ function ReceitasFeitas() {
               Tags da receita
             </p>
           </span>
-        ))}
+        ))} */}
       </div>
     </div>
   );

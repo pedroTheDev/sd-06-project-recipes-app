@@ -60,6 +60,22 @@ function ProcessoComida() {
     }
   };
 
+  const saveDoneRecipes = () => {
+    const date = new Date();
+    const doneDate = date;
+    localStorage.doneRecipes = JSON.stringify([{
+      id: dataMeal.idMeal,
+      type: 'comida',
+      area: dataMeal.strArea,
+      category: dataMeal.strCategory,
+      alcoholicOrNot: '',
+      name: dataMeal.strMeal,
+      image: dataMeal.strMealThumb,
+      doneDate,
+      tags: [],
+    }]);
+  };
+
   return (isLoading) ? <p>Loading</p> : (
     <div className="container-progress">
       <img
@@ -115,7 +131,8 @@ function ProcessoComida() {
         <button
           type="button"
           data-testid="finish-recipe-btn"
-          disabled={ isDisable }
+          // disabled={ isDisable }
+          onClick={ saveDoneRecipes }
         >
           Finalizar Receita
         </button>
