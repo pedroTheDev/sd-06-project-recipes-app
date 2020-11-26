@@ -57,13 +57,13 @@ function ProcessoBebida() {
     <div>
       <img
         data-testid="recipe-photo"
-        src=""
+        src={ dataDrinks.strDrinkThumb }
         alt="Foto da receita"
       />
       <h1
         data-testid="recipe-title"
       >
-        Nome da Receita
+        { dataDrinks.strDrink }
       </h1>
       <span>
         <button

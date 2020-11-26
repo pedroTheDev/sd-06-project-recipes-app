@@ -71,7 +71,7 @@ function RecipesMealsCards({ categories }) {
 }
 
 RecipesMealsCards.propTypes = {
-  categories: PropTypes.arrayOf(Object).isRequired,
+  categories: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default RecipesMealsCards;
