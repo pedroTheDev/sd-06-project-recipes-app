@@ -58,7 +58,7 @@ function ExploreByArea() {
   };
 
   const renderMeals = () => {
-    if (selectedArea === '') {
+    if (selectedArea === '' || selectedArea === 'All') {
       return meals.slice(inicial, final).map((meal, id) => (
         <Link to={ `/comidas/${meal.idMeal}` } key={ id }>
           <div
@@ -106,6 +106,13 @@ function ExploreByArea() {
         data-testid="explore-by-area-dropdown"
         onChange={ handleClickArea }
       >
+        <option
+          key="All"
+          data-testid="All-option"
+          value="All"
+        >
+          All
+        </option>
         {
           areas.map((area, id) => (
             <option
