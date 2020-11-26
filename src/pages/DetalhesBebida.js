@@ -13,7 +13,7 @@ function DetalhesBebida() {
     iniciarReceitas,
     setIniciarReceitas,
     receitasTerminadas,
-    setReceitasTerminadas } = useContext(RecipeContext);
+  } = useContext(RecipeContext);
   const seis = 6;
   const zero = 0;
   const fetchBebidasDetalhes = async () => {
