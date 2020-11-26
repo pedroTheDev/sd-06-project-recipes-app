@@ -16,16 +16,15 @@ function RecipeDrinkDetails({ match }) {
     return setRecipes(json.drinks);
   };
 
-  const fetchRecomendationsDrinks = async () => {
-    const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
-    // https://www.thecocktaildb.com/api/json/v1/1/search.php?s=
+  const fetchRecomendationsMeals = async () => {
+    const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
     const json = await response.json();
-    return setRecomendation(json.drinks);
+    return setRecomendation(json.meals);
   };
 
   useEffect(() => {
     fetchDetailRecipeDrinkByID();
-    fetchRecomendationsDrinks();
+    fetchRecomendationsMeals();
   }, []);
 
   if (recipes.length !== 0) {
@@ -87,21 +86,18 @@ function RecipeDrinkDetails({ match }) {
             </li>
           ))}
         </ul>
-        <p data-testid="instructions">{recipes[0].strInstructions}</p>
-        <div data-testid={ `${0}-recomendation-card` } />
         <button type="button" data-testid="start-recipe-btn">Iniciar Receita</button>
 
         <div className="scrollmenu">
           {recomendation.slice(0, 6).map((element, index) => (
-            <div key={ index }>
+            <div key={ index } className="scrollmenu-child">
               <img
                 data-testid={ `${index}-recomendation-card` }
-                src={ element.strDrinkThumb }
-                alt={ element.strDrink }
+                src={ element.strMealThumb }
+                alt={ element.strMeal }
               />
-              <p data-testid={ `${index}-recomendation-title` }>{ element.strDrink }</p>
+              <p data-testid={ `${index}-recomendation-title` }>{ element.strMeal }</p>
             </div>
-
           ))}
         </div>
 
