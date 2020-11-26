@@ -5,6 +5,7 @@ import { fetchDetail, fetchRecommendation } from '../helpers/Helper';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeart from '../images/whiteHeartIcon.svg';
 import blackHeart from '../images/blackHeartIcon.svg';
+import saveFavorite from '../helpers/saveFavorite';
 
 import '../css/itemDetails.css';
 import '../css/scroller.css';
@@ -55,7 +56,10 @@ export default function DrinkDetails(props) {
       setBtnStartValue('Continuar Receita');
     }
     if (localStorage.getItem('favoriteRecipes') !== null) {
-      setFav(blackHeart);
+      const tarefa = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      if (tarefa.some((item) => item.id === id)) {
+        setFav(blackHeart);
+      }
     }
   }, []);
 
@@ -66,7 +70,7 @@ export default function DrinkDetails(props) {
   }
 
   function handleFav(item) {
-    const favObj = [{
+    const favObj = {
       id: item.idDrink,
       type: 'bebida',
       area: '',
@@ -74,14 +78,14 @@ export default function DrinkDetails(props) {
       alcoholicOrNot: item.strAlcoholic,
       name: item.strDrink,
       image: item.strDrinkThumb,
-    }];
+    };
     if (fav === blackHeart) {
       setFav(whiteHeart);
-      localStorage.removeItem('favoriteRecipes');
+      saveFavorite(id, favObj, 'remove');
     }
     if (fav === whiteHeart) {
       setFav(blackHeart);
-      localStorage.setItem('favoriteRecipes', JSON.stringify(favObj));
+      saveFavorite(id, favObj, 'add');
     }
   }
 

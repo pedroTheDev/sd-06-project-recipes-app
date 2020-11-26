@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { fetchDetail, fetchRecommendation } from '../helpers/Helper';
 import saveInStorage from '../helpers/saveInStorage';
+import saveFavorite from '../helpers/saveFavorite';
 
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeart from '../images/whiteHeartIcon.svg';
@@ -45,7 +46,10 @@ export default function DrinkInProgress(props) {
       setDisabled(false);
     }
     if (localStorage.getItem('favoriteRecipes') !== null) {
-      setFav(blackHeart);
+      const tarefa = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      if (tarefa.some((item) => item.id === id)) {
+        setFav(blackHeart);
+      }
     }
   }, []);
 
@@ -66,7 +70,7 @@ export default function DrinkInProgress(props) {
   }
 
   function handleFav(item) {
-    const favObj = [{
+    const favObj = {
       id: item.idDrink,
       type: 'bebida',
       area: '',
@@ -74,14 +78,14 @@ export default function DrinkInProgress(props) {
       alcoholicOrNot: item.strAlcoholic,
       name: item.strDrink,
       image: item.strDrinkThumb,
-    }];
+    };
     if (fav === blackHeart) {
       setFav(whiteHeart);
-      localStorage.removeItem('favoriteRecipes');
+      saveFavorite(id, favObj, 'remove');
     }
     if (fav === whiteHeart) {
       setFav(blackHeart);
-      localStorage.setItem('favoriteRecipes', JSON.stringify(favObj));
+      saveFavorite(id, favObj, 'add');
     }
   }
 
