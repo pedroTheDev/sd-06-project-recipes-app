@@ -14,7 +14,6 @@ function ExploreFoods() {
     const id = recipe.meals[0].idMeal;
     setRandomId(id);
   };
-
   useEffect(() => {
     setHeader({ page: 'Explorar Comidas', search: false });
     getRandomId();
