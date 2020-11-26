@@ -35,8 +35,30 @@ const localStorageTemplate = {
     },
   },
 };
+function setMockedLocalStorage() {
+  const mockedDoneRecipes = [
+    {
+      id: '52771',
+    },
+  ];
 
-export default localStorageTemplate;
+  const favoriteRecipes = [{
+    id: 15997,
+  }];
+  const mockedRecipesInprogress = {
+    cocktails: {
+      17222: [],
+    },
+    meals: {
+      52771: [],
+    },
+  };
+  localStorage.setItem('doneRecipes', JSON.stringify(mockedDoneRecipes));
+  localStorage.setItem('inProgressRecipes', JSON.stringify(mockedRecipesInprogress));
+  localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+}
+
+export default setMockedLocalStorage;
 
 // OBS: id-da-bebida e id-da-comida representam o ID de uma bebida e comida
 // respectivamente, e cada item da lista de ingredientes da respectiva

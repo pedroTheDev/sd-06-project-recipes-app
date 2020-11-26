@@ -15,9 +15,6 @@ const apiDataProcessor = (recipe) => {
     strSource, strYoutube, strTags, idDrink, strDrink, strDrinkThumb, strAlcoholic,
   } = recipe;
 
-  console.log('entrei no processador');
-  console.log(idDrink);
-
   if (idMeal) {
     return ({
       id: idMeal,

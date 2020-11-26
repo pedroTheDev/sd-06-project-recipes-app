@@ -8,12 +8,13 @@ const INITIAL_STATE = {
   recommendations: [],
   error: '',
   loading: false,
+  favRecipes: JSON.parse(localStorage.getItem('favoriteRecipes')),
 };
 
 export default function recommendationsReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
   case LOADING_RECOMMENDATIONS:
-    return { ...state, loading: true };
+    return { ...state, loading: action.payload };
   case SUCCESS_RECOMMENDATIONS:
     return { ...state, recommendations: action.payload };
   case ERROR_RECOMMENDATIONS:

@@ -1,16 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import splitPathname from '../utils/splitPathname';
-import fetchRecipeDetails from '../services/fetchRecipeDetails';
-import apiDataProcessor from '../services/apiDataProcessor';
-import { processRecipeObject } from '../utils/processRecipeObject';
 import recomendationsThunk from '../redux/actions/pageDetailsFetcher';
 import invertPathName from '../utils/invertPathName';
+import ShareButton from '../components/ShareButton';
+import FavButton from '../components/FavButton';
+import recipeDetailsProcessing from '../utils/recipeDetailsProcessing';
 
-function RecipeDetails({ location: { pathname }, recommendations }) {
+function RecipeDetails(
+  { location: { pathname }, recommendations },
+) {
   const [path, id] = splitPathname(pathname);
   const [recipe, setRecipe] = useState([]);
+  const [disableButton, setdisableButton] = useState('visible');
+  const [wasStarted, setWasStarted] = useState(false);
+  const [wasCopied, setWasCopied] = useState(false);
+
+  const history = useHistory();
   const { image,
     name,
     category,
@@ -23,34 +31,47 @@ function RecipeDetails({ location: { pathname }, recommendations }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    async function request() {
-      const data = await fetchRecipeDetails(id, path);
-      const requestType = data.meals || data.drinks;
-      console.log(requestType);
-      const treatedRecipe = apiDataProcessor(requestType[0]);
-      const processedRecipeObject = processRecipeObject(treatedRecipe);
-      setRecipe(processedRecipeObject);
-    }
-    request();
-  }, []);
-
-  useEffect(() => {
+    recipeDetailsProcessing(id, path, setRecipe);
     const newPath = invertPathName(path);
     dispatch(recomendationsThunk(`/${newPath}`));
   }, []);
 
+  useEffect(() => {
+    let savedRecipes = [];
+    savedRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+    if (savedRecipes) {
+      savedRecipes.forEach((savedRecipe) => {
+        if (savedRecipe.id === recipe.id) {
+          setdisableButton('hidden');
+          return true;
+        }
+      });
+    }
+  }, [recipe]);
+
+  useEffect(() => {
+    const conditionalKey = path === 'comidas' ? 'meals' : 'cocktails';
+    const storedRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (storedRecipes) {
+      const inProgressIds = Object.keys(storedRecipes[conditionalKey]);
+      setWasStarted(inProgressIds.includes(recipe.id));
+    }
+  }, [recipe]);
+
   return (
     <main>
-      <img data-testid="recipe-photo" src={ image } alt={ name } className="main-photo" />
+      <img
+        data-testid="recipe-photo"
+        src={ image }
+        alt={ name }
+        className="main-photo"
+      />
       <h1 data-testid="recipe-title">{ name }</h1>
       <div>
-        <button data-testid="share-btn" type="button">
-          share
-        </button>
-        <button data-testid="favorite-btn" type="button">
-          Fav
-        </button>
+        <ShareButton setMessage={ setWasCopied } />
+        <FavButton />
       </div>
+      {wasCopied && 'Link copiado!'}
       <p data-testid="recipe-category">
         { isAlcoholic === 'Alcoholic'
           ? isAlcoholic
@@ -58,7 +79,10 @@ function RecipeDetails({ location: { pathname }, recommendations }) {
       </p>
       <ul>
         { ingredients.map((ingredient, index) => (
-          <li key={ ingredient } data-testid={ `${index}-ingredient-name-and-measure` }>
+          <li
+            key={ ingredient }
+            data-testid={ `${index}-ingredient-name-and-measure` }
+          >
             { `${ingredient} - ${measures[index]}` }
           </li>
         )) }
@@ -88,8 +112,14 @@ function RecipeDetails({ location: { pathname }, recommendations }) {
         </div>
       </div>
 
-      <button type="button" data-testid="start-recipe-btn">Iniciar Receita</button>
-
+      <button
+        type="button"
+        data-testid="start-recipe-btn"
+        className={ `start-recipe-btn ${disableButton}` }
+        onClick={ () => history.push(`/${path}/${id}/in-progress`) }
+      >
+        {wasStarted ? 'Continuar Receita' : 'Iniciar Receita'}
+      </button>
     </main>
   );
 }
