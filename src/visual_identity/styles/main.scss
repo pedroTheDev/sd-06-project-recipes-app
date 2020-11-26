@@ -22,10 +22,12 @@
 
 // Modules
 @import './3.Modules/recipecards';
+@import './3.Modules/defaultPage';
+
 
 // Pages
 @import './4.Pages/Login.scss';
 
-
-
+// Pages
+@import './4.Pages/RecipeDetails.scss'
 
