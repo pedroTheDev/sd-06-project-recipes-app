@@ -155,6 +155,7 @@ function DrinkInProgress(props) {
         <FavoriteBtn isFavorite={ isFavorite } changesFavorites={ changesFavorites } />
         <span className="link-copy" style={ { display: copied } }>Link copiado!</span>
         <p data-testid="recipe-category">{ recipe.strCategory }</p>
+
         <ul>
           Ingredientes:
           {ingredients.map((ingredient, index) => (
