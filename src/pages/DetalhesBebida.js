@@ -8,7 +8,12 @@ import '../components/MenuInferior.css';
 function DetalhesBebida() {
   const { idDaReceita } = useParams();
   const [estadoApiBebidas, setEstadoApiBebidas] = useState([]);
-  const { retornoApi6Comidas } = useContext(RecipeContext);
+  const {
+    retornoApi6Comidas,
+    iniciarReceitas,
+    setIniciarReceitas,
+    receitasTerminadas,
+    setReceitasTerminadas } = useContext(RecipeContext);
   const seis = 6;
   const zero = 0;
   const fetchBebidasDetalhes = async () => {
@@ -18,6 +23,9 @@ function DetalhesBebida() {
   useEffect(() => {
     fetchBebidasDetalhes();
   }, []);
+  function handleIniciarReceita() {
+    setIniciarReceitas([...iniciarReceitas, idDaReceita]);
+  }
 
   return (
     estadoApiBebidas.map((bebida, index) => (
@@ -124,13 +132,18 @@ function DetalhesBebida() {
           }
 
         </div>
-        <button
-          data-testid="start-recipe-btn"
-          className="IniciarReceita"
-          type="button"
-        >
-          Iniciar Receita
-        </button>
+        { receitasTerminadas
+          .includes(!idDaReceita)
+          ? (
+            <button
+              data-testid="start-recipe-btn"
+              className="IniciarReceita"
+              type="button"
+              onClick={ handleIniciarReceita }
+            >
+
+              Iniciar Receita
+            </button>) : ''}
       </div>
     )));
 }
