@@ -4,6 +4,10 @@ import PropTypes from 'prop-types';
 import DrinkCard from '../components/DrinkCard';
 import MealCard from '../components/MealCard';
 
+import shareIcon from '../images/shareIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+// import blackHeartIcon from '../images/blackHeartIcon.svg';
+
 class Details extends Component {
   constructor() {
     super();
@@ -13,15 +17,27 @@ class Details extends Component {
       isLoading: true,
       isMeal: false,
       isDrink: false,
+      clipboard: '',
     };
     this.requestDetails = this.requestDetails.bind(this);
     this.renderCardDetails = this.renderCardDetails.bind(this);
+    this.handleShare = this.handleShare.bind(this);
   }
 
   componentDidMount() {
     const { match: { path } } = this.props;
     const pathname = path;
     this.requestDetails(pathname);
+  }
+
+  handleShare() {
+    const { match: { url } } = this.props;
+    window.navigator.clipboard.writeText(`http://localhost:3000${url}`)
+      .then(() => {
+        this.setState({
+          clipboard: `http://localhost:3000${url}`,
+        });
+      });
   }
 
   requestDetails(pathname) {
@@ -96,11 +112,13 @@ class Details extends Component {
   }
 
   renderCardDetails() {
-    const { details, recomendations, isMeal } = this.state;
+    const { details, recomendations, isMeal, clipboard } = this.state;
     const ingredientsAndMeasures = this.parseIngredientsAndMeasures(details);
     console.log('1', details);
     console.log('1', recomendations);
     console.log('1', ingredientsAndMeasures);
+    console.log('1', this.props);
+    const zero = 0;
     const {
       strMeal,
       strMealThumb,
@@ -120,11 +138,16 @@ class Details extends Component {
           alt={ `${strMeal || strDrink}` }
           width={ 100 }
         />
-        <button type="button" data-testid="share-btn">
-          share
+        {clipboard.length !== zero && (
+          <div>
+            <p>Link Copiado!</p>
+          </div>
+        )}
+        <button type="button" data-testid="share-btn" onClick={ this.handleShare }>
+          <img src={ shareIcon } alt="Share Recipe" />
         </button>
         <button type="button" data-testid="favorite-btn">
-          favorite
+          <img src={ whiteHeartIcon } alt="Favorite Recipe" />
         </button>
         {isMeal ? (
           <p data-testid="recipe-category">{strCategory}</p>
@@ -167,20 +190,11 @@ class Details extends Component {
   }
 }
 
-// O texto da categoria deve possuir o atributo data-testid="recipe-category";
-// Os ingredientes devem possuir o atributo data-testid="${index}-ingredient-name-and-measure";
-// O texto de instruções deve possuir o atributo data-testid="instructions";
-// O vídeo, presente somente na tela de comidas, deve possuir o atributo data-testid="video";
-// O card de receitas recomendadas deve possuir o atributo data-testid="${index}-recomendation-card";
-
-// const mapDispatchToProps = (dispatch) => ({
-//   sendLogin: (email) => dispatch(addLogin(email)),
-// });
-
 Details.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.objectOf,
     path: PropTypes.string,
+    url: PropTypes.string,
   }).isRequired,
 };
 
