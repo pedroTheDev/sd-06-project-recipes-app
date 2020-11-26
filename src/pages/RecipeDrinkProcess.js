@@ -13,6 +13,7 @@ function RecipeDrinkProcess(props) {
   const { id } = props.match.params;
   const { recipes, setRecipes } = useContext(RecipesContext);
   const [recipeIngredient, setRecipeIngredient] = useState([]);
+  // let cocktails = { [id]: [] };
 
   const settingRecipeInProgress = async () => {
     const response = await fetchDrinkById(id);
@@ -31,12 +32,15 @@ function RecipeDrinkProcess(props) {
   };
 
   const markIngredient = (e) => {
-    if (recipeIngredient.length === ZERO) setRecipeIngredient([e]);
-    else {
+    if (recipeIngredient.length === ZERO) {
+      setRecipeIngredient([e]);
+    } else {
       recipeIngredient.filter((ing) => (
-        setRecipeIngredient((ing !== e) ? [...recipeIngredient, e] : [...recipeIngredient])
+        setRecipeIngredient((ing !== e)
+          ? [...recipeIngredient, e] : [...recipeIngredient])
       ));
     }
+    localStorage.setItem('cocktails', JSON.stringify({ [id]: recipeIngredient }));
 
     // setRecipeIngredient([...recipeIngredient, e]);
   };

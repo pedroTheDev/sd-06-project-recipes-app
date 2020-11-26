@@ -93,6 +93,7 @@ function RecipeFoodDetails({ match, title }) {
           allowFullScreen
         />
         <div data-testid={ `${ZERO}-recomendation-card` } />
+
         <div className="scrollmenu">
           {recomendation.slice(ZERO, SEIS).map((element, index) => (
             <div key={ index } className="scrollmenu-child">
