@@ -17,16 +17,20 @@ export default function Header(props) {
   const { title } = props;
 
   const searchButton = (
-    (title === 'Comidas' || title === 'Bebidas'
+    (title === 'Comidas' || title === 'Bebidas' || title === 'Explorar Origem'
       ? (
         <button
           type="button"
           name="search"
           className="btn-search"
-          data-testid="search-top-btn"
           onClick={ handleSearch }
         >
-          <img src={ searchIcon } alt="search" className="icon-search" />
+          <img
+            src={ searchIcon }
+            alt="search"
+            className="icon-search"
+            data-testid="search-top-btn"
+          />
         </button>
       )
       : (null)

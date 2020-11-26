@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import './Perfil.css';
 
 function Perfil() {
-  const { email } = JSON.parse(localStorage.getItem('user'));
+  const [userEmail, setUserEmail] = useState('email@mail.com');
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user !== null) {
+      setUserEmail(user.email);
+    }
+  }, []);
 
   function handleExit() {
     localStorage.clear();
@@ -13,9 +20,9 @@ function Perfil() {
 
   return (
     <div>
-      <Header title="Perfil" />
+      <Header title="MeuPerfil" />
       <div className="body-perfil">
-        <p data-testid="profile-email">{email}</p>
+        <p data-testid="profile-email">{userEmail}</p>
 
         <div>
           <Link to="/receitas-feitas">
