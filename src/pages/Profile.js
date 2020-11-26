@@ -6,13 +6,12 @@ import AppContext from '../context/AppContext';
 
 function Profile() {
   const history = useHistory();
-  const { setHeader } = useContext(AppContext);
+  const { setHeader, user: { email } } = useContext(AppContext);
   const [userEmail, setEmail] = useState('');
 
   useEffect(() => {
     setHeader({ page: 'Perfil', search: false });
-    const jsonUser = localStorage.getItem('user');
-    const { email } = JSON.parse(jsonUser);
+    localStorage.user = JSON.stringify({ email });
     setEmail(email);
   }, []);
 
