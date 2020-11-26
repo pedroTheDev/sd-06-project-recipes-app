@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { requestApiDrinkDetails, requestApiDrinkFilterIngredient } from '../services/requestDrink';
+import { 
+  requestApiDrinkDetails,
+  requestApiDrinkFilterIngredient
+} from '../services/requestDrink';
 
 function DetalhesBebida(props) {
   const [detailsDrink, setDetailsDrink] = useState([]);
   const [arrayIngredients, setArrayIngredients] = useState([]);
   const [recommendDrink, setRecommendDrink] = useState([]);
 
-  useEffect(() =>{
+  useEffect(() => {
     requestApiDrinkDetails(props.match.params.id)
       .then((response) => {
         setDetailsDrink(response[0]);
       });
   }, []);
-
-  useEffect(() => {
-    ingredientsFunc();
-    recommendDrinkFunction();
-  }, [detailsDrink])
 
   const ingredientsFunc = () => {
     if(detailsDrink.length !== 0) {
@@ -30,6 +28,12 @@ function DetalhesBebida(props) {
       setArrayIngredients(arrayReturn);
     } 
   }
+
+  useEffect(() => {
+    ingredientsFunc();
+    recommendDrinkFunction();
+  }, [detailsDrink])
+
 
   const recommendDrinkFunction = async () => {
     if (detailsDrink.length !== 0) {

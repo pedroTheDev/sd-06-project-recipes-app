@@ -16,41 +16,41 @@ function DetalhesReceita(props) {
       });
   }, []);
 
+  const recommendFoodFunction = async () => {
+    if (detailsFood.length !== 0) {
+      const response = await requestApiFoodFilterIngredient(detailsFood.strIngredient1);
+      setRecommendFood(response.slice(0, 6));
+    }
+  };
+
   useEffect(() => {
     ingredientsFunc();
     embedVideo();
     recommendFoodFunction();
-  }, [detailsFood])
+  }, [detailsFood]);
 
   const embedVideo = () => {
     const youtubeVideo = detailsFood.strYoutube;
     if (youtubeVideo != undefined) {
-      const newYoutube = youtubeVideo.split("=")
-      setEmbed(newYoutube[newYoutube.length-1]);
+      const newYoutube = youtubeVideo.split('=');
+      setEmbed(newYoutube[newYoutube.length - 1]);
     }
-  }
+  };
 
   const ingredientsFunc = () => {
-    if(detailsFood.length !== 0) {
+    if (detailsFood.length !== 0) {
       const array = []
-      for(let i=1;i<=20;i++) {
+      for(let i = 1;i <= 20;i += 1) {
         const ingredient = detailsFood[`strIngredient${i}`];
         array.push(ingredient);
       }
-      const arrayReturn = array.filter((element) => element!=='')
+      const arrayReturn = array.filter((element) => element !== '')
       setArrayIngredients(arrayReturn);
     } 
-  }
+  };
 
-  const recommendFoodFunction = async () => {
-    if (detailsFood.length !== 0) {
-      const response = await requestApiFoodFilterIngredient(detailsFood.strIngredient1);
-      setRecommendFood(response.slice(0,6));
-    }
-  }
-
-  if (detailsFood.length === 0)  {
-    return <div>Loading...</div>
+  if (detailsFood.length === 0) {
+    return <div>Loading...</div>;
   }
   return (
     <div>
@@ -60,15 +60,15 @@ function DetalhesReceita(props) {
       <h4 data-testid="instructions">{detailsFood.strInstructions}</h4>
       <button data-testid="share-btn">Share</button>
       <button data-testid="favorite-btn">Favorite</button>
-      <button data-testid="start-recipe-btn">Iniciar receita</button>
+      <button type="button" data-testid="start-recipe-btn">Iniciar receita</button>
       {arrayIngredients.map((element, index) => {
         return (
-          <h5 
-            data-testid={`${index}-ingredient-name-and-measure`} 
+          <h5
+            data-testid={`${ index }-ingredient-name-and-measure`} 
             key={index}>
-              {element}
+            { element }
           </h5>
-        )
+        );
       })}
       <iframe 
         data-testid="video" 
@@ -85,13 +85,13 @@ function DetalhesReceita(props) {
       <div>
         {recommendFood.map((food, index) => {
           return (
-            <div key={index} data-testid={`${index}-recomendation-card`}>
-              <img src={food.strMealThumb} />
+            <div key={ index } data-testid={`${ index }-recomendation-card`}>
+              <img src={ food.strMealThumb } />
               <h3>{food.strMeal}</h3>
             </div>
-          )
+          );
         })}
-      </div> 
+      </div>
     </div>
   );
 }
@@ -99,9 +99,9 @@ function DetalhesReceita(props) {
 DetalhesReceita.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
-      id: PropTypes.string.isRequired
-    })
-  }),
-}
+      id: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
+};
 
 export default DetalhesReceita;
