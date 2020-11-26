@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import mealsContext from './MealsContext';
-import { getAllDrinkTypesApi } from '../services/drinksAPI';
-import { getAllRecipeTypesApi } from '../services/mealsAPI';
+import { getAllDrinkTypesApi, getFilteredDrinksApi } from '../services/drinksAPI';
+import { getAllRecipeTypesApi, getFilteredRecipesApi } from '../services/mealsAPI';
 
 function MyProvider({ children }) {
   const [categories, setCategories] = useState([]);
@@ -15,6 +15,7 @@ function MyProvider({ children }) {
   const [disable, setDisable] = useState(true);
   const [user, setUser] = useState({ email: '' });
   const [showSearchBar, setSearchBar] = useState(false);
+  const [cardsRecipe, setCardsRecipe] = useState([]);
 
   useEffect(() => {
     async function fetchALL() {
@@ -51,6 +52,10 @@ function MyProvider({ children }) {
     setUser,
     showSearchBar,
     setSearchBar,
+    getFilteredRecipesApi,
+    getFilteredDrinksApi,
+    cardsRecipe,
+    setCardsRecipe,
   };
 
   return (

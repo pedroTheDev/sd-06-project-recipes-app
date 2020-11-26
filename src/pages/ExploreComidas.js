@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router';
 import Footer from '../components/Footer';
 import { getRecipesMealsByRandomIngredients } from '../services/mealsAPI';
+import Header from '../components/Header';
 
 function ExploreComidas() {
   const [idRecipeRandom, setRecipeRandom] = useState('');
@@ -12,7 +13,7 @@ function ExploreComidas() {
   }
   return (
     <div>
-      <h1>Explore Comidas</h1>
+      <Header />
       <Link to="/explorar/comidas/area">
         <button type="button" data-testid="explore-by-area">
           Por Local de Origem

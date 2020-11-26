@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router';
 import Footer from '../components/Footer';
 import { getRecipeDrinksByRandom } from '../services/drinksAPI';
+import Header from '../components/Header';
 
 function ExploreBebidas() {
   const [idRecipeRandom, setRecipeRandom] = useState('');
@@ -12,7 +13,7 @@ function ExploreBebidas() {
   }
   return (
     <div>
-      <h1>Explore Bebidas</h1>
+      <Header />
       <Link to="/explorar/bebidas/ingredientes">
         <button type="button" data-testid="explore-by-ingredient">
           Por Ingredientes
