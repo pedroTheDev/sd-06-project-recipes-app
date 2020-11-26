@@ -23,7 +23,7 @@ function ProcessoComida() {
 
   useEffect(() => {
     localStorage.inProgressRecipes = JSON.stringify(
-      { meals: { idComida: Object.keys(checked) } },
+      { meals: { [idMeal]: Object.keys(checked) } },
     );
   }, [checked]);
 
