@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { requestApiFoodDetails, requestApiFoodFilterIngredient } from '../services/requestFood';
 
 function DetalhesReceita(props) {
@@ -73,18 +74,18 @@ function DetalhesReceita(props) {
         data-testid="video" 
         width="1042" height="586"
         src={`https://www.youtube.com/embed/${embed}`}
-        frameborder="0" allow="accelerometer;
+        allow="accelerometer;
         autoplay;
         clipboard-write;
         encrypted-media;
         gyroscope;
         picture-in-picture"
-        allowfullscreen>
-      </iframe>
+      />
+      {/* </iframe> */}
       <div>
         {recommendFood.map((food, index) => {
           return (
-            <div data-testid={`${index}-recomendation-card`}>
+            <div key={index} data-testid={`${index}-recomendation-card`}>
               <img src={food.strMealThumb} />
               <h3>{food.strMeal}</h3>
             </div>
@@ -93,6 +94,14 @@ function DetalhesReceita(props) {
       </div> 
     </div>
   );
+}
+
+DetalhesReceita.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired
+    })
+  }),
 }
 
 export default DetalhesReceita;

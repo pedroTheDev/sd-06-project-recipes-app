@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { requestApiDrinkDetails, requestApiDrinkFilterIngredient } from '../services/requestDrink';
 
 function DetalhesBebida(props) {
@@ -71,6 +72,14 @@ function DetalhesBebida(props) {
       </div> 
     </div>
   );
+}
+
+DetalhesBebida.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired
+    })
+  }),
 }
 
 export default DetalhesBebida;
