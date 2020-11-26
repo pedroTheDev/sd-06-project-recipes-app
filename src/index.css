@@ -7,6 +7,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   width: 100%;
 }
+.link-copy {
+  font-size: 0.6em;
+}
 
 .card {
   margin: 0.5%;

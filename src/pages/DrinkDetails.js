@@ -14,6 +14,7 @@ function DrinkDetails(props) {
   const [apiResponse, setFilter] = useRequestFood([]);
   const [isFavorite, setIsFavorite] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [inProgress, setInProgress] = useState(false);
   const textArea = useRef(null);
   const maxShow = 6;
 
@@ -21,7 +22,7 @@ function DrinkDetails(props) {
     textArea.current.select();
     document.execCommand('copy');
     e.target.focus();
-    setCopied(false);
+    setCopied(true);
   };
 
   const requestDetailsAPI = async () => {
@@ -48,8 +49,19 @@ function DrinkDetails(props) {
   };
 
   const handleInitRecipe = () => {
+    const readLocalStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const inProgressRecipes = readLocalStorage !== null ? readLocalStorage
+      : {
+        cocktails: {},
+        meals: {},
+      };
+    if (!inProgressRecipes.cocktails[id]) {
+      inProgressRecipes.cocktails[id] = [];
+    }
+    localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
     history.push(`/bebidas/${id}/in-progress`);
   };
+
   const removeIdLocalSotrage = () => {
     const readLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
     const newArray = readLocalStorage.filter((element) => element.id !== id);
@@ -65,6 +77,11 @@ function DrinkDetails(props) {
       setIsFavorite(true);
     } else {
       setIsFavorite(false);
+    }
+    const readInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (readInProgress !== null
+      && readInProgress.cocktails !== null && readInProgress.cocktails[id]) {
+      setInProgress(true);
     }
   };
 
@@ -107,7 +124,6 @@ function DrinkDetails(props) {
   }, []);
   return (
     <div data-testid="drink-details" className="food-details">
-      {copied ? (<p>Link copiado!</p>) : ''}
       <img
         className="pictureDetail"
         src={ requestDetails.strDrinkThumb }
@@ -117,6 +133,7 @@ function DrinkDetails(props) {
       <h1 data-testid="recipe-title">{requestDetails.strDrink}</h1>
       <ShareBtn copy={ copyToClipboard } />
       <FavoriteBtn isFavorite={ isFavorite } changesFavorites={ changesFavorites } />
+      {copied ? (<p className="link-copy">Link copiado!</p>) : ''}
       <p data-testid="recipe-category">{requestDetails.strAlcoholic}</p>
       {ingredients.map((ingredient, index) => (
         <div key={ index }>
@@ -149,7 +166,7 @@ function DrinkDetails(props) {
         data-testid="start-recipe-btn"
         type="button"
       >
-        Iniciar Receita
+        { inProgress ? ('Continuar Receita') : ('Iniciar Receita') }
       </button>
       <textarea
         className="text-area"

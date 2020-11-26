@@ -13,6 +13,7 @@ function FoodDetails(props) {
   const [ingredients, setIngredients] = useState([]);
   const [apiResponse, setFilter] = useRequestDrink([]);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [inProgress, setInProgress] = useState(false);
   const [copied, setCopied] = useState('none');
   const textArea = useRef(null);
   const maxShow = 6;
@@ -47,6 +48,16 @@ function FoodDetails(props) {
   };
 
   const handleInitRecipe = () => {
+    const readLocalStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const inProgressRecipes = readLocalStorage !== null ? readLocalStorage
+      : {
+        cocktails: {},
+        meals: {},
+      };
+    if (!inProgressRecipes.meals[id]) {
+      inProgressRecipes.meals[id] = [];
+    }
+    localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
     history.push(`/comidas/${id}/in-progress`);
   };
 
@@ -65,6 +76,11 @@ function FoodDetails(props) {
       setIsFavorite(true);
     } else {
       setIsFavorite(false);
+    }
+    const readInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (readInProgress !== null
+      && readInProgress.meals !== null && readInProgress.meals[id]) {
+      setInProgress(true);
     }
   };
 
@@ -106,7 +122,6 @@ function FoodDetails(props) {
   }, []);
   return (
     <div data-testid="food-details" className="food-details">
-      <p style={ { display: copied } }>Link copiado!</p>
       <img
         className="pictureDetail"
         src={ requestDetails.strMealThumb }
@@ -116,6 +131,7 @@ function FoodDetails(props) {
       <h1 data-testid="recipe-title">{requestDetails.strMeal}</h1>
       <ShareBtn copy={ copyToClipboard } />
       <FavoriteBtn isFavorite={ isFavorite } changesFavorites={ changesFavorites } />
+      <span className="link-copy" style={ { display: copied } }>Link copiado!</span>
       <p data-testid="recipe-category">{requestDetails.strCategory}</p>
       {ingredients.map((ingredient, index) => (
         <div key={ index }>
@@ -155,6 +171,7 @@ function FoodDetails(props) {
           </div>))}
       </div>
       <textarea
+        className="text-area"
         ref={ textArea }
         value={ `http://localhost:3000${pathname}` }
       />
@@ -164,7 +181,7 @@ function FoodDetails(props) {
         data-testid="start-recipe-btn"
         type="button"
       >
-        Iniciar Receita
+        { inProgress ? ('Continuar Receita') : ('Iniciar Receita') }
       </button>
     </div>
   );
