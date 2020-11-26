@@ -33,15 +33,15 @@ const DetalhesBebidas = () => {
     getSugestedDrinks();
   }, []);
 
-  const getIngredients = () => {
-    const objectIngredients = stateLocal.drink.drinks[0];
+  const getIngredientsOrMeasure = (param) => {
+    const dataObject = stateLocal.drink.drinks[0];
 
-    const keysIngredients = Object.keys(objectIngredients)
-      .filter((key) => key.includes('strIngredient')
-        && objectIngredients[key] !== null);
+    const dataKeys = Object.keys(dataObject)
+      .filter((key) => key.includes(param)
+        && dataObject[key] !== null);
 
-    const ingredients = keysIngredients
-      .map((key) => objectIngredients[key]);
+    const ingredients = dataKeys
+      .map((key) => dataObject[key]);
 
     return ingredients;
   };
@@ -77,16 +77,17 @@ const DetalhesBebidas = () => {
             </div>
             <div data-testid="recipe-category">
               {stateLocal.drink.drinks[0].strCategory}
+              {stateLocal.drink.drinks[0].strAlcoholic}
             </div>
             <div className="ingredients">
               <span>Ingredients</span>
               <ul>
-                {getIngredients().map((ingred, i) => (
+                {getIngredientsOrMeasure('strIngredient').map((ingred, i) => (
                   <li
                     data-testid={ `${i}-ingredient-name-and-measure` }
                     key={ i }
                   >
-                    {ingred}
+                    {`${ingred} - ${getIngredientsOrMeasure('strMeasure')[i]}`}
                   </li>
                 ))}
               </ul>
@@ -110,6 +111,7 @@ const DetalhesBebidas = () => {
               </a>
             </div>
             <div>
+              <span>Recomendadas</span>
               { stateSugestions && stateSugestions.drinks.map((drink, index) => {
                 if (index <= number) {
                   return (
