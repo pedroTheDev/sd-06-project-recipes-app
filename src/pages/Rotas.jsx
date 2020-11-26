@@ -21,6 +21,8 @@ import ExplorarComidasLocalOrigem from './ExplorarComidasLocalOrigem';
 import ReceitasFavoritas from './ReceitasFavoritas';
 import ReceitasFeitas from './ReceitasFeitas';
 
+import NotFound from './NotFound';
+
 export default function Rotas() {
   return (
     <BrowserRouter>
@@ -41,6 +43,7 @@ export default function Rotas() {
           component={ ExplorarComidasIngredientes }
         />
         <Route path="/explorar/comidas/area" component={ ExplorarComidasLocalOrigem } />
+        <Route path="/explorar/bebidas/area" component={ NotFound } />
         <Route path="/explorar/bebidas" component={ ExplorarBebidas } />
         <Route path="/explorar/comidas" component={ ExplorarComidas } />
         <Route path="/explorar" component={ Explorar } />
