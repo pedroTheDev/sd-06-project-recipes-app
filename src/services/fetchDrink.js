@@ -36,7 +36,7 @@ async function fetchDrink(filter, searchTerm = '') {
     const detailsResponse = await fetchDetails.json();
     return detailsResponse.drinks;
   }
-  
+
   case 'allCategories': {
     const fetchAllCategories = await fetch(`${url}list.php?c=list`);
     const allCategoriesResponse = await fetchAllCategories.json();
