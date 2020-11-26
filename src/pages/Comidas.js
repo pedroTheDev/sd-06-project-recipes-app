@@ -4,6 +4,7 @@ import MenuInferior from '../components/MenuInferior';
 import RecipeContext from '../context/RecipeContext';
 import CardComida from '../components/CardComida';
 import FetchApiComidas, { fetchApiComidasByCategory } from '../services/FetchApiComidas';
+import '../components/Card.css';
 
 function Comidas() {
   const [categoriaAtual, setCategoriaAtual] = useState('');
@@ -45,15 +46,18 @@ function Comidas() {
       <Header title="Comidas" />
       <div>
         <button
+          className="Buttons"
           type="button"
           data-testid="All-category-filter"
           onClick={ renderAll }
         >
           All
         </button>
+
         {categoriesComida
              && categoriesComida.slice(zero, cinco).map((category, index) => (
                <button
+                 className="Buttons"
                  key={ index }
                  type="button"
                  data-testid={ `${category.strCategory}-category-filter` }
@@ -62,16 +66,19 @@ function Comidas() {
                  { category.strCategory }
                </button>
              ))}
+
       </div>
-      {
-        retornoApiComidas ? retornoApiComidas.map((comida, index) => {
-          if (index < doze) {
-            return CardComida(comida, index);
-          }
-          return undefined;
-        }) // eslint-disable-next-line no-alert
-          : alert('Sinto muito, não encontramos nenhuma receita para esses filtros.')
-      }
+      <div className="ComidasPage bodyRender">
+        {
+          retornoApiComidas ? retornoApiComidas.map((comida, index) => {
+            if (index < doze) {
+              return CardComida(comida, index);
+            }
+            return undefined;
+          }) // eslint-disable-next-line no-alert
+            : alert('Sinto muito, não encontramos nenhuma receita para esses filtros.')
+        }
+      </div>
       <MenuInferior />
     </div>
   );

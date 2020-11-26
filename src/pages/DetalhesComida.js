@@ -1,14 +1,15 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import CardBebida from '../components/CardBebida';
+import CardBebidaRecomendacao from '../components/CardBebidaRecomendacao';
 import RecipeContext from '../context/RecipeContext';
 import { fetchApiComidasDetalhes } from '../services/FetchApiComidas';
+import '../components/MenuInferior.css';
 
 function DetalhesComidas() {
   const { idDaReceita } = useParams();
   const [estadoApiComidas, setEstadoApiComidas] = useState([]);
   const {
-    retornoApiBebidas,
+    retornoApi6Bebidas,
   } = useContext(RecipeContext);
   const seis = 6;
   const zero = 0;
@@ -93,12 +94,6 @@ function DetalhesComidas() {
           </p>
         </div>
         <p data-testid="instructions">{comida.strInstructions}</p>
-        <button
-          type="button"
-          data-testid={ `${index}-recomendation-card` }
-        >
-          Card receitas Recomendadas
-        </button>
 
         <video
           controls
@@ -115,14 +110,31 @@ function DetalhesComidas() {
         </video>
         <button type="button" data-testid="share-btn">Compartilhar</button>
         <button type="button" data-testid="favorite-btn">Favoritar</button>
-        <button type="button" data-testid="start-recipe-btn">Favoritar</button>
-        <div data-testid={ `${index}-recomendation-card` }>
+        <button
+          data-testid="start-recipe-btn"
+          className="IniciarReceita"
+          type="button"
+        >
+          Iniciar Receita
+        </button>
+        <div className="recomendacao">
+
           {
-            retornoApiBebidas
-            && retornoApiBebidas.slice(zero, seis)
-              .map((drink, indice) => CardBebida(drink, indice))
+            retornoApi6Bebidas
+            && retornoApi6Bebidas.slice(zero, seis)
+              .map((drink, indice) => (
+                <button
+                  data-testid={ `${indice}-recomendation-card` }
+                  className="img-recomendacao"
+                  key={ indice }
+                  type="button"
+                >
+                  {CardBebidaRecomendacao(drink, indice)}
+                </button>))
           }
+
         </div>
+
       </div>
     )));
 }
