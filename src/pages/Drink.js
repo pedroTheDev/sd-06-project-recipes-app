@@ -53,6 +53,7 @@ class Drink extends React.Component {
   render() {
     const { history } = this.props;
     const { Drinks, Categories } = this.state;
+    const INITIAL_VALUE = 0;
     return (
       <div className="food-drink-container">
         <div className="category-buttons">
@@ -64,13 +65,16 @@ class Drink extends React.Component {
               </button>
             </div>
           )) : ''}
-          <button
-            type="button"
-            data-testid="All-category-filter"
-            onClick={ () => this.allButtonHandler() }
-          >
-            All
-          </button>
+          {Categories.length > INITIAL_VALUE
+          && (
+            <button
+              type="button"
+              data-testid="All-category-filter"
+              onClick={ () => this.allButtonHandler() }
+            >
+              All
+            </button>
+          )}
         </div>
         <div className="cards-container">
           {Drinks ? Drinks.map((recipe, index) => (
