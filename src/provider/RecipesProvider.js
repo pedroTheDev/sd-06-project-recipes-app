@@ -29,12 +29,20 @@ export default function RecipesProvider({ children }) {
   const [recomendedFood, setRecomendedFood] = useState([]);
   const [recomendedDrink, setRecomendedDrink] = useState([]);
 
+  // mais um state para verificar o estado da receita iniciada , em andamento e finalizada
+  const [recipeState, setRecipeState] = useState({
+    ReceitaIniciada: true,
+    ReceitaEmAndamento: false,
+    ReceitaConcluida: false,
+  });
+
   useEffect(() => {
     if (fetchFood && fetchFood.length === 1) {
       const { idMeal } = fetchFood[0];
       window.location.pathname = `/comidas/${idMeal}`;
     }
     if (!fetchFood) {
+      // eslint-disable-next-line no-alert
       alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
     }
   }, [fetchFood]);
@@ -45,6 +53,7 @@ export default function RecipesProvider({ children }) {
       window.location.pathname = `/bebidas/${idDrink}`;
     }
     if (!fetchDrink) {
+      // eslint-disable-next-line no-alert
       alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
     }
   }, [fetchDrink]);
@@ -78,6 +87,8 @@ export default function RecipesProvider({ children }) {
     setRecomendedFood,
     recomendedDrink,
     setRecomendedDrink,
+    recipeState,
+    setRecipeState,
   };
 
   return (

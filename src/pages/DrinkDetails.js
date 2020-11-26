@@ -3,15 +3,20 @@ import RecipesContext from '../context/RecipesContext';
 import FetchApiDrink from '../services/FetchApiDrink';
 import FetchApiFood from '../services/FetchApiFood';
 
+import '../App.css';
+
 function DrinkDetails() {
   // state que guarda o retorno da requisição
   const {
     drinkDetail,
     setDrinkDetail,
     recomendedFood,
-    setRecomendedFood } = useContext(RecipesContext);
+    setRecomendedFood,
+    recipeState,
+    setRecipeState } = useContext(RecipesContext);
 
   const maxRecomended = 6;
+  const minRecomended = 0;
 
   useEffect(() => {
     // código esperto para pegar somente o id no final da url
@@ -20,6 +25,7 @@ function DrinkDetails() {
     const RecipeID = location.slice(magickNumber, location.length);
     FetchApiDrink('6', setDrinkDetail, RecipeID);
     FetchApiFood('2', setRecomendedFood, drinkDetail.strMeal);
+    console.log(recomendedFood);
   }, []);
 
   function renderIngredients() {
@@ -50,6 +56,16 @@ function DrinkDetails() {
   // O card de receitas recomendadas deve possuir o atributo data-testid="${index}-recomendation-card";
   // O botão de iniciar receita deve possuir o atributo data-testid="start-recipe-btn";
 
+  // Essa função gerencia o estado da receita
+  function handleRecipeState() {
+    setRecipeState({ ...recipeState, ReceitaIniciada: true });
+    const location = window.location.pathname;
+    const magickNumber = 9;
+    const RecipeID = location.slice(magickNumber, location.length);
+
+    window.location.pathname = `/bebidas/${RecipeID}/in-progress`;
+  }
+
   return (
     drinkDetail.map((drink, index) => (
       <div key={ index }>
@@ -77,36 +93,46 @@ function DrinkDetails() {
           <div>
             {drinkDetail.length === 1 ? renderIngredients() : null}
           </div>
-          <div>
-            <p>Recomendado:</p>
-            {drinkDetail.map((commendedDrink, index3) => (
-              <span
-                key={ index3 }
-                data-testid={ `${index3}-recomendation-card` }
-              >
-                {commendedDrink.strTags}
-              </span>
-            ))}
 
-            <p>Comidas Recomendadas:</p>
+          <div>Recomendadas: </div>
+
+          <div className="carousel scroller">
+            <span className="btn prev">&lt;</span>
+            <span className="btn next">&gt;</span>
             {recomendedFood.length >= maxRecomended
               ? recomendedFood.map((recomendation, index4) => (
-                <p
-                  key={ index4 }
-                  data-testid={ `${index4}-recomendation-card` }
-                >
-                  {recomendation.strMeal}
-                </p>
-              )).splice(1, maxRecomended) : null}
+                <div key={ index4 }>
+                  <span
+                    className="carousel-item"
+                    data-testid={ `${index4}-recomendation-card` }
+                  >
+                    <div>
+                      <img src={ recomendation.strMealThumb } alt="drink" />
+                    </div>
+                    <div
+                      className="card"
+                      data-testid={ `${index4}-recomendation-title` }
+                    >
+                      {recomendation.strMeal}
+                    </div>
+                  </span>
+                </div>
+              )).slice(minRecomended, maxRecomended) : null}
           </div>
+
+          <button
+            type="button"
+            data-testid="start-recipe-btn"
+            className="fixed-btn"
+            onClick={ handleRecipeState }
+          >
+            {recipeState.ReceitaIniciada ? 'Continuar Receita' : 'Iniciar Receita'}
+          </button>
           <button type="button" data-testid="share-btn">
             Botão compartilhar
           </button>
           <button type="button" data-testid="favorite-btn">
             Botão favoritar
-          </button>
-          <button type="button" data-testid="start-recipe-btn">
-            Botão iniciar receita
           </button>
         </div>
       </div>
