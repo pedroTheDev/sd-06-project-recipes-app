@@ -5,6 +5,7 @@ import shareIcon from '../images/shareIcon.svg';
 
 export default function DoneRecipes() {
   const [recipes, setRecipes] = useState([]);
+  const [copy, setCopy] = useState('');
 
   useEffect(() => {
     const storage = JSON.parse(localStorage.getItem('doneRecipes'));
@@ -13,11 +14,10 @@ export default function DoneRecipes() {
     }
   }, []);
 
-  function handleCopy() {
-    console.log('oi');
-    // const link = `${window.location.origin}/comidas/${id}`;
-    // navigator.clipboard.writeText(link);
-    // setCopy('Link copiado!');
+  function handleCopy(type, id) {
+    const link = `${window.location.origin}/${type}s/${id}`;
+    navigator.clipboard.writeText(link);
+    setCopy('Link copiado!');
   }
 
   const maxTags = 2;
@@ -52,11 +52,12 @@ export default function DoneRecipes() {
                   type="button"
                   data-testid={ `${index}-horizontal-share-btn` }
                   value="Share"
-                  onClick={ () => handleCopy() }
+                  onClick={ () => handleCopy(recipe.type, recipe.id) }
                   src={ shareIcon }
                 >
                   <img alt="Share" src={ shareIcon } />
                 </button>
+                <span>{copy}</span>
                 { (recipe.tags !== null)
                   && (Array.isArray(recipe.tags))
                   ? recipe.tags.map((tag, innerIndex) => (
