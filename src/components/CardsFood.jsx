@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import RecipesAppContext from '../hooks/RecipesAppContext';
 import {
@@ -21,9 +21,10 @@ function CardsFood() {
   const ofTheFirstParameter = 0;
   const upToParameter12 = 12;
 
+  const arrayVoid = 0;
   return (
     <div>
-      {(cardFood.length === 0) ? <span>Loading...</span> : cardFood
+      {(cardFood.length === arrayVoid) ? <span>Loading...</span> : cardFood
         .slice(ofTheFirstParameter, upToParameter12).map(({
           idMeal,
           strMeal,

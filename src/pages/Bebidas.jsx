@@ -1,23 +1,10 @@
-import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import Header from '../components/Header';
-import RecipesAppContext from '../hooks/RecipesAppContext';
 import Footer from '../components/Footer';
 import CardsDrink from '../components/CardsDrink';
 import ButtonCategoriesDrink from '../components/ButtonCategoriesDrink';
 
-function Bebidas({ history }) {
-  const {
-    cards: {
-      cardDrink,
-    },
-  } = useContext(RecipesAppContext);
-
-  if (cardDrink.length === 1) {
-    const { idDrink } = cardDrink[0];
-    history.push(`/bebidas/${idDrink}`);
-  }
-
+function Bebidas() {
   const namePage = 'Bebidas';
   const buttonIs = true;
 
@@ -30,11 +17,5 @@ function Bebidas({ history }) {
     </div>
   );
 }
-
-Bebidas.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
-};
 
 export default Bebidas;

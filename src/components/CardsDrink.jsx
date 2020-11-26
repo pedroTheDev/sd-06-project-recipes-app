@@ -19,9 +19,10 @@ function CardsDrink() {
   const ofTheFirstParameter = 0;
   const upToParameter12 = 12;
 
+  const arrayVoid = 0;
   return (
     <div>
-      {(cardDrink.length === 0) ? <span>Loading...</span> : cardDrink
+      {(cardDrink.length === arrayVoid) ? <span>Loading...</span> : cardDrink
         .slice(ofTheFirstParameter, upToParameter12).map(({
           idDrink,
           strDrink,

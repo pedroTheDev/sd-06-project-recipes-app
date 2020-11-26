@@ -16,10 +16,13 @@ function ButtonCategoriesFood() {
   const [categoriesButton, setCategoriesButton] = useState([]);
   const [categorySelectPreviously, setCategorySelectPreviously] = useState([]);
 
+  const ofTheFirstParameter = 0;
+  const upToParameter5 = 5;
   useEffect(() => {
     requestApiFoodListCategories()
       .then((arrayApiList) => {
-        const arrayCategoriesList5 = arrayApiList.slice(0, 5)
+        const arrayCategoriesList5 = arrayApiList
+          .slice(ofTheFirstParameter, upToParameter5)
           .map((objCategory) => objCategory.strCategory);
         const arrayListButton = ['All', ...arrayCategoriesList5];
         setCategoriesButton(arrayListButton);
@@ -37,8 +40,9 @@ function ButtonCategoriesFood() {
     setCategorySelectPreviously(category);
   };
 
+  const arrayVoid = 0;
   return (
-    (categoriesButton.length === 0) ? <span>Loading...</span> : (
+    (categoriesButton.length === arrayVoid) ? <span>Loading...</span> : (
       <div>
         {categoriesButton.map((category) => (
           <button
