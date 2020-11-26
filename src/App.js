@@ -11,8 +11,9 @@ import NotFound from './pages/NotFound';
 import Explore from './pages/Explore';
 import ReceitasFavoritas from './pages/ReceitasFavoritas';
 import ReceitasFeitas from './pages/ReceitasFeitas';
-import ExpComIngr from './pages/ExplorarComidasIngredientes';
-import ExpBebIngr from './pages/ExplorarBebidasIngredientes';
+import MealsPerIngredients from './pages/MealsPerIngredients';
+import MealsPerArea from './pages/MealsPerArea';
+import DrinksPerIngredients from './pages/DrinksPerIngredients';
 
 function App() {
   return (
@@ -29,9 +30,22 @@ function App() {
           <Route exact path="/bebidas/:id" component={ MenuDetails } />
           <Route exact path="/receitas-feitas" component={ ReceitasFeitas } />
           <Route exact path="/receitas-favoritas" component={ ReceitasFavoritas } />
-          <Route exact path="/explorar/comidas/ingredientes" component={ ExpComIngr } />
-          <Route exact path="/explorar/bebidas/ingredientes" component={ ExpBebIngr } />
           <Route exact path="/" component={ Login } />
+          <Route
+            exact
+            path="/explorar/comidas/ingredientes"
+            component={ MealsPerIngredients }
+          />
+          <Route
+            exact
+            path="/explorar/comidas/area"
+            component={ MealsPerArea }
+          />
+          <Route
+            exact
+            path="/explorar/bebidas/ingredientes"
+            component={ DrinksPerIngredients }
+          />
           <Route component={ NotFound } />
         </Switch>
       </BrowserRouter>

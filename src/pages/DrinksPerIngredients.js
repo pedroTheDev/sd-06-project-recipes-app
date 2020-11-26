@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-function ExplorarBebidasIngredientes() {
+function DrinksPerIngredients() {
   return (
     <div>
       <Header />
@@ -11,4 +11,4 @@ function ExplorarBebidasIngredientes() {
   );
 }
 
-export default ExplorarBebidasIngredientes;
+export default DrinksPerIngredients;

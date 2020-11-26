@@ -3,7 +3,7 @@ import React from 'react';
 function MenuDetails() {
   return (
     <div>
-      <h1>Detalhes da Receita</h1>
+      <h1>MenuDetails</h1>
     </div>
   );
 }
