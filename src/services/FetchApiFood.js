@@ -18,6 +18,8 @@ export default async function fetchApiFood(radioSelected, setData = '', value = 
     endpoint = `https://www.themealdb.com/api/json/v1/1/filter.php?a=${value}`;
   } else if (radioSelected === '9') {
     endpoint = 'https://www.themealdb.com/api/json/v1/1/list.php?i=list';
+  } else if (radioSelected === '10') {
+    endpoint = 'https://www.themealdb.com/api/json/v1/1/random.php';
   }
 
   const response = await fetch(endpoint);

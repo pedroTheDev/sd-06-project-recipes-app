@@ -14,6 +14,8 @@ export default async function fetchApiDrink(radioSelected, setData = '', value =
     endpoint = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${value}`;
   } else if (radioSelected === '7') {
     endpoint = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list';
+  } else if (radioSelected === '8') {
+    endpoint = 'https://www.thecocktaildb.com/api/json/v1/1/random.php';
   }
 
   const response = await fetch(endpoint);

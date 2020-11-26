@@ -1298,8 +1298,8 @@ Obs: se a opção escolhida for explorar bebidas, o botão para explorar por loc
 
   **Observações técnicas**
 
-  * Ao clicar no botão "Por Ingredientes" da tela de explorar comidas a rota muda para a página de explorar comidas por ingrediente;
-  * Ao clicar no botão "Explorar Bebidas" da tela de explorar bebidas a rota muda para a página de explorar bebidas por ingrediente.
+  * Ao clicar no botão "Por Ingredientes" da tela de *explorar comidas* a rota muda para a página de explorar comidas por ingrediente;
+  * Ao clicar no botão "Por Ingredientes" da tela de *explorar bebidas* a rota muda para a página de explorar bebidas por ingrediente.
 
 ### 73 - Redirecione a pessoa usuária ao clicar em "Por Local de Origem", a rota deve mudar para tela de explorar por local de origem
 
@@ -1307,8 +1307,8 @@ Obs: se a opção escolhida for explorar bebidas, o botão para explorar por loc
 
   **Observações técnicas**
 
-  * Ao clicar no botão "Por Ingredientes" da tela de explorar comidas a rota muda para a página de detalhes de uma comida aleatória obtida através do endpoint `https://www.themealdb.com/api/json/v1/1/random.php`;
-  * Ao clicar no botão "Explorar Bebidas" da tela de explorar bebidas a rota muda para a página de detalhes de uma bebida aleatória obtida através do endpoint `https://www.thecocktaildb.com/api/json/v1/1/random.php`.
+  * Ao clicar no botão "Por Ingredientes" da tela de *explorar comidas* a rota muda para a página de detalhes de uma comida aleatória obtida através do endpoint `https://www.themealdb.com/api/json/v1/1/random.php`;
+  * Ao clicar no botão "Por Ingredientes" da tela de *explorar bebidas* a rota muda para a página de detalhes de uma bebida aleatória obtida através do endpoint `https://www.thecocktaildb.com/api/json/v1/1/random.php`.
 
 ## Tela de explorar ingredientes
 
