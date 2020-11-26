@@ -11,10 +11,9 @@ function Header({ pageName }) {
 
   function handleClick() {
     if (divShow === 'hide') {
-      setDivShow('show');
-    } else {
-      setDivShow('hide');
+      return setDivShow('show');
     }
+    return setDivShow('hide');
   }
 
   return (
