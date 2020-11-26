@@ -21,8 +21,7 @@ const SearchBar = () => {
 
     if (window.location.pathname === '/bebidas') {
       const drinks = await searchDrink(nome, radioButton);
-      // console.log(drinks);
-      if (drinks === null || drinks === undefined) {
+      if (drinks === undefined || drinks.drinks === null) {
         alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
       } else {
         return setApiValueSearch({
@@ -32,7 +31,6 @@ const SearchBar = () => {
       }
     }
     const foods = await searchFood(nome, radioButton);
-    // console.log(foods);
     if (foods.meals === null) {
       alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
     } else {
