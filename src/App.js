@@ -5,7 +5,7 @@ import Login from './pages/Login';
 import Foods from './pages/Foods';
 import Perfil from './pages/Perfil';
 import FavoriteRecipes from './pages/FavoriteRecipes';
-import recipesMade from './pages/RecipesMade';
+import RecipesMade from './pages/RecipesMade';
 import Drinks from './pages/Drinks';
 import RecipeDetails from './pages/RecipeDetails';
 import Explore from './pages/Explore';
@@ -17,8 +17,8 @@ function App() {
   return (
     <Provider>
       <Switch>
-        <Route path="/receitas-feitas" component={ recipesMade } />
         <Route path="/receitas-favoritas" component={ FavoriteRecipes } />
+        <Route path="/receitas-feitas" component={ RecipesMade } />
         <Route exact path="/" component={ Login } />
         <Route exact path="/comidas" component={ Foods } />
         <Route exact path="/bebidas" component={ Drinks } />
