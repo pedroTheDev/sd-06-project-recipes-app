@@ -29,10 +29,12 @@ function App() {
         <Route exact path="/comidas" component={ Comidas } />
 
         <Route
+          exact
           path="/comidas/:id"
           render={ (props) => <ComidasDetails { ...props } /> }
         />
         <Route
+          exact
           path="/bebidas/:id"
           render={ (props) => <BebidasDetails { ...props } /> }
         />
