@@ -8,6 +8,7 @@ function Menu() {
     <div>
       <Header />
       <RecipeList />
+
       <Footer />
     </div>
   );
