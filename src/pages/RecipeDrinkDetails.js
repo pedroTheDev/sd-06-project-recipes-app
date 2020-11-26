@@ -92,8 +92,6 @@ function RecipeDrinkDetails({ match, title }) {
           ))}
         </ul>
         <p data-testid="instructions">{recipes[0].strInstructions}</p>
-        <button type="button" data-testid="start-recipe-btn">Iniciar Receita</button>
-
         <div>
           {recomendation.slice(ZERO, SEIS).map((element, index) => (
             <div key={ index } className="scrollmenu-child">

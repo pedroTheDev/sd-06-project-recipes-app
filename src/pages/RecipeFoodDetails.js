@@ -92,8 +92,6 @@ function RecipeFoodDetails({ match, title }) {
           allow="accelerometer; autoplay; clipboard-write; encrypted-media"
           allowFullScreen
         />
-        <button type="button" data-testid="start-recipe-btn">Iniciar Receita</button>
-
         <div>
           {recomendation.slice(ZERO, SEIS).map((element, index) => (
             <div key={ index } className="scrollmenu-child">
