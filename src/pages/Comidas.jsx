@@ -13,6 +13,7 @@ function Comidas({ history }) {
     },
   } = useContext(RecipesAppContext);
 
+  //  esse if só de ve ser ativado se apessoa fizer a requisição pelo HeaderSearch alterar
   if (cardFood.length === 1) {
     const { idMeal } = cardFood[0];
     history.push(`/comidas/${idMeal}`);

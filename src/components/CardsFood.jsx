@@ -32,18 +32,19 @@ function CardsFood() {
           <Link
             key={ idMeal }
             to={ `/comidas/${idMeal}` }
-            data-testid={ `${index}-recipe-card` }
           >
-            <img
-              src={ strMealThumb }
-              alt={ strMeal }
-              data-testid={ `${index}-card-img` }
-            />
-            <h4
-              data-testid={ `${index}-card-name` }
-            >
-              { strMeal }
-            </h4>
+            <div data-testid={ `${index}-recipe-card` }>
+              <img
+                src={ strMealThumb }
+                alt={ strMeal }
+                data-testid={ `${index}-card-img` }
+              />
+              <h4
+                data-testid={ `${index}-card-name` }
+              >
+                { strMeal }
+              </h4>
+            </div>
           </Link>
         ))}
     </div>

@@ -29,19 +29,20 @@ function CardsDrink() {
         }, index) => (
           <Link
             key={ idDrink }
-            to={ `/comidas/${idDrink}` }
-            data-testid={ `${index}-recipe-card` }
+            to={ `/bebidas/${idDrink}` }
           >
-            <img
-              src={ strDrinkThumb }
-              alt={ strDrink }
-              data-testid={ `${index}-card-img` }
-            />
-            <h4
-              data-testid={ `${index}-card-name` }
-            >
-              { strDrink }
-            </h4>
+            <div data-testid={ `${index}-recipe-card` }>
+              <img
+                src={ strDrinkThumb }
+                alt={ strDrink }
+                data-testid={ `${index}-card-img` }
+              />
+              <h4
+                data-testid={ `${index}-card-name` }
+              >
+                { strDrink }
+              </h4>
+            </div>
           </Link>
         ))}
     </div>
