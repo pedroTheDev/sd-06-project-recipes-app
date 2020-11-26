@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import RecipesList from '../components/RecipesList';
 import { addRecipes, changeIsFetchin } from '../redux/actions/searchRecipes';
 import useFetch from '../helpers/effects/useFetch';
+import { fetchAPI } from '../helpers/APIRequests';
 import Footer from '../components/Footer';
 
 function Food(props) {
@@ -12,11 +13,16 @@ function Food(props) {
     pageConfig,
     fetchmap,
     dispatchRecipes, data, isFetchin, dispatchFetching } = props;
+  const [isLoading, setIsLoading] = useState(false);
 
   const { header, recipe } = pageConfig;
   const { title } = header;
   const { inputText, radioSearchSelection } = data;
 
+  const allFoodRecipesEndPoint = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+  const allDrinkRecipesEndPoint = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+
+  
   useFetch(
     title,
     inputText,
@@ -44,6 +50,7 @@ function Food(props) {
         dispatchRecipes={ dispatchRecipes }
         recipeConfig={ recipe }
         pathname={ pathname }
+        isLoading={ isLoading }
       />
       <Footer />
     </>

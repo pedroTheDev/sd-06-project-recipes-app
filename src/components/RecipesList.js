@@ -1,32 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Redirect } from 'react-router-dom';
 import RecipeCard from './RecipeCard';
 import findMatchInKeys from '../helpers/assets';
-import { fetchAPI } from '../helpers/APIRequests';
 
 export default function RecipesList(props) {
-  const { pathname, recipes, title, recipeConfig, dispatchRecipes } = props;
+  const { pathname, recipes, title, recipeConfig, isLoading } = props;
   const { type } = recipeConfig;
-  const [isLoading, setIsLoading] = useState(false);
-
-  const allFoodRecipesEndPoint = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
-  const allDrinkRecipesEndPoint = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
-
-  useEffect(() => {
-    async function fetchData() {
-      let initialRecipes;
-      setIsLoading(true);
-      if (pathname === '/comidas') {
-        initialRecipes = await fetchAPI(allFoodRecipesEndPoint);
-        dispatchRecipes(initialRecipes);
-      } else {
-        initialRecipes = await fetchAPI(allDrinkRecipesEndPoint);
-        dispatchRecipes(initialRecipes);
-      }
-      setIsLoading(false);
-    }
-    fetchData();
-  }, []);
 
   const renderRecipesResults = () => {
     console.log('recipesType', recipes[type]);

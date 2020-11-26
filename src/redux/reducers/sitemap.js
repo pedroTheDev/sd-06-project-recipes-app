@@ -69,7 +69,7 @@ const initialState = {
   },
   perfil: {
     header: {
-      profileButton: false,
+      profileButton: true,
       searchButton: false,
       title: 'Perfil',
     },
