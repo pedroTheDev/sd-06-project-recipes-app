@@ -140,7 +140,7 @@ class Details extends Component {
         />
         {clipboard.length !== zero && (
           <div>
-            <p>Link Copiado!</p>
+            <p>Link copiado!</p>
           </div>
         )}
         <button type="button" data-testid="share-btn" onClick={ this.handleShare }>
