@@ -28,6 +28,7 @@ function DrinkFilters() {
       setSelectedFilter(category);
     } else {
       fetchDrink();
+      setSelectedFilter('All');
     }
   };
 
