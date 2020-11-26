@@ -22,14 +22,16 @@ function FoodExp() {
           Por Local de Origem
         </button>
       </Link>
-      {!random ? <p>LOADING...</p> : 
-      random.map((meal) => 
-        <Link to={`/comidas/${meal.idMeal}`} >
-          <button type="button" data-testid="explore-surprise">
-            Me Surpreenda!
-          </button>
-        </Link>
-      )}
+      {!random ? <p>LOADING...</p>
+        : (
+          random.map((meal) => (
+            <Link key={ meal.idMeal } to={ `/comidas/${meal.idMeal}` }>
+              <button type="button" data-testid="explore-surprise">
+                Me Surpreenda!
+              </button>
+            </Link>
+          ))
+        )}
       <Footer />
     </div>
   );

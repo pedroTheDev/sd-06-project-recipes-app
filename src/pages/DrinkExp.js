@@ -17,14 +17,16 @@ function DrinkExp() {
           Por Ingredientes
         </button>
       </Link>
-      {!random ? <p>LOADING...</p> : 
-      random.map((drink) => 
-        <Link to={`/bebidas/${drink.idDrink}`} >
-          <button type="button" data-testid="explore-surprise">
-            Me Surpreenda!
-          </button>
-        </Link>
-      )}
+      {!random ? <p>LOADING...</p>
+        : (
+          random.map((drink) => (
+            <Link key={ drink.idDrink } to={ `/bebidas/${drink.idDrink}` }>
+              <button type="button" data-testid="explore-surprise">
+                Me Surpreenda!
+              </button>
+            </Link>
+          ))
+        )}
       <Footer />
     </div>
   );

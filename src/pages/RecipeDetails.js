@@ -17,7 +17,7 @@ function RecipeDetails(props) {
     details,
     recommended,
   } = useContext(Context);
-  const { match: { path, params } } = props;
+  const { match: { path, params, url } } = props;
   const [fav, setFav] = useState('white');
   const [copied, setCopied] = useState('');
   const ZERO = 0;
@@ -46,9 +46,10 @@ function RecipeDetails(props) {
   const getVideoId = (link) => link.split('=').pop();
 
   const share = () => {
-    copy(`http://localhost:3000${props.location.pathname}`);
+    const time = 3000;
+    copy(`http://localhost:3000${url}`);
     setCopied('copy');
-    setTimeout(() => setCopied(false), 3000);
+    setTimeout(() => setCopied(false), time);
   };
 
   return (
@@ -139,6 +140,7 @@ RecipeDetails.propTypes = {
   match: PropTypes.shape({
     path: PropTypes.string,
     params: PropTypes.shape({ id: PropTypes.string }),
+    url: PropTypes.string,
   }).isRequired,
 };
 
