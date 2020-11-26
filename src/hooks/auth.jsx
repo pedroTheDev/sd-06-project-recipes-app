@@ -7,9 +7,17 @@ const authContext = createContext();
 
 function AuthProvider({ children }) {
   const [user, setUserData] = useState(() => {
-    const previousUserData = JSON.parse(localStorage.getItem('user'));
+    let previousUserData = JSON.parse(localStorage.getItem('user'));
+
+    const registeredUser = JSON.parse(localStorage.getItem('userNames')) || {};
 
     if (previousUserData) {
+      const userName = registeredUser[previousUserData.email];
+
+      if (userName) {
+        previousUserData = { ...previousUserData, name: userName };
+      }
+
       return previousUserData;
     }
 

@@ -9,6 +9,7 @@ import { useCook } from '../../hooks/cook';
 import { useRecipes } from '../../hooks/recipes';
 
 import parseRecipeToFavorite from '../../utils/parseFavoriteRecipeFormat';
+import parseIngredientAndMeasures from '../../utils/parseIngredientAndMeasures';
 
 import shareIcon from '../../images/shareIcon.svg';
 import blackHeart from '../../images/blackHeartIcon.svg';
@@ -75,38 +76,8 @@ function RecipeInProgress({ pageType }) {
     updateFavoriteRecipes(favoriteRecipe, recipeIsFavorited);
   }, [id, pageType, currentlyCooking, updateFavoriteRecipes, recipeIsFavorited]);
 
-  const foodIngredients = useMemo(() => {
-    const ingredients = (
-      Object
-        .keys(currentlyCooking)
-        .filter((detail) => {
-          const ingredientPattern = /strIngredient\d/i;
-
-          const detailIsIngredient = (
-            ingredientPattern.test(detail)
-          );
-
-          // makes sure we only have filled ingredients
-          if (detailIsIngredient) {
-            return currentlyCooking[detail];
-          }
-
-          return false;
-        })
-        .map((ingredientKey) => {
-          const everyNonDigitChar = /[^\d]/g;
-          const ingredientNumber = ingredientKey.replace(everyNonDigitChar, '');
-
-          const matchingMeasure = `strMeasure${ingredientNumber}`;
-
-          const ingredient = currentlyCooking[ingredientKey];
-          const measure = currentlyCooking[matchingMeasure];
-
-          const displayFormat = `${ingredient} - ${measure}`;
-
-          return displayFormat;
-        })
-    );
+  const recipeIngredients = useMemo(() => {
+    const ingredients = parseIngredientAndMeasures(currentlyCooking);
 
     return ingredients;
   }, [currentlyCooking]);
@@ -132,12 +103,12 @@ function RecipeInProgress({ pageType }) {
   }, [recipesProgress, id]);
 
   const canFinalizeRecipe = useMemo(() => {
-    const everyIngredientChecked = foodIngredients.every(
+    const everyIngredientChecked = recipeIngredients.every(
       (_, index) => currentProgress.includes(`${index}`),
     );
 
     return everyIngredientChecked;
-  }, [foodIngredients, currentProgress]);
+  }, [recipeIngredients, currentProgress]);
 
   const handleFinalizeRecipe = useCallback(() => {
     finalizeRecipe(pageType, id);
@@ -201,7 +172,7 @@ function RecipeInProgress({ pageType }) {
       </div>
 
       <div className="recipe-ingredients in-progress-ingredients">
-        {foodIngredients.map((ingredient, index) => (
+        {recipeIngredients.map((ingredient, index) => (
           <div
             className="ingredients-checkbox-container"
             key={ ingredient }

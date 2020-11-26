@@ -9,13 +9,22 @@ import { useRecipes } from '../../hooks/recipes';
 
 import Header from '../../components/Header';
 import Navbar from '../../components/Navbar';
+import LoadingBook from '../../components/LoadingBook';
+
+import './styles.css';
 
 function Recipes({ pageType }) {
   const [filterSelected, setFilterSelected] = useState('all');
 
-  const { infoSearched, appSearch } = useSearch();
+  const { infoSearched, appSearch, loadingRecipes } = useSearch();
+
   const {
-    currentRecipes, currentFilters, currentFilteredRecipes, updateFilteredRecipes,
+    currentRecipes,
+    currentFilters,
+    currentFilteredRecipes,
+    updateFilteredRecipes,
+    loadingFilters,
+    loadingByCategory,
   } = useRecipes();
 
   useEffect(() => {
@@ -54,66 +63,90 @@ function Recipes({ pageType }) {
     [currentFilters, pageType],
   );
 
+  if (loadingFilters && loadingRecipes) {
+    return (
+      <LoadingBook />
+    );
+  }
+
   return (
-    <div className="foods-page">
+    <div className="recipes-page">
       <Header pageName={ pageType } showSearch />
 
-      <div className="filters-container">
-        <label htmlFor="all">
-          <input
-            type="checkbox"
-            name="filter"
-            id="all"
-            value="all"
-            checked={ filterSelected === 'all' }
-            onChange={ handleFilterChange }
-            data-testid="All-category-filter"
-          />
-          Todos
-        </label>
+      <section className="recipe-filters">
+        <div className="filters-container">
 
-        {currentRecipeFilters.map((filter) => (
-          <React.Fragment key={ filter }>
-            <label
-              data-testid={ `${filter}-category-filter` }
-              htmlFor={ filter }
-              key={ filter }
-            >
-              {filter}
-
-            </label>
+          <div className="label-container">
             <input
               type="checkbox"
               name="filter"
-              id={ filter }
-              value={ filter }
-              checked={ filterSelected === filter }
+              id="all"
+              value="all"
+              checked={ filterSelected === 'all' }
               onChange={ handleFilterChange }
             />
-          </React.Fragment>
-        ))}
-      </div>
+            {/* eslint-disable-next-line */}
+            <label
+              data-testid="All-category-filter"
+              htmlFor="all"
+            >
+              All
+            </label>
 
-      <div className="foods-container">
-        {loadedRecipes.map((recipe, index) => (
-          <Link
-            to={ `/${pageType}/${recipe.idMeal || recipe.idDrink}` }
-            className="recipe-card"
-            data-testid={ `${index}-recipe-card` }
-            key={ recipe.idMeal || recipe.idDrink }
-          >
-            <img
-              src={ recipe.strMealThumb || recipe.strDrinkThumb }
-              alt={ recipe.strMeal || recipe.strDrink }
-              data-testid={ `${index}-card-img` }
-            />
+          </div>
 
-            <strong data-testid={ `${index}-card-name` }>
-              {recipe.strMeal || recipe.strDrink }
-            </strong>
-          </Link>
-        ))}
-      </div>
+          {currentRecipeFilters.map((filter) => (
+            <div className="label-container" key={ filter }>
+              <input
+                type="checkbox"
+                name="filter"
+                id={ filter }
+                value={ filter }
+                checked={ filterSelected === filter }
+                onChange={ handleFilterChange }
+              />
+
+              <label
+                data-testid={ `${filter}-category-filter` }
+                htmlFor={ filter }
+                key={ filter }
+              >
+                {filter}
+              </label>
+
+            </div>
+          ))}
+        </div>
+
+      </section>
+
+      {(loadingRecipes || loadingByCategory)
+        ? (
+          <div className="spinner-container">
+            <div className="loading-spinner" />
+          </div>
+        ) : (
+          <div className="recipes-container">
+            {loadedRecipes.map((recipe, index) => (
+              <Link
+                to={ `/${pageType}/${recipe.idMeal || recipe.idDrink}` }
+                className="recipe-card"
+                data-testid={ `${index}-recipe-card` }
+                key={ recipe.idMeal || recipe.idDrink }
+              >
+                <img
+                  src={ recipe.strMealThumb || recipe.strDrinkThumb }
+                  alt={ recipe.strMeal || recipe.strDrink }
+                  data-testid={ `${index}-card-img` }
+                />
+
+                <strong data-testid={ `${index}-card-name` }>
+                  {recipe.strMeal || recipe.strDrink }
+                </strong>
+              </Link>
+            ))}
+          </div>
+        )}
 
       <Navbar />
     </div>

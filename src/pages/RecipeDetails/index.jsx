@@ -10,6 +10,7 @@ import { useCook } from '../../hooks/cook';
 import { useRecipes } from '../../hooks/recipes';
 
 import parseRecipeToFavorite from '../../utils/parseFavoriteRecipeFormat';
+import parseIngredientAndMeasures from '../../utils/parseIngredientAndMeasures';
 
 import shareIcon from '../../images/shareIcon.svg';
 import blackHeart from '../../images/blackHeartIcon.svg';
@@ -54,38 +55,8 @@ function RecipeDetails({ pageType }) {
     [currentFocusedRecipes, pageType],
   );
 
-  const foodIngredients = useMemo(() => {
-    const ingredients = (
-      Object
-        .keys(recipeDetails)
-        .filter((detail) => {
-          const ingredientPattern = /strIngredient\d/i;
-
-          const detailIsIngredient = (
-            ingredientPattern.test(detail)
-          );
-
-          // makes sure we only have filled ingredients
-          if (detailIsIngredient) {
-            return recipeDetails[detail];
-          }
-
-          return false;
-        })
-        .map((ingredientKey) => {
-          const everyNonDigitChar = /[^\d]/g;
-          const ingredientNumber = ingredientKey.replace(everyNonDigitChar, '');
-
-          const matchingMeasure = `strMeasure${ingredientNumber}`;
-
-          const ingredient = recipeDetails[ingredientKey];
-          const measure = recipeDetails[matchingMeasure];
-
-          const displayFormat = `${ingredient} - ${measure}`;
-
-          return displayFormat;
-        })
-    );
+  const recipeIngredients = useMemo(() => {
+    const ingredients = parseIngredientAndMeasures(recipeDetails);
 
     return ingredients;
   }, [recipeDetails]);
@@ -174,7 +145,7 @@ function RecipeDetails({ pageType }) {
       </div>
 
       <div className="recipe-ingredients">
-        {foodIngredients.map((ingredients, index) => (
+        {recipeIngredients.map((ingredients, index) => (
           <p
             key={ ingredients }
             data-testid={ `${index}-ingredient-name-and-measure` }

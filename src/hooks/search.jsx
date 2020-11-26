@@ -36,11 +36,14 @@ const searchContext = createContext();
 
 function SearchProvider({ children }) {
   const [infoSearched, setInfoSearched] = useState(initialSearchValues);
+  const [loadingRecipes, setLoadingRecipes] = useState(true);
 
   const { updateRecipes } = useRecipes();
   const { userToken } = useAuth();
 
   const appSearch = useCallback(async (type, { option, value, token }) => {
+    setLoadingRecipes(true);
+
     const userSearch = { option, value, token };
 
     setInfoSearched((oldInfo) => ({
@@ -70,15 +73,19 @@ function SearchProvider({ children }) {
 
       updateRecipes(type, recipesSearched);
 
+      setLoadingRecipes(false);
+
       return firstItemID;
     } catch (err) {
       console.log(err);
 
       // eslint-disable-next-line
       alert('Sinto muito, houve um erro ao buscar. Tente novamente.');
-
-      return null;
+    } finally {
+      setLoadingRecipes(false);
     }
+
+    return null;
   }, [updateRecipes]);
 
   const updateSearch = useCallback((type, { option, value }) => {
@@ -93,7 +100,7 @@ function SearchProvider({ children }) {
   return (
     <searchContext.Provider
       value={ {
-        appSearch, infoSearched, updateSearch,
+        appSearch, infoSearched, updateSearch, loadingRecipes,
       } }
     >
       {children}

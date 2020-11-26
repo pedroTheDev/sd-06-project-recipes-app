@@ -1,3 +1,21 @@
+:root {
+  --main-color: rgb(199, 47, 47);
+
+  /* loading */
+  /* --background: linear-gradient(135deg, #23c4f8, #275efe); */
+  --background: linear-gradient(135deg, #1c990b, #1c990b);
+  /* --shadow: rgba(47, 199, 166, 0.28); */
+  /* --shadow: rgba(39, 94, 254, 0.28); */
+  --text: #6c7486;
+  --page: rgba(255, 255, 255, 0.36);
+  --page-fold: rgba(255, 255, 255, 0.36);
+  --duration: 3s;
+}
+
+#root {
+  min-height: 100vh;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -21,6 +39,10 @@ a {
   text-decoration: none;
 }
 
+button {
+  cursor: pointer;
+}
+
 .start-recipe-btn {
   position: fixed;
   bottom: 0;
@@ -28,12 +50,7 @@ a {
   left: 0;
 }
 
-button {
-  cursor: pointer;
-}
 
-.foods-container,
-.drinks-container,
 .ingredients-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -44,7 +61,6 @@ button {
   padding: 0 40px;
 }
 
-.recipe-card,
 .ingredient-card {
   display: flex;
   flex-direction: column;
@@ -55,7 +71,6 @@ button {
   padding-bottom: 15px;
 }
 
-.recipe-card img,
 .ingredient-card img {
   width: 100%;
   height: 30vh;

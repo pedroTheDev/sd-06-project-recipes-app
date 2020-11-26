@@ -21,8 +21,15 @@ const recipesContext = createContext();
 
 function RecipeProvider({ children }) {
   const [currentRecipes, setCurrentRecipes] = useState(recipesStructure);
+
   const [currentFilteredRecipes, setCurrentFilteredRecipes] = useState(recipesStructure);
+
   const [currentFilters, setCurrentFilters] = useState(recipesStructure);
+
+  const [loadingFilters, setLoadingFilters] = useState(true);
+
+  const [loadingByCategory, setLoadingByCategory] = useState(false);
+
   const [favoriteRecipes, setFavoriteRecipes] = useState(() => {
     const favorites = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
 
@@ -37,6 +44,7 @@ function RecipeProvider({ children }) {
 
   useEffect(() => {
     async function getCategories() {
+      setLoadingFilters(true);
       const foodCategories = await fetchFoodsCategories(userToken);
       const drinkCategories = await fetchDrinksCategories(userToken);
 
@@ -46,6 +54,7 @@ function RecipeProvider({ children }) {
       };
 
       setCurrentFilters(categories);
+      setLoadingFilters(false);
     }
 
     getCategories();
@@ -63,6 +72,8 @@ function RecipeProvider({ children }) {
   }, []);
 
   const updateFilteredRecipes = useCallback(async (type, category) => {
+    setLoadingByCategory(true);
+
     const fetchCategories = fetchCategoryOptions[type];
 
     const recipesByCategory = await fetchCategories(category, userToken);
@@ -75,6 +86,8 @@ function RecipeProvider({ children }) {
       ...oldRecipes,
       [type]: recipesToShow,
     }));
+
+    setLoadingByCategory(false);
   }, [userToken]);
 
   const updateFavoriteRecipes = useCallback(({
@@ -110,6 +123,8 @@ function RecipeProvider({ children }) {
         currentFilters,
         favoriteRecipes,
         currentFilteredRecipes,
+        loadingFilters,
+        loadingByCategory,
         updateRecipes,
         updateFilteredRecipes,
         updateFavoriteRecipes,

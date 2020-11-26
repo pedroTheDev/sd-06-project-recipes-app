@@ -2,6 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import Login from '../pages/Login';
+import Register from '../pages/Register';
 import Recipes from '../pages/Recipes';
 import RecipeDetails from '../pages/RecipeDetails';
 import RecipeInProgress from '../pages/RecipeInProgress';
@@ -18,6 +19,8 @@ function Routes() {
   return (
     <Switch>
       <Route path="/" exact component={ Login } />
+
+      <Route path="/register" exact component={ Register } />
 
       <Route path="/comidas" exact render={ () => <Recipes pageType="comidas" /> } />
 
