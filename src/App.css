@@ -61,6 +61,19 @@
   }
 }
 
+.loading {
+  align-items: center;
+  display: grid;
+  justify-content: center;
+  margin: auto;
+  margin-top: 50px;
+  width: 85%;
+}
+
+.loading-text {
+  width: auto;
+}
+
 .recipes-page {
   align-items: center;
   background-color: rgb(230,230,230);
@@ -70,9 +83,9 @@
 }
 
 .categories {
-  justify-content: center;
   display: grid;
-  /* grid-template-columns: repeat(auto-fit, minmax(30px, auto)); */
+  grid-template-columns: repeat(auto-fit, minmax(30px, auto));
+  justify-content: center;
   margin: auto;
   width: auto;
 }

@@ -117,7 +117,11 @@ function DrinksPage() {
   const { recipes, categories, type } = localState;
 
   if (recipes.length === zero || categories.length === zero) {
-    return <h2>Carregando...</h2>;
+    return (
+      <div className="loading">
+        <h2 className="loading-text">Carregando...</h2>
+      </div>
+    );
   }
 
   return (
