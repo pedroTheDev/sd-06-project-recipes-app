@@ -64,7 +64,7 @@ function DrinksRecipesPage() {
               value={ element.strCategory }
               type="button"
               data-testid={ `${element.strCategory}-category-filter` }
-              key={ index }
+              key={ element }
             >
               {element.strCategory}
             </button>

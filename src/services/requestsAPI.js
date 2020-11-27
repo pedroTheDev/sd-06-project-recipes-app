@@ -7,7 +7,7 @@ export async function requestIngredients(info) {
     const result = await resolve.json();
     return result;
   } catch (error) {
-    customAlert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+    alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
   }
   return null;
 }
@@ -30,7 +30,7 @@ export async function requestDrinksIngredients(info) {
     const result = await resolve.json();
     return result;
   } catch (error) {
-    customAlert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+    alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
   }
   return null;
 }
@@ -41,7 +41,7 @@ export async function requestDrinksName(info) {
     const result = await resolve.json();
     return result;
   } catch (error) {
-    customAlert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+    alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
   }
   return null;
 }

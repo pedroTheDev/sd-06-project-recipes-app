@@ -42,7 +42,7 @@ function Filters() {
         if (resultIngredients.meals !== null) {
           return setResultsFoodsAndDrinks(resultIngredients);
         }
-        return (customAlert(
+        return (alert(
           'Sinto muito, não encontramos nenhuma receita para esses filtros.',
         ));
       }
@@ -52,7 +52,7 @@ function Filters() {
         if (resultName.meals !== null) {
           return setResultsFoodsAndDrinks(resultName);
         }
-        return (customAlert(
+        return (alert(
           'Sinto muito, não encontramos nenhuma receita para esses filtros.',
         ));
       }
@@ -62,7 +62,7 @@ function Filters() {
         return setResultsFoodsAndDrinks(resultFirstLetter);
       }
       if (radioValue === 'firstLetter' && valueInput.length > 1) {
-        customAlert(
+        alert(
           'Sua busca deve conter somente 1 (um) caracter',
         );
       }
@@ -83,7 +83,7 @@ function Filters() {
           console.log('entrou no if do null');
           return setResultsFoodsAndDrinks(resultDrinksName);
         }
-        return (customAlert(
+        return (alert(
           'Sinto muito, não encontramos nenhuma receita para esses filtros.',
         ));
       }
@@ -93,7 +93,7 @@ function Filters() {
         return setResultsFoodsAndDrinks(resultDrinksFirstLetter);
       }
       if (radioValue === 'firstLetter' && valueInput.length > 1) {
-        customAlert('Sua busca deve conter somente 1 (um) caracter');
+        alert('Sua busca deve conter somente 1 (um) caracter');
       }
     }
     return null;
