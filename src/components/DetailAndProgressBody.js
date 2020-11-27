@@ -66,7 +66,7 @@ function DetailAndProgressBody({ recipe, recommendations, buttonsProps, page = n
       );
     }
     return (
-      <IngredientsCheck recipe={ recipe } />
+      <IngredientsCheck recipe={ recipe } path={ path }/>
     );
   };
 
