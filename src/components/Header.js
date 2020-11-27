@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { profileIcon, searchIcon } from '../images';
-import '../style/Header.css';
 import SearchBar from './SearchBar';
+import '../style/Header.css';
 
 function Header({ title }) {
   const [searchBar, setSearchBar] = useState(false);
@@ -13,10 +13,7 @@ function Header({ title }) {
     <header>
       <nav>
         <Link to="/perfil">
-          <button 
-            className="bttn-profile"
-            type="button"
-          >
+          <button type="button">
             <img
               data-testid="profile-top-btn"
               src={ profileIcon }
@@ -24,17 +21,13 @@ function Header({ title }) {
             />
           </button>
         </Link>
-        <h1
-          data-testid="page-title"
-          className="title"
-        >
+        <h1 data-testid="page-title">
           { title }
         </h1>
         {
           (title === 'Comidas' || title === 'Explorar Origem' || title === 'Bebidas')
           && (
             <button
-              className="bttn-search-header"
               type="button"
               onClick={ () => { setSearchBar(!searchBar); } }
             >
@@ -47,7 +40,6 @@ function Header({ title }) {
           )
         }
       </nav>
-
       <SearchBar
         title={ title }
         searchBar={ searchBar }

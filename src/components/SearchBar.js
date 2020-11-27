@@ -87,9 +87,8 @@ function SearchBar({ title, searchBar }) {
   return (
     searchBar
     && (
-      <div className="div-search">
+      <div className="searchBar">
         <input
-          className="input"
           value={ inputRecipe }
           onChange={ ({ target: { value } }) => { setInputRecipe(value); } }
           data-testid="search-input"
@@ -97,9 +96,8 @@ function SearchBar({ title, searchBar }) {
           placeholder="Buscar Receita"
         />
         <div>
-          <label className="label-radio" htmlFor="radioIngrediente">
+          <label htmlFor="radioIngrediente">
             <input
-              className="input-radio"
               data-testid="ingredient-search-radio"
               type="radio"
               id="radioIngrediente"
@@ -108,9 +106,8 @@ function SearchBar({ title, searchBar }) {
             />
             Ingrediente
           </label>
-          <label className="label-radio" htmlFor="radioNome">
+          <label htmlFor="radioNome">
             <input
-              className="input-radio"
               type="radio"
               id="radioNome"
               name="search"
@@ -119,9 +116,8 @@ function SearchBar({ title, searchBar }) {
             />
             Nome
           </label>
-          <label className="label-radio" htmlFor="radioLetra">
+          <label htmlFor="radioLetra">
             <input
-              className="input-radio"
               data-testid="first-letter-search-radio"
               type="radio"
               id="radioLetra"
@@ -130,9 +126,8 @@ function SearchBar({ title, searchBar }) {
             />
             Primeira Letra
           </label>
-        </div> 
+        </div>
         <button
-          className="bttn-search"
           data-testid="exec-search-btn"
           onClick={ searchFood }
           type="button"

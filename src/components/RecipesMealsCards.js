@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
-import '../style/RecipeMealsCards.css';
+import '../style/RecipeCards.css';
 
 function RecipesMealsCards({ categories }) {
   const { data, setData } = useContext(RecipesContext);
@@ -28,7 +28,7 @@ function RecipesMealsCards({ categories }) {
   }
 
   return (
-    <div className="div-bttn-category-meals">
+    <div className="div-bttn-category">
       <button
         className="bttn-category-meals"
         data-testid="All-category-filter"
@@ -56,20 +56,13 @@ function RecipesMealsCards({ categories }) {
                 key={ idMeal }
                 to={ `/comidas/${idMeal}` }
               >
-                <div
-                  data-testid={ `${index}-recipe-card` }
-                  className="card-recipe-div"
-                >
+                <div data-testid={ `${index}-recipe-card` }>
                   <img
-                    className="card-recipe-img"
                     data-testid={ `${index}-card-img` }
                     src={ strMealThumb }
                     alt={ strMeal }
                   />
-                  <h1 
-                    className="card-recipe-title" 
-                    data-testid={ `${index}-card-name` }
-                  >
+                  <h1 data-testid={ `${index}-card-name` }>
                     { strMeal }
                   </h1>
                 </div>

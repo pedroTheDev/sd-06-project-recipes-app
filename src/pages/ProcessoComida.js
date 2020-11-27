@@ -83,31 +83,38 @@ function ProcessoComida() {
         data-testid="recipe-photo"
         src={ dataMeal.strMealThumb }
         alt="Foto da receita"
+        className="food-image"
       />
-      <h1 data-testid="recipe-title">{ dataMeal.strMeal }</h1>
-      <span>
-        <button
-          type="button"
-          data-testid="share-btn"
-          onClick={ () => handleCopy(`/comidas/${idMeal}`) }
-        >
-          <img
-            src={ shareIcon }
-            alt="Botão de Compartilhar"
-          />
-        </button>
-        { isCopied ? <p>Link copiado!</p> : true }
-      </span>
-      <button
-        type="button"
-        onClick={ handleClick }
-      >
-        <img
-          data-testid="favorite-btn"
-          src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
-          alt="Botão de Favorito"
-        />
-      </button>
+      <div className="div-header">
+        <h1 data-testid="recipe-title">
+          { dataMeal.strMeal }
+        </h1>
+        <div className="div-icon">
+          <span>
+            <button
+              type="button"
+              data-testid="share-btn"
+              onClick={ () => handleCopy(`/comidas/${idMeal}`) }
+            >
+              <img
+                src={ shareIcon }
+                alt="Botão de Compartilhar"
+              />
+            </button>
+            { isCopied ? <p>Link copiado!</p> : true }
+          </span>
+          <button
+            type="button"
+            onClick={ handleClick }
+          >
+            <img
+              data-testid="favorite-btn"
+              src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+              alt="Botão de Favorito"
+            />
+          </button>
+        </div>
+      </div>
       <p data-testid="recipe-category">
         Categoria
       </p>

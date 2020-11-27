@@ -1,4 +1,4 @@
-.div-search {
+.searchBar {
   align-items: center;
   display: flex;
   flex-flow: column wrap;
@@ -7,7 +7,7 @@
   margin-top: 2%;
 }
 
-.input {
+.searchBar input[type='text'] {
   border: 1px solid #cecccc;
   border-radius: 5px;
   font-family: 'Montserrat', sans-serif;
@@ -18,36 +18,37 @@
   width: 300px;
 }
 
-.input:focus {
+.searchBar input[type='text']:focus {
   border: 2px solid #960051;
   outline: none !important;
 }
 
-.input-radio {
+.searchBar input[type='radio'] {
   border: 1px solid #cecccc;
   height: 20px;
   width: 20px;
 }
 
-.input-radio:checked::after {
+/* falta alterar a cor do botão - irei pesquisar depois */
+.searchBar input[type='radio']:focus {
   border: 2px solid #960051;
   background-color: #960051;
   color: #960051;
   outline: #960051;
 }
 
-.label-radio {
+.searchBar label {
   font-family: 'Montserrat', sans-serif;
   font-size: 15px;
   text-align: center;
 }
 
-.label-radio:focus {
+.searchBar label:focus {
   font-weight: 900;
   color: #960051;
 }
 
-.bttn-search {
+.searchBar button{
   background-color: #960051;
   border: none;
   border-radius: 5px;
@@ -60,7 +61,7 @@
   width: 305px;
 }
 
-.bttn-search:hover {
+.searchBar button:hover {
   background-color: #bd0165;
   cursor: pointer;
 }

@@ -1,12 +1,73 @@
-.card-recipe {
-  max-width: 100%;
-  display: flex;
-  flex-direction: column;
+.div-bttn-category {
   align-items: center;
-  border: solid 1px black;
-  margin: 10px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  margin: auto;
+  margin-top: 20%;
 }
 
-.card-recipe img {
+.div-bttn-category button {
+  border: none;
+  border-radius: 5px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  margin: 5px;
+  padding: 10px;
+} 
+
+.div-bttn-category button:hover {
+  cursor: pointer;
+}
+
+.bttn-category-drink {
+  background-color: #f1e510;
+}
+
+.bttn-category-drink:hover {
+  background-color: #e4cd03;
+}
+
+.bttn-category-meals {
+  background-color: #e9b304;
+}
+
+.bttn-category-meals:hover {
+  background-color: #fac001;
+}
+
+.card-div {
+  align-items: center;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  margin: auto;
+  margin-bottom: 100px;
+}
+
+.card-div div {
+  align-items: center;
+  border: 1px solid #960051;
+  display: flex;
+  flex-direction: column;
+  margin: 5px auto;
+  max-width: 70%;
+}
+
+.card-div img {
   width: 100%;
+}
+
+.card-div h1 {
+  color: #960051;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  text-decoration: none !important;
+}
+
+.card-div h1:active {
+  text-decoration: none !important;
+  margin-bottom: 5px
 }

@@ -10,14 +10,14 @@ nav {
   width: 360px;
 }
 
-.title {
+nav h1 {
   color: #ffffff;
   font-family: 'Montserrat', sans-serif;
   font-size: 25px;
   font-weight: 700;
 }
 
-.bttn-profile {
+nav button {
   background-color: #960051;
   border: none;
   border-radius: 50%;
@@ -25,21 +25,7 @@ nav {
   width: 50px;
 }
 
-.bttn-profile:hover {
-  background-color: #92928f;
-  cursor: pointer;
-}
-
-.bttn-search-header {
-  background-color: #960051;
-  border: none;
-  border-radius: 50%;
-  height: 50px;
-  margin-top: 5px;
-  width: 50px;
-}
-
-.bttn-search-header:hover {
+nav button:hover {
   background-color: #92928f;
   cursor: pointer;
 }

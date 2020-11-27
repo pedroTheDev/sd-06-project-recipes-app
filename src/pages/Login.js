@@ -26,14 +26,12 @@ function Login() {
 
   return (
     <div className="login">
-      <form className="form">
+      <form>
         <img
-          className="img-logo"
           src={ logo }
           alt="logo"
         />
         <input
-          className="input-login"
           data-testid="email-input"
           type="text"
           name="email"
@@ -46,7 +44,6 @@ function Login() {
         />
         <br />
         <input
-          className="input-login"
           data-testid="password-input"
           type="password"
           name="password"
@@ -60,7 +57,6 @@ function Login() {
         <br />
         <Link to="/comidas">
           <button
-            className="bttn-login"
             data-testid="login-submit-btn"
             type="submit"
             disabled={ isDisabled }

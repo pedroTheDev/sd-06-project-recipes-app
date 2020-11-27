@@ -12,7 +12,7 @@ body {
   width: 360px;
 }
 
-.form {
+.login form {
   align-items: center;
   display: flex;
   flex-flow: column wrap;
@@ -21,11 +21,11 @@ body {
   margin-top: 20%;
 }
 
-.img-logo {
+form img {
   width: 150px;
 }
 
-.input-login {
+form input {
   border: 1px solid #cecccc;
   border-radius: 5px;
   font-family: 'Montserrat', sans-serif;
@@ -35,12 +35,12 @@ body {
   width: 300px;
 }
 
-.input-login:focus {
+form input:focus {
   border: 2px solid #960051;
   outline: none !important;
 }
 
-.bttn-login {
+form button {
   background-color: #960051;
   border: none;
   border-radius: 5px;
@@ -53,13 +53,13 @@ body {
   width: 305px;
 }
 
-.bttn-login:hover {
+form button:hover {
   background-color: #bd0165;
   cursor: pointer;
 }
 
-.bttn-login:disabled,
-.bttn-login:hover:disabled {
+form button:disabled,
+form button:hover:disabled {
   border: 1px solid #999999;
   background-color: #cccccc;
   color: #666666;

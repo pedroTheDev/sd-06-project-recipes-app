@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import useCopyToClipboard from '../hooks/useCopyToClipboard';
 import RecipesContext from '../context/RecipesContext';
 import { shareIcon, whiteHeartIcon, blackHeartIcon } from '../images';
+import '../style/Processo.css';
 
 function ProcessoBebida() {
   const timeoutTextCopy = 3000;
@@ -54,40 +55,45 @@ function ProcessoBebida() {
   };
 
   return (isLoading) ? <p>Loading</p> : (
-    <div>
+    <div className="container-progress">
       <img
         data-testid="recipe-photo"
         src={ dataDrinks.strDrinkThumb }
         alt="Foto da receita"
+        className="food-image"
       />
-      <h1
-        data-testid="recipe-title"
-      >
-        { dataDrinks.strDrink }
-      </h1>
-      <span>
-        <button
-          type="button"
-          data-testid="share-btn"
-          onClick={ () => handleCopy(`/bebidas/${idDrink}`) }
+      <div className="div-header">
+        <h1
+          data-testid="recipe-title"
         >
-          <img
-            src={ shareIcon }
-            alt="Botão de Compartilhar"
-          />
-        </button>
-        { isCopied ? <p>Link copiado!</p> : true }
-      </span>
-      <button
-        type="button"
-        onClick={ handleClick }
-      >
-        <img
-          data-testid="favorite-btn"
-          src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
-          alt="Botão de Favorito"
-        />
-      </button>
+          { dataDrinks.strDrink }
+        </h1>
+        <div className="div-icon">
+          <span>
+            <button
+              type="button"
+              data-testid="share-btn"
+              onClick={ () => handleCopy(`/bebidas/${idDrink}`) }
+            >
+              <img
+                src={ shareIcon }
+                alt="Botão de Compartilhar"
+              />
+            </button>
+            { isCopied ? <p>Link copiado!</p> : true }
+          </span>
+          <button
+            type="button"
+            onClick={ handleClick }
+          >
+            <img
+              data-testid="favorite-btn"
+              src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+              alt="Botão de Favorito"
+            />
+          </button>
+        </div>
+      </div>
       <p data-testid="recipe-category">
         Categoria
       </p>
