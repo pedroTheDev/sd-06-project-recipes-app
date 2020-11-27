@@ -1,4 +1,3 @@
-
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -6,10 +5,12 @@ import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesAppContext';
 import './scroll.css';
 
-function RecipeDrinkDetails({ match }) {
+function RecipeDrinkDetails(props) {
+  const { match } = props;
   const { id } = match.params;
   const { recipes, setRecipes } = useContext(RecipesContext);
   const [recomendation, setRecomendation] = useState([]);
+  const [share, setShare] = useState(false);
   let arrIngredient = [];
   let arrMeasure = [];
   const ZERO = 0;
@@ -70,7 +71,19 @@ function RecipeDrinkDetails({ match }) {
           {' '}
         </h4>
         <p data-testid="recipe-category">{recipes[0].strAlcoholic}</p>
-        <button type="button" data-testid="share-btn">Compartilhar</button>
+        <div>
+          <button
+            type="button"
+            onClick={ () => setShare(true) }
+            data-testid="share-btn"
+            className="btn-copy"
+            data-clipboard-text={ `http://localhost:3000${props.location.pathname}` }
+            data-clipboard-action="copy"
+          >
+            Compartilhar
+          </button>
+          {share && <span>Link copiado!</span>}
+        </div>
         <button type="button" data-testid="favorite-btn">Favoritar</button>
         <p data-testid="recipe-category">{recipes[0].strCategory}</p>
         <ul>
@@ -94,7 +107,6 @@ function RecipeDrinkDetails({ match }) {
           ))}
         </ul>
         <p data-testid="instructions">{recipes[0].strInstructions}</p>
-        <div data-testid={ `${ZERO}-recomendation-card` } />
 
         <div className="scrollmenu">
           {recomendation.slice(ZERO, SEIS).map((element, index) => (
@@ -126,7 +138,14 @@ function RecipeDrinkDetails({ match }) {
 }
 
 RecipeDrinkDetails.propTypes = {
-  match: PropTypes.objectOf(Object).isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+  }).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
 };
 
 export default RecipeDrinkDetails;

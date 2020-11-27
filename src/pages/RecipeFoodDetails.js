@@ -1,13 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import RecipesContext from '../context/RecipesAppContext';
 import { Link } from 'react-router-dom';
+import RecipesContext from '../context/RecipesAppContext';
 import './scroll.css';
 
-function RecipeFoodDetails({ match, title }) {
+function RecipeFoodDetails(props) {
+  const { match } = props;
   const { id } = match.params;
   const { recipes, setRecipes } = useContext(RecipesContext);
   const [recomendation, setRecomendation] = useState([]);
+  const [share, setShare] = useState(false);
   let arrIngredient = [];
   let arrMeasure = [];
   const ZERO = 0;
@@ -66,7 +68,19 @@ function RecipeFoodDetails({ match, title }) {
           { recipes[0].strMeal }
           {' '}
         </h4>
-        <button type="button" data-testid="share-btn">Compartilhar</button>
+        <div>
+          <button
+            type="button"
+            onClick={ () => setShare(true) }
+            data-testid="share-btn"
+            className="btn-copy"
+            data-clipboard-text={ `http://localhost:3000${props.location.pathname}` }
+            data-clipboard-action="copy"
+          >
+            Compartilhar
+          </button>
+          {share && <span>Link copiado!</span>}
+        </div>
         <button type="button" data-testid="favorite-btn">Favoritar</button>
         <p data-testid="recipe-category">{recipes[0].strCategory}</p>
         <ul>
@@ -100,7 +114,6 @@ function RecipeFoodDetails({ match, title }) {
           allow="accelerometer; autoplay; clipboard-write; encrypted-media"
           allowFullScreen
         />
-        <div data-testid={ `${ZERO}-recomendation-card` } />
 
         <div className="scrollmenu">
           {recomendation.slice(ZERO, SEIS).map((element, index) => (
@@ -120,7 +133,7 @@ function RecipeFoodDetails({ match, title }) {
           <button
             type="button"
             data-testid="start-recipe-btn"
-            onClick={ () => console.log(title) }
+            // onClick={ () => console.log(title) }
           >
             Iniciar Receita
           </button>
@@ -133,7 +146,14 @@ function RecipeFoodDetails({ match, title }) {
 }
 
 RecipeFoodDetails.propTypes = {
-  match: PropTypes.objectOf(Object).isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+  }).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
 };
 
 export default RecipeFoodDetails;

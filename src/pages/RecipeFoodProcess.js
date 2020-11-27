@@ -1,15 +1,20 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import RecipesContext from '../context/RecipesAppContext';
 import { fetchMealById } from '../services';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 import '../App.css';
 
 function RecipeFoodProcess(props) {
   const ZERO = 0;
   const VINTE = 20;
-  let arrIngredient = [];
-  const { id } = props.match.params;
+  // let list = [];
+  const [arrIngredient, setArrIngredient] = useState([]);
+  const [share, setShare] = useState(false);
+  const [favorite, setFavorite] = useState(false);
+  const { match } = props;
+  const { id } = match.params;
   const { recipes, setRecipes } = useContext(RecipesContext);
 
   const settingRecipeInProgress = async () => {
@@ -18,40 +23,75 @@ function RecipeFoodProcess(props) {
   };
 
   const renderIngredients = () => {
+    const arr = [];
     for (let i = 1; i <= VINTE; i += 1) {
       if (recipes[0][`strIngredient${i}`]) {
-        arrIngredient = arrIngredient.concat(recipes[0][`strIngredient${i}`]);
+        arr.push({ ingredient: recipes[0][`strIngredient${i}`], checked: false });
       } else {
         break;
       }
     }
-    return arrIngredient;
+    setArrIngredient(arr);
   };
 
-  const createCheckBoxes = () => {
-    const ingredients = renderIngredients();
-    console.log(ingredients);
-    return (
-      ingredients.map((ingredient, index) => (
-        <label
-          key={ index }
-          htmlFor={ ingredient }
-          data-testid={ `${index}-ingredient-step` }
-        >
-          <input
-            type="checkbox"
-            value={ ingredient }
-            id={ ingredient }
-          />
-          { ingredient }
-        </label>
-      ))
-    );
+  const markIngredient = (index, event) => {
+    const copyArrIngredient = [...arrIngredient];
+    copyArrIngredient[index].checked = event.target.checked;
+    setArrIngredient(copyArrIngredient);
+
+    const response = arrIngredient.filter((item) => item.checked === true)
+      .map((name) => name.ingredient);
+
+    localStorage.setItem('cocktails', JSON.stringify({ [id]: response }));
+  };
+
+  const createCheckBoxes = () => (
+    arrIngredient.map((ingredient, index) => (
+      <label
+        htmlFor={ ingredient.ingredient }
+        key={ index }
+        data-testid={ `${index}-ingredient-step` }
+      >
+        <input
+          type="checkbox"
+          checked={ arrIngredient[index].checked }
+          // ={ arrIngredient[index].checked }
+          id={ ingredient.ingredient }
+          onClick={ (e) => markIngredient(index, e) }
+        />
+        { ingredient.ingredient }
+      </label>
+    ))
+  );
+
+  const favoritar = () => {
+    setFavorite(!favorite);
+    const favoritas = {
+      id,
+      type: 'comida',
+      area: recipes[0].strArea,
+      category: recipes[0].strCategory,
+      alcoholicOrNot: '',
+      name: recipes[0].strMeal,
+      image: recipes[0].strMealThumb,
+    };
+
+    const obj = [{
+      favorite,
+      favoritas,
+    }];
+
+    const response = obj.filter((fav) => !fav.favorite).map((item) => item.favoritas);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(response));
   };
 
   useEffect(() => {
     settingRecipeInProgress();
   }, []);
+
+  useEffect(() => {
+    if (recipes.length > ZERO) renderIngredients();
+  }, [recipes]);
 
   return (
     recipes.length > ZERO
@@ -67,16 +107,34 @@ function RecipeFoodProcess(props) {
           >
             { recipes[0].strMeal }
           </h4>
-          <img
-            data-testid="share-btn"
-            src={ shareIcon }
-            alt="compartilhar"
-          />
-          <img
-            data-testid="favorite-btn"
-            src={ whiteHeartIcon }
-            alt="Favoritar"
-          />
+          <div>
+            <button
+              type="button"
+              data-testid="share-btn"
+              onClick={ () => setShare(true) }
+              className="btn-copy"
+              data-clipboard-text={ `http://localhost:3000/comidas/${id}` }
+              data-clipboard-action="copy"
+            >
+              <img
+                src={ shareIcon }
+                alt="compartilhar"
+              />
+            </button>
+            {share && <span>Link copiado!</span>}
+          </div>
+          <div>
+            <button
+              type="button"
+              onClick={ () => favoritar() }
+            >
+              <img
+                data-testid="favorite-btn"
+                alt="Favoritar"
+                src={ favorite ? blackHeartIcon : whiteHeartIcon }
+              />
+            </button>
+          </div>
           <h5
             data-testid="recipe-category"
           >
@@ -89,6 +147,8 @@ function RecipeFoodProcess(props) {
           <button
             type="button"
             data-testid="finish-recipe-btn"
+            onClick={ () => props.history.push('/receitas-feitas') }
+            disabled={ !arrIngredient.every((item) => item.checked) }
           >
             Finalizar Receita
           </button>
@@ -96,5 +156,16 @@ function RecipeFoodProcess(props) {
       )
   );
 }
+
+RecipeFoodProcess.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
+};
 
 export default RecipeFoodProcess;

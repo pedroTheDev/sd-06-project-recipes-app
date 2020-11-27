@@ -30,6 +30,18 @@
 
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
+  <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script>
+  <script>
+    let clipboard = new ClipboardJS(".btn-copy");
+
+    clipboard.on('success', function(e) {
+        console.log(e);
+    });
+
+    clipboard.on('error', function(e) {
+        console.log(e);
+    });
+    </script>
   <div id="root"></div>
   <!--
       This HTML file is a template.

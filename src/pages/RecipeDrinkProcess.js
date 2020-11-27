@@ -1,19 +1,22 @@
 import React, { useEffect, useContext, useState } from 'react';
+import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesAppContext';
 import { fetchDrinkById } from '../services';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 import '../App.css';
 
 function RecipeDrinkProcess(props) {
   const ZERO = 0;
   const VINTE = 20;
-  let list = [];
-  let arrIngredient = [];
-  const { id } = props.match.params;
+  // let list = [];
+  const [arrIngredient, setArrIngredient] = useState([]);
+  const [share, setShare] = useState(false);
+  const [favorite, setFavorite] = useState(false);
+  const { match } = props;
+  const { id } = match.params;
   const { recipes, setRecipes } = useContext(RecipesContext);
-  const [recipeIngredient, setRecipeIngredient] = useState([]);
-  // let cocktails = { [id]: [] };
 
   const settingRecipeInProgress = async () => {
     const response = await fetchDrinkById(id);
@@ -21,63 +24,75 @@ function RecipeDrinkProcess(props) {
   };
 
   const renderIngredients = () => {
+    const arr = [];
     for (let i = 1; i <= VINTE; i += 1) {
       if (recipes[0][`strIngredient${i}`]) {
-        arrIngredient = arrIngredient.concat(recipes[0][`strIngredient${i}`]);
+        arr.push({ ingredient: recipes[0][`strIngredient${i}`], checked: false });
       } else {
         break;
       }
     }
-    return arrIngredient;
+    setArrIngredient(arr);
   };
 
-  const markIngredient = (e) => {
-    if (recipeIngredient.length === ZERO) {
-      setRecipeIngredient([e]);
-    } else {
-      recipeIngredient.filter((ing) => (
-        setRecipeIngredient((ing !== e)
-          ? [...recipeIngredient, e] : [...recipeIngredient])
-      ));
-    }
-    localStorage.setItem('cocktails', JSON.stringify({ [id]: recipeIngredient }));
+  const markIngredient = (index, event) => {
+    const copyArrIngredient = [...arrIngredient];
+    copyArrIngredient[index].checked = event.target.checked;
+    setArrIngredient(copyArrIngredient);
 
-    // setRecipeIngredient([...recipeIngredient, e]);
+    const response = arrIngredient.filter((item) => item.checked === true)
+      .map((name) => name.ingredient);
+
+    localStorage.setItem('cocktails', JSON.stringify({ [id]: response }));
   };
 
-  const createCheckBoxes = () => {
-    const ingredients = renderIngredients();
-    // setRecipeIngredient(ingredients);
-    // console.log(ingredients);
-    return (
-      ingredients.map((ingredient, index) => (
-        // <div
-        // >
-        <label
-          key={ index }
-          htmlFor={ ingredient }
-          data-testid={ `${index}-ingredient-step` }
-        >
-          <input
-            type="checkbox"
-            value={ ingredient }
-            id={ ingredient }
-            onChange={ () => markIngredient(ingredient) }
-          />
-          { ingredient }
-        </label>
-        // </div>
-      ))
-    );
+  const createCheckBoxes = () => (
+    arrIngredient.map((ingredient, index) => (
+      <label
+        htmlFor={ ingredient.ingredient }
+        key={ index }
+        data-testid={ `${index}-ingredient-step` }
+      >
+        <input
+          type="checkbox"
+          checked={ arrIngredient[index].checked }
+          // ={ arrIngredient[index].checked }
+          id={ ingredient.ingredient }
+          onClick={ (e) => markIngredient(index, e) }
+        />
+        { ingredient.ingredient }
+      </label>
+    ))
+  );
+
+  const favoritar = () => {
+    setFavorite(!favorite);
+    const favoritas = {
+      id,
+      type: 'bebida',
+      area: recipes[0].strArea,
+      category: recipes[0].strCategory,
+      alcoholicOrNot: recipes[0].strAlcoholic,
+      name: recipes[0].strDrink,
+      image: recipes[0].strDrinkThumb,
+    };
+
+    const obj = [{
+      favorite,
+      favoritas,
+    }];
+
+    const response = obj.filter((fav) => !fav.favorite).map((item) => item.favoritas);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(response));
   };
 
   useEffect(() => {
     settingRecipeInProgress();
   }, []);
 
-  // useEffect(() => {
-  //   setRecipeIngredient(renderIngredients());
-  // });
+  useEffect(() => {
+    if (recipes.length > ZERO) renderIngredients();
+  }, [recipes]);
 
   return (
     recipes.length > ZERO
@@ -93,16 +108,32 @@ function RecipeDrinkProcess(props) {
           >
             { recipes[0].strDrink }
           </h4>
-          <img
+          <button
+            type="button"
+            onClick={ () => setShare(true) }
             data-testid="share-btn"
-            src={ shareIcon }
-            alt="compartilhar"
-          />
-          <img
-            data-testid="favorite-btn"
-            src={ whiteHeartIcon }
-            alt="Favoritar"
-          />
+            className="btn-copy"
+            data-clipboard-text={ `http://localhost:3000/bebidas/${id}` }
+            data-clipboard-action="copy"
+          >
+            <img
+              src={ shareIcon }
+              alt="compartilhar"
+            />
+          </button>
+          {share && <span>Link copiado!</span>}
+          <div>
+            <button
+              type="button"
+              onClick={ () => favoritar() }
+            >
+              <img
+                data-testid="favorite-btn"
+                alt="Favoritar"
+                src={ favorite ? blackHeartIcon : whiteHeartIcon }
+              />
+            </button>
+          </div>
           <h5
             data-testid="recipe-category"
           >
@@ -115,6 +146,8 @@ function RecipeDrinkProcess(props) {
           <button
             type="button"
             data-testid="finish-recipe-btn"
+            onClick={ () => props.history.push('/receitas-feitas') }
+            disabled={ !arrIngredient.every((item) => item.checked) }
           >
             Finalizar Receita
           </button>
@@ -123,12 +156,15 @@ function RecipeDrinkProcess(props) {
   );
 }
 
+RecipeDrinkProcess.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
+};
+
 export default RecipeDrinkProcess;
-
-// function RecipeDrinkProcess() {
-//   return (
-//     <span>Bebidas em procresso</span>
-//   );
-// }
-
-// export default RecipeDrinkProcess;
