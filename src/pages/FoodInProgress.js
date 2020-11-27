@@ -180,6 +180,7 @@ function FoodInProgress(props) {
               { ingredient.value }
               <input
                 key={ ingredient.id }
+                className={ ingredients.isChecked ? 'checked' : '' }
                 type="checkbox"
                 value={ ingredient.value }
                 checked={ ingredient.isChecked }
