@@ -3,6 +3,8 @@ import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { ingredientsThunk, resetId } from '../redux/actions/exploreActions';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const Explorer = (props) => {
   const { location: { pathname }, handleClick, id, handleResetId } = props;
@@ -21,6 +23,7 @@ const Explorer = (props) => {
 
   return (
     <>
+      <Header pageName={ pathname } />
       <Link to={ `${pathname}/ingredientes` }>
         <button
           type="button"
@@ -58,6 +61,7 @@ const Explorer = (props) => {
       >
         Me Surpreenda!
       </button>
+      <Footer />
     </>
   );
 };

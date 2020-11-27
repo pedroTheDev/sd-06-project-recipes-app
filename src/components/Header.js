@@ -13,6 +13,9 @@ export default function Header({ pageName, renderSearch }) {
   title = pageName === '/bebidas' ? 'Bebidas' : pageName;
   title = pageName === '/comidas' ? 'Comidas' : title;
 
+  title = pageName === '/explorar/bebidas' ? 'Explorar Bebidas' : title;
+  title = pageName === '/explorar/comidas' ? 'Explorar Comidas' : title;
+
   const renderSearchIcon = () => (
     <button
       type="button"
