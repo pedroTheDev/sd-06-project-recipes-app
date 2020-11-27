@@ -28,9 +28,12 @@ export default function Perfil({ history }) {
   return (
     <div>
       <Header titulo={ titulo } />
-      <p data-testid="profile-email">
-        { email2.email }
-      </p>
+      {email2
+        ? (
+          <p data-testid="profile-email">
+            { email2.email }
+          </p>)
+        : <p data-testid="profile-email">email@email.com</p>}
       <Link to="/receitas-feitas">
         <button type="button" data-testid="profile-done-btn">
           Receitas Feitas
