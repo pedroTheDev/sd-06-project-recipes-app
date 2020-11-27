@@ -66,6 +66,7 @@ function Food() {
       if (APISearchResponse !== null && searchItens) {
         setCurrentMeals(APISearchResponse.meals);
         setCurrentCategories('roi');
+        console.log(searchItens.searchRadio);
       }
     };
 
