@@ -5,8 +5,8 @@ import './App.css';
 import { Provider } from 'react-redux';
 import {
   Login, MainPage, Explorar, Perfil, ReceitasFavoritas,
-  ReceitasFeitas, RecipeDetails, BebidasIngredientes, BebidasProgresso,
-  ComidasArea, ComidasIngredientes, ComidasProgresso,
+  ReceitasFeitas, RecipeDetails, BebidasIngredientes,
+  ComidasArea, ComidasIngredientes,
   Explorer, ReceitaProgresso,
 } from './pages';
 import store from './redux/store';

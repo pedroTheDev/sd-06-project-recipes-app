@@ -8,7 +8,7 @@ function IngredientsCheck({ recipe }) {
   useEffect(() => {
     const ingredientsObj = {};
     ingredients.forEach((ingredient) => {
-      ingredientsObj[ingredient] = false; 
+      ingredientsObj[ingredient] = false;
     });
     setCheckedIngredients(ingredientsObj);
   }, [recipe]);
@@ -20,7 +20,7 @@ function IngredientsCheck({ recipe }) {
     const newcheckedIngredients = {
       ...checkedIngredients,
       [ingredientId]: !checkedIngredients[ingredientId],
-    }
+    };
     setCheckedIngredients(newcheckedIngredients);
   };
   return (
@@ -30,18 +30,15 @@ function IngredientsCheck({ recipe }) {
           key={ ingredient }
           data-testid={ `${index}-ingredient-step` }
         >
-          <label htmlFor={`${ingredient}`}>
+          <label htmlFor={ `${ingredient}` }>
             <input
-              className={
-                checkedIngredients[ingredient] && "checked"
-              }
+              className={ checkedIngredients[ingredient] && 'checked' }
               type="checkbox"
-              id={`${ingredient}`}
+              id={ `${ingredient}` }
               onClick={ (event) => handleCheckClick(event) }
             />
-            <span className={
-              checkedIngredients[ingredient] && "checked-text"
-              }
+            <span
+              className={ checkedIngredients[ingredient] && 'checked-text' }
             >
               {`${ingredient} - ${measures[index]}`}
             </span>

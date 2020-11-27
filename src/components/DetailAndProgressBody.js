@@ -5,7 +5,7 @@ import FavButton from './FavButton';
 import Ingredients from './Ingredients';
 import IngredientsCheck from './IngredientsCheck';
 
-function DetailAndProgressBody({ recipe, recommendations, buttonsProps, page=null }) {
+function DetailAndProgressBody({ recipe, recommendations, buttonsProps, page = null }) {
   const {
     image,
     name,
@@ -29,35 +29,34 @@ function DetailAndProgressBody({ recipe, recommendations, buttonsProps, page=nul
       return (
         <div>
           { path === 'comidas'
-        ? (
+            ? (
+              <div>
+                <h4>Video</h4>
+                <iframe data-testid="video" src={ video } title="Recipe Video" />
+              </div>
+            )
+            : null}
           <div>
-            <h4>Video</h4>
-            <iframe data-testid="video" src={ video } title="Recipe Video" />
-          </div>
-        )
-        : null}
-      <div>
-        <h4>Recommendations</h4>
-        <div className="recomendation-container">
-          {recommendations.map((recommendation, index) => (
-            <div
-              data-testid={ `${index}-recomendation-card` }
-              key={ recommendation.name }
-              className="recomendation-card"
-            >
-              <img src={ recommendation.image } alt={ recommendation.name } />
-              <h4 data-testid={ `${index}-recomendation-title` }>
-                {recommendation.name}
-              </h4>
+            <h4>Recommendations</h4>
+            <div className="recomendation-container">
+              {recommendations.map((recommendation, index) => (
+                <div
+                  data-testid={ `${index}-recomendation-card` }
+                  key={ recommendation.name }
+                  className="recomendation-card"
+                >
+                  <img src={ recommendation.image } alt={ recommendation.name } />
+                  <h4 data-testid={ `${index}-recomendation-title` }>
+                    {recommendation.name}
+                  </h4>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
-      </div>
-        </div>        
       );
-    } else {
-      return null;
     }
+    return null;
   };
 
   const renderIngredientsConditionally = (url) => {
@@ -65,11 +64,10 @@ function DetailAndProgressBody({ recipe, recommendations, buttonsProps, page=nul
       return (
         <Ingredients recipe={ recipe } />
       );
-    } else {
-      return (
-        <IngredientsCheck recipe={ recipe } />
-      );
     }
+    return (
+      <IngredientsCheck recipe={ recipe } />
+    );
   };
 
   return (
@@ -109,6 +107,7 @@ DetailAndProgressBody.propTypes = {
   recipe: PropTypes.shape.isRequired,
   buttonsProps: PropTypes.shape.isRequired,
   recommendations: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  page: PropTypes.string.isRequired,
 };
 
 export default DetailAndProgressBody;
