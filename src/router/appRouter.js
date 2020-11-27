@@ -3,7 +3,8 @@ import { Switch, Route } from 'react-router-dom';
 import { Login,
   Foods, Drinks, Profile,
   FoodsDetails, DrinkDetails,
-  FoodInProgress, DrinkInProgress, DoneRecipes } from '../pages';
+  FoodInProgress, DrinkInProgress,
+  DoneRecipes, FavRecipes } from '../pages';
 
 export default class AppRouter extends React.Component {
   render() {
@@ -84,11 +85,11 @@ export default class AppRouter extends React.Component {
           path="/receitas-feitas"
           component={ DoneRecipes }
         />
-        {/* <Route
+        <Route
           exact
           path="/receitas-favoritas"
-          component={ Favorites }
-        /> */}
+          component={ FavRecipes }
+        />
       </Switch>
     );
   }
