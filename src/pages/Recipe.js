@@ -7,7 +7,7 @@ import FoodDetail from './FoodDetail';
 
 function Recipe(props) {
   const { match } = props;
-return <FoodDetail  match={match}/>
+  return <FoodDetail match={ match } />;
 }
 
 Recipe.propTypes = {
