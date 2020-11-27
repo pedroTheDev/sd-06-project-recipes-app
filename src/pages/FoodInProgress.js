@@ -24,6 +24,14 @@ function FoodInProgress(props) {
       meals: { [id]: [] },
     };
   }
+  const verifyIngredientsChecked = () => {
+    if (progressRecipes.meals[id].length === ingredients.length) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  };
+
   const setLocalStorage = () => {
     const readLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
     const favoriteRecipes = readLocalStorage !== null ? readLocalStorage : [];
@@ -49,12 +57,6 @@ function FoodInProgress(props) {
   const recipeAPI = async () => {
     const response = await fetchRecipes(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
     setRecipe(response.meals[0]);
-  };
-
-  const verifyIngredientsChecked = () => {
-    const isAllChecked = !ingredients
-      .some((ingredient) => ingredient.isChecked === false);
-    setIsDisabled(!isAllChecked);
   };
 
   const requestIngredients = () => {
@@ -86,6 +88,7 @@ function FoodInProgress(props) {
         .map((each) => each.value);
       progressRecipes.meals[id] = checkeds;
       localStorage.setItem('inProgressRecipes', JSON.stringify(progressRecipes));
+      verifyIngredientsChecked();
     }
   };
 
@@ -93,6 +96,7 @@ function FoodInProgress(props) {
     const readLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
     const newArray = readLocalStorage.filter((element) => element.id !== id);
     localStorage.setItem('favoriteRecipes', JSON.stringify(newArray));
+    verifyIngredientsChecked();
   };
 
   const getLocalStorage = () => {

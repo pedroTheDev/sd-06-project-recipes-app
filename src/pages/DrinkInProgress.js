@@ -53,9 +53,11 @@ function DrinkInProgress(props) {
   };
 
   const verifyIngredientsChecked = () => {
-    const isAllChecked = !ingredients
-      .some((ingredient) => ingredient.isChecked === false);
-    setIsDisabled(!isAllChecked);
+    if (progressRecipes.cocktails[id].length === ingredients.length) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
   };
 
   const requestIngredients = () => {
@@ -77,7 +79,6 @@ function DrinkInProgress(props) {
       }
     }
     setIngredients(TheIngredients);
-    verifyIngredientsChecked();
   };
 
   const setLocalIngredients = () => {
@@ -87,6 +88,7 @@ function DrinkInProgress(props) {
         .map((each) => each.value);
       progressRecipes.cocktails[id] = checkeds;
       localStorage.setItem('inProgressRecipes', JSON.stringify(progressRecipes));
+      verifyIngredientsChecked();
     }
   };
 
@@ -94,6 +96,7 @@ function DrinkInProgress(props) {
     const readLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
     const newArray = readLocalStorage.filter((element) => element.id !== id);
     localStorage.setItem('favoriteRecipes', JSON.stringify(newArray));
+    verifyIngredientsChecked();
   };
 
   const getLocalStorage = () => {
@@ -112,7 +115,6 @@ function DrinkInProgress(props) {
     const ingredientsChecked = [...ingredients];
     ingredientsChecked[index].isChecked = event.target.checked;
     setIngredients(ingredientsChecked);
-    verifyIngredientsChecked();
   };
 
   const changesFavorites = () => {
