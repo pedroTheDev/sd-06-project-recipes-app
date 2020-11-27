@@ -6,7 +6,7 @@ import Context from '../context/Context';
 function SearchBar(props) {
   const [searchTerm, setSearchTerm] = useState();
   const [filterType, setFilterType] = useState();
-  const { recipesToRender } = useContext(Context);
+  const { recipesToRender, recipesToRenderByIngredient } = useContext(Context);
   const { title } = props;
   const type = title === 'Comidas' ? 'meal' : 'drink';
 
@@ -15,7 +15,7 @@ function SearchBar(props) {
 
     switch (filterType) {
     case 'ingredient': {
-      console.log(filterType);
+      recipesToRenderByIngredient(type, searchTerm);
       break;
     }
 
@@ -25,8 +25,7 @@ function SearchBar(props) {
     }
 
     default: {
-      recipesToRender(type, searchTerm);
-      break;
+      return recipesToRender(type, searchTerm);
     }
     }
   };

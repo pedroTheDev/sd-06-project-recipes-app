@@ -3,8 +3,12 @@ async function fetchDrink(filter, searchTerm = '') {
   switch (filter) {
   case 'ingredient': {
     const fetchByIngredient = await fetch(`${url}filter.php?i=${searchTerm}`);
-    const ingredientResponse = await fetchByIngredient.json();
-    return ingredientResponse.drinks;
+    try {
+      const ingredientResponse = await fetchByIngredient.json();
+      return ingredientResponse.drinks;
+    } catch (error) {
+      return null;
+    }
   }
 
   case 'name': {

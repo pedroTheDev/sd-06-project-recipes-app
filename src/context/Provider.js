@@ -19,8 +19,12 @@ function RecipesAppProvider({ children }) {
     const first = 0;
     const twelfth = 12;
 
-    fetchedRecipes = fetchedRecipes.slice(first, twelfth);
-    setRecipes(fetchedRecipes);
+    if (!fetchedRecipes) {
+      alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+    } else {
+      fetchedRecipes = fetchedRecipes.slice(first, twelfth);
+      setRecipes(fetchedRecipes);
+    }
   };
 
   const categoriesToRender = async (type) => {
@@ -45,6 +49,23 @@ function RecipesAppProvider({ children }) {
 
     fetchedRecipes = fetchedRecipes.slice(first, twelfth);
     setRecipes(fetchedRecipes);
+  };
+
+  const recipesToRenderByIngredient = async (type, searchTerm) => {
+    let fetchedRecipes = await (type === 'meal'
+      ? fetchMeal('ingredient', searchTerm)
+      : fetchDrink('ingredient', searchTerm)
+    );
+
+    const first = 0;
+    const twelfth = 12;
+
+    if (!fetchedRecipes) {
+      alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+    } else {
+      fetchedRecipes = fetchedRecipes.slice(first, twelfth);
+      setRecipes(fetchedRecipes);
+    }
   };
 
   const getMealDetail = async (id) => {
@@ -92,6 +113,7 @@ function RecipesAppProvider({ children }) {
     categories,
     categoriesToRender,
     recipesToRenderByCategory,
+    recipesToRenderByIngredient,
   };
 
   return (
