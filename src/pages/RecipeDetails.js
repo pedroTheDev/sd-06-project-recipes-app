@@ -69,9 +69,6 @@ export default function RecipeDetails() {
       if (searchParam === 'Meal') {
         videoCode = (foods[0].strYoutube) ? foods[0].strYoutube.split('=') : undefined;
       }
-      // const videoCode = (searchParam === 'Meal')
-      //   ? foods[0].strYoutube.split('=')
-      //   : undefined;
       return (
         <>
           <img
