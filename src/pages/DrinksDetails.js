@@ -68,7 +68,7 @@ const DrinksDetails = (props) => {
   };
 
   const handleStartRecipe = () => {
-    history.push({ pathname: `/bebidas/${ id }/in-progress`});
+    history.push({ pathname: `/bebidas/${id}/in-progress` });
   };
 
   useEffect(() => {
@@ -142,6 +142,9 @@ DrinksDetails.propTypes = {
     params: PropTypes.shape({
       id: PropTypes.string,
     }),
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
   }).isRequired,
 };
 
