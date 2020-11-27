@@ -11,7 +11,7 @@ import profileIcon from '../../images/profileIcon.svg';
 const Header = () => {
   const [state, setState] = useState({
     namePage: '',
-    search: '',
+    search: true,
   });
 
   const changeHeader = () => {

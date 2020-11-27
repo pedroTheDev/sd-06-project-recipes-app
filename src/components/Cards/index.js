@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import ContextAPI from '../../Context/ContextAPI';
 import './styles.css';
 
@@ -15,14 +16,25 @@ const Cards = () => {
         apiValueSearch.foods.meals && apiValueSearch.foods.meals.map((meal, index) => {
           if (index <= number) {
             return (
-              <div className="card" key={ meal.strMeal } data-testid={ `${index}-recipe-card` }>
+              <div
+                className="card"
+                key={ meal.strMeal }
+                data-testid={ `${index}-recipe-card` }
+              >
                 <p data-testid={ `${index}-card-name` }>{meal.strMeal}</p>
-                <img
-                  width="200"
-                  src={ meal.strMealThumb }
-                  alt={ meal.strMeal }
-                  data-testid={ `${index}-card-img` }
-                />
+                <button
+                  type="button"
+                  className="button"
+                >
+                  <Link to={ `/comidas/${meal.idMeal}` }>
+                    <img
+                      width="200"
+                      src={ meal.strMealThumb }
+                      alt={ meal.strMeal }
+                      data-testid={ `${index}-card-img` }
+                    />
+                  </Link>
+                </button>
               </div>
             );
           }
@@ -42,14 +54,25 @@ const Cards = () => {
         apiValueSearch.drinks.drinks && apiValueSearch.drinks.drinks.map((res, index) => {
           if (index <= number) {
             return (
-              <div className="card" key={ res.idDrink } data-testid={ `${index}-recipe-card` }>
+              <div
+                className="card"
+                key={ res.idDrink }
+                data-testid={ `${index}-recipe-card` }
+              >
                 <p data-testid={ `${index}-card-name` }>{res.strDrink}</p>
-                <img
-                  width="200"
-                  src={ res.strDrinkThumb }
-                  alt={ res.strDrink }
-                  data-testid={ `${index}-card-img` }
-                />
+                <button
+                  type="button"
+                  className="button"
+                >
+                  <Link to={ `/bebidas/${res.idDrink}` }>
+                    <img
+                      width="200"
+                      src={ res.strDrinkThumb }
+                      alt={ res.strDrink }
+                      data-testid={ `${index}-card-img` }
+                    />
+                  </Link>
+                </button>
               </div>
             );
           }

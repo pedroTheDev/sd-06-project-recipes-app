@@ -141,7 +141,7 @@ describe('35 - Desenvolva a tela de forma que contenha uma imagem da receita, o 
 
 describe('36 - Implemente as recomendações, para receitas de comida, a recomendação deverá ser bebida e vice-versa', () => {
   it('Verifica se a requisição para a API de bebidas foi realizada', () => {
-    cy.visit('http://localhost:3000/comidas/52771', {
+    cy.visit('http://localhost:3000/bebidas/52771', {
       onBeforeLoad(win) {
         cy.spy(win, 'fetch');
       },
@@ -153,7 +153,7 @@ describe('36 - Implemente as recomendações, para receitas de comida, a recomen
   });
 
   it('Verifica se a requisição para a API de comidas foi realizada', () => {
-    cy.visit('http://localhost:3000/bebidas/178319', {
+    cy.visit('http://localhost:3000/comidas/178319', {
       onBeforeLoad(win) {
         cy.spy(win, 'fetch');
       },
@@ -167,7 +167,7 @@ describe('36 - Implemente as recomendações, para receitas de comida, a recomen
 
 describe('37 - Implemente os cards de recomendação, onde serão 6 cards, mas mostrando apenas 2 e o scroll é horizontal, similar a um `carousel`', () => {
   it('Verifica se existem todas as recomendações na tela de detalhes de uma comida', () => {
-    cy.visit('http://localhost:3000/comidas/52771', {
+    cy.visit('http://localhost:3000/bebidas/52771', {
       onBeforeLoad(win) {
         win.fetch = fetchMock;
       },
@@ -191,7 +191,7 @@ describe('37 - Implemente os cards de recomendação, onde serão 6 cards, mas m
   });
 
   it('Verifica se existem todas as recomendações na tela de detalhes de uma bebida', () => {
-    cy.visit('http://localhost:3000/bebidas/178319', {
+    cy.visit('http://localhost:3000/comidas/178319', {
       onBeforeLoad(win) {
         win.fetch = fetchMock;
       },
@@ -471,7 +471,7 @@ describe('44 - Implemente o ícone do coração (favorito) de maneira que, deve 
   });
 });
 
-describe('45 - Ao clicar no botão de favoritar, o ícone do coração deve mudar de seu estado atual, caso esteja preenchido deve mudar para "despreenchido" e vice-versa', () => {
+describe('45 - Implemente a lógica no botão de favoritar, caso seja clicado, o ícone do coração deve mudar seu estado atual, caso esteja preenchido deve mudar para "despreenchido" e vice-versa', () => {
   it('Favorita a comida', () => {
     cy.visit('http://localhost:3000/comidas/52771', {
       onBeforeLoad(win) {

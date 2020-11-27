@@ -6,8 +6,7 @@ import Cards from '../components/Cards';
 
 import CategoriesBebidas from '../components/Categories/indexBebidas';
 
-import { showSugestedDrinks,
-} from '../services/aPI';
+import { showSugestedDrinks } from '../services/aPI';
 import ContextAPI from '../Context/ContextAPI';
 
 const Bebidas = () => {
