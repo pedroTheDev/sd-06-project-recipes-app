@@ -16,8 +16,8 @@ function RecipesMealsCards({ categories }) {
     <div>
       {
         categories === 'none'
-        ? ''
-        : <CategoriesButtons categories={ categories } />
+          ? ''
+          : <CategoriesButtons categories={ categories } />
       }
       {
         data[0].meals.filter((_, index) => index < DOZE)

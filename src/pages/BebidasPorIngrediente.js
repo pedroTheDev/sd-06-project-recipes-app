@@ -26,13 +26,13 @@ function BebidasPorIngrediente() {
 
   const clickOn = (ingredients) => {
     getDrinkByIngredients(ingredients).then((drinks) => {
-      setData([data[0],drinks]);
+      setData([data[0], drinks]);
       setRedirect(true);
     });
   };
 
   useEffect(() => {
-    getDrinkIngredients().then((data) => setIngredientsDrink(data.drinks));
+    getDrinkIngredients().then((drinks) => setIngredientsDrink(drinks.drinks));
   }, []);
 
   if (ingredientsDrink.length > twelve) {

@@ -32,14 +32,14 @@ function ComidasPorIngrediente() {
   };
 
   useEffect(() => {
-    getMealsIngredients().then((data) => setIngredientsMeal(data.meals));
+    getMealsIngredients().then((meals) => setIngredientsMeal(meals.meals));
   }, []);
 
   if (ingredientsMeal.length > twelve) {
     return setIngredientsMeal(ingredientsMeal.slice(zero, twelve));
   }
 
-  if (redirect) return <Redirect to="/comidas" />
+  if (redirect) return <Redirect to="/comidas" />;
 
   return (
     <div>
@@ -62,7 +62,7 @@ function ComidasPorIngrediente() {
             { ingredients.strIngredient }
           </p>
         </button>
-      ))}
+      )) }
       <Footer />
     </div>
   );
