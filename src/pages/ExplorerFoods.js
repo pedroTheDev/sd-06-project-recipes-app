@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { fetchRandom } from '../helpers/Helper';
 
 export default function ExplorerFoods(props) {
   return (
@@ -21,6 +22,9 @@ export default function ExplorerFoods(props) {
       <button
         type="button"
         data-testid="explore-surprise"
+        onClick={
+          async () => props.history.push(`/comidas/${await fetchRandom('comida')}`)
+        }
       >
         Me Surpreenda!
       </button>
