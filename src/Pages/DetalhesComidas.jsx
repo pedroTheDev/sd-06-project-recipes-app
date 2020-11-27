@@ -109,17 +109,19 @@ const DetalhesComida = () => {
                 />
               </a>
             </div>
-            <div className="main-scroll">
-              <span>Recomendadas</span>
+            <span>Recomendadas</span>
+            <div className="main-recomendations">
               { stateSugestions && stateSugestions.meals.map((meal, index) => {
                 if (index <= number) {
                   return (
                     <div
-                      className="card-details"
+                      className="main-scroll"
                       key={ meal.strMeal }
                       data-testid={ `${index}-recomendation-card` }
                     >
-                      <p data-testid={ `${index}-card-name` }>{meal.strMeal}</p>
+                      <p data-testid={ `${index}-recomendation-title` }>
+                        {meal.strMeal}
+                      </p>
                       <button
                         type="button"
                         className="button"

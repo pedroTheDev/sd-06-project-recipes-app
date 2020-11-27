@@ -49,14 +49,14 @@ const DetalhesBebidas = () => {
   const number = 5;
 
   return (
-    <div>
+    <div className="main-principal">
       {stateLocal ? (
-        <div className="main-details">
+        <div className="container-main">
           {console.log(stateLocal)}
-          <div className="container-img">
+          <div className="container-initial">
             <img
               data-testid="recipe-photo"
-              className="img-details"
+              className="img-initial"
               src={ stateLocal.drink.drinks[0].strDrinkThumb }
               alt={ stateLocal.drink.drinks[0].strDrink }
             />
@@ -98,30 +98,19 @@ const DetalhesBebidas = () => {
                 {stateLocal.drink.drinks[0].strInstructions}
               </div>
             </div>
-            <div className="video">
-              <span>Video</span>
-              <a
-                data-testid="video"
-                href={ stateLocal.drink.drinks[0].strYoutube }
-              >
-                <img
-                  src={ stateLocal.drink.drinks[0].strDrinkThumb }
-                  alt={ stateLocal.drink.drinks[0].strDrink }
-                />
-              </a>
-            </div>
-            <div>
-              <span>Recomendadas</span>
+            <span>Recomendadas</span>
+            <div className="main-recomendations">
               { stateSugestions && stateSugestions.drinks.map((drink, index) => {
                 if (index <= number) {
                   return (
                     <div
-                      className="card"
+                      className="main-scroll"
                       key={ drink.strDrink }
                       data-testid={ `${index}-recomendation-card` }
                     >
-                      <p data-testid={ `${index}-card-name` }>{drink.strDrink}</p>
-                      <span>{drink.strAlcoholic}</span>
+                      <p data-testid={ `${index}-recomendation-title` }>
+                        {drink.strDrink}
+                      </p>
                       <button
                         type="button"
                         className="button"
@@ -129,6 +118,7 @@ const DetalhesBebidas = () => {
                       >
                         <Link to={ `/bebidas/${drink.idDrink}` }>
                           <img
+                            className="img-recomendations"
                             width="200"
                             src={ drink.strDrinkThumb }
                             alt={ drink.strDrink }
