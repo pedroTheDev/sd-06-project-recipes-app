@@ -119,7 +119,7 @@ export default function Comidas({ history }) {
     </div>
   );
 }
-// comentario para push
+// comentario para push;
 Comidas.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
