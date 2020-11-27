@@ -8,7 +8,7 @@ import * as cocktailAPI from '../../services/cocktailAPI';
 import * as mealAPI from '../../services/mealAPI';
 import recipesAppContext from '../../context/recipesAppContext';
 
-function DrinksPage() {
+function MealsPage() {
   const [state, changeState] = useState({
     type: '',
     recipes: [],
@@ -230,4 +230,4 @@ function DrinksPage() {
   );
 }
 
-export default DrinksPage;
+export default MealsPage;

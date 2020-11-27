@@ -1,36 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // import Proptypes from 'prop-types';
-import fetchMeal from '../../services/mealAPI';
+import { useParams } from 'react-router-dom';
+import { fetchMeal } from '../../services/mealAPI';
 import SecondaryHeader from '../../components/SecondaryHeader';
 
-function Detail({
-  match: {
-    params: { id },
-  },
-}) {
+function Detail() {
   const [recipes, setRecipes] = useState({});
+  const { id } = useParams();
 
   const fetchIngredients = async () => {
     const recipesByIdApi = await fetchMeal('lookupIngredient', id);
+    console.log('recipes', recipesByIdApi);
+    // const secondaryHeaderData = {
+    //   strMeal: '',
+    //   strMealThumb: '',
+    //   strCategory: '',
+    // };
     setRecipes(recipesByIdApi);
   };
 
+  useEffect(() => {
+    fetchIngredients();
+  }, []);
+
   return (
     <div>
-      <SecondaryHeader id={ id } />
+      <SecondaryHeader />
       <div className="ingredients-container">
         <h3>Ingredientes</h3>
-        {
-          recipes.ingredientsAndMeasures.map((ingredient, index) => (
-            <div key={ index } data-testid={ `${index}-ingredient-name-and-measure` }>
-              {ingredient}
-            </div>
-          ))
-        }
       </div>
       <div className="instructions-container">
         <h3>Instruções</h3>
-        <p data-testid="instructions">{recipes.instruction}</p>
+        {
+
+        }
+        <div data-testid="instructions" />
       </div>
       <div className="container-reccomended">
         <img data-testid="${index}-recomendation-card" />

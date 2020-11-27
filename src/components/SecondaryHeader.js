@@ -1,7 +1,9 @@
 import React, { useContext } from 'react';
+import { useParams } from 'react-router-dom';
 import recipesAppContext from '../context/recipesAppContext';
 
-function SecondaryHeader(id) {
+function SecondaryHeader() {
+  // const { id } = useParams();
   const { strName, strThumb, title, category } = useContext(recipesAppContext);
   return (
     <div className="header-container">
