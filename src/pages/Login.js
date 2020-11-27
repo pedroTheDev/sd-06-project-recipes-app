@@ -77,6 +77,7 @@ class Login extends React.Component {
                 type="text"
                 required
                 name="email"
+                placeholder="Digite seu Email"
                 value={ email }
                 onChange={ this.changeHandler }
               />
@@ -88,6 +89,7 @@ class Login extends React.Component {
                 type="password"
                 required
                 name="password"
+                placeholder="Digite sua Senha"
                 value={ password }
                 onChange={ this.changeHandler }
               />

@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { Footer, Header } from '../components';
 import { drinksCategoriesOnRender,
   drinksOnRender, filterDrinksByCategory } from '../services';
+import { bebida } from '../actions';
 
 class Drink extends React.Component {
   constructor() {
@@ -25,6 +25,14 @@ class Drink extends React.Component {
     this.setInitialState(drinksRender, Categories);
   }
 
+  async componentDidUpdate() {
+    const { stateDrinks } = this.props;
+    const MAXIMUM_LENGTH = 0;
+    if (stateDrinks.length > MAXIMUM_LENGTH) {
+      this.stateAfterProps(stateDrinks);
+    }
+  }
+
   async setCategory({ strCategory }) {
     const { CategoryFilter } = this.state;
     if (CategoryFilter !== strCategory) {
@@ -36,6 +44,12 @@ class Drink extends React.Component {
     }
   }
 
+  stateAfterProps(props) {
+    const { dispatchDrinks } = this.props;
+    this.setState({ Drinks: props });
+    dispatchDrinks([]);
+  }
+
   setInitialState(drinksRender, Categories) {
     this.setState({ Drinks: drinksRender, Categories });
   }
@@ -45,40 +59,59 @@ class Drink extends React.Component {
     this.setState({ Drinks: initialDrinks, CategoryFilter: '' });
   }
 
+  redirectOnImage(recipe) {
+    const { history } = this.props;
+    history.push(`/bebidas/${recipe.idDrink}`);
+  }
+
   render() {
     const { history } = this.props;
     const { Drinks, Categories } = this.state;
+    const INITIAL_VALUE = 0;
     return (
       <div className="food-drink-container">
-        <Header history={ history } />
-        {Categories ? Categories.map((element, index) => (
-          <div key={ index } data-testid={ `${element.strCategory}-category-filter` }>
-            <button type="button" onClick={ () => this.setCategory(element) }>
-              {element.strCategory}
+        <div className="category-buttons">
+          <Header history={ history } />
+          {Categories ? Categories.map((element, index) => (
+            <div key={ index } data-testid={ `${element.strCategory}-category-filter` }>
+              <button
+                type="button"
+                className="drink-filters"
+                onClick={ () => this.setCategory(element) }
+              >
+                {element.strCategory}
+              </button>
+            </div>
+          )) : ''}
+          {Categories.length > INITIAL_VALUE
+          && (
+            <button
+              type="button"
+              className="drink-filters"
+              data-testid="All-category-filter"
+              onClick={ () => this.allButtonHandler() }
+            >
+              All
             </button>
-          </div>
-        )) : ''}
-        <button
-          type="button"
-          data-testid="All-category-filter"
-          onClick={ () => this.allButtonHandler() }
-        >
-          All
-        </button>
-        {Drinks ? Drinks.map((recipe, index) => (
-          <div className="card" key={ index } data-testid={ `${index}-recipe-card` }>
-            <Link to={ `/bebidas/${recipe.idDrink}` }>
-              <img
+          )}
+        </div>
+        <div className="cards-container">
+          {Drinks ? Drinks.map((recipe, index) => (
+            <div className="card" key={ index } data-testid={ `${index}-recipe-card` }>
+              <input
+                type="image"
+                width="100%"
                 src={ recipe.strDrinkThumb }
                 data-testid={ `${index}-card-img` }
                 alt="recipe"
+                onClick={ () => this.redirectOnImage(recipe) }
               />
               <hr className="card-hr" />
               <p data-testid={ `${index}-card-name` }>{recipe.strDrink}</p>
               <hr className="card-hr" />
-            </Link>
-          </div>
-        )) : null}
+            </div>
+          )) : null}
+        </div>
         <Footer history={ history } />
       </div>
     );
@@ -87,10 +120,16 @@ class Drink extends React.Component {
 
 Drink.propTypes = {
   history: PropTypes.shape().isRequired,
+  dispatchDrinks: PropTypes.func.isRequired,
+  stateDrinks: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatchDrinks: (drinks) => dispatch(bebida(drinks)),
+});
 
 const mapStateToProps = (state) => ({
   stateDrinks: state.menu.drinks,
 });
 
-export default connect(mapStateToProps, null)(Drink);
+export default connect(mapStateToProps, mapDispatchToProps)(Drink);

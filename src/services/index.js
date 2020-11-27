@@ -22,6 +22,8 @@ export function fetchMeal(endPoint, value) {
 
 export function fetchDrinks(endPoint, value) {
   let variavel;
+  const INITIAL_LENGTH = 0;
+  const MAX_LENGTH = 12;
   if (endPoint.length < 1) {
     variavel = fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=')
       .then((response) => response.json())
@@ -37,11 +39,15 @@ export function fetchDrinks(endPoint, value) {
   } else if (value === 'nome') {
     variavel = fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${endPoint}`)
       .then((response) => response.json())
-      .then((response) => response.drinks);
+      .then((response) => response.drinks.slice(INITIAL_LENGTH, MAX_LENGTH))
+      .catch(() => {
+        alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+        return [];
+      });
   } else if (value === 'primeira-letra') {
     variavel = fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${endPoint}`)
       .then((response) => response.json())
-      .then((response) => response.drinks);
+      .then((response) => response.drinks.slice(INITIAL_LENGTH, MAX_LENGTH));
   }
   return variavel;
 }

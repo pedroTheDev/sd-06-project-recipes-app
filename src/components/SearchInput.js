@@ -10,7 +10,7 @@ class SearchInput extends React.Component {
     this.state = {
       search: '',
       radio: 'ingrediente',
-      meals: [],
+      Meals: [],
       drinks: [],
     };
     this.searchHandleChange = this.searchHandleChange.bind(this);
@@ -23,10 +23,10 @@ class SearchInput extends React.Component {
   }
 
   redirectFromState() {
-    const { meals, drinks } = this.state;
+    const { Meals, drinks } = this.state;
     const { history } = this.props;
-    if (meals !== null && meals.length === 1) {
-      history.push(`/comidas/${meals[0].idMeal}`);
+    if (Meals !== null && Meals.length === 1) {
+      history.push(`/comidas/${Meals[0].idMeal}`);
     }
     if (drinks !== null && drinks.length === 1) {
       history.push(`/bebidas/${drinks[0].idDrink}`);
@@ -44,9 +44,7 @@ class SearchInput extends React.Component {
         window.alert('Sua busca deve conter somente 1 (um) caracter');
       } else {
         const responseApi = await fetchMeal(search, radio);
-        this.setState({
-          meals: responseApi,
-        });
+        this.setState({ Meals: responseApi });
         if (responseApi !== null) dispatchMeals(responseApi);
         if (responseApi === null) {
           window.alert(
@@ -79,7 +77,6 @@ class SearchInput extends React.Component {
   }
 
   render() {
-    // const { history: { location: { pathname } } } = this.props;
     return (
       <div className="toogle-search-input">
         <input

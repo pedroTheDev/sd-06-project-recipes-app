@@ -84,8 +84,7 @@ class Header extends React.Component {
 
   render() {
     const { h1, searchInput } = this.state;
-    const { history } = this.props;
-    const { history: { location: { pathname } } } = this.props;
+    const { history: { location: { pathname } }, history } = this.props;
     return (
       <header className="header-global-header">
         <div className="global-header">
@@ -99,7 +98,9 @@ class Header extends React.Component {
               onClick={ () => history.push('/perfil') }
             />
           </div>
-          <h1 id="header-h1" data-testid="page-title">{h1}</h1>
+          <h1 id="header-h1" data-testid="page-title" className="global-h1">
+            {h1}
+          </h1>
           <div className="search-input-div">
             {(pathname !== ('/explorar')
               && pathname !== ('/explorar/comidas')
