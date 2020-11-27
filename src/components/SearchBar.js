@@ -31,30 +31,36 @@ export default function SearchBar() {
           data-testid="search-input"
           onChange={ handleChange }
         />
-        <input
-          type="radio"
-          value="Nome"
-          name="tipo"
-          data-testid="name-search-radio"
-          onClick={ handleClickSearch }
-        />
-        Nome
-        <input
-          type="radio"
-          value="Ingrediente"
-          name="tipo"
-          data-testid="ingredient-search-radio"
-          onClick={ handleClickSearch }
-        />
-        Ingrediente
-        <input
-          type="radio"
-          value="PrimeiraLetra"
-          name="tipo"
-          data-testid="first-letter-search-radio"
-          onClick={ handleClickSearch }
-        />
-        Primeira Letra
+        <div>
+          <input
+            type="radio"
+            value="Nome"
+            name="tipo"
+            data-testid="name-search-radio"
+            onClick={ handleClickSearch }
+          />
+          Nome
+        </div>
+        <div>
+          <input
+            type="radio"
+            value="Ingrediente"
+            name="tipo"
+            data-testid="ingredient-search-radio"
+            onClick={ handleClickSearch }
+          />
+          Ingrediente
+        </div>
+        <div>
+          <input
+            type="radio"
+            value="PrimeiraLetra"
+            name="tipo"
+            data-testid="first-letter-search-radio"
+            onClick={ handleClickSearch }
+          />
+          Primeira Letra
+        </div>
         <div>
           <button
             type="submit"

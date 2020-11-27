@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import './Login.css';
 
 function Login() {
   const [isValid, setIsValid] = useState(false);
@@ -30,28 +31,45 @@ function Login() {
   };
 
   return (
-    <>
-      <input
-        type="email"
-        name="email"
-        data-testid="email-input"
-        onChange={ handleChangeEmail }
-      />
-      <input
-        type="password"
-        name="password"
-        data-testid="password-input"
-        onChange={ handleChangePassword }
-      />
-      <Link to="/comidas">
+    <div className="wrapper">
+      <div className="title">
+        Cook APP
+      </div>
+      <div className="field">
         <input
-          type="submit"
-          data-testid="login-submit-btn"
-          disabled={ !isValid }
-          onClick={ setLocalStorage }
+          type="email"
+          name="email"
+          data-testid="email-input"
+          onChange={ handleChangeEmail }
+          placeholder="email"
         />
-      </Link>
-    </>
+      </div>
+      <div className="field">
+        <input
+          type="password"
+          name="password"
+          data-testid="password-input"
+          onChange={ handleChangePassword }
+          placeholder="senha"
+        />
+      </div>
+      <div className="field">
+        <Link to="/comidas">
+          <input
+            type="submit"
+            data-testid="login-submit-btn"
+            disabled={ !isValid }
+            onClick={ setLocalStorage }
+          />
+        </Link>
+      </div>
+      <div className="content">
+        <div className="checkbox">
+          <input type="checkbox" id="remember-me" />
+          Lembrar senha
+        </div>
+      </div>
+    </div>
   );
 }
 
