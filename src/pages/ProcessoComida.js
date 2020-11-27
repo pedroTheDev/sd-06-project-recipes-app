@@ -23,9 +23,16 @@ function ProcessoComida() {
 
   // useEffect(() => {
   //   localStorage.inProgressRecipes = JSON.stringify(
-  //     { meals: { [idMeal]: Object.keys(checked) } },
+  //     { meals: { [idMeal]: checked } },
   //   );
   // }, [checked]);
+
+  // const isChecked = (ingredient) => {
+  //   const progress = JSON(localStorage.inProgressRecipes);
+  //   const progress2 = Object.value(progress);
+  //   console.log(progress2);
+  //   return true
+  // }
 
   useEffect(() => {
     async function fetchAPI() {
@@ -39,8 +46,12 @@ function ProcessoComida() {
 
   useEffect(() => {
     if (localStorage.favoriteRecipes) {
-      // const favoriteRecipes = JSON.parse(localStorage.favoriteRecipes);
-      setIsFavorite(true);
+      const favoriteRecipes = JSON.parse(localStorage.favoriteRecipes);
+      favoriteRecipes.forEach((favorite) => {
+        if (favorite.id === idMeal) {
+          setIsFavorite(true);
+        }
+      });
     }
   }, []);
 
@@ -129,7 +140,7 @@ function ProcessoComida() {
           <input
             type="checkbox"
             name={ ingredient }
-            checked={ checked[ingredient[ingredient.name]] }
+            checked={ () => { isChecked(ingredient); } }
             onChange={ handleChange }
           />
         </span>
