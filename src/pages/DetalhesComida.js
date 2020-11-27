@@ -6,7 +6,7 @@ import DrinksCard from '../components/DrinksCard';
 import Header from '../components/Header';
 import { drinkAPI } from '../services/drinkAPI';
 import { fetchFoodAPI } from '../services/foodAPI';
-import "../style/Detalhes.css";
+import '../style/Detalhes.css';
 
 function DetalhesComida(props) {
   const {
@@ -14,7 +14,7 @@ function DetalhesComida(props) {
     beganRecipes, setBeganRecipes, doneRecipes,
   } = useContext(ReceitasContext);
   const { match: { params: { id } } } = props;
-  let startedRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+  const startedRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
   const seis = 6;
 
   useEffect(() => {
@@ -40,21 +40,23 @@ function DetalhesComida(props) {
     return keys;
   };
 
-  const startRecipe = (recipeName) => { 
+  const startRecipe = (recipeName) => {
     localStorage.setItem('inProgressRecipes', JSON.stringify({
       ...startedRecipes,
       meals: {
         ...startedRecipes.meals,
-        [recipeName]: fetchById 
-      }
+        [recipeName]: fetchById,
+      },
     }));
 
-    if (!beganRecipes.includes(recipeName)) setBeganRecipes([ ...beganRecipes, recipeName ]);
+    if (!beganRecipes.includes(recipeName)) {
+      setBeganRecipes([...beganRecipes, recipeName]);
+    }
   };
 
-  const verifyState = (idMeal) => {
-    return !startedRecipes.meals[idMeal] ? 'Iniciar Receita' : 'Continuar Receita'; 
-  }
+  const verifyState = (idMeal) => (
+    !startedRecipes.meals[idMeal] ? 'Iniciar Receita' : 'Continuar Receita'
+  );
 
   return ((!fetchById)
     ? <div>carregando...</div>
@@ -63,8 +65,8 @@ function DetalhesComida(props) {
         <Header title="Detalhes Comidas" />
         {
           fetchById.map((meal, index) => (
-            <div key={index}>
-              <img data-testid="recipe-photo" src={meal.strMealThumb} alt="" />
+            <div key={ index }>
+              <img data-testid="recipe-photo" src={ meal.strMealThumb } alt="" />
               <h2 data-testid="recipe-title">{meal.strMeal}</h2>
               <button data-testid="share-btn" type="button">Compartilhar</button>
               <button data-testid="favorite-btn" type="button">Favoritar</button>
@@ -73,8 +75,8 @@ function DetalhesComida(props) {
                 const measure = getIngredients(meal, /strMeasure/);
                 return (
                   <p
-                    key={indx}
-                    data-testid={`${indx}-ingredient-name-and-measure`}
+                    key={ indx }
+                    data-testid={ `${indx}-ingredient-name-and-measure` }
                   >
                     {`- ${item} - ${measure[indx]} `}
                   </p>
@@ -83,7 +85,7 @@ function DetalhesComida(props) {
               <p data-testid="instructions">{meal.strInstructions}</p>
               <iframe
                 data-testid="video"
-                src={meal.strYoutube.replace('watch?v=', 'embed/')}
+                src={ meal.strYoutube.replace('watch?v=', 'embed/') }
                 title="frame"
               />
               <h2>Receitas Recomendadas</h2>
@@ -91,15 +93,15 @@ function DetalhesComida(props) {
                 {drinks
                   .filter((_, indx) => indx < seis)
                   .map((drink, i) => (
-                    <div key={i} data-testid={`${i}-recomendation-card`}>
-                      <div data-testid={`${i}-recomendation-title`}>
-                        <DrinksCard key={drink} drink={drink} index={i} />
+                    <div key={ i } data-testid={ `${i}-recomendation-card` }>
+                      <div data-testid={ `${i}-recomendation-title` }>
+                        <DrinksCard key={ drink } drink={ drink } index={ i } />
                       </div>
                     </div>
                   ))}
               </div>
               {!doneRecipes.includes(meal.idMeal) && (
-                <Link to={`/comidas/${meal.idMeal}/in-progress`}>
+                <Link to={ `/comidas/${meal.idMeal}/in-progress` }>
                   <button
                     className="start-recipe-btn"
                     data-testid="start-recipe-btn"

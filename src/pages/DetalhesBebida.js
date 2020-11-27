@@ -6,14 +6,14 @@ import MealsCard from '../components/MealsCard';
 import Header from '../components/Header';
 import { fetchDrinkAPI } from '../services/drinkAPI';
 import { foodAPI } from '../services/foodAPI';
-import "../style/Detalhes.css";
+import '../style/Detalhes.css';
 
 function DetalhesBebida(props) {
   const { meals, setMeals, fetchById, setFetchById,
     beganRecipes, setBeganRecipes, doneRecipes,
   } = useContext(ReceitasContext);
   const { match: { params: { id } } } = props;
-  let startedRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+  const startedRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
   const seis = 6;
 
   useEffect(() => {
@@ -38,23 +38,25 @@ function DetalhesBebida(props) {
     return keys;
   };
 
-  const startRecipe = (recipeName) => { 
+  const startRecipe = (recipeName) => {
     localStorage.setItem('inProgressRecipes', JSON.stringify({
       ...startedRecipes,
       cocktails: {
         ...startedRecipes.cocktails,
-        [recipeName]: fetchById 
-      }
+        [recipeName]: fetchById,
+      },
     }));
 
-    if (!beganRecipes.includes(recipeName)) setBeganRecipes([ ...beganRecipes, recipeName ]);
+    if (!beganRecipes.includes(recipeName)) {
+      setBeganRecipes([...beganRecipes, recipeName]);
+    }
   };
 
   console.log(startedRecipes);
 
-  const verifyState = (idDrink) => {
-    return !startedRecipes.cocktails[idDrink] ? 'Iniciar Receita' : 'Continuar Receita'; 
-  }
+  const verifyState = (idDrink) => (
+    !startedRecipes.cocktails[idDrink] ? 'Iniciar Receita' : 'Continuar Receita'
+  );
 
   return ((!fetchById)
     ? <div>carregando...</div>
@@ -88,9 +90,9 @@ function DetalhesBebida(props) {
                   .filter((_, indx) => indx < seis)
                   .map((food, i) => (
                     <div key={ i } data-testid={ `${i}-recomendation-card` }>
-                      <div data-testid={ `${i}-recomendation-title` }>  
+                      <div data-testid={ `${i}-recomendation-title` }>
                         <MealsCard food={ food } index={ i } />
-                      </div>  
+                      </div>
                     </div>
                   )))}
               </div>
@@ -102,7 +104,9 @@ function DetalhesBebida(props) {
                     type="button"
                     onClick={ () => startRecipe(drink.idDrink) }
                   >
-                    {!startedRecipes.cocktails ? 'Iniciar Receita' : verifyState(drink.idDrink)}
+                    {!startedRecipes.cocktails
+                      ? 'Iniciar Receita'
+                      : verifyState(drink.idDrink)}
                   </button>
                 </Link>
               )}
