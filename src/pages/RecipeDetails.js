@@ -4,8 +4,6 @@ import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import splitPathname from '../utils/splitPathname';
 import recomendationsThunk from '../redux/actions/pageDetailsFetcher';
-import ShareButton from '../components/ShareButton';
-import FavButton from '../components/FavButton';
 import recipeDetailsProcessing from '../utils/recipeDetailsProcessing';
 import checkRecipeInProgress from '../utils/checkRecipeInProgress';
 import checkSavedRecipe from '../utils/checkSavedRecipe';
@@ -31,15 +29,6 @@ function RecipeDetails(
   };
 
   const history = useHistory();
-  const { image,
-    name,
-    category,
-    ingredients = [],
-    measures = [],
-    instructions,
-    video,
-    isAlcoholic,
-  } = recipe;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -83,5 +72,3 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps)(RecipeDetails);
-
-// export default RecipeDetails;

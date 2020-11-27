@@ -1,18 +1,17 @@
-import { func } from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import ShareButton from './ShareButton';
 import FavButton from './FavButton';
 import Ingredients from './Ingredients';
 
-function DetailAndProgressBody (props) {
-  const { recommendations } = props;
+function DetailAndProgressBody({ recipe, recommendations, buttonsProps }) {
   const {
     image,
     name,
     isAlcoholic,
     category,
     instructions,
-  } = props.recipe;
+  } = recipe;
   const {
     path,
     id,
@@ -21,7 +20,7 @@ function DetailAndProgressBody (props) {
     setIsFav,
     setWasCopied,
     video,
-  } = props.buttonsProps;
+  } = buttonsProps;
   return (
     <main>
       <img
@@ -38,7 +37,7 @@ function DetailAndProgressBody (props) {
           isFav={ isFav }
           id={ id }
           setIsFav={ setIsFav }
-          recipe={ props.recipe }
+          recipe={ recipe }
         />
       </div>
       {wasCopied && 'Link copiado!'}
@@ -47,14 +46,16 @@ function DetailAndProgressBody (props) {
           ? isAlcoholic
           : category}
       </p>
-      <Ingredients recipe={ props.recipe }/>
+      <Ingredients recipe={ recipe } />
       <h4>Instructions</h4>
       <p data-testid="instructions">{ instructions }</p>
       { path === 'comidas'
-        ? <div>
-          <h4>Video</h4>
+        ? (
+          <div>
+            <h4>Video</h4>
             <iframe data-testid="video" src={ video } title="Recipe Video" />
-        </div>
+          </div>
+        )
         : null}
       <div>
         <h4>Recommendations</h4>
@@ -75,7 +76,13 @@ function DetailAndProgressBody (props) {
         </div>
       </div>
     </main>
-    );
+  );
 }
+
+DetailAndProgressBody.propTypes = {
+  recipe: PropTypes.shape.isRequired,
+  buttonsProps: PropTypes.shape.isRequired,
+  recommendations: PropTypes.arrayOf(PropTypes.shape).isRequired,
+};
 
 export default DetailAndProgressBody;
