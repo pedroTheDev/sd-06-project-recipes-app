@@ -11,10 +11,10 @@ function RecipesAppProvider({ children }) {
   const [recipes, setRecipes] = useState([]);
   const [categories, setCategories] = useState([]);
 
-  const recipesToRender = async (type) => {
+  const recipesToRender = async (type, searchTerm) => {
     let fetchedRecipes = await (type === 'meal'
-      ? fetchMeal('name')
-      : fetchDrink('name')
+      ? fetchMeal('name', searchTerm)
+      : fetchDrink('name', searchTerm)
     );
     const first = 0;
     const twelfth = 12;
