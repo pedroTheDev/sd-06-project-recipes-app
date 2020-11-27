@@ -1,5 +1,7 @@
 import { fetchMainPage, fetchNewSelectedCategory } from '../../services/fetchMainPage';
 import apiDataProcessor from '../../services/apiDataProcessor';
+import fetchMealAPI from '../../services/apiDataProcessor';
+import { fetchDrinkAPI } from '../../services/searchAPI';
 
 export const LOADING = 'LOADING';
 export const SUCCESS = 'SUCCESS';
@@ -35,6 +37,26 @@ export function fetcherThunk(foodOrDrink) {
   return (dispatch) => {
     dispatch(loading());
     return fetchMainPage(foodOrDrink).then(
+      (r) => dispatch(success(r)),
+      (fail) => dispatch(error(fail)),
+    );
+  };
+}
+
+export function redirectToIngredientThunk(ingredient, option, pathname) {
+  if (pathname) {
+    return (dispatch) => {
+      dispatch(loading());
+      return fetchMealAPI(option, ingredient).then(
+        (r) => dispatch(success(r)),
+        (fail) => dispatch(error(fail)),
+      );
+    };
+  }
+
+  return (dispatch) => {
+    dispatch(loading());
+    return fetchDrinkAPI(option, ingredient).then(
       (r) => dispatch(success(r)),
       (fail) => dispatch(error(fail)),
     );

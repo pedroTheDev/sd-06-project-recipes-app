@@ -25,6 +25,7 @@ const MainPage = (props) => {
       return (
         recipesToRender.map(({ name, image, id }, index) => (
           <RecipeCard
+            datatestId='recipe'
             key={ id }
             recipeName={ name }
             recipeImage={ image }
