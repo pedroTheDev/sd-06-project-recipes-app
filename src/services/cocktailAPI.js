@@ -1,6 +1,7 @@
 const COCKTAIL_API = 'https://www.thecocktaildb.com/api/json/v1/1/';
 
 // Endpoints
+const filterByCategoryEndpoint = 'filter.php?c=';
 const listCategoriesEndpoint = 'list.php?c=list';
 const requestRecipeEndpoint = 'lookup.php?i=';
 const randomRequestEndpoint = 'random.php';
@@ -40,6 +41,13 @@ export async function requestRecipe(key) {
 
 export async function randomRequest() {
   const url = `${COCKTAIL_API}${randomRequestEndpoint}`;
+  const result = await fetch(url);
+  const data = await result.json();
+  return data;
+}
+
+export async function filterByCategory(key) {
+  const url = `${COCKTAIL_API}${filterByCategoryEndpoint}${key}`;
   const result = await fetch(url);
   const data = await result.json();
   return data;

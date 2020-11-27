@@ -1,5 +1,5 @@
 import React from 'react';
-import fireEvent from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 import Login from './Login';
 import renderWithRouter from '../../renderWithRouter';
 
@@ -18,10 +18,10 @@ describe('Test Login page', () => {
 
   it('tests if use is redirected when logged in', () => {
     const { history, getByText } = renderWithRouter(<Login />);
-    const { pathname } = history.location;
     const loginBtn = getByText(/Entrar/i);
     expect(loginBtn).toBeInTheDocument();
     fireEvent.click(loginBtn);
+    const { pathname } = history.location;
     expect(pathname).toBe('/comidas');
   });
 });
