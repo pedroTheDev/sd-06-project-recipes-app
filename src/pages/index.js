@@ -11,3 +11,4 @@ export { default as FavRecipes } from './FavRecipes';
 export { default as ExploreRecipes } from './ExploreRecipes';
 export { default as ExplorerFoods } from './ExplorerFoods';
 export { default as ExplorerDrinks } from './ExplorerDrinks';
+export { default as IngredientsExplorer } from './IngredientsExplorer';

@@ -33,6 +33,9 @@ export default function useSearch() {
       case 'category':
         endpoint = `filter.php?c=${searchText}`;
         break;
+      case 'ingredientsList':
+        endpoint = 'list.php?i=list';
+        break;
       default:
         break;
       }

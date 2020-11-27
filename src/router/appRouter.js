@@ -5,7 +5,8 @@ import { Login,
   FoodsDetails, DrinkDetails,
   FoodInProgress, DrinkInProgress,
   DoneRecipes, FavRecipes,
-  ExploreRecipes, ExplorerFoods, ExplorerDrinks } from '../pages';
+  ExploreRecipes, ExplorerFoods, ExplorerDrinks,
+  IngredientsExplorer } from '../pages';
 
 export default class AppRouter extends React.Component {
   render() {
@@ -61,16 +62,11 @@ export default class AppRouter extends React.Component {
           path="/explorar/bebidas"
           component={ ExplorerDrinks }
         />
-        {/* <Route
+        <Route
           exact
-          path="/explorar/comidas/ingredientes"
-          component={ IngredientsFoods }
-        /> */}
-        {/* <Route
-          exact
-          path="/explorar/bebidas/ingredientes"
-          component={ IngredientsDrinks }
-        /> */}
+          path="/explorar/:id/ingredientes"
+          render={ (props) => <IngredientsExplorer { ...props } /> }
+        />
         {/* <Route
           exact
           path="/explorar/comidas/area"
