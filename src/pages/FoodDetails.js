@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import { requestDetailsFood, requestDrinks } from '../services/requestsAPI';
 import DrinkRecomendCard from '../components/DrinkRecomendCard';
 import '../style/FoodAndDrinkDetails.css';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import shareIcon from '../images/shareIcon.svg';
 
 function FoodDetails() {
   const url = document.URL;
@@ -11,17 +14,15 @@ function FoodDetails() {
   const [ingredients, setIngredients] = useState('');
   const [apiResult, setApiResult] = useState([]);
   const [spanHidden, setSpanHidden] = useState(true);
-  const [favoriteFood, setFavoriteFood] = useState('non-favorite');
+  const [favoriteFood, setFavoriteFood] = useState(false);
   const zero = 0;
   const six = 6;
 
   useEffect(() => {
-    const teste = foodDetails;
     async function fetchData() {
       const resultsDetails = await requestDetailsFood(splitedURL[4]);
       const meal = resultsDetails.meals[0];
       setFoodDetails(meal);
-      console.log(meal);
       const keysMeal = Object.keys(meal);
       const filterMeal = keysMeal
         .filter((key) => key.toLowerCase().includes('ingredient'));
@@ -33,7 +34,6 @@ function FoodDetails() {
         }));
       setIngredients(allIngredients);
     }
-    console.log('teste', teste);
     fetchData();
   }, []);
 
@@ -50,18 +50,14 @@ function FoodDetails() {
   }
 
   function copyToClipBoard(text) {
-    const input = document.body.appendChild(document.createElement('input'));
-    input.value = text;
-    input.focus();
-    input.select();
-    document.execCommand('copy');
-    input.parentNode.removeChild(input);
+    navigator.clipboard.writeText(text);
     setSpanHidden(false);
   }
 
   function handleFavoriteFood() {
-    if (favoriteFood === 'non-favorite') {
-      setFavoriteFood('favorite');
+    if (favoriteFood === false) {
+      console.log('entrou');
+      setFavoriteFood(true);
       const favoriteObj = [
         {
           id: foodDetails.idMeal,
@@ -73,13 +69,20 @@ function FoodDetails() {
           image: foodDetails.strMealThumb,
         },
       ];
-      localStorage.setItem('Favorite-Food', JSON.stringify(favoriteObj));
-      console.log('Favorite', favoriteObj);
-      // console.log(foodDetails);
-      console.log('entrou1', favoriteFood);
+      if (localStorage.getItem('favoriteRecipes') === null) {
+        localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteObj));
+      } else {
+        localStorage.setItem(
+          'favoriteRecipes',
+          JSON.stringify([
+            ...JSON.parse(localStorage.getItem('favoriteRecipes')),
+            favoriteObj,
+          ]),
+        );
+      }
     }
-    if (favoriteFood === 'favorite') {
-      setFavoriteFood('non-favorite');
+    if (favoriteFood === true) {
+      setFavoriteFood(false);
       console.log('entrou2', favoriteFood);
     }
   }
@@ -90,13 +93,31 @@ function FoodDetails() {
       <img
         data-testid="recipe-photo"
         width="100px"
-        src={ foodDetails.meals && foodDetails.meals[0].strMealThumb }
+        src={ foodDetails.strMealThumb }
         alt="Meal"
       />
 
       <h3 data-testid="recipe-title">
-        {foodDetails.meals && foodDetails.meals[0].strMeal}
+        {foodDetails.strMeal}
       </h3>
+
+      <button
+        type="button"
+        data-testid="share-btn"
+        onClick={ () => copyToClipBoard(document.URL) }
+      >
+        <img src={ shareIcon } alt="Share" />
+      </button>
+
+      <span hidden={ spanHidden }>Link copiado!</span>
+
+      <button
+        aria-label="favorite-button"
+        type="button"
+        data-testid="favorite-btn"
+        onClick={ handleFavoriteFood }
+        src={ favoriteFood ? whiteHeartIcon : blackHeartIcon }
+      />
 
       <h4 data-testid="recipe-category">
         {foodDetails.meals && foodDetails.meals[0].strCategory}
@@ -111,12 +132,12 @@ function FoodDetails() {
       </div>
 
       <p data-testid="instructions">
-        {foodDetails.meals && foodDetails.meals[0].strInstructions}
+        {foodDetails.strInstructions}
       </p>
 
       <video data-testid="video" width="750" height="500" controls>
         <source
-          src={ foodDetails.meals && foodDetails.meals[0].strYoutube }
+          src={ foodDetails.strYoutube }
           type="video/mp4"
         />
         <track src="" kind="captions" />
@@ -132,26 +153,8 @@ function FoodDetails() {
         )) }
       </div>
 
-      <button
-        type="button"
-        data-testid="share-btn"
-        className="share-btn"
-        onClick={ () => copyToClipBoard(document.URL) }
-      >
-        Compartilhar
-      </button>
-
-      <button
-        type="button"
-        data-testid="favorite-btn"
-        className={ favoriteFood }
-        onClick={ handleFavoriteFood }
-      >
-        Favorito
-      </button>
-
       <Link
-        to={ `/comidas/${foodDetails.meals && foodDetails.meals[0].idMeal}/in-progress` }
+        to={ `/comidas/${foodDetails.idMeal}/in-progress` }
       >
         <button
           type="button"
@@ -177,7 +180,9 @@ function FoodDetails() {
           Continuar Receita
         </button>
       </Link>
-      <span hidden={ spanHidden }>Link copiado!</span>
+      <br />
+      <br />
+      <br />
     </div>
   );
 }

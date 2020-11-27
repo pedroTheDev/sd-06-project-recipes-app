@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { requestDetailsDrinks, requestFoods } from '../services/requestsAPI';
 import FoodRecomendCard from '../components/FoodRecomendCard';
-import '../style/FoodAndDrinkDetails.css';
+import shareIcon from '../images/shareIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 function DrinkDetails() {
   const url = document.URL;
@@ -12,30 +14,31 @@ function DrinkDetails() {
   const [apiResult, setApiResult] = useState([]);
   const [buttonText, setButtonText] = useState('Iniciar Receita');
   const [spanHidden, setSpanHidden] = useState(true);
-  const [favoriteDrink, setFavoriteDrink] = useState('non-favorite');
+  const [favoriteDrink, setFavoriteDrink] = useState(false);
   const zero = 0;
   const six = 6;
 
   useEffect(() => {
     async function fetchData() {
       const resultsDetails = await requestDetailsDrinks(splitedURL[4]);
-      setDrinkDetails(resultsDetails);
-
       const drink = resultsDetails.drinks[0];
+      setDrinkDetails(drink);
       const keysDrink = Object.keys(drink);
-
-      const filterDrink = keysDrink.filter((key) => key
-        .toLowerCase().includes('ingredient'));
-
+      const filterDrink = keysDrink
+        .filter((key) => key.toLowerCase().includes('ingredient'));
       const filterMeasure = keysDrink.filter((key) => key
         .toLowerCase().includes('measure'));
-
       const allIngredients = filterDrink
         .map((item, index) => ({
           ingredient: drink[item], measure: drink[filterMeasure[index]],
         }));
       setIngredients(allIngredients);
+    }
+    fetchData();
+  }, []);
 
+  useEffect(() => {
+    async function fetchData() {
       const response = await requestFoods();
       setApiResult(response);
     }
@@ -65,20 +68,35 @@ function DrinkDetails() {
   // }
 
   function copyToClipBoard(text) {
-    const input = document.body.appendChild(document.createElement('input'));
-    input.value = text;
-    input.focus();
-    input.select();
-    document.execCommand('copy');
-    input.parentNode.removeChild(input);
+    navigator.clipboard.writeText(text);
     setSpanHidden(false);
-    // alert('Link copiado!');
   }
 
   function handleFavoriteDrink() {
-    if (favoriteDrink === 'non-favorite') {
-      setFavoriteDrink('favorite');
-      console.log('entrou1', favoriteDrink);
+    if (favoriteDrink === false) {
+      setFavoriteDrink(true);
+      const favoriteObj = [
+        {
+          id: drinkDetails.idDrink,
+          type: 'bebida',
+          area: '',
+          category: drinkDetails.strCategory,
+          alcoholicOrNot: drinkDetails.strAlcoholic,
+          name: drinkDetails.strDrink,
+          image: drinkDetails.strDrinkThumb,
+        },
+      ];
+      if (localStorage.getItem('favoriteRecipes') === null) {
+        localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteObj));
+      } else {
+        localStorage.setItem(
+          'favoriteRecipes',
+          JSON.stringify([
+            ...JSON.parse(localStorage.getItem('favoriteRecipes')),
+            favoriteObj,
+          ]),
+        );
+      }
     }
     if (favoriteDrink === 'favorite') {
       setFavoriteDrink('non-favorite');
@@ -102,6 +120,24 @@ function DrinkDetails() {
         }
       </h3>
 
+      <button
+        type="button"
+        data-testid="share-btn"
+        onClick={ () => copyToClipBoard(document.URL) }
+      >
+        <img src={ shareIcon } alt="Share" />
+      </button>
+
+      <span hidden={ spanHidden }>Link copiado!</span>
+
+      <button
+        aria-label="favorite-button"
+        type="button"
+        data-testid="favorite-btn"
+        className={ favoriteDrink }
+        onClick={ handleFavoriteDrink }
+        src={ favoriteDrink ? blackHeartIcon : whiteHeartIcon }
+      />
       <h4 data-testid="recipe-category">
         {
           drinkDetails.drinks && drinkDetails.drinks[0].strCategory
@@ -138,24 +174,6 @@ function DrinkDetails() {
         { apiResult.meals && apiResult.meals.slice(zero, six).map((element, idx) => (
           <FoodRecomendCard element={ element } idx={ idx } key={ element.idMeal } />)) }
       </div>
-
-      <button
-        type="button"
-        data-testid="share-btn"
-        className="share-btn"
-        onClick={ () => copyToClipBoard(document.URL) }
-      >
-        Compartilhar
-      </button>
-
-      <button
-        type="button"
-        data-testid="favorite-btn"
-        className={ favoriteDrink }
-        onClick={ handleFavoriteDrink }
-      >
-        Favorito
-      </button>
 
       <Link
         to={ `/bebidas/${drinkDetails

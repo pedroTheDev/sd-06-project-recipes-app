@@ -29,7 +29,7 @@ function App() {
             <Route path="/bebidas" component={ DrinksRecipesPage } />
           </Switch>
         </BrowserRouter>
-        <div id="meals">
+        {/* <div id="meals">
           <span>TRYBE</span>
           <svg xmlns="http://www.w3.org/2000/svg" id="rocksGlass" viewBox="-8.233 -8.233 122.466 122.466" height="300px">
             <path
@@ -99,7 +99,7 @@ function App() {
               />
             </g>
           </svg>
-        </div>
+        </div> */}
       </main>
     </RecipesAppProvider>
   );
