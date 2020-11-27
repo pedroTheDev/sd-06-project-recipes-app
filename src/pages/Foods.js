@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Footer, Header } from '../components';
 import { foodsOnRender, foodsCategoriesOnRender,
   filterFoodsByCategory } from '../services';
+import { comida } from '../actions';
 
 class Foods extends React.Component {
   constructor() {
@@ -24,6 +25,14 @@ class Foods extends React.Component {
     this.setInitialState(mealsRender, Categories);
   }
 
+  async componentDidUpdate() {
+    const { stateMeals } = this.props;
+    const MAXIMUM_LENGTH = 0;
+    if (stateMeals.length > MAXIMUM_LENGTH) {
+      this.stateAfterProps(stateMeals);
+    }
+  }
+
   async setCategory({ target }, { strCategory }) {
     const { CategoryFilter } = this.state;
     if (CategoryFilter !== strCategory) {
@@ -35,6 +44,12 @@ class Foods extends React.Component {
       this.setState({ Meals: initialMeals, CategoryFilter: '' });
       target.style.background = '#5a2d0c';
     }
+  }
+
+  stateAfterProps(props) {
+    const { dispatchMeals } = this.props;
+    this.setState({ Meals: props });
+    dispatchMeals([]);
   }
 
   setInitialState(mealsRender, Categories) {
@@ -107,10 +122,16 @@ class Foods extends React.Component {
 
 Foods.propTypes = {
   history: PropTypes.shape().isRequired,
+  dispatchMeals: PropTypes.func.isRequired,
+  stateMeals: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const mapStateToProps = (state) => ({
   stateMeals: state.menu.meals,
 });
 
-export default connect(mapStateToProps, null)(Foods);
+const mapDispatchToProps = (dispatch) => ({
+  dispatchMeals: (meals) => dispatch(comida(meals)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Foods);

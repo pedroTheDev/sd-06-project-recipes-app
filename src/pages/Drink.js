@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Footer, Header } from '../components';
 import { drinksCategoriesOnRender,
   drinksOnRender, filterDrinksByCategory } from '../services';
+import { bebida } from '../actions';
 
 class Drink extends React.Component {
   constructor() {
@@ -24,6 +25,14 @@ class Drink extends React.Component {
     this.setInitialState(drinksRender, Categories);
   }
 
+  async componentDidUpdate() {
+    const { stateDrinks } = this.props;
+    const MAXIMUM_LENGTH = 0;
+    if (stateDrinks.length > MAXIMUM_LENGTH) {
+      this.stateAfterProps(stateDrinks);
+    }
+  }
+
   async setCategory({ strCategory }) {
     const { CategoryFilter } = this.state;
     if (CategoryFilter !== strCategory) {
@@ -33,6 +42,12 @@ class Drink extends React.Component {
       const initialDrinks = await drinksOnRender();
       this.setState({ Drinks: initialDrinks, CategoryFilter: '' });
     }
+  }
+
+  stateAfterProps(props) {
+    const { dispatchDrinks } = this.props;
+    this.setState({ Drinks: props });
+    dispatchDrinks([]);
   }
 
   setInitialState(drinksRender, Categories) {
@@ -100,10 +115,16 @@ class Drink extends React.Component {
 
 Drink.propTypes = {
   history: PropTypes.shape().isRequired,
+  dispatchDrinks: PropTypes.func.isRequired,
+  stateDrinks: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatchDrinks: (drinks) => dispatch(bebida(drinks)),
+});
 
 const mapStateToProps = (state) => ({
   stateDrinks: state.menu.drinks,
 });
 
-export default connect(mapStateToProps, null)(Drink);
+export default connect(mapStateToProps, mapDispatchToProps)(Drink);
