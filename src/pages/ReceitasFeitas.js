@@ -1,10 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Header } from '../components';
 import { shareIcon } from '../images';
 
 function ReceitasFeitas() {
+  if (!localStorage.doneRecipes) {
+    return <h1>Você ainda não tem nenhuma receita Favorita. :(</h1>;
+  }
+
   const doneRecipes = JSON.parse(localStorage.doneRecipes);
-  console.log(doneRecipes);
 
   return (
     <div>
@@ -28,46 +32,48 @@ function ReceitasFeitas() {
         Drinks
       </button>
       <div>
-        {doneRecipes.map(({ image, name, area, category, doneDate, tags }, index) => (
-          <span
-            key={ index }
-          >
-            <img
-              src={ image }
-              alt={ name }
-              data-testid={ `${index}-horizontal-image` }
-            />
-            <p
-              data-testid={ `${index}-horizontal-top-text` }
+        { doneRecipes
+          .map(({ id, type, image, name, area, category, doneDate, tags }, index) => (
+            <span
+              key={ index }
             >
-              { `${area} - ${category}` }
-            </p>
-            <p
-              data-testid={ `${index}-horizontal-name` }
-            >
-              { name }
-            </p>
-            <p
-              data-testid={ `${index}-horizontal-done-date` }
-            >
-              { doneDate }
-            </p>
-            <img
-              src={ shareIcon }
-              alt="Compatilhar Receita"
-              data-testid={ `${index}-horizontal-share-btn` }
-            />
-            {tags.map((tag) => (
+              <Link to={ `/${type}s/${id}` }>
+                <img
+                  src={ image }
+                  alt={ name }
+                  data-testid={ `${index}-horizontal-image` }
+                />
+                <p
+                  data-testid={ `${index}-horizontal-top-text` }
+                >
+                  { `${area} - ${category}` }
+                </p>
+                <p
+                  data-testid={ `${index}-horizontal-name` }
+                >
+                  { name }
+                </p>
+              </Link>
               <p
-                key={ tag }
-                data-testid={ `${index}-${tag}-horizontal-tag` }
+                data-testid={ `${index}-horizontal-done-date` }
               >
-                {tag}
+                { doneDate }
               </p>
-            ))}
-
-          </span>
-        ))}
+              <img
+                src={ shareIcon }
+                alt="Compatilhar Receita"
+                data-testid={ `${index}-horizontal-share-btn` }
+              />
+              {tags.map((tag) => (
+                <p
+                  key={ tag }
+                  data-testid={ `${index}-${tag}-horizontal-tag` }
+                >
+                  {tag }
+                </p>
+              )) }
+            </span>
+          )) }
       </div>
     </div>
   );

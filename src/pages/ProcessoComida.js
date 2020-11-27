@@ -39,6 +39,7 @@ function ProcessoComida() {
 
   useEffect(() => {
     if (localStorage.favoriteRecipes) {
+      // const favoriteRecipes = JSON.parse(localStorage.favoriteRecipes);
       setIsFavorite(true);
     }
   }, []);
@@ -46,7 +47,11 @@ function ProcessoComida() {
   const handleClick = () => {
     setIsFavorite(!isFavorite);
     if (!isFavorite) {
-      localStorage.favoriteRecipes = JSON.stringify([{
+      let favoriteRecipes = [];
+      if (localStorage.favoriteRecipes) {
+        favoriteRecipes = JSON.parse(localStorage.favoriteRecipes);
+      }
+      localStorage.favoriteRecipes = JSON.stringify([...favoriteRecipes, {
         id: dataMeal.idMeal,
         type: 'comida',
         area: dataMeal.strArea,
@@ -63,7 +68,10 @@ function ProcessoComida() {
   const saveDoneRecipes = () => {
     const date = new Date();
     const doneDate = date;
-    const doneRecipes = JSON.parse(localStorage.doneRecipes);
+    let doneRecipes = [];
+    if (localStorage.doneRecipes) {
+      doneRecipes = JSON.parse(localStorage.doneRecipes);
+    }
     localStorage.doneRecipes = JSON.stringify([...doneRecipes, {
       id: dataMeal.idMeal,
       type: 'comida',
@@ -117,7 +125,7 @@ function ProcessoComida() {
           key={ index }
           data-testid={ `${index}-ingredient-step` }
         >
-          {ingredient}
+          {ingredient }
           <input
             type="checkbox"
             name={ ingredient }
@@ -125,7 +133,7 @@ function ProcessoComida() {
             onChange={ handleChange }
           />
         </span>
-      ))}
+      )) }
       <p data-testid="instructions">
         Instruções
       </p>
