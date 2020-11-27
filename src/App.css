@@ -86,3 +86,8 @@ footer {
   font-size: 12px;
   border: 1px solid grey;
 }
+
+.selected-category {
+  background-color: #05566e;
+  color: white;
+}

@@ -89,7 +89,7 @@ export default function RecipeDetails() {
           <h6 data-testid="recipe-category">
             { searchParam === 'Meal' ? foods[0].strCategory : foods[0].strAlcoholic }
           </h6>
-          <ul>
+          <ul data-testid="0-recipe-card">
             { listContent().map((pairArray, index) => (
               <li key={ index } data-testid={ `${index}-ingredient-name-and-measure` }>
                 {pairArray[0] }
