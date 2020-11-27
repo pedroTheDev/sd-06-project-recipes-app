@@ -202,8 +202,7 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 300px;
-  max-width: 400px;
+  width: 300px;
   margin: 30px;
   background-color: #ebe6e1;
   border: 1px solid rgba(0, 0, 0, 0.350);
@@ -355,13 +354,26 @@ a {
   flex-direction: column;
 }
 
-.cards-container {
+.cs-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
 
-.category-buttons button {
+.food-filters {
+  width: 150px;
+  height: 50px;
+  padding: 5px;
+  margin: 0 15px 30px 15px;
+  background: #5a2d0c;
+  color: white;
+  font-size: 20px;
+  font-weight: 100;
+  border: 1px solid rgba(0, 0, 0, 0.450);
+  border-radius: 5px;
+}
+
+.drink-filters {
   width: 150px;
   height: 50px;
   padding: 5px;
@@ -472,19 +484,35 @@ a {
   }
 
   .food-drink-container {
-    margin-top: 100px;
+    margin-top: 70px;
     margin-bottom: 100px;
     background: transparent;
   }
 
+  .cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .cards-container p {
+    margin: 0;
+  }
+
   .card {
-    width: 250px;
+    min-width: 120px;
+    max-width: 150px;
+    min-height: 165px;
+    max-height: 250px;
     border: 1px solid rgba(0, 0, 0, 0.350);
     border-radius: 5px;
+    margin: 5px;
+    justify-content: space-between;
   }
 
   .card p {
     max-width: 80%;
+    flex-wrap: nowrap;
   }
 
   .global-header h1 {
@@ -537,7 +565,6 @@ a {
   }
 
   .radio-input-second-div input {
-    background-color: red;
     margin: 0;
     margin-left: 15px;
   }
@@ -624,14 +651,6 @@ a {
   .detail-instructions {
     width: 90%;
   }
-
-  .cards-container p {
-    margin: 0;
-  }
-
-  .cards-container hr {
-    margin: 20px 0;
-  }
   
   .category-buttons {
     width: 100%;
@@ -645,13 +664,22 @@ a {
     flex-wrap: wrap;
   }
 
-  .category-buttons button {
+  .food-filters {
     text-align: left;
-    max-width: 140px;
-    max-height: 45px;
-    font-size: 16px;
-    margin: 7px 15px 15px 7px;
-    padding-left: 15px;
+    width: 75px;
+    height: 30px;
+    font-size: 12px;
+    margin: 7px 15px 15px 10px;
+    padding-left: 7px;
+  }
+
+  .drink-filters {
+    text-align: left;
+    width: 120px;
+    height: 30px;
+    font-size: 12px;
+    margin: 7px 15px 15px 10px;
+    padding-left: 7px;
   }
 
   .food-or-drink-done-card {

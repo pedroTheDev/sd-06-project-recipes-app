@@ -77,6 +77,7 @@ class Foods extends React.Component {
           {Categories ? Categories.map((element, index) => (
             <div key={ index } data-testid={ `${element.strCategory}-category-filter` }>
               <button
+                className="food-filters"
                 type="button"
                 onClick={ (event) => this.setCategory(event, element) }
               >
@@ -88,6 +89,7 @@ class Foods extends React.Component {
           && (
             <button
               type="button"
+              className="food-filters"
               data-testid="All-category-filter"
               onClick={ () => this.allButtonHandler() }
             >
