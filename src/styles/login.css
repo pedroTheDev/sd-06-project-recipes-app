@@ -65,3 +65,10 @@ top: 12px;
   top: 12px;
 }
 
+.ingredient-done {
+  text-decoration: line-through;
+} 
+
+.ingredient-not-done {
+  text-decoration: none;
+}
