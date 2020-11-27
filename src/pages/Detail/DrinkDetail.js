@@ -53,7 +53,7 @@ function DrinkDetail() {
       >
         Iniciar Receita
       </button>
-    </div> //
+    </div>
   );
 }
 
