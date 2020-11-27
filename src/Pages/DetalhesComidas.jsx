@@ -11,9 +11,7 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 const DetalhesComida = () => {
   const [stateLocal, setStatelocal] = useState();
   const [stateSugestions, setSugestions] = useState();
-  const [stateButton, setStateButton] = useState({
-    initialRecipe: false,
-  });
+  const [foodsInProgress, setFoodsInProgress] = useState({ meals: {} });
   const [stateFavorite, setStateFavorite] = useState({
     heart: false,
   });
@@ -35,9 +33,27 @@ const DetalhesComida = () => {
     setSugestions(drinks);
   };
 
+  const loadLocalStorage = () => {
+    if (localStorage.getItem('inProgressRecipes') === null) {
+      const inProgressRecipes = {
+        cocktails: {},
+        meals: {},
+      };
+      localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
+    }
+    if (localStorage.getItem('heart') === null) {
+      localStorage.setItem('heart', (false));
+    }
+    setStateFavorite({ heart: JSON.parse(localStorage.getItem('heart')) });
+
+    const progressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    setFoodsInProgress({ meals: progressRecipes.meals });
+  };
+
   useEffect(() => {
     handleIdDetails();
     getSugestedFoods();
+    loadLocalStorage();
   }, []);
 
   const getIngredientsOrMeasure = (param) => {
@@ -54,9 +70,16 @@ const DetalhesComida = () => {
   };
 
   const progressButton = () => {
-    setStateButton({
-      initialRecipe: !stateButton.initialRecipe,
-    });
+    const progressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const mealProgressID = stateLocal.food.meals[0].idMeal;
+    const inProgressRecipes = {
+      ...progressRecipes,
+      meals: {
+        ...progressRecipes.meals,
+        [mealProgressID]: getIngredientsOrMeasure('strIngredient'),
+      },
+    };
+    localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
   };
 
   const handleFavorite = () => {
@@ -122,10 +145,8 @@ const DetalhesComida = () => {
                 >
                   <img
                     data-testid="favorite-btn"
-                    src={ !JSON.parse(localStorage.getItem('heart')).heart
-                      ? whiteHeartIcon
-                      : blackHeartIcon }
-                    alt="whiteHeartIcon"
+                    src={ !stateFavorite.heart ? whiteHeartIcon : blackHeartIcon }
+                    alt={ !stateFavorite.heart ? 'whiteHeartIcon' : 'blackHeartIcon' }
                   />
                 </button>
               </div>
@@ -205,7 +226,8 @@ const DetalhesComida = () => {
                   className="link-button"
                   to={ `/comidas/${stateLocal.food.meals[0].idMeal}/in-progress` }
                 >
-                  {!stateButton.initialRecipe ? 'Iniciar Receita' : 'Continuar Receita'}
+                  {foodsInProgress.meals[stateLocal.food.meals[0].idMeal]
+                    ? 'Continuar Receita' : 'Iniciar Receita'}
                 </Link>
               </button>
             </div>
