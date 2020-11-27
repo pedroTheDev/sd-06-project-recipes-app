@@ -50,7 +50,7 @@ export default function useSearch() {
       const slicedResults = (data[typeOfFetch] <= maxCards)
         ? data[typeOfFetch]
         : data[typeOfFetch].slice(firstCard, maxCards);
-      console.log('hook mudando Items');
+
       setItems({ [typeOfFetch]: slicedResults });
     } catch (error) {
       setItems({ [typeOfFetch]: null });

@@ -60,7 +60,7 @@ export default function Cards({ id }) {
       );
     }
   }
-  return <div>Faça uma busca</div>;
+  return <div>Loading ...</div>;
 }
 
 Cards.propTypes = {
