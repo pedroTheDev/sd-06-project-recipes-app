@@ -36,7 +36,7 @@ function LoginPage() {
         data-testid="email-input"
         required
         placeholder="Digite seu email"
-        onChange={({ target }) => handleEmail(target.value)}
+        onChange={ ({ target }) => handleEmail(target.value) }
       />
       <input
         type="password"
@@ -44,14 +44,14 @@ function LoginPage() {
         required
         minLength="6"
         placeholder="Digite sua senha"
-        onChange={({ target }) => handlePassword(target.value)}
+        onChange={ ({ target }) => handlePassword(target.value) }
       />
       <Link to="/comidas">
         <button
           type="button"
           data-testid="login-submit-btn"
-          disabled={!email + !password}
-          onClick={handleClick}
+          disabled={ !email + !password }
+          onClick={ handleClick }
         >
           Entrar
         </button>

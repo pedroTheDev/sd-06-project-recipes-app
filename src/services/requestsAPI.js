@@ -87,3 +87,15 @@ export async function filterCategoryDrinks(info) {
   const result = await resolve.json();
   return result;
 }
+
+export async function requestDetailsFood(info) {
+  const resolve = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${info}`);
+  const result = await resolve.json();
+  return result;
+}
+
+export async function requestDetailsDrinks(info) {
+  const resolve = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${info}`);
+  const result = await resolve.json();
+  return result;
+}

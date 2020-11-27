@@ -6,6 +6,7 @@ function RecipesAppProvider({ children }) {
   const [valueInput, setValueInput] = useState('');
   const [resultsFoodsAndDrinks, setResultsFoodsAndDrinks] = useState([]);
   const [hiddenInput, setHiddenInput] = useState(false);
+  const [isFetchingContext, setIsFetchingContext] = useState(true);
   const context = {
     valueInput,
     setValueInput,
@@ -13,9 +14,11 @@ function RecipesAppProvider({ children }) {
     setResultsFoodsAndDrinks,
     hiddenInput,
     setHiddenInput,
+    isFetchingContext,
+    setIsFetchingContext,
   };
   return (
-    <RecipesContext.Provider value={context}>
+    <RecipesContext.Provider value={ context }>
       {children}
     </RecipesContext.Provider>
   );

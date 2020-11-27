@@ -9,8 +9,8 @@ function SearchInput() {
       type="text"
       placeholder="search"
       data-testid="search-input"
-      onChange={(e) => setValueInput(e.target.value)}
-      value={valueInput}
+      onChange={ (e) => setValueInput(e.target.value) }
+      value={ valueInput }
     />
   );
 }

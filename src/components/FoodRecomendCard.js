@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-function Card(props) {
+function FoodRecomendCard(props) {
   const { element, idx } = props;
   const { strMeal, strMealThumb } = element;
   return (
@@ -14,8 +14,8 @@ function Card(props) {
         },
       } }
     >
-      <div data-testid={ `${idx}-recipe-card` }>
-        <h2 data-testid={ `${idx}-card-name` }>{ strMeal }</h2>
+      <div data-testid={ `${idx}-recomendation-card` }>
+        <h2 data-testid={ `${idx}-recomendation-title` }>{ strMeal }</h2>
         <img
           src={ strMealThumb }
           alt={ `${strMeal} photograph` }
@@ -26,11 +26,11 @@ function Card(props) {
   );
 }
 
-Card.propTypes = {
+FoodRecomendCard.propTypes = {
   element: PropTypes.objectOf.isRequired,
   idx: PropTypes.number.isRequired,
   strMeal: PropTypes.string.isRequired,
   strMealThumb: PropTypes.string.isRequired,
 };
 
-export default Card;
+export default FoodRecomendCard;
