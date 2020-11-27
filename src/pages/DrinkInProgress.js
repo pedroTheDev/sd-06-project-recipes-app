@@ -147,7 +147,8 @@ function DrinkInProgress(props) {
     getLocalStorage();
   }, []);
 
-  const handleFinishedRecipe = () => {
+  const handleFinishedRecipe = (e) => {
+    e.preventDefault();
     const finishedRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
     const arrayFinished = finishedRecipes !== null ? finishedRecipes : [];
     arrayFinished.push({
@@ -180,26 +181,24 @@ function DrinkInProgress(props) {
         <span className="link-copy" style={ { display: copied } }>Link copiado!</span>
         <p data-testid="recipe-category">{ recipe.strCategory }</p>
 
-        <ul>
-          Ingredientes:
-          {ingredients.map((ingredient, index) => (
-            <li data-testid={ `${index}-ingredient-step` } key={ index }>
-              { ingredient.value }
-              { ingredient.isChecked ? (<input
-                key={ ingredient.id }
-                type="checkbox"
-                value={ ingredient.value }
-                checked
-                onChange={ (ev) => handleCheckedIngredient(ev, index) }
-              />) : (<input
-                key={ ingredient.id }
-                type="checkbox"
-                value={ ingredient.value }
-                onChange={ (ev) => handleCheckedIngredient(ev, index) }
-              />)}
-            </li>
-          ))}
-        </ul>
+        Ingredientes:
+        {ingredients.map((ingredient, index) => (
+          <label data-testid={ `${index}-ingredient-step` } key={ index }>
+            { ingredient.value }
+            { ingredient.isChecked ? (<input
+              key={ ingredient.id }
+              type="checkbox"
+              value={ ingredient.value }
+              checked
+              onChange={ (ev) => handleCheckedIngredient(ev, index) }
+            />) : (<input
+              key={ ingredient.id }
+              type="checkbox"
+              value={ ingredient.value }
+              onChange={ (ev) => handleCheckedIngredient(ev, index) }
+            />)}
+          </label>
+        ))}
         <p data-testid="instructions">{ recipe.strInstructions }</p>
         { isDisabled
           ? (
