@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import fetchRecipes from '../services';
@@ -7,14 +7,13 @@ import ShareBtn from '../components/ShareBtn';
 import './RecipeInProgress.css';
 
 function FoodInProgress(props) {
-  const { match: { params: { id } }, location: { pathname } } = props;
+  const { match: { params: { id } } } = props;
   const history = useHistory();
   const [recipe, setRecipe] = useState([]);
   const [isFavorite, setIsFavorite] = useState(false);
   const [ingredients, setIngredients] = useState([]);
   const [isDisabled, setIsDisabled] = useState(true);
   const [copied, setCopied] = useState('none');
-  const textArea = useRef(null);
   const now = new Date();
   let progressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
   const zero = 0;
@@ -24,6 +23,14 @@ function FoodInProgress(props) {
       meals: { [id]: [] },
     };
   }
+  const verifyIngredientsChecked = () => {
+    if (progressRecipes.meals[id].length === ingredients.length) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  };
+
   const setLocalStorage = () => {
     const readLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
     const favoriteRecipes = readLocalStorage !== null ? readLocalStorage : [];
@@ -39,11 +46,14 @@ function FoodInProgress(props) {
     localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
   };
 
-  const copyToClipboard = (e) => {
-    textArea.current.select();
-    document.execCommand('copy');
-    e.target.focus();
+  const copyToClipboard = () => {
     setCopied('block');
+    window.navigator.clipboard
+      .writeText(window.location.toString()
+        .substr(zero, window.location.toString().length - '/in-progress'.length));
+    window.navigator.clipboard
+      .writeText(window.location.toString()
+        .substr(zero, window.location.toString().length - '/in-progress'.length));
   };
 
   const recipeAPI = async () => {
@@ -70,11 +80,7 @@ function FoodInProgress(props) {
       }
     }
     setIngredients(TheIngredients);
-  };
-  const verifyIngredientsChecked = () => {
-    const isAllChecked = !ingredients
-      .some((ingredient) => ingredient.isChecked === false);
-    setIsDisabled(!isAllChecked);
+    verifyIngredientsChecked();
   };
 
   const setLocalIngredients = () => {
@@ -84,6 +90,7 @@ function FoodInProgress(props) {
         .map((each) => each.value);
       progressRecipes.meals[id] = checkeds;
       localStorage.setItem('inProgressRecipes', JSON.stringify(progressRecipes));
+      verifyIngredientsChecked();
     }
   };
 
@@ -91,6 +98,7 @@ function FoodInProgress(props) {
     const readLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
     const newArray = readLocalStorage.filter((element) => element.id !== id);
     localStorage.setItem('favoriteRecipes', JSON.stringify(newArray));
+    verifyIngredientsChecked();
   };
 
   const getLocalStorage = () => {
@@ -172,29 +180,38 @@ function FoodInProgress(props) {
           {ingredients.map((ingredient, index) => (
             <li data-testid={ `${index}-ingredient-step` } key={ index }>
               { ingredient.value }
-              <input
+              { ingredient.isChecked ? (<input
                 key={ ingredient.id }
                 type="checkbox"
                 value={ ingredient.value }
-                checked={ ingredient.isChecked }
+                checked
                 onChange={ (ev) => handleCheckedIngredient(ev, index) }
-              />
+              />) : (<input
+                key={ ingredient.id }
+                type="checkbox"
+                value={ ingredient.value }
+                onChange={ (ev) => handleCheckedIngredient(ev, index) }
+              />)}
             </li>
           ))}
         </ul>
         <p data-testid="instructions">{ recipe.strInstructions }</p>
-        <textarea
-          className="text-area"
-          ref={ textArea }
-          value={ `http://localhost:3000${pathname}` }
-        />
-        <button
-          data-testid="finish-recipe-btn"
-          type="submit"
-          disabled={ isDisabled }
-        >
-          Finalizar receita
-        </button>
+        { isDisabled
+          ? (
+            <button
+              data-testid="finish-recipe-btn"
+              type="submit"
+              disabled
+            >
+              Finalizar receita
+            </button>)
+          : (
+            <button
+              data-testid="finish-recipe-btn"
+              type="submit"
+            >
+              Finalizar receita
+            </button>)}
       </form>
     </div>
   );
@@ -206,7 +223,6 @@ FoodInProgress.propTypes = {
       id: PropTypes.string,
     }),
   }).isRequired,
-  location: PropTypes.func.isRequired,
 };
 
 export default FoodInProgress;
