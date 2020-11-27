@@ -54,8 +54,8 @@ const Routes = () => {
         <Route exact path="/" component={ Login } />
         <Route path="/explorar/comidas/ingredientes" component={ IngredientFoods } />
         <Route path="/explorar/bebidas/ingredientes" component={ IngredientDrinks } />
-        <Route path="/comidas/:id/in-progress" component={ FoodInProgress } />
-        <Route path="/bebidas/:id/in-progress" component={ DrinkInProgress } />
+        <Route path="/comidas/:id/in-progress" render={ (props) => <FoodsDetails { ...props } /> } />
+        <Route path="/bebidas/:id/in-progress" render={ (props) => <DrinksDetails { ...props } /> } />
         <Route path="/explorar/comidas/area" component={ OriginFoods } />
         <Route path="/explorar/comidas" component={ ExploreFoods } />
         <Route path="/explorar/bebidas" component={ ExploreDrinks } />

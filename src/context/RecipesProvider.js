@@ -10,6 +10,8 @@ const RecipesProvider = ({ children }) => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [recipeTitle, setRecipeTitle] = useState('');
   const [recipeImage, setRecipeImage] = useState('');
+  const [recipeArea, setRecipeArea] = useState('');
+  const [recipeAlc, setRecipeAlc] = useState('');
   const [recipeCategory, setRecipeCategory] = useState('');
   const [recipeIngredients, setRecipeIngredients] = useState([]);
   const [recipeInstructions, setRecipeInstructions] = useState('');
@@ -20,6 +22,10 @@ const RecipesProvider = ({ children }) => {
     setRecipeTitle,
     recipeImage,
     setRecipeImage,
+    recipeArea,
+    setRecipeArea,
+    recipeAlc,
+    setRecipeAlc,
     recipeCategory,
     setRecipeCategory,
     recipeIngredients,
@@ -32,6 +38,7 @@ const RecipesProvider = ({ children }) => {
     setRecipeRecommendations,
   };
   const [recipesDone, setRecipesDone] = useState([]);
+  const [recipesInProgress, setRecipesInProgress] = useState([]);
 
   const providerValue = {
     selectedApiEndpoint,
@@ -45,6 +52,8 @@ const RecipesProvider = ({ children }) => {
     recipeObject,
     recipesDone,
     setRecipesDone,
+    recipesInProgress,
+    setRecipesInProgress,
     selectedCategory,
     setSelectedCategory,
   };

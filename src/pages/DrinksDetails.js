@@ -1,14 +1,21 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import HeaderContext from '../context/HeaderContext';
 import RecipesContext from '../context/RecipesContext';
 import shareIcon from '../images/shareIcon.svg';
 import likeIcon from '../images/whiteHeartIcon.svg';
+import fullLikeIcon from '../images/blackHeartIcon.svg';
 import './DrinksDetails.css';
 
 const DrinksDetails = (props) => {
+  const [btnTitle, setBtnTitle] = useState('Iniciar Receita');
+  const [btnImg, setBtnImg] = useState('');
   const { title, setTitle } = useContext(HeaderContext);
-  const { recipeObject, recipesDone } = useContext(RecipesContext);
+  const {
+    recipeObject,
+    recipesInProgress,
+    setRecipesInProgress,
+  } = useContext(RecipesContext);
   const {
     recipeTitle,
     setRecipeTitle,
@@ -16,6 +23,8 @@ const DrinksDetails = (props) => {
     setRecipeImage,
     recipeCategory,
     setRecipeCategory,
+    recipeAlc,
+    setRecipeAlc,
     recipeIngredients,
     setRecipeIngredients,
     recipeInstructions,
@@ -47,9 +56,10 @@ const DrinksDetails = (props) => {
     const getRecipe = await fetch(path);
     const jsonRecipe = await getRecipe.json();
     setRecipeTitle(jsonRecipe.drinks[0].strDrink);
-    setRecipeCategory(jsonRecipe.drinks[0].strAlcoholic);
-    setRecipeImage(jsonRecipe.drinks[0].strDrinkThumb);
+    setRecipeCategory(jsonRecipe.drinks[0].strCategory);
+    setRecipeAlc(jsonRecipe.drinks[0].strAlcoholic);
     setRecipeInstructions(jsonRecipe.drinks[0].strInstructions);
+    setRecipeImage(jsonRecipe.drinks[0].strDrinkThumb);
     ingredientsMount(jsonRecipe);
   };
 
@@ -61,20 +71,100 @@ const DrinksDetails = (props) => {
   };
 
   const buttonMount = () => {
-    if (recipesDone.includes(id)) {
-      return false;
+    if (localStorage.getItem('doneRecipes') !== null) {
+      const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+      const findElement = doneRecipes.find((item) => item.id === id);
+      if (findElement !== undefined) {
+        return false;
+      }
     }
     return true;
   };
 
-  const handleStartRecipe = () => {
-    history.push({ pathname: `/bebidas/${id}/in-progress` });
+  const setButtonTitle = () => {
+    if (localStorage.getItem('inProgressRecipes') !== null) {
+      const recipes = JSON.parse(localStorage.getItem('inProgressRecipes')).cocktails;
+      const recipesIds = Object.keys(recipes);
+      const findElement = recipesIds.find((recipeId) => recipeId === id);
+      if (findElement !== undefined) {
+        setBtnTitle('Continuar Receita');
+      }
+    }
+  };
+
+  const unLikeRecipe = () => {
+    const recipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const unSave = recipes.filter((item) => item.id !== id);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(unSave));
+  };
+
+  const saveFavoriteRecipe = () => {
+    if (localStorage.getItem('favoriteRecipes') === null) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+    }
+    const favoriteRecipes = {
+      id,
+      type: 'bebida',
+      area: '',
+      category: recipeCategory,
+      alcoholicOrNot: recipeAlc,
+      name: recipeTitle,
+      image: recipeImage,
+    };
+    const recipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    recipes.push(favoriteRecipes);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(recipes));
+  };
+
+  const handleImage = () => {
+    if (btnImg === likeIcon) {
+      setBtnImg(fullLikeIcon);
+      saveFavoriteRecipe();
+    } else {
+      setBtnImg(likeIcon);
+      unLikeRecipe();
+    }
+  };
+
+  const handleClick = () => {
+    if (localStorage.getItem('inProgressRecipes') === null) {
+      const inProgressRecipes = {
+        cocktails: {
+          [id]: [],
+        },
+        meals: {},
+      };
+      localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
+    } else {
+      const recipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      recipes.cocktails[id] = [];
+      localStorage.setItem('inProgressRecipes', JSON.stringify(recipes));
+    }
+    const path = `/bebidas/${id}/in-progress`;
+    setRecipesInProgress(recipesInProgress.concat(id));
+    props.history.push(path);
+  };
+
+  const setLikeImage = () => {
+    if (localStorage.getItem('favoriteRecipes') !== null) {
+      const recipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      const findElement = recipes.find((item) => item.id.toString() === id);
+      if (findElement !== undefined) {
+        setBtnImg(fullLikeIcon);
+      } else {
+        setBtnImg(likeIcon);
+      }
+    } else {
+      setBtnImg(likeIcon);
+    }
   };
 
   useEffect(() => {
     setTitle('Drink Details');
     fetchRecipe();
     fetchRecommendations();
+    setButtonTitle();
+    setLikeImage();
   }, []);
 
   return (
@@ -92,7 +182,13 @@ const DrinksDetails = (props) => {
         <p data-testid="recipe-title">{recipeTitle}</p>
         <div>
           <img src={ shareIcon } alt="share" data-testid="share-btn" />
-          <img src={ likeIcon } alt="like" data-testid="favorite-btn" />
+          <button type="button" onClick={ handleImage }>
+            <img
+              src={ btnImg }
+              alt="like"
+              data-testid="favorite-btn"
+            />
+          </button>
         </div>
       </div>
       <p data-testid="recipe-category">{recipeCategory}</p>
@@ -127,9 +223,9 @@ const DrinksDetails = (props) => {
             type="button"
             data-testid="start-recipe-btn"
             className="start-recipe-btn"
-            onClick={ handleStartRecipe }
+            onClick={ handleClick }
           >
-            Iniciar Receita
+            {btnTitle}
           </button>
         )
       }
