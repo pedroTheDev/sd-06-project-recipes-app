@@ -7,6 +7,7 @@ import shareIcon from '../images/shareIcon.svg';
 import favoriteIcon from '../images/whiteHeartIcon.svg';
 import MyCarousel from './MyCarousel';
 import MealsContext from '../context/MealsContext';
+import '../Css/MealDetail.css';
 
 function DrinkDetails() {
   const [recipeDrink, setRecipeDrink] = useState({});
@@ -70,7 +71,7 @@ function DrinkDetails() {
         </div>
       </div>
       <div>
-        <h4 data-testid="recipe-category">{ recipeDrink.strCategory }</h4>
+        <h4 data-testid="recipe-category">{ recipeDrink.strAlcoholic }</h4>
       </div>
       <div>
         <h3>Ingredients</h3>
@@ -97,9 +98,10 @@ function DrinkDetails() {
       </div>
       <div>
         <Button
+          className="btn-iniciar-receita"
           type="button"
           data-testid="start-recipe-btn"
-          variant="warning"
+          variant="success"
           size="lg"
           block
         >
