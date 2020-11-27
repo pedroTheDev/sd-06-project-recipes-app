@@ -8,6 +8,7 @@ import {
   ReceitasComidas,
   ReceitasBebidas,
   Details,
+  InProgress,
 } from './pages';
 import './App.css';
 
@@ -18,10 +19,10 @@ function App() {
     <div>
       <Switch>
         <Route exact path="/" component={ Login } />
-        <Route path="/comidas/:id/in-progress" component={ ReceitasComidas } />
+        <Route path="/comidas/:id/in-progress" component={ InProgress } />
         <Route path="/comidas/:id" component={ Details } />
         <Route path="/comidas" component={ ReceitasComidas } />
-        <Route path="/bebidas/:id/in-progress" component={ ReceitasBebidas } />
+        <Route path="/bebidas/:id/in-progress" component={ InProgress } />
         <Route path="/bebidas/:id" component={ Details } />
         <Route path="/bebidas" component={ ReceitasBebidas } />
         <Route path="/explorar/comidas/area" component={ ReceitasBebidas } />

@@ -1,33 +1,30 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import DrinkCard from '../components/DrinkCard';
-import MealCard from '../components/MealCard';
-
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 import './style/details.css';
 
-class Details extends Component {
+class InProgress extends Component {
   constructor() {
     super();
     this.state = {
       details: [],
-      recomendations: [],
       isLoading: true,
       isMeal: false,
-      isDrink: false,
       clipboard: '',
       isFavorite: false,
       isDone: false,
+      ingredientsUsed: [],
     };
     this.requestDetails = this.requestDetails.bind(this);
     this.renderCardDetails = this.renderCardDetails.bind(this);
     this.handleShare = this.handleShare.bind(this);
     this.handleFavorite = this.handleFavorite.bind(this);
     this.checkIsFavorite = this.checkIsFavorite.bind(this);
+    this.handleInput = this.handleInput.bind(this);
   }
 
   componentDidMount() {
@@ -38,10 +35,10 @@ class Details extends Component {
 
   handleShare() {
     const { match: { url } } = this.props;
-    window.navigator.clipboard.writeText(`http://localhost:3000${url}`)
+    window.navigator.clipboard.writeText(`http://localhost:3000${url.replace('/in-progress', '')}`)
       .then(() => {
         this.setState({
-          clipboard: `http://localhost:3000${url}`,
+          clipboard: `http://localhost:3000${url.replace('/in-progress', '')}`,
         });
       });
   }
@@ -54,6 +51,18 @@ class Details extends Component {
       if (isFavorite) this.saveToLocalStorage();
       else this.deleteFromLocalStorage();
     });
+  }
+
+  handleInput({ target: { value, checked } }) {
+    if (checked) {
+      this.setState((prev) => ({
+        ingredientsUsed: [...prev.ingredientsUsed, value],
+      }));
+    } else {
+      this.setState((prev) => ({
+        ingredientsUsed: prev.ingredientsUsed.filter((ing) => ing !== value),
+      }));
+    }
   }
 
   checkIsFavorite() {
@@ -130,35 +139,25 @@ class Details extends Component {
           params: { id },
         },
       } = this.props;
-      const { isMeal, isDrink } = this.state;
-      let endPointMeal;
-      let endPointDrink;
+      const { isMeal } = this.state;
+
       if (isMeal) {
-        endPointMeal = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
-        endPointDrink = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
-      } else {
-        endPointDrink = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
-        endPointMeal = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
-      }
-      const mealsApi = await fetch(endPointMeal);
-      const { meals } = await mealsApi.json();
-      const drinksApi = await fetch(endPointDrink);
-      const { drinks } = await drinksApi.json();
-      const zero = 0;
-      const six = 6;
-      if (isDrink) {
+        const endPointMeal = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
+        const mealsApi = await fetch(endPointMeal);
+        const { meals } = await mealsApi.json();
         this.setState({
-          details: drinks,
-          recomendations: meals.slice(zero, six),
+          details: meals,
           isLoading: false,
         }, () => {
           this.checkIsFavorite();
           this.checkIsDone();
         });
       } else {
+        const endPointDrink = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
+        const drinksApi = await fetch(endPointDrink);
+        const { drinks } = await drinksApi.json();
         this.setState({
-          details: meals,
-          recomendations: drinks.slice(zero, six),
+          details: drinks,
           isLoading: false,
         }, () => {
           this.checkIsFavorite();
@@ -196,11 +195,11 @@ class Details extends Component {
   }
 
   renderCardDetails() {
-    const { match: { url }, history } = this.props;
-    const { details, recomendations, isMeal, clipboard, isFavorite, isDone } = this.state;
+    const { details, isMeal, clipboard, isFavorite, isDone } = this.state;
     const ingredientsAndMeasures = this.parseIngredientsAndMeasures(details);
     console.log('1', details);
-    console.log('1', recomendations);
+    console.log('1', this.props);
+
     const zero = 0;
     const {
       strMeal,
@@ -210,7 +209,6 @@ class Details extends Component {
       strCategory,
       strAlcoholic,
       strInstructions,
-      strYoutube,
     } = details[0];
     return (
       <div>
@@ -250,36 +248,25 @@ class Details extends Component {
           <p data-testid="recipe-category">{strAlcoholic}</p>
         )}
         {ingredientsAndMeasures.map((item, idx) => (
-          <p key={ `${idx}` } data-testid={ `${idx}-ingredient-name-and-measure` }>
+          <div key={ `${idx}` } data-testid={ `${idx}-ingredient-step` }>
+            <input
+              name={ `${idx}-ingredient-step` }
+              type="checkbox"
+              onChange={ this.handleInput }
+              value={ item }
+            />
             {item}
-          </p>
-        ))}
-        <p data-testid="instructions">{strInstructions}</p>
-        { isMeal && (<p data-testid="video">{strYoutube}</p>) }
-        {/*
-          REQ 37:
-          TODO: Pegar Carousel de 'react-bootstrap/Carousel'
-          https://react-bootstrap.github.io/components/carousel/#carousel-props
-         */}
-        {recomendations.map((item, idx) => (
-          <div key={ idx } data-testid={ `${idx}-recomendation-card` }>
-            {isMeal ? (
-              <DrinkCard drink={ item } idx={ idx } />
-            ) : (
-              <MealCard meal={ item } idx={ idx } />
-            )}
           </div>
         ))}
-        {!isDone && (
-          <button
-            type="button"
-            data-testid="start-recipe-btn"
-            className="start-recipe-btn"
-            onClick={() => history.push(`${url}/in-progress`)}
-          >
-            Iniciar Receita
-          </button>
-        )}
+        <p data-testid="instructions">{strInstructions}</p>
+        <button
+          type="button"
+          data-testid="finish-recipe-btn"
+          className="finish-recipe-btn"
+          disabled={ !isDone }
+        >
+          Finalizar Receita
+        </button>
       </div>
     );
   }
@@ -292,7 +279,7 @@ class Details extends Component {
   }
 }
 
-Details.propTypes = {
+InProgress.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.objectOf,
     path: PropTypes.string,
@@ -301,4 +288,4 @@ Details.propTypes = {
 };
 
 // export default connect(null, mapDispatchToProps)(Login);
-export default Details;
+export default InProgress;
