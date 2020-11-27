@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import propTypes from 'prop-types';
 import recipeRequest from '../services/recipeRequest';
 import RecipeContext from '../hooks/RecipeContext';
-import searchBar from '../Style/searchBar.css';
+import '../Style/searchBar.css';
 
 const SearchBar = ({ className }) => {
   const history = useHistory();
@@ -74,7 +74,7 @@ const SearchBar = ({ className }) => {
   };
 
   return (
-    <div className={`search-bar ${className}`} id="searchBar">
+    <div className={ `search-bar ${className}` } id="searchBar">
       <input
         value={ text }
         onChange={ handleSearch }

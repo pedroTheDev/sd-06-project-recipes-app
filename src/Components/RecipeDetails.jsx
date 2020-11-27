@@ -147,12 +147,12 @@ const RecipeDetails = () => {
           />
           <div className="details-nav">
             <button type="button" data-testid="favorite-btn">
-              <img src={favIcon} alt="favorite" />
+              <img src={ favIcon } alt="favorite" />
             </button>
             <div className="name-category">
-              <p 
+              <p
                 data-testid="recipe-title"
-                style={ {fontSize: THIRTY + px} }
+                style={ { fontSize: THIRTY + px } }
               >
                 { drink.strDrink }
               </p>
@@ -175,7 +175,7 @@ const RecipeDetails = () => {
           <div className="carousel scroller">
             {
               foodRecommendation && foodRecommendation.length && foodRecommendation
-                .filter((_) => index < six)
+                .filter(() => index < six)
                 .map((meals) => (
                   <div
                     className="card"
@@ -192,11 +192,16 @@ const RecipeDetails = () => {
                         data-testid={ `${index}-card-img` }
                         alt={ meals.strMeal }
                       />
-                      <p className="carousel-item" data-testid={ `${index}-recomendation-title` }>{ meals.strMeal}</p>
+                      <p
+                        className="carousel-item"
+                        data-testid={ `${index}-recomendation-title` }
+                      >
+                        { meals.strMeal}
+                      </p>
                     </Link>
                   </div>
                 ))
-              }
+            }
           </div>
           <button
             type="button"
