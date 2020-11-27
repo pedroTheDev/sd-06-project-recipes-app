@@ -20,7 +20,7 @@ function Header(props) {
           <button
             aria-label="profile-btn"
             type="button"
-            src={profileIcon}
+            src={ profileIcon }
             data-testid="profile-top-btn"
           />
         </Link>
@@ -32,9 +32,9 @@ function Header(props) {
         <button
           aria-label="search-btn"
           type="button"
-          src={searchIcon}
+          src={ searchIcon }
           data-testid="search-top-btn"
-          onClick={() => setHiddenInput(!hiddenInput)}
+          onClick={ () => setHiddenInput(!hiddenInput) }
         />
         { hiddenInput ? <SearchInput /> : null }
         { hiddenInput ? <Filters /> : null }

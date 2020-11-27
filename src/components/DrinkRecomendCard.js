@@ -6,10 +6,21 @@ function DrinkRecomendCard(props) {
   const { element, idx } = props;
   const { strDrink, strDrinkThumb } = element;
   return (
-    <Link to={{ pathname: `/bebidas/${element.idDrink}`, state: { dataRecipes: element } }}>
-      <div data-testid={`${idx}-recomendation-card`}>
-        <h2 data-testid={`${idx}-recomendation-title`}>{ strDrink }</h2>
-        <img src={strDrinkThumb} alt={`${strDrink} photograph`} data-testid={`${idx}-card-img`} />
+    <Link
+      to={ {
+        pathname: `/bebidas/${element.idDrink}`,
+        state: {
+          dataRecipes: element,
+        },
+      } }
+    >
+      <div data-testid={ `${idx}-recomendation-card` }>
+        <h2 data-testid={ `${idx}-recomendation-title` }>{ strDrink }</h2>
+        <img
+          src={ strDrinkThumb }
+          alt={ `${strDrink} photograph` }
+          data-testid={ `${idx}-card-img` }
+        />
       </div>
     </Link>
   );

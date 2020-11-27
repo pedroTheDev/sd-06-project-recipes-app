@@ -6,10 +6,21 @@ function FoodRecomendCard(props) {
   const { element, idx } = props;
   const { strMeal, strMealThumb } = element;
   return (
-    <Link to={{ pathname: `/comidas/${element.idMeal}`, state: { dataRecipes: element } }}>
-      <div data-testid={`${idx}-recomendation-card`}>
-        <h2 data-testid={`${idx}-recomendation-title`}>{ strMeal }</h2>
-        <img src={strMealThumb} alt={`${strMeal} photograph`} data-testid={`${idx}-card-img`} />
+    <Link
+      to={ {
+        pathname: `/comidas/${element.idMeal}`,
+        state: {
+          dataRecipes: element,
+        },
+      } }
+    >
+      <div data-testid={ `${idx}-recomendation-card` }>
+        <h2 data-testid={ `${idx}-recomendation-title` }>{ strMeal }</h2>
+        <img
+          src={ strMealThumb }
+          alt={ `${strMeal} photograph` }
+          data-testid={ `${idx}-card-img` }
+        />
       </div>
     </Link>
   );

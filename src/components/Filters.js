@@ -42,7 +42,9 @@ function Filters() {
         if (resultIngredients.meals !== null) {
           return setResultsFoodsAndDrinks(resultIngredients);
         }
-        return (alert('Sinto muito, não encontramos nenhuma receita para esses filtros.'));
+        return (alert(
+          'Sinto muito, não encontramos nenhuma receita para esses filtros.',
+        ));
       }
       if (radioValue === 'name') {
         const resultName = await requestName(valueInput);
@@ -50,7 +52,9 @@ function Filters() {
         if (resultName.meals !== null) {
           return setResultsFoodsAndDrinks(resultName);
         }
-        return (alert('Sinto muito, não encontramos nenhuma receita para esses filtros.'));
+        return (alert(
+          'Sinto muito, não encontramos nenhuma receita para esses filtros.',
+        ));
       }
       if (radioValue === 'firstLetter' && valueInput.length === 1) {
         const resultFirstLetter = await requestFirstLetter(valueInput);
@@ -58,7 +62,9 @@ function Filters() {
         return setResultsFoodsAndDrinks(resultFirstLetter);
       }
       if (radioValue === 'firstLetter' && valueInput.length > 1) {
-        alert('Sua busca deve conter somente 1 (um) caracter');
+        alert(
+          'Sua busca deve conter somente 1 (um) caracter',
+        );
       }
     }
 
@@ -77,7 +83,9 @@ function Filters() {
           console.log('entrou no if do null');
           return setResultsFoodsAndDrinks(resultDrinksName);
         }
-        return (alert('Sinto muito, não encontramos nenhuma receita para esses filtros.'));
+        return (alert(
+          'Sinto muito, não encontramos nenhuma receita para esses filtros.',
+        ));
       }
       if (radioValue === 'firstLetter' && valueInput.length === 1) {
         const resultDrinksFirstLetter = await requestDrinksFirstLetter(valueInput);
@@ -133,7 +141,7 @@ function Filters() {
           name="radios"
           id="ingredients"
           value="ingredients"
-          onClick={(e) => handleRadio(e)}
+          onClick={ (e) => handleRadio(e) }
         />
         Ingredientes
       </label>
@@ -145,7 +153,7 @@ function Filters() {
           name="radios"
           id="name"
           value="name"
-          onClick={(e) => handleRadio(e)}
+          onClick={ (e) => handleRadio(e) }
         />
         Nome
       </label>
@@ -157,7 +165,7 @@ function Filters() {
           name="radios"
           id="firstLetter"
           value="firstLetter"
-          onClick={(e) => handleRadio(e)}
+          onClick={ (e) => handleRadio(e) }
         />
         Primeira letra
       </label>
@@ -165,7 +173,7 @@ function Filters() {
       <button
         type="button"
         data-testid="exec-search-btn"
-        onClick={() => handleClick()}
+        onClick={ () => handleClick() }
       >
         Buscar
       </button>
