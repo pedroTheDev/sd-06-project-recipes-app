@@ -178,13 +178,18 @@ function FoodInProgress(props) {
           {ingredients.map((ingredient, index) => (
             <li data-testid={ `${index}-ingredient-step` } key={ index }>
               { ingredient.value }
-              <input
+              { ingredient.isChecked ? (<input
                 key={ ingredient.id }
                 type="checkbox"
                 value={ ingredient.value }
-                checked={ ingredient.isChecked ? 'checked' : '' }
+                checked
                 onChange={ (ev) => handleCheckedIngredient(ev, index) }
-              />
+              />) : (<input
+                key={ ingredient.id }
+                type="checkbox"
+                value={ ingredient.value }
+                onChange={ (ev) => handleCheckedIngredient(ev, index) }
+              />)}
             </li>
           ))}
         </ul>
@@ -194,13 +199,22 @@ function FoodInProgress(props) {
           ref={ textArea }
           value={ `http://localhost:3000/comidas/${id}` }
         />
-        <button
-          data-testid="finish-recipe-btn"
-          type="submit"
-          disabled={ isDisabled }
-        >
-          Finalizar receita
-        </button>
+        { isDisabled
+          ? (
+            <button
+              data-testid="finish-recipe-btn"
+              type="submit"
+              disabled
+            >
+              Finalizar receita
+            </button>)
+          : (
+            <button
+              data-testid="finish-recipe-btn"
+              type="submit"
+            >
+              Finalizar receita
+            </button>)}
       </form>
     </div>
   );
