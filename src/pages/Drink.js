@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import RecipeContext from '../context/RecipeContext';
@@ -128,7 +128,7 @@ function Drink() {
           </div>
         </Link>
       ));
-    } if (currentDrinks) {
+    } if (currentDrinks.length > 1) {
       return currentDrinks
         .slice(firstDrink, limitDrink).map((drink, id) => (
           <Link
@@ -152,6 +152,7 @@ function Drink() {
           </Link>
         ));
     }
+    return <Redirect to="/bebidas/178319" />;
   };
 
   const handleClickCategory = async ({ target: { value } }) => {
