@@ -61,7 +61,8 @@ describe('Testar a página de login renderiza normalmente', () => {
 //     // inputEmail.value = 'teste@email.com';
 //     // inputPassword.value = '1234567';
 //     expect(submitBtn).toBeDisabled(true);
-
+// asdasdasdas
+// asdasasdd
 //     fireEvent.change(inputEmail, { target: { value: 'teste@email.com' } });
 //     fireEvent.change(inputPassword, { target: { value: '1234567' } });
 
