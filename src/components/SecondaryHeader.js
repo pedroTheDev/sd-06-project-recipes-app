@@ -1,4 +1,5 @@
 import React from 'react';
+import propTypes from 'prop-types';
 
 function SecondaryHeader({ name, img, category }) {
   return (
@@ -27,5 +28,11 @@ function SecondaryHeader({ name, img, category }) {
     </div>
   );
 }
+
+SecondaryHeader.propTypes = {
+  name: propTypes.string.isRequired,
+  img: propTypes.string.isRequired,
+  category: propTypes.string.isRequired,
+};
 
 export default SecondaryHeader;

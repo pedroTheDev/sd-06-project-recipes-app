@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// import Proptypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import { fetchMeal } from '../../services/mealAPI';
 import { fetchDrink } from '../../services/cocktailAPI';
@@ -36,10 +35,16 @@ function Detail() {
       }
     }
 
-    console.log(ingredients);
-
     return ingredients;
   };
+
+  if (!recipes) {
+    return (
+      <div className="loading">
+        <h2 className="loading-text">Carregando...</h2>
+      </div>
+    );
+  }
 
   return (
     <div>
