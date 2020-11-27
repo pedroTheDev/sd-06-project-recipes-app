@@ -24,6 +24,10 @@ export const getFirstLetterFoodEndPoint = (inputText) => (
   `https://www.themealdb.com/api/json/v1/1/search.php?f=${inputText}`
 );
 
+export const getFoodRecipeIdEndPoint = (id) => (
+  `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
+);
+
 export const getIngredientsDrinkEndPoint = (inputText) => (
   `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${inputText}`
 );
@@ -34,6 +38,10 @@ export const getNameDrinkEndPoint = (inputText) => (
 
 export const getFirstLetterDrinkEndPoint = (inputText) => (
   `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${inputText}`
+);
+
+export const getDrinkRecipeIdEndPoint = (id) => (
+  `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`
 );
 
 const handleSucessAPIResponse = (recipesData, dispatchRecipes, type) => {
