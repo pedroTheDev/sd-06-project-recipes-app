@@ -1,4 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react';
+import copy from 'clipboard-copy';
+import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesAppContext';
 import { fetchMealById } from '../services';
 import shareIcon from '../images/shareIcon.svg';
@@ -9,7 +11,6 @@ import '../App.css';
 function RecipeFoodProcess(props) {
   const ZERO = 0;
   const VINTE = 20;
-  // let list = [];
   const [arrIngredient, setArrIngredient] = useState([]);
   const [share, setShare] = useState(false);
   const [favorite, setFavorite] = useState(false);
@@ -85,6 +86,12 @@ function RecipeFoodProcess(props) {
     localStorage.setItem('favoriteRecipes', JSON.stringify(response));
   };
 
+  const copyClip = async () => {
+    setShare(true);
+    const url = `http://localhost:3000/comidas/${id}`;
+    await copy(url);
+  };
+
   useEffect(() => {
     settingRecipeInProgress();
   }, []);
@@ -111,10 +118,7 @@ function RecipeFoodProcess(props) {
             <button
               type="button"
               data-testid="share-btn"
-              onClick={ () => setShare(true) }
-              className="btn-copy"
-              data-clipboard-text={ `http://localhost:3000/comidas/${id}` }
-              data-clipboard-action="copy"
+              onClick={ () => copyClip() }
             >
               <img
                 src={ shareIcon }

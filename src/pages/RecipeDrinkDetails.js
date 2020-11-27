@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-
 import PropTypes from 'prop-types';
+import copy from 'clipboard-copy';
 import RecipesContext from '../context/RecipesAppContext';
 import './scroll.css';
 
@@ -55,6 +55,13 @@ function RecipeDrinkDetails(props) {
         }
       }
     };
+
+    const copyClip = async () => {
+      const { location: { pathname } } = props;
+      setShare(true);
+      const url = `http://localhost:3000${pathname}`;
+      await copy(url);
+    };
     renderMeasure();
     renderIngredients();
 
@@ -74,11 +81,8 @@ function RecipeDrinkDetails(props) {
         <div>
           <button
             type="button"
-            onClick={ () => setShare(true) }
+            onClick={ () => copyClip() }
             data-testid="share-btn"
-            className="btn-copy"
-            data-clipboard-text={ `http://localhost:3000${props.location.pathname}` }
-            data-clipboard-action="copy"
           >
             Compartilhar
           </button>

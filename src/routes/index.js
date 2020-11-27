@@ -2,7 +2,6 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Login from '../pages/Login';
 import Home from '../pages/Home';
-// import RecipeDrink from '../pages/RecipeDrink';
 import RecipeFoodDetails from '../pages/RecipeFoodDetails';
 import RecipeDrinkDetails from '../pages/RecipeDrinkDetails';
 import RecipeFoodProcess from '../pages/RecipeFoodProcess';
