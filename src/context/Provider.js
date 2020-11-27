@@ -83,6 +83,47 @@ const Provider = ({ children }) => {
     fetchByCategory,
   };
 
+  const localStorageData = {
+    mealsToken: 1,
+    cocktailsToken: 1,
+    user:
+    {
+      email,
+    },
+    // doneRecipes:
+    // [{
+    //     id: id-da-receita,
+    //     type: comida-ou-bebida,
+    //     area: area-da-receita-ou-texto-vazio,
+    //     category: categoria-da-receita-ou-texto-vazio,
+    //     alcoholicOrNot: alcoholic-ou-non-alcoholic-ou-texto-vazio,
+    //     name: nome-da-receita,
+    //     image: imagem-da-receita,
+    //     doneDate: quando-a-receita-foi-concluida,
+    //     tags: array-de-tags-da-receita-ou-array-vazio
+    // }],
+    // favoriteRecipes:
+    // [{
+    //     id: id-da-receita,
+    //     type: comida-ou-bebida,
+    //     area: area-da-receita-ou-texto-vazio,
+    //     category: categoria-da-receita-ou-texto-vazio,
+    //     alcoholicOrNot: alcoholic-ou-non-alcoholic-ou-texto-vazio,
+    //     name: nome-da-receita,
+    //     image: imagem-da-receita
+    // }],
+    // inProgressRecipes:
+    // {
+    //     cocktails: {
+    //         id-da-bebida: [lista-de-ingredientes-utilizados],
+    //         ...
+    //     },
+    //     meals: {
+    //         id-da-comida: [lista-de-ingredientes-utilizados],
+    //         ...
+    //     },
+  };
+
   return (
     <RevenueContext.Provider value={ context }>
       {children}
