@@ -16,7 +16,7 @@ function Food() {
   const urlCategories = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
   const urlMealsCategories = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${currentCategories}`;
   const urlMealsCategories2 = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${currentCategories}`;
-
+  console.log(urlMealsCategories2);
   useEffect(() => {
     const fecthMeals = async () => {
       const APIRequest = await fetch(url);
@@ -127,7 +127,10 @@ function Food() {
           </div>
         </Link>
       ));
-    } if (currentMeals.length > 1) {
+    } if (currentMeals) {
+      if (searchItens.searchRadio !== '' && currentMeals.length === 1) {
+        return <Redirect to="/comidas/52771" />;
+      }
       return currentMeals
         .slice(firstMeal, limitMeal).map((meal, id) => (
           <Link to={ `/comidas/${meal.idMeal}` } key={ id }>
@@ -148,9 +151,6 @@ function Food() {
           </Link>
         ));
     }
-    // if (currentMeals.length === 1) {
-    return <Redirect to="/comidas/52771" />;
-    // }
   };
 
   const handleClickCategory = ({ target: { value } }) => {
