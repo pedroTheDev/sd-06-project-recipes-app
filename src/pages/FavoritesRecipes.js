@@ -30,10 +30,10 @@ function FavoritesRecipes() {
     setCopied('block');
     window.navigator.clipboard
       .writeText(window.location.toString()
-        .replace('receitas-feitas', `${type}s/${id}`));
+        .replace('receitas-favoritas', `${type}s/${id}`));
     window.navigator.clipboard
       .writeText(window.location.toString()
-        .replace('receitas-feitas', `${type}s/${id}`));
+        .replace('receitas-favoritas', `${type}s/${id}`));
   };
   useEffect(() => {
     setHeader({ page: 'Receitas Favoritas', search: false });
@@ -68,13 +68,16 @@ function FavoritesRecipes() {
           Drink
         </button>
       </div>
-      <div>
+      <div className="bodier">
         {favoriteRecipes.filter((el) => el.type === filter || filter === 'All')
           .map((e, index) => (
-            <div key={ index }>
+            <div key={ index } className="card">
               <Link to={ `/${e.type}s/${e.id}` }>
-                <h1 data-testid={ `${index}-horizontal-name` }>{e.name}</h1>
+                <h4 className="text" data-testid={ `${index}-horizontal-name` }>
+                  {e.name}
+                </h4>
                 <img
+                  className="picture"
                   src={ e.image }
                   alt={ e.name }
                   data-testid={ `${index}-horizontal-image` }
@@ -82,14 +85,14 @@ function FavoritesRecipes() {
               </Link>
               {e.type === 'comida'
                 ? (
-                  <h2 data-testid={ `${index}-horizontal-top-text` }>
+                  <p data-testid={ `${index}-horizontal-top-text` }>
                     {`${e.area} - ${e.category}` }
-                  </h2>
+                  </p>
                 )
                 : (
-                  <h2 data-testid={ `${index}-horizontal-top-text` }>
+                  <p data-testid={ `${index}-horizontal-top-text` }>
                     {e.alcoholicOrNot}
-                  </h2>
+                  </p>
                 )}
               <ShareBtn
                 copy={ () => copyToClipboard(e.type, e.id) }
