@@ -17,22 +17,105 @@ function DetalhesComidas() {
 
   const seis = 6;
   const zero = 0;
+
   const fetchComidasDetalhes = async () => {
     const response = await fetchApiComidasDetalhes(idDaReceita);
     setEstadoApiComidas(response);
   };
-  function mudaNomeButton() {
-    if (iniciarReceitas.includes(idDaReceita)) {
-      document.getElementById('IniciarReceita').innerText = 'Continuar Receita';
-    }
-  }
+
+  // const inProgress = JSON.parse((localStorage.getItem(inProgressRecipes)));
+  // const idIniciados = Object.keys(inProgress.meals);
+
   const history = useHistory();
   function handleIniciarReceita() {
     setIniciarReceitas([...iniciarReceitas, idDaReceita]);
     console.log(idDaReceita);
-    mudaNomeButton();
+    let inProgress;
+    let idIniciados;
+    if (localStorage.getItem('inProgressRecipes')) {
+      inProgress = JSON.parse((localStorage.getItem('inProgressRecipes')));
+      if (inProgress.meals) {
+        idIniciados = Object.keys(inProgress.meals);
+        if (!idIniciados.includes(idDaReceita)) {
+          const novaReceita = {
+            ...inProgress,
+            meals: {
+              ...inProgress.meals,
+              [idDaReceita]: []
+            }
+          }
+          localStorage.setItem('inProgressRecipes', JSON.stringify(novaReceita));
+        }
+      } else {
+        const newMeal = {
+          ...inProgress,
+          meals: {
+            [idDaReceita]: []
+          }
+        }
+        localStorage.setItem('inProgressRecipes', JSON.stringify(newMeal));
+      }
+    } else {
+      const newMeal = {
+        meals: {
+          [idDaReceita]: []
+        }
+      }
+      localStorage.setItem('inProgressRecipes', JSON.stringify(newMeal));
+    }
     history.push(`/comidas/${idDaReceita}/in-progress`);
   }
+
+  const buttonIniciar = () => {
+    let inProgress;
+    let idIniciados;
+    if (localStorage.getItem('inProgressRecipes')) {
+      inProgress = JSON.parse((localStorage.getItem('inProgressRecipes')));
+      if (inProgress.meals) {
+        idIniciados = Object.keys(inProgress.meals);
+        if (!idIniciados.includes(idDaReceita)) {
+          return (
+            <button
+              data-testid="start-recipe-btn"
+              className="IniciarReceita"
+              type="button"
+              id="IniciarReceita"
+              onClick={ handleIniciarReceita }
+            >
+              Iniciar Receita
+            </button>
+          );
+        } else {
+          return (
+            <button
+              type="button"
+              data-testid="start-recipe-btn"
+              onClick={ continuarReceita }
+            >
+              Continuar Receita
+            </button>
+          );
+        }
+      }
+    } else {
+      return (
+        <button
+          data-testid="start-recipe-btn"
+          className="IniciarReceita"
+          type="button"
+          id="IniciarReceita"
+          onClick={ handleIniciarReceita }
+        >
+          Iniciar Receita
+        </button>
+      );
+    }
+  }
+
+  const continuarReceita = () => {
+    history.push(`/comidas/${idDaReceita}/in-progress`);
+  }
+
   useEffect(() => {
     fetchComidasDetalhes();
   }, []);
@@ -122,13 +205,10 @@ function DetalhesComidas() {
             srcLang="en"
             src={ comida.strYoutube }
           />
-
         </video>
         <button type="button" data-testid="share-btn">Compartilhar</button>
         <button type="button" data-testid="favorite-btn">Favoritar</button>
-
         <div className="recomendacao">
-
           {
             retornoApi6Bebidas
             && retornoApi6Bebidas.slice(zero, seis)
@@ -143,19 +223,10 @@ function DetalhesComidas() {
                 </button>))
           }
         </div>
-        <button
-          data-testid="start-recipe-btn"
-          className="IniciarReceita"
-          type="button"
-          id="IniciarReceita"
-          onClick={ handleIniciarReceita }
-        >
-          Iniciar Receita
-
-        </button>
-
+        {buttonIniciar()}
       </div>
-    )));
+    )
+    ));
 }
 
 export default DetalhesComidas;

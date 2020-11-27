@@ -20,18 +20,109 @@ function DetalhesBebida() {
     const response = await fetchApiBebidasDetalhes(idDaReceita);
     setEstadoApiBebidas(response);
   };
-  function mudaNomeButton() {
-    if (iniciarReceitas.includes(idDaReceita)) {
-      document.getElementById('IniciarReceita').innerText = 'Continuar Receita';
-    }
-  }
+
   const history = useHistory();
   function handleIniciarReceita() {
     setIniciarReceitas([...iniciarReceitas, idDaReceita]);
     console.log(idDaReceita);
-    mudaNomeButton();
+    let inProgress;
+    let idIniciados;
+    if (localStorage.getItem('inProgressRecipes')) {
+      inProgress = JSON.parse((localStorage.getItem('inProgressRecipes')));
+      if (inProgress.cocktails) {
+        idIniciados = Object.keys(inProgress.cocktails);
+        if (!idIniciados.includes(idDaReceita)) {
+          const novaReceita = {
+            ...inProgress,
+            cocktails: {
+              ...inProgress.cocktails,
+              [idDaReceita]: []
+            }
+          }
+          localStorage.setItem('inProgressRecipes', JSON.stringify(novaReceita));
+        }
+      } else {
+        const newMeal = {
+          ...inProgress,
+          cocktails: {
+            [idDaReceita]: []
+          }
+        }
+        localStorage.setItem('inProgressRecipes', JSON.stringify(newMeal));
+      }
+    } else {
+      const newMeal = {
+        cocktails: {
+          [idDaReceita]: []
+        }
+      }
+      localStorage.setItem('inProgressRecipes', JSON.stringify(newMeal));
+    }
     history.push(`/bebidas/${idDaReceita}/in-progress`);
   }
+
+  const buttonIniciar = () => {
+    let inProgress;
+    let idIniciados;
+    if (localStorage.getItem('inProgressRecipes')) {
+      inProgress = JSON.parse((localStorage.getItem('inProgressRecipes')));
+      if (inProgress.cocktails) {
+        idIniciados = Object.keys(inProgress.cocktails);
+        if (!idIniciados.includes(idDaReceita)) {
+          return (
+            <button
+              data-testid="start-recipe-btn"
+              className="IniciarReceita"
+              type="button"
+              id="IniciarReceita"
+              onClick={ handleIniciarReceita }
+            >
+              Iniciar Receita
+            </button>
+          );
+        } else {
+          return (
+            <button
+              type="button"
+              data-testid="start-recipe-btn"
+              onClick={ continuarReceita }
+            >
+              Continuar Receita
+            </button>
+          );
+        }
+      } else {
+        return (
+          <button
+            data-testid="start-recipe-btn"
+            className="IniciarReceita"
+            type="button"
+            id="IniciarReceita"
+            onClick={ handleIniciarReceita }
+          >
+            Iniciar Receita
+          </button>
+        );
+      }
+    } else {
+      return (
+        <button
+          data-testid="start-recipe-btn"
+          className="IniciarReceita"
+          type="button"
+          id="IniciarReceita"
+          onClick={ handleIniciarReceita }
+        >
+          Iniciar Receita
+        </button>
+      );
+    }
+  }
+
+  const continuarReceita = () => {
+    history.push(`/bebidas/${idDaReceita}/in-progress`);
+  }
+
   useEffect(() => {
     fetchBebidasDetalhes();
   }, []);
@@ -118,7 +209,6 @@ function DetalhesBebida() {
         <button type="button" data-testid="share-btn">Compartilhar</button>
         <button type="button" data-testid="favorite-btn">Favoritar</button>
         <div className="recomendacao">
-
           {
             retornoApi6Comidas
             && retornoApi6Comidas.slice(zero, seis)
@@ -133,35 +223,10 @@ function DetalhesBebida() {
                 </button>))
           }
         </div>
-        <button
-          data-testid="start-recipe-btn"
-          className="IniciarReceita"
-          type="button"
-          id="IniciarReceita"
-          onClick={ handleIniciarReceita }
-        >
-          Iniciar Receita
-
-        </button>
-        )
-        {/* { receitasTerminadas
-          .includes(!idDaReceita)
-          ? (
-            <button
-              data-testid="start-recipe-btn"
-              className="IniciarReceita"
-              type="button"
-              id="IniciarReceita"
-              onClick={ handleIniciarReceita }
-            >
-              {iniciarReceitas
-                .includes(idDaReceita)
-                ? <span>Continuar Receita</span> : 'Iniciar Receita'}
-
-            </button>) : ''} */}
-
+        {buttonIniciar()}
       </div>
-    )));
+    )
+    ));
 }
 
 export default DetalhesBebida;
