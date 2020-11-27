@@ -29,7 +29,7 @@ function ExploreDrinkIngredients() {
 
   const handleIngredientExplore = (index) => {
     const ingredient = ingredients[index].strIngredient1;
-    setOptions({ text: ingredient, option: 'Ingredient', category: '' });
+    setOptions({ text: ingredient, option: 'Ingrediente', category: '' });
     history.push('/bebidas');
   };
 

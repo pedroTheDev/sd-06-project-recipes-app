@@ -29,7 +29,7 @@ function ExploreFoodIngredients() {
 
   const handleIngredientExplore = (index) => {
     const ingredient = ingredients[index].strIngredient;
-    setOptions({ text: ingredient, option: 'Ingredient', category: '' });
+    setOptions({ text: ingredient, option: 'Ingrediente', category: '' });
     history.push('/comidas');
   };
 
