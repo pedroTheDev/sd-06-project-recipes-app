@@ -3,9 +3,9 @@ import { Link, useParams } from 'react-router-dom';
 import blackHeart from '../images/blackHeartIcon.svg';
 import whiteHeart from '../images/whiteHeartIcon.svg';
 import ShareIcon from '../images/shareIcon.svg';
-import '../Components/style/style.css';
 import * as api from '../services/Api';
 import Context from '../context/Context';
+import './styles/pages.css';
 
 export default function DetalhesBebidas() {
   const { id } = useParams();
@@ -141,7 +141,7 @@ export default function DetalhesBebidas() {
                   <img src={ meal.strMealThumb } alt={ index } />
                 </div>))}
             <Link to={ `/bebidas/${id}/in-progress` }>
-              <button type="button" id="iniciar-receita" data-testid="start-recipe-btn">
+              <button type="button" className="iniciar-receita" data-testid="start-recipe-btn">
                 Iniciar Receita
               </button>
             </Link>
