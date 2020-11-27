@@ -1,5 +1,6 @@
 import React from 'react';
 import propTypes from 'prop-types';
+import { shareIcon, whiteHeartIcon, blackHeartIcon } from '../images';
 
 function SecondaryHeader({ name, img, category }) {
   return (
@@ -15,13 +16,13 @@ function SecondaryHeader({ name, img, category }) {
           type="button"
           data-testid="share-btn"
         >
-          Compartilhar
+          <img src={ shareIcon } alt="Share recipe" />
         </button>
         <button
           type="button"
           data-testid="favorite-btn"
         >
-          Favoritar
+          <img src={ whiteHeartIcon } alt="Share recipe" />
         </button>
         <p data-testid="recipe-category">{ category }</p>
       </header>
