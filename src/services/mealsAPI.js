@@ -10,22 +10,33 @@ export async function getAllRecipeTypesApi(type) {
 // Lista de receitas de comidas filtradas
 export async function getFilteredRecipesApi(type, value) {
   if (type === 'ingredients') {
-    const response = await fetch(`${URL_BASE}filter.php?i=${value}`);
-    const result = await response.json();
-    console.log(result.meals);
-    return result.meals;
+    try {
+      const response = await fetch(`${URL_BASE}filter.php?i=${value}`);
+      const result = await response.json();
+      return result.meals;
+    } catch (error) {
+      return null;
+    }
   }
   if (type === 'name') {
-    const response = await fetch(`${URL_BASE}search.php?s=${value}`);
-    const result = await response.json();
-    return result.meals;
+    try {
+      const response = await fetch(`${URL_BASE}filter.php?i=${value}`);
+      const result = await response.json();
+      return result.meals;
+    } catch (error) {
+      return null;
+    }
   }
   if (type === 'first') {
-    const response = await fetch(`${URL_BASE}search.php?f=${value}`);
-    const result = await response.json();
-    return result.meals;
+    try {
+      const response = await fetch(`${URL_BASE}filter.php?i=${value}`);
+      const result = await response.json();
+      return result.meals;
+    } catch (error) {
+      return null;
+    }
   }
-  return [];
+  return null;
 }
 
 // Lista de receitas de comidas
