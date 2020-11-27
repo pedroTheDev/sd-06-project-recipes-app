@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import StartButton from '../components/StartButton';
 import RecipesContext from '../context/RecipesAppContext';
-import './scroll.css';
 
-function RecipeFoodDetails({ match }) {
+function RecipeFoodDetails({ match, title }) {
   const { id } = match.params;
   const { recipes, setRecipes } = useContext(RecipesContext);
   const [recomendation, setRecomendation] = useState([]);
@@ -13,6 +13,7 @@ function RecipeFoodDetails({ match }) {
   const TWENTY = 20;
   const SEIS = 6;
   const API = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=';
+  const positionButton = { position: 'fixed' };
 
   const fetchDetailRecipeFoodByID = async () => {
     const response = await fetch(`${API}${id}`);
@@ -60,14 +61,6 @@ function RecipeFoodDetails({ match }) {
           src={ recipes[0].strMealThumb }
           alt={ recipes[0].strMeal }
         />
-        <h4 data-testid="recipe-title">
-          {' '}
-          { recipes[0].strMeal }
-          {' '}
-        </h4>
-        <button type="button" data-testid="share-btn">Compartilhar</button>
-        <button type="button" data-testid="favorite-btn">Favoritar</button>
-        <p data-testid="recipe-category">{recipes[0].strCategory}</p>
         <ul>
           {arrIngredient.map((ingredient, index) => (
             <li
@@ -99,9 +92,7 @@ function RecipeFoodDetails({ match }) {
           allow="accelerometer; autoplay; clipboard-write; encrypted-media"
           allowFullScreen
         />
-        <button type="button" data-testid="start-recipe-btn">Iniciar Receita</button>
-
-        <div className="scrollmenu">
+        <div>
           {recomendation.slice(ZERO, SEIS).map((element, index) => (
             <div key={ index } className="scrollmenu-child">
               <img
@@ -113,16 +104,19 @@ function RecipeFoodDetails({ match }) {
             </div>
           ))}
         </div>
-
+        <div style={ positionButton }>
+          <StartButton id={ id } title={ title } />
+        </div>
       </div>
     );
   }
 
-  return <span>Ops..</span>;
+  return <span>Ops...</span>;
 }
 
 RecipeFoodDetails.propTypes = {
   match: PropTypes.objectOf(Object).isRequired,
+  title: PropTypes.string.isRequired,
 };
 
 export default RecipeFoodDetails;

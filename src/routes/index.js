@@ -24,14 +24,22 @@ function Routes() {
       <Route path="/bebidas" exact render={ () => <Home title="Bebidas" /> } />
       <Route
         path="/comidas/:id"
-        render={ (props) => <RecipeFoodDetails { ...props } /> }
+        render={ (props) => <RecipeFoodDetails { ...props } title="comidas" /> }
       />
       <Route
         path="/bebidas/:id"
-        render={ (props) => <RecipeDrinkDetails { ...props } /> }
+        render={ (props) => <RecipeDrinkDetails { ...props } title="bebidas" /> }
       />
-      <Route path="/comidas/:id/in-progress" exact component={ RecipeFoodProcess } />
-      <Route path="/bebidas/:id/in-progress" exact component={ RecipeDrinkProcess } />
+      <Route
+        path="/comidas/:id/in-progress"
+        exact
+        render={ (props) => <RecipeFoodProcess { ...props } /> }
+      />
+      <Route
+        path="/bebidas/:id/in-progress"
+        exact
+        render={ (props) => <RecipeDrinkProcess { ...props } /> }
+      />
       <Route path="/explorar" exact component={ Explore } />
       <Route
         path="/explorar/comidas"

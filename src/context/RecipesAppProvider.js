@@ -11,6 +11,8 @@ function RecipesAppProvider({ children }) {
   const [errorFromApi, setErrorFromApi] = useState(false);
   const [categoryList, setCategoryList] = useState([]);
   const [isFetching, setIsFetching] = useState(true);
+  const [startRecipe, setStartRecipe] = useState(false);
+  const [finalizedRecipe, setFinalizedRecipe] = useState(false);
 
   const value = {
     ingredient,
@@ -29,6 +31,10 @@ function RecipesAppProvider({ children }) {
     setCategoryList,
     isFetching,
     setIsFetching,
+    startRecipe,
+    setStartRecipe,
+    finalizedRecipe,
+    setFinalizedRecipe,
   };
 
   return (
