@@ -11,3 +11,4 @@ export { default as ComidasProgresso } from './ComidasProgresso';
 export { default as ComidasArea } from './ComidasArea';
 export { default as Explorer } from './Explorer';
 export { default as ReceitasFeitas } from './ReceitasFeitas';
+export { default as ReceitaProgresso } from './ReceitaProgresso';

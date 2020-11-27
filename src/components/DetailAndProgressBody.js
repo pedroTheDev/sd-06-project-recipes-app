@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import ShareButton from './ShareButton';
 import FavButton from './FavButton';
 import Ingredients from './Ingredients';
+import IngredientsCheck from './IngredientsCheck';
 
-function DetailAndProgressBody({ recipe, recommendations, buttonsProps }) {
+function DetailAndProgressBody({ recipe, recommendations, buttonsProps, page=null }) {
   const {
     image,
     name,
@@ -21,6 +22,56 @@ function DetailAndProgressBody({ recipe, recommendations, buttonsProps }) {
     setWasCopied,
     video,
   } = buttonsProps;
+  console.log(path);
+
+  const renderRecommendAndVideoIfInDetails = (url) => {
+    if (url !== 'in-progress') {
+      return (
+        <div>
+          { path === 'comidas'
+        ? (
+          <div>
+            <h4>Video</h4>
+            <iframe data-testid="video" src={ video } title="Recipe Video" />
+          </div>
+        )
+        : null}
+      <div>
+        <h4>Recommendations</h4>
+        <div className="recomendation-container">
+          {recommendations.map((recommendation, index) => (
+            <div
+              data-testid={ `${index}-recomendation-card` }
+              key={ recommendation.name }
+              className="recomendation-card"
+            >
+              <img src={ recommendation.image } alt={ recommendation.name } />
+              <h4 data-testid={ `${index}-recomendation-title` }>
+                {recommendation.name}
+              </h4>
+            </div>
+          ))}
+        </div>
+      </div>
+        </div>        
+      );
+    } else {
+      return null;
+    }
+  };
+
+  const renderIngredientsConditionally = (url) => {
+    if (url !== 'in-progress') {
+      return (
+        <Ingredients recipe={ recipe } />
+      );
+    } else {
+      return (
+        <IngredientsCheck recipe={ recipe } />
+      );
+    }
+  };
+
   return (
     <main>
       <img
@@ -46,35 +97,10 @@ function DetailAndProgressBody({ recipe, recommendations, buttonsProps }) {
           ? isAlcoholic
           : category}
       </p>
-      <Ingredients recipe={ recipe } />
+      { renderIngredientsConditionally(page) }
       <h4>Instructions</h4>
       <p data-testid="instructions">{ instructions }</p>
-      { path === 'comidas'
-        ? (
-          <div>
-            <h4>Video</h4>
-            <iframe data-testid="video" src={ video } title="Recipe Video" />
-          </div>
-        )
-        : null}
-      <div>
-        <h4>Recommendations</h4>
-        <div className="recomendation-container">
-          {recommendations.map((recommendation, index) => (
-            <div
-              data-testid={ `${index}-recomendation-card` }
-              key={ recommendation.name }
-              className="recomendation-card"
-            >
-              <img src={ recommendation.image } alt={ recommendation.name } />
-              <h4 data-testid={ `${index}-recomendation-title` }>
-                {recommendation.name}
-              </h4>
-            </div>
-
-          ))}
-        </div>
-      </div>
+      { renderRecommendAndVideoIfInDetails(page) }
     </main>
   );
 }

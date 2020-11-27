@@ -16,7 +16,6 @@ function Ingredients({ recipe }) {
     </ul>
   );
 }
-
 Ingredients.propTypes = {
   recipe: PropTypes.shape.isRequired,
 };
