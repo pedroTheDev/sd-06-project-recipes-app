@@ -19,7 +19,7 @@ function Footer() {
           <button
             aria-label="drinks-btn"
             type="button"
-            src={drinkIcon}
+            src={ drinkIcon }
             data-testid="drinks-bottom-btn"
           />
         </Link>
@@ -27,7 +27,7 @@ function Footer() {
           <button
             aria-label="explore-btn"
             type="button"
-            src={exploreIcon}
+            src={ exploreIcon }
             data-testid="explore-bottom-btn"
           />
         </Link>
@@ -35,7 +35,7 @@ function Footer() {
           <button
             aria-label="meal-btn"
             type="button"
-            src={mealIcon}
+            src={ mealIcon }
             data-testid="food-bottom-btn"
           />
         </Link>

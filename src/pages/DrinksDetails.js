@@ -12,7 +12,9 @@ function DrinkDetails() {
   const [apiResult, setApiResult] = useState([]);
   const [buttonText, setButtonText] = useState('Iniciar Receita');
   const [spanHidden, setSpanHidden] = useState(true);
-  const [favoriteDrink, setFavoriteDrink] = useState("non-favorite");
+  const [favoriteDrink, setFavoriteDrink] = useState('non-favorite');
+  const zero = 0;
+  const six = 6;
 
   useEffect(() => {
     async function fetchData() {
@@ -22,12 +24,16 @@ function DrinkDetails() {
       const drink = resultsDetails.drinks[0];
       const keysDrink = Object.keys(drink);
 
-      const filterDrink = keysDrink.filter((key) => key.toLowerCase().includes('ingredient'));
+      const filterDrink = keysDrink.filter((key) => key
+        .toLowerCase().includes('ingredient'));
 
-      const filterMeasure = keysDrink.filter((key) => key.toLowerCase().includes('measure'));
+      const filterMeasure = keysDrink.filter((key) => key
+        .toLowerCase().includes('measure'));
 
       const allIngredients = filterDrink
-        .map((item, index) => ({ ingredient: drink[item], measure: drink[filterMeasure[index]] }));
+        .map((item, index) => ({
+          ingredient: drink[item], measure: drink[filterMeasure[index]],
+        }));
       setIngredients(allIngredients);
 
       const response = await requestFoods();
@@ -82,28 +88,90 @@ function DrinkDetails() {
 
   return (
     <div>
+
       <img
         data-testid="recipe-photo"
         width="100px"
-        src={drinkDetails.drinks && drinkDetails.drinks[0].strDrinkThumb}
+        src={ drinkDetails.drinks && drinkDetails.drinks[0].strDrinkThumb }
         alt="Meal"
       />
-      <h3 data-testid="recipe-title">{drinkDetails.drinks && drinkDetails.drinks[0].strDrink}</h3>
-      <h4 data-testid="recipe-category">{drinkDetails.drinks && drinkDetails.drinks[0].strCategory}</h4>
-      <h4>{drinkDetails.drinks && drinkDetails.drinks[0].strAlcoholic}</h4>
+
+      <h3 data-testid="recipe-title">
+        {
+          drinkDetails.drinks && drinkDetails.drinks[0].strDrink
+        }
+      </h3>
+
+      <h4 data-testid="recipe-category">
+        {
+          drinkDetails.drinks && drinkDetails.drinks[0].strCategory
+        }
+      </h4>
+
+      <h4>
+        {
+          drinkDetails.drinks && drinkDetails.drinks[0].strAlcoholic
+        }
+      </h4>
+
       <div id="ingredients-div">
-        {ingredients && ingredients.map((item, index) => (<p data-testid={`${index}-ingredient-name-and-measure`}>{`${index + 1} ${item.ingredient} - ${item.measure}`}</p>))}
+        {ingredients && ingredients
+          .map((item, index) => (
+            <p
+              data-testid={ `${index}-ingredient-name-and-measure` }
+              key={ index }
+            >
+              {
+                `${index + 1} ${item.ingredient} - ${item.measure}`
+              }
+            </p>
+          ))}
       </div>
-      <p data-testid="instructions">{drinkDetails.drinks && drinkDetails.drinks[0].strInstructions}</p>
+
+      <p
+        data-testid="instructions"
+      >
+        {drinkDetails.drinks && drinkDetails.drinks[0].strInstructions}
+      </p>
+
       <div>
-        { apiResult.meals && apiResult.meals.slice(0, 6).map((element, idx) => (
-          <FoodRecomendCard element={element} idx={idx} key={element.idMeal} />)) }
+        { apiResult.meals && apiResult.meals.slice(zero, six).map((element, idx) => (
+          <FoodRecomendCard element={ element } idx={ idx } key={ element.idMeal } />)) }
       </div>
-      <button type="button" data-testid="share-btn" className="share-btn" onClick={ () => copyToClipBoard(document.URL) }>Compartilhar</button>
-      <button type="button" data-testid="favorite-btn" className={ favoriteDrink } onClick={ handleFavoriteDrink }>Favorito</button>
-      <Link to={`/bebidas/${drinkDetails.drinks && drinkDetails.drinks[0].idDrink}/in-progress`}>
-        <button type="button" className="start-btn" data-testid="start-recipe-btn" hidden={localStorage.getItem('hiddenButtonDrink')} onClick={handleClick}>{buttonText}</button>
+
+      <button
+        type="button"
+        data-testid="share-btn"
+        className="share-btn"
+        onClick={ () => copyToClipBoard(document.URL) }
+      >
+        Compartilhar
+      </button>
+
+      <button
+        type="button"
+        data-testid="favorite-btn"
+        className={ favoriteDrink }
+        onClick={ handleFavoriteDrink }
+      >
+        Favorito
+      </button>
+
+      <Link
+        to={ `/bebidas/${drinkDetails
+          .drinks && drinkDetails.drinks[0].idDrink}/in-progress` }
+      >
+        <button
+          type="button"
+          className="start-btn"
+          data-testid="start-recipe-btn"
+          hidden={ localStorage.getItem('hiddenButtonDrink') }
+          onClick={ handleClick }
+        >
+          {buttonText}
+        </button>
       </Link>
+
       <span hidden={ spanHidden }>Link copiado!</span>
     </div>
   );

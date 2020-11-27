@@ -18,7 +18,7 @@ function RecipesAppProvider({ children }) {
     setIsFetchingContext,
   };
   return (
-    <RecipesContext.Provider value={context}>
+    <RecipesContext.Provider value={ context }>
       {children}
     </RecipesContext.Provider>
   );

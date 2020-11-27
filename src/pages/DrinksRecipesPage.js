@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { requestDrinks, requestCategoryDrink, filterCategoryDrinks } from '../services/requestsAPI';
+import {
+  requestDrinks, requestCategoryDrink, filterCategoryDrinks,
+} from '../services/requestsAPI';
 import DrinkCard from '../components/DrinkCard';
 import RecipesContext from '../context/RecipesContext';
 
@@ -10,6 +12,9 @@ function DrinksRecipesPage() {
   const [drinkCategory, setDrinkCategory] = useState([]);
   const [curCategory, setCurcategory] = useState([]);
   const { hiddenInput } = useContext(RecipesContext);
+  const zero = 0;
+  const doze = 12;
+  const cinco = 5;
 
   useEffect(() => {
     async function fetchData() {
@@ -48,17 +53,28 @@ function DrinksRecipesPage() {
           data-testid="All-category-filter"
           type="button"
           value="all"
-          onClick={() => handleClickAll()}
+          onClick={ () => handleClickAll() }
         >
           All
         </button>
-        {drinkCategory.drinks && drinkCategory.drinks.slice(0, 5).map((element) => (
-          <button onClick={(e) => handleClick(e)} value={element.strCategory} type="button" data-testid={`${element.strCategory}-category-filter`}>{element.strCategory}</button>
-        ))}
+        {drinkCategory.drinks && drinkCategory.drinks
+          .slice(zero, cinco).map((element) => (
+            <button
+              onClick={ (e) => handleClick(e) }
+              value={ element.strCategory }
+              type="button"
+              data-testid={ `${element.strCategory}-category-filter` }
+              key={ index }
+            >
+              {element.strCategory}
+            </button>
+          ))}
       </div>
       <div>
-        { !hiddenInput ? apiResult.drinks && apiResult.drinks.slice(0, 12).map((element, idx) => (
-          <DrinkCard element={element} idx={idx} key={element.idDrink} />)) : null }
+        { !hiddenInput ? apiResult.drinks && apiResult.drinks
+          .slice(zero, doze).map((element, idx) => (
+            <DrinkCard element={ element } idx={ idx } key={ element.idDrink } />
+          )) : null }
       </div>
 
       <Footer />

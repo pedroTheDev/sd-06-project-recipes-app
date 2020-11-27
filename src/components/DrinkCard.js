@@ -6,10 +6,14 @@ function Card(props) {
   const { element, idx } = props;
   const { strDrink, strDrinkThumb } = element;
   return (
-    <Link to={`/bebidas/${element.idDrink}`}>
-      <div data-testid={`${idx}-recipe-card`}>
-        <h2 data-testid={`${idx}-card-name`}>{ strDrink }</h2>
-        <img src={strDrinkThumb} alt={`${strDrink} photograph`} data-testid={`${idx}-card-img`} />
+    <Link to={ `/bebidas/${element.idDrink}` }>
+      <div data-testid={ `${idx}-recipe-card` }>
+        <h2 data-testid={ `${idx}-card-name` }>{ strDrink }</h2>
+        <img
+          src={ strDrinkThumb }
+          alt={ `${strDrink} photograph` }
+          data-testid={ `${idx}-card-img` }
+        />
       </div>
     </Link>
   );
