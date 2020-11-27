@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import CardComidaRecomendacao from '../components/CardComidaRecomendacao';
 import RecipeContext from '../context/RecipeContext';
 import { fetchApiBebidasDetalhes } from '../services/FetchApiBebidas';
@@ -12,7 +12,7 @@ function DetalhesBebida() {
     retornoApi6Comidas,
     iniciarReceitas,
     setIniciarReceitas,
-    receitasTerminadas,
+    // receitasTerminadas,
   } = useContext(RecipeContext);
   const seis = 6;
   const zero = 0;
@@ -20,12 +20,21 @@ function DetalhesBebida() {
     const response = await fetchApiBebidasDetalhes(idDaReceita);
     setEstadoApiBebidas(response);
   };
+  function mudaNomeButton() {
+    if (iniciarReceitas.includes(idDaReceita)) {
+      document.getElementById('IniciarReceita').innerText = 'Continuar Receita';
+    }
+  }
+  const history = useHistory();
+  function handleIniciarReceita() {
+    setIniciarReceitas([...iniciarReceitas, idDaReceita]);
+    console.log(idDaReceita);
+    mudaNomeButton();
+    history.push(`/bebidas/${idDaReceita}/in-progress`);
+  }
   useEffect(() => {
     fetchBebidasDetalhes();
   }, []);
-  function handleIniciarReceita() {
-    setIniciarReceitas([...iniciarReceitas, idDaReceita]);
-  }
 
   return (
     estadoApiBebidas.map((bebida, index) => (
@@ -108,13 +117,6 @@ function DetalhesBebida() {
         </button> */}
         <button type="button" data-testid="share-btn">Compartilhar</button>
         <button type="button" data-testid="favorite-btn">Favoritar</button>
-        <button
-          data-testid="start-recipe-btn"
-          className="IniciarReceita"
-          type="button"
-        >
-          Iniciar Receita
-        </button>
         <div className="recomendacao">
 
           {
@@ -130,20 +132,34 @@ function DetalhesBebida() {
                   {CardComidaRecomendacao(food, indice)}
                 </button>))
           }
-
         </div>
-        { receitasTerminadas
+        <button
+          data-testid="start-recipe-btn"
+          className="IniciarReceita"
+          type="button"
+          id="IniciarReceita"
+          onClick={ handleIniciarReceita }
+        >
+          Iniciar Receita
+
+        </button>
+        )
+        {/* { receitasTerminadas
           .includes(!idDaReceita)
           ? (
             <button
               data-testid="start-recipe-btn"
               className="IniciarReceita"
               type="button"
+              id="IniciarReceita"
               onClick={ handleIniciarReceita }
             >
+              {iniciarReceitas
+                .includes(idDaReceita)
+                ? <span>Continuar Receita</span> : 'Iniciar Receita'}
 
-              Iniciar Receita
-            </button>) : ''}
+            </button>) : ''} */}
+
       </div>
     )));
 }
