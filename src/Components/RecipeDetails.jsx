@@ -1,7 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import RecipeContext from '../hooks/RecipeContext';
+import Slider from 'react-slick';
 import recipeRequest from '../services/recipeRequest';
+import shareIcon from '../images/share.png';
+import favIcon from '../images/favHeart.png';
+import '../Style/RecipeDetails.css';
+import '../Style/carousel.css';
+// import "slick-carousel/slick/slick.css";
+// import "slick-carousel/slick/slick-theme.css";
 
 const RecipeDetails = () => {
   const six = 6;
@@ -60,10 +67,18 @@ const RecipeDetails = () => {
       ));
   };
 
+  // const settingsSlider = {
+  //   dots: true,
+  //   infinite: false,
+  //   speed: 500,
+  //   slidesToShow: 2,
+  //   slidesToScroll: 1,
+  // };
+
   const renderRecipe = () => {
     if (pathname === `/comidas/${ids}` && recipeDetailFood.length >= 1) {
       return recipeDetailFood.map((food, index) => (
-        <div key={ index }>
+        <div key={ index } className="details-container">
           <img
             alt="product"
             data-testid="recipe-photo"
@@ -81,7 +96,7 @@ const RecipeDetails = () => {
             <source src={ food.strYoutube } type="video/mp4" />
             <track src={ food.strYoutube } kind="captions" />
           </video>
-          <div>
+          <div className="carousel scroller">
             {
               DrinkRecommendation && DrinkRecommendation.length && DrinkRecommendation
                 .filter((_, indexs) => indexs < six)
@@ -94,6 +109,7 @@ const RecipeDetails = () => {
                     <div
                       data-testid={ `${indx}-recomendation-card` }
                       key="index"
+                      className="card"
                     >
                       <img
                         src={ drinks.strDrinkThumb }
@@ -102,6 +118,7 @@ const RecipeDetails = () => {
                       />
                       <p
                         data-testid={ `${indx}-recomendation-title` }
+                        className="carousel-item"
                       >
                         { drinks.strDrink}
                       </p>
@@ -122,46 +139,60 @@ const RecipeDetails = () => {
       ));
     }
     if (recipeDetailDrink[0].strDrink) {
-      return recipeDetailDrink.map((drink) => (
-        <div key="1">
+      return recipeDetailDrink.map((drink, index) => (
+        <div key={ index } className="details-container">
           <img
             alt="product"
             data-testid="recipe-photo"
             src={ drink.strDrinkThumb }
           />
-          <h1 data-testid="recipe-title">{ drink.strDrink }</h1>
-          <button type="button" data-testid="share-btn">Share</button>
-          <button type="button" data-testid="favorite-btn">Favorite</button>
-          <p data-testid="recipe-category">{drink.strAlcoholic}</p>
-          {
-            handleIngredients(drink, TWENTY_ONE, THIRTY_SIX, FIFTY_ONE)
-          }
-          <p data-testid="instructions">{ drink.strInstructions }</p>
-          <div>
+          <div className="details-nav">
+            <button type="button" data-testid="favorite-btn"><img src={favIcon} alt="favorite" /></button>
+            <div className="name-category">
+              <p data-testid="recipe-title" style={{fontSize: 30 + 'px'}}>{ drink.strDrink }</p>
+              <p data-testid="recipe-category">{drink.strAlcoholic}</p>
+            </div>
+            <button type="button" data-testid="share-btn"><img src={shareIcon} alt="share" /></button>
+          </div>
+          <div className="recipe-ingredients">
+            INGREDIENTS
             {
-              foodRecommendation && foodRecommendation.length && foodRecommendation
-                .filter((_, index) => index < six)
-                .map((meals, index) => (
-                  <Link
-                    onClick={ () => setIds(meals.idMeal) }
-                    to={ `/comidas/${meals.idMeal}` }
-                    key={ index }
-                  >
-                    <div
-                      data-testid={ `${index}-recomendation-card` }
-                      key="index"
-                    >
-                      <img
-                        src={ meals.strMealThumb }
-                        data-testid={ `${index}-card-img` }
-                        alt={ meals.strMeal }
-                      />
-                      <p data-testid={ `${index}-card-name` }>{ meals.strMeal}</p>
-                    </div>
-                  </Link>
-                ))
+              handleIngredients(drink, TWENTY_ONE, THIRTY_SIX, FIFTY_ONE)
             }
           </div>
+          <div className="recipe-instructions">
+            INSTRUCTIONS
+            <p data-testid="instructions">{ drink.strInstructions }</p>
+          </div>
+          <div className="carousel scroller">
+            <span class="btn prev"> Prev </span>
+            <span class="btn next"> Next </span>
+              {
+                foodRecommendation && foodRecommendation.length && foodRecommendation
+                  .filter((_, index) => index < six)
+                  .map((meals, index) => (
+                    <div
+                          className="card"
+                          data-testid={ `${index}-recomendation-card` }
+                          key="index"
+                        >
+                      <Link
+                        onClick={ () => setIds(meals.idMeal) }
+                        to={ `/comidas/${meals.idMeal}` }
+                        key={ index }
+                      >
+                        <img
+                          src={ meals.strMealThumb }
+                          data-testid={ `${index}-card-img` }
+                          alt={ meals.strMeal }
+                        />
+                        <p className="carousel-item" data-testid={ `${index}-recomendation-title` }>{ meals.strMeal}</p>
+                      </Link>
+                    </div>
+                  ))
+                }
+          </div>
+                {/* </Slider> */}
           <button
             type="button"
             data-testid="start-recipe-btn"

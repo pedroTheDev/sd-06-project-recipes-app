@@ -51,7 +51,7 @@ export default function MainScreen() {
   const renderFilters = () => {
     if (pathname === '/comidas') {
       return (
-        <div>
+        <div className="filter-container">
           <button
             type="button"
             className="filter-button"
@@ -81,7 +81,7 @@ export default function MainScreen() {
     }
     if (pathname === '/bebidas') {
       return (
-        <div>
+        <div className="filter-container">
           <button
             type="button"
             className="filter-button"
@@ -146,7 +146,7 @@ export default function MainScreen() {
               to={ `/bebidas/${drinks.idDrink}` }
               key={ index }
             >
-              <p data-testid={ `${index}-card-name` }>{ drinks.strDrink}</p>
+              <p data-testid={ `${index}-card-name` }>{ drinks.strDrink }</p>
               <img
                 src={ drinks.strDrinkThumb }
                 data-testid={ `${index}-card-img` }
@@ -160,9 +160,7 @@ export default function MainScreen() {
 
   return (
     <div>
-      <div className="filter-container">
-        {renderFilters()}
-      </div>
+      {renderFilters()}
       <div className="recipes-container">
         { isLoading ? <p>Loading...</p> : renderCards() }
       </div>

@@ -3,6 +3,7 @@
 body {
   height: 667px;
   width: 357px;
+  background-color: rgba(41, 41, 41, 1);
 }
 
 .meals {
