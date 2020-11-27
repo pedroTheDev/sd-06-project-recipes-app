@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { detailsFoodById, showSugestedDrinks } from '../services/aPI';
 import './DetalhesComida.css';
 
@@ -13,6 +13,7 @@ const DetalhesComida = () => {
   const [stateButton, setStateButton] = useState({
     initialRecipe: false,
   });
+  const location = useLocation().pathname;
 
   const idFood = useParams().id;
 
@@ -55,11 +56,27 @@ const DetalhesComida = () => {
     });
   };
 
-  const handleShareClick = () => {
-    const urlPage = window.location.href;
-
-    urlPage.select();
-    urlPage.setSelectRange(0, 9999);
+  const handleShareIcon = () => {
+    const zero = 0;
+    const menosUm = -1;
+    let fullPath = '';
+    if (location.substr(location.length - 1) === '/') {
+      fullPath = `http://localhost:3000${location.slice(zero, menosUm)}`;
+    } else {
+      fullPath = `http://localhost:3000${location}`;
+    }
+    const tempElement = document.createElement('textarea');
+    tempElement.value = fullPath;
+    tempElement.setAttribute('readonly', '');
+    tempElement.style.position = 'absolute';
+    tempElement.style.left = '-9999px';
+    document.body.appendChild(tempElement);
+    tempElement.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempElement);
+    const linkCopy = document.createElement('p');
+    linkCopy.innerHTML = 'Link copiado!';
+    // document.querySelector('.container-cards').appendChild(linkCopy);
   };
 
   const number = 5;
@@ -89,7 +106,7 @@ const DetalhesComida = () => {
               <div>
                 <button
                   type="button"
-                  onClick={ handleShareClick }
+                  onClick={ handleShareIcon }
                 >
                   <img
                     data-testid="share-btn"
