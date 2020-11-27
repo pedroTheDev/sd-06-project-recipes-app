@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
@@ -6,16 +6,19 @@ import RecipesList from '../components/RecipesList';
 import Footer from '../components/Footer';
 import { addRecipes, changeIsFetchin } from '../redux/actions/searchRecipes';
 import useFetch from '../helpers/effects/useFetch';
+import { fetchAPI } from '../helpers/APIRequests';
 
 function CockTail(props) {
-  const { history: { location: { pathname } }, recipes,
+  const { history: { location: { pathname } },
     pageConfig, fetchmap, dispatchRecipes, data,
     isFetchin, dispatchFetching } = props;
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const { header, recipe } = pageConfig;
   const { title } = header;
   const { inputText, radioSearchSelection } = data;
-  console.log('page:', title, 'varRecipeType:', recipe.type);
+  console.log('isLoading cocktail', isLoading);
   useFetch(
     title,
     inputText,
@@ -26,9 +29,27 @@ function CockTail(props) {
     fetchmap,
     recipe,
   );
-  console.log(title);
 
-  // useFetchOnMount(fetchmap, title, dispatchRecipes);
+  const allFoodRecipesEndPoint = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+  const allDrinkRecipesEndPoint = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+  useEffect(() => {
+    async function fetchData() {
+      let initialRecipes;
+      setIsLoading(true);
+      if (pathname === '/comidas') {
+        initialRecipes = await fetchAPI(allFoodRecipesEndPoint);
+        dispatchRecipes(initialRecipes);
+      } else {
+        initialRecipes = await fetchAPI(allDrinkRecipesEndPoint);
+        dispatchRecipes(initialRecipes);
+      }
+      setIsLoading(false);
+    }
+    fetchData();
+    return () => {
+      dispatchRecipes({ meals: [], drinks: [] });
+    };
+  }, []);
 
   return (
     <>
@@ -38,11 +59,11 @@ function CockTail(props) {
       />
       <RecipesList
         title={ title }
-        recipes={ recipes }
         fetchmap={ fetchmap }
         dispatchRecipes={ dispatchRecipes }
         recipeConfig={ recipe }
         pathname={ pathname }
+        isLoading={ isLoading }
       />
       <Footer />
     </>

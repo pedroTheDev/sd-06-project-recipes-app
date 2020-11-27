@@ -1,37 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 import RecipeCard from './RecipeCard';
 import findMatchInKeys from '../helpers/assets';
-import { fetchAPI } from '../helpers/APIRequests';
 
-export default function RecipesList(props) {
-  const { pathname, recipes, title, recipeConfig, dispatchRecipes } = props;
+function RecipesList(props) {
+  const { pathname, recipes, title, recipeConfig, isLoading } = props;
   const { type } = recipeConfig;
-  const [isLoading, setIsLoading] = useState(false);
-
-  const allFoodRecipesEndPoint = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
-  const allDrinkRecipesEndPoint = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
-
-  useEffect(() => {
-    async function fetchData() {
-      let initialRecipes;
-      setIsLoading(true);
-      if (pathname === '/comidas') {
-        initialRecipes = await fetchAPI(allFoodRecipesEndPoint);
-        dispatchRecipes(initialRecipes);
-      } else {
-        initialRecipes = await fetchAPI(allDrinkRecipesEndPoint);
-        dispatchRecipes(initialRecipes);
-      }
-      setIsLoading(false);
-    }
-    fetchData();
-  }, []);
+  console.log(pathname, recipes, 'recipeslist');
 
   const renderRecipesResults = () => {
-    console.log('recipesType', recipes[type]);
     const maxRecipesNumber = 12;
-    if (recipes[type]) {
+    if (recipes && recipes[type] && recipes[type].length > 1) {
       if (recipes[type].length > 1) {
         return (
           recipes[type].filter((_recipe, index) => index < maxRecipesNumber)
@@ -47,10 +27,9 @@ export default function RecipesList(props) {
   };
 
   const renderRedirectToSingleResult = () => {
-    const results = recipes[type];
-    const recipe = results[0];
-    if (recipes[type]) {
-      console.log('recipe:', recipe, 'recipes:', recipes, 'results:', results);
+    if (recipes && recipes[type]) {
+      const results = recipes[type];
+      const recipe = results[0];
       if (recipes[type].length === 1) {
         const id = findMatchInKeys('id', recipe);
         return <Redirect to={ `${title.toLowerCase()}/${recipe[id]}` } />;
@@ -63,6 +42,7 @@ export default function RecipesList(props) {
       {renderRedirectToSingleResult()}
       {renderRecipesResults()}
     </>
+
   );
 
   const render = () => {
@@ -74,3 +54,9 @@ export default function RecipesList(props) {
 
   return render();
 }
+
+const mapStateToProps = (state) => ({
+  recipes: state.searchRecipes.recipes,
+});
+
+export default connect(mapStateToProps, null)(RecipesList);

@@ -63,13 +63,13 @@ const initialState = {
   explorarComidasLocalOrigem: {
     header: {
       profileButton: true,
-      searchButton: false,
+      searchButton: true,
       title: 'Explorar Origem',
     },
   },
   perfil: {
     header: {
-      profileButton: false,
+      profileButton: true,
       searchButton: false,
       title: 'Perfil',
     },
