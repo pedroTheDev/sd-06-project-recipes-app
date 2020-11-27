@@ -2,7 +2,7 @@
 
 const fetchMock = require('../mocks/fetch');
 
-describe.skip('70 - Implemente os elementos da tela de explorar bebidas ou comidas respeitando os atributos descritos no protótipo', () => {
+describe('70 - Implemente os elementos da tela de explorar bebidas ou comidas respeitando os atributos descritos no protótipo', () => {
   it('Tem os data-testids corretos para a tela de explorar comidas', () => {
     cy.visit('http://localhost:3000/explorar/comidas');
 
@@ -20,7 +20,7 @@ describe.skip('70 - Implemente os elementos da tela de explorar bebidas ou comid
   });
 });
 
-describe.skip('71 - Desenvolva 3 botões: um para explorar por ingrediente, um para explorar por local de origem e um para pegar uma receita aleatória', () => {
+describe('71 - Desenvolva 3 botões: um para explorar por ingrediente, um para explorar por local de origem e um para pegar uma receita aleatória', () => {
   it('Tem os botões "Por Ingredientes", "Por Local de Origem" e "Me Surpreenda!" para a tela de explorar comidas', () => {
     cy.visit('http://localhost:3000/explorar/comidas');
 

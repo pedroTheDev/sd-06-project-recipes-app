@@ -9,3 +9,5 @@ export { default as Drinks } from './Drinks';
 export { default as DoneRecipes } from './DoneRecipes';
 export { default as FavRecipes } from './FavRecipes';
 export { default as ExploreRecipes } from './ExploreRecipes';
+export { default as ExplorerFoods } from './ExplorerFoods';
+export { default as ExplorerDrinks } from './ExplorerDrinks';
