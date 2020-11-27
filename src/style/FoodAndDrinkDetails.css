@@ -2,3 +2,12 @@
   position: fixed;
   bottom: 0px;
 }
+.share-btn {
+  background-image: url("../images/shareIcon.svg");
+}
+.favorite {
+  background-image: url("../images/blackHeartIcon.svg");
+}
+.non-favorite {
+  background-image: url("../images/whiteHeartIcon.svg");
+}

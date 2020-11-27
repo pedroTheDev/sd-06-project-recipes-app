@@ -10,6 +10,8 @@ function FoodDetails() {
   const [foodDetails, setFoodDetails] = useState([]);
   const [ingredients, setIngredients] = useState('');
   const [apiResult, setApiResult] = useState([]);
+  const [spanHidden, setSpanHidden] = useState(true);
+  const [favoriteFood, setFavoriteFood] = useState("non-favorite");
 
   console.log(foodDetails.meals);
 
@@ -40,6 +42,27 @@ function FoodDetails() {
     localStorage.setItem('hiddenButtonFood', true);
   }
 
+  function copyToClipBoard(text) {
+    const input = document.body.appendChild(document.createElement('input'));
+    input.value = text;
+    input.focus();
+    input.select();
+    document.execCommand('copy');
+    input.parentNode.removeChild(input);
+    setSpanHidden(false);
+  }
+
+  function handleFavoriteFood() {
+    if (favoriteFood === 'non-favorite') {
+      setFavoriteFood('favorite');
+      console.log('entrou1', favoriteFood);
+    }
+    if (favoriteFood === 'favorite') {
+      setFavoriteFood('non-favorite');
+      console.log('entrou2', favoriteFood);
+    }
+  }
+
   return (
     <div>
       <img
@@ -59,17 +82,18 @@ function FoodDetails() {
         <track src="" kind="captions" />
       </video>
       <div>
-        { apiResult.drinks && apiResult.drinks.slice(12, 18).map((element, idx) => (
+        { apiResult.drinks && apiResult.drinks.slice(0, 6).map((element, idx) => (
           <DrinkRecomendCard element={element} idx={idx} key={element.idDrink} />)) }
       </div>
-      <button type="button" data-testid="share-btn">Compartilhar</button>
-      <button type="button" data-testid="favorite-btn">Favorito</button>
+      <button type="button" data-testid="share-btn" className="share-btn" onClick={ () => copyToClipBoard(document.URL) }>Compartilhar</button>
+      <button type="button" data-testid="favorite-btn" className={ favoriteFood } onClick={ handleFavoriteFood }>Favorito</button>
       <Link to={`/comidas/${foodDetails.meals && foodDetails.meals[0].idMeal}/in-progress`}>
         <button type="button" className="start-btn" data-testid="start-recipe-btn" hidden={localStorage.getItem('hiddenButtonFood')} onClick={handleClick}>Iniciar Receita</button>
       </Link>
       <Link to={`/comidas/${foodDetails.meals && foodDetails.meals[0].idMeal}/in-progress`}>
         <button type="button" className="start-btn" data-testid="start-recipe-btn" hidden={!localStorage.getItem('hiddenButtonFood')} onClick={handleClick}>Continuar Receita</button>
       </Link>
+      <span hidden={ spanHidden }>Link copiado!</span>
     </div>
   );
 }
