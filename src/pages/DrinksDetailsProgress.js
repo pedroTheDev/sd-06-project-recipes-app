@@ -3,7 +3,7 @@ import React from 'react';
 function DrinksDetailsProgress() {
   return (
     <div>
-      Food details Progress
+      DRIIIIIIIINK details Progress
     </div>
   );
 }
