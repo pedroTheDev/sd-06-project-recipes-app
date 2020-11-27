@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { connect, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import splitPathname from '../utils/splitPathname';
-import recomendationsThunk from '../redux/actions/pageDetailsFetcher';
 import recipeDetailsProcessing from '../utils/recipeDetailsProcessing';
 import checkRecipeInProgress from '../utils/checkRecipeInProgress';
 import checkSavedRecipe from '../utils/checkSavedRecipe';
 import checkFavoriteRecipe from '../utils/checkFavoriteRecipe';
 import DetailAndProgressBody from '../components/DetailAndProgressBody';
-function ReceitaProgresso(
-  { location: { pathname } }
-) {
 
+function ReceitaProgresso(
+  { location: { pathname } },
+) {
   const [path, id, page] = splitPathname(pathname);
   const [recipe, setRecipe] = useState([]);
   const [disableButton, setdisableButton] = useState('visible');
@@ -28,8 +25,7 @@ function ReceitaProgresso(
     setWasCopied,
   };
 
-  const history = useHistory();
-
+  console.log(wasStarted);
   useEffect(() => {
     recipeDetailsProcessing(id, path, setRecipe);
   }, []);
