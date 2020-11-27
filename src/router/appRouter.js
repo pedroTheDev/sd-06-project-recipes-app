@@ -4,7 +4,7 @@ import { Login,
   Foods, Drinks, Profile,
   FoodsDetails, DrinkDetails,
   FoodInProgress, DrinkInProgress,
-  DoneRecipes, FavRecipes } from '../pages';
+  DoneRecipes, FavRecipes, ExploreRecipes } from '../pages';
 
 export default class AppRouter extends React.Component {
   render() {
@@ -45,11 +45,11 @@ export default class AppRouter extends React.Component {
           path="/bebidas/:id/in-progress"
           render={ (props) => <DrinkInProgress { ...props } /> }
         />
-        {/* <Route
+        <Route
           exact
           path="/explorar"
-          component={ Explorer }
-        /> */}
+          component={ ExploreRecipes }
+        />
         {/* <Route
           exact
           path="/explorar/comidas"
