@@ -17,7 +17,7 @@ function RecipesAppProvider({ children }) {
       redirect: false,
     };
     if (result.meals === null) {
-      return alert('Sinto muito, não encontramos nenhuma receita para esses filtros');
+      return alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
     }
     if (result.meals.length === 1) {
       resultReturn.redirect = true;
@@ -29,13 +29,14 @@ function RecipesAppProvider({ children }) {
 
   const setFetchDrink = async (type, key) => {
     const result = await fetchDrink(type, key);
+    console.log('Result: ',result);
     setData(result);
     const resultReturn = {
       result,
       redirect: false,
     };
     if (result.drinks === null) {
-      return alert('Sinto muito, não encontramos nenhuma receita para esses filtros');
+      return alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
     }
     if (result.drinks.length === 1) {
       resultReturn.redirect = true;

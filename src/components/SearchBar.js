@@ -9,6 +9,9 @@ export default function SearchBar() {
 
   const searchMeal = async () => {
     const meal = await setFetchMeal(filterType, product);
+    if (!meal) {
+      return null;
+    }
     const id = meal.result.meals[0].idMeal;
     if (meal.redirect) {
       return window.location.replace(`/comidas/${id}`);
@@ -17,6 +20,9 @@ export default function SearchBar() {
 
   const searchDrink = async () => {
     const drink = await setFetchDrink(filterType, product);
+    if (!drink) {
+      return null;
+    }
     const id = drink.result.drinks[0].idDrink;
     if (drink.redirect) {
       return window.location.replace(`/bebidas/${id}`);
