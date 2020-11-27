@@ -23,7 +23,7 @@ const DrinksDetails = (props) => {
     recipeRecommendations,
     setRecipeRecommendations,
   } = recipeObject;
-  const { match } = props;
+  const { match, history } = props;
   const { params } = match;
   const { id } = params;
 
@@ -65,6 +65,10 @@ const DrinksDetails = (props) => {
       return false;
     }
     return true;
+  };
+
+  const handleStartRecipe = () => {
+    history.push({ pathname: `/bebidas/${ id }/in-progress`});
   };
 
   useEffect(() => {
@@ -123,6 +127,7 @@ const DrinksDetails = (props) => {
             type="button"
             data-testid="start-recipe-btn"
             className="start-recipe-btn"
+            onClick={ handleStartRecipe }
           >
             Iniciar Receita
           </button>
