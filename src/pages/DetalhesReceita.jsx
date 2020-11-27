@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import {
   requestApiFoodDetails,
 } from '../services/requestFood';
@@ -55,6 +56,19 @@ function DetalhesReceita(props) {
     }
   };
 
+  const copyBoard = () => {
+    const url = `http://localhost:3000/comidas/${props.match.params.id}`;
+    const input = document.body.appendChild(document.createElement('input'));
+    input.value = url;
+    input.select();
+    document.execCommand('copy');
+    input.parentNode.removeChild(input);
+    const divBtns = document.getElementById('btns');
+    const newSpan = document.createElement('span');
+    newSpan.innerHTML = 'Link copiado!';
+    divBtns.appendChild(newSpan);
+  };
+
   useEffect(() => {
     ingredientsFunc();
     embedVideo();
@@ -70,10 +84,12 @@ function DetalhesReceita(props) {
       <h2 data-testid="recipe-title">{detailsFood.strMeal}</h2>
       <h3 data-testid="recipe-category">{detailsFood.strCategory}</h3>
       <h4 data-testid="instructions">{detailsFood.strInstructions}</h4>
-      <button type="button" data-testid="share-btn">
-        <img src={ buttonShare } alt="button-share" />
-      </button>
-      <button type="button" data-testid="favorite-btn">Favorite</button>
+      <div id="btns">
+        <button type="button" data-testid="share-btn" onClick={ copyBoard }>
+          <img src={ buttonShare } alt="button-share" />
+        </button>
+        <button type="button" data-testid="favorite-btn">Favorite</button>
+      </div>
       {arrayIngredients.map((element, index) => (
         <h5
           data-testid={ `${index}-ingredient-name-and-measure` }
@@ -113,5 +129,13 @@ function DetalhesReceita(props) {
     </div>
   );
 }
+
+DetalhesReceita.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
+};
 
 export default DetalhesReceita;

@@ -52,6 +52,19 @@ function DetalhesBebida(props) {
     recommendDrinkFunction();
   }, [detailsDrink]);
 
+  const copyBoard = () => {
+    const url = `http://localhost:3000/bebidas/${props.match.params.id}`;
+    const input = document.body.appendChild(document.createElement('input'));
+    input.value = url;
+    input.select();
+    document.execCommand('copy');
+    input.parentNode.removeChild(input);
+    const divBtns = document.getElementById('btns');
+    const newSpan = document.createElement('span');
+    newSpan.innerHTML = 'Link copiado!';
+    divBtns.appendChild(newSpan);
+  };
+
   if (detailsDrink.length === zero) {
     return <div>Loading...</div>;
   }
@@ -64,10 +77,12 @@ function DetalhesBebida(props) {
         <h3>{detailsDrink.strCategory}</h3>
       </div>
       <h4 data-testid="instructions">{detailsDrink.strInstructions}</h4>
-      <button type="button" data-testid="share-btn">
-        <img src={ buttonShare } alt="img-button-share" />
-      </button>
-      <button type="button" data-testid="favorite-btn">Favorite</button>
+      <div id="btns">
+        <button type="button" data-testid="share-btn" onClick={ copyBoard }>
+          <img src={ buttonShare } alt="img-button-share" />
+        </button>
+        <button type="button" data-testid="favorite-btn">Favorite</button>
+      </div>
       {arrayIngredients.map((element, index) => (
         <h5
           data-testid={ `${index}-ingredient-name-and-measure` }
