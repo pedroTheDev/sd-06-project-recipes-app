@@ -1,14 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import RecipeContext from '../hooks/RecipeContext';
-import Slider from 'react-slick';
 import recipeRequest from '../services/recipeRequest';
 import shareIcon from '../images/share.png';
 import favIcon from '../images/favHeart.png';
 import '../Style/RecipeDetails.css';
 import '../Style/carousel.css';
-// import "slick-carousel/slick/slick.css";
-// import "slick-carousel/slick/slick-theme.css";
 
 const RecipeDetails = () => {
   const six = 6;
@@ -139,6 +136,8 @@ const RecipeDetails = () => {
       ));
     }
     if (recipeDetailDrink[0].strDrink) {
+      const px = 'px';
+      const THIRTY = 30;
       return recipeDetailDrink.map((drink, index) => (
         <div key={ index } className="details-container">
           <img
@@ -147,12 +146,21 @@ const RecipeDetails = () => {
             src={ drink.strDrinkThumb }
           />
           <div className="details-nav">
-            <button type="button" data-testid="favorite-btn"><img src={favIcon} alt="favorite" /></button>
+            <button type="button" data-testid="favorite-btn">
+              <img src={favIcon} alt="favorite" />
+            </button>
             <div className="name-category">
-              <p data-testid="recipe-title" style={{fontSize: 30 + 'px'}}>{ drink.strDrink }</p>
+              <p 
+                data-testid="recipe-title"
+                style={ {fontSize: THIRTY + px} }
+              >
+                { drink.strDrink }
+              </p>
               <p data-testid="recipe-category">{drink.strAlcoholic}</p>
             </div>
-            <button type="button" data-testid="share-btn"><img src={shareIcon} alt="share" /></button>
+            <button type="button" data-testid="share-btn">
+              <img src={ shareIcon } alt="share" />
+            </button>
           </div>
           <div className="recipe-ingredients">
             INGREDIENTS
@@ -165,34 +173,31 @@ const RecipeDetails = () => {
             <p data-testid="instructions">{ drink.strInstructions }</p>
           </div>
           <div className="carousel scroller">
-            <span class="btn prev"> Prev </span>
-            <span class="btn next"> Next </span>
-              {
-                foodRecommendation && foodRecommendation.length && foodRecommendation
-                  .filter((_, index) => index < six)
-                  .map((meals, index) => (
-                    <div
-                          className="card"
-                          data-testid={ `${index}-recomendation-card` }
-                          key="index"
-                        >
-                      <Link
-                        onClick={ () => setIds(meals.idMeal) }
-                        to={ `/comidas/${meals.idMeal}` }
-                        key={ index }
-                      >
-                        <img
-                          src={ meals.strMealThumb }
-                          data-testid={ `${index}-card-img` }
-                          alt={ meals.strMeal }
-                        />
-                        <p className="carousel-item" data-testid={ `${index}-recomendation-title` }>{ meals.strMeal}</p>
-                      </Link>
-                    </div>
-                  ))
-                }
+            {
+              foodRecommendation && foodRecommendation.length && foodRecommendation
+                .filter((_) => index < six)
+                .map((meals) => (
+                  <div
+                    className="card"
+                    data-testid={ `${index}-recomendation-card` }
+                    key="index"
+                  >
+                    <Link
+                      onClick={ () => setIds(meals.idMeal) }
+                      to={ `/comidas/${meals.idMeal}` }
+                      key={ index }
+                    >
+                      <img
+                        src={ meals.strMealThumb }
+                        data-testid={ `${index}-card-img` }
+                        alt={ meals.strMeal }
+                      />
+                      <p className="carousel-item" data-testid={ `${index}-recomendation-title` }>{ meals.strMeal}</p>
+                    </Link>
+                  </div>
+                ))
+              }
           </div>
-                {/* </Slider> */}
           <button
             type="button"
             data-testid="start-recipe-btn"

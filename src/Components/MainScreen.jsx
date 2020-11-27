@@ -57,7 +57,6 @@ export default function MainScreen() {
             className="filter-button"
             onClick={ handleFilters }
             id="all"
-            type="button"
             data-testid="All-category-filter"
           >
             All
@@ -87,7 +86,6 @@ export default function MainScreen() {
             className="filter-button"
             onClick={ handleFilters }
             id="all"
-            type="button"
             data-testid="All-category-filter"
           >
             All
@@ -118,9 +116,10 @@ export default function MainScreen() {
       return foodRecipes.filter((_, index) => index < twelve)
         .map((food, index) => (
           <div
-              data-testid={ `${index}-recipe-card` }
-              className="card-container"
-            >
+            data-testid={ `${index}-recipe-card` }
+            className="card-container"
+            key={ index }
+          >
             <Link
               to={ `/comidas/${food.idMeal}` }
               onClick={ () => handleIds(food) }
@@ -140,7 +139,11 @@ export default function MainScreen() {
     if (pathname === '/bebidas' && drinkRecipes) {
       return (drinkRecipes.filter((_, index) => index < twelve)
         .map((drinks, index) => (
-          <div data-testid={ `${index}-recipe-card` } key={index} className="card-container">
+          <div
+            data-testid={ `${index}-recipe-card` }
+            key={ index }
+            className="card-container"
+          >
             <Link
               onClick={ () => setIds(drinks.idDrink) }
               to={ `/bebidas/${drinks.idDrink}` }
