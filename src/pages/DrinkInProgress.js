@@ -22,16 +22,16 @@ const DrinkInProgress = ({ match: { params: { id } } }) => {
   } = recipeObject;
 
   const ingredientsMount = (jsonRecipe) => {
-    const initalIndex = 0;
+    const initialIndex = 0;
     const halfIndex = 2;
     const ingredients = Object.entries(jsonRecipe.drinks[0])
       .filter((item) => item[0].includes('Ingredient') || item[0].includes('Measure'))
-      .filter((ar) => ar[1] !== null && ar[1] !== '')
+      .filter((ar) => ar[1] !== null && ar[1] !== ' ' && ar[1] !== '')
       .map((ar2) => ar2[1]);
     const ingredientsMeasures = [];
-    for (let i = initalIndex; i < ingredients.length / halfIndex; i += 1) {
-      ingredientsMeasures.push(ingredients[i]
-        .concat(' - ', `${ingredients[i + ingredients.length / halfIndex]} `));
+    for (let i = initialIndex; i < ingredients.length / halfIndex; i += 1) {
+      ingredientsMeasures
+        .push(`${ingredients[i]} - ${ingredients[i + ingredients.length / halfIndex]}`);
     }
     setRecipeIngredients(ingredientsMeasures);
   };

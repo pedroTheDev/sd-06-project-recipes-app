@@ -21,24 +21,24 @@ const FoodsDetails = (props) => {
     setRecipeInstructions,
     recipeVideo,
     setRecipeVideo,
-    recipeRecomendations,
-    setRecipeRecomendations,
+    recipeRecommendations,
+    setRecipeRecommendations,
   } = recipeObject;
   const { match } = props;
   const { params } = match;
   const { id } = params;
 
   const ingredientsMount = (jsonRecipe) => {
-    const initalIndex = 0;
+    const initialIndex = 0;
     const halfIndex = 2;
     const ingredients = Object.entries(jsonRecipe.meals[0])
       .filter((item) => item[0].includes('Ingredient') || item[0].includes('Measure'))
-      .filter((ar) => ar[1] !== null && ar[1] !== '')
+      .filter((ar) => ar[1] !== null && ar[1] !== ' ' && ar[1] !== '')
       .map((ar2) => ar2[1]);
     const ingredientsMeasures = [];
-    for (let i = initalIndex; i < ingredients.length / halfIndex; i += 1) {
-      ingredientsMeasures.push(ingredients[i]
-        .concat(' - ', `${ingredients[i + ingredients.length / halfIndex]} `));
+    for (let i = initialIndex; i < ingredients.length / halfIndex; i += 1) {
+      ingredientsMeasures
+        .push(`${ingredients[i]} - ${ingredients[i + ingredients.length / halfIndex]}`);
     }
     setRecipeIngredients(ingredientsMeasures);
   };
@@ -62,11 +62,11 @@ const FoodsDetails = (props) => {
     ingredientsMount(jsonRecipe);
   };
 
-  const fecthRecomendations = async () => {
+  const fetchRecommendations = async () => {
     const path = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
     const getRecipe = await fetch(path);
     const jsonRecipe = await getRecipe.json();
-    setRecipeRecomendations([jsonRecipe.drinks[0], jsonRecipe.drinks[1]]);
+    setRecipeRecommendations([jsonRecipe.drinks[0], jsonRecipe.drinks[1]]);
   };
 
   const buttonMount = () => {
@@ -79,7 +79,7 @@ const FoodsDetails = (props) => {
   useEffect(() => {
     setTitle('Food Details');
     fetchRecipe();
-    fecthRecomendations();
+    fetchRecommendations();
   }, []);
 
   return (
@@ -118,10 +118,10 @@ const FoodsDetails = (props) => {
       <iframe src={ recipeVideo } title={ recipeTitle } data-testid="video" />
 
       <div>
-        {recipeRecomendations.map((item, index) => (
+        {recipeRecommendations.map((item, index) => (
           <div
             key={ item.idDrink }
-            data-testid={ `${index}-recomendation-card` }
+            data-testid={ `${index}-recommendation-card` }
           >
             {item.strDrink}
           </div>
