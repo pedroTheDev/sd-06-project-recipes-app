@@ -27,16 +27,27 @@ function Detail() {
   }, []);
 
   const setIngredientAndMeasure = () => {
+    const twenty = 20;
     const ingredients = [];
-    for (let i = 1; i <= 20; i += 1) {
+    console.log(recipes);
+    for (let i = 1; i <= twenty; i += 1) {
       const keyName = `strIngredient${i}`;
-      if (recipes.meals[0][keyName] !== ('' || null)) {
-        ingredients.push(recipes.meals[0][keyName]);
+      const measureKeyName = `strMeasure${i}`;
+      if (recipes[0][keyName] !== ('' || null)) {
+        const obj = {
+          name: recipes[0][keyName],
+          measure: recipes[0][measureKeyName],
+        };
+        ingredients.push(obj);
       }
     }
 
     return ingredients;
   };
+
+  useEffect(() => {
+    setIngredientAndMeasure();
+  }, [recipes]);
 
   if (!recipes) {
     return (
@@ -58,7 +69,7 @@ function Detail() {
         <ul>
           {
             setIngredientAndMeasure().map((ingredient, index) => (
-              <li key={ index }>{ingredient}</li>
+              <li key={ index }>{`- ${ingredient.name} - ${ingredient.measure}`}</li>
             ))
           }
         </ul>

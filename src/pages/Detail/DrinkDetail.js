@@ -30,8 +30,8 @@ function DrinkDetail() {
   return (
     <div>
       <SecondaryHeader
-        name={ recipes.strMeal }
-        img={ recipes.strMealThumb }
+        name={ recipes.strDrink }
+        img={ recipes.strDrinkThumb }
         category={ recipes.strAlcoholic }
       />
       <div className="ingredients-container">
