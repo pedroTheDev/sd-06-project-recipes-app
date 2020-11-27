@@ -25,7 +25,6 @@ function ReceitaProgresso(
     setWasCopied,
   };
 
-  console.log(wasStarted);
   useEffect(() => {
     recipeDetailsProcessing(id, path, setRecipe);
   }, []);
@@ -35,7 +34,6 @@ function ReceitaProgresso(
     checkRecipeInProgress(path, recipe, setWasStarted);
     setIsFav(checkFavoriteRecipe(id));
   }, [recipe]);
-  console.log(page);
 
   return (
     <main>

@@ -1,32 +1,44 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-function IngredientsCheck({ recipe, path }) {
+function IngredientsCheck({ recipe, path, id }) {
   const { ingredients = [], measures = [] } = recipe;
   const [ingredientsCheck, setIngredientsCheck] = useState({});
 
-  const getLocalStorageInfo = () => {
-    return JSON.parse(localStorage.getItem('inProgressRecipes'));
-  };
+  const getLocalStorageInfo = () => JSON.parse(localStorage.getItem('inProgressRecipes'));
+
   useEffect(() => {
-    const retrievedLocalStorageInfo = getLocalStorageInfo();
     const key = path === 'comidas' ? 'meals' : 'cocktails';
-    if (retrievedLocalStorageInfo[key][recipe.id] !== undefined) {
+
+    const retrievedLocalStorageInfo = getLocalStorageInfo();
+
+    if (retrievedLocalStorageInfo === null) {
+      console.log('sem local storage');
+    } else if (retrievedLocalStorageInfo[key][id] !== undefined) {
+      console.log('local storage existe, mas TEM a chave desta receita');
+
+      const savedIngredients = retrievedLocalStorageInfo[key][id];
+
+      const unCheckedIngredients = ingredients.filter((ingredient) => (
+        !savedIngredients.includes(ingredient)
+      ));
+
       const ingredientsObj = {};
-      ingredients.forEach((ingredient) => {
+
+      unCheckedIngredients.forEach((ingredient) => {
         ingredientsObj[ingredient] = false;
-    });
+      });
+
+      savedIngredients.forEach((ingredient) => {
+        ingredientsObj[ingredient] = true;
+      });
+
+      setIngredientsCheck(ingredientsObj);
     }
-    const ingredientsObj = {};
-    ingredients.forEach((ingredient) => {
-      ingredientsObj[ingredient] = false;
-    });
-    setIngredientsCheck(ingredientsObj);
-  }, [recipe]);
+  }, []);
 
   useEffect(() => {
     if (recipe.id !== undefined && (Object.keys(ingredientsCheck)).length > 0) {
-      console.log(Object.keys(ingredientsCheck).length);
       saveProgressInLocalStorage();
     }
   }, [ingredientsCheck]);
@@ -41,13 +53,13 @@ function IngredientsCheck({ recipe, path }) {
   };
 
   const saveProgressInLocalStorage = () => {
-    console.log('Recipe id:' , recipe.id);
-    if(recipe.id === undefined) return null;
+    console.log('Recipe id:', recipe.id);
+    if (recipe.id === undefined) return null;
     const ingredients = Object.keys(ingredientsCheck);
     const status = Object.values(ingredientsCheck);
     const currentCheckedIngredients = JSON.parse(localStorage.getItem(
-      'inProgressRecipes'
-    )) || {'meals': {}, 'cocktails': {}};
+      'inProgressRecipes',
+    )) || { meals: {}, cocktails: {} };
     console.log(currentCheckedIngredients);
     const key = path === 'comidas' ? 'meals' : 'cocktails';
     const checkedIngToLocalStorage = ingredients.filter((ingredient, index) => (
@@ -59,6 +71,7 @@ function IngredientsCheck({ recipe, path }) {
 
   const handleCheckClick = (event) => {
     toggleIngredientCheck(event);
+    saveProgressInLocalStorage();
   };
 
   return (
@@ -74,6 +87,8 @@ function IngredientsCheck({ recipe, path }) {
               type="checkbox"
               id={ `${ingredient}` }
               onClick={ (event) => handleCheckClick(event) }
+              // checked
+              checked={ ingredientsCheck[ingredient] }
             />
             <span
               className={ ingredientsCheck[ingredient] && 'checked-text' }

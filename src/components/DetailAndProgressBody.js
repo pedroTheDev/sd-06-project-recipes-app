@@ -22,7 +22,6 @@ function DetailAndProgressBody({ recipe, recommendations, buttonsProps, page = n
     setWasCopied,
     video,
   } = buttonsProps;
-  console.log(path);
 
   const renderRecommendAndVideoIfInDetails = (url) => {
     if (url !== 'in-progress') {
@@ -66,7 +65,7 @@ function DetailAndProgressBody({ recipe, recommendations, buttonsProps, page = n
       );
     }
     return (
-      <IngredientsCheck recipe={ recipe } path={ path }/>
+      <IngredientsCheck recipe={ recipe } path={ path } id={ id } />
     );
   };
 
