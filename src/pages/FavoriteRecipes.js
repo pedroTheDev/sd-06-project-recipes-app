@@ -54,6 +54,7 @@ class FavoriteRecipes extends React.Component {
             id="all"
             data-testid="filter-by-all-btn"
             type="button"
+            className="food-filters"
             onClick={ this.setFilterState }
           >
             All
@@ -63,6 +64,7 @@ class FavoriteRecipes extends React.Component {
             id="food"
             data-testid="filter-by-food-btn"
             type="button"
+            className="food-filters"
             onClick={ this.setFilterState }
           >
             Food
@@ -72,6 +74,7 @@ class FavoriteRecipes extends React.Component {
             id="drink"
             data-testid="filter-by-drink-btn"
             type="button"
+            className="food-filters"
             onClick={ this.setFilterState }
           >
             Drinks
