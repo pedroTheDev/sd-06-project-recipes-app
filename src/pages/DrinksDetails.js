@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import HeaderContext from '../context/HeaderContext';
 import RecipesContext from '../context/RecipesContext';
-import shareIcon from '../images/shareIcon.svg';
 import likeIcon from '../images/whiteHeartIcon.svg';
 import fullLikeIcon from '../images/blackHeartIcon.svg';
+import ShareButton from '../components/ShareButton';
 import './DrinksDetails.css';
 
 const DrinksDetails = (props) => {
@@ -29,25 +29,24 @@ const DrinksDetails = (props) => {
     setRecipeIngredients,
     recipeInstructions,
     setRecipeInstructions,
-    recipeRecomendations,
-    setRecipeRecomendations,
+    recipeRecommendations,
+    setRecipeRecommendations,
   } = recipeObject;
-  const { match } = props;
+  const { match, history: { location: { pathname } } } = props;
   const { params } = match;
   const { id } = params;
 
   const ingredientsMount = (jsonRecipe) => {
-    const initalIndex = 0;
+    const initialIndex = 0;
     const halfIndex = 2;
     const ingredients = Object.entries(jsonRecipe.drinks[0])
       .filter((item) => item[0].includes('Ingredient') || item[0].includes('Measure'))
-      .filter((ar) => ar[1] !== null && ar[1] !== '')
+      .filter((ar) => ar[1] !== null && ar[1] !== ' ' && ar[1] !== '')
       .map((ar2) => ar2[1]);
-    console.log(ingredients);
     const ingredientsMeasures = [];
-    for (let i = initalIndex; i < ingredients.length / halfIndex; i += 1) {
-      ingredientsMeasures.push(ingredients[i]
-        .concat(' - ', `${ingredients[i + ingredients.length / halfIndex]} `));
+    for (let i = initialIndex; i < ingredients.length / halfIndex; i += 1) {
+      ingredientsMeasures
+        .push(`${ingredients[i]} - ${ingredients[i + ingredients.length / halfIndex]}`);
     }
     setRecipeIngredients(ingredientsMeasures);
   };
@@ -56,7 +55,6 @@ const DrinksDetails = (props) => {
     const path = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
     const getRecipe = await fetch(path);
     const jsonRecipe = await getRecipe.json();
-    console.log(jsonRecipe.drinks[0]);
     setRecipeTitle(jsonRecipe.drinks[0].strDrink);
     setRecipeCategory(jsonRecipe.drinks[0].strCategory);
     setRecipeAlc(jsonRecipe.drinks[0].strAlcoholic);
@@ -65,11 +63,11 @@ const DrinksDetails = (props) => {
     ingredientsMount(jsonRecipe);
   };
 
-  const fecthRecomendations = async () => {
+  const fetchRecommendations = async () => {
     const path = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
     const getRecipe = await fetch(path);
     const jsonRecipe = await getRecipe.json();
-    setRecipeRecomendations([jsonRecipe.meals[0], jsonRecipe.meals[1]]);
+    setRecipeRecommendations([jsonRecipe.meals[0], jsonRecipe.meals[1]]);
   };
 
   const buttonMount = () => {
@@ -129,7 +127,7 @@ const DrinksDetails = (props) => {
   };
 
   const handleClick = () => {
-    if (localStorage.getItem('inProgressRecipes') === null) {
+    if (!JSON.parse(localStorage.getItem('inProgressRecipes'))) {
       const inProgressRecipes = {
         cocktails: {
           [id]: [],
@@ -137,10 +135,6 @@ const DrinksDetails = (props) => {
         meals: {},
       };
       localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
-    } else {
-      const recipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
-      recipes.cocktails[id] = [];
-      localStorage.setItem('inProgressRecipes', JSON.stringify(recipes));
     }
     const path = `/bebidas/${id}/in-progress`;
     setRecipesInProgress(recipesInProgress.concat(id));
@@ -164,7 +158,7 @@ const DrinksDetails = (props) => {
   useEffect(() => {
     setTitle('Drink Details');
     fetchRecipe();
-    fecthRecomendations();
+    fetchRecommendations();
     setButtonTitle();
     setLikeImage();
   }, []);
@@ -183,7 +177,7 @@ const DrinksDetails = (props) => {
       <div>
         <p data-testid="recipe-title">{recipeTitle}</p>
         <div>
-          <img src={ shareIcon } alt="share" data-testid="share-btn" />
+          <ShareButton path={ pathname } />
           <button type="button" onClick={ handleImage }>
             <img
               src={ btnImg }
@@ -209,10 +203,10 @@ const DrinksDetails = (props) => {
       <h3 data-testid="instructions">{recipeInstructions}</h3>
 
       <div>
-        {recipeRecomendations.map((item, index) => (
+        {recipeRecommendations.map((item, index) => (
           <div
             key={ item.idMeal }
-            data-testid={ `${index}-recomendation-card` }
+            data-testid={ `${index}-recommendation-card` }
           >
             {item.strMeal}
           </div>
@@ -241,7 +235,12 @@ DrinksDetails.propTypes = {
       id: PropTypes.string,
     }),
   }).isRequired,
-  history: PropTypes.shape(PropTypes.object).isRequired,
+  history: PropTypes.shape({
+    location: PropTypes.shape({
+      pathname: PropTypes.string,
+    }),
+    push: PropTypes.func,
+  }).isRequired,
 };
 
 export default DrinksDetails;

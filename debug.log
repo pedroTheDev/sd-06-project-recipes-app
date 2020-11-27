@@ -5,3 +5,7 @@
 [1124/165715.428:ERROR:directory_reader_win.cc(43)] FindFirstFile: O sistema n�o pode encontrar o caminho especificado. (0x3)
 [1124/184951.512:ERROR:directory_reader_win.cc(43)] FindFirstFile: O sistema n�o pode encontrar o caminho especificado. (0x3)
 
+[1127/150825.356:ERROR:directory_reader_win.cc(43)] FindFirstFile: O sistema n�o pode encontrar o caminho especificado. (0x3)
+[1127/180122.935:ERROR:directory_reader_win.cc(43)] FindFirstFile: O sistema n�o pode encontrar o caminho especificado. (0x3)
+[1127/183903.577:ERROR:directory_reader_win.cc(43)] FindFirstFile: O sistema n�o pode encontrar o caminho especificado. (0x3)
+[1127/190333.608:ERROR:directory_reader_win.cc(43)] FindFirstFile: O sistema n�o pode encontrar o caminho especificado. (0x3)
