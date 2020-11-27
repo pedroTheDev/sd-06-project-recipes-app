@@ -24,8 +24,6 @@ function Recommended() {
     })();
   }, []);
 
-  console.log(recommended);
-
   const renderRecommended = () => (
     <div className="cards-container">
       {recommended.map((item, id) => {
