@@ -28,7 +28,6 @@ function Header({ name, button }) {
         </button>
         <h1 data-testid="page-title">{name}</h1>
         { button && (
-
           <button
             type="button"
             className="logo-search"

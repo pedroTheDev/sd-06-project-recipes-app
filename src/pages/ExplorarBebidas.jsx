@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
@@ -38,5 +39,11 @@ function ExplorarBebidas({ history }) {
     </>
   );
 }
+
+ExplorarBebidas.protoTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 export default ExplorarBebidas;
