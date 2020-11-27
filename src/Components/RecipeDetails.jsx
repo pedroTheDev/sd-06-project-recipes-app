@@ -1,8 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import Clipboard from 'react-clipboard.js';
+import copy from 'clipboard-copy';
 import RecipeContext from '../hooks/RecipeContext';
 import recipeRequest from '../services/recipeRequest';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 const RecipeDetails = () => {
   const six = 6;
@@ -11,7 +13,10 @@ const RecipeDetails = () => {
     foodRecommendation,
     setFoodRecommendation,
     DrinkRecommendation,
+    handleLikes,
     setIds,
+    liked,
+    setLiked,
     setDrinkRecommendation } = useContext(RecipeContext);
   const [recipeDetailFood, setRecipeDetailFood] = useState([]);
   const [recipeDetailDrink, setRecipeDetailDrink] = useState('foi');
@@ -47,6 +52,16 @@ const RecipeDetails = () => {
   useEffect(() => {
     getAPI();
     getRecommendation();
+    if (!localStorage.favoriteRecipes) {
+      localStorage.favoriteRecipes = JSON.stringify([]);
+    }
+    const favoriteStorage = JSON.parse(localStorage.favoriteRecipes)
+      .filter((item) => item.id === ids);
+    if (favoriteStorage.length >= 1) {
+      setLiked(blackHeartIcon);
+    } else {
+      setLiked(whiteHeartIcon);
+    }
   }, []);
 
   const handleIngredients = (recipe, initial, middle, end) => {
@@ -62,6 +77,7 @@ const RecipeDetails = () => {
   };
 
   const handleCopy = () => {
+    copy(window.location.href);
     const TWO = 2000;
     setCopied('Link copiado!');
     setInterval(() => setCopied(''), TWO);
@@ -77,18 +93,22 @@ const RecipeDetails = () => {
             src={ food.strMealThumb }
           />
           <h1 data-testid="recipe-title">{ food.strMeal }</h1>
-          <Clipboard
-            data-clipboard-text={ window.location.href }
+          <button
             onClick={ handleCopy }
             type="button"
             data-testid="share-btn"
           >
             Share
 
-          </Clipboard>
+          </button>
 
           {copied}
-          <button type="button" data-testid="favorite-btn">Favorite</button>
+          <button
+            onClick={ () => handleLikes(recipeDetailFood[0]) }
+            type="button"
+          >
+            <img data-testid="favorite-btn" src={ liked } alt="favorite logo" />
+          </button>
           <p data-testid="recipe-category">{ recipeDetailFood[0].strCategory }</p>
           {
             handleIngredients(food, NINE, TWENTY_NINE, FOURTY_NINE)
@@ -110,7 +130,7 @@ const RecipeDetails = () => {
                   >
                     <div
                       data-testid={ `${indx}-recomendation-card` }
-                      key="index"
+                      key={ indx }
                     >
                       <img
                         src={ drinks.strDrinkThumb }
@@ -139,24 +159,28 @@ const RecipeDetails = () => {
       ));
     }
     if (recipeDetailDrink[0].strDrink) {
-      return recipeDetailDrink.map((drink) => (
-        <div key="1">
+      return recipeDetailDrink.map((drink, index) => (
+        <div key={ index }>
           <img
             alt="product"
             data-testid="recipe-photo"
             src={ drink.strDrinkThumb }
           />
           <h1 data-testid="recipe-title">{ drink.strDrink }</h1>
-          <Clipboard
-            data-clipboard-text={ window.location.href }
+          <button
             onClick={ handleCopy }
             type="button"
             data-testid="share-btn"
           >
             Share
-          </Clipboard>
+          </button>
           { copied }
-          <button type="button" data-testid="favorite-btn">Favorite</button>
+          <button
+            onClick={ () => handleLikes(recipeDetailFood, recipeDetailDrink[0]) }
+            type="button"
+          >
+            <img data-testid="favorite-btn" src={ liked } alt="favorite logo" />
+          </button>
           <p data-testid="recipe-category">{drink.strAlcoholic}</p>
           {
             handleIngredients(drink, TWENTY_ONE, THIRTY_SIX, FIFTY_ONE)
@@ -165,23 +189,23 @@ const RecipeDetails = () => {
           <div>
             {
               foodRecommendation && foodRecommendation.length && foodRecommendation
-                .filter((_, index) => index < six)
-                .map((meals, index) => (
+                .filter((_, indx) => indx < six)
+                .map((meals, indexs) => (
                   <Link
                     onClick={ () => setIds(meals.idMeal) }
                     to={ `/comidas/${meals.idMeal}` }
-                    key={ index }
+                    key={ indexs }
                   >
                     <div
-                      data-testid={ `${index}-recomendation-card` }
+                      data-testid={ `${indexs}-recomendation-card` }
                       key="index"
                     >
                       <img
                         src={ meals.strMealThumb }
-                        data-testid={ `${index}-card-img` }
+                        data-testid={ `${indexs}-card-img` }
                         alt={ meals.strMeal }
                       />
-                      <p data-testid={ `${index}-card-name` }>{ meals.strMeal}</p>
+                      <p data-testid={ `${indexs}-card-name` }>{ meals.strMeal}</p>
                     </div>
                   </Link>
                 ))

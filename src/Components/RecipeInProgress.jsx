@@ -1,7 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import copy from 'clipboard-copy';
 import RecipeContext from '../hooks/RecipeContext';
 import recipeRequest from '../services/recipeRequest';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 const RecipeInProgress = () => {
   const history = useHistory();
@@ -9,8 +12,20 @@ const RecipeInProgress = () => {
   const id = pathname.split('/')[2];
   const [recipeDetailDrink, setRecipeDetailDrink] = useState([]);
   const [recipeDetailFood, setRecipeDetailFood] = useState([]);
+  const [copied, setCopied] = useState('');
   const [disable, setDisable] = useState(true);
-  const { inProgressRecipes } = useContext(RecipeContext);
+  const { inProgressRecipes,
+    handleLikes,
+    liked,
+    setLiked,
+  } = useContext(RecipeContext);
+  const NINE = 9;
+  const TWENTY_NINE = 29;
+  const FOURTY_NINE = 49;
+
+  const THIRTY_SIX = 36;
+  const TWENTY_ONE = 21;
+  const FIFTY_ONE = 51;
   const getAPI = async () => {
     const food = await recipeRequest(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
     const recipeFood = await food.meals;
@@ -20,16 +35,21 @@ const RecipeInProgress = () => {
     setRecipeDetailFood(recipeFood);
   };
 
-  const NINE = 9;
-  const TWENTY_NINE = 29;
-  const FOURTY_NINE = 49;
-
-  const THIRTY_SIX = 36;
-  const TWENTY_ONE = 21;
-  const FIFTY_ONE = 51;
-
   useEffect(() => {
     getAPI();
+    if (!localStorage.doneRecipes) {
+      localStorage.doneRecipes = JSON.stringify([]);
+    }
+    if (!localStorage.favoriteRecipes) {
+      localStorage.favoriteRecipes = JSON.stringify([]);
+    }
+    const favoriteStorage = JSON.parse(localStorage.favoriteRecipes)
+      .filter((item) => item.id === id);
+    if (favoriteStorage.length >= 1) {
+      setLiked(blackHeartIcon);
+    } else {
+      setLiked(whiteHeartIcon);
+    }
   }, []);
 
   const handleCheckbox = ({ target }) => {
@@ -75,6 +95,50 @@ const RecipeInProgress = () => {
       ));
   };
 
+  const handleFinishRecipe = () => {
+    const typeRecipe = pathname.split('/')[1];
+    if (typeRecipe === 'comidas') {
+      const doneFood = {
+        id: recipeDetailFood[0].idMeal,
+        type: 'comida',
+        area: recipeDetailFood[0].strArea,
+        category: recipeDetailFood[0].strCategory,
+        alcoholicOrNot: '',
+        name: recipeDetailFood[0].strMeal,
+        image: recipeDetailFood[0].strMealThumb,
+        doneDate: '',
+        tags: recipeDetailFood[0].strTags,
+      };
+      const itens = JSON.parse(localStorage.doneRecipes);
+      const AllFavorites = itens.concat(doneFood);
+      localStorage.doneRecipes = JSON.stringify(AllFavorites);
+    } else {
+      const doneFood = {
+        id: recipeDetailDrink[0].idDrink,
+        type: 'bebida',
+        area: '',
+        category: recipeDetailDrink[0].strCategory,
+        alcoholicOrNot: recipeDetailDrink[0].strAlcoholic,
+        name: recipeDetailDrink[0].strDrink,
+        image: recipeDetailDrink[0].strDrinkThumb,
+        doneDate: '',
+        tags: recipeDetailDrink[0].strTags,
+      };
+      const itens = JSON.parse(localStorage.doneRecipes);
+      const AllFavorites = itens.concat(doneFood);
+      localStorage.doneRecipes = JSON.stringify(AllFavorites);
+    }
+  };
+
+  const handleCopy = () => {
+    const urls = window.location.href.split('/');
+    const fullUrl = `${urls[0]}//${urls[2]}/${urls[3]}/${urls[4]}`;
+    copy(fullUrl);
+    const TWO = 2000;
+    setCopied('Link copiado!');
+    setInterval(() => setCopied(''), TWO);
+  };
+
   if (pathname === `/comidas/${id}/in-progress`) {
     return recipeDetailFood.map((food) => (
       <div key="1">
@@ -84,8 +148,22 @@ const RecipeInProgress = () => {
           src={ food.strMealThumb }
         />
         <h1 data-testid="recipe-title">{ food.strMeal }</h1>
-        <button type="button" data-testid="share-btn">Share</button>
-        <button type="button" data-testid="favorite-btn">Favorite</button>
+        <button
+          onClick={ handleCopy }
+          type="button"
+          data-testid="share-btn"
+        >
+          Share
+
+        </button>
+
+        {copied}
+        <button
+          onClick={ () => handleLikes(recipeDetailFood[0]) }
+          type="button"
+        >
+          <img data-testid="favorite-btn" src={ liked } alt="favorite logo" />
+        </button>
         <p data-testid="recipe-category">{ food.strCategory }</p>
         {
           handleIngredients(food, NINE, TWENTY_NINE, FOURTY_NINE)
@@ -111,8 +189,22 @@ const RecipeInProgress = () => {
         src={ drink.strDrinkThumb }
       />
       <h1 data-testid="recipe-title">{ drink.strDrink }</h1>
-      <button type="button" data-testid="share-btn">Share</button>
-      <button type="button" data-testid="favorite-btn">Favorite</button>
+      <button
+        onClick={ handleCopy }
+        type="button"
+        data-testid="share-btn"
+      >
+        Share
+
+      </button>
+
+      {copied}
+      <button
+        onClick={ () => handleLikes(recipeDetailFood, recipeDetailDrink[0]) }
+        type="button"
+      >
+        <img data-testid="favorite-btn" src={ liked } alt="favorite logo" />
+      </button>
       <p data-testid="recipe-category">{drink.strAlcoholic}</p>
       {
         handleIngredients(drink, TWENTY_ONE, THIRTY_SIX, FIFTY_ONE)
@@ -123,6 +215,7 @@ const RecipeInProgress = () => {
           data-testid="finish-recipe-btn"
           type="button"
           disabled={ disable }
+          onClick={ handleFinishRecipe }
         >
           Finalizar
         </button>
