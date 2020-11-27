@@ -6,13 +6,22 @@ import shareIcon from '../images/shareIcon.svg';
 export default function DoneRecipes() {
   const [recipes, setRecipes] = useState([]);
   const [copy, setCopy] = useState('');
+  const [filter, setFilter] = useState('');
 
   useEffect(() => {
     const storage = JSON.parse(localStorage.getItem('doneRecipes'));
     if (storage) {
-      setRecipes(storage);
+      if (filter === '') {
+        setRecipes(storage);
+      } else if (filter === 'Food') {
+        const filtered = storage.filter((item) => item.type === 'comida');
+        setRecipes(filtered);
+      } else if (filter === 'Drink') {
+        const filtered = storage.filter((item) => item.type === 'bebida');
+        setRecipes(filtered);
+      }
     }
-  }, []);
+  }, [filter]);
 
   function handleCopy(type, id) {
     const link = `${window.location.origin}/${type}s/${id}`;
@@ -24,9 +33,27 @@ export default function DoneRecipes() {
 
   return (
     <section>
-      <button type="button" data-testid="filter-by-all-btn">All</button>
-      <button type="button" data-testid="filter-by-food-btn">Food</button>
-      <button type="button" data-testid="filter-by-drink-btn">Drinks</button>
+      <button
+        type="button"
+        data-testid="filter-by-all-btn"
+        onClick={ () => setFilter('') }
+      >
+        All
+      </button>
+      <button
+        type="button"
+        data-testid="filter-by-food-btn"
+        onClick={ () => setFilter('Food') }
+      >
+        Food
+      </button>
+      <button
+        type="button"
+        data-testid="filter-by-drink-btn"
+        onClick={ () => setFilter('Drink') }
+      >
+        Drinks
+      </button>
 
       { (recipes)
         ? (
