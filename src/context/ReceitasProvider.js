@@ -15,6 +15,8 @@ const ReceitasProvider = ({ children }) => {
   const [randomDrinkID, setRandomDrink] = useState();
   const [randomMealID, setRandomMeal] = useState();
   const [fetchById, setFetchById] = useState();
+  const [beganRecipes, setBeganRecipes] = useState([]);
+  const [doneRecipes, setDoneRecipes] = useState([]);
 
   const state = {
     meals,
@@ -41,6 +43,10 @@ const ReceitasProvider = ({ children }) => {
     setDrinksIngredientList,
     fetchById,
     setFetchById,
+    beganRecipes,
+    setBeganRecipes,
+    doneRecipes,
+    setDoneRecipes,
   };
 
   return (

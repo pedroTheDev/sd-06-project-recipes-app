@@ -28,6 +28,7 @@ function FoodFilters() {
       setSelectedFilter(category);
     } else {
       fetchFood();
+      setSelectedFilter('All');
     }
   };
 

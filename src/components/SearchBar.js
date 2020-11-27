@@ -10,7 +10,7 @@ function SearchBar() {
   const [radioValue, setRadioValue] = useState('');
   const [url, setUrl] = useState('');
 
-  const { setMeals } = useContext(ReceitasContext);
+  const { setMeals, setDrinks } = useContext(ReceitasContext);
 
   const path = window.location.pathname;
 
@@ -25,7 +25,7 @@ function SearchBar() {
 
     if (path.includes('comidas')) {
       const responseFoodsAPI = await foodAPI(radioValue, searchValue);
-      if (responseFoodsAPI === null || responseFoodsAPI === undefined) {
+      if (!responseFoodsAPI) {
         alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
       } else {
         setMeals(responseFoodsAPI);
@@ -33,10 +33,10 @@ function SearchBar() {
       }
     } else {
       const responseDrinksAPI = await drinkAPI(radioValue, searchValue);
-      if (responseDrinksAPI === null || responseDrinksAPI === undefined) {
+      if (!responseDrinksAPI) {
         alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
       } else {
-        setMeals(responseDrinksAPI);
+        setDrinks(responseDrinksAPI);
         handleUrl(responseDrinksAPI, 'idDrink');
       }
     }

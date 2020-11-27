@@ -1,14 +1,19 @@
 import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import ReceitasContext from '../context/ReceitasContext';
 import MealsCard from '../components/MealsCard';
 import Header from '../components/Header';
 import { fetchDrinkAPI } from '../services/drinkAPI';
 import { foodAPI } from '../services/foodAPI';
+import '../style/Detalhes.css';
 
 function DetalhesBebida(props) {
-  const { meals, setMeals, fetchById, setFetchById } = useContext(ReceitasContext);
+  const { meals, setMeals, fetchById, setFetchById,
+    beganRecipes, setBeganRecipes, doneRecipes,
+  } = useContext(ReceitasContext);
   const { match: { params: { id } } } = props;
+  const startedRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
   const seis = 6;
 
   useEffect(() => {
@@ -32,6 +37,24 @@ function DetalhesBebida(props) {
     });
     return keys;
   };
+
+  const startRecipe = (recipeName) => {
+    localStorage.setItem('inProgressRecipes', JSON.stringify({
+      ...startedRecipes,
+      cocktails: {
+        ...startedRecipes.cocktails,
+        [recipeName]: fetchById,
+      },
+    }));
+
+    if (!beganRecipes.includes(recipeName)) {
+      setBeganRecipes([...beganRecipes, recipeName]);
+    }
+  };
+
+  const verifyState = (idDrink) => (
+    !startedRecipes.cocktails[idDrink] ? 'Iniciar Receita' : 'Continuar Receita'
+  );
 
   return ((!fetchById)
     ? <div>carregando...</div>
@@ -60,21 +83,31 @@ function DetalhesBebida(props) {
               <h3>Instruções</h3>
               <p data-testid="instructions">{drink.strInstructions}</p>
               <h2>Receitas Recomendadas</h2>
-              <div>
+              <div className="carousel">
                 {meals.length && (meals
                   .filter((_, indx) => indx < seis)
                   .map((food, i) => (
                     <div key={ i } data-testid={ `${i}-recomendation-card` }>
-                      <MealsCard food={ food } index={ i } />
+                      <div data-testid={ `${i}-recomendation-title` }>
+                        <MealsCard food={ food } index={ i } />
+                      </div>
                     </div>
                   )))}
               </div>
-              <button
-                data-testid="start-recipe-btn"
-                type="button"
-              >
-                Iniciar Receita
-              </button>
+              {!doneRecipes.includes(drink.idDrink) && (
+                <Link to={ `/bebidas/${drink.idDrink}/in-progress` }>
+                  <button
+                    className="start-recipe-btn"
+                    data-testid="start-recipe-btn"
+                    type="button"
+                    onClick={ () => startRecipe(drink.idDrink) }
+                  >
+                    {!startedRecipes
+                      ? 'Iniciar Receita'
+                      : verifyState(drink.idDrink)}
+                  </button>
+                </Link>
+              )}
             </div>
           ))
         }
