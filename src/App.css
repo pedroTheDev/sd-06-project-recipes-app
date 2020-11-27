@@ -334,14 +334,6 @@ a {
   background-color: rgba(92, 206, 47, 1);
 }
 
-.invisible {
-  background: transparent;
-  border: none !important;
-  font-size:0;
-  position: absolute;
-  top: -50%;
-}
-
 .category-buttons {
   display: flex;
   justify-content: center;
@@ -470,23 +462,16 @@ a {
     background: url(https://ak.picdn.net/shutterstock/videos/14891857/thumb/1.jpg);
   }
   .toogle-search-input {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.356);
-    height: 200px;
-    border: 1px solid rgba(0, 0, 0, 0.5);
-    border-top: none;
-    border-radius: 2px;
+    background: url(https://ak.picdn.net/shutterstock/videos/14891857/thumb/1.jpg);
     width: 90%;
-    margin: 0 auto;
+    height: 170px;
+    border: 2px solid rgba(0, 0, 0, 0.5);
+    border-top: none;
   }
 
   .food-drink-container {
     margin-top: 70px;
     margin-bottom: 100px;
-    background: transparent;
   }
 
   .cards-container {
@@ -541,8 +526,9 @@ a {
   }
 
   .toogle-search-input input{
-    width: 250px;
+    width: 330px;
     height: 25px;
+    margin-top: 20px;
   }
 
   .radio-input-div {
@@ -574,7 +560,7 @@ a {
   }
 
   .search-button-div {
-    width: 80%;
+    width: 100%;
   }
 
   .search-button-div button{
