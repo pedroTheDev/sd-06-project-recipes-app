@@ -10,9 +10,7 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 const DetalhesBebidas = () => {
   const [stateLocal, setStatelocal] = useState();
   const [stateSugestions, setSugestions] = useState();
-  const [stateButton, setStateButton] = useState({
-    initialRecipe: false,
-  });
+  const [drinksInProgress, setDrinksInProgress] = useState({ cocktails: {} });
 
   const idDrink = useParams().id;
 
@@ -31,9 +29,22 @@ const DetalhesBebidas = () => {
     setSugestions(foods);
   };
 
+  const loadLocalStorage = () => {
+    if (localStorage.getItem('inProgressRecipes') === null) {
+      const inProgressRecipes = {
+        cocktails: {},
+        meals: {},
+      };
+      localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
+    }
+    const progressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    setDrinksInProgress({ cocktails: progressRecipes.cocktails });
+  };
+
   useEffect(() => {
     handleIdDetails();
     getSugestedDrinks();
+    loadLocalStorage();
   }, []);
 
   const getIngredientsOrMeasure = (param) => {
@@ -50,9 +61,16 @@ const DetalhesBebidas = () => {
   };
 
   const progressButton = () => {
-    setStateButton({
-      initialRecipe: !stateButton.initialRecipe,
-    });
+    const progressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const drinkProgressID = stateLocal.drink.drinks[0].idDrink;
+    const inProgressRecipes = {
+      ...progressRecipes,
+      cocktails: {
+        ...progressRecipes.cocktails,
+        [drinkProgressID]: getIngredientsOrMeasure('strIngredient'),
+      },
+    };
+    localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
   };
 
   const number = 5;
@@ -156,7 +174,8 @@ const DetalhesBebidas = () => {
                   className="link-button"
                   to={ `/bebidas/${stateLocal.drink.drinks[0].idDrink}/in-progress` }
                 >
-                  {!stateButton.initialRecipe ? 'Iniciar Receita' : 'Continuar Receita'}
+                  {drinksInProgress.cocktails[stateLocal.drink.drinks[0].idDrink]
+                    ? 'Continuar Receita' : 'Iniciar Receita'}
                 </Link>
               </button>
             </div>

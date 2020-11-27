@@ -6,12 +6,14 @@ import './DetalhesComida.css';
 
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 const DetalhesComida = () => {
   const [stateLocal, setStatelocal] = useState();
   const [stateSugestions, setSugestions] = useState();
-  const [stateButton, setStateButton] = useState({
-    initialRecipe: false,
+  const [foodsInProgress, setFoodsInProgress] = useState({ meals: {} });
+  const [stateFavorite, setStateFavorite] = useState({
+    heart: false,
   });
 
   const idFood = useParams().id;
@@ -31,9 +33,27 @@ const DetalhesComida = () => {
     setSugestions(drinks);
   };
 
+  const loadLocalStorage = () => {
+    if (localStorage.getItem('inProgressRecipes') === null) {
+      const inProgressRecipes = {
+        cocktails: {},
+        meals: {},
+      };
+      localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
+    }
+    if (localStorage.getItem('heart') === null) {
+      localStorage.setItem('heart', (false));
+    }
+    setStateFavorite({ heart: JSON.parse(localStorage.getItem('heart')) });
+
+    const progressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    setFoodsInProgress({ meals: progressRecipes.meals });
+  };
+
   useEffect(() => {
     handleIdDetails();
     getSugestedFoods();
+    loadLocalStorage();
   }, []);
 
   const getIngredientsOrMeasure = (param) => {
@@ -50,9 +70,16 @@ const DetalhesComida = () => {
   };
 
   const progressButton = () => {
-    setStateButton({
-      initialRecipe: !stateButton.initialRecipe,
-    });
+    const progressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const mealProgressID = stateLocal.food.meals[0].idMeal;
+    const inProgressRecipes = {
+      ...progressRecipes,
+      meals: {
+        ...progressRecipes.meals,
+        [mealProgressID]: getIngredientsOrMeasure('strIngredient'),
+      },
+    };
+    localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
   };
 
   const handleShareClick = () => {
@@ -60,6 +87,27 @@ const DetalhesComida = () => {
 
     urlPage.select();
     urlPage.setSelectRange(0, 9999);
+  };
+
+  const handleFavorite = () => {
+    setStateFavorite({
+      heart: !stateFavorite.heart,
+    });
+
+    const favoriteRecipes = [{
+      id: stateLocal.food.meals[0].idMeal,
+      type: 'comida',
+      area: stateLocal.food.meals[0].srtArea,
+      category: stateLocal.food.meals[0].strCategory,
+      alcoholicOrNot: '',
+      name: stateLocal.food.meals[0].strMeal,
+      image: stateLocal.food.meals[0].strMealThumb,
+    }];
+
+    const heartBlack = !stateFavorite.heart;
+
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+    localStorage.setItem('heart', JSON.stringify(heartBlack));
   };
 
   const number = 5;
@@ -97,11 +145,16 @@ const DetalhesComida = () => {
                     alt="shareIcon"
                   />
                 </button>
-                <img
-                  data-testid="favorite-btn"
-                  src={ whiteHeartIcon }
-                  alt="whiteHeartIcon"
-                />
+                <button
+                  type="button"
+                  onClick={ handleFavorite }
+                >
+                  <img
+                    data-testid="favorite-btn"
+                    src={ !stateFavorite.heart ? whiteHeartIcon : blackHeartIcon }
+                    alt={ !stateFavorite.heart ? 'whiteHeartIcon' : 'blackHeartIcon' }
+                  />
+                </button>
               </div>
             </div>
             <div className="ingredients">
@@ -179,7 +232,8 @@ const DetalhesComida = () => {
                   className="link-button"
                   to={ `/comidas/${stateLocal.food.meals[0].idMeal}/in-progress` }
                 >
-                  {!stateButton.initialRecipe ? 'Iniciar Receita' : 'Continuar Receita'}
+                  {foodsInProgress.meals[stateLocal.food.meals[0].idMeal]
+                    ? 'Continuar Receita' : 'Iniciar Receita'}
                 </Link>
               </button>
             </div>
