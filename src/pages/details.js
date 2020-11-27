@@ -196,6 +196,7 @@ class Details extends Component {
   }
 
   renderCardDetails() {
+    const { match: { url }, history } = this.props;
     const { details, recomendations, isMeal, clipboard, isFavorite, isDone } = this.state;
     const ingredientsAndMeasures = this.parseIngredientsAndMeasures(details);
     console.log('1', details);
@@ -274,6 +275,7 @@ class Details extends Component {
             type="button"
             data-testid="start-recipe-btn"
             className="start-recipe-btn"
+            onClick={ () => history.push(`${url}/in-progress`) }
           >
             Iniciar Receita
           </button>
@@ -296,6 +298,7 @@ Details.propTypes = {
     path: PropTypes.string,
     url: PropTypes.string,
   }).isRequired,
+  history: PropTypes.objectOf.isRequired,
 };
 
 // export default connect(null, mapDispatchToProps)(Login);
