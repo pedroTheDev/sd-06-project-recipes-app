@@ -81,31 +81,31 @@ function DrinkDetails() {
         },
       ];
       if (localStorage.getItem('favoriteRecipes') === null) {
-          localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteObj));
-        } else {
-          localStorage.setItem(
-            'favoriteRecipes',
-            JSON.stringify([
-              ...JSON.parse(localStorage.getItem('favoriteRecipes')),
-              favoriteObj,
-            ]),
-          );
-        }
+        localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteObj));
+      } else {
+        localStorage.setItem(
+          'favoriteRecipes',
+          JSON.stringify([
+            ...JSON.parse(localStorage.getItem('favoriteRecipes')),
+            favoriteObj,
+          ]),
+        );
+      }
     }
 
-      // const favoriteObj = [
-      //   {
-      //     id: drinkDetails.idDrink,
-      //     type: 'bebida',
-      //     area: '',
-      //     category: drinkDetails.strCategory,
-      //     alcoholicOrNot: drinkDetails.strAlcoholic,
-      //     name: drinkDetails.strDrink,
-      //     image: drinkDetails.strDrinkThumb,
-      //   },
-      // ];
-      // if (localStorage.getItem('favoriteRecipes') === null) {
-      //   localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteObj));
+    // const favoriteObj = [
+    //   {
+    //     id: drinkDetails.idDrink,
+    //     type: 'bebida',
+    //     area: '',
+    //     category: drinkDetails.strCategory,
+    //     alcoholicOrNot: drinkDetails.strAlcoholic,
+    //     name: drinkDetails.strDrink,
+    //     image: drinkDetails.strDrinkThumb,
+    //   },
+    // ];
+    // if (localStorage.getItem('favoriteRecipes') === null) {
+    //   localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteObj));
     //   } else {
     //     localStorage.setItem(
     //       'favoriteRecipes',
@@ -157,7 +157,7 @@ function DrinkDetails() {
         onClick={ handleFavoriteDrink }
         src={ whiteHeartIcon }
       >
-        <img src={ favoriteDrink ? blackHeartIcon : whiteHeartIcon } />
+        <img alt="bla" src={ favoriteDrink ? blackHeartIcon : whiteHeartIcon } />
       </button>
       <h4 data-testid="recipe-category">
         {
