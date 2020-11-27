@@ -12,12 +12,17 @@ function FavoritesRecipes() {
   const [filter, setFilter] = useState('All');
   const isFavorite = true;
   const getFavoritesLocalStorage = () => {
-    const readLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    let readLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (readLocalStorage === null) {
+      readLocalStorage = [];
+    }
     setFavoriteRecipes(readLocalStorage);
   };
   const changesFavorites = (id) => {
     const readLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    const newArray = readLocalStorage.filter((element) => element.id !== id);
+    const newArray = readLocalStorage !== null
+      ? readLocalStorage.filter((element) => element.id !== id)
+      : [];
     localStorage.setItem('favoriteRecipes', JSON.stringify(newArray));
     setFavoriteRecipes(newArray);
   };
