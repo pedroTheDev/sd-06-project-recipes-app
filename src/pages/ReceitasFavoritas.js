@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import useCopyToClipboard from '../hooks/useCopyToClipboard';
 import { Header } from '../components';
 import { shareIcon, blackHeartIcon } from '../images';
 
 function ReceitasFavoritas() {
+  const timeoutTextCopy = 3000;
+  const [isCopied, handleCopy] = useCopyToClipboard(timeoutTextCopy);
   const [favoriteRecipes, setFavoriteRecipe] = useState([]);
 
   useEffect(() => {
@@ -111,11 +114,18 @@ function ReceitasFavoritas() {
               >
                 { doneDate }
               </p>
-              <img
-                src={ shareIcon }
-                alt="Compatilhar Receita"
-                data-testid={ `${index}-horizontal-share-btn` }
-              />
+              <button
+                data-testid="share-btn"
+                type="button"
+                onClick={ () => handleCopy(`/${type}s/${id}`) }
+              >
+                <img
+                  src={ shareIcon }
+                  alt="Compatilhar Receita"
+                  data-testid={ `${index}-horizontal-share-btn` }
+                />
+              </button>
+              { isCopied ? <p>Link copiado!</p> : true }
               <button
                 type="button"
                 onClick={ () => { handleClick(index); } }

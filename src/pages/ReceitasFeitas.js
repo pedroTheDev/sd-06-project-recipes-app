@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import useCopyToClipboard from '../hooks/useCopyToClipboard';
 import { Header } from '../components';
 import { shareIcon } from '../images';
 
 function ReceitasFeitas() {
+  const timeoutTextCopy = 3000;
+  const [isCopied, handleCopy] = useCopyToClipboard(timeoutTextCopy);
   const [doneRecipes, setDoneRecipes] = useState([]);
 
   useEffect(() => {
@@ -77,19 +80,21 @@ function ReceitasFeitas() {
                   alt={ name }
                   data-testid={ `${index}-horizontal-image` }
                 />
-                {
-                  (type === 'comida')
-                    ? (
-                      <p
-                        data-testid={ `${index}-horizontal-top-text` }
-                      >
-                        { `${area} - ${category}` }
-                      </p>)
-                    : (
-                      <p data-testid={ `${index}-horizontal-top-text` }>
-                        { alcoholicOrNot }
-                      </p>)
-                }
+              </Link>
+              {
+                (type === 'comida')
+                  ? (
+                    <p
+                      data-testid={ `${index}-horizontal-top-text` }
+                    >
+                      { `${area} - ${category}` }
+                    </p>)
+                  : (
+                    <p data-testid={ `${index}-horizontal-top-text` }>
+                      { alcoholicOrNot }
+                    </p>)
+              }
+              <Link to={ `/${type}s/${id}` }>
                 <p
                   data-testid={ `${index}-horizontal-name` }
                 >
@@ -101,11 +106,18 @@ function ReceitasFeitas() {
               >
                 { doneDate }
               </p>
-              <img
-                src={ shareIcon }
-                alt="Compatilhar Receita"
-                data-testid={ `${index}-horizontal-share-btn` }
-              />
+              <button
+                data-testid="share-btn"
+                type="button"
+                onClick={ () => handleCopy(`/${type}s/${id}`) }
+              >
+                <img
+                  src={ shareIcon }
+                  alt="Compatilhar Receita"
+                  data-testid={ `${index}-horizontal-share-btn` }
+                />
+              </button>
+              { isCopied ? <p>Link copiado!</p> : true }
               {tags.map((tag) => (
                 <p
                   key={ tag }
