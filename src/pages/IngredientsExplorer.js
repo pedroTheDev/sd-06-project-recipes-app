@@ -1,25 +1,14 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import RecipesContext from '../context/Context';
-import useSearch from '../hooks/useSearch';
-import { Header, IngredientCards, Footer } from '../components';
+import { HeaderNoSearch, IngredientCards, Footer } from '../components';
 
 export default function IngredientsExplorer(props) {
-  const { filters, setFilters } = useContext(RecipesContext);
   const { match: { params: { id } } } = props;
-
-  useEffect(() => {
-    if (filters.category === '') {
-      setFilters({
-        ...filters, category: id, searchType: 'ingredientsList',
-      });
-    }
-  });
-  useSearch();
+  document.title = id;
 
   return (
     <div>
-      <Header id={ id } />
+      <HeaderNoSearch id={ id } />
       <IngredientCards id={ id } />
       <Footer />
     </div>

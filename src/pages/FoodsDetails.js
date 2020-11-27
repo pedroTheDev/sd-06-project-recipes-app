@@ -178,7 +178,7 @@ export default function FoodsDetails(props) {
     );
   }
   return (
-    <div>aló</div>
+    <div>Loading ...</div>
   );
 }
 

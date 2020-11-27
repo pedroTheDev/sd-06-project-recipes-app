@@ -6,7 +6,7 @@ import useSearch from '../hooks/useSearch';
 export default function Foods() {
   document.title = 'Comidas';
   const { items, filters } = useContext(RecipesContext);
-  const setFilters = useSearch();
+  const [setFilters] = useSearch();
   useEffect(() => {
     if (filters.category === '') {
       setFilters({ ...filters, category: 'comidas' });

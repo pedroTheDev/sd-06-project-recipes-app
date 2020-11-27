@@ -191,7 +191,7 @@ export default function DrinkDetails(props) {
     );
   }
   return (
-    <div>aloudingue</div>
+    <div>Loading ...</div>
   );
 }
 
