@@ -1,48 +1,19 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import RecipesContext from '../context/RecipesContext';
 import useCopyToClipboard from '../hooks/useCopyToClipboard';
 import { shareIcon, whiteHeartIcon, blackHeartIcon } from '../images';
 import '../style/Processo.css';
 
 function ProcessoComida() {
   const timeoutTextCopy = 3000;
-  const { foodIngredients } = useContext(RecipesContext);
   const [isCopied, handleCopy] = useCopyToClipboard(timeoutTextCopy);
   const [dataMeal, setDataMeal] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   // const [isDisable] = useState(true);
-  const [checked, setChecked] = useState({});
+  const [checked, setChecked] = useState([]);
   const history = useHistory();
   const idMeal = history.location.pathname.split('/')[2];
-
-  const handleChange = ({ target }) => {
-    setChecked({ ...checked, [target.name]: target.checked });
-  };
-
-  // useEffect(() => {
-  //   localStorage.inProgressRecipes = JSON.stringify(
-  //     { meals: { [idMeal]: checked } },
-  //   );
-  // }, [checked]);
-
-  // const isChecked = (ingredient) => {
-  //   const progress = JSON(localStorage.inProgressRecipes);
-  //   const progress2 = Object.value(progress);
-  //   console.log(progress2);
-  //   return true
-  // }
-
-  useEffect(() => {
-    async function fetchAPI() {
-      const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`);
-      const responseJson = await response.json();
-      setDataMeal(responseJson.meals[0]);
-      setIsLoading(false);
-    }
-    fetchAPI();
-  }, [idMeal]);
 
   useEffect(() => {
     if (localStorage.favoriteRecipes) {
@@ -53,7 +24,37 @@ function ProcessoComida() {
         }
       });
     }
+    if (localStorage.inProgressRecipes) {
+      const progress = JSON.parse(localStorage.inProgressRecipes);
+      setChecked(Object.values(Object.values(progress)[0])[0]);
+    }
   }, []);
+
+  const handleChange = (target, index) => {
+    if (target.checked) {
+      setChecked([...checked, index]);
+    } else {
+      const removed = [...checked];
+      removed.splice(removed.indexOf(index), 1);
+      setChecked(removed);
+    }
+  };
+
+  useEffect(() => {
+    localStorage.inProgressRecipes = JSON.stringify({
+      meals: { [idMeal]: checked }
+    });
+  }, [checked])
+
+  useEffect(() => {
+    async function fetchAPI() {
+      const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`);
+      const responseJson = await response.json();
+      setDataMeal(responseJson.meals[0]);
+      setIsLoading(false);
+    }
+    fetchAPI();
+  }, [idMeal]);
 
   const handleClick = () => {
     setIsFavorite(!isFavorite);
@@ -131,20 +132,27 @@ function ProcessoComida() {
       <p data-testid="recipe-category">
         Categoria
       </p>
-      {foodIngredients.map((ingredient, index) => (
-        <span
-          key={ index }
-          data-testid={ `${index}-ingredient-step` }
-        >
-          {ingredient }
-          <input
-            type="checkbox"
-            name={ ingredient }
-            checked={ () => { isChecked(ingredient); } }
-            onChange={ handleChange }
-          />
-        </span>
-      )) }
+      { Object.keys(dataMeal)
+        .filter((keys) => keys.includes('Ingredient'))
+        .map((ingredient, index) => {
+          if (dataMeal[ingredient] !== '' && dataMeal[ingredient] !== null) {
+            return (
+              <div
+                key={ index }
+                data-testid={ `${index}-ingredient-step` }
+              >
+                <input
+                  type="checkbox"
+                  name={ dataMeal[ingredient] }
+                  checked={ checked.includes(index) }
+                  onChange={ ({ target }) => { handleChange(target, index) } }
+                />
+                { dataMeal[ingredient] }
+              </div>
+            );
+          }
+          return '';
+        }) }
       <p data-testid="instructions">
         Instruções
       </p>
