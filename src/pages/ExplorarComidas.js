@@ -14,7 +14,7 @@ function ExplorarComidas() {
   function redirectExplorarOrigem() {
     history.push('/explorar/comidas/area');
   }
-  
+
   async function redirectExplorarSurpresa() {
     const response = await fetchApiComidasExplorar();
     const novoId = response[0].idMeal;

@@ -15,9 +15,7 @@ function ExplorarBebidas() {
     const novoId = response[0].idDrink;
     history.push(`/bebidas/${novoId}`);
   }
-  // function redirectExplorarBebidas() {
-  //   history.push('/explorar/bebidas');
-  // }
+
   return (
     <div>
       <Header2 title="Explorar Bebidas" />
