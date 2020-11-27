@@ -47,3 +47,18 @@ export async function fetchRecommendation(type) {
 
   return slicedResults;
 }
+
+export async function fetchRandom(type) {
+  const api = (type === 'comida')
+    ? 'https://www.themealdb.com/api/json/v1/1/random.php'
+    : 'https://www.thecocktaildb.com/api/json/v1/1/random.php';
+
+  const json = await fetch(api)
+    .then((response) => response.json());
+
+  if (type === 'comida') {
+    return json.meals[0].idMeal;
+  } if (type === 'bebida') {
+    return json.drinks[0].idDrink;
+  }
+}
