@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { Footer, Header } from '../components';
 import { foodsOnRender, foodsCategoriesOnRender,
   filterFoodsByCategory } from '../services';
+import { comida } from '../actions';
 
 class Foods extends React.Component {
   constructor() {
@@ -25,15 +25,31 @@ class Foods extends React.Component {
     this.setInitialState(mealsRender, Categories);
   }
 
-  async setCategory({ strCategory }) {
+  async componentDidUpdate() {
+    const { stateMeals } = this.props;
+    const MAXIMUM_LENGTH = 0;
+    if (stateMeals.length > MAXIMUM_LENGTH) {
+      this.stateAfterProps(stateMeals);
+    }
+  }
+
+  async setCategory({ target }, { strCategory }) {
     const { CategoryFilter } = this.state;
     if (CategoryFilter !== strCategory) {
       const filteredFoods = await filterFoodsByCategory(strCategory);
       this.setState({ Meals: filteredFoods, CategoryFilter: strCategory });
+      target.style.background = '#ac5c22';
     } else {
       const initialMeals = await foodsOnRender();
       this.setState({ Meals: initialMeals, CategoryFilter: '' });
+      target.style.background = '#5a2d0c';
     }
+  }
+
+  stateAfterProps(props) {
+    const { dispatchMeals } = this.props;
+    this.setState({ Meals: props });
+    dispatchMeals([]);
   }
 
   setInitialState(mealsRender, Categories) {
@@ -45,44 +61,61 @@ class Foods extends React.Component {
     this.setState({ Meals: initialMeals, CategoryFilter: '' });
   }
 
+  redirectOnImage(recipe) {
+    const { history } = this.props;
+    history.push(`/comidas/${recipe.idMeal}`);
+  }
+
   render() {
+    const INITIAL_VALUE = 0;
     const { history } = this.props;
     const { Meals, Categories } = this.state;
-    const INITIAL_VALUE = 0;
     return (
       <div className="food-drink-container">
         <Header history={ history } />
-        {Categories ? Categories.map((element, index) => (
-          <div key={ index } data-testid={ `${element.strCategory}-category-filter` }>
-            <button type="button" onClick={ () => this.setCategory(element) }>
-              {element.strCategory}
+        <div className="category-buttons">
+          {Categories ? Categories.map((element, index) => (
+            <div key={ index } data-testid={ `${element.strCategory}-category-filter` }>
+              <button
+                className="food-filters"
+                type="button"
+                onClick={ (event) => this.setCategory(event, element) }
+              >
+                {element.strCategory}
+              </button>
+            </div>
+          )) : ''}
+          {Categories.length > INITIAL_VALUE
+          && (
+            <button
+              type="button"
+              className="food-filters"
+              data-testid="All-category-filter"
+              onClick={ () => this.allButtonHandler() }
+            >
+              All
             </button>
-          </div>
-        )) : ''}
-        {Categories.length > INITIAL_VALUE
-        && (
-          <button
-            type="button"
-            data-testid="All-category-filter"
-            onClick={ () => this.allButtonHandler() }
-          >
-            All
-          </button>
-        )}
-        {Meals ? Meals.map((recipe, index) => (
-          <div className="card" key={ index } data-testid={ `${index}-recipe-card` }>
-            <Link to={ `/comidas/${recipe.idMeal}` }>
-              <img
+          )}
+        </div>
+        <div className="cards-container">
+          {Meals ? Meals.map((recipe, index) => (
+            <div className="card" key={ index } data-testid={ `${index}-recipe-card` }>
+              <input
+                type="image"
+                width="100%"
                 src={ recipe.strMealThumb }
                 data-testid={ `${index}-card-img` }
                 alt="recipe"
+                onClick={ () => this.redirectOnImage(recipe) }
               />
               <hr className="card-hr" />
-              <p data-testid={ `${index}-card-name` }>{recipe.strMeal}</p>
+              <p data-testid={ `${index}-card-name` } className="bla">
+                {recipe.strMeal}
+              </p>
               <hr className="card-hr" />
-            </Link>
-          </div>
-        )) : null}
+            </div>
+          )) : null}
+        </div>
         <Footer history={ history } />
       </div>
     );
@@ -91,10 +124,16 @@ class Foods extends React.Component {
 
 Foods.propTypes = {
   history: PropTypes.shape().isRequired,
+  dispatchMeals: PropTypes.func.isRequired,
+  stateMeals: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const mapStateToProps = (state) => ({
   stateMeals: state.menu.meals,
 });
 
-export default connect(mapStateToProps, null)(Foods);
+const mapDispatchToProps = (dispatch) => ({
+  dispatchMeals: (meals) => dispatch(comida(meals)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Foods);

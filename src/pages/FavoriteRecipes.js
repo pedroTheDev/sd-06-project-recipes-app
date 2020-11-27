@@ -22,6 +22,13 @@ class FavoriteRecipes extends React.Component {
       const foods = recipes.filter((element) => element.type === 'comida').length;
       this.setFilterIndex(foods);
     }
+    const eightHundred = 800;
+    if (window.screen.availHeight < eightHundred) {
+      const h1 = document.querySelector('.global-h1');
+      h1.style.fontSize = '20px';
+      const bla = document.querySelector('.search-input-div');
+      bla.style.width = '70px';
+    }
   }
 
   setFilterIndex(foods) {
@@ -40,38 +47,36 @@ class FavoriteRecipes extends React.Component {
     const { history } = this.props;
     const { type, drinkIndex } = this.state;
     return (
-      <div>
+      <div className="done-recipes-container">
         <Header history={ history } />
-        <h1>dentro do header</h1>
-        <h1>quase fora do header</h1>
-        <h1>fora do header</h1>
-        <button
-          id="all"
-          data-testid="filter-by-all-btn"
-          type="button"
-          onClick={ this.setFilterState }
-        >
-          All
-        </button>
+        <div className="category-buttons buttons-done">
+          <button
+            id="all"
+            data-testid="filter-by-all-btn"
+            type="button"
+            onClick={ this.setFilterState }
+          >
+            All
+          </button>
 
-        <button
-          id="food"
-          data-testid="filter-by-food-btn"
-          type="button"
-          onClick={ this.setFilterState }
-        >
-          Food
-        </button>
+          <button
+            id="food"
+            data-testid="filter-by-food-btn"
+            type="button"
+            onClick={ this.setFilterState }
+          >
+            Food
+          </button>
 
-        <button
-          id="drink"
-          data-testid="filter-by-drink-btn"
-          type="button"
-          onClick={ this.setFilterState }
-        >
-          Drinks
-        </button>
-
+          <button
+            id="drink"
+            data-testid="filter-by-drink-btn"
+            type="button"
+            onClick={ this.setFilterState }
+          >
+            Drinks
+          </button>
+        </div>
         {type === 'food' ? <FavFoodCard history={ history } indexAcc={ 0 } /> : null }
         {type === 'drink' ? <FavDrinkCard history={ history } indexAcc={ 0 } /> : null }
         {type === 'all'

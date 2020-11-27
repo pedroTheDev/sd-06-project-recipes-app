@@ -43,9 +43,9 @@
   flex-wrap: wrap;
   align-items: flex-start;
   width: 180px;
-  height: 280px;
+  height: 200px;
   margin: 7px;
-  background-color: #ebe6e1;
+  background: url(https://ak.picdn.net/shutterstock/videos/14891857/thumb/1.jpg);
   border: 1px solid rgba(0, 0, 0, 0.250);
   border-radius: 5px;
   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.525);
@@ -121,7 +121,7 @@
   }
 
   .slide img{
-    width: 150px;
+    width: 145px;
     height: 145px;
   }
 }
