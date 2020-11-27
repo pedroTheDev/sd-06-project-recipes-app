@@ -2,12 +2,18 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Header2 from '../components/Header2';
 import MenuInferior from '../components/MenuInferior';
+import { fetchApiBebidasExplorar } from '../services/FetchApiBebidas';
 
 function ExplorarBebidas() {
   const history = useHistory();
 
   function redirectExplorarIngredientes() {
     history.push('/explorar/bebidas/ingredientes');
+  }
+  async function redirectExplorarSurpresa() {
+    const response = await fetchApiBebidasExplorar();
+    const novoId = response[0].idDrink;
+    history.push(`/bebidas/${novoId}`);
   }
   // function redirectExplorarBebidas() {
   //   history.push('/explorar/bebidas');
@@ -25,6 +31,7 @@ function ExplorarBebidas() {
       <button
         type="button"
         data-testid="explore-surprise"
+        onClick={ redirectExplorarSurpresa }
       >
         Me Surpreenda!
       </button>

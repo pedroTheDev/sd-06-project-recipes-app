@@ -2,6 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Header2 from '../components/Header2';
 import MenuInferior from '../components/MenuInferior';
+import { fetchApiComidasExplorar } from '../services/FetchApiComidas';
 
 function ExplorarComidas() {
   const history = useHistory();
@@ -13,10 +14,11 @@ function ExplorarComidas() {
   function redirectExplorarOrigem() {
     history.push('/explorar/comidas/area');
   }
-  // const response = await fetchApiComidasExplorar(idDaReceita);
-  // setIdDaReceita(response);
-  function redirectExplorarSurpresa() {
-    history.push('/comidas/:idDaReceita');
+  
+  async function redirectExplorarSurpresa() {
+    const response = await fetchApiComidasExplorar();
+    const novoId = response[0].idMeal;
+    history.push(`/comidas/${novoId}`);
   }
 
   return (
