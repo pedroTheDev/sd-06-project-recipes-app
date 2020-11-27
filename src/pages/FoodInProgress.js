@@ -1,13 +1,20 @@
 import React, { useEffect, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import HeaderContext from '../context/HeaderContext';
 import RecipesContext from '../context/RecipesContext';
-import shareIcon from '../images/shareIcon.svg';
 import likeIcon from '../images/whiteHeartIcon.svg';
+import fullLikeIcon from '../images/blackHeartIcon.svg';
+import ShareButton from '../components/ShareButton';
 import './FoodInProgress.css';
 
-const FoodInProgress = ({ match: { params: { id } } }) => {
+const FoodInProgress = ({
+  match: { params: { id } },
+  history: { location: { pathname } },
+}) => {
   const [isLoading, setIsLoading] = useState(true);
+  const [btnImg, setBtnImg] = useState('');
+  const [inProgressRecipes, setInProgressRecipes] = useState(true);
   const { setTitle } = useContext(HeaderContext);
   const { recipeObject } = useContext(RecipesContext);
   const { recipeTitle,
@@ -15,6 +22,8 @@ const FoodInProgress = ({ match: { params: { id } } }) => {
     recipeImage,
     setRecipeImage,
     recipeCategory,
+    recipeArea,
+    setRecipeArea,
     setRecipeCategory,
     recipeIngredients,
     setRecipeIngredients,
@@ -45,38 +54,147 @@ const FoodInProgress = ({ match: { params: { id } } }) => {
     setRecipeCategory(jsonRecipe.meals[0].strCategory);
     setRecipeImage(jsonRecipe.meals[0].strMealThumb);
     setRecipeInstructions(jsonRecipe.meals[0].strInstructions);
+    setRecipeArea(jsonRecipe.meals[0].strArea);
     ingredientsMount(jsonRecipe);
     setIsLoading(false);
   };
 
   const saveProgress = (ingredient) => {
-    if (!localStorage.getItem('inProgressRecipes')) {
-      const defaultObject = {
-          cocktails: {},
-          meals: {},
-      }
-      localStorage.setItem('inProgressRecipes', JSON.stringify(defaultObject));
-    }
     const previousProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    previousProgress.meals[id]
+
+    if (previousProgress.meals[id]) {
+      if (previousProgress.meals[id].includes(ingredient)) {
+        previousProgress.meals[id] = previousProgress.meals[id]
+          .filter((item) => item !== ingredient);
+      } else {
+        previousProgress.meals[id].push(ingredient);
+      }
+    } else {
+      previousProgress.meals[id] = [ingredient];
+    }
+    localStorage.setItem('inProgressRecipes', JSON.stringify(previousProgress));
+    setInProgressRecipes(previousProgress);
   };
 
   const handleChecked = ({ target: { name } }) => {
-    saveProgress(name)
+    saveProgress(name);
+  };
+
+  const handleCheckedFromLocalStorage = (item) => {
+    if (localStorage.getItem('inProgressRecipes')) {
+      const previousLocalStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      return previousLocalStorage.meals[id].find((currentItem) => currentItem === item);
+    }
+    return false;
+  };
+
+  const handleClass = (item) => {
+    if (localStorage.getItem('inProgressRecipes')) {
+      const previousLocalStorage = JSON
+        .parse(localStorage.getItem('inProgressRecipes'));
+      const isThere = previousLocalStorage.meals[id]
+        .find((currentItem) => currentItem === item);
+      if (isThere) {
+        return 'is-checked';
+      }
+    }
+    return 'is-not-checked';
+  };
+
+  const recheckLocalStorage = () => {
+    if (!JSON.parse(localStorage.getItem('inProgressRecipes'))) {
+      const inProgressRecipesPattern = {
+        meals: {
+          [id]: [],
+        },
+        cocktails: {},
+      };
+      localStorage.setItem('inProgressRecipes', JSON
+        .stringify(inProgressRecipesPattern));
+    }
+  };
+
+  const unLikeRecipe = () => {
+    const recipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const unSave = recipes.filter((item) => item.id !== id);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(unSave));
+  };
+
+  const saveFavoriteRecipe = () => {
+    if (localStorage.getItem('favoriteRecipes') === null) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+    }
+    const favoriteRecipes = {
+      id,
+      type: 'comida',
+      area: recipeArea,
+      category: recipeCategory,
+      alcoholicOrNot: '',
+      name: recipeTitle,
+      image: recipeImage,
+    };
+    const recipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    recipes.push(favoriteRecipes);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(recipes));
+  };
+
+  const setLikeImage = () => {
+    if (localStorage.getItem('favoriteRecipes') !== null) {
+      const recipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      const findElement = recipes.find((item) => item.id.toString() === id);
+      if (findElement !== undefined) {
+        setBtnImg(fullLikeIcon);
+      } else {
+        setBtnImg(likeIcon);
+      }
+    } else {
+      setBtnImg(likeIcon);
+    }
+  };
+
+  const handleImage = () => {
+    if (btnImg === likeIcon) {
+      setBtnImg(fullLikeIcon);
+      saveFavoriteRecipe();
+    } else {
+      setBtnImg(likeIcon);
+      unLikeRecipe();
+    }
+  };
+
+  const handleFinishRecipe = (ingredientsLength) => {
+    if (JSON.parse(localStorage.getItem('inProgressRecipes'))) {
+      const ingredientsInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      if (ingredientsLength === ingredientsInProgress.meals[id].length) {
+        return false;
+      }
+      return true;
+    }
   };
 
   useEffect(() => {
     setTitle('Food In Progress');
     fetchRecipe();
+    setLikeImage();
+    recheckLocalStorage();
   }, []);
+
+  useEffect(() => {
+  }, [inProgressRecipes]);
 
   return (
     <div>
       <img data-testid="recipe-photo" src={ recipeImage } alt={ recipeTitle } />
       <h1 data-testid="recipe-title">{recipeTitle}</h1>
       <div>
-        <img src={ shareIcon } alt="share" data-testid="share-btn" />
-        <img src={ likeIcon } alt="like" data-testid="favorite-btn" />
+        <ShareButton path={ pathname } />
+        <button type="button" onClick={ handleImage }>
+          <img
+            src={ btnImg }
+            alt="like"
+            data-testid="favorite-btn"
+          />
+        </button>
       </div>
       <h3 data-testid="recipe-category">{recipeCategory}</h3>
       <ul>
@@ -84,29 +202,34 @@ const FoodInProgress = ({ match: { params: { id } } }) => {
           <li
             key={ index }
             data-testid={ `${index}-ingredient-step` }
-            onClick={ handleChecked }
           >
-            <input
-              type="checkbox"
-              name={ item }
-              id={ item }
-            />
             <label
               htmlFor={ item }
-              name={ item }
+              className={ handleClass(item) }
             >
+              <input
+                type="checkbox"
+                checked={ handleCheckedFromLocalStorage(item) }
+                name={ item }
+                id={ item }
+                onClick={ handleChecked }
+              />
               { item }
             </label>
           </li>
         ))}
+
       </ul>
       <p data-testid="instructions">{recipeInstructions}</p>
-      <button
-        type="button"
-        data-testid="finish-recipe-btn"
-      >
-        Finalizar receita
-      </button>
+      <Link to="/receitas-feitas">
+        <button
+          type="button"
+          data-testid="finish-recipe-btn"
+          disabled={ handleFinishRecipe(recipeIngredients.length) }
+        >
+          Finalizar receita
+        </button>
+      </Link>
     </div>
   );
 };
@@ -116,6 +239,12 @@ FoodInProgress.propTypes = {
     params: PropTypes.shape({
       id: PropTypes.string,
     }),
+  }).isRequired,
+  history: PropTypes.shape({
+    location: PropTypes.shape({
+      pathname: PropTypes.string,
+    }),
+    push: PropTypes.func,
   }).isRequired,
 };
 

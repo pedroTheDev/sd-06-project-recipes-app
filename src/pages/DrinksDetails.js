@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import HeaderContext from '../context/HeaderContext';
 import RecipesContext from '../context/RecipesContext';
-import shareIcon from '../images/shareIcon.svg';
 import likeIcon from '../images/whiteHeartIcon.svg';
 import fullLikeIcon from '../images/blackHeartIcon.svg';
+import ShareButton from '../components/ShareButton';
 import './DrinksDetails.css';
 
 const DrinksDetails = (props) => {
@@ -32,7 +32,7 @@ const DrinksDetails = (props) => {
     recipeRecommendations,
     setRecipeRecommendations,
   } = recipeObject;
-  const { match, history } = props;
+  const { match, history: { location: { pathname } } } = props;
   const { params } = match;
   const { id } = params;
 
@@ -127,7 +127,7 @@ const DrinksDetails = (props) => {
   };
 
   const handleClick = () => {
-    if (localStorage.getItem('inProgressRecipes') === null) {
+    if (!JSON.parse(localStorage.getItem('inProgressRecipes'))) {
       const inProgressRecipes = {
         cocktails: {
           [id]: [],
@@ -135,10 +135,6 @@ const DrinksDetails = (props) => {
         meals: {},
       };
       localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
-    } else {
-      const recipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
-      recipes.cocktails[id] = [];
-      localStorage.setItem('inProgressRecipes', JSON.stringify(recipes));
     }
     const path = `/bebidas/${id}/in-progress`;
     setRecipesInProgress(recipesInProgress.concat(id));
@@ -181,7 +177,7 @@ const DrinksDetails = (props) => {
       <div>
         <p data-testid="recipe-title">{recipeTitle}</p>
         <div>
-          <img src={ shareIcon } alt="share" data-testid="share-btn" />
+          <ShareButton path={ pathname } />
           <button type="button" onClick={ handleImage }>
             <img
               src={ btnImg }
@@ -240,6 +236,9 @@ DrinksDetails.propTypes = {
     }),
   }).isRequired,
   history: PropTypes.shape({
+    location: PropTypes.shape({
+      pathname: PropTypes.string,
+    }),
     push: PropTypes.func,
   }).isRequired,
 };
