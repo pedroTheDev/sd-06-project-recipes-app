@@ -151,3 +151,12 @@ export function randomRecipeDrinks() {
     .then((response) => response.drinks);
   return API;
 }
+
+export function foodsIngredientsRender() {
+  const INITIAL_LENGTH = 0;
+  const MAX_LENGTH = 12;
+  const variavel = fetch('https://www.themealdb.com/api/json/v1/1/list.php?i=list')
+    .then((response) => response.json())
+    .then((response) => response.meals.slice(INITIAL_LENGTH, MAX_LENGTH));
+  return variavel;
+}
