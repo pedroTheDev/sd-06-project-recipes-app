@@ -1,4 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative&display=swap');
+
 .details-container {
+  font-family: 'Cinzel Decorative', cursive;
   width: 360px;
 }
 
@@ -14,10 +17,14 @@
   height: 80px;
   font-family: 'Cinzel Decorative', cursive;
   justify-content: space-around;
+  position: relative;
+  top: -85px;
+  background-color: #13BBAF;
+  border-radius: 0 0 36px 36px;
 }
 
 .details-nav button {
-  background-color: rgba(41, 41, 41, 1);
+  background-color: #13BBAF;
   height: 50px;
   outline: none;
   border: none;
@@ -31,4 +38,46 @@
 
 p {
   margin: 5px;
+}
+
+.ing-inst {
+  position: relative;
+  top: -85px;
+  
+}
+
+.recipe-ingredients li {
+  list-style: none;
+  margin-left: 20px;
+  font-size: 14px;
+}
+
+.recipe-ingredients h5 {
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+.recipe-instructions h5 {
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+.recipe-instructions p {
+  text-align: center;
+  font-size: 14px;
+  margin-left: 25px;
+}
+
+/* comida */
+
+.food-recipe-instructions {
+  position: relative;
+  top: -85px;
+}
+
+video {
+  position: relative;
+  margin: 15px 5px;
+  top: -85px;
+  width: 100%;
 }

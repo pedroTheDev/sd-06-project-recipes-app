@@ -36,7 +36,7 @@
   border-radius: 36px;
 }
 
-.card-container a {
+.details-link {
   display: flex;
   flex-flow: column wrap;
   align-items: center;

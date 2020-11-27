@@ -124,6 +124,7 @@ export default function MainScreen() {
               to={ `/comidas/${food.idMeal}` }
               onClick={ () => handleIds(food) }
               key={ index }
+              className="details-link"
             >
               <p data-testid={ `${index}-card-name` }>{food.strMeal}</p>
               <img
@@ -148,6 +149,7 @@ export default function MainScreen() {
               onClick={ () => setIds(drinks.idDrink) }
               to={ `/bebidas/${drinks.idDrink}` }
               key={ index }
+              className="details-link"
             >
               <p data-testid={ `${index}-card-name` }>{ drinks.strDrink }</p>
               <img
