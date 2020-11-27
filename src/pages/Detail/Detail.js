@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// import Proptypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import { fetchMeal } from '../../services/mealAPI';
 import { fetchDrink } from '../../services/cocktailAPI';
@@ -28,18 +27,35 @@ function Detail() {
   }, []);
 
   const setIngredientAndMeasure = () => {
+    const twenty = 20;
     const ingredients = [];
-    for (let i = 1; i <= 20; i += 1) {
+    console.log(recipes);
+    for (let i = 1; i <= twenty; i += 1) {
       const keyName = `strIngredient${i}`;
-      if (recipes.meals[0][keyName] !== ('' || null)) {
-        ingredients.push(recipes.meals[0][keyName]);
+      const measureKeyName = `strMeasure${i}`;
+      if (recipes[0][keyName] !== ('' || null)) {
+        const obj = {
+          name: recipes[0][keyName],
+          measure: recipes[0][measureKeyName],
+        };
+        ingredients.push(obj);
       }
     }
 
-    console.log(ingredients);
-
     return ingredients;
   };
+
+  useEffect(() => {
+    setIngredientAndMeasure();
+  }, [recipes]);
+
+  if (!recipes) {
+    return (
+      <div className="loading">
+        <h2 className="loading-text">Carregando...</h2>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -53,7 +69,7 @@ function Detail() {
         <ul>
           {
             setIngredientAndMeasure().map((ingredient, index) => (
-              <li key={ index }>{ingredient}</li>
+              <li key={ index }>{`- ${ingredient.name} - ${ingredient.measure}`}</li>
             ))
           }
         </ul>
