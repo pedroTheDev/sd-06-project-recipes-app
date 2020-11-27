@@ -19,7 +19,7 @@ class InProgress extends Component {
       isFavorite: false,
       isDone: false,
       ingredientsUsed: [],
-      inputsMarked: [],
+      inputsMarked: {},
     };
     this.requestDetails = this.requestDetails.bind(this);
     this.checkRecipeProgress = this.checkRecipeProgress.bind(this);
@@ -28,18 +28,24 @@ class InProgress extends Component {
     this.handleFavorite = this.handleFavorite.bind(this);
     this.checkIsFavorite = this.checkIsFavorite.bind(this);
     this.handleInput = this.handleInput.bind(this);
+    this.setInputMarked = this.setInputMarked.bind(this);
     this.saveInProgressToLS = this.saveInProgressToLS.bind(this);
   }
 
   componentDidMount() {
-    const { match: { path } } = this.props;
+    const {
+      match: { path },
+    } = this.props;
     const pathname = path;
     this.requestDetails(pathname);
   }
 
   handleShare() {
-    const { match: { url } } = this.props;
-    window.navigator.clipboard.writeText(`http://localhost:3000${url.replace('/in-progress', '')}`)
+    const {
+      match: { url },
+    } = this.props;
+    window.navigator.clipboard
+      .writeText(`http://localhost:3000${url.replace('/in-progress', '')}`)
       .then(() => {
         this.setState({
           clipboard: `http://localhost:3000${url.replace('/in-progress', '')}`,
@@ -48,34 +54,71 @@ class InProgress extends Component {
   }
 
   handleFavorite() {
-    this.setState((prevState) => ({
-      isFavorite: !prevState.isFavorite,
-    }), () => {
-      const { isFavorite } = this.state;
-      if (isFavorite) this.saveToLocalStorage();
-      else this.deleteFromLocalStorage();
-    });
+    this.setState(
+      (prevState) => ({
+        isFavorite: !prevState.isFavorite,
+      }),
+      () => {
+        const { isFavorite } = this.state;
+        if (isFavorite) this.saveToLocalStorage();
+        else this.deleteFromLocalStorage();
+      },
+    );
   }
 
-  handleInput({ target: { value, checked } }, idx) {
+  handleInput({ target: { name, value, checked } }) {
     if (checked) {
-      this.setState((prev) => ({
-        ingredientsUsed: [...prev.ingredientsUsed, value],
-        inputsMarked: [ ...prev.inputsMarked, [name]: checked ],
-      }), () => this.saveInProgressToLS());
+      this.setState(
+        (prev) => ({
+          ingredientsUsed: [...prev.ingredientsUsed, value],
+          inputsMarked: {
+            ...prev.inputsMarked,
+            [name]: !prev.inputsMarked[name],
+          },
+        }),
+        () => {
+          this.saveInProgressToLS();
+          this.checkIsDone();
+        },
+      );
     } else {
-      this.setState((prev) => ({
-        ingredientsUsed: prev.ingredientsUsed.filter((ing) => ing !== value),
-        // inputsMarked: { ...prev.inputsMarked, [name]: checked },
-      }), () => this.saveInProgressToLS());
+      this.setState(
+        (prev) => ({
+          ingredientsUsed: prev.ingredientsUsed.filter((ing) => ing !== value),
+          inputsMarked: {
+            ...prev.inputsMarked,
+            [name]: !prev.inputsMarked[name],
+          },
+        }),
+        () => {
+          this.saveInProgressToLS();
+          this.checkIsDone();
+        },
+      );
     }
+  }
+
+  setInputMarked() {
+    const { ingredientsUsed, details } = this.state;
+    const ingredientsAndMeasures = this.parseIngredientsAndMeasures(details);
+    ingredientsAndMeasures.forEach((i) => {
+      this.setState((prev) => ({
+        inputsMarked: {
+          ...prev.inputsMarked,
+          [i]: ingredientsUsed.includes(i),
+        },
+      }));
+    });
   }
 
   checkIsFavorite() {
     const { details } = this.state;
     const LS = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    if (LS && LS.find((recipe) => recipe.id === details[0].idMeal
-    || recipe.id === details[0].idDrink)) {
+    if (LS
+      && LS.find(
+        (recipe) => recipe.id === details[0].idMeal || recipe.id === details[0].idDrink,
+      )
+    ) {
       this.setState({
         isFavorite: true,
       });
@@ -99,7 +142,11 @@ class InProgress extends Component {
 
   saveInProgressToLS() {
     const { ingredientsUsed, isMeal } = this.state;
-    const { match: { params: { id } } } = this.props;
+    const {
+      match: {
+        params: { id },
+      },
+    } = this.props;
     let LS = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (!LS) {
       LS = {
@@ -163,79 +210,98 @@ class InProgress extends Component {
   deleteFromLocalStorage() {
     const { details } = this.state;
     const LS = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    const filteredLS = LS.filter((recipe) => !recipe.id
-      .includes(details[0].idMeal || details[0].idDrink));
+    const filteredLS = LS.filter(
+      (recipe) => !recipe.id.includes(details[0].idMeal || details[0].idDrink),
+    );
     localStorage.setItem('favoriteRecipes', JSON.stringify(filteredLS));
   }
 
   requestDetails(pathname) {
-    this.setState(() => {
-      if (pathname.includes('comidas')) {
-        return { isLoading: true, isMeal: true };
-      }
-      return { isLoading: true, isDrink: true };
-    }, async () => {
-      const {
-        match: {
-          params: { id },
-        },
-      } = this.props;
-      const { isMeal } = this.state;
+    this.setState(
+      () => {
+        if (pathname.includes('comidas')) {
+          return { isLoading: true, isMeal: true };
+        }
+        return { isLoading: true, isDrink: true };
+      },
+      async () => {
+        const {
+          match: {
+            params: { id },
+          },
+        } = this.props;
+        const { isMeal } = this.state;
 
-      if (isMeal) {
-        const endPointMeal = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
-        const mealsApi = await fetch(endPointMeal);
-        const { meals } = await mealsApi.json();
-        this.setState({
-          details: meals,
-          isLoading: false,
-        }, () => {
-          this.checkIsFavorite();
-          this.checkIsDone();
-          this.checkRecipeProgress();
-        });
-      } else {
-        const endPointDrink = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
-        const drinksApi = await fetch(endPointDrink);
-        const { drinks } = await drinksApi.json();
-        this.setState({
-          details: drinks,
-          isLoading: false,
-        }, () => {
-          this.checkIsFavorite();
-          this.checkIsDone();
-          this.checkRecipeProgress();
-        });
-      }
-    });
+        if (isMeal) {
+          const endPointMeal = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
+          const mealsApi = await fetch(endPointMeal);
+          const { meals } = await mealsApi.json();
+          this.setState(
+            {
+              details: meals,
+              isLoading: false,
+            },
+            () => {
+              this.checkIsFavorite();
+              this.checkIsDone();
+              this.checkRecipeProgress();
+            },
+          );
+        } else {
+          const endPointDrink = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
+          const drinksApi = await fetch(endPointDrink);
+          const { drinks } = await drinksApi.json();
+          this.setState(
+            {
+              details: drinks,
+              isLoading: false,
+            },
+            () => {
+              this.checkIsFavorite();
+              this.checkIsDone();
+              this.checkRecipeProgress();
+            },
+          );
+        }
+      },
+    );
   }
 
   checkRecipeProgress() {
     const { isMeal, isDrink } = this.state;
-    const { match: { params: { id } } } = this.props;
+    const {
+      match: {
+        params: { id },
+      },
+    } = this.props;
     const LS = JSON.parse(localStorage.getItem('inProgressRecipes'));
 
     if (LS && isMeal) {
       if (Object.keys(LS.meals).find((mealId) => mealId === id)) {
         this.setState({
           ingredientsUsed: LS.meals[id],
-        });
+        }, () => this.setInputMarked());
       }
     } else if (LS && isDrink) {
       if (Object.keys(LS.cocktails).find((cocktailId) => cocktailId === id)) {
-        this.setState({
-          ingredientsUsed: LS.cocktails[id],
-        }, () => {
-          const { ingredientsUsed, details } = this.state;
-          const ingredientsAndMeasures = this.parseIngredientsAndMeasures(details);
-          this.setState({
-            inputsMarked: ingredientsAndMeasures.map((i) => {
-              if (ingredientsUsed.length > 0 && ingredientsUsed.includes(i)) return true;
-              return false;
-            }),
-          });
-        });
+        this.setState(
+          {
+            ingredientsUsed: LS.cocktails[id],
+          },
+          () => this.setInputMarked(),
+        );
       }
+    } else {
+      const { details } = this.state;
+      const ingredientsAndMeasures = this.parseIngredientsAndMeasures(details);
+      ingredientsAndMeasures.forEach((i) => {
+        this.setState((prev) => ({
+          inputsMarked: {
+            ...prev.inputsMarked,
+            [i]: false,
+          },
+        }));
+      });
     }
   }
 
@@ -267,10 +333,9 @@ class InProgress extends Component {
   }
 
   renderCardDetails() {
+    const { history } = this.props;
     const { details, isMeal, clipboard, isFavorite, isDone, inputsMarked } = this.state;
     const ingredientsAndMeasures = this.parseIngredientsAndMeasures(details);
-    console.log('1', details);
-    console.log('1', this.props);
 
     const zero = 0;
     const {
@@ -322,10 +387,10 @@ class InProgress extends Component {
         {ingredientsAndMeasures.map((item, idx) => (
           <div key={ `${idx}` } data-testid={ `${idx}-ingredient-step` }>
             <input
-              name={ `${idx}-ingredient-step` }
+              name={ item }
               type="checkbox"
-              checked={ inputsMarked[idx] }
-              onClick={ (e) => this.handleInput(e, idx) }
+              checked={ inputsMarked[item] }
+              onChange={ (e) => this.handleInput(e) }
               value={ item }
             />
             {item}
@@ -337,6 +402,7 @@ class InProgress extends Component {
           data-testid="finish-recipe-btn"
           className="finish-recipe-btn"
           disabled={ !isDone }
+          onClick={ () => history.push('/receitas-feitas') }
         >
           Finalizar Receita
         </button>
@@ -346,9 +412,7 @@ class InProgress extends Component {
 
   render() {
     const { isLoading } = this.state;
-    return (
-      <div>{isLoading ? <p>carregando</p> : this.renderCardDetails()}</div>
-    );
+    return <div>{isLoading ? <p>carregando</p> : this.renderCardDetails()}</div>;
   }
 }
 
@@ -358,7 +422,7 @@ InProgress.propTypes = {
     path: PropTypes.string,
     url: PropTypes.string,
   }).isRequired,
+  history: PropTypes.objectOf.isRequired,
 };
 
-// export default connect(null, mapDispatchToProps)(Login);
 export default InProgress;
