@@ -17,7 +17,8 @@ export default function Comidas({ history }) {
     meals,
     mealsByIngredient,
     setMeals,
-    showMealsByIngredient } = useContext(Context);
+    showMealsByIngredient,
+    search } = useContext(Context);
   const [hidden, setHidden] = useState(true);
   const [selected] = useState(false);
 
@@ -40,13 +41,7 @@ export default function Comidas({ history }) {
   }, []);
 
   useEffect(() => {
-    // if (!meals) {
-    //   // eslint-disable-next-line no-alert
-    //   console.log(meals);
-    //   alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
-    //   return history.push('/comidas');
-    // }
-    if (meals.length === 1) {
+    if (meals.length === 1 && search) {
       history.push(`/comidas/${meals[0].idMeal}`);
     }
   }, [meals]);

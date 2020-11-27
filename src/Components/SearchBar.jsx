@@ -5,8 +5,8 @@ import * as api from '../services/Api';
 export default function SearchBar() {
   const [searchParam, setSearchParam] = useState('');
   const [termoBusca, setTermoBusca] = useState('');
-  const { setMeals, setDrinks, setLoading, titulo } = useContext(Context);
-
+  const { setSearch, setMeals, setDrinks, setLoading, titulo } = useContext(Context);
+ 
   const handleChange = ({ target }) => {
     setSearchParam(target.value);
   };
@@ -62,6 +62,7 @@ export default function SearchBar() {
   const onClick = () => {
     if (titulo === 'Comidas') {
       buscaComidas();
+      setSearch(true);
     }
     if (titulo === 'Bebidas') {
       buscaBebidas();
