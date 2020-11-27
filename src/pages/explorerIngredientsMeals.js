@@ -6,28 +6,28 @@ import { Header, Footer } from '../components';
 
 class ExplorerIngredientsMeals extends Component {
   constructor() {
-    super()
+    super();
     this.state = {
       ingredients: [],
-    }
+    };
     this.getIngredients = this.getIngredients.bind(this);
     this.renderIngredients = this.renderIngredients.bind(this);
   }
 
   componentDidMount() {
     this.getIngredients();
-  };
+  }
 
-  async getIngredients () {
+  async getIngredients() {
     const endPoint = 'https://www.themealdb.com/api/json/v1/1/list.php?i=list';
     const { meals } = await theIngredientsAndAreaApi(endPoint);
     // this.renderIngredients(meals);
     this.setState({
       ingredients: meals,
-    })
-    console.log("ings", this.state.ingredients);
-    console.log("z", meals[1]);
-    console.log("tudo", meals);
+    });
+    // console.log("ings", this.state.ingredients);
+    // console.log("z", meals[1]);
+    // console.log("tudo", meals);
     // link
   }
 
@@ -42,7 +42,7 @@ class ExplorerIngredientsMeals extends Component {
       const sourceImg = `https://www.themealdb.com/images/ingredients/${strIngredient}-Small.png`;
       return (
         <div key={ index }>
-          <Link data-testid={ `${index}-ingredient-card` } to={ `/comidas` }>
+          <Link data-testid={ `${index}-ingredient-card` } to="/comidas">
             <img
               className="recipe-thumb"
               data-testid={ `${index}-card-img` }
@@ -58,10 +58,11 @@ class ExplorerIngredientsMeals extends Component {
 
   render() {
     const { ingredients } = this.state;
+    const zero = 0;
     return (
       <div>
-        <Header title={ 'Explorar Ingredientes' } />
-        { ingredients.length !== 0 && this.renderIngredients()}
+        <Header title="Explorar Ingredientes" />
+        { ingredients.length !== zero && this.renderIngredients()}
         <Footer />
       </div>
     );
