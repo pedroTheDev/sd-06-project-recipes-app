@@ -84,7 +84,7 @@ const RecipeDetails = () => {
             src={ food.strMealThumb }
           />
           <div className="details-nav">
-          <button type="button" data-testid="favorite-btn">
+            <button type="button" data-testid="favorite-btn">
               <img src={ favIcon } alt="favorite" />
             </button>
             <div className="name-category">
@@ -105,9 +105,9 @@ const RecipeDetails = () => {
           <div className="ing-inst">
             <div className="recipe-ingredients">
               <h5>INGREDIENTS</h5>
-            {
-              handleIngredients(food, NINE, TWENTY_NINE, FOURTY_NINE)
-            }
+              {
+                handleIngredients(food, NINE, TWENTY_NINE, FOURTY_NINE)
+              }
             </div>
             <div className="recipe-instructions">
               <h5>INSTRUCTIONS</h5>
