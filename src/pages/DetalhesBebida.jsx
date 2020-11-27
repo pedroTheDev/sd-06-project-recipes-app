@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
   requestApiDrinkDetails,
@@ -8,6 +9,8 @@ import {
 } from '../services/requestFood';
 import '../styles/Detalhes.css';
 import buttonShare from '../styles/images/shareIcon.svg';
+import whiteHeartIcon from '../styles/images/whiteHeartIcon.svg';
+import blackHeartIcon from '../styles/images/blackHeartIcon.svg';
 
 function DetalhesBebida(props) {
   const [detailsDrink, setDetailsDrink] = useState([]);
@@ -68,6 +71,7 @@ function DetalhesBebida(props) {
   if (detailsDrink.length === zero) {
     return <div>Loading...</div>;
   }
+
   return (
     <div>
       <img data-testid="recipe-photo" src={ detailsDrink.strDrinkThumb } alt="dk aspo" />
@@ -81,7 +85,9 @@ function DetalhesBebida(props) {
         <button type="button" data-testid="share-btn" onClick={ copyBoard }>
           <img src={ buttonShare } alt="img-button-share" />
         </button>
-        <button type="button" data-testid="favorite-btn">Favorite</button>
+        <button type="button" data-testid="favorite-btn">
+          <img src={ whiteHeartIcon } alt="img-button-fav" />
+        </button>
       </div>
       {arrayIngredients.map((element, index) => (
         <h5
@@ -99,13 +105,15 @@ function DetalhesBebida(props) {
           </div>
         ))}
       </div>
-      <button
-        type="button"
-        data-testid="start-recipe-btn"
-        className="btn-footer"
-      >
-        Iniciar receita
-      </button>
+      <Link to={ `/bebidas/${props.match.params.id}/in-progress` }>
+        <button
+          type="button"
+          data-testid="start-recipe-btn"
+          className="btn-footer"
+        >
+          Iniciar receita
+        </button>
+      </Link>
     </div>
   );
 }

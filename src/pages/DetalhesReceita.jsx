@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
   requestApiFoodDetails,
@@ -119,13 +120,15 @@ function DetalhesReceita(props) {
           </div>
         ))}
       </div>
-      <button
-        type="button"
-        data-testid="start-recipe-btn"
-        className="btn-footer"
-      >
-        Iniciar receita
-      </button>
+      <Link to={ `/comidas/${props.match.params.id}/in-progress` }>
+        <button
+          type="button"
+          data-testid="start-recipe-btn"
+          className="btn-footer"
+        >
+          Iniciar receita
+        </button>
+      </Link>
     </div>
   );
 }
