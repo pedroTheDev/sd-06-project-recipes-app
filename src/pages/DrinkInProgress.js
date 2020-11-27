@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { fetchDetail, fetchRecommendation } from '../helpers/Helper';
+import { fetchDetail } from '../helpers/Helper';
 import saveInStorage from '../helpers/saveInStorage';
 import saveFavorite from '../helpers/saveFavorite';
 
@@ -15,7 +15,6 @@ export default function DrinkInProgress(props) {
   const [recipe, setRecipe] = useState('');
   const [recipeDetails, setRecipeDetails] = useState([]);
   const [checkedIngredients, setCheckedIngredients] = useState([]);
-  const [recommendation, setRecommendation] = useState([]);
   const [disabled, setDisabled] = useState(true);
   const [copy, setCopy] = useState('');
   const [fav, setFav] = useState(whiteHeart);
@@ -25,8 +24,6 @@ export default function DrinkInProgress(props) {
     async function fetchData() {
       const currRecipe = await fetchDetail('bebidas', id);
       setRecipe(currRecipe);
-      const results = await fetchRecommendation('bebidas');
-      setRecommendation(results);
 
       const storage = JSON.parse(localStorage.getItem('inProgressRecipes'));
       const inProgress = (storage) && storage.cocktails[id];
@@ -175,7 +172,7 @@ export default function DrinkInProgress(props) {
     props.history.push('/receitas-feitas');
   }
 
-  if (recipe.drinks && recommendation) {
+  if (recipe.drinks) {
     const item = recipe.drinks[0];
     return (
       <div>
@@ -207,7 +204,6 @@ export default function DrinkInProgress(props) {
           <p data-testid="recipe-category">{item.strAlcoholic}</p>
           <p data-testid="instructions">{item.strInstructions}</p>
           {renderIngredients()}
-          <p data-testid="video">{item.strYoutube}</p>
 
           <button
             type="button"
@@ -220,29 +216,11 @@ export default function DrinkInProgress(props) {
           </button>
 
         </div>
-        <div className="testimonials">
-          <div className="scroller">
-            {recommendation.map((rec, index) => (
-              <div
-                key={ index }
-                data-testid={ `${index}-recomendation-card` }
-                className="item"
-              >
-                <p data-testid={ `${index}-recomendation-title` }>{rec.strMeal}</p>
-                <img
-                  alt="foto da receita"
-                  className="item-img"
-                  src={ rec.strMealThumb }
-                />
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
     );
   }
   return (
-    <div>aloudingue</div>
+    <div>Loading ...</div>
   );
 }
 

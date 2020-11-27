@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { fetchDetail, fetchRecommendation } from '../helpers/Helper';
+import { fetchDetail } from '../helpers/Helper';
 import saveInStorage from '../helpers/saveInStorage';
 import saveFavorite from '../helpers/saveFavorite';
 
@@ -14,7 +14,6 @@ export default function FoodInProgress(props) {
   const [recipe, setRecipe] = useState('');
   const [recipeDetails, setRecipeDetails] = useState([]);
   const [checkedIngredients, setCheckedIngredients] = useState([]);
-  const [recommendation, setRecommendation] = useState([]);
   const [disabled, setDisabled] = useState(true);
   const [copy, setCopy] = useState('');
   const [fav, setFav] = useState(whiteHeart);
@@ -24,8 +23,6 @@ export default function FoodInProgress(props) {
     async function fetchData() {
       const currRecipe = await fetchDetail('comidas', id);
       setRecipe(currRecipe);
-      const results = await fetchRecommendation('comidas');
-      setRecommendation(results);
 
       const storage = JSON.parse(localStorage.getItem('inProgressRecipes'));
       const inProgress = (storage) && storage.meals[id];
@@ -174,7 +171,7 @@ export default function FoodInProgress(props) {
     props.history.push('/receitas-feitas');
   }
 
-  if (recipe.meals && recommendation) {
+  if (recipe.meals) {
     const item = recipe.meals[0];
     console.log(item);
     return (
@@ -207,7 +204,6 @@ export default function FoodInProgress(props) {
           <p data-testid="recipe-category">{item.strCategory}</p>
           <p data-testid="instructions">{item.strInstructions}</p>
           {renderIngredients()}
-          <p data-testid="video">{item.strYoutube}</p>
 
           <button
             type="button"
@@ -218,31 +214,12 @@ export default function FoodInProgress(props) {
           >
             Finalizar receita
           </button>
-
-        </div>
-        <div className="testimonials">
-          <div className="scroller">
-            {recommendation.map((rec, index) => (
-              <div
-                key={ index }
-                data-testid={ `${index}-recomendation-card` }
-                className="item"
-              >
-                <p data-testid={ `${index}-recomendation-title` }>{rec.strDrink}</p>
-                <img
-                  alt="foto da receita"
-                  className="item-img"
-                  src={ rec.strDrinkThumb }
-                />
-              </div>
-            ))}
-          </div>
         </div>
       </div>
     );
   }
   return (
-    <div>aló</div>
+    <div>Loading ...</div>
   );
 }
 
