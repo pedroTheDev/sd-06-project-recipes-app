@@ -12,7 +12,7 @@ function ProcessoComida() {
   const [dataMeal, setDataMeal] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [isDisable] = useState(true);
+  // const [isDisable] = useState(true);
   const [checked, setChecked] = useState({});
   const history = useHistory();
   const idMeal = history.location.pathname.split('/')[2];
@@ -21,11 +21,11 @@ function ProcessoComida() {
     setChecked({ ...checked, [target.name]: target.checked });
   };
 
-  useEffect(() => {
-    localStorage.inProgressRecipes = JSON.stringify(
-      { meals: { [idMeal]: Object.keys(checked) } },
-    );
-  }, [checked]);
+  // useEffect(() => {
+  //   localStorage.inProgressRecipes = JSON.stringify(
+  //     { meals: { [idMeal]: Object.keys(checked) } },
+  //   );
+  // }, [checked]);
 
   useEffect(() => {
     async function fetchAPI() {
@@ -39,6 +39,7 @@ function ProcessoComida() {
 
   useEffect(() => {
     if (localStorage.favoriteRecipes) {
+      // const favoriteRecipes = JSON.parse(localStorage.favoriteRecipes);
       setIsFavorite(true);
     }
   }, []);
@@ -46,7 +47,11 @@ function ProcessoComida() {
   const handleClick = () => {
     setIsFavorite(!isFavorite);
     if (!isFavorite) {
-      localStorage.favoriteRecipes = JSON.stringify([{
+      let favoriteRecipes = [];
+      if (localStorage.favoriteRecipes) {
+        favoriteRecipes = JSON.parse(localStorage.favoriteRecipes);
+      }
+      localStorage.favoriteRecipes = JSON.stringify([...favoriteRecipes, {
         id: dataMeal.idMeal,
         type: 'comida',
         area: dataMeal.strArea,
@@ -60,12 +65,33 @@ function ProcessoComida() {
     }
   };
 
+  const saveDoneRecipes = () => {
+    const date = new Date();
+    const doneDate = date;
+    let doneRecipes = [];
+    if (localStorage.doneRecipes) {
+      doneRecipes = JSON.parse(localStorage.doneRecipes);
+    }
+    localStorage.doneRecipes = JSON.stringify([...doneRecipes, {
+      id: dataMeal.idMeal,
+      type: 'comida',
+      area: dataMeal.strArea,
+      category: dataMeal.strCategory,
+      alcoholicOrNot: '',
+      name: dataMeal.strMeal,
+      image: dataMeal.strMealThumb,
+      doneDate,
+      tags: [],
+    }]);
+  };
+
   return (isLoading) ? <p>Loading</p> : (
     <div className="container-progress">
       <img
         data-testid="recipe-photo"
         src={ dataMeal.strMealThumb }
         alt="Foto da receita"
+        className="food-image"
       />
       <h1 data-testid="recipe-title">{ dataMeal.strMeal }</h1>
       <span>
@@ -99,7 +125,7 @@ function ProcessoComida() {
           key={ index }
           data-testid={ `${index}-ingredient-step` }
         >
-          {ingredient}
+          {ingredient }
           <input
             type="checkbox"
             name={ ingredient }
@@ -107,7 +133,7 @@ function ProcessoComida() {
             onChange={ handleChange }
           />
         </span>
-      ))}
+      )) }
       <p data-testid="instructions">
         Instruções
       </p>
@@ -115,7 +141,8 @@ function ProcessoComida() {
         <button
           type="button"
           data-testid="finish-recipe-btn"
-          disabled={ isDisable }
+          // disabled={ isDisable }
+          onClick={ saveDoneRecipes }
         >
           Finalizar Receita
         </button>

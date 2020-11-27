@@ -78,6 +78,7 @@ function DetalhesBebida() {
                 <img
                   src={ shareIcon }
                   alt="Botão de Compartilhar"
+                  className="icons"
                 />
               </button>
               { isCopied ? <p>Link copiado!</p> : true }
@@ -90,6 +91,7 @@ function DetalhesBebida() {
                 data-testid="favorite-btn"
                 src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
                 alt="Botão de Favorito"
+                className="icons"
               />
             </button>
             <h2>Ingredientes:</h2>
@@ -121,16 +123,30 @@ function DetalhesBebida() {
             <br />
 
             <h2>Recomendadas</h2>
-            {
-              data[0] && data[0].meals
-                .filter((_, index) => index < SEIS)
-                .map(({ strMeal, strMealThumb }, index) => (
-                  <div key={ strMeal } data-testid={ `${index}-recomendation-card` }>
-                    <img src={ strMealThumb } alt={ strMeal } />
-                    <h2 data-testid={ `${index}-recomendation-title` }>{ strMeal }</h2>
-                  </div>
-                ))
-            }
+
+            <div className="cards">
+              <div className="scroller">
+                {
+                  data[0] && data[0].meals
+                    .filter((_, index) => index < SEIS)
+                    .map(({ strMeal, strMealThumb }, index) => (
+                      <div
+                        className="card"
+                        key={ strMeal }
+                        data-testid={ `${index}-recomendation-card` }
+                      >
+                        <img src={ strMealThumb } alt={ strMeal } />
+                        <h2
+                          data-testid={ `${index}-recomendation-title` }
+                        >
+                          { strMeal }
+                        </h2>
+                      </div>
+                    ))
+                }
+              </div>
+            </div>
+
             <Link to={ `/bebidas/${idDrink}/in-progress` }>
               <button
                 className="start-recipe"

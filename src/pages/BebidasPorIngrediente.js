@@ -60,7 +60,7 @@ function BebidasPorIngrediente() {
             { ingredients.strIngredient1 }
           </p>
         </button>
-      ))}
+      )) }
       <Footer />
     </div>
   );
