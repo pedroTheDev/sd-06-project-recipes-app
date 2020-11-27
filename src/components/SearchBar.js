@@ -67,14 +67,15 @@ function SearchBar() {
   };
 
   const handleButton = async () => {
-    if (inputValue.length !== 1 && radioValue === 'first') {
+    if (inputValue.length !== 1 && inputValue === '#' && radioValue === 'first') {
+      console.log('first');
       alert('Sua busca deve conter somente 1 (um) caracter');
     } else if (pathname === '/comidas') {
       const recipes = await getFilteredRecipesApi(radioValue, inputValue);
-      if (recipes === null) {
+      console.log(recipes);
+      if (recipes === null || recipes === undefined) {
         alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
       } else if (recipes.length === 1) {
-        console.log(recipes);
         return history.push(`/comidas/${recipes[0].idMeal}`);
       } else {
         const myCards = recipes.map((item) => {
@@ -87,7 +88,8 @@ function SearchBar() {
       }
     } else if (pathname === '/bebidas') {
       const drinks = await getFilteredDrinksApi(radioValue, inputValue);
-      if (drinks === null) {
+      console.log(drinks);
+      if (drinks === null || drinks === undefined) {
         alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
       } else if (drinks.length === 1) {
         return history.push(`/bebidas/${drinks[0].idDrink}`);
