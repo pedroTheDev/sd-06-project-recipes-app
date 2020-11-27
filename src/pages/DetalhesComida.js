@@ -7,6 +7,8 @@ import DrinksCard from '../components/DrinksCard';
 import Header from '../components/Header';
 import { drinkAPI } from '../services/drinkAPI';
 import { fetchFoodAPI } from '../services/foodAPI';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import '../style/Detalhes.css';
 
 function DetalhesComida(props) {
@@ -16,10 +18,13 @@ function DetalhesComida(props) {
   } = useContext(ReceitasContext);
 
   const [copied, setCopied] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(true);
+  const [isFetching, setFetching] = useState(true);
 
   const { match: { params: { id } } } = props;
 
   const startedRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+
   const seis = 6;
 
   useEffect(() => {
@@ -29,6 +34,21 @@ function DetalhesComida(props) {
 
       setDrinks(responseFoodsAPI);
       setFetchById(responseID);
+
+      const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      console.log(favoriteRecipes);
+
+      if (!favoriteRecipes || !favoriteRecipes.length) {
+        setIsFavorite(false);
+      } else {
+        if (favoriteRecipes.some((recipe) => recipe.id === id)) {
+          setIsFavorite(true);
+        } else {
+          setIsFavorite(false);
+        }
+      };
+
+      setFetching(false);
     }
 
     fetchDrink();
@@ -75,7 +95,74 @@ function DetalhesComida(props) {
     setCopied(true);
   };
 
-  return ((!fetchById)
+  const localVerify = () => {
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const {
+      idMeal, strArea, strCategory, strMeal, strMealThumb,
+    } = fetchById[0];
+
+    !favoriteRecipes
+    ? (
+      localStorage.setItem('favoriteRecipes', JSON.stringify([
+        {
+          id: idMeal,
+          type: 'comida',
+          area: strArea,
+          category: strCategory,
+          alcoholicOrNot: '',
+          name: strMeal,
+          image: strMealThumb,
+        },
+      ]))
+    )
+    : (
+      localStorage.setItem('favoriteRecipes', JSON.stringify([
+        ...favoriteRecipes,
+        {
+          id: idMeal,
+          type: 'comida',
+          area: '',
+          category: strCategory,
+          alcoholicOrNot: '',
+          name: strMeal,
+          image: strMealThumb,
+        },
+      ]))
+    )
+
+    setIsFavorite(true);
+  };
+
+  const removeFavorite = (idRecipe) => {
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+
+    let index;
+    
+    favoriteRecipes.forEach((item, i) => {
+      if (item.id === idRecipe) {
+        index = i;
+      }
+    });
+
+    localStorage.setItem('favoriteRecipes', JSON.stringify([
+      ...favoriteRecipes.slice(0, index),
+      ...favoriteRecipes.slice(index + 1, favoriteRecipes.length),
+    ]));
+
+    setIsFavorite(false);
+  };
+
+  const setFavorite = (idRecipe) => {
+    const image = document.getElementById('favorite-img').src;
+
+    if (image.includes(whiteHeartIcon)) {
+      localVerify();
+    } else {
+      removeFavorite(idRecipe);
+    }
+  };
+
+  return ((isFetching)
     ? <div>carregando...</div>
     : (
       <section>
@@ -95,7 +182,19 @@ function DetalhesComida(props) {
                 </button>
                 {copied ? 'Link copiado!' : null}
               </div>
-              <button data-testid="favorite-btn" type="button">Favoritar</button>
+              <button
+                type="button"
+                onClick={ () => setFavorite(meal.idMeal) }
+              >
+                <img
+                  data-testid="favorite-btn"
+                  id="favorite-img"
+                  src={ !isFavorite
+                    ? whiteHeartIcon
+                    : blackHeartIcon }
+                  atl=""
+                />
+              </button>
               <p data-testid="recipe-category">{meal.strCategory}</p>
               {getIngredients(meal, /strIngredient/).map((item, indx) => {
                 const measure = getIngredients(meal, /strMeasure/);
