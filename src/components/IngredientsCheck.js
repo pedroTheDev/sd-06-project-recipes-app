@@ -7,6 +7,32 @@ function IngredientsCheck({ recipe, path, id }) {
 
   const getLocalStorageInfo = () => JSON.parse(localStorage.getItem('inProgressRecipes'));
 
+  const toggleIngredientCheck = (event) => {
+    const ingredientId = event.target.id;
+    const newcheckedIngredients = {
+      ...ingredientsCheck,
+      [ingredientId]: !ingredientsCheck[ingredientId],
+    };
+    setIngredientsCheck(newcheckedIngredients);
+  };
+
+  const saveProgressInLocalStorage = () => {
+    console.log('Recipe id:', recipe.id);
+    if (recipe.id === undefined) return null;
+    const settedIngredients = Object.keys(ingredientsCheck);
+    const status = Object.values(ingredientsCheck);
+    const currentCheckedIngredients = JSON.parse(localStorage.getItem(
+      'inProgressRecipes',
+    )) || { meals: {}, cocktails: {} };
+    console.log(currentCheckedIngredients);
+    const key = path === 'comidas' ? 'meals' : 'cocktails';
+    const checkedIngToLocalStorage = settedIngredients.filter((ingredient, index) => (
+      status[index]
+    ));
+    currentCheckedIngredients[key][recipe.id] = checkedIngToLocalStorage;
+    localStorage.setItem('inProgressRecipes', JSON.stringify(currentCheckedIngredients));
+  };
+
   useEffect(() => {
     const key = path === 'comidas' ? 'meals' : 'cocktails';
 
@@ -38,36 +64,11 @@ function IngredientsCheck({ recipe, path, id }) {
   }, []);
 
   useEffect(() => {
-    if (recipe.id !== undefined && (Object.keys(ingredientsCheck)).length > 0) {
+    const minLength = 0;
+    if (recipe.id !== undefined && (Object.keys(ingredientsCheck)).length > minLength) {
       saveProgressInLocalStorage();
     }
   }, [ingredientsCheck]);
-
-  const toggleIngredientCheck = (event) => {
-    const ingredientId = event.target.id;
-    const newcheckedIngredients = {
-      ...ingredientsCheck,
-      [ingredientId]: !ingredientsCheck[ingredientId],
-    };
-    setIngredientsCheck(newcheckedIngredients);
-  };
-
-  const saveProgressInLocalStorage = () => {
-    console.log('Recipe id:', recipe.id);
-    if (recipe.id === undefined) return null;
-    const ingredients = Object.keys(ingredientsCheck);
-    const status = Object.values(ingredientsCheck);
-    const currentCheckedIngredients = JSON.parse(localStorage.getItem(
-      'inProgressRecipes',
-    )) || { meals: {}, cocktails: {} };
-    console.log(currentCheckedIngredients);
-    const key = path === 'comidas' ? 'meals' : 'cocktails';
-    const checkedIngToLocalStorage = ingredients.filter((ingredient, index) => (
-      status[index]
-    ));
-    currentCheckedIngredients[key][recipe.id] = checkedIngToLocalStorage;
-    localStorage.setItem('inProgressRecipes', JSON.stringify(currentCheckedIngredients));
-  };
 
   const handleCheckClick = (event) => {
     toggleIngredientCheck(event);
@@ -103,6 +104,8 @@ function IngredientsCheck({ recipe, path, id }) {
 }
 IngredientsCheck.propTypes = {
   recipe: PropTypes.shape.isRequired,
+  path: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default IngredientsCheck;
