@@ -69,8 +69,14 @@ export async function selectDrinksItensCategories(name) {
   return json;
 }
 
-// export async function showAllDrinksCategories() {
-//   const URL = 'https://www.themealdb.com/api/json/v1/1/categories.php';
+export async function showAllFoodsInCategories() {
+  const URL = 'https://www.themealdb.com/api/json/v1/1/categories.php';
+
+  const response = await fetch(`${URL}`);
+  const json = response.json();
+
+  return json;
+}
 
 export async function showSugestedDrinks() {
   const URL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';

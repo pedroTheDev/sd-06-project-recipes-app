@@ -37,10 +37,13 @@ const Cards = () => {
         apiValueSearch.drinks.drinks && apiValueSearch.drinks.drinks.map((res, index) => {
           if (index <= number) {
             return (
-              <div data-testid={ `${index}-recipe-card` } key={ res.idDrink }>
-                <p data-testid={ `${index}-card-name` }>{res.strDrink}</p>
-                <img data-testid={ `${index}-card-img` } width="200" src={ res.strDrinkThumb } alt={ res.strDrink } />
+              <div>
+                <div data-testid={ `${index}-recipe-card` } key={ res.idDrink }>
+                  <p data-testid={ `${index}-card-name` }>{res.strDrink}</p>
+                  <img data-testid={ `${index}-card-img` } width="200" src={ res.strDrinkThumb } alt={ res.strDrink } />
+                </div>
               </div>
+
             );
           }
         })
@@ -48,9 +51,27 @@ const Cards = () => {
     }
   };
 
+  const showFoodCategories = () => {
+    const number = 11;
+    console.log(number);
+    return (
+      apiValueSearch.categoriesResult && apiValueSearch.categoriesResult.map((res, index) => {
+        if (index <= number) {
+          return (
+            <div data-testid={ `${index}-recipe-card` } key={ res.idCategory }>
+              <p data-testid={ `${index}-card-name` }>{res.strCategory}</p>
+              <img data-testid={ `${index}-card-img` } width="200" src={ res.strCategoryThumb } alt={ res.strCategory } />
+            </div>
+          );
+        }
+      })
+    );
+  };
+
+  // {apiValueSearch.foods.meals ? (showFoodResearch()) : (showFoodCategories()) }
   return window.location.pathname === '/comidas' ? (
     <div>
-      {showFoodResearch() }
+      { apiValueSearch.value === 'All' ? (showFoodCategories()) : (showFoodResearch()) }
     </div>
   ) : (
     <ul>

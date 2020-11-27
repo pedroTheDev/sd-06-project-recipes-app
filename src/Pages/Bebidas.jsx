@@ -7,14 +7,18 @@ import Cards from '../components/Cards';
 import CategoriesBebidas from '../components/Categories/indexBebidas';
 
 import { showSugestedDrinks,
+  showAllDrinksCategories,
 } from '../services/aPI';
+
 import ContextAPI from '../Context/ContextAPI';
 
 const Bebidas = () => {
-  const { setApiValueSearch, apiValueSearch } = useContext(ContextAPI);
+  const { setApiValueSearch, apiValueSearch, setCategories } = useContext(ContextAPI);
 
   const getSugestedDrinks = async () => {
     const drinks = await showSugestedDrinks();
+    const result = await showAllDrinksCategories();
+    setCategories(result);
     setApiValueSearch({
       ...apiValueSearch,
       drinks,
