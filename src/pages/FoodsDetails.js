@@ -13,6 +13,7 @@ import saveFavorite from '../helpers/saveFavorite';
 export default function FoodsDetails(props) {
   const [recipe, setRecipe] = useState('');
   const [recipeDetails, setRecipeDetails] = useState([]);
+  const [concluded, setConcluded] = useState(false);
   const [recommendation, setRecommendation] = useState([]);
   const [btnStartValue, setBtnStartValue] = useState('Iniciar Receita');
   const [copy, setCopy] = useState('');
@@ -32,9 +33,15 @@ export default function FoodsDetails(props) {
   useEffect(() => {
     const storage = JSON.parse(localStorage.getItem('inProgressRecipes'));
     const inProgress = (storage) && storage.meals[id];
+    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+    const recipeDone = (doneRecipes) && doneRecipes.some((item) => item.id === id);
 
     if (inProgress) {
       setBtnStartValue('Continuar Receita');
+    }
+
+    if (recipeDone) {
+      setConcluded(true);
     }
 
     if (localStorage.getItem('favoriteRecipes') !== null) {
@@ -145,16 +152,19 @@ export default function FoodsDetails(props) {
             <source src={ item.strYoutube } type="video/mp4" />
             <track src="" kind="captions" />
           </video>
-
-          <Link to={ `/comidas/${id}/in-progress` }>
-            <button
-              type="button"
-              data-testid="start-recipe-btn"
-              className="btnStart"
-            >
-              {btnStartValue}
-            </button>
-          </Link>
+          {
+            (!concluded) ? (
+              <Link to={ `/comidas/${id}/in-progress` }>
+                <button
+                  type="button"
+                  data-testid="start-recipe-btn"
+                  className="btnStart"
+                >
+                  {btnStartValue}
+                </button>
+              </Link>
+            ) : null
+          }
         </div>
         <div className="testimonials">
           <div className="scroller">
