@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import fetchRecipes from '../services';
@@ -14,7 +14,6 @@ function FoodInProgress(props) {
   const [ingredients, setIngredients] = useState([]);
   const [isDisabled, setIsDisabled] = useState(true);
   const [copied, setCopied] = useState('none');
-  const textArea = useRef(null);
   const now = new Date();
   let progressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
   const zero = 0;
@@ -47,11 +46,14 @@ function FoodInProgress(props) {
     localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
   };
 
-  const copyToClipboard = (e) => {
-    textArea.current.select();
-    document.execCommand('copy');
-    e.target.focus();
+  const copyToClipboard = () => {
     setCopied('block');
+    window.navigator.clipboard
+      .writeText(window.location.toString()
+        .substr(zero, window.location.toString().length - '/in-progress'.length));
+    window.navigator.clipboard
+      .writeText(window.location.toString()
+        .substr(zero, window.location.toString().length - '/in-progress'.length));
   };
 
   const recipeAPI = async () => {
@@ -194,11 +196,6 @@ function FoodInProgress(props) {
           ))}
         </ul>
         <p data-testid="instructions">{ recipe.strInstructions }</p>
-        <textarea
-          className="text-area"
-          ref={ textArea }
-          value={ `http://localhost:3000/comidas/${id}` }
-        />
         { isDisabled
           ? (
             <button
