@@ -56,6 +56,7 @@ export default function CategoryButton() {
             className="category-buttons"
             type="button"
             onClick={ () => fetchApi(generalAPI) }
+            data-testid="All-category-filter"
           >
             All
           </button>
@@ -65,7 +66,7 @@ export default function CategoryButton() {
               return (
                 <button
                   key={ index }
-                  data-testid={ `${index}-category-filter` }
+                  data-testid={ `${category.strCategory}-category-filter` }
                   className="category-buttons"
                   type="button"
                   onClick={ () => fetchByCategory(linkAPI) }
