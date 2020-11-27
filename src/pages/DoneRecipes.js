@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import '../css/Cards.css';
 import shareIcon from '../images/shareIcon.svg';
@@ -60,17 +61,21 @@ export default function DoneRecipes() {
           <section className="cards-wrapper">
             { recipes.map((recipe, index) => (
               <section key={ recipe.id } className="item-card">
-                <img
-                  src={ recipe.image }
-                  data-testid={ `${index}-horizontal-image` }
-                  alt="card"
-                />
+                <Link to={ `/${recipe.type}s/${recipe.id}` }>
+                  <img
+                    src={ recipe.image }
+                    data-testid={ `${index}-horizontal-image` }
+                    alt="card"
+                  />
+                </Link>
                 <h4 data-testid={ `${index}-horizontal-top-text` }>
                   { (recipe.type === 'bebida')
                     ? recipe.alcoholicOrNot
                     : `${recipe.area} - ${recipe.category}` }
                 </h4>
-                <p data-testid={ `${index}-horizontal-name` }>{ recipe.name }</p>
+                <Link to={ `/${recipe.type}s/${recipe.id}` }>
+                  <p data-testid={ `${index}-horizontal-name` }>{ recipe.name }</p>
+                </Link>
                 <span data-testid={ `${index}-horizontal-done-date` }>
                   { recipe.doneDate }
                 </span>
