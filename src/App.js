@@ -5,6 +5,8 @@ import {
   Login,
   Perfil,
   Explorar,
+  ExplorerIngredientsMeals,
+  ExplorerIngredientsDrinks,
   ReceitasComidas,
   ReceitasBebidas,
   Details,
@@ -27,7 +29,7 @@ function App() {
         <Route path="/explorar/comidas/area" component={ ReceitasBebidas } />
         <Route
           path="/explorar/comidas/ingredientes"
-          component={ ReceitasBebidas }
+          component={ ExplorerIngredientsMeals }
         />
         <Route
           path="/explorar/comidas"
@@ -35,7 +37,7 @@ function App() {
         />
         <Route
           path="/explorar/bebidas/ingredientes"
-          component={ ReceitasBebidas }
+          component={ ExplorerIngredientsDrinks }
         />
         <Route
           path="/explorar/bebidas"

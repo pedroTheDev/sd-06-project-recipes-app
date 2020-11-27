@@ -4,3 +4,5 @@ export { default as Explorar } from './explorar';
 export { default as ReceitasBebidas } from './receitasBebidas';
 export { default as ReceitasComidas } from './receitasComidas';
 export { default as Details } from './details';
+export { default as ExplorerIngredientsMeals } from './explorerIngredientsMeals';
+export { default as ExplorerIngredientsDrinks } from './explorerIngredientsDrinks';
