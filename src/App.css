@@ -90,6 +90,28 @@
   width: auto;
 }
 
+.inputForm {
+  display: flex;
+  justify-content: space-around;
+  margin-right: 10px;
+  width: 100%;
+}
+
+.radioBtns {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-right: 10px;
+  margin-top: 8px;
+  width: 50%;
+}
+
+.btnForm {
+  display: flex;
+  margin-top: 8px;
+  width: 20%;
+}
+
 .category-button {
   background-color: rgb(240,240,240);
   margin-top: 25px;

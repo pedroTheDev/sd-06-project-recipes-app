@@ -39,7 +39,7 @@ function MealsPage() {
           temp = data;
           setControl(false);
         } else {
-          temp = await cocktailAPI.searchByName('');
+          temp = await cocktailAPI.fetchDrink('name', '');
         }
         setState({
           filter: newFilter,
@@ -53,7 +53,7 @@ function MealsPage() {
           temp = data;
           setControl(false);
         } else {
-          temp = await mealAPI.searchByName('');
+          temp = await mealAPI.fetchMeal('name', '');
         }
         setState({
           filter: newFilter,

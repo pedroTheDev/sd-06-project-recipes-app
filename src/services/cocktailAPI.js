@@ -1,30 +1,20 @@
 const COCKTAIL_API = 'https://www.thecocktaildb.com/api/json/v1/1/';
 
 // Endpoints
-const filterByIngredientEndpoint = 'filter.php?i=';
 const filterByCategoryEndpoint = 'filter.php?c=';
-const searchByNameEndpoint = 'search.php?s=';
-const searchByFirstLetterEndpoint = 'search.php?f=';
 const listCategoriesEndpoint = 'list.php?c=list';
 const requestRecipeEndpoint = 'lookup.php?i=';
 const randomRequestEndpoint = 'random.php';
 
-export async function filterByIngredient(key) {
-  const url = `${COCKTAIL_API}${filterByIngredientEndpoint}${key}`;
-  const result = await fetch(url);
-  const data = await result.json();
-  return data;
-}
+const endpoints = {
+  ingredient: 'filter.php?i=',
+  name: 'search.php?s=',
+  firstLetter: 'search.php?f=',
+};
 
-export async function searchByName(key) {
-  const url = `${COCKTAIL_API}${searchByNameEndpoint}${key}`;
-  const result = await fetch(url);
-  const data = await result.json();
-  return data;
-}
-
-export async function searchByFirstLetter(key) {
-  const url = `${COCKTAIL_API}${searchByFirstLetterEndpoint}${key}`;
+export async function fetchDrink(type, key) {
+  key = type === 'firstLetter' ? key[0] : key;
+  const url = `${COCKTAIL_API}${endpoints[type]}${key}`;
   const result = await fetch(url);
   const data = await result.json();
   return data;
