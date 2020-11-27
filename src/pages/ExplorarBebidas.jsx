@@ -40,7 +40,7 @@ function ExplorarBebidas({ history }) {
   );
 }
 
-ExplorarComidas.protoTypes = {
+ExplorarBebidas.protoTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,

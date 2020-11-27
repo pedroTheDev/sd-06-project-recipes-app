@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import {
   requestApiFoodDetails,
 } from '../services/requestFood';
@@ -114,13 +113,5 @@ function DetalhesReceita(props) {
     </div>
   );
 }
-
-DetalhesReceita.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-    }).isRequired,
-  }).isRequired,
-};
 
 export default DetalhesReceita;
