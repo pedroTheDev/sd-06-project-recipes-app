@@ -8,8 +8,10 @@ const Provider = ({ children }) => {
   const [search, setSearch] = useState(false);
   const [searchButton, setSearchButton] = useState(true);
   const [foods, setFoods] = useState([]);
+  const [recommendations, setRecommendations] = useState();
+  const [categories, setCategories] = useState();
   const [isLoading, setisLoading] = useState(false);
-  const [searchParam, setSearchParam] = useState();
+  const [searchParam, setSearchParam] = useState('Meal');
 
   const fetchApi = async (URL) => {
     setisLoading(true);
@@ -38,6 +40,19 @@ const Provider = ({ children }) => {
     }
   };
 
+  const fetchRecommendations = async (URL) => {
+    const response = await fetch(URL);
+    const json = await response.json();
+    if (searchParam === 'Meal') setRecommendations(json.drinks);
+    if (searchParam === 'Drink') setRecommendations(json.meals);
+  };
+
+  const fetchCategories = async (URL) => {
+    const response = await fetch(URL);
+    const json = await response.json();
+    setCategories(json);
+  };
+
   const context = {
     email,
     password,
@@ -54,6 +69,10 @@ const Provider = ({ children }) => {
     fetchApi,
     isLoading,
     setisLoading,
+    recommendations,
+    fetchRecommendations,
+    categories,
+    fetchCategories,
   };
 
   return (
