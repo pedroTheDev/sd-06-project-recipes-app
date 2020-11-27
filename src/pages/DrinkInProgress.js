@@ -4,6 +4,7 @@ import HeaderContext from '../context/HeaderContext';
 import RecipesContext from '../context/RecipesContext';
 import shareIcon from '../images/shareIcon.svg';
 import likeIcon from '../images/whiteHeartIcon.svg';
+import './DrinkInProgress.css';
 
 const DrinkInProgress = ({ match: { params: { id } } }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -66,7 +67,7 @@ const DrinkInProgress = ({ match: { params: { id } } }) => {
         {!isLoading && recipeIngredients.map((item, index) => (
           <li key={ index } data-testid={ `${index}-ingredient-step` }>
             <input type="checkbox" name={ item } id={ item } />
-            <label htmlFor={ item }>{item}</label>
+            <label className="is-checked" htmlFor={ item }>{item}</label>
           </li>
         ))}
       </ul>

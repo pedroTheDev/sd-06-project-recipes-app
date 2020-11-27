@@ -4,6 +4,7 @@ import HeaderContext from '../context/HeaderContext';
 import RecipesContext from '../context/RecipesContext';
 import shareIcon from '../images/shareIcon.svg';
 import likeIcon from '../images/whiteHeartIcon.svg';
+import './FoodInProgress.css';
 
 const FoodInProgress = ({ match: { params: { id } } }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -48,6 +49,22 @@ const FoodInProgress = ({ match: { params: { id } } }) => {
     setIsLoading(false);
   };
 
+  const saveProgress = (ingredient) => {
+    if (!localStorage.getItem('inProgressRecipes')) {
+      const defaultObject = {
+          cocktails: {},
+          meals: {},
+      }
+      localStorage.setItem('inProgressRecipes', JSON.stringify(defaultObject));
+    }
+    const previousProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    previousProgress.meals[id]
+  };
+
+  const handleChecked = ({ target: { name } }) => {
+    saveProgress(name)
+  };
+
   useEffect(() => {
     setTitle('Food In Progress');
     fetchRecipe();
@@ -64,13 +81,22 @@ const FoodInProgress = ({ match: { params: { id } } }) => {
       <h3 data-testid="recipe-category">{recipeCategory}</h3>
       <ul>
         { !isLoading && recipeIngredients.map((item, index) => (
-          <li key={ index } data-testid={ `${index}-ingredient-step` }>
+          <li
+            key={ index }
+            data-testid={ `${index}-ingredient-step` }
+            onClick={ handleChecked }
+          >
             <input
               type="checkbox"
               name={ item }
               id={ item }
             />
-            <label htmlFor={ item }>{item}</label>
+            <label
+              htmlFor={ item }
+              name={ item }
+            >
+              { item }
+            </label>
           </li>
         ))}
       </ul>

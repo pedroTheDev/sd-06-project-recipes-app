@@ -77,7 +77,7 @@ const FoodsDetails = (props) => {
   };
 
   const handleStartRecipe = () => {
-    history.push({ pathname: `/bebidas/${id}/in-progress` });
+    history.push({ pathname: `/comidas/${id}/in-progress` });
   };
 
   useEffect(() => {
