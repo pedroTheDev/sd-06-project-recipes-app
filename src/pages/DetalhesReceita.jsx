@@ -16,6 +16,7 @@ function DetalhesReceita(props) {
   const [recommendFood, setRecommendFood] = useState([]);
   const zero = 0;
   const vinte = 20;
+  const seis = 6;
 
   useEffect(() => {
     requestApiFoodDetails(props.match.params.id)
@@ -29,7 +30,7 @@ function DetalhesReceita(props) {
     if (detailsFood.length !== zero) {
       const response = await recommendDrinksList();
       console.log(response);
-      setRecommendFood(response.drinks.slice(zero, 6));
+      setRecommendFood(response.drinks.slice(zero, seis));
     }
   };
 

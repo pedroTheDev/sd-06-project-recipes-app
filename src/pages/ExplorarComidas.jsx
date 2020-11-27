@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
@@ -10,7 +11,7 @@ function ExplorarComidas({ history }) {
     const response = await requestApiMealSurprise();
     const id = response[0].idMeal;
     const randomMealEndpoint = `/comidas/${id}`;
-    console.log(randomMealEndpoint);
+    console.log(history);
     history.push(randomMealEndpoint);
   }
 
@@ -46,5 +47,11 @@ function ExplorarComidas({ history }) {
     </>
   );
 }
+
+ExplorarComidas.protoTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 export default ExplorarComidas;
