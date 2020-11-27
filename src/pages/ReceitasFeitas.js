@@ -1,14 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Header } from '../components';
 import { shareIcon } from '../images';
 
 function ReceitasFeitas() {
-  if (!localStorage.doneRecipes) {
-    return <h1>Você ainda não tem nenhuma receita Favorita. :(</h1>;
-  }
+  const [doneRecipes, setDoneRecipes] = useState([]);
 
-  const doneRecipes = JSON.parse(localStorage.doneRecipes);
+  useEffect(() => {
+    if (!localStorage.doneRecipes) {
+      return <h1>Você ainda não tem nenhuma receita pronta. </h1>;
+    }
+    setDoneRecipes(JSON.parse(localStorage.doneRecipes));
+  }, []);
+
+  const filterRecipes = ({ innerText }) => {
+    if (innerText === 'Food') {
+      const newDone = doneRecipes.filter((done) => (
+        done.type === 'comida'
+      ));
+      setDoneRecipes(newDone);
+    } else if (innerText === 'Drinks') {
+      const newDone = doneRecipes.filter((done) => (
+        done.type === 'bebida'
+      ));
+      setDoneRecipes(newDone);
+    } else {
+      setDoneRecipes(JSON.parse(localStorage.doneRecipes));
+    }
+  };
 
   return (
     <div>
@@ -16,18 +35,21 @@ function ReceitasFeitas() {
       <button
         type="button"
         data-testid="filter-by-all-btn"
+        onClick={ ({ target }) => { filterRecipes(target); } }
       >
         All
       </button>
       <button
         type="button"
         data-testid="filter-by-food-btn"
+        onClick={ ({ target }) => { filterRecipes(target); } }
       >
         Food
       </button>
       <button
         type="button"
         data-testid="filter-by-drink-btn"
+        onClick={ ({ target }) => { filterRecipes(target); } }
       >
         Drinks
       </button>

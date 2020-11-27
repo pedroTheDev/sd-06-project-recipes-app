@@ -4,7 +4,6 @@ import { Header } from '../components';
 import { shareIcon, blackHeartIcon } from '../images';
 
 function ReceitasFavoritas() {
-  // const [isFavorite, setIsFavorite] = useState(true);
   const [favoriteRecipes, setFavoriteRecipe] = useState([]);
 
   useEffect(() => {
@@ -14,15 +13,27 @@ function ReceitasFavoritas() {
     setFavoriteRecipe(JSON.parse(localStorage.favoriteRecipes));
   }, []);
 
-  useEffect(() => {
-
-  }, [favoriteRecipes]);
-
   const handleClick = (index) => {
     const newFavoriteRecipes = [...favoriteRecipes];
     newFavoriteRecipes.splice(index, 1);
     setFavoriteRecipe(newFavoriteRecipes);
-    localStorage.favoriteRecipes = newFavoriteRecipes;
+    localStorage.favoriteRecipes = JSON.stringify(newFavoriteRecipes);
+  };
+
+  const filterRecipes = ({ innerText }) => {
+    if (innerText === 'Food') {
+      const newFavorite = favoriteRecipes.filter((favorite) => (
+        favorite.type === 'comida'
+      ));
+      setFavoriteRecipe(newFavorite);
+    } else if (innerText === 'Drinks') {
+      const newFavorite = favoriteRecipes.filter((favorite) => (
+        favorite.type === 'bebida'
+      ));
+      setFavoriteRecipe(newFavorite);
+    } else {
+      setFavoriteRecipe(JSON.parse(localStorage.favoriteRecipes));
+    }
   };
 
   return (
@@ -31,18 +42,21 @@ function ReceitasFavoritas() {
       <button
         type="button"
         data-testid="filter-by-all-btn"
+        onClick={ ({ target }) => { filterRecipes(target); } }
       >
         All
       </button>
       <button
         type="button"
         data-testid="filter-by-food-btn"
+        onClick={ ({ target }) => { filterRecipes(target); } }
       >
         Food
       </button>
       <button
         type="button"
         data-testid="filter-by-drink-btn"
+        onClick={ ({ target }) => { filterRecipes(target); } }
       >
         Drinks
       </button>
