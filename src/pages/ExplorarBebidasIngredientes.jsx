@@ -12,6 +12,7 @@ export default function ExplorarBebidasingredientes({ history }) {
     loading,
     setLoading,
     setDrinksByIngredient,
+    setShowDrinksByIngredient,
   } = useContext(Context);
   const [ingredients, setIngredients] = useState([]);
 
@@ -31,6 +32,7 @@ export default function ExplorarBebidasingredientes({ history }) {
     setLoading(true);
     const response = await api.fetchDrinkByIngredients(name);
     setDrinksByIngredient(response);
+    setShowDrinksByIngredient(true);
     setLoading(false);
   };
 

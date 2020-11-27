@@ -16,7 +16,8 @@ export default function Comidas({ history }) {
     loading,
     meals,
     mealsByIngredient,
-    setMeals } = useContext(Context);
+    setMeals,
+    showMealsByIngredient } = useContext(Context);
   const [hidden, setHidden] = useState(true);
   const [selected] = useState(false);
 
@@ -95,7 +96,7 @@ export default function Comidas({ history }) {
       ))}
       {hidden ? '' : <SearchBar />}
       <h1>{ titulo }</h1>
-      {loading ? <p>Loading</p>
+      {loading || showMealsByIngredient ? <p>Loading</p>
         : meals.filter((meal, index) => meal && index < twelve)
           .map((meal, index) => (
             <button

@@ -16,7 +16,8 @@ export default function Bebidas({ history }) {
     setLoading,
     drinks,
     drinksByIngredient,
-    setDrinks } = useContext(Context);
+    setDrinks,
+    showDrinksByIngredient } = useContext(Context);
   const [hidden, setHidden] = useState(true);
   const [selected] = useState(false);
 
@@ -94,7 +95,7 @@ export default function Bebidas({ history }) {
       ))}
       {hidden ? '' : <SearchBar />}
       <h1>{ titulo }</h1>
-      {loading ? <p>Loading</p>
+      {loading || showDrinksByIngredient ? <p>Loading</p>
         : drinks.filter((drink, index) => drink && index < twelve)
           .map((drink, index) => (
             <button

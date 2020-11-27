@@ -12,7 +12,7 @@ export default function ExplorarComidasingredientes({ history }) {
     loading,
     setLoading,
     setMealsByIngredient,
-  } = useContext(Context);
+    setShowMealsByIngredient } = useContext(Context);
   const [ingredients, setIngredients] = useState([]);
 
   const fetchIngredients = async () => {
@@ -31,6 +31,7 @@ export default function ExplorarComidasingredientes({ history }) {
     setLoading(true);
     const response = await api.fetchFoodByIngredients(name);
     setMealsByIngredient(response);
+    setShowMealsByIngredient(true);
     setLoading(false);
   };
 

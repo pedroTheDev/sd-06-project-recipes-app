@@ -3,9 +3,9 @@ import { Link, useParams } from 'react-router-dom';
 import blackHeart from '../images/blackHeartIcon.svg';
 import whiteHeart from '../images/whiteHeartIcon.svg';
 import ShareIcon from '../images/shareIcon.svg';
-import '../Components/style/style.css';
 import * as api from '../services/Api';
 import Context from '../context/Context';
+import './styles/pages.css';
 
 export default function DetalhesBebidas() {
   const { id } = useParams();
@@ -87,7 +87,7 @@ export default function DetalhesBebidas() {
   return (
     <div>
       <h1>Detalhes Bebidas</h1>
-      {loading ? <p>Loading</p>
+      {loading ? <p>Loading...</p>
         : (
           <div>
             <img
@@ -99,11 +99,10 @@ export default function DetalhesBebidas() {
             <h2 data-testid="recipe-title">{selectedDrink.strDrink}</h2>
             <button
               type="button"
-              src={ ShareIcon }
               alt="compartilhar"
               data-testid="share-btn"
             >
-              Compartilhar
+              <img src={ ShareIcon } alt="compartilhar" />
             </button>
             <button
               type="button"
@@ -138,10 +137,14 @@ export default function DetalhesBebidas() {
               .map((meal, index) => (
                 <div key={ index } data-testid={ `${index}-recomendation-card` }>
                   <p data-testid={ `${index}-recomendation-title` }>{meal.strMeal}</p>
-                  <img src={ meal.strMealThumb } alt={ index } />
+                  <img src={ meal.strMealThumb } alt={ index } width="200px" />
                 </div>))}
             <Link to={ `/bebidas/${id}/in-progress` }>
-              <button type="button" id="iniciar-receita" data-testid="start-recipe-btn">
+              <button
+                type="button"
+                className="iniciar-receita"
+                data-testid="start-recipe-btn"
+              >
                 Iniciar Receita
               </button>
             </Link>

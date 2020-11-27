@@ -8,12 +8,17 @@ import Footer from '../Components/Footer';
 export default function Perfil({ history }) {
   const { titulo, setTitulo } = useContext(Context);
 
+  let email2 = JSON.parse(localStorage.getItem('user'));
+  const getEmail = () => {
+    if (!email2) {
+      email2 = { email: 'email@email.com' };
+    }
+  };
+
   useEffect(() => {
     setTitulo('Perfil');
+    getEmail();
   }, []);
-
-  const email2 = JSON.parse(localStorage.getItem('user'));
-  console.log('email', email2.email);
 
   const onClick = () => {
     localStorage.clear();
@@ -23,7 +28,9 @@ export default function Perfil({ history }) {
   return (
     <div>
       <Header titulo={ titulo } />
-      <p data-testid="profile-email">{email2.email}</p>
+      <p data-testid="profile-email">
+        { email2.email }
+      </p>
       <Link to="/receitas-feitas">
         <button type="button" data-testid="profile-done-btn">
           Receitas Feitas

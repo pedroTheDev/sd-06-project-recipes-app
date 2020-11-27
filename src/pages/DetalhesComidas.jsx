@@ -3,9 +3,9 @@ import { Link, useParams } from 'react-router-dom';
 import blackHeart from '../images/blackHeartIcon.svg';
 import whiteHeart from '../images/whiteHeartIcon.svg';
 import ShareIcon from '../images/shareIcon.svg';
-import '../Components/style/style.css';
 import * as api from '../services/Api';
 import Context from '../context/Context';
+import './styles/pages.css';
 
 export default function DetalhesComidas() {
   const { id } = useParams();
@@ -30,8 +30,15 @@ export default function DetalhesComidas() {
     setLoading(false);
   };
 
+  const verifyFavorite = () => {
+    if (favoriteMeals.includes(selectedMeal)) {
+      setFavoriteImg(blackHeart);
+    }
+  };
+
   useEffect(() => {
     setarComida();
+    verifyFavorite();
   }, []);
 
   const collectIngredients = () => {
@@ -51,38 +58,33 @@ export default function DetalhesComidas() {
     collectIngredients();
   }, [selectedMeal]);
 
-  const saveFavoriteRecipe = {
-    id: selectedMeal.idMeal,
-    type: 'meal',
-    area: selectedMeal.strArea,
-    category: selectedMeal.strCategory,
-    alcoholicOrNot: '',
-    name: selectedMeal.strMeal,
-    image: selectedMeal.strMealThumb,
-  };
-
-  /*
-  const handleFavorite = (id) => {
-    const newFavorite =
-  }
-  */
+  // const favoriteRecipe = {
+  //   id: selectedMeal.idMeal,
+  //   type: 'meal',
+  //   area: selectedMeal.strArea,
+  //   category: selectedMeal.strCategory,
+  //   alcoholicOrNot: '',
+  //   name: selectedMeal.strMeal,
+  //   image: selectedMeal.strMealThumb,
+  // };
 
   const clickFavorite = () => {
-    setFavoriteMeals(...favoriteMeals, saveFavoriteRecipe);
-    console.log(selectedMeal);
-    localStorage.setItem('favoriteRecipes', JSON.stringify(saveFavoriteRecipe));
     if (favoriteImg === whiteHeart) {
+      setFavoriteMeals(...favoriteMeals, [selectedMeal]);
       return setFavoriteImg(blackHeart);
     }
+    const newMeals = favoriteMeals.filter(
+      (meal) => meal.strMeal !== selectedMeal.strMeal,
+    );
+    setFavoriteMeals(newMeals);
     return setFavoriteImg(whiteHeart);
   };
-
   const seis = 6;
 
   return (
     <div>
       <h1>Detalhes Comidas</h1>
-      { loading ? <p>Loading</p>
+      { loading ? <p>Loading...</p>
         : (
           <div>
             <img
@@ -94,11 +96,10 @@ export default function DetalhesComidas() {
             <h2 data-testid="recipe-title">{selectedMeal.strMeal}</h2>
             <button
               type="button"
-              src={ ShareIcon }
               alt="compartilhar"
               data-testid="share-btn"
             >
-              Compartilhar
+              <img src={ ShareIcon } alt="compartilhar" />
             </button>
             <button
               type="button"
@@ -130,12 +131,16 @@ export default function DetalhesComidas() {
               .map((drink, index) => (
                 <div key={ index } data-testid={ `${index}-recomendation-card` }>
                   <p data-testid={ `${index}-recomendation-title` }>{drink.strDrink }</p>
-                  <img src={ drink.strDrinkThumb } alt={ index } />
+                  <img src={ drink.strDrinkThumb } alt={ index } width="200px" />
                 </div>
               ))}
 
             <Link to={ `/comidas/${id}/in-progress` }>
-              <button type="button" id="iniciar-receita" data-testid="start-recipe-btn">
+              <button
+                type="button"
+                className="iniciar-receita"
+                data-testid="start-recipe-btn"
+              >
                 Iniciar Receita
               </button>
             </Link>

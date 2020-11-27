@@ -15,6 +15,8 @@ export default function Provider({ children }) {
   const [mealsByIngredient, setMealsByIngredient] = useState([]);
   const [mealsByArea, setMealsByArea] = useState([]);
   const [drinksByIngredient, setDrinksByIngredient] = useState([]);
+  const [showMealsByIngredient, setShowMealsByIngredient] = useState(false);
+  const [showDrinksByIngredient, setShowDrinksByIngredient] = useState(false);
 
   const contextValue = {
     email,
@@ -41,6 +43,10 @@ export default function Provider({ children }) {
     setMealsByArea,
     drinksByIngredient,
     setDrinksByIngredient,
+    showMealsByIngredient,
+    setShowMealsByIngredient,
+    showDrinksByIngredient,
+    setShowDrinksByIngredient,
   };
 
   return (
