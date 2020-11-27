@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-// import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import RevenueContext from '../context/RevenueContext';
 
 // 01. Devem ser exibidas apenas as 5 primeiras categorias retornadas da API.
@@ -15,62 +15,76 @@ import RevenueContext from '../context/RevenueContext';
 // deve-se carregar as 12 primeiras receitas de cada categoria
 
 export default function CategoryButton() {
-  const { categories, fetchCategories, searchParam } = useContext(RevenueContext);
-  // setSearchParam
+  const { foods, categories, fetchCategories, searchParam,
+    setSearchParam, fetchByCategory, fetchApi } = useContext(RevenueContext);
 
-  // const location = useLocation();
-  // const idRecipe = location.pathname.split('/');
-  // let foodOrDrink;
-  // if (idRecipe[1] === 'comidas') {
-  //   setSearchParam('Meal');
-  //   foodOrDrink = 'Meals';
-  // }
-  // if (idRecipe[1] === 'bebidas') {
-  //   setSearchParam('Drink');
-  //   foodOrDrink = 'Drinks';
-  // }
+  const location = useLocation();
+  const idRecipe = location.pathname.split('/');
+  let foodOrDrink;
+  if (idRecipe[1] === 'comidas') {
+    setSearchParam('Meal');
+    foodOrDrink = 'meals';
+  }
+  if (idRecipe[1] === 'bebidas') {
+    setSearchParam('Drink');
+    foodOrDrink = 'drinks';
+  }
 
-  const linkCategoriesAPI = (searchParam === 'Meal')
-    ? 'https://www.themealdb.com/api/json/v1/1/list.php?c=list'
-    : 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
+  let generalAPI;
+  let linkCategoriesAPI;
+  let linkByCategoryAPI;
+  if (searchParam === 'Meal') {
+    generalAPI = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+    linkCategoriesAPI = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
+    linkByCategoryAPI = 'https://www.themealdb.com/api/json/v1/1/filter.php?c=';
+  } else {
+    generalAPI = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+    linkCategoriesAPI = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
+    linkByCategoryAPI = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=';
+  }
 
   useEffect(() => {
     fetchCategories(linkCategoriesAPI);
-  }, []);
+  }, [searchParam, foods]);
 
-  console.log(categories);
-
-  // const renderCategories = () => {
-  //   if (categories[foodOrDrink]) {
-  //     return (
-  //       <div>
-  //         <button
-  //           type="button"
-  //         >
-  //           All
-  //         </button>
-  //         {categories[foodOrDrink].map((category, index) => {
-  //           if (index < 5) {
-  //             return (
-  //               <button
-  //                 key={ index }
-  //                 data-testid={ `${index}-category-filter` }
-  //                 type="button"
-  //               >
-  //                 {category.strCategory}
-  //               </button>
-  //             );
-  //           }
-  //         })}
-  //       </div>
-  //     );
-  //   }
-  //   return 'As categorias não foram carregadas';
-  // };
+  const renderCategories = () => {
+    if (categories[foodOrDrink]) {
+      const CINCO = 5;
+      return (
+        <div className="d-flex justify-content-around align-items-center flex-wrap">
+          <button
+            className="category-buttons"
+            type="button"
+            onClick={ () => fetchApi(generalAPI) }
+          >
+            All
+          </button>
+          {categories[foodOrDrink].map((category, index) => {
+            if (index < CINCO) {
+              const linkAPI = `${linkByCategoryAPI}${category.strCategory}`;
+              return (
+                <button
+                  key={ index }
+                  data-testid={ `${index}-category-filter` }
+                  className="category-buttons"
+                  type="button"
+                  onClick={ () => fetchByCategory(linkAPI) }
+                >
+                  {category.strCategory}
+                </button>
+              );
+            }
+            return null;
+          })}
+        </div>
+      );
+    }
+    return 'As categorias não foram carregadas';
+  };
 
   return (
     <div>
-      {/* {(categories) ? renderCategories() : 'Loading...'} */}
+      {(categories) ? renderCategories() : 'Loading...'}
     </div>
   );
 }

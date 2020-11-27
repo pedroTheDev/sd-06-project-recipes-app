@@ -16,19 +16,17 @@ export default function Foods() {
   }, [searchParam]);
 
   const foodOrDrink = (searchParam === 'Meal') ? 'comidas' : 'bebidas';
-  const idFirstPosition = (foods.length !== ZERO) ? foods[0][`id${searchParam}`] : null;
+  const idFirstPosition = (foods && foods.length !== ZERO)
+    ? foods[0][`id${searchParam}`]
+    : null;
   const renderFoodOrDrink = () => (
     <>
-      {(foods.length === 1)
+      {(foods && foods.length === 1)
         ? <Redirect to={ `/${foodOrDrink}/${idFirstPosition}` } /> : null}
-      {foods.map((food, index) => {
+      {foods && foods.map((food, index) => {
         const id = food[`id${searchParam}`];
-        // const linkRecipeAPI = (searchParam === 'Meal')
-        //   ? `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
-        //   : `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
         if (index < DOZE) {
           return (
-            // <a href onClick={ () => fetchApi(linkRecipeAPI) }>
             <Link to={ `/${foodOrDrink}/${id}` }>
               <div key={ id } data-testid={ `${index}-recipe-card` }>
                 <img
@@ -42,7 +40,6 @@ export default function Foods() {
                 </div>
               </div>
             </Link>
-            // </a>
           );
         }
         return '';
