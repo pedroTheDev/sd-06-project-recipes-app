@@ -5,6 +5,7 @@ import RecipeContext from './RecipeContext';
 function ContextProvider({ children }) {
   const [foodAPI, setFoodAPI] = useState([]);
   const [drinkAPI, setDrinkAPI] = useState([]);
+  const [searchItens, setSearchItens] = useState();
   const [mealCategories, setMealCategories] = useState('');
   const [drinkCategories, setDrinkCategories] = useState('');
   const [currentMealsExplore, setCurrentMealsExplore] = useState(false);
@@ -15,6 +16,8 @@ function ContextProvider({ children }) {
     setFoodAPI,
     drinkAPI,
     setDrinkAPI,
+    searchItens,
+    setSearchItens,
     mealCategories,
     setMealCategories,
     drinkCategories,

@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import RecipeContext from '../context/RecipeContext';
 import './Food.css';
 
 function Food() {
-  const { setFoodAPI, mealCategories, currentMealsExplore } = useContext(RecipeContext);
+  const { setFoodAPI,
+    mealCategories, currentMealsExplore, searchItens } = useContext(RecipeContext);
   const [meals, setMeals] = useState([]);
   const [categories, setCategories] = useState([]);
   const [currentCategories, setCurrentCategories] = useState('');
@@ -47,16 +48,61 @@ function Food() {
       const APIResponseMealsCategory = await APIRequestMealsCategory.json();
       const APIRequestMealsCategory2 = await fetch(urlMealsCategories2);
       const APIResponseMealsCategory2 = await APIRequestMealsCategory2.json();
-      if (APIResponseMealsCategory2 !== null && currentMealsExplore) {
+      if (APIResponseMealsCategory2 !== null
+        && currentMealsExplore && currentCategories !== 'ok') {
         setCurrentMeals(APIResponseMealsCategory2.meals);
       }
-      if (APIResponseMealsCategory !== null && !currentMealsExplore) {
+      if (APIResponseMealsCategory !== null
+        && !currentMealsExplore && currentCategories !== 'ok') {
         setCurrentMeals(APIResponseMealsCategory.meals);
       }
     };
     fecthMealsCategory();
   }, [currentCategories]);
 
+  useEffect(() => {
+    const fecthSearch = async () => {
+      if (searchItens) {
+        const { searchInput, searchRadio } = searchItens;
+        if (searchRadio === 'Nome') {
+          const urlSearchName = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchInput}`;
+          const APISearchRequest = await fetch(urlSearchName);
+          const APISearchResponse = await APISearchRequest.json();
+          if (APISearchResponse !== null && searchItens) {
+            setCurrentMeals(APISearchResponse.meals);
+            setCurrentCategories('ok');
+            console.log(searchItens.searchRadio);
+          }
+        }
+        if (searchRadio === 'Ingrediente') {
+          const urlSearchName = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${searchInput}`;
+          const APISearchRequest = await fetch(urlSearchName);
+          const APISearchResponse = await APISearchRequest.json();
+          if (APISearchResponse !== null && searchItens) {
+            setCurrentMeals(APISearchResponse.meals);
+            setCurrentCategories('ok');
+            console.log(searchItens.searchRadio);
+          }
+        }
+        if (searchRadio === 'PrimeiraLetra') {
+          // if (searchInput.length > 1) {
+          //   alert('Sua busca deve conter somente 1 (um) caracter');
+          // } else {
+          const urlSearchName = `https://www.themealdb.com/api/json/v1/1/search.php?f=${searchInput}`;
+          const APISearchRequest = await fetch(urlSearchName);
+          const APISearchResponse = await APISearchRequest.json();
+          if (APISearchResponse !== null && searchItens) {
+            setCurrentMeals(APISearchResponse.meals);
+            setCurrentCategories('ok');
+            console.log(searchItens.searchRadio);
+          }
+        }
+      }
+    };
+
+    fecthSearch();
+  }, [searchItens]);
+  console.log(currentMeals);
   const firstMeal = 0;
   const limitMeal = 12;
   const limitCategory = 5;
@@ -82,6 +128,9 @@ function Food() {
         </Link>
       ));
     } if (currentMeals) {
+      if (searchItens !== undefined && currentMeals.length === 1) {
+        return <Redirect to="/comidas/52771" />;
+      }
       return currentMeals
         .slice(firstMeal, limitMeal).map((meal, id) => (
           <Link to={ `/comidas/${meal.idMeal}` } key={ id }>
