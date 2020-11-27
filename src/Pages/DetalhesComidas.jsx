@@ -6,12 +6,16 @@ import './DetalhesComida.css';
 
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 const DetalhesComida = () => {
   const [stateLocal, setStatelocal] = useState();
   const [stateSugestions, setSugestions] = useState();
   const [stateButton, setStateButton] = useState({
     initialRecipe: false,
+  });
+  const [stateFavorite, setStateFavorite] = useState({
+    heart: false,
   });
 
   const idFood = useParams().id;
@@ -55,11 +59,27 @@ const DetalhesComida = () => {
     });
   };
 
-  const handleShareClick = () => {
-    const urlPage = window.location.href;
+  const handleFavorite = () => {
+    setStateFavorite({
+      heart: !stateFavorite.heart,
+    });
 
-    urlPage.select();
-    urlPage.setSelectRange(0, 9999);
+    const favoriteRecipes = [{
+      id: stateLocal.food.meals[0].idMeal,
+      type: 'comida',
+      area: stateLocal.food.meals[0].srtArea,
+      category: stateLocal.food.meals[0].strCategory,
+      alcoholicOrNot: '',
+      name: stateLocal.food.meals[0].strMeal,
+      image: stateLocal.food.meals[0].strMealThumb,
+    }];
+
+    const heartBlack = {
+      heart: !stateFavorite.heart,
+    };
+
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+    localStorage.setItem('heart', JSON.stringify(heartBlack));
   };
 
   const number = 5;
@@ -68,7 +88,7 @@ const DetalhesComida = () => {
     <div className="main-principal">
       {stateLocal ? (
         <div className="container-main">
-          {console.log(window.location.href)}
+          {console.log(JSON.parse(localStorage.getItem('heart')).heart)}
           <div className="container-initial">
             <img
               data-testid="recipe-photo"
@@ -89,7 +109,6 @@ const DetalhesComida = () => {
               <div>
                 <button
                   type="button"
-                  onClick={ handleShareClick }
                 >
                   <img
                     data-testid="share-btn"
@@ -97,11 +116,18 @@ const DetalhesComida = () => {
                     alt="shareIcon"
                   />
                 </button>
-                <img
-                  data-testid="favorite-btn"
-                  src={ whiteHeartIcon }
-                  alt="whiteHeartIcon"
-                />
+                <button
+                  type="button"
+                  onClick={ handleFavorite }
+                >
+                  <img
+                    data-testid="favorite-btn"
+                    src={ !JSON.parse(localStorage.getItem('heart')).heart
+                      ? whiteHeartIcon
+                      : blackHeartIcon }
+                    alt="whiteHeartIcon"
+                  />
+                </button>
               </div>
             </div>
             <div className="ingredients">
