@@ -6,7 +6,11 @@ import Context from '../context/Context';
 function SearchBar(props) {
   const [searchTerm, setSearchTerm] = useState();
   const [filterType, setFilterType] = useState();
-  const { recipesToRender, recipesToRenderByIngredient } = useContext(Context);
+  const {
+    recipesToRender,
+    recipesToRenderByIngredient,
+    recipesToRenderByFirstLetter,
+  } = useContext(Context);
   const { title } = props;
   const type = title === 'Comidas' ? 'meal' : 'drink';
 
@@ -15,13 +19,15 @@ function SearchBar(props) {
 
     switch (filterType) {
     case 'ingredient': {
-      recipesToRenderByIngredient(type, searchTerm);
-      break;
+      return recipesToRenderByIngredient(type, searchTerm);
     }
 
     case 'firstLetter': {
-      console.log(filterType);
-      break;
+      if (searchTerm.length > 1) {
+        alert('Sua busca deve conter somente 1 (um) caracter');
+        break;
+      }
+      return recipesToRenderByFirstLetter(type, searchTerm);
     }
 
     default: {

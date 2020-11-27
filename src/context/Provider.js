@@ -68,6 +68,23 @@ function RecipesAppProvider({ children }) {
     }
   };
 
+  const recipesToRenderByFirstLetter = async (type, searchTerm) => {
+    let fetchedRecipes = await (type === 'meal'
+      ? fetchMeal('firstLetter', searchTerm)
+      : fetchDrink('firstLetter', searchTerm)
+    );
+
+    const first = 0;
+    const twelfth = 12;
+
+    if (!fetchedRecipes) {
+      alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+    } else {
+      fetchedRecipes = fetchedRecipes.slice(first, twelfth);
+      setRecipes(fetchedRecipes);
+    }
+  };
+
   const getMealDetail = async (id) => {
     const api = await fetchMeal('details', id);
     setDetails(api);
@@ -114,6 +131,7 @@ function RecipesAppProvider({ children }) {
     categoriesToRender,
     recipesToRenderByCategory,
     recipesToRenderByIngredient,
+    recipesToRenderByFirstLetter,
   };
 
   return (
