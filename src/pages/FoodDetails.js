@@ -15,6 +15,7 @@ function FoodDetails(props) {
   const [isFavorite, setIsFavorite] = useState(false);
   const [inProgress, setInProgress] = useState(false);
   const [copied, setCopied] = useState('none');
+  const [display, setDisplay] = useState('block');
   const textArea = useRef(null);
   const maxShow = 6;
   const zero = 0;
@@ -98,7 +99,12 @@ function FoodDetails(props) {
     favoriteRecipes.push(newRecipe);
     localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
   };
-
+  const verifyButton = () => {
+    const finished = JSON.parse(localStorage.getItem('doneRecipes'));
+    if (finished !== null && finished.some((e) => e.id === id)) {
+      setDisplay('none');
+    }
+  };
   const changesFavorites = () => {
     if (isFavorite) {
       removeIdLocalSotrage();
@@ -117,6 +123,7 @@ function FoodDetails(props) {
     requestDetailsAPI();
     setFilter({ text: '', option: '', category: '' });
     getLocalStorage();
+    verifyButton();
   }, []);
   return (
     <div data-testid="food-details" className="food-details">
@@ -175,12 +182,13 @@ function FoodDetails(props) {
       />
       <button
         onClick={ handleInitRecipe }
-        style={ { position: 'fixed', bottom: '0px' } }
+        style={ { position: 'fixed', bottom: '0px', display } }
         data-testid="start-recipe-btn"
         type="button"
       >
         { inProgress ? ('Continuar Receita') : ('Iniciar Receita') }
       </button>
+
     </div>
   );
 }

@@ -5,7 +5,7 @@ import AppContext from '../context/AppContext';
 function AppProvider({ children }) {
   const [header, setHeader] = useState({ page: '', search: true });
   const [options, setOptions] = useState({ text: '', option: '', category: '' });
-  const [user, setUser] = useState({ email: 'email@email.com' });
+  const [user, setUser] = useState({ email: '' });
   const [recipe, setRecipe] = useState('');
 
   const contextValue = {
