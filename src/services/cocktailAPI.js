@@ -16,7 +16,12 @@ export async function fetchDrink(type, key) {
   key = type === 'firstLetter' ? key[0] : key;
   const url = `${COCKTAIL_API}${endpoints[type]}${key}`;
   const result = await fetch(url);
-  const data = await result.json();
+  let data = {};
+  try {
+    data = await result.json();
+  } catch (e) {
+    data = { drinks: null };
+  }
   return data;
 }
 
