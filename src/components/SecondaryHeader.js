@@ -1,19 +1,15 @@
-import React, { useContext } from 'react';
-import { useParams } from 'react-router-dom';
-import recipesAppContext from '../context/recipesAppContext';
+import React from 'react';
 
-function SecondaryHeader() {
-  // const { id } = useParams();
-  const { strName, strThumb, title, category } = useContext(recipesAppContext);
+function SecondaryHeader({ name, img, category }) {
   return (
     <div className="header-container">
       <header>
         <img
           data-testid="recipe-photo"
-          alt={ strName }
-          src={ strThumb }
+          alt={ name }
+          src={ img }
         />
-        <h1 data-testid="recipe-title">{ title }</h1>
+        <h1 data-testid="recipe-title">{ name }</h1>
         <button
           type="button"
           data-testid="share-btn"
