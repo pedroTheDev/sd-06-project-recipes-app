@@ -13,7 +13,7 @@ function RecipeDrinkProcess(props) {
   const VINTE = 20;
   const [arrIngredient, setArrIngredient] = useState([]);
   const [share, setShare] = useState(false);
-  const [favorite, setFavorite] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
   const { match } = props;
   const { id } = match.params;
   const { recipes, setRecipes } = useContext(RecipesContext);
@@ -35,7 +35,18 @@ function RecipeDrinkProcess(props) {
     setArrIngredient(arr);
   };
 
+  const checkIfIngredientIsSave = () => {
+    if ((!localStorage.inProgressRecipes)) {
+      const initialStorage = {
+        meals: {},
+        cocktails: {},
+      };
+      localStorage.setItem('inProgressRecipes', JSON.stringify(initialStorage));
+    }
+  };
+
   const markIngredient = (index, event) => {
+    let newStorage = {};
     const copyArrIngredient = [...arrIngredient];
     copyArrIngredient[index].checked = event.target.checked;
     setArrIngredient(copyArrIngredient);
@@ -43,7 +54,26 @@ function RecipeDrinkProcess(props) {
     const response = arrIngredient.filter((item) => item.checked === true)
       .map((name) => name.ingredient);
 
-    localStorage.setItem('cocktails', JSON.stringify({ [id]: response }));
+    const oldStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+
+    if (Object.keys(oldStorage.cocktails).length === ZERO) {
+      newStorage = {
+        ...oldStorage,
+        cocktails: {
+          [id]: response,
+        },
+      };
+    } else {
+      newStorage = {
+        ...oldStorage,
+        cocktails: {
+          ...oldStorage.cocktails,
+          [id]: oldStorage.cocktails[id].concat(response),
+        },
+      };
+    }
+
+    localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
   };
 
   const createCheckBoxes = () => (
@@ -52,11 +82,11 @@ function RecipeDrinkProcess(props) {
         htmlFor={ ingredient.ingredient }
         key={ index }
         data-testid={ `${index}-ingredient-step` }
+        className={ ingredient.checked ? 'checked' : '' }
       >
         <input
           type="checkbox"
-          checked={ arrIngredient[index].checked }
-          // ={ arrIngredient[index].checked }
+          // checked={ ingredient.checked }
           id={ ingredient.ingredient }
           onClick={ (e) => markIngredient(index, e) }
         />
@@ -65,25 +95,39 @@ function RecipeDrinkProcess(props) {
     ))
   );
 
-  const favoritar = () => {
-    setFavorite(!favorite);
-    const favoritas = {
+  const addToFavoriteRecipes = () => {
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+
+    const recipe = {
       id,
       type: 'bebida',
-      area: recipes[0].strArea,
+      area: recipes[0].strArea || '',
       category: recipes[0].strCategory,
       alcoholicOrNot: recipes[0].strAlcoholic,
       name: recipes[0].strDrink,
       image: recipes[0].strDrinkThumb,
     };
 
-    const obj = [{
-      favorite,
-      favoritas,
-    }];
+    const updatedFavoriteRecipes = [
+      ...favoriteRecipes,
+      recipe,
+    ];
 
-    const response = obj.filter((fav) => !fav.favorite).map((item) => item.favoritas);
-    localStorage.setItem('favoriteRecipes', JSON.stringify(response));
+    localStorage.setItem('favoriteRecipes', JSON.stringify(updatedFavoriteRecipes));
+  };
+
+  const removeFromFavoriteRecipes = () => {
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const updatedFavoriteRecipes = favoriteRecipes.filter((recipe) => (recipe.id !== id));
+
+    localStorage.setItem('favoriteRecipes', JSON.stringify(updatedFavoriteRecipes));
+  };
+
+  const handleFavorites = () => {
+    if (isFavorite) removeFromFavoriteRecipes();
+    else addToFavoriteRecipes();
+
+    setIsFavorite(!isFavorite);
   };
 
   const copyClip = async () => {
@@ -92,8 +136,41 @@ function RecipeDrinkProcess(props) {
     await copy(url);
   };
 
+  const checkIfRecipeIsFavorite = () => {
+    if (!localStorage.favoriteRecipes) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+    }
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const isRecipeFavorite = favoriteRecipes.some((recipe) => (recipe.id === id));
+    if (isRecipeFavorite) setIsFavorite(true);
+  };
+
+  const handleCheckBoxes = () => {
+    const checkBoxes = document.querySelectorAll('input[type="checkbox"]');
+    if (checkBoxes.length > ZERO) {
+      const savedRecipe = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      if (Object.keys(savedRecipe.cocktails).length !== ZERO) {
+        checkBoxes.forEach((box) => {
+          savedRecipe.cocktails[id].forEach((drink) => {
+            console.log(box);
+            if (box.id === drink) {
+              console.log(box);
+              box.setAttribute('checked', true);
+            }
+          });
+        });
+      }
+    }
+  };
+
   useEffect(() => {
+    handleCheckBoxes();
+  }, [createCheckBoxes]);
+
+  useEffect(() => {
+    checkIfRecipeIsFavorite();
     settingRecipeInProgress();
+    checkIfIngredientIsSave();
   }, []);
 
   useEffect(() => {
@@ -128,12 +205,12 @@ function RecipeDrinkProcess(props) {
           <div>
             <button
               type="button"
-              onClick={ () => favoritar() }
+              onClick={ handleFavorites }
             >
               <img
                 data-testid="favorite-btn"
                 alt="Favoritar"
-                src={ favorite ? blackHeartIcon : whiteHeartIcon }
+                src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
               />
             </button>
           </div>
