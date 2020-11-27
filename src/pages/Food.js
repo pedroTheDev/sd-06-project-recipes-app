@@ -16,8 +16,7 @@ function Food() {
   const urlCategories = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
   const urlMealsCategories = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${currentCategories}`;
   const urlMealsCategories2 = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${currentCategories}`;
-  const urlSearchName = 'https://www.themealdb.com/api/json/v1/1/search.php?s=Arrabiata';
-  console.log(searchItens);
+
   useEffect(() => {
     const fecthMeals = async () => {
       const APIRequest = await fetch(url);
@@ -49,10 +48,12 @@ function Food() {
       const APIResponseMealsCategory = await APIRequestMealsCategory.json();
       const APIRequestMealsCategory2 = await fetch(urlMealsCategories2);
       const APIResponseMealsCategory2 = await APIRequestMealsCategory2.json();
-      if (APIResponseMealsCategory2 !== null && currentMealsExplore) {
+      if (APIResponseMealsCategory2 !== null
+        && currentMealsExplore && currentCategories !== 'ok') {
         setCurrentMeals(APIResponseMealsCategory2.meals);
       }
-      if (APIResponseMealsCategory !== null && !currentMealsExplore) {
+      if (APIResponseMealsCategory !== null
+        && !currentMealsExplore && currentCategories !== 'ok') {
         setCurrentMeals(APIResponseMealsCategory.meals);
       }
     };
@@ -61,12 +62,41 @@ function Food() {
 
   useEffect(() => {
     const fecthSearch = async () => {
-      const APISearchRequest = await fetch(urlSearchName);
-      const APISearchResponse = await APISearchRequest.json();
-      if (APISearchResponse !== null && searchItens) {
-        setCurrentMeals(APISearchResponse.meals);
-        setCurrentCategories('roi');
-        console.log(searchItens.searchRadio);
+      if (searchItens) {
+        const { searchInput, searchRadio } = searchItens;
+        if (searchRadio === 'Nome') {
+          const urlSearchName = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchInput}`;
+          const APISearchRequest = await fetch(urlSearchName);
+          const APISearchResponse = await APISearchRequest.json();
+          if (APISearchResponse !== null && searchItens) {
+            setCurrentMeals(APISearchResponse.meals);
+            setCurrentCategories('ok');
+            console.log(searchItens.searchRadio);
+          }
+        }
+        if (searchRadio === 'Ingrediente') {
+          const urlSearchName = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${searchInput}`;
+          const APISearchRequest = await fetch(urlSearchName);
+          const APISearchResponse = await APISearchRequest.json();
+          if (APISearchResponse !== null && searchItens) {
+            setCurrentMeals(APISearchResponse.meals);
+            setCurrentCategories('ok');
+            console.log(searchItens.searchRadio);
+          }
+        }
+        if (searchRadio === 'PrimeiraLetra') {
+          // if (searchInput.length > 1) {
+          //   alert('Sua busca deve conter somente 1 (um) caracter');
+          // } else {
+          const urlSearchName = `https://www.themealdb.com/api/json/v1/1/search.php?f=${searchInput}`;
+          const APISearchRequest = await fetch(urlSearchName);
+          const APISearchResponse = await APISearchRequest.json();
+          if (APISearchResponse !== null && searchItens) {
+            setCurrentMeals(APISearchResponse.meals);
+            setCurrentCategories('ok');
+            console.log(searchItens.searchRadio);
+          }
+        }
       }
     };
 
