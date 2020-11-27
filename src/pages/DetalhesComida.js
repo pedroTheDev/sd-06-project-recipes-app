@@ -108,7 +108,7 @@ function DetalhesComida(props) {
                     type="button"
                     onClick={ () => startRecipe(meal.idMeal) }
                   >
-                    {!startedRecipes.meals ? 'Iniciar Receita' : verifyState(meal.idMeal)}
+                    {!startedRecipes ? 'Iniciar Receita' : verifyState(meal.idMeal)}
                   </button>
                 </Link>
               )}

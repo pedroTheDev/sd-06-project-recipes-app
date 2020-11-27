@@ -52,8 +52,6 @@ function DetalhesBebida(props) {
     }
   };
 
-  console.log(startedRecipes);
-
   const verifyState = (idDrink) => (
     !startedRecipes.cocktails[idDrink] ? 'Iniciar Receita' : 'Continuar Receita'
   );
@@ -104,7 +102,7 @@ function DetalhesBebida(props) {
                     type="button"
                     onClick={ () => startRecipe(drink.idDrink) }
                   >
-                    {!startedRecipes.cocktails
+                    {!startedRecipes
                       ? 'Iniciar Receita'
                       : verifyState(drink.idDrink)}
                   </button>
