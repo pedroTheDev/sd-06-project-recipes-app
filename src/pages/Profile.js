@@ -1,9 +1,12 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import RevenueContext from '../context/RevenueContext';
 
 export default function Profile() {
-  const { email } = useContext(RevenueContext);
+  let email = '';
+  if (localStorage.user) {
+    const userStorage = JSON.parse(localStorage.user);
+    email = userStorage.email;
+  }
   return (
     <div>
       <span data-testid="profile-email">
