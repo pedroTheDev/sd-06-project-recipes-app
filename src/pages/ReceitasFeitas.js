@@ -33,7 +33,19 @@ function ReceitasFeitas() {
       </button>
       <div>
         { doneRecipes
-          .map(({ id, type, image, alcoholicOrNot, name, area, category, doneDate, tags }, index) => (
+          .map((
+            { id,
+              type,
+              image,
+              alcoholicOrNot,
+              name,
+              area,
+              category,
+              doneDate,
+              tags,
+            },
+            index,
+          ) => (
             <span
               key={ index }
             >
@@ -43,19 +55,19 @@ function ReceitasFeitas() {
                   alt={ name }
                   data-testid={ `${index}-horizontal-image` }
                 />
-               {
-                (type === 'comida')
-                  ? (
-                    <p
-                      data-testid={ `${index}-horizontal-top-text` }
-                    >
-                      { `${area} - ${category}` }
-                    </p>)
-                  : (
-                    <p data-testid={ `${index}-horizontal-top-text` }>
-                      { alcoholicOrNot }
-                    </p>)
-              }
+                {
+                  (type === 'comida')
+                    ? (
+                      <p
+                        data-testid={ `${index}-horizontal-top-text` }
+                      >
+                        { `${area} - ${category}` }
+                      </p>)
+                    : (
+                      <p data-testid={ `${index}-horizontal-top-text` }>
+                        { alcoholicOrNot }
+                      </p>)
+                }
                 <p
                   data-testid={ `${index}-horizontal-name` }
                 >
