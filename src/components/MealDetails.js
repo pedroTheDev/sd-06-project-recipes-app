@@ -12,8 +12,9 @@ import '../Css/MealDetail.css';
 
 function MealDetails() {
   const [recipeMeal, setRecipeMeal] = useState({});
+  const [btnDoneRecipe, setBtnDoneRecipe] = useState([]);
+
   const { recommendedRecipe, setRecommendedRecipe } = useContext(MealsContext);
-  // const [recommendedDrinks, setRecommendedDrinks] = useState([]);
   const itemZerado = 0;
 
   const { id } = useParams(); // retorna o paramentro que está na rota
@@ -37,6 +38,18 @@ function MealDetails() {
         return myCard; // retorna o novo objeto criado no map do myCards
       });
       setRecommendedRecipe(myRecommendedDrinks);
+
+      const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+      const indexDoneRecipe = doneRecipes.findIndex((item) => item.id === id);
+      let textBtnDoneRecipe = 'Iniciar Receita';
+      if (indexDoneRecipe >= inicio) {
+        if (doneRecipes[indexDoneRecipe].doneDate !== '') {
+          textBtnDoneRecipe = 'Continuar Receita';
+        } else {
+          textBtnDoneRecipe = 'Receita Finalizada';
+        }
+      }
+      setBtnDoneRecipe(textBtnDoneRecipe);
     }
     fetchDatas();
   }, []);
@@ -66,6 +79,24 @@ function MealDetails() {
   function getIdYoutube() {
     const idYoutube = recipeMeal.strYoutube.split('watch?v=')[1];
     return idYoutube;
+  }
+
+  function updateDoneRecipes() {
+    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+
+    const newDoneRecipe = {
+      id: recipeMeal.idMeal,
+      type: 'comida',
+      area: recipeMeal.strArea,
+      category: recipeMeal.strCategory,
+      alcoholicOrNot: '',
+      name: recipeMeal.strMeal,
+      image: recipeMeal.strMealThumb,
+      doneDate: '',
+      tags: recipeMeal.strTags,
+    };
+    const arrayDoneRecipe = [...doneRecipes, newDoneRecipe];
+    localStorage.setItem('doneRecipes', JSON.stringify(arrayDoneRecipe));
   }
 
   return (
@@ -127,8 +158,9 @@ function MealDetails() {
           variant="success"
           size="lg"
           block
+          onClick={ updateDoneRecipes }
         >
-          Iniciar Receita
+          { btnDoneRecipe }
         </Button>
       </div>
     </div>

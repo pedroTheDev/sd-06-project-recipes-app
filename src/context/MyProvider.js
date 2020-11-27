@@ -39,6 +39,12 @@ function MyProvider({ children }) {
       setDrinkIngredients(myDrinkIngredients);
       setGlasses(myGlasses);
       setDrinksAlcoholic(myDrinksAlcoholic);
+
+      // Cria Local storage de Receitas Feitas
+      if (localStorage.getItem('doneRecipes') === null) {
+        const newArrayDoneRecipes = [];
+        localStorage.setItem('doneRecipes', JSON.stringify(newArrayDoneRecipes));
+      }
     }
     fetchALL();
   }, []);
