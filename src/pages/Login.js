@@ -33,7 +33,7 @@ function Login() {
   return (
     <div className="wrapper">
       <div className="title">
-        Login
+        Cook APP
       </div>
       <div className="field">
         <input
