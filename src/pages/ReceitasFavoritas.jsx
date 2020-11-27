@@ -12,10 +12,30 @@ export default function ReceitasFavoritas() {
     setTitulo,
     favoriteDrinks,
   } = useContext(Context);
+  // const [favoriteImg, setFavoriteImg] = useState(whiteHeart);
+
+  // const verifyFavorite = () => {
+  //   if (favoriteDrinks.includes(thisDrink)) {
+  //     setFavoriteImg(blackHeart);
+  //   }
+  // };
 
   useEffect(() => {
     setTitulo('Receitas Favoritas');
+    // verifyFavorite();
   }, []);
+
+  // const clickFavoriteDrink = () => {
+  //   if (favoriteImg === whiteHeart) {
+  //     setFavoriteDrinks(...favoriteDrinks, [thisDrink]);
+  //     return setFavoriteImg(blackHeart);
+  //   }
+  //   const newDrinks = favoriteDrinks.filter(
+  //     (drink) => drink.strDrink !== thisDrink.strDrink,
+  //   );
+  //   setFavoriteDrinks(newDrinks);
+  //   return setFavoriteImg(whiteHeart);
+  // };
 
   return (
     <div>
@@ -58,6 +78,7 @@ export default function ReceitasFavoritas() {
                   src={ whiteHeart }
                   alt="favoritar"
                   data-testid="favorite-btn"
+                  // onClick={ clickFavoriteDrink }
                 >
                   <img src={ whiteHeart } alt="favoritar" />
                 </button>

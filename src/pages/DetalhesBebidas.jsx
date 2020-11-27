@@ -1,5 +1,8 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import copy from 'clipboard-copy';
+
 import blackHeart from '../images/blackHeartIcon.svg';
 import whiteHeart from '../images/whiteHeartIcon.svg';
 import ShareIcon from '../images/shareIcon.svg';
@@ -7,7 +10,7 @@ import * as api from '../services/Api';
 import Context from '../context/Context';
 import './styles/pages.css';
 
-export default function DetalhesBebidas() {
+export default function DetalhesBebidas({ history }) {
   const { id } = useParams();
   const {
     setSelectedDrink,
@@ -20,6 +23,7 @@ export default function DetalhesBebidas() {
   const [arrayIngredients, setArrayIngredients] = useState([]);
   const [recomendedMeals, setRecomendedMeals] = useState([]);
   const [favoriteImg, setFavoriteImg] = useState(whiteHeart);
+  const [sharedURL, setSharedURL] = useState(false);
 
   const setarBebida = async () => {
     setLoading(true);
@@ -30,14 +34,34 @@ export default function DetalhesBebidas() {
     setLoading(false);
   };
 
+  let favLocalStorage = [];
+
+  const favoriteRecipe = {
+    id: selectedDrink.idDrink,
+    type: 'drinks',
+    area: '',
+    category: selectedDrink.strCategory,
+    alcoholicOrNot: selectedDrink.strAlcoholic,
+    name: selectedDrink.strDrink,
+    image: selectedDrink.strDrinkThumb,
+  };
+
+  const getLocalStorage = () => {
+    if (!favLocalStorage) {
+      favLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      console.log(favLocalStorage);
+    }
+  };
+
   const verifyFavorite = () => {
-    if (favoriteDrinks.includes(selectedDrink)) {
+    if (favLocalStorage.includes(favoriteRecipe)) {
       setFavoriteImg(blackHeart);
     }
   };
 
   useEffect(() => {
     setarBebida();
+    getLocalStorage();
     verifyFavorite();
   }, []);
 
@@ -58,28 +82,33 @@ export default function DetalhesBebidas() {
     collectIngredients();
   }, [selectedDrink]);
 
-  /* Para salvar no LocalSotrage dessa forma:
-  localStorage.setItem('favoriteRecipes', JSON.stringfy(saveFavoriteRecipes)); */
-  // const saveFavoriteRecipe = {
-  //   id: selectedDrink.idDrink,
-  //   type: 'drinks',
-  //   area: '',
-  //   category: selectedDrink.strCategory,
-  //   alcoholicOrNot: selectedDrink.strAlcoholic,
-  //   name: selectedDrink.strDrink,
-  //   image: selectedDrink.strDrinkThumb,
-  // };
-
   const clickFavorite = () => {
     if (favoriteImg === whiteHeart) {
-      setFavoriteDrinks(...favoriteDrinks, [selectedDrink]);
+      setFavoriteDrinks([...favoriteDrinks, selectedDrink]);
+      localStorage.setItem('favoriteRecipes',
+        JSON.stringify([...favLocalStorage, favoriteRecipe]));
       return setFavoriteImg(blackHeart);
     }
+    const takeOutDrink = favLocalStorage.filter(
+      (drink) => drink.name !== favoriteRecipe.name,
+    );
     const newDrinks = favoriteDrinks.filter(
       (drink) => drink.strDrink !== selectedDrink.strDrink,
     );
     setFavoriteDrinks(newDrinks);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(takeOutDrink));
     return setFavoriteImg(whiteHeart);
+  };
+
+  const clickDetails = (identidade) => {
+    history.push(`/bebidas/${identidade}/in-progress`);
+  };
+
+  const urlToClipboard = () => {
+    const url = window.location.href;
+
+    copy(url);
+    setSharedURL(true);
   };
 
   const seis = 6;
@@ -97,13 +126,19 @@ export default function DetalhesBebidas() {
               alt="foto-recipe"
             />
             <h2 data-testid="recipe-title">{selectedDrink.strDrink}</h2>
-            <button
-              type="button"
-              alt="compartilhar"
-              data-testid="share-btn"
-            >
-              <img src={ ShareIcon } alt="compartilhar" />
-            </button>
+
+            <div>
+              <button
+                type="button"
+                alt="compartilhar"
+                data-testid="share-btn"
+                onClick={ urlToClipboard }
+              >
+                <img src={ ShareIcon } alt="compartilhar" />
+              </button>
+              {sharedURL ? <p>Link copiado!</p> : null}
+            </div>
+
             <button
               type="button"
               src={ favoriteImg }
@@ -139,17 +174,22 @@ export default function DetalhesBebidas() {
                   <p data-testid={ `${index}-recomendation-title` }>{meal.strMeal}</p>
                   <img src={ meal.strMealThumb } alt={ index } width="200px" />
                 </div>))}
-            <Link to={ `/bebidas/${id}/in-progress` }>
-              <button
-                type="button"
-                className="iniciar-receita"
-                data-testid="start-recipe-btn"
-              >
-                Iniciar Receita
-              </button>
-            </Link>
+            <button
+              type="button"
+              className="iniciar-receita"
+              data-testid="start-recipe-btn"
+              onClick={ () => clickDetails(selectedDrink.idDrink) }
+            >
+              Iniciar Receita
+            </button>
           </div>
         )}
     </div>
   );
 }
+
+DetalhesBebidas.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};

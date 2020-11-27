@@ -1,13 +1,17 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import copy from 'clipboard-copy';
+
 import blackHeart from '../images/blackHeartIcon.svg';
 import whiteHeart from '../images/whiteHeartIcon.svg';
 import ShareIcon from '../images/shareIcon.svg';
 import * as api from '../services/Api';
 import Context from '../context/Context';
+
 import './styles/pages.css';
 
-export default function DetalhesComidas() {
+export default function DetalhesComidas({ history }) {
   const { id } = useParams();
   const {
     setSelectedMeal,
@@ -20,6 +24,8 @@ export default function DetalhesComidas() {
   const [arrayIngredients, setArrayIngredients] = useState([]);
   const [recomendedDrinks, setRecomendedDrinks] = useState([]);
   const [favoriteImg, setFavoriteImg] = useState(whiteHeart);
+  const [favLocalStorage, setFavLocalStorage] = useState([]);
+  const [sharedURL, setSharedURL] = useState(false);
 
   const setarComida = async () => {
     setLoading(true);
@@ -30,14 +36,34 @@ export default function DetalhesComidas() {
     setLoading(false);
   };
 
+  // let favLocalStorage = [];
+
+  const favoriteRecipe = {
+    id: selectedMeal.idMeal,
+    type: 'meal',
+    area: selectedMeal.strArea,
+    category: selectedMeal.strCategory,
+    alcoholicOrNot: '',
+    name: selectedMeal.strMeal,
+    image: selectedMeal.strMealThumb,
+  };
+
+  const getLocalStorage = () => {
+    if (!favLocalStorage) {
+    // favLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      setFavLocalStorage(JSON.parse(localStorage.getItem('favoriteRecipes')));
+    }
+  };
+
   const verifyFavorite = () => {
-    if (favoriteMeals.includes(selectedMeal)) {
+    if (favLocalStorage.includes(favoriteRecipe)) {
       setFavoriteImg(blackHeart);
     }
   };
 
   useEffect(() => {
     setarComida();
+    getLocalStorage();
     verifyFavorite();
   }, []);
 
@@ -58,28 +84,37 @@ export default function DetalhesComidas() {
     collectIngredients();
   }, [selectedMeal]);
 
-  // const favoriteRecipe = {
-  //   id: selectedMeal.idMeal,
-  //   type: 'meal',
-  //   area: selectedMeal.strArea,
-  //   category: selectedMeal.strCategory,
-  //   alcoholicOrNot: '',
-  //   name: selectedMeal.strMeal,
-  //   image: selectedMeal.strMealThumb,
-  // };
-
   const clickFavorite = () => {
     if (favoriteImg === whiteHeart) {
-      setFavoriteMeals(...favoriteMeals, [selectedMeal]);
+      setFavoriteMeals([...favoriteMeals, selectedMeal]);
+      const newFav = [...favLocalStorage, favoriteRecipe];
+      localStorage.setItem('favoriteRecipes',
+        JSON.stringify(newFav));
       return setFavoriteImg(blackHeart);
     }
+    const takeOutMeal = favLocalStorage.filter(
+      (meal) => meal.id !== favoriteRecipe.id,
+    );
     const newMeals = favoriteMeals.filter(
       (meal) => meal.strMeal !== selectedMeal.strMeal,
     );
     setFavoriteMeals(newMeals);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(takeOutMeal));
     return setFavoriteImg(whiteHeart);
   };
+
+  const clickDetails = (identidade) => {
+    history.push(`/comidas/${identidade}/in-progress`);
+  };
+
   const seis = 6;
+
+  const urlToClipboard = () => {
+    const url = window.location.href;
+
+    copy(url);
+    setSharedURL(true);
+  };
 
   return (
     <div>
@@ -93,14 +128,20 @@ export default function DetalhesComidas() {
               data-testid="recipe-photo"
               alt="foto-recipe"
             />
+
             <h2 data-testid="recipe-title">{selectedMeal.strMeal}</h2>
-            <button
-              type="button"
-              alt="compartilhar"
-              data-testid="share-btn"
-            >
-              <img src={ ShareIcon } alt="compartilhar" />
-            </button>
+            <div>
+              <button
+                type="button"
+                alt="compartilhar"
+                data-testid="share-btn"
+                onClick={ urlToClipboard }
+              >
+                <img src={ ShareIcon } alt="compartilhar" />
+              </button>
+              {sharedURL ? <p>Link copiado!</p> : null}
+            </div>
+
             <button
               type="button"
               src={ favoriteImg }
@@ -134,18 +175,22 @@ export default function DetalhesComidas() {
                   <img src={ drink.strDrinkThumb } alt={ index } width="200px" />
                 </div>
               ))}
-
-            <Link to={ `/comidas/${id}/in-progress` }>
-              <button
-                type="button"
-                className="iniciar-receita"
-                data-testid="start-recipe-btn"
-              >
-                Iniciar Receita
-              </button>
-            </Link>
+            <button
+              type="button"
+              className="iniciar-receita"
+              data-testid="start-recipe-btn"
+              onClick={ () => clickDetails(selectedMeal.idMeal) }
+            >
+              Iniciar Receita
+            </button>
           </div>
         )}
     </div>
   );
 }
+
+DetalhesComidas.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};

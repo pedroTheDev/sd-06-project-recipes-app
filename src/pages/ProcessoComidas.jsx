@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useParams, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import HeartIcon from '../images/blackHeartIcon.svg';
 import ShareIcon from '../images/shareIcon.svg';
 import Context from '../context/Context';
@@ -25,11 +25,17 @@ export default function ProcessoComidas() {
     setLoading(false);
   };
 
+  useEffect(() => {
+    setTitulo('Receita em Progresso');
+    prepareFood();
+  }, []);
+
   const getIngredientsArray = () => {
     const ingredients = [];
+    const maxLenght = 20;
     const noLength = 0;
-    const ingLength = selectedMeal.strIngredient.length - 1;
-    for (let index = noLength; index <= ingLength; index += 1) {
+    /* const ingLength = selectedMeal.strIngredient.length - 1; */
+    for (let index = noLength; index <= maxLenght; index += 1) {
       if (selectedMeal.length !== noLength && selectedMeal[`strIngredient${index}`]) {
         ingredients.push(`${selectedMeal[`strIngredient${index}`]} 
         ${selectedMeal[`strMeasure${index}`]}`);
@@ -39,10 +45,8 @@ export default function ProcessoComidas() {
   };
 
   useEffect(() => {
-    setTitulo('Receita em Progresso');
-    prepareFood();
     getIngredientsArray();
-  }, []);
+  }, [selectedMeal]);
 
   return (
     <div>
@@ -54,6 +58,7 @@ export default function ProcessoComidas() {
               src={ selectedMeal.strMealThumb }
               data-testid="recipe-photo"
               alt="foto-recipe"
+              width="200px"
             />
             <h2 data-testid="recipe-title">{selectedMeal.strMeal}</h2>
             <button
@@ -74,18 +79,19 @@ export default function ProcessoComidas() {
             </button>
             <h3 data-testid="recipe-category">{selectedMeal.strCategory}</h3>
             { arrayIngredients.map((ingredient, index) => (
-              <p
+              <label
+                htmlFor={ index }
                 key={ index }
               >
                 <input
                   type="checkbox"
                   id={ index }
                   nome={ ingredient }
-                  value={ index }
-                  data-testid={ `${index}-ingredient-stepIngredientes` }
+                  value={ ingredient }
+                  data-testid={ `${index}-ingredient-step` }
                 />
                 { ingredient }
-              </p>
+              </label>
             ))}
             <p data-testid="instructions">
               Instructions
