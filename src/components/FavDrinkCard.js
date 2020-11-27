@@ -120,7 +120,7 @@ class FavDrinkCard extends React.Component {
     return (
       <div>
         {Drink.map((element, index) => (
-          <div key={ index }>
+          <div key={ index } className="food-drink-card">
             <input
               type="image"
               data-testid={ `${index + indexAcc}-horizontal-image` }
@@ -128,35 +128,45 @@ class FavDrinkCard extends React.Component {
               width="200px"
               alt="horizontal"
               onClick={ () => history.push(`/bebidas/${element.id}`) }
+              className="done-recipe-image"
             />
-            <p data-testid={ `${index + indexAcc}-horizontal-top-text` }>
-              {element.alcoholicOrNot}
-            </p>
-            <button
-              type="button"
-              data-testid={ `${index + indexAcc}-horizontal-name` }
-              onClick={ () => history.push(`/bebidas/${element.id}`) }
-              value={ element.name }
-            >
-              { element.name }
-            </button>
-            <input
-              type="image"
-              className="share-btn"
-              data-testid={ `${index + indexAcc}-horizontal-share-btn` }
-              src={ shareIcon }
-              alt="share"
-              onClick={ () => this.handleShareDrink(element) }
-            />
-            <input
-              type="image"
-              data-testid={ `${index + indexAcc}-horizontal-favorite-btn` }
-              className="fav-button"
-              src={ this.changeFavoriteIcon(element) }
-              onClick={ () => this.setLocalState(element) }
-              alt="whiteHeartIcon"
-            />
-            <p className="p" />
+            <div className="left-side-div">
+              <div className="food-drink-top-div">
+                <div className="food-drink-titles">
+                  <p data-testid={ `${index + indexAcc}-horizontal-top-text` }>
+                    {element.alcoholicOrNot}
+                  </p>
+                  <button
+                    type="button"
+                    data-testid={ `${index + indexAcc}-horizontal-name` }
+                    onClick={ () => history.push(`/bebidas/${element.id}`) }
+                    value={ element.name }
+                    className="button-title"
+                  >
+                    { element.name }
+                  </button>
+                  <p className="p" />
+                </div>
+                <div className="food-drink-image">
+                  <input
+                    type="image"
+                    data-testid={ `${index + indexAcc}-horizontal-favorite-btn` }
+                    className="fav-button"
+                    src={ this.changeFavoriteIcon(element) }
+                    onClick={ () => this.setLocalState(element) }
+                    alt="whiteHeartIcon"
+                  />
+                  <input
+                    type="image"
+                    className="share-btn"
+                    data-testid={ `${index + indexAcc}-horizontal-share-btn` }
+                    src={ shareIcon }
+                    alt="share"
+                    onClick={ () => this.handleShareDrink(element) }
+                  />
+                </div>
+              </div>
+            </div>
           </div>))}
       </div>
     );

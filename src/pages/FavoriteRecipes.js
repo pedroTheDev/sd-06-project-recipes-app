@@ -25,7 +25,7 @@ class FavoriteRecipes extends React.Component {
     const eightHundred = 800;
     if (window.screen.availHeight < eightHundred) {
       const h1 = document.querySelector('.global-h1');
-      h1.style.fontSize = '30px';
+      h1.style.fontSize = '20px';
       const bla = document.querySelector('.search-input-div');
       bla.style.width = '70px';
     }
