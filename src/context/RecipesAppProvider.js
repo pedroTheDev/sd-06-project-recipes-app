@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import propTypes, { object} from 'prop-types';
+import propTypes from 'prop-types';
 import recipesAppContext from './recipesAppContext';
 import { fetchMeal } from '../services/mealAPI';
 import { fetchDrink } from '../services/cocktailAPI';
