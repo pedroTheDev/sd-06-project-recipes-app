@@ -6,9 +6,12 @@ function Profile() {
   const [userEmail, setUserEmail] = useState('');
 
   useEffect(() => {
-    const { email } = JSON.parse(localStorage.getItem('user'));
-    console.log(email);
-    setUserEmail(email);
+    const user = localStorage.getItem('user');
+    if (user !== null) {
+      const { email } = JSON.parse(user);
+      console.log(email);
+      setUserEmail(email);
+    }
   }, []);
 
   const onclick = () => {
