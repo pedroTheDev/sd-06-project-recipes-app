@@ -6,7 +6,8 @@ import RecipeContext from '../context/RecipeContext';
 import './Food.css';
 
 function Food() {
-  const { setFoodAPI, mealCategories, currentMealsExplore } = useContext(RecipeContext);
+  const { setFoodAPI,
+    mealCategories, currentMealsExplore, searchItens } = useContext(RecipeContext);
   const [meals, setMeals] = useState([]);
   const [categories, setCategories] = useState([]);
   const [currentCategories, setCurrentCategories] = useState('');
@@ -15,7 +16,8 @@ function Food() {
   const urlCategories = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
   const urlMealsCategories = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${currentCategories}`;
   const urlMealsCategories2 = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${currentCategories}`;
-
+  const urlSearchName = 'https://www.themealdb.com/api/json/v1/1/search.php?s=Arrabiata';
+  console.log(searchItens);
   useEffect(() => {
     const fecthMeals = async () => {
       const APIRequest = await fetch(url);
@@ -57,6 +59,19 @@ function Food() {
     fecthMealsCategory();
   }, [currentCategories]);
 
+  useEffect(() => {
+    const fecthSearch = async () => {
+      const APISearchRequest = await fetch(urlSearchName);
+      const APISearchResponse = await APISearchRequest.json();
+      if (APISearchResponse !== null && searchItens) {
+        setCurrentMeals(APISearchResponse.meals);
+        setCurrentCategories('roi');
+      }
+    };
+
+    fecthSearch();
+  }, [searchItens]);
+  console.log(currentMeals);
   const firstMeal = 0;
   const limitMeal = 12;
   const limitCategory = 5;
