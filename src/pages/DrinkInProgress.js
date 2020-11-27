@@ -115,6 +115,7 @@ function DrinkInProgress(props) {
     const ingredientsChecked = [...ingredients];
     ingredientsChecked[index].isChecked = event.target.checked;
     setIngredients(ingredientsChecked);
+    verifyIngredientsChecked();
   };
 
   const changesFavorites = () => {
