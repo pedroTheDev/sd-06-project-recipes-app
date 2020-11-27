@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
-import { detailsDrinkById, showSugestedDrinks } from '../services/aPI';
+import { detailsDrinkById, showSugestedFoods } from '../services/aPI';
 import './DetalhesComida.css';
 
 import shareIcon from '../images/shareIcon.svg';
@@ -10,6 +10,9 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 const DetalhesBebidas = () => {
   const [stateLocal, setStatelocal] = useState();
   const [stateSugestions, setSugestions] = useState();
+  const [stateButton, setStateButton] = useState({
+    initialRecipe: false,
+  });
 
   const idDrink = useParams().id;
 
@@ -23,9 +26,9 @@ const DetalhesBebidas = () => {
   };
 
   const getSugestedDrinks = async () => {
-    const drinks = await showSugestedDrinks();
+    const foods = await showSugestedFoods();
 
-    setSugestions(drinks);
+    setSugestions(foods);
   };
 
   useEffect(() => {
@@ -46,6 +49,12 @@ const DetalhesBebidas = () => {
     return ingredients;
   };
 
+  const progressButton = () => {
+    setStateButton({
+      initialRecipe: !stateButton.initialRecipe,
+    });
+  };
+
   const number = 5;
 
   return (
@@ -60,24 +69,29 @@ const DetalhesBebidas = () => {
               src={ stateLocal.drink.drinks[0].strDrinkThumb }
               alt={ stateLocal.drink.drinks[0].strDrink }
             />
-            <span data-testid="recipe-title">
-              { stateLocal.drink.drinks[0].strDrink }
-            </span>
-            <div>
-              <img
-                data-testid="share-btn"
-                src={ shareIcon }
-                alt="shareIcon"
-              />
-              <img
-                data-testid="favorite-btn"
-                src={ whiteHeartIcon }
-                alt="whiteHeartIcon"
-              />
-            </div>
-            <div data-testid="recipe-category">
-              {stateLocal.drink.drinks[0].strCategory}
-              {stateLocal.drink.drinks[0].strAlcoholic}
+            <div className="title-e-icons">
+              <div
+                className="category"
+                data-testid="recipe-category"
+              >
+                {stateLocal.drink.drinks[0].strCategory}
+                {stateLocal.drink.drinks[0].strAlcoholic}
+              </div>
+              <span data-testid="recipe-title">
+                { stateLocal.drink.drinks[0].strDrink }
+              </span>
+              <div>
+                <img
+                  data-testid="share-btn"
+                  src={ shareIcon }
+                  alt="shareIcon"
+                />
+                <img
+                  data-testid="favorite-btn"
+                  src={ whiteHeartIcon }
+                  alt="whiteHeartIcon"
+                />
+              </div>
             </div>
             <div className="ingredients">
               <span>Ingredients</span>
@@ -100,28 +114,28 @@ const DetalhesBebidas = () => {
             </div>
             <span>Recomendadas</span>
             <div className="main-recomendations">
-              { stateSugestions && stateSugestions.drinks.map((drink, index) => {
+              { stateSugestions && stateSugestions.meals.map((meal, index) => {
                 if (index <= number) {
                   return (
                     <div
                       className="main-scroll"
-                      key={ drink.strDrink }
+                      key={ meal.strMeal }
                       data-testid={ `${index}-recomendation-card` }
                     >
                       <p data-testid={ `${index}-recomendation-title` }>
-                        {drink.strDrink}
+                        {meal.strMeal}
                       </p>
                       <button
                         type="button"
                         className="button"
-                        onClick={ () => handleIdDetails(drink.idDrink) }
+                        onClick={ () => handleIdDetails(meal.idMeal) }
                       >
-                        <Link to={ `/bebidas/${drink.idDrink}` }>
+                        <Link to={ `/bebidas/${meal.idMeal}` }>
                           <img
                             className="img-recomendations"
                             width="200"
-                            src={ drink.strDrinkThumb }
-                            alt={ drink.strDrink }
+                            src={ meal.strMealThumb }
+                            alt={ meal.strMeal }
                             data-testid={ `${index}-card-img` }
                           />
                         </Link>
@@ -132,12 +146,20 @@ const DetalhesBebidas = () => {
                 return '';
               })}
             </div>
-            <button
-              type="button"
-              data-testid="start-recipe-btn"
-            >
-              Iniciar Receita
-            </button>
+            <div className="button-initial-recipe">
+              <button
+                type="button"
+                data-testid="start-recipe-btn"
+                onClick={ progressButton }
+              >
+                <Link
+                  className="link-button"
+                  to={ `/bebidas/${stateLocal.drink.drinks[0].idDrink}/in-progress` }
+                >
+                  {!stateButton.initialRecipe ? 'Iniciar Receita' : 'Continuar Receita'}
+                </Link>
+              </button>
+            </div>
           </div>
         </div>
       ) : <div>Loading...</div>}

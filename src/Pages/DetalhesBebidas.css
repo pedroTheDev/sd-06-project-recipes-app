@@ -2,6 +2,23 @@
   width: 100%;
 }
 
+.title-e-icons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.category {
+  margin-left: 10px;
+}
+
+.title-e-icons span {
+  margin-left: 10px;
+}
+
+.title-e-icons img {
+  margin-right: 10px;
+}
+
 .video {
   width: 100%;
 }
@@ -21,4 +38,24 @@
 .main-scroll img {
   width: 175px;
 
+}
+
+.button-initial-recipe {
+  
+  display: flex;
+  justify-content: center;
+} 
+
+.button-initial-recipe button {
+  position: fixed;
+  bottom: 0;
+  background-color: chartreuse;
+  font-size: 20px;
+  width: 90%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 5px 0;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px;
+  cursor: pointer;
 }
