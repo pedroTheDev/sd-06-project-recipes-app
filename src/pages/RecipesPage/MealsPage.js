@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
@@ -33,11 +33,11 @@ function MealsPage() {
     if (newFilter !== zero) {
       let temp = {};
       if (type === 'cocktails') {
-        if (newFilter !== (zero || '')) {
-          temp = await cocktailAPI.filterByCategory(newFilter);
-        } else if (control) {
+        if (control) {
           temp = data;
           setControl(false);
+        } else if (newFilter !== (zero || '')) {
+          temp = await cocktailAPI.filterByCategory(newFilter);
         } else {
           temp = await cocktailAPI.fetchDrink('name', '');
         }
@@ -47,11 +47,11 @@ function MealsPage() {
           newFilter: zero,
         });
       } else if (type === 'meals') {
-        if (newFilter !== (zero || '')) {
-          temp = await mealAPI.filterByCategory(newFilter);
-        } else if (control) {
+        if (control) {
           temp = data;
           setControl(false);
+        } else if (newFilter !== (zero || '')) {
+          temp = await mealAPI.filterByCategory(newFilter);
         } else {
           temp = await mealAPI.fetchMeal('name', '');
         }
@@ -104,6 +104,15 @@ function MealsPage() {
     loadRecipes();
   }
 
+  function loadSearchResults() {
+    setState({
+      newFilter: '',
+      recipes: [],
+    });
+
+    loadRecipes();
+  }
+
   if (localState.type === '') {
     if (wLocation === 'http://localhost:3000/comidas') {
       setState({ type: 'meals' });
@@ -113,6 +122,12 @@ function MealsPage() {
       loadCategories('cocktails');
     }
   }
+
+  useEffect(() => {
+    if (control) {
+      loadSearchResults();
+    }
+  }, [control]);
 
   const { recipes, categories, type } = localState;
 

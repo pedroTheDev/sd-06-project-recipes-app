@@ -29,7 +29,6 @@ function RecipesAppProvider({ children }) {
 
   const setFetchDrink = async (type, key) => {
     const result = await fetchDrink(type, key);
-    console.log('Result: ',result);
     setData(result);
     const resultReturn = {
       result,
