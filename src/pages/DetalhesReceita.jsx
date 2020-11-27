@@ -15,6 +15,7 @@ function DetalhesReceita(props) {
   const [embed, setEmbed] = useState('');
   const [recommendFood, setRecommendFood] = useState([]);
   const zero = 0;
+  const vinte = 20;
 
   useEffect(() => {
     requestApiFoodDetails(props.match.params.id)
@@ -27,7 +28,7 @@ function DetalhesReceita(props) {
   const recommendFoodFunction = async () => {
     if (detailsFood.length !== zero) {
       const response = await recommendDrinksList();
-      console.log(response)
+      console.log(response);
       setRecommendFood(response.drinks.slice(zero, 6));
     }
   };
@@ -40,23 +41,25 @@ function DetalhesReceita(props) {
     }
   };
 
-  useEffect(() => {
-    ingredientsFunc();
-    embedVideo();
-    recommendFoodFunction();
-  }, [detailsFood]);
-
   const ingredientsFunc = () => {
     if (detailsFood.length !== zero) {
       const array = [];
-      for (let i = 1; i <= 20; i += 1) {
-        const ingredient = `${detailsFood[`strIngredient${i}`]} ${detailsFood[`strMeasure${i}`]}`;
+      for (let i = 1; i <= vinte; i += 1) {
+        const detIngredient = `${detailsFood[`strIngredient${i}`]}`;
+        const detMeasure = `${detailsFood[`strMeasure${i}`]}`;
+        const ingredient = `${detIngredient} ${detMeasure}`;
         array.push(ingredient);
       }
       const arrayReturn = array.filter((element) => element !== '');
       setArrayIngredients(arrayReturn);
     }
   };
+
+  useEffect(() => {
+    ingredientsFunc();
+    embedVideo();
+    recommendFoodFunction();
+  }, [detailsFood]);
 
   if (detailsFood.length === zero) {
     return <div>Loading...</div>;
@@ -68,13 +71,14 @@ function DetalhesReceita(props) {
       <h3 data-testid="recipe-category">{detailsFood.strCategory}</h3>
       <h4 data-testid="instructions">{detailsFood.strInstructions}</h4>
       <button type="button" data-testid="share-btn">
-        <img src={ buttonShare } />
+        <img src={ buttonShare } alt="button-share" />
       </button>
       <button type="button" data-testid="favorite-btn">Favorite</button>
       {arrayIngredients.map((element, index) => (
         <h5
           data-testid={ `${index}-ingredient-name-and-measure` }
-          key={ index }>
+          key={ index }
+        >
           { element }
         </h5>
       ))}
@@ -99,7 +103,13 @@ function DetalhesReceita(props) {
           </div>
         ))}
       </div>
-      <button type="button" data-testid="start-recipe-btn" className="btn-footer">Iniciar receita</button>
+      <button
+        type="button"
+        data-testid="start-recipe-btn"
+        className="btn-footer"
+      >
+        Iniciar receita
+      </button>
     </div>
   );
 }
