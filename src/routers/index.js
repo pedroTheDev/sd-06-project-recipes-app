@@ -14,8 +14,8 @@ export default function Routers() {
       <Route path="/comidas/:id/in-progress" component={ ProcessoComida } />
       <Route path="/bebidas/:id/in-progress" component={ ProcessoBebida } />
       <Route path="/explorar/comidas/ingredientes" component={ ComidasPorIngrediente } />
-      <Route path="/explorar/bebidas/ingredientes" component={ BebidasPorIngrediente } />
       <Route path="/explorar/comidas/area" component={ ComidasPorLocalOrigem } />
+      <Route path="/explorar/bebidas/ingredientes" component={ BebidasPorIngrediente } />
       <Route path="/comidas/:id" component={ DetalhesComida } />
       <Route path="/bebidas/:id" component={ DetalhesBebida } />
       <Route path="/explorar/comidas" component={ ExplorarComidas } />
