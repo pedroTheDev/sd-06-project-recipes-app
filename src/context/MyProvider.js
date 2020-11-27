@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import mealsContext from './MealsContext';
-import { getAllDrinkTypesApi, getFilteredDrinksApi } from '../services/drinksAPI';
+import { getAllDrinkTypesApi, getFilteredDrinksApi,
+  getDrinksAlcoholic } from '../services/drinksAPI';
 import { getAllRecipeTypesApi, getFilteredRecipesApi } from '../services/mealsAPI';
 
 function MyProvider({ children }) {
@@ -17,6 +18,7 @@ function MyProvider({ children }) {
   const [showSearchBar, setSearchBar] = useState(false);
   const [recommendedRecipe, setRecommendedRecipe] = useState([]);
   const [cardsRecipe, setCardsRecipe] = useState([]);
+  const [drinksAlcoholic, setDrinksAlcoholic] = useState({});
 
   useEffect(() => {
     async function fetchALL() {
@@ -31,10 +33,12 @@ function MyProvider({ children }) {
       const myAlcoholic = await getAllDrinkTypesApi('a');
       const myDrinkIngredients = await getAllDrinkTypesApi('i');
       const myGlasses = await getAllDrinkTypesApi('g');
+      const myDrinksAlcoholic = await getDrinksAlcoholic();
       setDrinkCategories(myDrinkCategories);
       setAlcoholic(myAlcoholic);
       setDrinkIngredients(myDrinkIngredients);
       setGlasses(myGlasses);
+      setDrinksAlcoholic(myDrinksAlcoholic);
     }
     fetchALL();
   }, []);
@@ -59,6 +63,7 @@ function MyProvider({ children }) {
     getFilteredDrinksApi,
     cardsRecipe,
     setCardsRecipe,
+    drinksAlcoholic,
   };
 
   return (
