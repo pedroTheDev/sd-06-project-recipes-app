@@ -45,12 +45,6 @@ function DrinkDetails() {
     fetchData();
   }, []);
 
-  // useEffect(() => {
-  //   if (buttonText === 'Iniciar Receita') {
-  //     setButtonText('Continuar Receita');
-  //   } setButtonText('Iniciar Receita');
-  // }, [buttonText]);
-
   function handleClick() {
     localStorage.setItem('iniciou?', true);
     console.log(buttonText);
@@ -73,8 +67,8 @@ function DrinkDetails() {
   }
 
   function handleFavoriteDrink() {
+    setFavoriteDrink(!favoriteDrink);
     if (favoriteDrink === false) {
-      setFavoriteDrink(true);
       const favoriteObj = [
         {
           id: drinkDetails.idDrink,
@@ -87,21 +81,46 @@ function DrinkDetails() {
         },
       ];
       if (localStorage.getItem('favoriteRecipes') === null) {
-        localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteObj));
-      } else {
-        localStorage.setItem(
-          'favoriteRecipes',
-          JSON.stringify([
-            ...JSON.parse(localStorage.getItem('favoriteRecipes')),
-            favoriteObj,
-          ]),
-        );
-      }
+          localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteObj));
+        } else {
+          localStorage.setItem(
+            'favoriteRecipes',
+            JSON.stringify([
+              ...JSON.parse(localStorage.getItem('favoriteRecipes')),
+              favoriteObj,
+            ]),
+          );
+        }
     }
-    if (favoriteDrink === 'favorite') {
-      setFavoriteDrink('non-favorite');
-      console.log('entrou2', favoriteDrink);
-    }
+
+      // const favoriteObj = [
+      //   {
+      //     id: drinkDetails.idDrink,
+      //     type: 'bebida',
+      //     area: '',
+      //     category: drinkDetails.strCategory,
+      //     alcoholicOrNot: drinkDetails.strAlcoholic,
+      //     name: drinkDetails.strDrink,
+      //     image: drinkDetails.strDrinkThumb,
+      //   },
+      // ];
+      // if (localStorage.getItem('favoriteRecipes') === null) {
+      //   localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteObj));
+    //   } else {
+    //     localStorage.setItem(
+    //       'favoriteRecipes',
+    //       JSON.stringify([
+    //         ...JSON.parse(localStorage.getItem('favoriteRecipes')),
+    //         favoriteObj,
+    //       ]),
+    //     );
+    // }
+    // if (favoriteDrink === true) {
+    //   setFavoriteDrink(false);
+    //   const arrayDoStorage = localStorage.getItem('favoriteRecipes');
+    //   const novoArray = arrayDoStorage.filter((element) => element.idDrink !== idDrink)
+    //   localStorage.setItem('favoriteRecipes', novoArray)
+    // }
   }
 
   return (
@@ -134,10 +153,12 @@ function DrinkDetails() {
         aria-label="favorite-button"
         type="button"
         data-testid="favorite-btn"
-        className={ favoriteDrink }
+        className={ whiteHeartIcon }
         onClick={ handleFavoriteDrink }
-        src={ favoriteDrink ? blackHeartIcon : whiteHeartIcon }
-      />
+        src={ whiteHeartIcon }
+      >
+        <img src={ favoriteDrink ? blackHeartIcon : whiteHeartIcon } />
+      </button>
       <h4 data-testid="recipe-category">
         {
           drinkDetails.drinks && drinkDetails.drinks[0].strCategory
