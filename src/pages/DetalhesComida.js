@@ -1,6 +1,7 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import copy from 'clipboard-copy';
 import ReceitasContext from '../context/ReceitasContext';
 import DrinksCard from '../components/DrinksCard';
 import Header from '../components/Header';
@@ -13,7 +14,11 @@ function DetalhesComida(props) {
     drinks, setDrinks, fetchById, setFetchById,
     beganRecipes, setBeganRecipes, doneRecipes,
   } = useContext(ReceitasContext);
+
+  const [copied, setCopied] = useState(false);
+
   const { match: { params: { id } } } = props;
+
   const startedRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
   const seis = 6;
 
@@ -44,7 +49,6 @@ function DetalhesComida(props) {
     localStorage.setItem('inProgressRecipes', JSON.stringify({
       ...startedRecipes,
       meals: {
-        ...startedRecipes.meals,
         [recipeName]: fetchById,
       },
     }));
@@ -54,9 +58,22 @@ function DetalhesComida(props) {
     }
   };
 
-  const verifyState = (idMeal) => (
-    !startedRecipes.meals[idMeal] ? 'Iniciar Receita' : 'Continuar Receita'
-  );
+  const verifyState = (idMeal) => {
+    if (!startedRecipes.meals) {
+      return 'Iniciar Receita';
+    }
+    if (!startedRecipes.meals[idMeal]) {
+      return 'Iniciar Receita';
+    }
+    return 'Continuar Receita';
+  };
+
+  const copyToCB = () => {
+    const url = window.location.href;
+
+    copy(url);
+    setCopied(true);
+  };
 
   return ((!fetchById)
     ? <div>carregando...</div>
@@ -68,7 +85,16 @@ function DetalhesComida(props) {
             <div key={ index }>
               <img data-testid="recipe-photo" src={ meal.strMealThumb } alt="" />
               <h2 data-testid="recipe-title">{meal.strMeal}</h2>
-              <button data-testid="share-btn" type="button">Compartilhar</button>
+              <div>
+                <button
+                  data-testid="share-btn"
+                  type="button"
+                  onClick={ copyToCB }
+                >
+                  Compartilhar
+                </button>
+                {copied ? 'Link copiado!' : null}
+              </div>
               <button data-testid="favorite-btn" type="button">Favoritar</button>
               <p data-testid="recipe-category">{meal.strCategory}</p>
               {getIngredients(meal, /strIngredient/).map((item, indx) => {
