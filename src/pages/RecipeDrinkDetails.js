@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import StartButton from '../components/StartButton';
 import RecipesContext from '../context/RecipesAppContext';
-import './scroll.css';
+import '../Style/scroll.css';
 
 function RecipeDrinkDetails({ match, title }) {
   const { id } = match.params;
@@ -14,7 +14,6 @@ function RecipeDrinkDetails({ match, title }) {
   const TWENTY = 20;
   const SEIS = 6;
   const API = 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=';
-  const positionButton = { position: 'fixed' };
 
   const fetchDetailRecipeDrinkByID = async () => {
     const response = await fetch(`${API}${id}`);
@@ -105,9 +104,9 @@ function RecipeDrinkDetails({ match, title }) {
             </div>
           ))}
         </div>
-        <div style={ positionButton }>
-          <StartButton id={ id } title={ title } />
-        </div>
+
+        <StartButton id={ id } title={ title } />
+
       </div>
     );
   }

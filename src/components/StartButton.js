@@ -1,14 +1,18 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import RecipesAppContext from '../context/RecipesAppContext';
+import '../Style/StartButton.css';
 
 function StartButton({ id, title }) {
   let setRoute = '';
+  let localStorageKey = '';
 
-  if (title === 'Comidas') {
+  if (title === 'comidas') {
     setRoute = 'comidas';
+    localStorageKey = 'meals';
   } else {
     setRoute = 'bebidas';
+    localStorageKey = 'cocktails';
   }
 
   const { startRecipe, setStartRecipe, finalizedRecipe } = useContext(RecipesAppContext);
@@ -18,21 +22,22 @@ function StartButton({ id, title }) {
     textButton = 'Continuar Receita';
   }
 
-  const handleStartRecipe = () => {
+  useEffect(() => {
     setStartRecipe(true);
-  };
+    localStorage.setItem('inProgressRecipes',
+      JSON.stringify({ [localStorageKey]: { [id]: [] } }));
+  }, []);
 
   const alredyRecipeMade = '';
 
   const button = (
     <Link
       to={ `/${setRoute}/${id}/in-progress` }
-      type="button"
     >
       <button
+        className="container-button"
         type="button"
         data-testid="start-recipe-btn"
-        onClick={ () => handleStartRecipe() }
       >
         {textButton}
       </button>
