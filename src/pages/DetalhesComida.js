@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import CardBebidaRecomendacao from '../components/CardBebidaRecomendacao';
 import RecipeContext from '../context/RecipeContext';
 import { fetchApiComidasDetalhes } from '../services/FetchApiComidas';
@@ -10,13 +10,29 @@ function DetalhesComidas() {
   const [estadoApiComidas, setEstadoApiComidas] = useState([]);
   const {
     retornoApi6Bebidas,
+    iniciarReceitas,
+    setIniciarReceitas,
+    // receitasTerminadas,
   } = useContext(RecipeContext);
+
   const seis = 6;
   const zero = 0;
   const fetchComidasDetalhes = async () => {
     const response = await fetchApiComidasDetalhes(idDaReceita);
     setEstadoApiComidas(response);
   };
+  function mudaNomeButton() {
+    if (iniciarReceitas.includes(idDaReceita)) {
+      document.getElementById('IniciarReceita').innerText = 'Continuar Receita';
+    }
+  }
+  const history = useHistory();
+  function handleIniciarReceita() {
+    setIniciarReceitas([...iniciarReceitas, idDaReceita]);
+    console.log(idDaReceita);
+    mudaNomeButton();
+    history.push(`/comidas/${idDaReceita}/in-progress`);
+  }
   useEffect(() => {
     fetchComidasDetalhes();
   }, []);
@@ -110,13 +126,7 @@ function DetalhesComidas() {
         </video>
         <button type="button" data-testid="share-btn">Compartilhar</button>
         <button type="button" data-testid="favorite-btn">Favoritar</button>
-        <button
-          data-testid="start-recipe-btn"
-          className="IniciarReceita"
-          type="button"
-        >
-          Iniciar Receita
-        </button>
+
         <div className="recomendacao">
 
           {
@@ -132,8 +142,17 @@ function DetalhesComidas() {
                   {CardBebidaRecomendacao(drink, indice)}
                 </button>))
           }
-
         </div>
+        <button
+          data-testid="start-recipe-btn"
+          className="IniciarReceita"
+          type="button"
+          id="IniciarReceita"
+          onClick={ handleIniciarReceita }
+        >
+          Iniciar Receita
+
+        </button>
 
       </div>
     )));
