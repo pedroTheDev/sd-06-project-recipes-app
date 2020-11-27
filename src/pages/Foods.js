@@ -17,6 +17,7 @@ class Foods extends React.Component {
     this.setCategory = this.setCategory.bind(this);
     this.allButtonHandler = this.allButtonHandler.bind(this);
     this.setInitialState = this.setInitialState.bind(this);
+    this.setKeyLocalStorage = this.setKeyLocalStorage.bind(this);
   }
 
   async componentDidMount() {
@@ -31,6 +32,7 @@ class Foods extends React.Component {
 
     const Categories = await foodsCategoriesOnRender();
     this.setInitialState(mealsRender, Categories);
+    this.setKeyLocalStorage();
   }
 
   async componentDidUpdate() {
@@ -44,6 +46,17 @@ class Foods extends React.Component {
   componentWillUnmount() {
     const { dispatchControlState } = this.props;
     dispatchControlState('');
+  }
+
+  setKeyLocalStorage() {
+    const verifyLocalStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const recipesInProgress = {
+      cocktails: { },
+      meals: { },
+    };
+    if (!verifyLocalStorage) {
+      localStorage.setItem('inProgressRecipes', JSON.stringify(recipesInProgress));
+    }
   }
 
   async setCategory({ target }, { strCategory }) {
