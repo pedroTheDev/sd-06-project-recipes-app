@@ -9,27 +9,36 @@ export default function SearchBar() {
           placeholder="Buscar receita"
           data-testid="search-input"
         />
-        <input
-          type="radio"
-          value="Nome"
-          name="tipo"
-          data-testid="name-search-radio"
-        />
-        Nome
-        <input
-          type="radio"
-          value="Ingrediente"
-          name="tipo"
-          data-testid="ingredient-search-radio"
-        />
-        Ingrediente
-        <input
-          type="radio"
-          value="PrimeiraLetra"
-          name="tipo"
-          data-testid="first-letter-search-radio"
-        />
-        Primeira Letra
+        <div>
+          <input
+            type="radio"
+            value="Nome"
+            name="tipo"
+            data-testid="name-search-radio"
+          />
+          Nome
+        </div>
+
+        <div>
+          <input
+            type="radio"
+            value="Ingrediente"
+            name="tipo"
+            data-testid="ingredient-search-radio"
+          />
+          Ingrediente
+        </div>
+
+        <div>
+          <input
+            type="radio"
+            value="PrimeiraLetra"
+            name="tipo"
+            data-testid="first-letter-search-radio"
+          />
+          Primeira Letra
+        </div>
+
         <div>
           <button
             type="submit"
