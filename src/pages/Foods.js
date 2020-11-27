@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Footer, Header } from '../components';
 import { foodsOnRender, foodsCategoriesOnRender,
-  filterFoodsByCategory } from '../services';
-import { comida } from '../actions';
+  filterFoodsByCategory, fetchMeal } from '../services';
+import { comida, controlState } from '../actions';
 
 class Foods extends React.Component {
   constructor() {
@@ -20,7 +20,15 @@ class Foods extends React.Component {
   }
 
   async componentDidMount() {
-    const mealsRender = await foodsOnRender();
+    const { control } = this.props;
+    let mealsRender;
+    const initList = 0;
+    const maxList = 12;
+    if (control !== '') {
+      const mealsExplorer = await fetchMeal(control, 'ingrediente');
+      mealsRender = mealsExplorer.slice(initList, maxList);
+    } else { mealsRender = await foodsOnRender(); }
+
     const Categories = await foodsCategoriesOnRender();
     this.setInitialState(mealsRender, Categories);
   }
@@ -31,6 +39,11 @@ class Foods extends React.Component {
     if (stateMeals.length > MAXIMUM_LENGTH) {
       this.stateAfterProps(stateMeals);
     }
+  }
+
+  componentWillUnmount() {
+    const { dispatchControlState } = this.props;
+    dispatchControlState('');
   }
 
   async setCategory({ target }, { strCategory }) {
@@ -126,14 +139,18 @@ Foods.propTypes = {
   history: PropTypes.shape().isRequired,
   dispatchMeals: PropTypes.func.isRequired,
   stateMeals: PropTypes.arrayOf(PropTypes.object).isRequired,
+  dispatchControlState: PropTypes.func.isRequired,
+  control: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   stateMeals: state.menu.meals,
+  control: state.menu.control,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchMeals: (meals) => dispatch(comida(meals)),
+  dispatchControlState: (control) => dispatch(controlState(control)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Foods);

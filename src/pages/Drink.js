@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Footer, Header } from '../components';
 import { drinksCategoriesOnRender,
-  drinksOnRender, filterDrinksByCategory } from '../services';
-import { bebida } from '../actions';
+  drinksOnRender, filterDrinksByCategory, fetchDrinks } from '../services';
+import { bebida, controlState } from '../actions';
 
 class Drink extends React.Component {
   constructor() {
@@ -20,7 +20,15 @@ class Drink extends React.Component {
   }
 
   async componentDidMount() {
-    const drinksRender = await drinksOnRender();
+    const { control } = this.props;
+    let drinksRender;
+    const initList = 0;
+    const maxList = 12;
+    if (control !== '') {
+      const drinksExplorer = await fetchDrinks(control, 'ingrediente');
+      drinksRender = drinksExplorer.slice(initList, maxList);
+    } else { drinksRender = await drinksOnRender(); }
+
     const Categories = await drinksCategoriesOnRender();
     this.setInitialState(drinksRender, Categories);
   }
@@ -31,6 +39,11 @@ class Drink extends React.Component {
     if (stateDrinks.length > MAXIMUM_LENGTH) {
       this.stateAfterProps(stateDrinks);
     }
+  }
+
+  componentWillUnmount() {
+    const { dispatchControlState } = this.props;
+    dispatchControlState('');
   }
 
   async setCategory({ strCategory }) {
@@ -122,14 +135,18 @@ Drink.propTypes = {
   history: PropTypes.shape().isRequired,
   dispatchDrinks: PropTypes.func.isRequired,
   stateDrinks: PropTypes.arrayOf(PropTypes.object).isRequired,
+  dispatchControlState: PropTypes.func.isRequired,
+  control: PropTypes.string.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchDrinks: (drinks) => dispatch(bebida(drinks)),
+  dispatchControlState: (control) => dispatch(controlState(control)),
 });
 
 const mapStateToProps = (state) => ({
   stateDrinks: state.menu.drinks,
+  control: state.menu.control,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Drink);

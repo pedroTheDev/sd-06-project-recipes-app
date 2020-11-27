@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Footer, Header } from '../components';
 import { foodsIngredientsRender } from '../services';
+import { controlState } from '../actions';
 
 class ExploreFoodsByIngredient extends React.Component {
   constructor() {
@@ -23,17 +24,19 @@ class ExploreFoodsByIngredient extends React.Component {
   }
 
   redirectOnImage(recipe) {
-    const { history } = this.props;
+    const { history, dispatchControlState } = this.props;
+    dispatchControlState(recipe);
     history.push('/comidas/');
   }
 
   render() {
     const { ingredients } = this.state;
     const { history } = this.props;
+    const listLength = 0;
     return (
       <div className="explorefoods-container">
         <Header history={ history } />
-        {ingredients.length > 0 && (ingredients.map((recipe, index) => (
+        {ingredients.length > listLength && (ingredients.map((recipe, index) => (
           <div className="card" key={ index } data-testid={ `${index}-ingredient-card` }>
             <input
               type="image"
@@ -55,8 +58,13 @@ class ExploreFoodsByIngredient extends React.Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  dispatchControlState: (control) => dispatch(controlState(control)),
+});
+
 ExploreFoodsByIngredient.propTypes = {
   history: PropTypes.shape().isRequired,
+  dispatchControlState: PropTypes.func.isRequired,
 };
 
-export default connect(null, null)(ExploreFoodsByIngredient);
+export default connect(null, mapDispatchToProps)(ExploreFoodsByIngredient);
