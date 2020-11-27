@@ -60,12 +60,12 @@ export default function Bebidas({ history }) {
       setLoading(true);
       const cdrinks = await api.fetchDrinkByCategory(target.value);
       setDrinks(cdrinks);
-      // setSelected(true);
       setLoading(false);
     }
     if (target.selected === true) {
       fetchDrinks();
     }
+    // setSelected(!selected);
   };
 
   const twelve = 12;

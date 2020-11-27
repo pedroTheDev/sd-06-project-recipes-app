@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 
 export default function DrinkCard({ drink, index }) {
   return (
@@ -9,12 +8,9 @@ export default function DrinkCard({ drink, index }) {
         data-testid={ `${index}-card-img` }
         src={ drink.strDrinkThumb }
         alt="drink-pic"
-        height="30px"
+        height="60px"
       />
       <p data-testid={ `${index}-card-name` }>{ drink.strDrink }</p>
-      <Link to={ `/bebidas/${drink.idDrink}` }>
-        <button type="button">Detalhes</button>
-      </Link>
     </div>
   );
 }

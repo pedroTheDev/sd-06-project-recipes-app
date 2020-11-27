@@ -55,13 +55,12 @@ export default function Comidas({ history }) {
       setLoading(true);
       const cmeals = await api.fetchFoodByCategory(target.value);
       setMeals(cmeals);
-      // setSelected(true);
       setLoading(false);
     }
     if (target.selected === true) {
       fetchFoods();
-      // setSelected(false);
     }
+    // setSelected(!selected);
   };
 
   const twelve = 12;
