@@ -53,7 +53,10 @@ describe('testando um ícone para a tela de perfil', () => {
   });
   it('Não tem footer na tela de detalhes de uma receita de comida;', () => {
     const { queryByTestId } = renderWithRouter(
-      <FoodDetails match={ { params: { id: '52977' } } } />,
+      <FoodDetails
+        match={ { params: { id: '52977' } } }
+        location={ { pathname: '' } }
+      />,
     );
     const drinks = queryByTestId('drinks-bottom-btn');
     const explore = queryByTestId('explore-bottom-btn');
@@ -64,7 +67,10 @@ describe('testando um ícone para a tela de perfil', () => {
   });
   it('Não tem footer na tela de detalhes de uma receita de bebida;', () => {
     const { queryByTestId } = renderWithRouter(
-      <DrinkDetails match={ { params: { id: '15997' } } } />,
+      <DrinkDetails
+        match={ { params: { id: '15997' } } }
+        location={ { pathname: '' } }
+      />,
     );
     const drinks = queryByTestId('drinks-bottom-btn');
     const explore = queryByTestId('explore-bottom-btn');
@@ -75,7 +81,10 @@ describe('testando um ícone para a tela de perfil', () => {
   });
   it('Não tem footer na tela de receita em processo de comida', () => {
     const { queryByTestId } = renderWithRouter(
-      <FoodInProgress match={ { params: { id: '15997' } } } />,
+      <FoodInProgress
+        match={ { params: { id: '15997' } } }
+        location={ { pathname: '' } }
+      />,
     );
     const drinks = queryByTestId('drinks-bottom-btn');
     const explore = queryByTestId('explore-bottom-btn');
@@ -86,7 +95,10 @@ describe('testando um ícone para a tela de perfil', () => {
   });
   it('Não tem footer na tela de receita em processo de bebida;', () => {
     const { queryByTestId } = renderWithRouter(
-      <DrinkInProgress match={ { params: { id: '15997' } } } />,
+      <DrinkInProgress
+        match={ { params: { id: '15997' } } }
+        location={ { pathname: '' } }
+      />,
     );
     const drinks = queryByTestId('drinks-bottom-btn');
     const explore = queryByTestId('explore-bottom-btn');
