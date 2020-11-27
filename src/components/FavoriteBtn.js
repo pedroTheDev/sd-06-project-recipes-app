@@ -9,7 +9,9 @@ function FavoriteBtn({ isFavorite, changesFavorites, index }) {
       ? (
         <button
           className="button-favorite"
-          data-testid={ typeof index !== 'number' ? ('favorite-btn') : (`${index}-horizontal-favorite-btn`) }
+          data-testid={ typeof index !== 'number'
+            ? ('favorite-btn')
+            : (`${index}-horizontal-favorite-btn`) }
           type="button"
           onClick={ changesFavorites }
           src={ blackHeartIcon }
@@ -20,7 +22,7 @@ function FavoriteBtn({ isFavorite, changesFavorites, index }) {
       : (
         <button
           className="button-favorite"
-          data-testid={ index ? (`${index}-horizontal-favorite-btn`) : 'favorite-btn' }
+          data-testid="favorite-btn"
           type="button"
           onClick={ changesFavorites }
           src={ whiteHeartIcon }
