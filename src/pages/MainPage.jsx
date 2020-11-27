@@ -23,16 +23,18 @@ const MainPage = (props) => {
       );
     } else {
       return (
-        recipesToRender.map(({ name, image, id }, index) => (
-          <RecipeCard
-            key={ id }
-            recipeName={ name }
-            recipeImage={ image }
-            id={ id }
-            foodOrDrink={ pathname }
-            index={ index }
-          />
-        ))
+        <main className="recipes-display">
+          { recipesToRender.map(({ name, image, id }, index) => (
+            <RecipeCard
+              key={ id }
+              recipeName={ name }
+              recipeImage={ image }
+              id={ id }
+              foodOrDrink={ pathname }
+              index={ index }
+            />
+          ))}
+        </main>
       );
     }
   };
@@ -47,10 +49,12 @@ const MainPage = (props) => {
   return (
     <div>
       <Header pageName={ pathname } renderSearch />
-      <CategoryMenu pathname={ pathname } />
-      {
-        checkRequestSize(recipeList)
-      }
+      <div className="default-page">
+        <CategoryMenu pathname={ pathname } />
+        {
+          checkRequestSize(recipeList)
+        }
+      </div>
       <Footer />
     </div>
   );

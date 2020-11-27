@@ -13,10 +13,14 @@ export default function Header({ pageName, renderSearch }) {
   title = pageName === '/bebidas' ? 'Bebidas' : pageName;
   title = pageName === '/comidas' ? 'Comidas' : title;
 
+  title = pageName === '/explorar/bebidas' ? 'Explorar Bebidas' : title;
+  title = pageName === '/explorar/comidas' ? 'Explorar Comidas' : title;
+
   const renderSearchIcon = () => (
     <button
       type="button"
       onClick={ () => setShowSearchBar(!showSearchBar) }
+      className="search-button"
     >
       <img
         className="header-icon"
@@ -31,7 +35,7 @@ export default function Header({ pageName, renderSearch }) {
     <header>
       <Link to="/perfil">
         <img
-          className="header-icon"
+          className="header-icon profile-icon"
           src={ profileIcon }
           alt="profileIcon"
           data-testid="profile-top-btn"
