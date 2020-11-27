@@ -143,7 +143,7 @@ function DrinksPage() {
     <div className="recipes-page">
       <Header
         className="header"
-        pageTitle="Comidas"
+        pageTitle="Bebidas"
         BtnSearchBar={ BtnSearchBar }
       />
       <div className="categories">
