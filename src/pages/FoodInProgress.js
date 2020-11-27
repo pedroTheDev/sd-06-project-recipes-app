@@ -183,7 +183,7 @@ function FoodInProgress(props) {
                 className={ ingredient.isChecked ? 'checked' : '' }
                 type="checkbox"
                 value={ ingredient.value }
-                checked={ ingredient.isChecked }
+                checked={ ingredient.isChecked ? 'checked' : '' }
                 onChange={ (ev) => handleCheckedIngredient(ev, index) }
               />
             </li>
