@@ -11,3 +11,6 @@ export { default as FoodsRecipesInProgress } from './FoodsRecipesInProgress';
 export { default as DrinksRecipesInProgress } from './DrinksRecipesInProgress';
 export { default as ExploreFoods } from './ExploreFoods';
 export { default as ExploreDrinks } from './ExploreDrinks';
+export { default as ExploreFoodsByIngredient } from './ExploreFoodsByIngredient';
+export { default as ExploreDrinksByIngredient } from './ExploreDrinksByIngredient';
+export { default as ExploreFoodsByArea } from './ExploreFoodsByArea';
