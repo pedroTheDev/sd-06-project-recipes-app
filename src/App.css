@@ -24,7 +24,10 @@
 .button-favorite:focus{
   outline-style: none;
 }
-
+.done-buttons {
+  display: flex;
+  justify-content: center;
+}
 
 .search-button {
   background-color: Transparent;
@@ -33,6 +36,14 @@
   cursor:pointer;
   overflow: hidden;
   outline:none;
+}
+
+.bodier p {
+  color: black;
+}
+
+.bodier span {
+  color: black;
 }
 
 .header {
