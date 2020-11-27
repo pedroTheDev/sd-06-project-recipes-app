@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -7,16 +7,15 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 
 function Perfil(props) {
-  const { history: { location: { pathname } }, pageConfig } = props;
+  const { history: { location: { pathname } }, pageConfig, email } = props;
   const { header } = pageConfig;
-  const [email, isLoading] = useState('');
 
   return (
     <div>
       <Header pathname={ pathname } componentConfig={ header } />
       <section className="profile-container">
         <section className="profile-email">
-          {!isLoading && <h3 data-testid="profile-email">{email}</h3>}
+          <h3 data-testid="profile-email">{email}</h3>
         </section>
         <section className="profile-buttons">
           <Link to="/receitas-feitas">
@@ -48,6 +47,7 @@ function Perfil(props) {
 
 const mapStateToProps = (state) => ({
   pageConfig: state.sitemap.perfil,
+  email: state.login.email,
 });
 
 export default connect(mapStateToProps, null)(Perfil);
@@ -65,4 +65,5 @@ Perfil.propTypes = {
       pathname: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
+  email: PropTypes.string.isRequired,
 };
