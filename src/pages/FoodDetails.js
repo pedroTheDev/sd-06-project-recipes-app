@@ -13,13 +13,13 @@ function FoodDetails() {
   const [spanHidden, setSpanHidden] = useState(true);
   const [favoriteFood, setFavoriteFood] = useState("non-favorite");
 
-  console.log(foodDetails.meals);
-
   useEffect(() => {
+    const teste = foodDetails;
     async function fetchData() {
       const resultsDetails = await requestDetailsFood(splitedURL[4]);
-      setFoodDetails(resultsDetails);
       const meal = resultsDetails.meals[0];
+      setFoodDetails(meal);
+      console.log(meal);
       const keysMeal = Object.keys(meal);
       const filterMeal = keysMeal.filter((key) => key.toLowerCase().includes('ingredient'));
       const filterMeasure = keysMeal.filter((key) => key.toLowerCase().includes('measure'));
@@ -27,6 +27,7 @@ function FoodDetails() {
         .map((item, index) => ({ ingredient: meal[item], measure: meal[filterMeasure[index]] }));
       setIngredients(allIngredients);
     }
+    console.log('teste', teste);
     fetchData();
   }, []);
 
@@ -55,6 +56,20 @@ function FoodDetails() {
   function handleFavoriteFood() {
     if (favoriteFood === 'non-favorite') {
       setFavoriteFood('favorite');
+      const favoriteObj = [
+        {
+          id: foodDetails.idMeal,
+          type: 'comida',
+          area: foodDetails.strArea,
+          category: foodDetails.strCategory,
+          alcoholicOrNot: '',
+          name: foodDetails.strMeal,
+          image: foodDetails.strMealThumb,
+        },
+      ];
+      localStorage.setItem('Favorite-Food', JSON.stringify(favoriteObj));
+      console.log('Favorite', favoriteObj);
+      // console.log(foodDetails);
       console.log('entrou1', favoriteFood);
     }
     if (favoriteFood === 'favorite') {
