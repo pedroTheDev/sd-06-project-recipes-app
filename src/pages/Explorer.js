@@ -24,20 +24,21 @@ const Explorer = (props) => {
   return (
     <>
       <Header pageName={ pathname } />
-      <Link to={ `${pathname}/ingredientes` }>
-        <button
-          type="button"
-          value={ pathname === '/explorar/bebidas'
-            ? 'https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list'
-            : 'https://www.themealdb.com/api/json/v1/1/list.php?i=list' }
-          onClick={ ({ target: { value } }) => handleClick(value) }
-          data-testid="explore-by-ingredient"
-        >
-          Por Ingredientes
-        </button>
-      </Link>
-      {
-        pathname === '/explorar/comidas'
+      <div className="default-page">
+        <Link to={ `${pathname}/ingredientes` }>
+          <button
+            type="button"
+            value={ pathname === '/explorar/bebidas'
+              ? 'https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list'
+              : 'https://www.themealdb.com/api/json/v1/1/list.php?i=list' }
+            onClick={ ({ target: { value } }) => handleClick(value) }
+            data-testid="explore-by-ingredient"
+          >
+            Por Ingredientes
+          </button>
+        </Link>
+        {
+          pathname === '/explorar/comidas'
         && (
           <Link to={ `${pathname}/area` }>
             <button
@@ -50,17 +51,18 @@ const Explorer = (props) => {
             </button>
           </Link>
         )
-      }
-      <button
-        type="button"
-        value={ pathname === '/explorar/comidas'
-          ? 'https://www.themealdb.com/api/json/v1/1/random.php'
-          : 'https://www.thecocktaildb.com/api/json/v1/1/random.php' }
-        onClick={ ({ target: { value } }) => handleClick(value) }
-        data-testid="explore-surprise"
-      >
-        Me Surpreenda!
-      </button>
+        }
+        <button
+          type="button"
+          value={ pathname === '/explorar/comidas'
+            ? 'https://www.themealdb.com/api/json/v1/1/random.php'
+            : 'https://www.thecocktaildb.com/api/json/v1/1/random.php' }
+          onClick={ ({ target: { value } }) => handleClick(value) }
+          data-testid="explore-surprise"
+        >
+          Me Surpreenda!
+        </button>
+      </div>
       <Footer />
     </>
   );
