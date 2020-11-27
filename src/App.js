@@ -3,11 +3,10 @@ import { Switch, Route } from 'react-router-dom';
 import RecipesAppProvider from './context/RecipesAppProvider';
 import './App.css';
 import Login from './pages/Login/Login';
-import MealsPage from './pages/MealsPage/MealsPage';
+import RecipesDetails from './pages/RecipesDetails/RecipesDetails';
+import MealsPage from './pages/RecipesPage/MealsPage';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
-import DrinksPage from './pages/DrinksPage/DrinksPage';
 import ExplorePage from './pages/ExplorePage/ExplorePage';
-import Detail from './pages/Detail/Detail';
 import InProgress from './pages/InProgress/InProgres';
 import MainExploreFood from './pages/MainExplore/MainExploreFood';
 import MainExploreDrink from './pages/MainExplore/MainExploreDrink';
@@ -15,17 +14,18 @@ import ExploreIngredients from './pages/ExploreIngredients/ExploreIngredients';
 import ExploreByArea from './pages/ExploreByArea/ExploreByArea';
 import CompletedRecipes from './pages/CompletedRecipes/CompletedRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes/FavoriteRecipes';
+import DrinksPage from './pages/DrinksPage/DrinksPage';
 
 function App() {
   return (
     <RecipesAppProvider>
       <Switch>
         <Route exact path="/" component={ Login } />
+        <Route exact path="/bebidas" component={ DrinksPage } />
         <Route exact path="/comidas" component={ MealsPage } />
         <Route exact path="/perfil" component={ ProfilePage } />
-        <Route exact path="/bebidas" component={ DrinksPage } />
-        <Route exact path="/comidas/:id" component={ Detail } />
-        <Route exact path="/bebidas/:id" component={ Detail } />
+        <Route exact path="/comidas/:id" component={ RecipesDetails } />
+        <Route exact path="/bebidas/:id" component={ RecipesDetails } />
         <Route exact path="/comidas/:id/in-progress" component={ InProgress } />
         <Route exact path="/bebidas/:id/in-progress" component={ InProgress } />
         <Route exact path="/explorar" component={ ExplorePage } />
