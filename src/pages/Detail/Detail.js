@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 // import Proptypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import { fetchMeal } from '../../services/mealAPI';
+import { fetchDrink } from '../../services/cocktailAPI';
 import SecondaryHeader from '../../components/SecondaryHeader';
 
 function Detail() {
   const [recipes, setRecipes] = useState({});
+  const [recommendations, setRecommendations] = useState({});
   const { id } = useParams();
 
   const fetchIngredients = async () => {
@@ -14,13 +16,29 @@ function Detail() {
     setRecipes(recipesByIdApi.meals[0]);
   };
 
+  const fetchRecommendations = async () => {
+    const recipesRecommendation = await fetchDrink('name', '');
+    console.log('recommendation', recipesRecommendation);
+    setRecommendations(recipesRecommendation.drinks[0]);
+  };
+
   useEffect(() => {
     fetchIngredients();
+    fetchRecommendations();
   }, []);
 
   const setIngredientAndMeasure = () => {
-    // checar se a chave não é vazia
+    const ingredients = [];
+    for (let i = 1; i <= 20; i += 1) {
+      const keyName = `strIngredient${i}`;
+      if (recipes.meals[0][keyName] !== ('' || null)) {
+        ingredients.push(recipes.meals[0][keyName]);
+      }
+    }
 
+    console.log(ingredients);
+
+    return ingredients;
   };
 
   return (

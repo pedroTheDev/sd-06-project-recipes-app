@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 // import Proptypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import { fetchDrink } from '../../services/cocktailAPI';
+import { fetchMeal } from '../../services/mealAPI';
 import SecondaryHeader from '../../components/SecondaryHeader';
 
 function DrinkDetail() {
   const [recipes, setRecipes] = useState({});
+  const [recommendations, setRecommendations] = useState({});
   const { id } = useParams();
 
   const fetchIngredients = async () => {
@@ -14,8 +16,15 @@ function DrinkDetail() {
     setRecipes(recipesByIdApi.drinks[0]);
   };
 
+  const fetchRecommendations = async () => {
+    const recipesRecommendation = await fetchMeal('name', '');
+    console.log('recommendation', recipesRecommendation);
+    setRecommendations(recipesRecommendation.meals[0]);
+  };
+
   useEffect(() => {
     fetchIngredients();
+    fetchRecommendations();
   }, []);
 
   return (
