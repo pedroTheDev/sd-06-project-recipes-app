@@ -47,7 +47,6 @@ const DrinksDetails = (props) => {
     const path = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
     const getRecipe = await fetch(path);
     const jsonRecipe = await getRecipe.json();
-    console.log(jsonRecipe);
     setRecipeTitle(jsonRecipe.drinks[0].strDrink);
     setRecipeCategory(jsonRecipe.drinks[0].strAlcoholic);
     setRecipeImage(jsonRecipe.drinks[0].strDrinkThumb);

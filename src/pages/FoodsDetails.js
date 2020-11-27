@@ -54,7 +54,6 @@ const FoodsDetails = (props) => {
     const path = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
     const getRecipe = await fetch(path);
     const jsonRecipe = await getRecipe.json();
-    console.log(jsonRecipe.meals[0]);
     setRecipeTitle(jsonRecipe.meals[0].strMeal);
     setRecipeCategory(jsonRecipe.meals[0].strCategory);
     setRecipeImage(jsonRecipe.meals[0].strMealThumb);

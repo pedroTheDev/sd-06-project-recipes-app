@@ -16,6 +16,8 @@ import ExploreDrinks from './pages/ExploreDrinks';
 import Explore from './pages/Explore';
 import OriginFoods from './pages/OriginFoods';
 import Footer from './components/Footer';
+import FoodInProgress from './pages/FoodInProgress';
+import DrinkInProgress from './pages/DrinkInProgress';
 import FoodsDetails from './pages/FoodsDetails';
 import DrinksDetails from './pages/DrinksDetails';
 
@@ -27,6 +29,9 @@ const Routes = () => {
       || title === 'Detalhe da Receita'
       || title === 'Receita em Processo'
       || title === 'Food Details'
+      || title === 'Drinks Details'
+      || title === 'Food In Progress'
+      || title === 'Drink In Progress'
     ) {
       return false;
     }
@@ -49,7 +54,8 @@ const Routes = () => {
         <Route exact path="/" component={ Login } />
         <Route path="/explorar/comidas/ingredientes" component={ IngredientFoods } />
         <Route path="/explorar/bebidas/ingredientes" component={ IngredientDrinks } />
-        <Route path="/comidas/:id-da-receita/in-progress" component={ Foods } />
+        <Route path="/comidas/:id/in-progress" component={ FoodInProgress } />
+        <Route path="/bebidas/:id/in-progress" component={ DrinkInProgress } />
         <Route path="/explorar/comidas/area" component={ OriginFoods } />
         <Route path="/explorar/comidas" component={ ExploreFoods } />
         <Route path="/explorar/bebidas" component={ ExploreDrinks } />
