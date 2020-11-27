@@ -44,7 +44,13 @@ export async function getRecipeDrinksByCategoryApi(category) {
   return result.drinks;
 }
 
-// Lista de Receitas de bebeidas aleatorias
+// Lista de receitas de Bebidas por ID
+export async function getRecipeDrinkByIdApi(id) {
+  const response = await fetch(`${URL_BASE}lookup.php?i=${id}`);
+  const result = await response.json();
+  return result.drinks;
+}
+
 export async function getRecipeDrinksByRandom() {
   const response = await fetch(`${URL_BASE}random.php`);
   const result = await response.json();
@@ -62,6 +68,7 @@ export default {
   getAllDrinkTypesApi,
   getRecipeDrinksApi,
   getRecipeDrinksByCategoryApi,
+  getRecipeDrinkByIdApi,
   getFilteredDrinksApi,
   getRecipeDrinksByRandom,
   getIngredientsDrinks,

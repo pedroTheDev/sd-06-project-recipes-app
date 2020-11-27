@@ -2,7 +2,6 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getRecipesMealsApi, getRecipesMealsByCategoryApi } from '../services/mealsAPI';
 import { getRecipeDrinksApi, getRecipeDrinksByCategoryApi } from '../services/drinksAPI';
-
 import MealsContext from '../context/MealsContext';
 import RecipeCard from './RecipeCard';
 import '../Css/RecipeList.css';

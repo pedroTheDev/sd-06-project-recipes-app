@@ -32,7 +32,7 @@ function Header() {
     case '/perfil':
       return 'Perfil';
     default:
-      return 'Not Found';
+      return 'Detalhes';
     }
   };
 
