@@ -14,17 +14,21 @@ class InProgress extends Component {
       details: [],
       isLoading: true,
       isMeal: false,
+      isDrink: false,
       clipboard: '',
       isFavorite: false,
       isDone: false,
       ingredientsUsed: [],
+      inputsMarked: [],
     };
     this.requestDetails = this.requestDetails.bind(this);
+    this.checkRecipeProgress = this.checkRecipeProgress.bind(this);
     this.renderCardDetails = this.renderCardDetails.bind(this);
     this.handleShare = this.handleShare.bind(this);
     this.handleFavorite = this.handleFavorite.bind(this);
     this.checkIsFavorite = this.checkIsFavorite.bind(this);
     this.handleInput = this.handleInput.bind(this);
+    this.saveInProgressToLS = this.saveInProgressToLS.bind(this);
   }
 
   componentDidMount() {
@@ -53,15 +57,17 @@ class InProgress extends Component {
     });
   }
 
-  handleInput({ target: { value, checked } }) {
+  handleInput({ target: { value, checked } }, idx) {
     if (checked) {
       this.setState((prev) => ({
         ingredientsUsed: [...prev.ingredientsUsed, value],
-      }));
+        inputsMarked: [ ...prev.inputsMarked, [name]: checked ],
+      }), () => this.saveInProgressToLS());
     } else {
       this.setState((prev) => ({
         ingredientsUsed: prev.ingredientsUsed.filter((ing) => ing !== value),
-      }));
+        // inputsMarked: { ...prev.inputsMarked, [name]: checked },
+      }), () => this.saveInProgressToLS());
     }
   }
 
@@ -77,14 +83,49 @@ class InProgress extends Component {
   }
 
   checkIsDone() {
-    const { details } = this.state;
-    const LS = JSON.parse(localStorage.getItem('doneRecipes'));
-    if (LS && LS.find((recipe) => recipe.id === details[0].idMeal
-    || recipe.id === details[0].idDrink)) {
+    const { details, ingredientsUsed } = this.state;
+    const ingredientsAndMeasures = this.parseIngredientsAndMeasures(details);
+    const ingredientsLength = ingredientsAndMeasures.length;
+    if (ingredientsUsed.length === ingredientsLength) {
       this.setState({
         isDone: true,
       });
+    } else {
+      this.setState({
+        isDone: false,
+      });
     }
+  }
+
+  saveInProgressToLS() {
+    const { ingredientsUsed, isMeal } = this.state;
+    const { match: { params: { id } } } = this.props;
+    let LS = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (!LS) {
+      LS = {
+        cocktails: {},
+        meals: {},
+      };
+    }
+    let obj;
+    if (isMeal) {
+      obj = {
+        ...LS,
+        meals: {
+          ...LS.meals,
+          [id]: ingredientsUsed,
+        },
+      };
+    } else {
+      obj = {
+        ...LS,
+        cocktails: {
+          ...LS.cocktails,
+          [id]: ingredientsUsed,
+        },
+      };
+    }
+    localStorage.setItem('inProgressRecipes', JSON.stringify(obj));
   }
 
   saveToLocalStorage() {
@@ -151,6 +192,7 @@ class InProgress extends Component {
         }, () => {
           this.checkIsFavorite();
           this.checkIsDone();
+          this.checkRecipeProgress();
         });
       } else {
         const endPointDrink = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
@@ -162,9 +204,39 @@ class InProgress extends Component {
         }, () => {
           this.checkIsFavorite();
           this.checkIsDone();
+          this.checkRecipeProgress();
         });
       }
     });
+  }
+
+  checkRecipeProgress() {
+    const { isMeal, isDrink } = this.state;
+    const { match: { params: { id } } } = this.props;
+    const LS = JSON.parse(localStorage.getItem('inProgressRecipes'));
+
+    if (LS && isMeal) {
+      if (Object.keys(LS.meals).find((mealId) => mealId === id)) {
+        this.setState({
+          ingredientsUsed: LS.meals[id],
+        });
+      }
+    } else if (LS && isDrink) {
+      if (Object.keys(LS.cocktails).find((cocktailId) => cocktailId === id)) {
+        this.setState({
+          ingredientsUsed: LS.cocktails[id],
+        }, () => {
+          const { ingredientsUsed, details } = this.state;
+          const ingredientsAndMeasures = this.parseIngredientsAndMeasures(details);
+          this.setState({
+            inputsMarked: ingredientsAndMeasures.map((i) => {
+              if (ingredientsUsed.length > 0 && ingredientsUsed.includes(i)) return true;
+              return false;
+            }),
+          });
+        });
+      }
+    }
   }
 
   parseIngredientsAndMeasures(details) {
@@ -195,7 +267,7 @@ class InProgress extends Component {
   }
 
   renderCardDetails() {
-    const { details, isMeal, clipboard, isFavorite, isDone } = this.state;
+    const { details, isMeal, clipboard, isFavorite, isDone, inputsMarked } = this.state;
     const ingredientsAndMeasures = this.parseIngredientsAndMeasures(details);
     console.log('1', details);
     console.log('1', this.props);
@@ -252,7 +324,8 @@ class InProgress extends Component {
             <input
               name={ `${idx}-ingredient-step` }
               type="checkbox"
-              onChange={ this.handleInput }
+              checked={ inputsMarked[idx] }
+              onClick={ (e) => this.handleInput(e, idx) }
               value={ item }
             />
             {item}
