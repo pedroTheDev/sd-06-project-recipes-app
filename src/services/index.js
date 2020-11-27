@@ -151,3 +151,25 @@ export function randomRecipeDrinks() {
     .then((response) => response.drinks);
   return API;
 }
+
+export function fetchAreas() {
+  const API = fetch('https://www.themealdb.com/api/json/v1/1/list.php?a=list')
+    .then((response) => response.json())
+    .then((response) => response.meals);
+  return API;
+}
+
+export function filterByArea(endPoint) {
+  const INITIAL_LENGTH = 0;
+  const MAX_LENGTH = 12;
+  if (endPoint === '') {
+    const API = fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=')
+      .then((response) => response.json())
+      .then((response) => response.meals.slice(INITIAL_LENGTH, MAX_LENGTH));
+    return API;
+  }
+  const API = fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?a=${endPoint}`)
+    .then((response) => response.json())
+    .then((response) => response.meals.slice(INITIAL_LENGTH, MAX_LENGTH));
+  return API;
+}

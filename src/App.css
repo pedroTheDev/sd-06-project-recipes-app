@@ -286,7 +286,7 @@ a {
 }
 
 .explore-buttons {
-  margin: 300px auto;
+  margin: 70px auto;
 }
 
 .exploredrinks-container {
@@ -455,6 +455,14 @@ a {
 
 .tags-div p {
   margin: 5px;
+}
+
+.explore-top-content {
+  margin: 100px auto;
+}
+
+.explore-top-content select{
+  height: 30px;
 }
 
 @media (max-width:600px) {
