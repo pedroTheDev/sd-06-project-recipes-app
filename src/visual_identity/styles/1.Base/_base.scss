@@ -4,6 +4,10 @@
   font-size: calc(10px + 0.8vw);
 }
 
+html, body, #root, #app, #app>div {
+  height: 100%;
+}
+
 h1 {
   font-size: calc(20px + 1.5vw);
   color: $darkBlue2;
