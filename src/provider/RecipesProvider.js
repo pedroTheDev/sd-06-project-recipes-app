@@ -20,6 +20,7 @@ export default function RecipesProvider({ children }) {
   const [filterDrink, setFilterDrink] = useState([]);
   const [radioValue, setRadioValue] = useState('');
   const [searchBar, setSearchBar] = useState('');
+  const [state, setState] = useState([]);
 
   // state para foodDetails
   const [foodDetail, setFoodDetail] = useState([]);
@@ -100,6 +101,8 @@ export default function RecipesProvider({ children }) {
     setEffectOnLoad,
     areaDropdown,
     setAreaDropdown,
+    state,
+    setState,
 
   };
 

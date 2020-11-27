@@ -61,6 +61,7 @@ function FoodDetails() {
     const RecipeID = location.slice(magickNumber, location.length);
 
     window.location.pathname = `/comidas/${RecipeID}/in-progress`;
+    console.log(RecipeID);
   }
 
   return (
