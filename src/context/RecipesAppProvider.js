@@ -16,8 +16,8 @@ function RecipesAppProvider({ children }) {
       result,
       redirect: false,
     };
-    if (result.meals == null) {
-      return alert('Sinto muito, não encontramos nenhuma receita para esses filtros');
+    if (result.meals === null) {
+      return alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
     }
     if (result.meals.length === 1) {
       resultReturn.redirect = true;
@@ -34,8 +34,8 @@ function RecipesAppProvider({ children }) {
       result,
       redirect: false,
     };
-    if (result === null) {
-      return null;
+    if (result.drinks === null) {
+      return alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
     }
     if (result.drinks.length === 1) {
       resultReturn.redirect = true;
