@@ -130,7 +130,7 @@ function Drink() {
         </Link>
       ));
     } if (currentDrinks) {
-      if (searchItens && currentDrinks.length === 1) {
+      if (searchItens !== undefined && currentDrinks.length === 1) {
         return <Redirect to="/bebidas/178319" />;
       }
       return currentDrinks

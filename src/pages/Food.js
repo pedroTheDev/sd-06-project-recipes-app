@@ -16,7 +16,7 @@ function Food() {
   const urlCategories = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
   const urlMealsCategories = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${currentCategories}`;
   const urlMealsCategories2 = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${currentCategories}`;
-  console.log(urlMealsCategories2);
+
   useEffect(() => {
     const fecthMeals = async () => {
       const APIRequest = await fetch(url);
@@ -128,7 +128,7 @@ function Food() {
         </Link>
       ));
     } if (currentMeals) {
-      if (searchItens.searchRadio !== '' && currentMeals.length === 1) {
+      if (searchItens !== undefined && currentMeals.length === 1) {
         return <Redirect to="/comidas/52771" />;
       }
       return currentMeals
