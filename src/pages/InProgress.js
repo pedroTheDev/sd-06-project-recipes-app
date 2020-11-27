@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, Redirect, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import clipboardCopy from 'clipboard-copy';
 import Recommended from '../components/Recommended';
 import { fetchRecipe } from '../services/api';
@@ -7,18 +7,23 @@ import handleFavorite from '../services/storageFunctions';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import './FoodDetails.css';
+import './InProgress.css';
 
 function InProgress() {
   const [recipe, setRecipe] = useState({ recipe: { } });
   const [isFetching, setIsFetching] = useState(true);
   const [isFavorite, setIsFavorite] = useState(whiteHeartIcon);
   const [copied, setCopied] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
+  const [checkedIngredients, setCheckedIngredients] = useState([]);
+  const zero = 0;
+  const [allChecked, setAllChecked] = useState(zero);
   const itemId = useLocation().pathname.match(/[0-9]/g).join('');
   const itemUrl = useLocation().pathname;
-  const url = (itemUrl.includes('/comidas/')) ?
-    `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${itemId}`
-    : `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${itemId}`;
+  const isFood = (itemUrl.includes('/comidas/'));
+  const url = (isFood
+    ? `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${itemId}`
+    : `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${itemId}`);
 
   function favoriteStatus(id) {
     let favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
@@ -31,20 +36,13 @@ function InProgress() {
     }
   }
 
-  useEffect(() => {
-    (async () => {
-      const recipeObj = await fetchRecipe(url);
-      setRecipe(recipeObj.meals);
-      setIsFetching(false);
-    })();
-    favoriteStatus(itemId);
-  }, []);
-
   // lógica dessa função adaptada de https://stackoverflow.com/questions/49580528/
   function ingredientsFunc(recipeData) {
     const ingredientsArray = [];
     let index = 1;
-    const max = 20;
+    const maxFoodIng = 20;
+    const maxDrinkIng = 15;
+    const max = isFood ? maxFoodIng : maxDrinkIng;
     for (index; index <= max; index += 1) {
       if (recipeData[`strIngredient${index}`] !== null
         && recipeData[`strIngredient${index}`] !== '') {
@@ -58,23 +56,26 @@ function InProgress() {
   }
 
   const data = (isFetching) ? [{}] : recipe;
-  const { strMeal,
-    strCategory,
-    strArea,
+  const { strMeal = '',
+    strDrink = '',
+    strCategory = '',
+    strAlcoholic = '',
+    strArea = '',
     strInstructions,
     strYoutube = '',
-    strMealThumb } = data[0];
+    strMealThumb = '',
+    strDrinkThumb = '' } = data[0];
   const vidUrl = strYoutube.replace(/watch\?v=/g, '/embed/');
   const ingredients = ingredientsFunc(data[0]);
 
   const favoriteObj = {
     id: itemId,
-    type: 'comida',
-    area: strArea,
-    alcoholicOrNot: '',
+    type: isFood ? 'comida' : 'bebida',
+    area: isFood ? strArea : '',
+    alcoholicOrNot: isFood ? '' : strAlcoholic,
     category: strCategory,
-    name: strMeal,
-    image: strMealThumb,
+    name: isFood ? strMeal : strDrink,
+    image: isFood ? strMealThumb : strDrinkThumb,
   };
 
   function handleFavoriteClick() {
@@ -91,22 +92,103 @@ function InProgress() {
     }, seconds);
   }
 
+  function handleCheckboxClick(e) {
+    const box = e.target;
+    if (!box.checked) {
+      box.removeAttribute('checked');
+    } else {
+      box.setAttribute('checked', 'true');
+    }
+    if (!box.checked) {
+      setAllChecked(allChecked - 1);
+    } else {
+      setAllChecked(allChecked + 1);
+    }
+    if (checkedIngredients.includes(box.value)) {
+      setCheckedIngredients(checkedIngredients.filter((name) => name !== box.value));
+    } else {
+      setCheckedIngredients([...checkedIngredients, box.value]);
+    }
+
+    if (checkedIngredients) {
+      localStorage.inProgressRecipes = JSON.stringify({
+        meals: { [itemId]: checkedIngredients },
+      });
+    } else {
+      localStorage.inProgressRecipes = JSON.stringify({
+        cocktails: { [itemId]: checkedIngredients },
+      });
+    }
+  }
+
+  const title = isFood ? strMeal : strDrink;
+  const recCategory = isFood ? strCategory : strAlcoholic;
+  const thumbnail = isFood ? strMealThumb : strDrinkThumb;
+
+  function video() {
+    return (
+      <div>
+        <iframe
+          data-testid="video"
+          src={ vidUrl }
+          title={ title }
+        />
+      </div>
+    );
+  }
+
+  function ingredientsList() {
+    return (
+      ingredients.map((ingredient, index) => (
+        <div key={ index } data-testid={ `${index}-ingredient-step` }>
+          <input
+            type="checkbox"
+            className="ingredient-checkbox"
+            id={ `${index}-${ingredient.ingredient}` }
+            key={ index }
+            onChange={ handleCheckboxClick }
+            value={ ingredient.ingredient }
+          />
+          <label key={ index } htmlFor={ `${index}-${ingredient.ingredient}` }>
+            {`${ingredient.ingredient} - ${(ingredient.quantity === null)
+              ? 'a pinch'
+              : ingredient.quantity}`}
+          </label>
+        </div>
+      ))
+    );
+  }
+
+  useEffect(() => {
+    (async () => {
+      const recipeObj = await fetchRecipe(url);
+      setRecipe(recipeObj[isFood ? 'meals' : 'drinks']);
+      setIsFetching(false);
+    })();
+    favoriteStatus(itemId);
+    if (allChecked === ingredients.length) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  }, [allChecked]);
+
   return (
     <main>
       {(isFetching) ? <div>Loading recipe...</div>
         : (
           <section className="body-recipe">
             <h1 data-testid="recipe-title">
-              { strMeal }
+              { title }
             </h1>
             <h3 data-testid="recipe-category">
-              { strCategory }
+              { recCategory }
             </h3>
             <img
               data-testid="recipe-photo"
               className="recipe-img"
-              src={ strMealThumb }
-              alt={ `${strMeal}` }
+              src={ thumbnail }
+              alt={ `${title}` }
             />
             <button
               type="button"
@@ -128,32 +210,21 @@ function InProgress() {
               />
               Favoritar
             </button>
-            <iframe
-              data-testid="video"
-              src={ vidUrl }
-              title={ strMeal }
-            />
-              {ingredients.map((ingredient, index) => (
-                <div>
-                  <input type="checkbox" data-testid={ `${index}-ingredient-step` } key={ index } />
-                  <label>
-                      {`${ingredient.ingredient} - ${(ingredient.quantity === null)
-                    ? 'a pinch'
-                    : ingredient.quantity}`}
-                  </label>
-                </div>
-              ))}
+            {isFood && video()}
+            {ingredientsList()}
             <p data-testid="instructions">
               {strInstructions}
             </p>
             <Recommended />
-            <Link to={`${itemUrl}/in-progress`}>
+            {/* {finishRecipeBtn()} */}
+            <Link to="/receitas-feitas">
               <button
                 type="button"
                 className="start-recipe-btn"
-                data-testid="start-recipe-btn"
+                data-testid="finish-recipe-btn"
+                disabled={ isDisabled }
               >
-                Iniciar Receita
+                Finalizar Receita
               </button>
             </Link>
           </section>
@@ -161,6 +232,5 @@ function InProgress() {
     </main>
   );
 }
-
 
 export default InProgress;

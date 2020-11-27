@@ -81,7 +81,7 @@ function DrinkDetails() {
   }
 
   function handleShareClick() {
-    clipboardCopy(`http://localhost:3000/${itemUrl}`);
+    clipboardCopy(`http://localhost:3000${itemUrl}`);
     const seconds = 5000;
     setCopied(true);
     setTimeout(() => {
@@ -139,7 +139,7 @@ function DrinkDetails() {
               {strInstructions}
             </p>
             <Recommended />
-            <Link to={`${itemUrl}/in-progress`}>
+            <Link to={ `${itemUrl}/in-progress` }>
               <button
                 type="button"
                 className="start-recipe-btn"

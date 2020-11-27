@@ -33,7 +33,7 @@ function Login() {
   return (
     <div className="wrapper">
       <div className="title">
-      Login
+        Login
       </div>
       <div className="field">
         <input
@@ -63,10 +63,10 @@ function Login() {
           />
         </Link>
       </div>
-      <div class="content">
-        <div class="checkbox">
+      <div className="content">
+        <div className="checkbox">
           <input type="checkbox" id="remember-me" />
-          <label for="remember-me">Lembrar senha</label>
+          Lembrar senha
         </div>
       </div>
     </div>

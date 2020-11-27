@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, Redirect, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import clipboardCopy from 'clipboard-copy';
 import Recommended from '../components/Recommended';
 import { fetchRecipe } from '../services/api';
@@ -18,7 +18,6 @@ function FoodDetails() {
   const itemId = useLocation().pathname.slice(sliceNumber);
   const itemUrl = useLocation().pathname;
   const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${itemId}`;
-
   function favoriteStatus(id) {
     let favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
     if (favRecipes === null) favRecipes = [];
@@ -82,7 +81,7 @@ function FoodDetails() {
   }
 
   function handleShareClick() {
-    clipboardCopy(`http://localhost:3000/${itemUrl}`);
+    clipboardCopy(`http://localhost:3000${itemUrl}`);
     const seconds = 5000;
     setCopied(true);
     setTimeout(() => {
@@ -145,7 +144,7 @@ function FoodDetails() {
               {strInstructions}
             </p>
             <Recommended />
-            <Link to={`${itemUrl}/in-progress`}>
+            <Link to={ `${itemUrl}/in-progress` }>
               <button
                 type="button"
                 className="start-recipe-btn"
