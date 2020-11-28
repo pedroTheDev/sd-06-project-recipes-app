@@ -21,6 +21,7 @@ const RecipesProvider = ({ children }) => {
     pageName,
     setPageName,
   };
+
   return (
     <ContextAPI.Provider value={ contextState }>
       { children }
