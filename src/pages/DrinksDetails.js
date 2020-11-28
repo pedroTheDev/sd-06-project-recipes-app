@@ -67,7 +67,12 @@ const DrinksDetails = (props) => {
     const path = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
     const getRecipe = await fetch(path);
     const jsonRecipe = await getRecipe.json();
-    setRecipeRecommendations([jsonRecipe.meals[0], jsonRecipe.meals[1]]);
+    const maximumRecommendations = 6;
+    const recommendations = jsonRecipe.drinks.map(
+      (recommendation, index) => (index < maximumRecommendations && recommendation),
+    );
+
+    setRecipeRecommendations(recommendations);
   };
 
   const buttonMount = () => {
@@ -175,7 +180,7 @@ const DrinksDetails = (props) => {
         className="image-display"
       />
       <div>
-        <p data-testid="recipe-title">{recipeTitle}</p>
+        <p data-testid="recipe-title">{ recipeTitle }</p>
         <div>
           <ShareButton path={ pathname } />
           <button type="button" onClick={ handleImage }>
@@ -187,7 +192,7 @@ const DrinksDetails = (props) => {
           </button>
         </div>
       </div>
-      <p data-testid="recipe-category">{recipeCategory}</p>
+      <p data-testid="recipe-category">{ recipeAlc }</p>
 
       <ul>
         {recipeIngredients.map((item, index) => (
@@ -206,7 +211,7 @@ const DrinksDetails = (props) => {
         {recipeRecommendations.map((item, index) => (
           <div
             key={ item.idMeal }
-            data-testid={ `${index}-recommendation-card` }
+            data-testid={ `${index}-recomendation-card` }
           >
             {item.strMeal}
           </div>

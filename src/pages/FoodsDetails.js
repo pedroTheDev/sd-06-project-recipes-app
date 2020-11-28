@@ -77,7 +77,12 @@ const FoodsDetails = (props) => {
     const path = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
     const getRecipe = await fetch(path);
     const jsonRecipe = await getRecipe.json();
-    setRecipeRecommendations([jsonRecipe.drinks[0], jsonRecipe.drinks[1]]);
+    const maximumRecommendations = 6;
+    const recommendations = jsonRecipe.drinks.map(
+      (recommendation, index) => (index < maximumRecommendations && recommendation),
+    );
+
+    setRecipeRecommendations(recommendations);
   };
 
   const buttonMount = () => {
@@ -218,7 +223,7 @@ const FoodsDetails = (props) => {
         {recipeRecommendations.map((item, index) => (
           <div
             key={ item.idDrink }
-            data-testid={ `${index}-recommendation-card` }
+            data-testid={ `${index}-recomendation-card` }
           >
             {item.strDrink}
           </div>
