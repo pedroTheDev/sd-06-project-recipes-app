@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { fetchDetail, fetchRecommendation } from '../helpers/Helper';
+import RecipesContext from '../context/Context';
 
 import '../css/scroller.css';
 import '../css/itemDetails.css';
@@ -11,6 +12,7 @@ import blackHeart from '../images/blackHeartIcon.svg';
 import saveFavorite from '../helpers/saveFavorite';
 
 export default function FoodsDetails(props) {
+  const { setItems } = useContext(RecipesContext);
   const [recipe, setRecipe] = useState('');
   const [recipeDetails, setRecipeDetails] = useState([]);
   const [concluded, setConcluded] = useState(false);
@@ -28,7 +30,9 @@ export default function FoodsDetails(props) {
       setRecommendation(results);
     }
     fetchData();
-  });
+
+    return () => setItems();
+  }, []);
 
   useEffect(() => {
     const storage = JSON.parse(localStorage.getItem('inProgressRecipes'));

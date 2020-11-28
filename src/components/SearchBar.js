@@ -6,7 +6,7 @@ export default function SearchBar({ id, ingredient }) {
   const { setFilters } = useContext(RecipesContext);
   const [searchOptions, setSearchOptions] = useState({
     searchText: (ingredient === undefined) ? '' : ingredient,
-    searchType: (ingredient === undefined) ? '' : 'ingredient',
+    searchType: (ingredient === undefined) ? 'name' : 'ingredient',
     category: id,
   });
 
@@ -15,12 +15,12 @@ export default function SearchBar({ id, ingredient }) {
   }
 
   useEffect(() => {
-    if (ingredient === searchOptions.searchText) {
+    if (ingredient !== undefined) {
       document.getElementById('ingredient-search-radio').checked = true;
       document.getElementById('search-input').value = ingredient;
-      setFilters(searchOptions);
+      setFilters({ ...searchOptions });
     }
-  });
+  }, []);
 
   function submitSearch() {
     const { searchText, searchType } = searchOptions;
