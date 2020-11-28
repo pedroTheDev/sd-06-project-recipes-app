@@ -9,8 +9,10 @@ import Explorar from './pages/Explorar';
 import ExplorarBebidas from './pages/ExplorarBebidas';
 import ExplorarBebidasIng from './pages/ExplorarBebidasIng';
 import ExplorarComidas from './pages/ExplorarComidas';
+import ExplorarComidasArea from './pages/ExplorarComidasArea';
 import ExplorarComidasIng from './pages/ExplorarComidasIng';
 import Login from './pages/Login';
+import NotFound from './pages/NotFound';
 import Perfil from './pages/Perfil';
 import ReceitasFavoritas from './pages/ReceitasFavoritas';
 import ReceitasFeitas from './pages/ReceitasFeitas';
@@ -27,6 +29,8 @@ function App() {
         <Route exact path="/explorar" component={ Explorar } />
         <Route exact path="/explorar/comidas" component={ ExplorarComidas } />
         <Route exact path="/explorar/bebidas" component={ ExplorarBebidas } />
+        <Route exact path="/explorar/comidas/area" component={ ExplorarComidasArea } />
+        <Route exact path="/explorar/bebidas/area" component={ NotFound } />
         <Route
           exact
           path="/explorar/bebidas/ingredientes"
