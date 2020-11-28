@@ -67,7 +67,12 @@ const DrinksDetails = (props) => {
     const path = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
     const getRecipe = await fetch(path);
     const jsonRecipe = await getRecipe.json();
-    setRecipeRecommendations([jsonRecipe.meals[0], jsonRecipe.meals[1]]);
+    const maximumRecommendations = 6;
+    const recommendations = jsonRecipe.drinks.map(
+      (recommendation, index) => (index < maximumRecommendations && recommendation)
+    );
+
+    setRecipeRecommendations(recommendations);
   };
 
   const buttonMount = () => {
