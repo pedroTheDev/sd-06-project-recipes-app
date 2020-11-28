@@ -8,25 +8,30 @@ import {
 
 function ButtonCategoriesDrink() {
   const {
+    categories: {
+      categoriesButtonDrink,
+      setCategoriesButtonDrink,
+    },
     cards: {
       setCardDrink,
     },
   } = useContext(RecipesAppContext);
 
-  const [categoriesButton, setCategoriesButton] = useState([]);
-  const [categorySelectPreviously, setCategorySelectPreviously] = useState([]);
+  const [categorySelectPreviously, setCategorySelectPreviously] = useState('');
 
   const ofTheFirstParameter = 0;
   const upToParameter5 = 5;
   useEffect(() => {
-    requestApiDrinkListCategories()
-      .then((arrayApiList) => {
-        const arrayCategoriesList5 = arrayApiList
-          .slice(ofTheFirstParameter, upToParameter5)
-          .map((objCategory) => objCategory.strCategory);
-        const arrayListButton = ['All', ...arrayCategoriesList5];
-        setCategoriesButton(arrayListButton);
-      });
+    if (categoriesButtonDrink.length === 0) {
+      requestApiDrinkListCategories()
+        .then((arrayApiList) => {
+          const arrayCategoriesList5 = arrayApiList
+            .slice(ofTheFirstParameter, upToParameter5)
+            .map((objCategory) => objCategory.strCategory);
+          const arrayListButton = ['All', ...arrayCategoriesList5];
+          setCategoriesButtonDrink(arrayListButton);
+        });
+    }
   }, []);
 
   const onClickCategory = async (category) => {
@@ -43,9 +48,9 @@ function ButtonCategoriesDrink() {
 
   const arrayVoid = 0;
   return (
-    (categoriesButton.length === arrayVoid) ? <span>Loading...</span> : (
+    (categoriesButtonDrink.length === arrayVoid) ? <span>Loading...</span> : (
       <div>
-        {categoriesButton.map((category) => (
+        {categoriesButtonDrink.map((category) => (
           <button
             key={ category }
             type="button"

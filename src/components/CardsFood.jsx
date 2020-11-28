@@ -14,8 +14,10 @@ function CardsFood() {
   } = useContext(RecipesAppContext);
 
   useEffect(() => {
-    requestApiFoodFilterName()
-      .then((arrayApi) => setCardFood(arrayApi));
+    if (cardFood.length === 0) {
+      requestApiFoodFilterName()
+        .then((arrayApi) => setCardFood(arrayApi));
+    }
   }, []);
 
   const ofTheFirstParameter = 0;

@@ -12,8 +12,10 @@ function CardsDrink() {
   } = useContext(RecipesAppContext);
 
   useEffect(() => {
-    requestApiDrinkFilterName()
-      .then((arrayApi) => setCardDrink(arrayApi));
+    if (cardDrink.length === 0) {
+      requestApiDrinkFilterName()
+        .then((arrayApi) => setCardDrink(arrayApi));
+    }
   }, []);
 
   const ofTheFirstParameter = 0;
