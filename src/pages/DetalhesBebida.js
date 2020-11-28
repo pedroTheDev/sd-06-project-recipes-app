@@ -24,7 +24,6 @@ function DetalhesBebida(props) {
   const { match: { params: { id } } } = props;
 
   const startedRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
-
   const seis = 6;
 
   useEffect(() => {
