@@ -152,6 +152,24 @@ export function randomRecipeDrinks() {
   return API;
 }
 
+export function foodsIngredientsRender() {
+  const INITIAL_LENGTH = 0;
+  const MAX_LENGTH = 12;
+  const variavel = fetch('https://www.themealdb.com/api/json/v1/1/list.php?i=list')
+    .then((response) => response.json())
+    .then((response) => response.meals.slice(INITIAL_LENGTH, MAX_LENGTH));
+  return variavel;
+}
+
+export function drinksIngredientsRender() {
+  const INITIAL_LENGTH = 0;
+  const MAX_LENGTH = 12;
+  const variavel = fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list')
+    .then((response) => response.json())
+    .then((response) => response.drinks.slice(INITIAL_LENGTH, MAX_LENGTH));
+  return variavel;
+}
+
 export function fetchAreas() {
   const API = fetch('https://www.themealdb.com/api/json/v1/1/list.php?a=list')
     .then((response) => response.json())

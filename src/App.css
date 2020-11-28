@@ -1,6 +1,5 @@
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
-  Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   background-color: #d39d60;
 }
 
@@ -50,7 +49,8 @@ a {
   height: 40px;
   font-size: 20px;
   margin-bottom: 35px;
-  border: 2px solid rgba(10, 10, 10, 0.325);;
+  border: 2px solid rgba(10, 10, 10, 0.325);
+  ;
   border-radius: 5px;
   padding-left: 10px;
 }
@@ -59,7 +59,7 @@ a {
   outline: none;
 }
 
-.login-div input:hover{
+.login-div input:hover {
   border: 3px solid rgb(170, 165, 165);
   box-shadow: 0 0 3px #ddd;
 }
@@ -113,7 +113,7 @@ a {
   -webkit-text-shadow: 0 0 3px #000;
 }
 
-.global-header h1{
+.global-header h1 {
   font-weight: 100;
   font-size: 55px;
 }
@@ -131,17 +131,18 @@ a {
   margin: 0 auto;
 }
 
-.toogle-search-input input{
+.toogle-search-input input {
   width: 600px;
   height: 40px;
   font-size: 25px;
   margin-top: 35px;
-  border: 2px solid rgba(10, 10, 10, 0.325);;
+  border: 2px solid rgba(10, 10, 10, 0.325);
+  ;
   border-radius: 5px;
   padding-left: 10px;
 }
 
-.toogle-search-input input:focus{
+.toogle-search-input input:focus {
   border: 3px solid rgba(0, 0, 0, 0.425);
   outline: none;
 }
@@ -182,7 +183,7 @@ a {
   text-shadow: 0 0 3px #000;
   -moz-text-shadow: 0 0 3px #000;
   -webkit-text-shadow: 0 0 3px #000;
-  background-color: #d39d60;
+  background-color: #ac5c22;
 }
 
 .global-footer input {
@@ -322,13 +323,13 @@ a {
   margin-bottom: 10px;
 }
 
-.start-recipe:hover{
+.start-recipe:hover {
   outline: none;
   transition: 0.5;
   background-color: rgba(92, 206, 47, 1);
 }
 
-.start-recipe:focus{
+.start-recipe:focus {
   outline: none;
   transition: 0.5;
   background-color: rgba(92, 206, 47, 1);
@@ -443,10 +444,9 @@ a {
   justify-content: space-between;
 }
 
-.food-drink-footer p{
+.food-drink-footer p {
   margin: 0 5px 0 10px;
 }
-
 
 .tags-div {
   display: flex;
@@ -461,7 +461,7 @@ a {
   margin: 100px auto;
 }
 
-.explore-top-content select{
+.explore-top-content select {
   height: 30px;
 }
 
@@ -476,22 +476,18 @@ a {
     border: 2px solid rgba(0, 0, 0, 0.5);
     border-top: none;
   }
-
   .food-drink-container {
     margin-top: 70px;
     margin-bottom: 100px;
   }
-
   .cards-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
   }
-
   .cards-container p {
     margin: 0;
   }
-
   .card {
     min-width: 120px;
     max-width: 150px;
@@ -502,43 +498,35 @@ a {
     margin: 5px;
     justify-content: space-between;
   }
-
   .card p {
     max-width: 80%;
     flex-wrap: nowrap;
   }
-
   .global-header h1 {
-    font-size:50px;
+    font-size: 50px;
     text-shadow: 0 0 3px #000;
   }
-
   .global-header input {
     width: 100%;
   }
-
   .profile-icon-div {
     display: flex;
     justify-content: center;
     width: 110px;
     height: 80px;
   }
-
   .search-input-div {
     width: 110px;
     height: 80px;
   }
-
   .global-footer input {
     width: 50px;
   }
-
-  .toogle-search-input input{
+  .toogle-search-input input {
     width: 330px;
     height: 25px;
     margin-top: 20px;
   }
-
   .radio-input-div {
     display: flex;
     flex-direction: column;
@@ -547,31 +535,25 @@ a {
     width: 100%;
     margin-top: 25px;
   }
-
   .radio-input-second-div {
     display: flex;
     justify-content: center;
   }
-  
   .radio-input-second-div label {
     display: flex;
     align-items: flex-end;
   }
-
   .radio-input-second-div input {
     margin: 0;
     margin-left: 15px;
   }
-
   .radio-input-div input {
     width: 30px;
   }
-
   .search-button-div {
     width: 100%;
   }
-
-  .search-button-div button{
+  .search-button-div button {
     margin-top: 15px;
     margin-left: 20px;
     background: #5a2d0c;
@@ -585,79 +567,62 @@ a {
     width: 100px;
     height: 30px;
   }
-
-  .search-button-div button:focus{
+  .search-button-div button:focus {
     outline: none;
   }
-  
   .login-container {
     width: 300px;
     height: 500px;
     margin: 25% auto;
   }
-
   .login-container input {
     width: 220px;
   }
-
   .global-footer {
     height: 55px;
     border-top: 2px solid rgba(0, 0, 0, 0.725);
     background: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxAYMat1kXeU_Ts2nEK_QYxLkQOFEUylkbGA&usqp=CAU);
   }
-
   .global-header {
     height: 55px;
     border-bottom: 2px solid rgba(0, 0, 0, 0.725);
     background: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxAYMat1kXeU_Ts2nEK_QYxLkQOFEUylkbGA&usqp=CAU);
   }
-  
   .detail-card {
     width: 85%;
   }
-
   .details-title-div {
     width: 95%;
   }
-
   .details-title-div h1 {
     font-size: 25px;
   }
-
   .details-title-div p {
     margin: 0;
     padding: 0;
   }
-
   .recipe-buttons {
     width: 70px;
     margin-top: 10px;
   }
-
   .ingredients {
     width: 90%;
   }
-
   .detail-ingredients {
     width: 100%;
   }
-
   .detail-instructions {
     width: 90%;
   }
-  
   .category-buttons {
     width: 100%;
   }
-
-  .buttons-done button{
+  .buttons-done button {
     width: 100px;
   }
-
   .category-buttons {
     flex-wrap: wrap;
   }
-
   .food-filters {
     text-align: left;
     width: 75px;
@@ -666,7 +631,6 @@ a {
     margin: 7px 15px 15px 10px;
     padding-left: 7px;
   }
-
   .drink-filters {
     text-align: left;
     width: 120px;
@@ -675,15 +639,12 @@ a {
     margin: 7px 15px 15px 10px;
     padding-left: 7px;
   }
-
   .food-or-drink-done-card {
     flex-direction: column;
   }
-
   .done-recipes-container {
     margin: 90px auto;
   }
-
   .food-drink-card {
     flex-direction: row;
     width: 370px;
@@ -693,13 +654,11 @@ a {
     box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.525);
     margin: 20px;
   }
-
   .done-recipe-image {
     width: 160px;
     height: 100%;
     border-radius: 3px;
   }
-  
   .left-side-div {
     display: flex;
     flex-wrap: wrap;
@@ -708,7 +667,6 @@ a {
     height: 100%;
     width: 56%;
   }
-
   .food-drink-top-div {
     display: flex;
     align-items: center;
@@ -717,7 +675,6 @@ a {
     height: 50%;
     margin: 0;
   }
-
   .food-drink-titles {
     display: flex;
     flex-direction: column;
@@ -726,23 +683,19 @@ a {
     max-width: 180px;
     font-weight: 100;
   }
-
   .food-drink-footer {
     justify-content: space-evenly;
     flex-direction: column;
     height: 40%;
   }
-
   .food-drink-image {
     width: 50px;
     height: 50px;
   }
-  
   .done-recipe-share-btn {
     width: 30px;
     height: 30px;
   }
-
   .tags-div p {
     background-color: #8d4613;
     padding: 5px;
@@ -753,8 +706,8 @@ a {
 
 .not-styled {
   text-decoration: none;
-} 
+}
 
 .styled {
   text-decoration: line-through;
-} 
+}
