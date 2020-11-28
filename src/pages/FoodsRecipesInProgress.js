@@ -27,6 +27,7 @@ class FoodsRecipesInProgress extends React.Component {
     this.setRecipesLocalStorage = this.setRecipesLocalStorage.bind(this);
     this.check = this.check.bind(this);
     this.getRecipesLocalStorage = this.getRecipesLocalStorage.bind(this);
+    this.setKeyLocalStorage = this.setKeyLocalStorage.bind(this);
   }
 
   async componentDidMount() {
@@ -94,9 +95,11 @@ class FoodsRecipesInProgress extends React.Component {
 
   getRecipesLocalStorage() {
     const verifyLocalStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    const idCurrent = Object.keys(verifyLocalStorage.meals)[0];
-    const listVefify = verifyLocalStorage.meals[idCurrent];
-    return listVefify;
+    if (verifyLocalStorage) {
+      const idCurrent = Object.keys(verifyLocalStorage.meals)[0];
+      const listVefify = verifyLocalStorage.meals[idCurrent];
+      return listVefify;
+    }
   }
 
   setMealState(Meal) {
@@ -163,11 +166,25 @@ class FoodsRecipesInProgress extends React.Component {
     return fullDate;
   }
 
+  setKeyLocalStorage() {
+    const verifyLocalStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const { history: { location: { pathname } } } = this.props;
+    const endpoint = pathname.split('/')[2];
+    const recipesInProgress = {
+      cocktails: {
+      },
+      meals: { [endpoint]: [] },
+    };
+    if (!verifyLocalStorage) {
+      localStorage.setItem('inProgressRecipes', JSON.stringify(recipesInProgress));
+    }
+  }
+
   checkedItems() {
     const getCheckedItems = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    const idCurrent = Object.keys(getCheckedItems.meals)[0];
-    const checkado = getCheckedItems.meals[idCurrent];
     if (getCheckedItems) {
+      const idCurrent = Object.keys(getCheckedItems.meals)[0];
+      const checkado = getCheckedItems.meals[idCurrent];
       this.setState({ checkedItems: checkado });
     }
   }
@@ -176,7 +193,7 @@ class FoodsRecipesInProgress extends React.Component {
     const { checkedItems } = this.state;
     const { value, checked } = e.target;
     const searchIndex = checkedItems.includes(value);
-    console.log(searchIndex);
+    this.setKeyLocalStorage();
     if (!searchIndex) {
       const updateCheck = checkedItems.concat(value);
       this.setState({ checkedItems: updateCheck });

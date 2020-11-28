@@ -192,8 +192,11 @@ class DrinksDetails extends React.Component {
     const { idCurrent } = this.props;
     const { history } = this.props;
     const getCheckedItems = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    getCheckedItems.cocktails = { [idCurrent]: [] };
-    localStorage.setItem('inProgressRecipes', JSON.stringify(getCheckedItems));
+    if (getCheckedItems) {
+      getCheckedItems.cocktails = { [idCurrent]: [] };
+      localStorage.setItem('inProgressRecipes', JSON.stringify(getCheckedItems));
+    }
+
     history.push(`/bebidas/${idCurrent}/in-progress`);
   }
 

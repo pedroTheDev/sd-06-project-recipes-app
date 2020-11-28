@@ -27,6 +27,7 @@ class DrinksRecipesInProgress extends React.Component {
     this.setRecipesLocalStorage = this.setRecipesLocalStorage.bind(this);
     this.check = this.check.bind(this);
     this.getRecipesLocalStorage = this.getRecipesLocalStorage.bind(this);
+    this.setKeyLocalStorage = this.setKeyLocalStorage.bind(this);
   }
 
   async componentDidMount() {
@@ -72,15 +73,6 @@ class DrinksRecipesInProgress extends React.Component {
     const span = document.createElement('span');
     p.appendChild(span);
     span.innerHTML = 'Link copiado!';
-    // const el = document.createElement('textarea');
-    // el.value = url;
-    // el.setAttribute('readonly', '');
-    // el.style.position = 'absolute';
-    // el.style.left = '-9999px';
-    // document.body.appendChild(el);
-    // el.select();
-    // document.execCommand('copy');
-    // document.body.removeChild(el);
   }
 
   handleButton() {
@@ -103,9 +95,11 @@ class DrinksRecipesInProgress extends React.Component {
 
   getRecipesLocalStorage() {
     const verifyLocalStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    const idCurrent = Object.keys(verifyLocalStorage.cocktails)[0];
-    const listVefify = verifyLocalStorage.cocktails[idCurrent];
-    return listVefify;
+    if (verifyLocalStorage) {
+      const idCurrent = Object.keys(verifyLocalStorage.cocktails)[0];
+      const listVefify = verifyLocalStorage.cocktails[idCurrent];
+      return listVefify;
+    }
   }
 
   setDrinkState(Drink) {
@@ -172,11 +166,24 @@ class DrinksRecipesInProgress extends React.Component {
     return fullDate;
   }
 
+  setKeyLocalStorage() {
+    const verifyLocalStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const { history: { location: { pathname } } } = this.props;
+    const endpoint = pathname.split('/')[2];
+    const recipesInProgress = {
+      cocktails: { [endpoint]: [] },
+      meals: { },
+    };
+    if (!verifyLocalStorage) {
+      localStorage.setItem('inProgressRecipes', JSON.stringify(recipesInProgress));
+    }
+  }
+
   checkedItems() {
     const getCheckedItems = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    const idCurrent = Object.keys(getCheckedItems.cocktails)[0];
-    const checkado = getCheckedItems.cocktails[idCurrent];
     if (getCheckedItems) {
+      const idCurrent = Object.keys(getCheckedItems.cocktails)[0];
+      const checkado = getCheckedItems.cocktails[idCurrent];
       this.setState({ checkedItems: checkado });
     }
   }
@@ -185,7 +192,7 @@ class DrinksRecipesInProgress extends React.Component {
     const { checkedItems } = this.state;
     const { value, checked } = e.target;
     const searchIndex = checkedItems.includes(value);
-    console.log(searchIndex);
+    this.setKeyLocalStorage();
     if (!searchIndex) {
       const updateCheck = checkedItems.concat(value);
       this.setState({ checkedItems: updateCheck });
