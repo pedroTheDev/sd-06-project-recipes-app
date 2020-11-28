@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 import { detailsFoodById } from '../services/aPI';
 
 import './ProcessoComida.css';
@@ -180,7 +181,12 @@ const ReceitaProcessoComida = () => {
                 type="button"
                 data-testid="finish-recipe-btn"
               >
-                Finalizar Receita
+                <Link
+                  className="link-button"
+                  to="/receitas-feitas"
+                >
+                  Finalizar Receita
+                </Link>
               </button>
             </div>
           </div>
