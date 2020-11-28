@@ -79,7 +79,7 @@ const FoodsDetails = (props) => {
     const jsonRecipe = await getRecipe.json();
     const maximumRecommendations = 6;
     const recommendations = jsonRecipe.drinks.map(
-      (recommendation, index) => (index < maximumRecommendations && recommendation)
+      (recommendation, index) => (index < maximumRecommendations && recommendation),
     );
 
     setRecipeRecommendations(recommendations);
