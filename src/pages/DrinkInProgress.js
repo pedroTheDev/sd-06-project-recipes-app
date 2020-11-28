@@ -174,6 +174,29 @@ const DrinkInProgress = ({
     }
   };
 
+  const handleDoneLocalStorage = () => {
+    if (!localStorage.getItem('doneRecipes')) {
+      localStorage.setItem('doneRecipes', JSON.stringify([]));
+    }
+    const previousDoneData = JSON.parse(localStorage.getItem('doneRecipes'));
+    const newDoneData = [
+      ...previousDoneData, 
+      {
+        id,
+        type: 'bebida',
+        area: '',
+        category: recipeCategory,
+        alcoholicOrNot: recipeAlc,
+        name: recipeTitle,
+        image: recipeImage,
+        doneDate: Date('DD-MM-YYYY'),
+        tags: '',
+      }
+    ];
+    
+    localStorage.setItem('doneRecipes', JSON.stringify(newDoneData));
+  };
+
   useEffect(() => {
     setTitle('Drink In Progress');
     fetchRecipe();
@@ -228,6 +251,7 @@ const DrinkInProgress = ({
           type="button"
           data-testid="finish-recipe-btn"
           disabled={ handleFinishRecipe(recipeIngredients.length) }
+          onChange={ handleDoneLocalStorage }
         >
           Finalizar receita
         </button>

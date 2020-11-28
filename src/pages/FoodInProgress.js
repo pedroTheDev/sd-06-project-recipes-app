@@ -29,6 +29,8 @@ const FoodInProgress = ({
     setRecipeIngredients,
     recipeInstructions,
     setRecipeInstructions,
+    recipeTags,
+    setRecipeTags,
   } = recipeObject;
 
   const ingredientsMount = (jsonRecipe) => {
@@ -55,6 +57,7 @@ const FoodInProgress = ({
     setRecipeImage(jsonRecipe.meals[0].strMealThumb);
     setRecipeInstructions(jsonRecipe.meals[0].strInstructions);
     setRecipeArea(jsonRecipe.meals[0].strArea);
+    setRecipeTags(jsonRecipe.meals[0].strTags.split(','));
     ingredientsMount(jsonRecipe);
     setIsLoading(false);
   };
@@ -172,6 +175,29 @@ const FoodInProgress = ({
     }
   };
 
+  const handleDoneLocalStorage = () => {
+    if (!localStorage.getItem('doneRecipes')) {
+      localStorage.setItem('doneRecipes', JSON.stringify([]));
+    }
+    const previousDoneData = JSON.parse(localStorage.getItem('doneRecipes'));
+    const newDoneData = [
+      ...previousDoneData, 
+      {
+        id,
+        type: 'comida',
+        area: recipeArea,
+        category: recipeCategory,
+        alcoholicOrNot: '',
+        name: recipeTitle,
+        image: recipeImage,
+        doneDate: Date('DD-MM-YYYY'),
+        tags: recipeTags,
+      }
+    ];
+    
+    localStorage.setItem('doneRecipes', JSON.stringify(newDoneData));
+  };
+
   useEffect(() => {
     setTitle('Food In Progress');
     fetchRecipe();
@@ -200,7 +226,7 @@ const FoodInProgress = ({
       <ul>
         { !isLoading && recipeIngredients.map((item, index) => (
           <li
-            key={ index }
+            key={ item }
             data-testid={ `${index}-ingredient-step` }
           >
             <label
@@ -212,7 +238,7 @@ const FoodInProgress = ({
                 checked={ handleCheckedFromLocalStorage(item) }
                 name={ item }
                 id={ item }
-                onClick={ handleChecked }
+                onChange={ handleChecked }
               />
               { item }
             </label>
@@ -226,6 +252,7 @@ const FoodInProgress = ({
           type="button"
           data-testid="finish-recipe-btn"
           disabled={ handleFinishRecipe(recipeIngredients.length) }
+          onClick={ handleDoneLocalStorage }
         >
           Finalizar receita
         </button>
