@@ -41,30 +41,34 @@ function DetalhesComidas() {
             ...inProgress,
             meals: {
               ...inProgress.meals,
-              [idDaReceita]: []
-            }
-          }
+              [idDaReceita]: [],
+            },
+          };
           localStorage.setItem('inProgressRecipes', JSON.stringify(novaReceita));
         }
       } else {
         const newMeal = {
           ...inProgress,
           meals: {
-            [idDaReceita]: []
-          }
-        }
+            [idDaReceita]: [],
+          },
+        };
         localStorage.setItem('inProgressRecipes', JSON.stringify(newMeal));
       }
     } else {
       const newMeal = {
         meals: {
-          [idDaReceita]: []
-        }
-      }
+          [idDaReceita]: [],
+        },
+      };
       localStorage.setItem('inProgressRecipes', JSON.stringify(newMeal));
     }
     history.push(`/comidas/${idDaReceita}/in-progress`);
   }
+
+  const continuarReceita = () => {
+    history.push(`/comidas/${idDaReceita}/in-progress`);
+  };
 
   const buttonIniciar = () => {
     let inProgress;
@@ -85,17 +89,16 @@ function DetalhesComidas() {
               Iniciar Receita
             </button>
           );
-        } else {
-          return (
-            <button
-              type="button"
-              data-testid="start-recipe-btn"
-              onClick={ continuarReceita }
-            >
-              Continuar Receita
-            </button>
-          );
         }
+        return (
+          <button
+            type="button"
+            data-testid="start-recipe-btn"
+            onClick={ continuarReceita }
+          >
+            Continuar Receita
+          </button>
+        );
       }
     } else {
       return (
@@ -110,11 +113,7 @@ function DetalhesComidas() {
         </button>
       );
     }
-  }
-
-  const continuarReceita = () => {
-    history.push(`/comidas/${idDaReceita}/in-progress`);
-  }
+  };
 
   useEffect(() => {
     fetchComidasDetalhes();
@@ -225,8 +224,7 @@ function DetalhesComidas() {
         </div>
         {buttonIniciar()}
       </div>
-    )
-    ));
+    )));
 }
 
 export default DetalhesComidas;

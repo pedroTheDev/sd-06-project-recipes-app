@@ -36,30 +36,34 @@ function DetalhesBebida() {
             ...inProgress,
             cocktails: {
               ...inProgress.cocktails,
-              [idDaReceita]: []
-            }
-          }
+              [idDaReceita]: [],
+            },
+          };
           localStorage.setItem('inProgressRecipes', JSON.stringify(novaReceita));
         }
       } else {
         const newMeal = {
           ...inProgress,
           cocktails: {
-            [idDaReceita]: []
-          }
-        }
+            [idDaReceita]: [],
+          },
+        };
         localStorage.setItem('inProgressRecipes', JSON.stringify(newMeal));
       }
     } else {
       const newMeal = {
         cocktails: {
-          [idDaReceita]: []
-        }
-      }
+          [idDaReceita]: [],
+        },
+      };
       localStorage.setItem('inProgressRecipes', JSON.stringify(newMeal));
     }
     history.push(`/bebidas/${idDaReceita}/in-progress`);
   }
+
+  const continuarReceita = () => {
+    history.push(`/bebidas/${idDaReceita}/in-progress`);
+  };
 
   const buttonIniciar = () => {
     let inProgress;
@@ -80,31 +84,17 @@ function DetalhesBebida() {
               Iniciar Receita
             </button>
           );
-        } else {
-          return (
-            <button
-              type="button"
-              data-testid="start-recipe-btn"
-              onClick={ continuarReceita }
-            >
-              Continuar Receita
-            </button>
-          );
         }
-      } else {
         return (
           <button
-            data-testid="start-recipe-btn"
-            className="IniciarReceita"
             type="button"
-            id="IniciarReceita"
-            onClick={ handleIniciarReceita }
+            data-testid="start-recipe-btn"
+            onClick={ continuarReceita }
           >
-            Iniciar Receita
+            Continuar Receita
           </button>
         );
       }
-    } else {
       return (
         <button
           data-testid="start-recipe-btn"
@@ -117,11 +107,18 @@ function DetalhesBebida() {
         </button>
       );
     }
-  }
-
-  const continuarReceita = () => {
-    history.push(`/bebidas/${idDaReceita}/in-progress`);
-  }
+    return (
+      <button
+        data-testid="start-recipe-btn"
+        className="IniciarReceita"
+        type="button"
+        id="IniciarReceita"
+        onClick={ handleIniciarReceita }
+      >
+        Iniciar Receita
+      </button>
+    );
+  };
 
   useEffect(() => {
     fetchBebidasDetalhes();
@@ -225,8 +222,7 @@ function DetalhesBebida() {
         </div>
         {buttonIniciar()}
       </div>
-    )
-    ));
+    )));
 }
 
 export default DetalhesBebida;
