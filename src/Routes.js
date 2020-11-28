@@ -28,6 +28,7 @@ const Routes = () => {
       title === 'Login'
       || title === 'Detalhe da Receita'
       || title === 'Receita em Processo'
+      || title === 'Drink Details'
       || title === 'Food Details'
       || title === 'Drinks Details'
       || title === 'Food In Progress'
