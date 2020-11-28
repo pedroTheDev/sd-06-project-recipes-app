@@ -12,3 +12,4 @@ export { default as ExploreRecipes } from './ExploreRecipes';
 export { default as ExplorerFoods } from './ExplorerFoods';
 export { default as ExplorerDrinks } from './ExplorerDrinks';
 export { default as IngredientsExplorer } from './IngredientsExplorer';
+export { default as RegionFoods } from './RegionFoods';

@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Footer } from '../components';
+import { Footer, HeaderNoSearch } from '../components';
 import { fetchRandom } from '../helpers/Helper';
 
 export default function ExplorerDrinks(props) {
   return (
     <section>
+      <HeaderNoSearch id="Explorar Bebidas" />
       <div>
         <button
           type="button"

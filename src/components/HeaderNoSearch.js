@@ -1,8 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import perfil from '../images/profileIcon.svg';
 
-export default function HeaderNoSearch() {
+export default function HeaderNoSearch(props) {
+  const { id } = props;
   return (
     <div>
       <div>
@@ -17,8 +19,12 @@ export default function HeaderNoSearch() {
         </Link>
       </div>
       <div>
-        <span data-testid="page-title">{ document.title }</span>
+        <span data-testid="page-title">{ id }</span>
       </div>
     </div>
   );
 }
+
+HeaderNoSearch.propTypes = {
+  id: PropTypes.string.isRequired,
+};
