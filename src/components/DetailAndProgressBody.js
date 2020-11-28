@@ -79,7 +79,7 @@ function DetailAndProgressBody({ recipe, recommendations, buttonsProps, page = n
       />
       <h1 data-testid="recipe-title">{ name }</h1>
       <div>
-        <ShareButton setMessage={ setWasCopied } />
+        <ShareButton setMessage={ setWasCopied } page={ page } />
         <FavButton
           type={ path }
           isFav={ isFav }

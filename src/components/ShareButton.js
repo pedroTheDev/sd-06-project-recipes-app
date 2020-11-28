@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import shareIcon from '../images/shareIcon.svg';
+import formatInProgressLink from '../utils/formatInProgressLink';
 
-function ShareButton({ setMessage }) {
+function ShareButton({ setMessage, page = null }) {
   function setFeedBackMessage() {
     setMessage(true);
     const resetInterval = 2500;
@@ -12,7 +13,11 @@ function ShareButton({ setMessage }) {
   }
 
   function copyToClip() {
-    const link = window.location.href.toString();
+    let link = window.location.href.toString();
+    if (page !== null) {
+      link = formatInProgressLink(page, link);
+      console.log(link);
+    }
     navigator.clipboard.writeText(link);
     setFeedBackMessage();
   }
@@ -26,6 +31,7 @@ function ShareButton({ setMessage }) {
 
 ShareButton.propTypes = {
   setMessage: PropTypes.func.isRequired,
+  page: PropTypes.string.isRequired,
 };
 
 export default ShareButton;
