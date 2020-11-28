@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import '../App.css';
@@ -24,12 +24,13 @@ function RecipeDetails(props) {
     recommended,
   } = useContext(Context);
   const { match: { path, params, url } } = props;
+  const [check, setCheck] = useState('');
 
   const ZERO = 0;
   const SIX = 6;
 
   useEffect(() => {
-    if (path === '/comidas/:id') {
+    if (path.includes('comidas')) {
       getMealDetail(params.id);
       getRecommendedDrink();
     } else {
@@ -51,6 +52,21 @@ function RecipeDetails(props) {
 
   const getVideoId = (link) => link.split('=').pop();
 
+  const isChecked = (id, target) => {
+    // const local = !localStorage.getItem('checkeds') ? '' : JSON.parse(localStorage.getItem('checkeds'));
+    console.log(target)
+    // setCheck({
+      
+    // });
+    // const ingredient = [{
+    //   ...local,
+    //   [id]: {
+    //     ...check,
+    //   }
+    // }]
+    // localStorage.setItem('checkeds', JSON.stringify(ingredient));
+  };
+
   return (
     <div>
       <h1>Página de Details</h1>
@@ -58,13 +74,13 @@ function RecipeDetails(props) {
         : details.map((recipe) => (
           <div key={ recipe }>
             <img
-              src={ path === '/comidas/:id' ? recipe.strMealThumb : recipe.strDrinkThumb }
+              src={ path.includes('comidas') ? recipe.strMealThumb : recipe.strDrinkThumb }
               alt="recipe_image"
               className="recipeImage"
               data-testid="recipe-photo"
             />
             <h1 data-testid="recipe-title">
-              {path === '/comidas/:id' ? recipe.strMeal : recipe.strDrink}
+              {path.includes('comidas') ? recipe.strMeal : recipe.strDrink}
             </h1>
             <input
               type="image"
@@ -82,19 +98,36 @@ function RecipeDetails(props) {
               onClick={ () => favorite(recipe, path, params.id) }
             />
             <p data-testid="recipe-category">
-              {path === '/comidas/:id' ? recipe.strCategory : recipe.strAlcoholic}
+              {path.includes('comidas') ? recipe.strCategory : recipe.strAlcoholic}
             </p>
             <h2>Ingredients</h2>
             {getIngredients(recipe, /strIngredient/).map((item, index) => {
               const measure = getIngredients(recipe, /strMeasure/);
-              return (
-                <p
-                  key={ index }
-                  data-testid={ `${index}-ingredient-name-and-measure` }
-                >
-                  {`- ${item} - ${measure[index]} `}
-                </p>
-              );
+              if(path.includes('in-progress')) {
+                return (
+                  <div data-testid="ingredient-step">
+                    <input
+                      type="checkbox"
+                      key={ index }
+                      onChange={ ({target}) => isChecked((path.includes('comidas') ? recipe.idMeal : recipe.idDrink), target) }
+                      id={`step-${index}`}
+                      data-testid={ `${index}-ingredient-name-and-measure` }
+                    />
+                    <label htmlFor={`step-${index}`}>
+                      {`- ${item} - ${measure[index]} `}
+                    </label>
+                  </div>
+                )
+              } else {
+                return (
+                  <p
+                    key={ index }
+                    data-testid={ `${index}-ingredient-name-and-measure` }
+                  >
+                    {`- ${item} - ${measure[index]} `}
+                  </p>
+                );
+              }
             })}
             <h2>Intructions</h2>
             <p data-testid="instructions">{ recipe.strInstructions }</p>
@@ -116,22 +149,37 @@ function RecipeDetails(props) {
                 : recommended.slice(ZERO, SIX).map((info, index) => (
                   <Cards
                     key={ index }
-                    recipe={ path === '/comidas/:id' ? 'bebidas' : 'comidas' }
+                    recipe={ path.includes('comidas') ? 'bebidas' : 'comidas' }
                     info={ info }
                     index={ index }
                     recomendation
                   />
                 ))}
             </div>
-            <Link to={ `${url}/in-progress` }>
-              <button
-                type="button"
-                className="StartRecipe"
-                data-testid="start-recipe-btn"
-              >
-                Iniciar Receita
-              </button>
-            </Link>
+            {path.includes('in-progress')
+              ? (
+                <Link to="receitas-feitas">
+                  <button
+                    type="button"
+                    className="StartRecipe"
+                    data-testid="finish-recipe-btn"
+                  >
+                    Finalizar Receita
+                  </button>
+                </Link>
+              )
+              : (
+                <Link to={ `${url}/in-progress` }>
+                  <button
+                    type="button"
+                    className="StartRecipe"
+                    data-testid="start-recipe-btn"
+                  >
+                    Iniciar Receita
+                  </button>
+                </Link>
+              )
+            }
           </div>))}
     </div>
   );
