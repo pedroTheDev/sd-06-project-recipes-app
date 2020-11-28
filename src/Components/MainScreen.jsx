@@ -128,26 +128,23 @@ export default function MainScreen() {
           </Link>
         ));
     }
-
-    if (pathname === '/bebidas' && drinkRecipes) {
-      return (drinkRecipes.filter((_, index) => index < twelve)
-        .map((drinks, index) => (
-          <Link
-            onClick={ () => setIds(drinks.idDrink) }
-            to={ `/bebidas/${drinks.idDrink}` }
-            key={ index }
-          >
-            <div data-testid={ `${index}-recipe-card` } key="index">
-              <img
-                src={ drinks.strDrinkThumb }
-                data-testid={ `${index}-card-img` }
-                alt={ drinks.strDrink }
-              />
-              <p data-testid={ `${index}-card-name` }>{ drinks.strDrink}</p>
-            </div>
-          </Link>
-        )));
-    }
+    return (drinkRecipes.filter((_, index) => index < twelve)
+      .map((drinks, index) => (
+        <Link
+          onClick={ () => setIds(drinks.idDrink) }
+          to={ `/bebidas/${drinks.idDrink}` }
+          key={ index }
+        >
+          <div data-testid={ `${index}-recipe-card` } key="index">
+            <img
+              src={ drinks.strDrinkThumb }
+              data-testid={ `${index}-card-img` }
+              alt={ drinks.strDrink }
+            />
+            <p data-testid={ `${index}-card-name` }>{ drinks.strDrink}</p>
+          </div>
+        </Link>
+      )));
   };
 
   return (

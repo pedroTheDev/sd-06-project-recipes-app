@@ -19,10 +19,11 @@ const RecipeDetails = () => {
     setLiked,
     setDrinkRecommendation } = useContext(RecipeContext);
   const [recipeDetailFood, setRecipeDetailFood] = useState([]);
-  const [recipeDetailDrink, setRecipeDetailDrink] = useState('foi');
+  const [recipeDetailDrink, setRecipeDetailDrink] = useState(undefined);
   const [copied, setCopied] = useState('');
   const { pathname } = history.location;
   const ids = pathname.split('/')[2];
+  const kindof = pathname.split('/')[1];
   const NINE = 9;
   const TWENTY_NINE = 29;
   const FOURTY_NINE = 49;
@@ -49,9 +50,9 @@ const RecipeDetails = () => {
     setDrinkRecommendation(drinksData);
   };
 
-  useEffect(() => {
-    getAPI();
-    getRecommendation();
+  const usarNoUse = async () => {
+    await getAPI();
+    await getRecommendation();
     if (!localStorage.favoriteRecipes) {
       localStorage.favoriteRecipes = JSON.stringify([]);
     }
@@ -62,6 +63,50 @@ const RecipeDetails = () => {
     } else {
       setLiked(whiteHeartIcon);
     }
+  };
+
+  const inProgressCheck = () => {
+    if (kindof === 'comidas') {
+      if (!localStorage.inProgressRecipes) {
+        localStorage.inProgressRecipes = JSON.stringify({
+          cocktails: {}, meals: { [ids]: '' } });
+      } else if (JSON.parse(localStorage.inProgressRecipes).meals[ids]) {
+        // const reset = JSON.parse(localStorage.inProgressRecipes = )
+        localStorage.inProgressRecipes = JSON.stringify(
+          { ...JSON.parse(localStorage.inProgressRecipes),
+            meals: { ...JSON.parse(localStorage.inProgressRecipes).meals },
+          },
+        );
+      } else {
+        localStorage.inProgressRecipes = JSON.stringify(
+          { ...JSON.parse(localStorage.inProgressRecipes),
+            meals: { ...JSON.parse(localStorage.inProgressRecipes).meals, [ids]: '' },
+          },
+        );
+      }
+    } else if (!localStorage.inProgressRecipes) {
+      localStorage.inProgressRecipes = JSON.stringify({
+        cocktails: { [ids]: '' }, meals: {} });
+    } else if (JSON.parse(localStorage.inProgressRecipes).cocktails[ids]) {
+      // const reset = JSON.parse(localStorage.inProgressRecipes = )
+      localStorage.inProgressRecipes = JSON.stringify(
+        { ...JSON.parse(localStorage.inProgressRecipes),
+          cocktails: { ...JSON.parse(localStorage.inProgressRecipes).cocktails },
+        },
+      );
+    } else {
+      localStorage.inProgressRecipes = JSON.stringify(
+        { ...JSON.parse(localStorage.inProgressRecipes),
+          cocktails: { ...JSON.parse(localStorage.inProgressRecipes)
+            .cocktails,
+          [ids]: '' },
+        },
+      );
+    }
+  };
+  useEffect(() => {
+    usarNoUse();
+    inProgressCheck();
   }, []);
 
   const handleIngredients = (recipe, initial, middle, end) => {
@@ -103,12 +148,14 @@ const RecipeDetails = () => {
           </button>
 
           {copied}
-          <button
-            onClick={ () => handleLikes(recipeDetailFood[0]) }
-            type="button"
-          >
-            <img data-testid="favorite-btn" src={ liked } alt="favorite logo" />
-          </button>
+          <div>
+            <button
+              onClick={ () => handleLikes(recipeDetailFood[0]) }
+              type="button"
+            >
+              <img data-testid="favorite-btn" src={ liked } alt="favorite logo" />
+            </button>
+          </div>
           <p data-testid="recipe-category">{ recipeDetailFood[0].strCategory }</p>
           {
             handleIngredients(food, NINE, TWENTY_NINE, FOURTY_NINE)
@@ -147,18 +194,28 @@ const RecipeDetails = () => {
                 ))
             }
           </div>
-          <button
-            type="button"
-            data-testid="start-recipe-btn"
-            style={ { position: 'fixed', bottom: 0 } }
-            onClick={ () => history.push(`${pathname}/in-progress`) }
-          >
-            Start Recipe
-          </button>
+          {(JSON.parse(localStorage.inProgressRecipes).meals[ids] !== '') ? (
+            <button
+              type="button"
+              style={ { position: 'fixed', bottom: 0 } }
+              data-testid="start-recipe-btn"
+              onClick={ () => history.push(`${pathname}/in-progress`) }
+            >
+              Continuar Receita
+            </button>
+          ) : (
+            <button
+              type="button"
+              data-testid="start-recipe-btn"
+              style={ { position: 'fixed', bottom: 0 } }
+              onClick={ () => history.push(`${pathname}/in-progress`) }
+            >
+              Start Recipe
+            </button>)}
         </div>
       ));
     }
-    if (recipeDetailDrink[0].strDrink) {
+    if (recipeDetailDrink !== undefined) {
       return recipeDetailDrink.map((drink, index) => (
         <div key={ index }>
           <img
@@ -175,12 +232,14 @@ const RecipeDetails = () => {
             Share
           </button>
           { copied }
-          <button
-            onClick={ () => handleLikes(recipeDetailFood, recipeDetailDrink[0]) }
-            type="button"
-          >
-            <img data-testid="favorite-btn" src={ liked } alt="favorite logo" />
-          </button>
+          <div>
+            <button
+              onClick={ () => handleLikes(recipeDetailFood, recipeDetailDrink[0]) }
+              type="button"
+            >
+              <img data-testid="favorite-btn" src={ liked } alt="favorite logo" />
+            </button>
+          </div>
           <p data-testid="recipe-category">{drink.strAlcoholic}</p>
           {
             handleIngredients(drink, TWENTY_ONE, THIRTY_SIX, FIFTY_ONE)
@@ -211,14 +270,24 @@ const RecipeDetails = () => {
                 ))
             }
           </div>
-          <button
-            type="button"
-            data-testid="start-recipe-btn"
-            style={ { position: 'fixed', bottom: 0 } }
-            onClick={ () => history.push(`${pathname}/in-progress`) }
-          >
-            Start Recipe
-          </button>
+          {(JSON.parse(localStorage.inProgressRecipes).cocktails[ids] !== '') ? (
+            <button
+              type="button"
+              style={ { position: 'fixed', bottom: 0 } }
+              data-testid="start-recipe-btn"
+              onClick={ () => history.push(`${pathname}/in-progress`) }
+            >
+              Continuar Receita
+            </button>
+          ) : (
+            <button
+              type="button"
+              data-testid="start-recipe-btn"
+              style={ { position: 'fixed', bottom: 0 } }
+              onClick={ () => history.push(`${pathname}/in-progress`) }
+            >
+              Start Recipe
+            </button>)}
         </div>
       ));
     }

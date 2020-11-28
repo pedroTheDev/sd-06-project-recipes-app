@@ -15,7 +15,6 @@ const Provider = ({ children }) => {
   const [ids, setIds] = useState('');
   const [foodRecommendation, setFoodRecommendation] = useState([]);
   const [DrinkRecommendation, setDrinkRecommendation] = useState([]);
-  const [inProgressRecipes, setInProgressRecipes] = useState({});
   const [liked, setLiked] = useState(whiteHeartIcon);
 
   const history = useHistory();
@@ -92,8 +91,6 @@ const Provider = ({ children }) => {
     setFoodRecommendation,
     DrinkRecommendation,
     setDrinkRecommendation,
-    inProgressRecipes,
-    setInProgressRecipes,
     handleLikes,
     setLiked,
     liked,

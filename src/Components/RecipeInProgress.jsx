@@ -10,11 +10,12 @@ const RecipeInProgress = () => {
   const history = useHistory();
   const { pathname } = history.location;
   const id = pathname.split('/')[2];
+  const kindof = pathname.split('/')[1];
   const [recipeDetailDrink, setRecipeDetailDrink] = useState([]);
   const [recipeDetailFood, setRecipeDetailFood] = useState([]);
   const [copied, setCopied] = useState('');
   const [disable, setDisable] = useState(true);
-  const { inProgressRecipes,
+  const {
     handleLikes,
     liked,
     setLiked,
@@ -26,6 +27,26 @@ const RecipeInProgress = () => {
   const THIRTY_SIX = 36;
   const TWENTY_ONE = 21;
   const FIFTY_ONE = 51;
+
+  const handleStartTasks = () => {
+    const items = document.getElementsByClassName('checks');
+    const arr = Array.from(items);
+    if (kindof === 'comidas') {
+      const tasks = JSON.parse(localStorage.inProgressRecipes).meals[id]
+        .map((item) => arr.filter((itens) => itens.id === item)[0]);
+      tasks.forEach((el) => {
+        el.checked = true;
+      });
+    } else {
+      console.log('indo');
+      const tasks = JSON.parse(localStorage.inProgressRecipes).cocktails[id]
+        .map((item) => arr.filter((itens) => itens.id === item)[0]);
+      tasks.forEach((el) => {
+        el.checked = true;
+      });
+    }
+  };
+
   const getAPI = async () => {
     const food = await recipeRequest(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
     const recipeFood = await food.meals;
@@ -33,6 +54,51 @@ const RecipeInProgress = () => {
     const recipeDrink = await drink.drinks;
     setRecipeDetailDrink(recipeDrink);
     setRecipeDetailFood(recipeFood);
+    if (JSON.parse(localStorage.inProgressRecipes).meals[id]) {
+      handleStartTasks();
+    } else if (JSON.parse(localStorage.inProgressRecipes).cocktails[id]) {
+      handleStartTasks();
+    }
+  };
+
+  const handleStorageProgress = () => {
+    if (kindof === 'comidas') {
+      if (!localStorage.inProgressRecipes) {
+        localStorage.inProgressRecipes = JSON.stringify({
+          cocktails: {}, meals: { [id]: [] } });
+      } else if (JSON.parse(localStorage.inProgressRecipes).meals[id]) {
+        // const reset = JSON.parse(localStorage.inProgressRecipes = )
+        localStorage.inProgressRecipes = JSON.stringify(
+          { ...JSON.parse(localStorage.inProgressRecipes),
+            meals: { ...JSON.parse(localStorage.inProgressRecipes).meals },
+          },
+        );
+      } else {
+        localStorage.inProgressRecipes = JSON.stringify(
+          { ...JSON.parse(localStorage.inProgressRecipes),
+            meals: { ...JSON.parse(localStorage.inProgressRecipes).meals, [id]: [] },
+          },
+        );
+      }
+    } else if (!localStorage.inProgressRecipes) {
+      localStorage.inProgressRecipes = JSON.stringify({
+        cocktails: { [id]: [] }, meals: {} });
+    } else if (JSON.parse(localStorage.inProgressRecipes).cocktails[id]) {
+      // const reset = JSON.parse(localStorage.inProgressRecipes = )
+      localStorage.inProgressRecipes = JSON.stringify(
+        { ...JSON.parse(localStorage.inProgressRecipes),
+          cocktails: { ...JSON.parse(localStorage.inProgressRecipes).cocktails },
+        },
+      );
+    } else {
+      localStorage.inProgressRecipes = JSON.stringify(
+        { ...JSON.parse(localStorage.inProgressRecipes),
+          cocktails: { ...JSON.parse(localStorage.inProgressRecipes)
+            .cocktails,
+          [id]: [] },
+        },
+      );
+    }
   };
 
   useEffect(() => {
@@ -50,25 +116,55 @@ const RecipeInProgress = () => {
     } else {
       setLiked(whiteHeartIcon);
     }
+    handleStorageProgress();
   }, []);
 
   const handleCheckbox = ({ target }) => {
-    const progress = {
-      ...inProgressRecipes,
-      meals: { ...inProgressRecipes.meals, [id]: [target.id] },
-    };
-    localStorage.inProgressRecipes = JSON.stringify(progress);
-    const ingr = JSON.parse(localStorage.inProgressRecipes);
-    console.log(ingr.meals[id][0]);
-    if (target.id === ingr.meals[id][0]) {
-      target.checked = true;
-    }
     const items = document.getElementsByClassName('checks');
     const arr = Array.from(items);
     if (arr.every((item) => item.checked === true)) {
       setDisable(false);
     } else {
       setDisable(true);
+    }
+    if (kindof === 'comidas') {
+      if (target.checked) {
+        const concatenando = JSON.parse(localStorage.inProgressRecipes);
+        const newObj = concatenando.meals[id].concat(target.id);
+        localStorage.inProgressRecipes = JSON.stringify(
+          { ...JSON.parse(localStorage.inProgressRecipes),
+            meals: { ...JSON.parse(localStorage.inProgressRecipes)
+              .meals,
+            [id]: newObj } },
+        );
+      } else {
+        const concatenando = JSON.parse(localStorage.inProgressRecipes);
+        const newObj = concatenando.meals[id].filter((meal) => meal !== target.id);
+        localStorage.inProgressRecipes = JSON.stringify(
+          { ...JSON.parse(localStorage.inProgressRecipes),
+            meals: { ...JSON.parse(localStorage.inProgressRecipes)
+              .meals,
+            [id]: newObj } },
+        );
+      }
+    } else if (target.checked) {
+      const concatenando = JSON.parse(localStorage.inProgressRecipes);
+      const newObj = concatenando.cocktails[id].concat(target.id);
+      localStorage.inProgressRecipes = JSON.stringify(
+        { ...JSON.parse(localStorage.inProgressRecipes),
+          cocktails: { ...JSON.parse(localStorage.inProgressRecipes)
+            .cocktails,
+          [id]: newObj } },
+      );
+    } else {
+      const concatenando = JSON.parse(localStorage.inProgressRecipes);
+      const newObj = concatenando.cocktails[id].filter((meal) => meal !== target.id);
+      localStorage.inProgressRecipes = JSON.stringify(
+        { ...JSON.parse(localStorage.inProgressRecipes),
+          cocktails: { ...JSON.parse(localStorage.inProgressRecipes)
+            .cocktails,
+          [id]: newObj } },
+      );
     }
   };
 
