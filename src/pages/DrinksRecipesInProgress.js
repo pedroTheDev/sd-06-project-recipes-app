@@ -26,6 +26,7 @@ class DrinksRecipesInProgress extends React.Component {
     this.handleButton = this.handleButton.bind(this);
     this.setRecipesLocalStorage = this.setRecipesLocalStorage.bind(this);
     this.check = this.check.bind(this);
+    this.getRecipesLocalStorage = this.getRecipesLocalStorage.bind(this);
   }
 
   async componentDidMount() {
@@ -35,10 +36,6 @@ class DrinksRecipesInProgress extends React.Component {
     this.setDrinkState(drinkRecipe);
     this.handleIngredients();
     this.checkedItems();
-  }
-
-  componentDidUpdate() {
-    this.setRecipesLocalStorage();
   }
 
   handleIngredients() {
@@ -97,12 +94,18 @@ class DrinksRecipesInProgress extends React.Component {
     }
   }
 
-  setRecipesLocalStorage() {
-    const { checkedItems } = this.state;
-    const zero = 0;
-    if (checkedItems.length > zero) {
-      localStorage.setItem('inProgressRecipes', JSON.stringify(checkedItems));
-    }
+  setRecipesLocalStorage(updateCheck) {
+    const localStorageMeals = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const idCurrent = Object.keys(localStorageMeals.cocktails)[0];
+    localStorageMeals.cocktails[idCurrent] = updateCheck;
+    localStorage.setItem('inProgressRecipes', JSON.stringify(localStorageMeals));
+  }
+
+  getRecipesLocalStorage() {
+    const verifyLocalStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const idCurrent = Object.keys(verifyLocalStorage.cocktails)[0];
+    const listVefify = verifyLocalStorage.cocktails[idCurrent];
+    return listVefify;
   }
 
   setDrinkState(Drink) {
@@ -169,10 +172,12 @@ class DrinksRecipesInProgress extends React.Component {
     return fullDate;
   }
 
-  async checkedItems() {
+  checkedItems() {
     const getCheckedItems = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const idCurrent = Object.keys(getCheckedItems.cocktails)[0];
+    const checkado = getCheckedItems.cocktails[idCurrent];
     if (getCheckedItems) {
-      this.setState({ checkedItems: await getCheckedItems });
+      this.setState({ checkedItems: checkado });
     }
   }
 
@@ -180,14 +185,17 @@ class DrinksRecipesInProgress extends React.Component {
     const { checkedItems } = this.state;
     const { value, checked } = e.target;
     const searchIndex = checkedItems.includes(value);
+    console.log(searchIndex);
     if (!searchIndex) {
       const updateCheck = checkedItems.concat(value);
       this.setState({ checkedItems: updateCheck });
+      this.setRecipesLocalStorage(updateCheck);
     } else if (!checked) {
       const positionCheck = checkedItems.indexOf(value);
       const originalChecked = checkedItems;
       originalChecked.splice(positionCheck, 1);
       this.setState({ checkedItems: originalChecked });
+      this.setRecipesLocalStorage(originalChecked);
     }
     const inputsList = document.querySelectorAll('input');
     inputsList.forEach((item) => {
@@ -237,17 +245,20 @@ class DrinksRecipesInProgress extends React.Component {
     const filteredStorage = combinedObjects
       .filter((v, i, a) => a.findIndex((t) => (t.id === v.id)) === i); // só registra um único id
     localStorage.setItem('doneRecipes', JSON.stringify(filteredStorage));
+    localStorage.removeItem('inProgressRecipes');
     history.push('/receitas-feitas');
   }
 
   check() {
     const { checkedItems } = this.state;
-    const verifyLocalStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
     const length = 0;
+    const verifyLocalStorage = this.getRecipesLocalStorage();
     if (checkedItems.length === length && verifyLocalStorage) {
-      const getCheckedItems = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      const getCheckedItems = this.getRecipesLocalStorage();
+      console.log('getCheckedItems');
       return getCheckedItems;
     }
+    console.log('checkedItems');
     return checkedItems;
   }
 

@@ -86,15 +86,15 @@ class FoodsRecipesInProgress extends React.Component {
   }
 
   setRecipesLocalStorage(updateCheck) {
-    const { idCurrent } = this.props;
     const localStorageMeals = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const idCurrent = Object.keys(localStorageMeals.meals)[0];
     localStorageMeals.meals[idCurrent] = updateCheck;
     localStorage.setItem('inProgressRecipes', JSON.stringify(localStorageMeals));
   }
 
   getRecipesLocalStorage() {
-    const { idCurrent } = this.props;
     const verifyLocalStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const idCurrent = Object.keys(verifyLocalStorage.meals)[0];
     const listVefify = verifyLocalStorage.meals[idCurrent];
     return listVefify;
   }
@@ -164,8 +164,8 @@ class FoodsRecipesInProgress extends React.Component {
   }
 
   checkedItems() {
-    const { idCurrent } = this.props;
     const getCheckedItems = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const idCurrent = Object.keys(getCheckedItems.meals)[0];
     const checkado = getCheckedItems.meals[idCurrent];
     if (getCheckedItems) {
       this.setState({ checkedItems: checkado });

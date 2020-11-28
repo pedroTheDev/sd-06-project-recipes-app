@@ -189,6 +189,9 @@ class FoodsDetails extends React.Component {
     const { idCurrent } = this.props;
     const { history } = this.props;
     localStorage.setItem('ReceitaIniciada', JSON.stringify(recipe.idMeal));
+    const getCheckedItems = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    getCheckedItems.meals = { [idCurrent]: [] };
+    localStorage.setItem('inProgressRecipes', JSON.stringify(getCheckedItems));
     history.push(`/comidas/${idCurrent}/in-progress`);
   }
 
