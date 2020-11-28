@@ -36,7 +36,7 @@ export default function DoneRecipes() {
 
   return (
     <section>
-      <HeaderNoSearch />
+      <HeaderNoSearch id="Receitas Feitas" />
       <section>
         <button
           type="button"

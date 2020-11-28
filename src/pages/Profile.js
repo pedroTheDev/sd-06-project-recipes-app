@@ -19,7 +19,7 @@ export default function Profile(props) {
   }
   return (
     <div>
-      <HeaderNoSearch />
+      <HeaderNoSearch id="Perfil" />
       <section>
         {
           email ? <p data-testid="profile-email">{email.email}</p>

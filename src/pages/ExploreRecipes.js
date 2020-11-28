@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Footer } from '../components';
+import { Footer, HeaderNoSearch } from '../components';
 
 export default function ExploreRecipes() {
   return (
     <div>
+      <HeaderNoSearch id="Explorar" />
       <Link to="/explorar/comidas">
         <button
           type="button"

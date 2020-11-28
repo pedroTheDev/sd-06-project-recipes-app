@@ -8,7 +8,7 @@ export default function IngredientsExplorer(props) {
 
   return (
     <div>
-      <HeaderNoSearch id={ id } />
+      <HeaderNoSearch id="Explorar Ingredientes" />
       <IngredientCards id={ id } />
       <Footer />
     </div>

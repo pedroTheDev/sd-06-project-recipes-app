@@ -45,7 +45,7 @@ export default function FavRecipes() {
 
   return (
     <section>
-      <HeaderNoSearch />
+      <HeaderNoSearch id="Receitas Favoritas" />
       <section>
         <button
           type="button"
