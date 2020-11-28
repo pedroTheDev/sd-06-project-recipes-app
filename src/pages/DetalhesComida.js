@@ -40,13 +40,11 @@ function DetalhesComida(props) {
 
       if (!favoriteRecipes || !favoriteRecipes.length) {
         setIsFavorite(false);
+      } else if (favoriteRecipes.some((recipe) => recipe.id === id)) {
+        setIsFavorite(true);
       } else {
-        if (favoriteRecipes.some((recipe) => recipe.id === id)) {
-          setIsFavorite(true);
-        } else {
-          setIsFavorite(false);
-        }
-      };
+        setIsFavorite(false);
+      }
 
       setFetching(false);
     }
@@ -101,8 +99,7 @@ function DetalhesComida(props) {
       idMeal, strArea, strCategory, strMeal, strMealThumb,
     } = fetchById[0];
 
-    !favoriteRecipes
-    ? (
+    if (!favoriteRecipes) {
       localStorage.setItem('favoriteRecipes', JSON.stringify([
         {
           id: idMeal,
@@ -113,9 +110,8 @@ function DetalhesComida(props) {
           name: strMeal,
           image: strMealThumb,
         },
-      ]))
-    )
-    : (
+      ]));
+    } else {
       localStorage.setItem('favoriteRecipes', JSON.stringify([
         ...favoriteRecipes,
         {
@@ -127,8 +123,8 @@ function DetalhesComida(props) {
           name: strMeal,
           image: strMealThumb,
         },
-      ]))
-    )
+      ]));
+    }
 
     setIsFavorite(true);
   };
@@ -137,15 +133,16 @@ function DetalhesComida(props) {
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
 
     let index;
-    
+
     favoriteRecipes.forEach((item, i) => {
       if (item.id === idRecipe) {
         index = i;
       }
     });
 
+    const zero = 0;
     localStorage.setItem('favoriteRecipes', JSON.stringify([
-      ...favoriteRecipes.slice(0, index),
+      ...favoriteRecipes.slice(zero, index),
       ...favoriteRecipes.slice(index + 1, favoriteRecipes.length),
     ]));
 
@@ -192,7 +189,7 @@ function DetalhesComida(props) {
                   src={ !isFavorite
                     ? whiteHeartIcon
                     : blackHeartIcon }
-                  atl=""
+                  alt=""
                 />
               </button>
               <p data-testid="recipe-category">{meal.strCategory}</p>

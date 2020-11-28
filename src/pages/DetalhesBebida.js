@@ -40,13 +40,11 @@ function DetalhesBebida(props) {
 
       if (!favoriteRecipes || !favoriteRecipes.length) {
         setIsFavorite(false);
+      } else if (favoriteRecipes.some((recipe) => recipe.id === id)) {
+        setIsFavorite(true);
       } else {
-        if (favoriteRecipes.some((recipe) => recipe.id === id)) {
-          setIsFavorite(true);
-        } else {
-          setIsFavorite(false);
-        }
-      };
+        setIsFavorite(false);
+      }
 
       setFetching(false);
     }
@@ -56,7 +54,7 @@ function DetalhesBebida(props) {
 
   const getIngredients = (obj, filter) => {
     const keys = [];
-    
+
     Object.keys(obj).forEach((key) => {
       if (key && filter.test(key) && obj[key] !== '' && obj[key] !== null) {
         keys.push(obj[key]);
@@ -101,8 +99,7 @@ function DetalhesBebida(props) {
       idDrink, strCategory, strAlcoholic, strDrink, strDrinkThumb,
     } = fetchById[0];
 
-    !favoriteRecipes
-    ? (
+    if (!favoriteRecipes) {
       localStorage.setItem('favoriteRecipes', JSON.stringify([
         {
           id: idDrink,
@@ -113,9 +110,8 @@ function DetalhesBebida(props) {
           name: strDrink,
           image: strDrinkThumb,
         },
-      ]))
-    )
-    : (
+      ]));
+    } else {
       localStorage.setItem('favoriteRecipes', JSON.stringify([
         ...favoriteRecipes,
         {
@@ -127,8 +123,8 @@ function DetalhesBebida(props) {
           name: strDrink,
           image: strDrinkThumb,
         },
-      ]))
-    )
+      ]));
+    }
 
     setIsFavorite(true);
   };
@@ -137,15 +133,16 @@ function DetalhesBebida(props) {
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
 
     let index;
-    
+
     favoriteRecipes.forEach((item, i) => {
       if (item.id === idRecipe) {
         index = i;
       }
     });
 
+    const zero = 0;
     localStorage.setItem('favoriteRecipes', JSON.stringify([
-      ...favoriteRecipes.slice(0, index),
+      ...favoriteRecipes.slice(zero, index),
       ...favoriteRecipes.slice(index + 1, favoriteRecipes.length),
     ]));
 
@@ -192,7 +189,7 @@ function DetalhesBebida(props) {
                   src={ !isFavorite
                     ? whiteHeartIcon
                     : blackHeartIcon }
-                  atl=""
+                  alt=""
                 />
               </button>
               <p data-testid="recipe-category">{drink.strAlcoholic}</p>
