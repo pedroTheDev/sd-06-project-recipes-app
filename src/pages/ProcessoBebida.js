@@ -17,9 +17,33 @@ function ProcessoBebida() {
   const history = useHistory();
   const idDrink = history.location.pathname.split('/')[2];
 
-  const handleChange = ({ target }) => {
-    setChecked({ ...checked, [target.name]: target.checked });
+  const handleChange = (target, index) => {
+    if (target.checked) {
+      setChecked([...checked, index]);
+    } else {
+      const removed = [...checked];
+      removed.splice(removed.indexOf(index), 1);
+      setChecked(removed);
+    }
   };
+
+  useEffect(() => {
+    if (localStorage.favoriteRecipes) {
+      const favoriteRecipes = JSON.parse(localStorage.favoriteRecipes);
+      favoriteRecipes.forEach((favorite) => {
+        if (favorite.id === idDrink) {
+          setIsFavorite(true);
+        }
+      });
+    }
+    if (localStorage.inProgressRecipes) {
+      const progress = JSON.parse(localStorage.inProgressRecipes);
+      if (progress.cocktails[idDrink]) setChecked(progress.cocktails[idDrink]);
+      else {
+        setChecked([]);
+      }
+    } else setChecked([]);
+  }, []);
 
   useEffect(() => {
     async function fetchAPI() {
@@ -32,10 +56,23 @@ function ProcessoBebida() {
   }, [idDrink]);
 
   useEffect(() => {
-    if (localStorage.favoriteRecipes) {
-      setIsFavorite(true);
+    if (localStorage.inProgressRecipes) {
+      const progress = JSON.parse(localStorage.inProgressRecipes);
+      localStorage.inProgressRecipes = JSON.stringify({
+        ...progress,
+        cocktails: {
+          ...progress.cocktails,
+          [idDrink]: checked,
+        },
+      });
+    } else {
+      localStorage.inProgressRecipes = JSON.stringify({
+        cocktails: {
+          [idDrink]: checked,
+        },
+      });
     }
-  }, []);
+  }, [checked]);
 
   const handleClick = () => {
     setIsFavorite(!isFavorite);
@@ -98,15 +135,15 @@ function ProcessoBebida() {
           key={ index }
           data-testid={ `${index}-ingredient-step` }
         >
-          {ingredient}
+          {ingredient }
           <input
             type="checkbox"
             name={ ingredient }
-            checked={ checked[ingredient[ingredient.name]] }
-            onChange={ handleChange }
+            checked={ checked.includes(index) }
+            onChange={ ({ target }) => { handleChange(target, index); } }
           />
         </span>
-      ))}
+      )) }
       <p data-testid="instructions">
         Instruções
       </p>
