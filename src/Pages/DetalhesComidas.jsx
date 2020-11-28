@@ -13,7 +13,7 @@ const DetalhesComida = () => {
   const [stateSugestions, setSugestions] = useState();
   const [foodsInProgress, setFoodsInProgress] = useState({ meals: {} });
   const [stateFavorite, setStateFavorite] = useState({
-    heart: false,
+    heart: true,
   });
 
   const idFood = useParams().id;
@@ -145,8 +145,12 @@ const DetalhesComida = () => {
                 >
                   <img
                     data-testid="favorite-btn"
-                    src={ !stateFavorite.heart ? whiteHeartIcon : blackHeartIcon }
-                    alt={ !stateFavorite.heart ? 'whiteHeartIcon' : 'blackHeartIcon' }
+                    src={ !JSON.parse(localStorage.getItem('heart')).heart
+                      ? whiteHeartIcon
+                      : blackHeartIcon }
+                    alt={ !JSON.parse(localStorage.getItem('heart')).heart
+                      ? 'whiteHeartIcon'
+                      : 'blackHeartIcon' }
                   />
                 </button>
               </div>
