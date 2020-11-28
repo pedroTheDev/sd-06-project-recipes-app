@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { fetchDetail, fetchRecommendation } from '../helpers/Helper';
+import RecipesContext from '../context/Context';
 
 import '../css/scroller.css';
 import '../css/itemDetails.css';
@@ -11,6 +12,7 @@ import blackHeart from '../images/blackHeartIcon.svg';
 import saveFavorite from '../helpers/saveFavorite';
 
 export default function FoodsDetails(props) {
+  const { setItems } = useContext(RecipesContext);
   const [recipe, setRecipe] = useState('');
   const [recipeDetails, setRecipeDetails] = useState([]);
   const [concluded, setConcluded] = useState(false);
@@ -28,6 +30,8 @@ export default function FoodsDetails(props) {
       setRecommendation(results);
     }
     fetchData();
+
+    return () => setItems();
   }, []);
 
   useEffect(() => {
@@ -149,7 +153,7 @@ export default function FoodsDetails(props) {
           {renderIngredients()}
 
           <video data-testid="video" width="340" controls>
-            <source src={ item.strYoutube } type="video/mp4" />
+            <source src={ decodeURI(item.strYoutube) } type="video/mp4" />
             <track src="" kind="captions" />
           </video>
           {

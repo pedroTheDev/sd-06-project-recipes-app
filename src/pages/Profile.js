@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import Header from '../components/Header';
+import { Footer, HeaderNoSearch } from '../components';
 
 export default function Profile(props) {
   document.title = 'Perfil';
@@ -19,34 +19,37 @@ export default function Profile(props) {
   }
   return (
     <div>
-      <Header />
-      {
-        email ? <p data-testid="profile-email">{email.email}</p>
-          : <p data-testid="profile-email">E-mail não encontrado</p>
-      }
-      <Link to="/receitas-feitas">
+      <HeaderNoSearch />
+      <section>
+        {
+          email ? <p data-testid="profile-email">{email.email}</p>
+            : <p data-testid="profile-email">E-mail não encontrado</p>
+        }
+        <Link to="/receitas-feitas">
+          <button
+            type="button"
+            data-testid="profile-done-btn"
+          >
+            Receitas Feitas
+          </button>
+        </Link>
+        <Link to="/receitas-favoritas">
+          <button
+            type="button"
+            data-testid="profile-favorite-btn"
+          >
+            Receitas Favoritas
+          </button>
+        </Link>
         <button
           type="button"
-          data-testid="profile-done-btn"
+          data-testid="profile-logout-btn"
+          onClick={ () => eraseLocalStorage() }
         >
-          Receitas Feitas
+          Sair
         </button>
-      </Link>
-      <Link to="/receitas-favoritas">
-        <button
-          type="button"
-          data-testid="profile-favorite-btn"
-        >
-          Receitas Favoritas
-        </button>
-      </Link>
-      <button
-        type="button"
-        data-testid="profile-logout-btn"
-        onClick={ () => eraseLocalStorage() }
-      >
-        Sair
-      </button>
+      </section>
+      <Footer />
     </div>
   );
 }

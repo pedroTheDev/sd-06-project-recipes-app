@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
 import RecipesContext from '../context/Context';
@@ -6,12 +6,13 @@ import RecipesContext from '../context/Context';
 import '../css/Cards.css';
 
 export default function Cards({ id }) {
-  const { items, filters } = useContext(RecipesContext);
+  const { items, setItems, filters } = useContext(RecipesContext);
 
-  if (items) {
+  useEffect(() => setItems(), []);
+
+  if (typeof items !== 'undefined') {
     if (items.drinks) {
       if (items.drinks.length === 1 && filters.searchType !== 'category') {
-        console.log(items.drinks[0]);
         return <Redirect to={ `/${id}/${items.drinks[0].idDrink}` } />;
       }
       return (
