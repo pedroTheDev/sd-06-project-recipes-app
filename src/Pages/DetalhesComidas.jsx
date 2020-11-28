@@ -90,8 +90,11 @@ const DetalhesComida = () => {
   const handleShareClick = () => {
     const urlPage = window.location.href;
 
+    const zero = 0;
+    const numeroQualquer = 9999;
+
     urlPage.select();
-    urlPage.setSelectRange(0, 9999);
+    urlPage.setSelectRange(zero, numeroQualquer);
   };
 
   const handleFavorite = () => {
