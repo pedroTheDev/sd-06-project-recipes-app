@@ -121,7 +121,7 @@ const DetalhesComida = () => {
     <div className="main-principal">
       {stateLocal ? (
         <div className="container-main">
-          {console.log(JSON.parse(localStorage.getItem('heart')).heart)}
+          {/* {console.log(JSON.parse(localStorage.getItem('heart')).heart)} */}
           <div className="container-initial">
             <img
               data-testid="recipe-photo"
