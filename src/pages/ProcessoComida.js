@@ -10,10 +10,20 @@ function ProcessoComida() {
   const [dataMeal, setDataMeal] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
-  // const [isDisable, setIsDisable] = useState(true);
+  const [isDisable, setIsDisable] = useState(true);
   const [checked, setChecked] = useState([]);
   const history = useHistory();
   const idMeal = history.location.pathname.split('/')[2];
+
+  useEffect(() => {
+    async function fetchAPI() {
+      const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`);
+      const responseJson = await response.json();
+      setDataMeal(responseJson.meals[0]);
+      setIsLoading(false);
+    }
+    fetchAPI();
+  }, [idMeal]);
 
   useEffect(() => {
     if (localStorage.favoriteRecipes) {
@@ -25,10 +35,14 @@ function ProcessoComida() {
       });
     }
     if (localStorage.inProgressRecipes) {
-      const progress = JSON.parse(localStorage.inProgressRecipes);
-      if (progress.meals[idMeal]) setChecked(progress.meals[idMeal]);
-      else setChecked([]);
-    }
+      if (JSON.parse(localStorage.inProgressRecipes).meals) {
+        const progress = JSON.parse(localStorage.inProgressRecipes);
+        if (progress.meals[idMeal]) setChecked(progress.meals[idMeal]);
+        else {
+          setChecked([]);
+        }
+      }
+    } else setChecked([]);
   }, []);
 
   const handleChange = (target, index) => {
@@ -58,17 +72,17 @@ function ProcessoComida() {
         },
       });
     }
-  }, [checked]);
-
-  useEffect(() => {
-    async function fetchAPI() {
-      const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`);
-      const responseJson = await response.json();
-      setDataMeal(responseJson.meals[0]);
-      setIsLoading(false);
+    const result = (Object.keys(dataMeal)
+      .filter((keys) => keys.includes('Ingredient'))
+      .filter((ingredient) => (
+        dataMeal[ingredient] !== '' && dataMeal[ingredient] !== null
+      )).length);
+    if (result === checked.length) {
+      setIsDisable(false);
+    } else {
+      setIsDisable(true);
     }
-    fetchAPI();
-  }, [idMeal]);
+  }, [checked]);
 
   const handleClick = () => {
     setIsFavorite(!isFavorite);
@@ -174,7 +188,7 @@ function ProcessoComida() {
         <button
           type="button"
           data-testid="finish-recipe-btn"
-          // disabled={ isDisable }
+          disabled={ isDisable }
           onClick={ saveDoneRecipes }
         >
           Finalizar Receita

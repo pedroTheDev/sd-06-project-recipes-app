@@ -12,7 +12,7 @@ function ProcessoBebida() {
   const [dataDrinks, setDataDrinks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [isDisable] = useState(true);
+  const [isDisable, setIsDisable] = useState(true);
   const [checked, setChecked] = useState({});
   const history = useHistory();
   const idDrink = history.location.pathname.split('/')[2];
@@ -37,9 +37,10 @@ function ProcessoBebida() {
       });
     }
     if (localStorage.inProgressRecipes) {
-      const progress = JSON.parse(localStorage.inProgressRecipes);
-      if (progress.cocktails[idDrink]) setChecked(progress.cocktails[idDrink]);
-      else {
+      if (JSON.parse(localStorage.inProgressRecipes).cocktails) {
+        const progress = JSON.parse(localStorage.inProgressRecipes);
+        if (progress.cocktails[idDrink]) setChecked(progress.cocktails[idDrink]);
+      } else {
         setChecked([]);
       }
     } else setChecked([]);
@@ -71,6 +72,16 @@ function ProcessoBebida() {
           [idDrink]: checked,
         },
       });
+    }
+    const result = (Object.keys(dataDrinks)
+      .filter((keys) => keys.includes('Ingredient'))
+      .filter((ingredient) => (
+        dataDrinks[ingredient] !== '' && dataDrinks[ingredient] !== null
+      )).length);
+    if (result === checked.length) {
+      setIsDisable(false);
+    } else {
+      setIsDisable(true);
     }
   }, [checked]);
 
