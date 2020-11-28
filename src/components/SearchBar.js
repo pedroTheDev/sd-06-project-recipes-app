@@ -1,14 +1,40 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import fetchDrink from '../services/fetchDrink';
-import fetchMeal from '../services/fetchMeal';
 import './Components.css';
+import Context from '../context/Context';
 
 function SearchBar(props) {
   const [searchTerm, setSearchTerm] = useState();
   const [filterType, setFilterType] = useState();
-
+  const {
+    recipesToRender,
+    recipesToRenderByIngredient,
+    recipesToRenderByFirstLetter,
+  } = useContext(Context);
   const { title } = props;
+  const type = title === 'Comidas' ? 'meal' : 'drink';
+
+  const handleClick = (e) => {
+    e.preventDefault();
+
+    switch (filterType) {
+    case 'ingredient': {
+      return recipesToRenderByIngredient(type, searchTerm);
+    }
+
+    case 'firstLetter': {
+      if (searchTerm.length > 1) {
+        alert('Sua busca deve conter somente 1 (um) caracter');
+        break;
+      }
+      return recipesToRenderByFirstLetter(type, searchTerm);
+    }
+
+    default: {
+      return recipesToRender(type, searchTerm);
+    }
+    }
+  };
 
   return (
     <div>
@@ -54,17 +80,7 @@ function SearchBar(props) {
         <button
           type="submit"
           data-testid="exec-search-btn"
-          onClick={ (e) => {
-            e.preventDefault();
-
-            if (filterType === 'firstLetter' && searchTerm.length > 1) {
-              alert('Sua busca deve conter somente 1 (um) caracter');
-            } else {
-              return title === 'Bebidas'
-                ? fetchDrink(filterType, searchTerm)
-                : fetchMeal(filterType, searchTerm);
-            }
-          } }
+          onClick={ (e) => handleClick(e) }
         >
           Buscar
         </button>

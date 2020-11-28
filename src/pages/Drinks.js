@@ -1,10 +1,11 @@
 import React, { useContext, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import DrinkRecipeCard from '../components/Cards';
 import Context from '../context/Context';
 
-function Drinks() {
+function Drinks({ history }) {
   const TRUE = true;
   const { recipes, recipesToRender, categoriesToRender } = useContext(Context);
 
@@ -17,18 +18,23 @@ function Drinks() {
     <div>
       <Header title="Bebidas" search={ TRUE } />
       <div className="recipes-cards">
-        {recipes.map((drink, index) => (
-          <DrinkRecipeCard
-            key={ drink.strDrink }
-            info={ drink }
-            recipe="bebidas"
-            index={ index }
-          />
-        ))}
+        {recipes.length === 1 ? history.push(`/bebidas/${recipes[0].idDrink}`) : (
+          recipes.map((drink, index) => (
+            <DrinkRecipeCard
+              key={ drink.strDrink }
+              info={ drink }
+              recipe="bebidas"
+              index={ index }
+            />
+          )))}
       </div>
       <Footer />
     </div>
   );
 }
+
+Drinks.propTypes = {
+  history: PropTypes.func.isRequired,
+};
 
 export default Drinks;

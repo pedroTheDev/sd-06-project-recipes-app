@@ -59,16 +59,20 @@ function RecipesAppProvider({ children }) {
     setTimeout(() => setCopied(false), time);
   };
 
-  const recipesToRender = async (type) => {
+  const recipesToRender = async (type, searchTerm) => {
     let fetchedRecipes = await (type === 'meal'
-      ? fetchMeal('name')
-      : fetchDrink('name')
+      ? fetchMeal('name', searchTerm)
+      : fetchDrink('name', searchTerm)
     );
     const first = 0;
     const twelfth = 12;
 
-    fetchedRecipes = fetchedRecipes.slice(first, twelfth);
-    setRecipes(fetchedRecipes);
+    if (!fetchedRecipes) {
+      alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+    } else {
+      fetchedRecipes = fetchedRecipes.slice(first, twelfth);
+      setRecipes(fetchedRecipes);
+    }
   };
 
   const categoriesToRender = async (type) => {
@@ -93,6 +97,40 @@ function RecipesAppProvider({ children }) {
 
     fetchedRecipes = fetchedRecipes.slice(first, twelfth);
     setRecipes(fetchedRecipes);
+  };
+
+  const recipesToRenderByIngredient = async (type, searchTerm) => {
+    let fetchedRecipes = await (type === 'meal'
+      ? fetchMeal('ingredient', searchTerm)
+      : fetchDrink('ingredient', searchTerm)
+    );
+
+    const first = 0;
+    const twelfth = 12;
+
+    if (!fetchedRecipes) {
+      alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+    } else {
+      fetchedRecipes = fetchedRecipes.slice(first, twelfth);
+      setRecipes(fetchedRecipes);
+    }
+  };
+
+  const recipesToRenderByFirstLetter = async (type, searchTerm) => {
+    let fetchedRecipes = await (type === 'meal'
+      ? fetchMeal('firstLetter', searchTerm)
+      : fetchDrink('firstLetter', searchTerm)
+    );
+
+    const first = 0;
+    const twelfth = 12;
+
+    if (!fetchedRecipes) {
+      alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+    } else {
+      fetchedRecipes = fetchedRecipes.slice(first, twelfth);
+      setRecipes(fetchedRecipes);
+    }
   };
 
   const getMealDetail = async (id) => {
@@ -146,6 +184,8 @@ function RecipesAppProvider({ children }) {
     categories,
     categoriesToRender,
     recipesToRenderByCategory,
+    recipesToRenderByIngredient,
+    recipesToRenderByFirstLetter,
   };
 
   return (
