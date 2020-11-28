@@ -10,6 +10,15 @@ function RecipesAppProvider({ children }) {
   const [random, setRandom] = useState('');
   const [recipes, setRecipes] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [fav, setFav] = useState([]);
+  const [heart, setHeart] = useState('');
+
+  const isFavorite = (id) => {
+    const local = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (!local) return setHeart('white');
+    const match = local.filter((item) => item.id === id);
+    return (match.length >= 1 ? setHeart('black') : setHeart('white'));
+  };
 
   const recipesToRender = async (type) => {
     let fetchedRecipes = await (type === 'meal'
@@ -84,6 +93,10 @@ function RecipesAppProvider({ children }) {
     getRecommendedMeal,
     getRandomDrink,
     getRandomMeal,
+    isFavorite,
+    fav,
+    setFav,
+    heart,
     details,
     recommended,
     random,

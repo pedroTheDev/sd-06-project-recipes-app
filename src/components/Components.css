@@ -33,14 +33,14 @@
 
 .thumbnail {
   object-fit: cover;
-  width: 161px;
-  height: 109px;
+  width: 180px;
+  height: 110px;
   border-radius: 6px 6px 0 0;
 }
 
 .recipe-card {
-  width: 161px;
-  height: 172px;
+  width: 180px;
+  height: 180px;
   border-radius: 6px;
   border: black solid 1px;
   margin: 5px auto;

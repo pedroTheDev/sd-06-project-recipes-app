@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import copy from 'clipboard-copy';
 import '../App.css';
 import Context from '../context/Context';
@@ -14,11 +15,14 @@ function RecipeDetails(props) {
     getDrinkDetail,
     getRecommendedDrink,
     getRecommendedMeal,
+    isFavorite,
+    fav,
+    heart,
+    setFav,
     details,
     recommended,
   } = useContext(Context);
   const { match: { path, params, url } } = props;
-  const [fav, setFav] = useState('white');
   const [copied, setCopied] = useState('');
   const ZERO = 0;
   const SIX = 6;
@@ -31,7 +35,8 @@ function RecipeDetails(props) {
       getDrinkDetail(params.id);
       getRecommendedMeal();
     }
-  }, [params.id]);
+    isFavorite(params.id);
+  }, [params.id, fav]);
 
   const getIngredients = (obj, filter) => {
     const keys = [];
@@ -50,6 +55,35 @@ function RecipeDetails(props) {
     copy(`http://localhost:3000${url}`);
     setCopied('copy');
     setTimeout(() => setCopied(false), time);
+  };
+
+  const favorite = (recipe) => {
+    const local = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const one = local ? local.filter((item) => item.id === params.id) : '';
+    const compare = path === '/comidas/:id';
+    const newFav = {
+      id: compare ? recipe.idMeal : recipe.idDrink,
+      type: compare ? 'comida' : 'bebida',
+      area: compare ? recipe.strArea : '',
+      category: recipe.strCategory,
+      alcoholicOrNot: compare ? '' : recipe.strAlcoholic,
+      name: compare ? recipe.strMeal : recipe.strDrink,
+      image: compare ? recipe.strMealThumb : recipe.strDrinkThumb,
+    };
+
+    const localFavorite = one.length > ZERO
+      ? local.filter((item) => item.id !== params.id)
+      : [
+        ...(!local ? '' : local),
+        newFav,
+      ];
+
+    setFav([
+      ...fav,
+      newFav,
+    ]);
+
+    localStorage.setItem('favoriteRecipes', JSON.stringify(localFavorite));
   };
 
   return (
@@ -77,10 +111,10 @@ function RecipeDetails(props) {
             { copied ? <span>Link copiado!</span> : '' }
             <input
               type="image"
-              src={ fav === 'white' ? whiteHeartIcon : blackHeartIcon }
+              src={ heart === 'white' ? whiteHeartIcon : blackHeartIcon }
               data-testid="favorite-btn"
-              alt={ fav === 'white' ? 'whiteHeartIcon' : 'blackHeartIcon' }
-              onClick={ () => (fav === 'white' ? setFav('black') : setFav('white')) }
+              alt={ heart === 'white' ? 'whiteHeartIcon' : 'blackHeartIcon' }
+              onClick={ () => favorite(recipe) }
             />
             <p data-testid="recipe-category">
               {path === '/comidas/:id' ? recipe.strCategory : recipe.strAlcoholic}
@@ -124,13 +158,15 @@ function RecipeDetails(props) {
                   />
                 ))}
             </div>
-            <button
-              type="button"
-              className="StartRecipe"
-              data-testid="start-recipe-btn"
-            >
-              Iniciar Receita
-            </button>
+            <Link to={ `${url}/in-progress` }>
+              <button
+                type="button"
+                className="StartRecipe"
+                data-testid="start-recipe-btn"
+              >
+                Iniciar Receita
+              </button>
+            </Link>
           </div>))}
     </div>
   );
