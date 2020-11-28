@@ -129,13 +129,13 @@ function DrinkDetails() {
       <img
         data-testid="recipe-photo"
         width="100px"
-        src={ drinkDetails.drinks && drinkDetails.drinks[0].strDrinkThumb }
-        alt="Meal"
+        src={ drinkDetails.strDrinkThumb }
+        alt="Drink"
       />
 
       <h3 data-testid="recipe-title">
         {
-          drinkDetails.drinks && drinkDetails.drinks[0].strDrink
+          drinkDetails.strDrink
         }
       </h3>
 
@@ -155,19 +155,19 @@ function DrinkDetails() {
         data-testid="favorite-btn"
         className={ whiteHeartIcon }
         onClick={ handleFavoriteDrink }
-        src={ whiteHeartIcon }
+        src={ favoriteDrink ? blackHeartIcon : whiteHeartIcon }
       >
         <img alt="bla" src={ favoriteDrink ? blackHeartIcon : whiteHeartIcon } />
       </button>
       <h4 data-testid="recipe-category">
         {
-          drinkDetails.drinks && drinkDetails.drinks[0].strCategory
+          drinkDetails.strCategory
         }
       </h4>
 
       <h4>
         {
-          drinkDetails.drinks && drinkDetails.drinks[0].strAlcoholic
+          drinkDetails.strAlcoholic
         }
       </h4>
 
@@ -179,7 +179,9 @@ function DrinkDetails() {
               key={ index }
             >
               {
-                `${index + 1} ${item.ingredient} - ${item.measure}`
+                item.ingredient && item.measure
+                  ? `${index + 1} ${item.ingredient} - ${item.measure}`
+                  : null
               }
             </p>
           ))}
@@ -188,7 +190,7 @@ function DrinkDetails() {
       <p
         data-testid="instructions"
       >
-        {drinkDetails.drinks && drinkDetails.drinks[0].strInstructions}
+        {drinkDetails.strInstructions}
       </p>
 
       <div>
@@ -197,8 +199,7 @@ function DrinkDetails() {
       </div>
 
       <Link
-        to={ `/bebidas/${drinkDetails
-          .drinks && drinkDetails.drinks[0].idDrink}/in-progress` }
+        to={ `/bebidas/${drinkDetails.idDrink}/in-progress` }
       >
         <button
           type="button"
