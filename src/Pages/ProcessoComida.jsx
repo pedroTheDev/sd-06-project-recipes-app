@@ -10,9 +10,9 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 const ReceitaProcessoComida = () => {
   const [recipeProgress, setRecipeProgress] = useState();
   const [attributesNames, setAttributesNames] = useState();
-  const [scratchIngredients, setScratchIngredients] = useState({
-    checkbox: false,
-  });
+  // const [scratchIngredients, setScratchIngredients] = useState({
+  //   checkbox: false,
+  // });
 
   const idFood = useParams().id;
 

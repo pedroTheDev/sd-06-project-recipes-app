@@ -10,9 +10,9 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 const ProcessoBebidas = () => {
   const [recipeProgress, setRecipeProgress] = useState();
   const [attributesNames, setAttributesNames] = useState();
-  const [scratchIngredients, setScratchIngredients] = useState({
-    checkbox: false,
-  });
+  // const [scratchIngredients, setScratchIngredients] = useState({
+  //   checkbox: false,
+  // });
 
   const idDrink = useParams().id;
 
