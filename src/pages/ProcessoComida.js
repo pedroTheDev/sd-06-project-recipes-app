@@ -10,7 +10,7 @@ function ProcessoComida() {
   const [dataMeal, setDataMeal] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
-  // const [isDisable] = useState(true);
+  // const [isDisable, setIsDisable] = useState(true);
   const [checked, setChecked] = useState([]);
   const history = useHistory();
   const idMeal = history.location.pathname.split('/')[2];
@@ -26,7 +26,8 @@ function ProcessoComida() {
     }
     if (localStorage.inProgressRecipes) {
       const progress = JSON.parse(localStorage.inProgressRecipes);
-      setChecked(Object.values(Object.values(progress)[0])[0]);
+      if (progress.meals[idMeal]) setChecked(progress.meals[idMeal]);
+      else setChecked([]);
     }
   }, []);
 
@@ -41,10 +42,23 @@ function ProcessoComida() {
   };
 
   useEffect(() => {
-    localStorage.inProgressRecipes = JSON.stringify({
-      meals: { [idMeal]: checked }
-    });
-  }, [checked])
+    if (localStorage.inProgressRecipes) {
+      const progress = JSON.parse(localStorage.inProgressRecipes);
+      localStorage.inProgressRecipes = JSON.stringify({
+        ...progress,
+        meals: {
+          ...progress.meals,
+          [idMeal]: checked,
+        },
+      });
+    } else {
+      localStorage.inProgressRecipes = JSON.stringify({
+        meals: {
+          [idMeal]: checked,
+        },
+      });
+    }
+  }, [checked]);
 
   useEffect(() => {
     async function fetchAPI() {
@@ -145,7 +159,7 @@ function ProcessoComida() {
                   type="checkbox"
                   name={ dataMeal[ingredient] }
                   checked={ checked.includes(index) }
-                  onChange={ ({ target }) => { handleChange(target, index) } }
+                  onChange={ ({ target }) => { handleChange(target, index); } }
                 />
                 { dataMeal[ingredient] }
               </div>
