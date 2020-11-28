@@ -503,7 +503,7 @@ a {
     flex-wrap: nowrap;
   }
   .global-header h1 {
-    font-size: 50px;
+    font-size: 20px;
     text-shadow: 0 0 3px #000;
   }
   .global-header input {
