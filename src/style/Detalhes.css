@@ -56,10 +56,6 @@ body {
   width: 25px;
 }
 
-.div-icon p {
-  border: solid 2px black;
-}
-
 .div-recipes {
   align-items: flex-start;
   display: flex;
@@ -123,4 +119,8 @@ body {
   min-height: 100px;
   background-color: #EDF2F7;
   /* scroll-snap-align: center; */
+}
+
+.card img{
+  width: 170px;
 }

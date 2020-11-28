@@ -24,28 +24,15 @@
 }
 
 .searchBar input[type='radio'] {
-  border: 1px solid #cecccc;
+  border: 1px solid #4b4040;
   height: 20px;
   width: 20px;
-}
-
-/* falta alterar a cor do botão - irei pesquisar depois */
-.searchBar input[type='radio']:focus {
-  border: 2px solid #960051;
-  background-color: #960051;
-  color: #960051;
-  outline: #960051;
 }
 
 .searchBar label {
   font-family: 'Montserrat', sans-serif;
   font-size: 15px;
-  text-align: center;
-}
-
-.searchBar label:focus {
-  font-weight: 900;
-  color: #960051;
+  font-weight: 700;
 }
 
 .searchBar button{

@@ -50,6 +50,48 @@ body {
   width: 25px;
 }
 
-.div-icon p {
-  border: solid 2px black;
+.div-recipes {
+  align-items: flex-start;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: flex-start;
+  margin: auto;
+  margin-bottom: 70px;
+  width: 320px;
+}
+
+.div-recipes h2{
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.div-recipes div {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+}
+
+.div-recipes input[type="checkbox"] {
+  height: 18px;
+  width: 18px;
+}
+
+.finish-recipe {
+  background-color: #960051;
+  border: none;
+  border-radius: 5px;
+  bottom: 0px;
+  color: #ffffff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 25px;
+  font-weight: 700;
+  height: 40px;
+  margin-top: 5px;
+  position: fixed;
+  width: 360px;
+}
+
+.finish-recipe:hover {
+  background-color: #bd0165;
+  cursor: pointer;
 }

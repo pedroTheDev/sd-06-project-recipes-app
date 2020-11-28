@@ -1,31 +1,50 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import RecipesContext from '../context/RecipesContext';
 import useCopyToClipboard from '../hooks/useCopyToClipboard';
 import { shareIcon, whiteHeartIcon, blackHeartIcon } from '../images';
 import '../style/Processo.css';
 
 function ProcessoComida() {
   const timeoutTextCopy = 3000;
-  const { foodIngredients } = useContext(RecipesContext);
   const [isCopied, handleCopy] = useCopyToClipboard(timeoutTextCopy);
   const [dataMeal, setDataMeal] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   // const [isDisable] = useState(true);
-  const [checked, setChecked] = useState({});
+  const [checked, setChecked] = useState([]);
   const history = useHistory();
   const idMeal = history.location.pathname.split('/')[2];
 
-  const handleChange = ({ target }) => {
-    setChecked({ ...checked, [target.name]: target.checked });
+  useEffect(() => {
+    if (localStorage.favoriteRecipes) {
+      const favoriteRecipes = JSON.parse(localStorage.favoriteRecipes);
+      favoriteRecipes.forEach((favorite) => {
+        if (favorite.id === idMeal) {
+          setIsFavorite(true);
+        }
+      });
+    }
+    if (localStorage.inProgressRecipes) {
+      const progress = JSON.parse(localStorage.inProgressRecipes);
+      setChecked(Object.values(Object.values(progress)[0])[0]);
+    }
+  }, []);
+
+  const handleChange = (target, index) => {
+    if (target.checked) {
+      setChecked([...checked, index]);
+    } else {
+      const removed = [...checked];
+      removed.splice(removed.indexOf(index), 1);
+      setChecked(removed);
+    }
   };
 
-  // useEffect(() => {
-  //   localStorage.inProgressRecipes = JSON.stringify(
-  //     { meals: { [idMeal]: Object.keys(checked) } },
-  //   );
-  // }, [checked]);
+  useEffect(() => {
+    localStorage.inProgressRecipes = JSON.stringify({
+      meals: { [idMeal]: checked },
+    });
+  }, [checked]);
 
   useEffect(() => {
     async function fetchAPI() {
@@ -37,16 +56,14 @@ function ProcessoComida() {
     fetchAPI();
   }, [idMeal]);
 
-  useEffect(() => {
-    if (localStorage.favoriteRecipes) {
-      setIsFavorite(true);
-    }
-  }, []);
-
   const handleClick = () => {
     setIsFavorite(!isFavorite);
     if (!isFavorite) {
-      localStorage.favoriteRecipes = JSON.stringify([{
+      let favoriteRecipes = [];
+      if (localStorage.favoriteRecipes) {
+        favoriteRecipes = JSON.parse(localStorage.favoriteRecipes);
+      }
+      localStorage.favoriteRecipes = JSON.stringify([...favoriteRecipes, {
         id: dataMeal.idMeal,
         type: 'comida',
         area: dataMeal.strArea,
@@ -63,7 +80,10 @@ function ProcessoComida() {
   const saveDoneRecipes = () => {
     const date = new Date();
     const doneDate = date;
-    const doneRecipes = JSON.parse(localStorage.doneRecipes);
+    let doneRecipes = [];
+    if (localStorage.doneRecipes) {
+      doneRecipes = JSON.parse(localStorage.doneRecipes);
+    }
     localStorage.doneRecipes = JSON.stringify([...doneRecipes, {
       id: dataMeal.idMeal,
       type: 'comida',
@@ -115,28 +135,40 @@ function ProcessoComida() {
           </button>
         </div>
       </div>
-      <p data-testid="recipe-category">
-        Categoria
-      </p>
-      {foodIngredients.map((ingredient, index) => (
-        <span
-          key={ index }
-          data-testid={ `${index}-ingredient-step` }
-        >
-          {ingredient}
-          <input
-            type="checkbox"
-            name={ ingredient }
-            checked={ checked[ingredient[ingredient.name]] }
-            onChange={ handleChange }
-          />
-        </span>
-      ))}
-      <p data-testid="instructions">
-        Instruções
-      </p>
+      <div className="div-recipes">
+        <h2 data-testid="recipe-category">
+          Categoria
+        </h2>
+        { Object.keys(dataMeal)
+          .filter((keys) => keys.includes('Ingredient'))
+          .map((ingredient, index) => {
+            if (dataMeal[ingredient] !== '' && dataMeal[ingredient] !== null) {
+              return (
+                <div
+                  className="label"
+                  key={ index }
+                  data-testid={ `${index}-ingredient-step` }
+                >
+                  <input
+                    className="checkbox"
+                    type="checkbox"
+                    name={ dataMeal[ingredient] }
+                    checked={ checked.includes(index) }
+                    onChange={ ({ target }) => { handleChange(target, index); } }
+                  />
+                  { dataMeal[ingredient] }
+                </div>
+              );
+            }
+            return '';
+          }) }
+        <h2 data-testid="instructions">
+          Instruções
+        </h2>
+      </div>
       <Link to="/receitas-feitas">
         <button
+          className="finish-recipe"
           type="button"
           data-testid="finish-recipe-btn"
           // disabled={ isDisable }

@@ -8,6 +8,7 @@ footer {
   height: 70px;
   position: fixed;
   width: 360px;
+  z-index: 100;
 }
 
 footer button {
