@@ -175,7 +175,7 @@ const DrinksDetails = (props) => {
         className="image-display"
       />
       <div>
-        <p data-testid="recipe-title">{recipeTitle}</p>
+        <p data-testid="recipe-title">{ recipeTitle }</p>
         <div>
           <ShareButton path={ pathname } />
           <button type="button" onClick={ handleImage }>
@@ -187,7 +187,7 @@ const DrinksDetails = (props) => {
           </button>
         </div>
       </div>
-      <p data-testid="recipe-category">{recipeCategory}</p>
+      <p data-testid="recipe-category">{ recipeAlc }</p>
 
       <ul>
         {recipeIngredients.map((item, index) => (
