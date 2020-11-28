@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { filterMatchInKeys } from '../helpers/assets';
-
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
@@ -13,6 +12,7 @@ function FoodDetail(props) {
   const [objResponse, setObjResponse] = useState({});
   const [ingredientsItem, setIngredientsItem] = useState([]);
   const [mesuresItem, setMesuresItem] = useState([]);
+  const [recomendation, setRecomendation] = useState([]);
 
   const settingResponseType = (response, nameType, idType, changeCategory) => {
     setObjResponse({
@@ -42,20 +42,73 @@ function FoodDetail(props) {
       const response = await Bebidas.idDrink(id);
       settingResponseType(response, nameType, idType, changeCategory);
       getIngredientsAndMesures(response.drinks[0]);
-      console.log(response);
     } else {
       const idType = 'meals';
       const nameType = 'Meal';
       const changeCategory = 'strCategory';
       const response = await Comidas.idFood(id);
-      console.log(response);
       settingResponseType(response, nameType, idType, changeCategory);
       getIngredientsAndMesures(response.meals[0]);
     }
   };
 
+  const filterRecomendation = (response) => {
+    if (path === '/bebidas/:id') {
+      const number = 5;
+      const newObj = response.meals.filter((item, index) => index <= number);
+      return newObj;
+    }
+    const number = 5;
+    const newObj = response.drinks.filter((item, index) => index <= number);
+    return newObj;
+  };
+
+  const randomName = (array) => {
+    if (path === '/comidas/:id') {
+      const nameType = 'Drink';
+      const changeCategory = 'strAlcoholic';
+      const arrayfiltered = array.map((element) => (
+        {
+          name: element[`str${nameType}`],
+          category: element[changeCategory],
+          img: element[`str${nameType}Thumb`],
+        }
+      ));
+      return arrayfiltered;
+    }
+    if (path === '/bebidas/:id') {
+      const nameType = 'Meal';
+      const changeCategory = 'strCategory';
+      const arrayfiltered = array.map((element) => (
+        {
+          name: element[`str${nameType}`],
+          category: element[changeCategory],
+          img: element[`str${nameType}Thumb`],
+        }
+      ));
+      return arrayfiltered;
+    }
+  };
+
+  const fetchRecomendation = async () => {
+    if (path === '/bebidas/:id') {
+      const URL = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+      const getRecomendation = await fetch(URL);
+      const response = await getRecomendation.json();
+      const filterResult = filterRecomendation(response);
+      setRecomendation(randomName(filterResult));
+    } else {
+      const URL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+      const getRecomendation = await fetch(URL);
+      const response = await getRecomendation.json();
+      const filterResult = filterRecomendation(response);
+      setRecomendation(randomName(filterResult));
+    }
+  };
+
   useEffect(() => {
     fetchRecipe();
+    fetchRecomendation();
   }, []);
 
   const showVideo = () => {
@@ -72,10 +125,12 @@ function FoodDetail(props) {
       </video>
     );
   };
-  console.log(objResponse);
+  console.log(recomendation);
+  console.log(path);
   return (
     <div>
       <img
+        className="main-image"
         data-testid="recipe-photo"
         src={ objResponse.img }
         alt={ objResponse.title }
@@ -98,7 +153,16 @@ function FoodDetail(props) {
       </ul>
       <p data-testid="instructions">{objResponse.instruction}</p>
       {showVideo()}
-      <span data-testid="index-0-recomendation-card">receitas recomendadas</span>
+      <ul className="recomendation-image">
+        {recomendation
+          .map((recipe, index) => (
+            <li key={ index } data-testid={ `${index}-recomendation-card` }>
+              <img src={ recipe.img } alt={ recipe.name } width="160" />
+              <h4>{recipe.category}</h4>
+              <h1 data-testid={ `${index}-recomendation-title` }>{recipe.name}</h1>
+            </li>
+          ))}
+      </ul>
       <button
         data-testid="start-recipe-btn"
         className="button-position"
