@@ -218,7 +218,7 @@ const FoodsDetails = (props) => {
         {recipeRecommendations.map((item, index) => (
           <div
             key={ item.idDrink }
-            data-testid={ `${index}-recommendation-card` }
+            data-testid={ `${index}-recomendation-card` }
           >
             {item.strDrink}
           </div>
