@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import copy from 'clipboard-copy';
 import Context from './Context';
 import fetchMeal from '../services/fetchMeal';
 import fetchDrink from '../services/fetchDrink';
@@ -12,12 +13,50 @@ function RecipesAppProvider({ children }) {
   const [categories, setCategories] = useState([]);
   const [fav, setFav] = useState([]);
   const [heart, setHeart] = useState('');
+  const [copied, setCopied] = useState('');
 
   const isFavorite = (id) => {
     const local = JSON.parse(localStorage.getItem('favoriteRecipes'));
     if (!local) return setHeart('white');
     const match = local.filter((item) => item.id === id);
     return (match.length >= 1 ? setHeart('black') : setHeart('white'));
+  };
+
+  const favorite = (recipe, path, id) => {
+    const ZERO = 0;
+    const local = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const one = local ? local.filter((item) => item.id === id) : '';
+    const compare = path.includes('comida');
+    const newFav = {
+      id: compare ? recipe.idMeal : recipe.idDrink,
+      type: compare ? 'comida' : 'bebida',
+      area: compare ? recipe.strArea : '',
+      category: recipe.strCategory,
+      alcoholicOrNot: compare ? '' : recipe.strAlcoholic,
+      name: compare ? recipe.strMeal : recipe.strDrink,
+      image: compare ? recipe.strMealThumb : recipe.strDrinkThumb,
+    };
+
+    const localFavorite = one.length > ZERO
+      ? local.filter((item) => item.id !== id)
+      : [
+        ...(!local ? '' : local),
+        newFav,
+      ];
+
+    setFav([
+      ...fav,
+      newFav,
+    ]);
+
+    localStorage.setItem('favoriteRecipes', JSON.stringify(localFavorite));
+  };
+
+  const share = (url) => {
+    const time = 3000;
+    copy(`http://localhost:3000${url}`);
+    setCopied('copy');
+    setTimeout(() => setCopied(false), time);
   };
 
   const recipesToRender = async (type) => {
@@ -93,9 +132,11 @@ function RecipesAppProvider({ children }) {
     getRecommendedMeal,
     getRandomDrink,
     getRandomMeal,
+    favorite,
     isFavorite,
+    share,
+    copied,
     fav,
-    setFav,
     heart,
     details,
     recommended,

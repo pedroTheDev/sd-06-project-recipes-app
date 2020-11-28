@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import copy from 'clipboard-copy';
 import '../App.css';
 import Context from '../context/Context';
 import Cards from '../components/Cards';
@@ -15,15 +14,17 @@ function RecipeDetails(props) {
     getDrinkDetail,
     getRecommendedDrink,
     getRecommendedMeal,
+    favorite,
     isFavorite,
     fav,
     heart,
-    setFav,
+    share,
+    copied,
     details,
     recommended,
   } = useContext(Context);
   const { match: { path, params, url } } = props;
-  const [copied, setCopied] = useState('');
+
   const ZERO = 0;
   const SIX = 6;
 
@@ -50,42 +51,6 @@ function RecipeDetails(props) {
 
   const getVideoId = (link) => link.split('=').pop();
 
-  const share = () => {
-    const time = 3000;
-    copy(`http://localhost:3000${url}`);
-    setCopied('copy');
-    setTimeout(() => setCopied(false), time);
-  };
-
-  const favorite = (recipe) => {
-    const local = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    const one = local ? local.filter((item) => item.id === params.id) : '';
-    const compare = path === '/comidas/:id';
-    const newFav = {
-      id: compare ? recipe.idMeal : recipe.idDrink,
-      type: compare ? 'comida' : 'bebida',
-      area: compare ? recipe.strArea : '',
-      category: recipe.strCategory,
-      alcoholicOrNot: compare ? '' : recipe.strAlcoholic,
-      name: compare ? recipe.strMeal : recipe.strDrink,
-      image: compare ? recipe.strMealThumb : recipe.strDrinkThumb,
-    };
-
-    const localFavorite = one.length > ZERO
-      ? local.filter((item) => item.id !== params.id)
-      : [
-        ...(!local ? '' : local),
-        newFav,
-      ];
-
-    setFav([
-      ...fav,
-      newFav,
-    ]);
-
-    localStorage.setItem('favoriteRecipes', JSON.stringify(localFavorite));
-  };
-
   return (
     <div>
       <h1>Página de Details</h1>
@@ -106,7 +71,7 @@ function RecipeDetails(props) {
               src={ shareIcon }
               data-testid="share-btn"
               alt="share-icon"
-              onClick={ () => share() }
+              onClick={ () => share(url) }
             />
             { copied ? <span>Link copiado!</span> : '' }
             <input
@@ -114,7 +79,7 @@ function RecipeDetails(props) {
               src={ heart === 'white' ? whiteHeartIcon : blackHeartIcon }
               data-testid="favorite-btn"
               alt={ heart === 'white' ? 'whiteHeartIcon' : 'blackHeartIcon' }
-              onClick={ () => favorite(recipe) }
+              onClick={ () => favorite(recipe, path, params.id) }
             />
             <p data-testid="recipe-category">
               {path === '/comidas/:id' ? recipe.strCategory : recipe.strAlcoholic}
