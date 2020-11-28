@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Footer } from '../components';
 
 export default function ExploreRecipes() {
   return (
@@ -20,6 +21,7 @@ export default function ExploreRecipes() {
           Explorar Bebidas
         </button>
       </Link>
+      <Footer />
     </div>
   );
 }

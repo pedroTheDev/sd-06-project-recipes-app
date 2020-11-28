@@ -1,19 +1,26 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import RecipesContext from '../context/Context';
 
-export default function SearchBar(props) {
+export default function SearchBar({ id, ingredient }) {
   const { setFilters } = useContext(RecipesContext);
-  const { id } = props;
   const [searchOptions, setSearchOptions] = useState({
-    searchText: '',
-    searchType: '',
+    searchText: (ingredient === undefined) ? '' : ingredient,
+    searchType: (ingredient === undefined) ? '' : 'ingredient',
     category: id,
   });
 
   function handleSearch({ target }) {
     setSearchOptions({ ...searchOptions, [target.name]: target.value });
   }
+
+  useEffect(() => {
+    if (ingredient === searchOptions.searchText) {
+      document.getElementById('ingredient-search-radio').checked = true;
+      document.getElementById('search-input').value = ingredient;
+      setFilters(searchOptions);
+    }
+  });
 
   function submitSearch() {
     const { searchText, searchType } = searchOptions;
@@ -84,4 +91,9 @@ export default function SearchBar(props) {
 
 SearchBar.propTypes = {
   id: PropTypes.string.isRequired,
+  ingredient: PropTypes.string,
+};
+
+SearchBar.defaultProps = {
+  ingredient: '',
 };

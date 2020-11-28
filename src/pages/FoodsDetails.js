@@ -28,7 +28,7 @@ export default function FoodsDetails(props) {
       setRecommendation(results);
     }
     fetchData();
-  }, []);
+  });
 
   useEffect(() => {
     const storage = JSON.parse(localStorage.getItem('inProgressRecipes'));
@@ -149,7 +149,7 @@ export default function FoodsDetails(props) {
           {renderIngredients()}
 
           <video data-testid="video" width="340" controls>
-            <source src={ item.strYoutube } type="video/mp4" />
+            <source src={ decodeURI(item.strYoutube) } type="video/mp4" />
             <track src="" kind="captions" />
           </video>
           {

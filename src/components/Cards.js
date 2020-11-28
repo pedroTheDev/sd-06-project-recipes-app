@@ -8,10 +8,9 @@ import '../css/Cards.css';
 export default function Cards({ id }) {
   const { items, filters } = useContext(RecipesContext);
 
-  if (items) {
+  if (typeof items !== 'undefined') {
     if (items.drinks) {
       if (items.drinks.length === 1 && filters.searchType !== 'category') {
-        console.log(items.drinks[0]);
         return <Redirect to={ `/${id}/${items.drinks[0].idDrink}` } />;
       }
       return (

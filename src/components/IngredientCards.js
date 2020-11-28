@@ -1,20 +1,22 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import useAPI from '../hooks/useAPI';
+import RecipesContext from '../context/Context';
 
 import '../css/Cards.css';
 
 export default function IngredientCards({ id }) {
-  // const { setItems, filters } = useContext(RecipesContext);
+  const { setItems } = useContext(RecipesContext);
   const items = useAPI(id, 'ingredientsList');
-  console.log(items);
+
+  useEffect(() => setItems(), []);
 
   if (items && items.drinks && id === 'bebidas') {
     return (
       <div className="cards-wrapper">
         {items.drinks.map((item, index) => (
-          <Link key={ index } to={ `/${id}/${item.idDrink}` }>
+          <Link key={ index } to={ { pathname: '/bebidas', state: item.strIngredient1 } }>
             <div
               key={ index }
               className="item-card"
@@ -36,7 +38,7 @@ export default function IngredientCards({ id }) {
     return (
       <div className="cards-wrapper">
         {items.meals.map((item, index) => (
-          <Link key={ index } to={ `/${id}/${item.idMeal}` }>
+          <Link key={ index } to={ { pathname: '/comidas', state: item.strIngredient } }>
             <div
               key={ index }
               className="item-card"

@@ -54,7 +54,7 @@ export default function useAPI(category, type = 'name', text = '') {
       const slicedResults = (data[typeOfFetch] <= maxCards)
         ? data[typeOfFetch]
         : data[typeOfFetch].slice(firstCard, maxCards);
-      console.log('hook mudando Items');
+
       setItems({ [typeOfFetch]: slicedResults });
     } catch (error) {
       setItems({ [typeOfFetch]: null });
