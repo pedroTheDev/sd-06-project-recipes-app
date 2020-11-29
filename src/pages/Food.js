@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
@@ -6,7 +6,6 @@ import RecipesList from '../components/RecipesList';
 import { addRecipes, addFoodRecipes,
   changeIsFetchin, addFoodCategories } from '../redux/actions/searchRecipes';
 import useFetch from '../helpers/effects/useFetch';
-import { fetchAPI } from '../helpers/APIRequests';
 import Footer from '../components/Footer';
 import FoodCategoriesButtons from '../components/FoodCategoriesButtons';
 
@@ -21,7 +20,6 @@ function Food(props) {
     iscategoriesFetching,
     dispatchFetching,
     dispatchCategories,
-    categories,
 
   } = props;
   const componentIsMounted = useRef(true);
@@ -30,12 +28,9 @@ function Food(props) {
   const { title } = header;
   const { inputText, radioSearchSelection } = data;
 
-  const allFoodRecipesEndPoint = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
-
   useEffect(() => {
     dispatchCategories();
     dispatchInitialRecipes();
-    console.log(categories);
   }, []);
 
   useFetch(
@@ -107,7 +102,11 @@ Food.propTypes = {
     all: PropTypes.func,
   }).isRequired,
   dispatchFetching: PropTypes.func.isRequired,
+  dispatchInitialRecipes: PropTypes.func.isRequired,
+  dispatchCategories: PropTypes.func.isRequired,
   dispatchRecipes: PropTypes.func.isRequired,
+  isFetchin: PropTypes.bool.isRequired,
+  iscategoriesFetching: PropTypes.bool.isRequired,
 
   pageConfig: PropTypes.shape({
     header: PropTypes.shape({
