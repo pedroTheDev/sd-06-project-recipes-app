@@ -53,7 +53,8 @@ function RecipesList(props) {
   );
 
   const render = () => {
-    if (!isLoading && recipes && recipes[type] && recipes[type].length > 0) {
+    const zero = 0;
+    if (!isLoading && recipes && recipes[type] && recipes[type].length > zero) {
       return renderSearchResults();
     }
     return <p>is loading</p>;

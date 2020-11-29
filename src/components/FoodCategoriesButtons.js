@@ -72,16 +72,20 @@ function FoodCategoriesButtons({ categories,
     </button>
   );
 
-  const renderAllCategoriesButton = () => (
-    <button
-      type="button"
-      data-testid="All-category-filter"
-      onClick={ (e) => handleClick(e, 5) }
+  const renderAllCategoriesButton = () => {
+    const five = 5;
+    return (
+      <button
+        type="button"
+        data-testid="All-category-filter"
+        onClick={ (e) => handleClick(e, five) }
 
-    >
-      All
-    </button>
-  );
+      >
+        All
+      </button>
+
+    );
+  };
 
   const renderCategoriesButtons = () => (
     <div>
