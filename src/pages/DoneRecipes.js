@@ -87,6 +87,7 @@ const DoneRecipes = () => {
                       data-testid={ `${index}-horizontal-image` }
                       src={ recipe.image }
                       alt={ recipe.name }
+                      className="image-display"
                     />
                     <h2 data-testid={ `${index}-horizontal-name` }>{ recipe.name }</h2>
                   </Link>
