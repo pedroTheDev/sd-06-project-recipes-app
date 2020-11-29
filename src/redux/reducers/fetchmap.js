@@ -8,6 +8,8 @@ import {
   getFirstLetterDrinkEndPoint,
   allFoodRecipesEndPoint,
   allDrinkRecipesEndPoint,
+  getFoodRecipeIdEndPoint,
+  getDrinkRecipeIdEndPoint,
 } from '../../helpers/APIRequests';
 
 const initialState = {
@@ -15,6 +17,7 @@ const initialState = {
     ingredients: (inputText) => fetchAPI(getIngredientsFoodEndPoint(inputText)),
     name: (inputText) => fetchAPI(getNameFoodEndPoint(inputText)),
     firstLetter: (inputText) => fetchAPI(getFirstLetterFoodEndPoint(inputText)),
+    idFood: (id) => fetchAPI(getFoodRecipeIdEndPoint(id)),
     all: () => fetchAPI(allFoodRecipesEndPoint),
 
   },
@@ -22,6 +25,7 @@ const initialState = {
     ingredients: (inputText) => fetchAPI(getIngredientsDrinkEndPoint(inputText)),
     name: (inputText) => fetchAPI(getNameDrinkEndPoint(inputText)),
     firstLetter: (inputText) => fetchAPI(getFirstLetterDrinkEndPoint(inputText)),
+    idDrink: (id) => (fetchAPI(getDrinkRecipeIdEndPoint(id))),
     all: () => fetchAPI(allDrinkRecipesEndPoint),
   },
 };

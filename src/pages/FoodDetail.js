@@ -1,27 +1,168 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { filterMatchInKeys } from '../helpers/assets';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
 import '../css/details.css';
 
-function FoodDetail() {
-  return (
-    <div>
-      <img data-testid="recipe-photo" src="" alt="" />
-      <h1 data-testid="recipe-title">titulo api</h1>
-      <button data-testid="share-btn" type="button">{shareIcon}</button>
-      <button data-testid="favorite-btn" type="button">{whiteHeartIcon}</button>
-      <h4 data-testid="recipe-category">texto categoria</h4>
-      <p data-testid="0-ingredient-name-and-measure">lista de ingredientes</p>
-      <p data-testid="instructions">texto das instruções</p>
+function FoodDetail(props) {
+  const { match: { path, params: { id } }, fetchId: { Comidas, Bebidas } } = props;
+  const [objResponse, setObjResponse] = useState({});
+  const [ingredientsItem, setIngredientsItem] = useState([]);
+  const [mesuresItem, setMesuresItem] = useState([]);
+  const [recomendation, setRecomendation] = useState([]);
+
+  const settingResponseType = (response, nameType, idType, changeCategory) => {
+    setObjResponse({
+      img: response[idType][0][`str${nameType}Thumb`],
+      title: response[idType][0][`str${nameType}`],
+      category: response[idType][0][changeCategory],
+      instruction: response[idType][0].strInstructions,
+    });
+  };
+
+  const getIngredientsAndMesures = (object) => {
+    const ingredients = filterMatchInKeys(/strIngredient/i, object);
+    const showIngredients = ingredients.map((ingred) => object[ingred])
+      .filter((eachIngredient) => eachIngredient !== '');
+    setIngredientsItem(showIngredients);
+    const mesures = filterMatchInKeys(/strMeasure/i, object);
+    const showMesures = mesures.map((mesu) => object[mesu])
+      .filter((eachMesure) => eachMesure !== '');
+    setMesuresItem(showMesures);
+  };
+
+  const fetchRecipe = async () => {
+    if (path === '/bebidas/:id') {
+      const idType = 'drinks';
+      const nameType = 'Drink';
+      const changeCategory = 'strAlcoholic';
+      const response = await Bebidas.idDrink(id);
+      settingResponseType(response, nameType, idType, changeCategory);
+      getIngredientsAndMesures(response.drinks[0]);
+    } else {
+      const idType = 'meals';
+      const nameType = 'Meal';
+      const changeCategory = 'strCategory';
+      const response = await Comidas.idFood(id);
+      settingResponseType(response, nameType, idType, changeCategory);
+      getIngredientsAndMesures(response.meals[0]);
+    }
+  };
+
+  const filterRecomendation = (response) => {
+    if (path === '/bebidas/:id') {
+      const number = 5;
+      const newObj = response.meals.filter((item, index) => index <= number);
+      return newObj;
+    }
+    const number = 5;
+    const newObj = response.drinks.filter((item, index) => index <= number);
+    return newObj;
+  };
+
+  const randomName = (array) => {
+    if (path === '/comidas/:id') {
+      const nameType = 'Drink';
+      const changeCategory = 'strAlcoholic';
+      const arrayfiltered = array.map((element) => (
+        {
+          name: element[`str${nameType}`],
+          category: element[changeCategory],
+          img: element[`str${nameType}Thumb`],
+        }
+      ));
+      return arrayfiltered;
+    }
+    if (path === '/bebidas/:id') {
+      const nameType = 'Meal';
+      const changeCategory = 'strCategory';
+      const arrayfiltered = array.map((element) => (
+        {
+          name: element[`str${nameType}`],
+          category: element[changeCategory],
+          img: element[`str${nameType}Thumb`],
+        }
+      ));
+      return arrayfiltered;
+    }
+  };
+
+  const fetchRecomendation = async () => {
+    if (path === '/bebidas/:id') {
+      const URL = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+      const getRecomendation = await fetch(URL);
+      const response = await getRecomendation.json();
+      const filterResult = filterRecomendation(response);
+      setRecomendation(randomName(filterResult));
+    } else {
+      const URL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+      const getRecomendation = await fetch(URL);
+      const response = await getRecomendation.json();
+      const filterResult = filterRecomendation(response);
+      setRecomendation(randomName(filterResult));
+    }
+  };
+
+  useEffect(() => {
+    fetchRecipe();
+    fetchRecomendation();
+  }, []);
+
+  const showVideo = () => {
+    if (path === '/bebidas/:id') {
+      return '';
+    }
+    return (
       <video
         data-testid="video"
         controls
-        src="qualquer-coisa.mp4"
+        src={ objResponse.video }
       >
-        <track src="qualquer-coisa.vtt" kind="captions" srcLang="en" />
+        <track src={ objResponse.video } kind="captions" srcLang="en" />
       </video>
-      <span data-testid="0-recomendation-card">receitas recomendadas</span>
+    );
+  };
+  console.log(recomendation);
+  console.log(path);
+  return (
+    <div>
+      <img
+        className="main-image"
+        data-testid="recipe-photo"
+        src={ objResponse.img }
+        alt={ objResponse.title }
+        width="150"
+      />
+      <h1 data-testid="recipe-title">{objResponse.title}</h1>
+      <button data-testid="share-btn" type="button">
+        <img src={ shareIcon } alt="share" />
+      </button>
+      <button data-testid="favorite-btn" type="button">
+        <img src={ whiteHeartIcon } alt="favorite" />
+      </button>
+      <h4 data-testid="recipe-category">{objResponse.category}</h4>
+      <ul>
+        {ingredientsItem.map((item, index) => (
+          <li key={ index } data-testid={ `${index}-ingredient-name-and-measure` }>
+            {`${item} - ${mesuresItem[index]}`}
+          </li>
+        ))}
+      </ul>
+      <p data-testid="instructions">{objResponse.instruction}</p>
+      {showVideo()}
+      <ul className="recomendation-image">
+        {recomendation
+          .map((recipe, index) => (
+            <li key={ index } data-testid={ `${index}-recomendation-card` }>
+              <img src={ recipe.img } alt={ recipe.name } width="160" />
+              <h4>{recipe.category}</h4>
+              <h1 data-testid={ `${index}-recomendation-title` }>{recipe.name}</h1>
+            </li>
+          ))}
+      </ul>
       <button
         data-testid="start-recipe-btn"
         className="button-position"
@@ -29,8 +170,23 @@ function FoodDetail() {
       >
         Iniciar Receita
       </button>
-    </div>
-  );
+    </div>);
 }
 
-export default FoodDetail;
+const mapStateToProps = (state) => ({
+  index: state.searchRecipes.recipes.results,
+  fetchId: state.fetchmap,
+});
+
+FoodDetail.propTypes = {
+  match: PropTypes.shape({
+    path: PropTypes.string.isRequired,
+    params: PropTypes.objectOf(PropTypes.object).isRequired,
+  }).isRequired,
+  fetchId: PropTypes.shape({
+    Bebidas: PropTypes.objectOf(PropTypes.func).isRequired,
+    Comidas: PropTypes.objectOf(PropTypes.func).isRequired,
+  }).isRequired,
+};
+
+export default connect(mapStateToProps)(FoodDetail);

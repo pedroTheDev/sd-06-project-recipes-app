@@ -1,13 +1,13 @@
 import React from 'react';
+
 import PropTypes from 'prop-types';
 
-export default function Recipe(props) {
-  const { match: { params: { id } } } = props;
-  return (
-    <>
-      {id}
-      {' '}
-    </>);
+import FoodDetail from './FoodDetail';
+// import DrinkDetail from './DrinkDetail';
+
+function Recipe(props) {
+  const { match } = props;
+  return <FoodDetail match={ match } />;
 }
 
 Recipe.propTypes = {
@@ -17,3 +17,5 @@ Recipe.propTypes = {
     }).isRequired,
   }).isRequired,
 };
+
+export default Recipe;
