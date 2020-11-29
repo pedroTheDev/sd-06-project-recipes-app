@@ -45,7 +45,7 @@ class FavoriteRecipes extends Component {
     if (name === 'Drinks') {
       name = 'bebida';
     }
-    this.setState({ filterButton: name }, () => this.filterRecipes());
+    this.setState({ filterButton: name });
   }
 
   filterRecipes() {

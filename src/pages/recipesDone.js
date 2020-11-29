@@ -45,7 +45,7 @@ class RecipesDone extends Component {
       name = 'bebida';
     }
 
-    this.setState({ filterButton: name }, () => this.filterRecipes());
+    this.setState({ filterButton: name });
   }
 
   filterRecipes() {
