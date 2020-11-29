@@ -2,9 +2,9 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import searchIcon from '../images/searchIcon.svg';
 import profileIcon from '../images/profileIcon.svg';
-import './Header.css';
 import HeaderContext from '../context/HeaderContext';
 import SearchBar from './SearchBar';
+import './Header.css';
 
 const Header = () => {
   const {

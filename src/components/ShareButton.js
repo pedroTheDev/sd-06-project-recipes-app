@@ -26,9 +26,7 @@ function ShareButton({ path }) {
 }
 
 ShareButton.propTypes = {
-  path: PropTypes.shape({
-    replace: PropTypes.func,
-  }).isRequired,
+  path: PropTypes.string.isRequired,
 };
 
 export default ShareButton;
