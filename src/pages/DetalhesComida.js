@@ -37,6 +37,24 @@ function DetalhesComidas() {
     fetchComidasDetalhes();
   }, []);
 
+  const vinte = 20;
+  function renderIngrediente(bebida) {
+    const array = [];
+    for (let numero = 1; numero <= vinte; numero += 1) {
+      if (bebida[`strIngredient${numero}`] !== null) {
+        array.push(
+          <p data-testid={ `${numero - 1}-ingredient-name-and-measure` }>
+            {`${bebida[`strIngredient${numero}`]} `}
+            {(bebida[`strMeasure${numero}`] !== null)
+              ? <span>{`${bebida[`strMeasure${numero}`]}`}</span>
+              : ''}
+          </p>,
+        );
+      }
+    }
+    return array;
+  }
+
   return (
     estadoApiComidas.map((comida, index) => (
       <div key={ index }>
@@ -48,66 +66,7 @@ function DetalhesComidas() {
         <h2 data-testid="recipe-title">{ comida.strMeal }</h2>
         <h3 data-testid="recipe-category">{comida.strCategory}</h3>
         <div>
-          <p data-testid="0-ingredient-name-and-measure">
-            {`${comida.strIngredient1}  ${comida.strMeasure1}`}
-          </p>
-          <p data-testid="1-ingredient-name-and-measure">
-            {`${comida.strIngredient2}  ${comida.strMeasure2}`}
-          </p>
-          <p data-testid="2-ingredient-name-and-measure">
-            {`${comida.strIngredient3}  ${comida.strMeasure3}`}
-          </p>
-          <p data-testid="3-ingredient-name-and-measure">
-            {`${comida.strIngredient4}  ${comida.strMeasure4}`}
-          </p>
-          <p data-testid="4-ingredient-name-and-measure">
-            {`${comida.strIngredient5}  ${comida.strMeasure5}`}
-          </p>
-          <p data-testid="5-ingredient-name-and-measure">
-            {`${comida.strIngredient6}  ${comida.strMeasure6}`}
-          </p>
-          <p data-testid="6-ingredient-name-and-measure">
-            {`${comida.strIngredient7}  ${comida.strMeasure7}`}
-          </p>
-          <p data-testid="7-ingredient-name-and-measure">
-            {`${comida.strIngredient8}  ${comida.strMeasure8}`}
-          </p>
-          <p data-testid="8-ingredient-name-and-measure">
-            {`${comida.strIngredient9}  ${comida.strMeasure9}`}
-          </p>
-          <p data-testid="9-ingredient-name-and-measure">
-            {`${comida.strIngredient10}  ${comida.strMeasure10}`}
-          </p>
-          <p data-testid="10-ingredient-name-and-measure">
-            {`${comida.strIngredient11}  ${comida.strMeasure11}`}
-          </p>
-          <p data-testid="11-ingredient-name-and-measure">
-            {`${comida.strIngredient12}  ${comida.strMeasure12}`}
-          </p>
-          <p data-testid="12-ingredient-name-and-measure">
-            {`${comida.strIngredient13}  ${comida.strMeasure13}`}
-          </p>
-          <p data-testid="13-ingredient-name-and-measure">
-            {`${comida.strIngredient14}  ${comida.strMeasure14}`}
-          </p>
-          <p data-testid="14-ingredient-name-and-measure">
-            {`${comida.strIngredient15}  ${comida.strMeasure15}`}
-          </p>
-          <p data-testid="15-ingredient-name-and-measure">
-            {`${comida.strIngredient16}  ${comida.strMeasure16}`}
-          </p>
-          <p data-testid="16-ingredient-name-and-measure">
-            {`${comida.strIngredient17}  ${comida.strMeasure17}`}
-          </p>
-          <p data-testid="17-ingredient-name-and-measure">
-            {`${comida.strIngredient18}  ${comida.strMeasure18}`}
-          </p>
-          <p data-testid="18-ingredient-name-and-measure">
-            {`${comida.strIngredient19}  ${comida.strMeasure19}`}
-          </p>
-          <p data-testid="19-ingredient-name-and-measure">
-            {`${comida.strIngredient20}  ${comida.strMeasure20}`}
-          </p>
+          {renderIngrediente(comida)}
         </div>
         <p data-testid="instructions">{comida.strInstructions}</p>
 
@@ -122,13 +81,11 @@ function DetalhesComidas() {
             srcLang="en"
             src={ comida.strYoutube }
           />
-
         </video>
         <button type="button" data-testid="share-btn">Compartilhar</button>
         <button type="button" data-testid="favorite-btn">Favoritar</button>
 
         <div className="recomendacao">
-
           {
             retornoApi6Bebidas
             && retornoApi6Bebidas.slice(zero, seis)
