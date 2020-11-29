@@ -162,55 +162,55 @@ function SearchBar() {
       /> : null}
       {showSearchBar
         ? (
-          <input
-            type="text"
-            data-testid="search-input"
-            id="search-input"
-            name="search"
-            onChange={ handleChange }
-          />)
+          <div>
+            <input
+              type="text"
+              data-testid="search-input"
+              id="search-input"
+              name="search"
+              onChange={ handleChange }
+            />
+            <div>
+              <label htmlFor="filter">
+                <input
+                  type="radio"
+                  value="ingredients"
+                  name="filter"
+                  data-testid="ingredient-search-radio"
+                  onChange={ handleRadio }
+                />
+                Ingredients
+              </label>
+              <label htmlFor="filter">
+                <input
+                  type="radio"
+                  value="name"
+                  name="filter"
+                  data-testid="name-search-radio"
+                  onChange={ handleRadio }
+                />
+                Nome
+              </label>
+              <label htmlFor="filter">
+                <input
+                  type="radio"
+                  value="first"
+                  name="filter"
+                  data-testid="first-letter-search-radio"
+                  onChange={ handleRadio }
+                />
+                Primeira letra
+              </label>
+              <button
+                type="button"
+                data-testid="exec-search-btn"
+                onClick={ handleButton }
+              >
+                Buscar
+              </button>
+            </div>
+          </div>)
         : null}
-      <div>
-        <label htmlFor="filter">
-          <input
-            type="radio"
-            value="ingredients"
-            name="filter"
-            data-testid="ingredient-search-radio"
-            onChange={ handleRadio }
-          />
-          Ingredients
-        </label>
-        <label htmlFor="filter">
-          <input
-            type="radio"
-            value="name"
-            name="filter"
-            data-testid="name-search-radio"
-            onChange={ handleRadio }
-          />
-          Nome
-        </label>
-        <label htmlFor="filter">
-          <input
-            type="radio"
-            value="first"
-            name="filter"
-            data-testid="first-letter-search-radio"
-            onChange={ handleRadio }
-          />
-          Primeira letra
-        </label>
-      </div>
-      <button
-        type="button"
-        data-testid="exec-search-btn"
-        onClick={ handleButton }
-      >
-        Buscar
-      </button>
-      {/* {renderFoodCard()} */}
-      {/* {renderDrinksCard()} */}
     </div>
   );
 }

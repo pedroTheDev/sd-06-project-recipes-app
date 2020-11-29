@@ -10,7 +10,10 @@ import MealsContext from '../context/MealsContext';
 import '../Css/MealDetail.css';
 
 function DrinkDetails() {
-  const [recipeDrink, setRecipeDrink] = useState({});
+  const [recipeDrink, setRecipeDrink] = useState(
+    { recipe: {}, btnDone: '' },
+  );
+
   const { recommendedRecipe, setRecommendedRecipe } = useContext(MealsContext);
   const itemZerado = 0;
 
@@ -18,11 +21,26 @@ function DrinkDetails() {
 
   useEffect(() => {
     async function fetchDatas() {
+      const inicio = 0;
+      const fim = 6;
+
+      // Verifica se receita já foi iniciada ou concluída
+      const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+      const indexDoneRecipe = doneRecipes.findIndex((item) => item.id === id);
+      let textBtnDoneRecipe = 'Iniciar Receita';
+      if (indexDoneRecipe >= inicio) {
+        if (doneRecipes[indexDoneRecipe].doneDate === '') {
+          textBtnDoneRecipe = 'Continuar Receita';
+        } else {
+          textBtnDoneRecipe = 'Receita Finalizada';
+        }
+      }
+
+      // Verifica os detalhes da receita por id para
       const resultDetail = await getRecipeDrinkByIdApi(id);
       setRecipeDrink(resultDetail[0]);
 
-      const inicio = 0;
-      const fim = 6;
+      // Verifica receitas recomendadas
       const resultMeals = await getRecipesMealsApi();
       const myMeals = resultMeals.slice(inicio, fim);
       const myRecommendedMeals = myMeals.map((item) => {
@@ -53,8 +71,26 @@ function DrinkDetails() {
     return ingredients;
   }
 
-  return (
-    <div>
+  function updateDoneRecipes() {
+    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+
+    const newDoneRecipe = {
+      id: recipeDrink.idDrink,
+      type: 'bebida',
+      area: '',
+      category: recipeDrink.strCategory,
+      alcoholicOrNot: recipeDrink.strAlcoholic,
+      name: recipeDrink.strDrink,
+      image: recipeDrink.strDrinkThumb,
+      doneDate: '',
+      tags: recipeDrink.strTags,
+    };
+    const arrayDoneRecipe = [...doneRecipes, newDoneRecipe];
+    localStorage.setItem('doneRecipes', JSON.stringify(arrayDoneRecipe));
+  }
+
+  function imgDetail() {
+    return (
       <div className="img-container">
         <img
           className="detail-img"
@@ -63,6 +99,10 @@ function DrinkDetails() {
           src={ recipeDrink.strDrinkThumb }
         />
       </div>
+    );
+  }
+  function titleDatail() {
+    return (
       <div>
         <h2 data-testid="recipe-title">{ recipeDrink.strDrink }</h2>
         <div>
@@ -70,9 +110,19 @@ function DrinkDetails() {
           <img src={ favoriteIcon } alt="Profile" data-testid="favorite-btn" />
         </div>
       </div>
+    );
+  }
+
+  function categoryDetail() {
+    return (
       <div>
         <h4 data-testid="recipe-category">{ recipeDrink.strAlcoholic }</h4>
       </div>
+    );
+  }
+
+  function ingredientsDetail() {
+    return (
       <div>
         <h3>Ingredients</h3>
         <ul>
@@ -86,28 +136,65 @@ function DrinkDetails() {
           ))}
         </ul>
       </div>
+    );
+  }
+
+  function instructionsDetail() {
+    return (
       <div>
         <h3>Instructions</h3>
         <p data-testid="instructions">{ recipeDrink.strInstructions }</p>
       </div>
+    );
+  }
+
+  function recommendedDetail() {
+    return (
       <div>
         <h3>Recommended</h3>
         { recommendedRecipe.length !== itemZerado
           ? <MyCarousel />
           : <p>Loading...</p> }
       </div>
+    );
+  }
+
+  function buttonDetail() {
+    return (
       <div>
-        <Button
-          className="btn-iniciar-receita"
-          type="button"
-          data-testid="start-recipe-btn"
-          variant="success"
-          size="lg"
-          block
-        >
-          Iniciar Receita
-        </Button>
+        { recipeDrink.btnDone === 'Receita Finalizada'
+          ? (<h5>{ recipeDrink.btnDone }</h5>)
+          : (
+            <Button
+              className="btn-iniciar-receita"
+              type="button"
+              data-testid="start-recipe-btn"
+              variant="success"
+              size="lg"
+              block
+              onClick={ updateDoneRecipes }
+            >
+              { recipeDrink.btnDone }
+            </Button>)}
       </div>
+    );
+  }
+
+  return (
+    <div>
+      {/* { btnDoneRecipe === ''
+        ? (<h5>Loading...</h5>)
+        : ( */}
+      <div>
+        { imgDetail() }
+        { titleDatail() }
+        { categoryDetail() }
+        { ingredientsDetail() }
+        { instructionsDetail() }
+        { recommendedDetail() }
+        { buttonDetail() }
+      </div>
+      {/* )} */}
     </div>
   );
 }

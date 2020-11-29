@@ -1,90 +1,100 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import Carousel from 'react-bootstrap/Carousel';
 import MealsContext from '../context/MealsContext';
-import './myCarousel.css';
+import '../Css/myCarousel.css';
 
 function MyCarousel() {
-  const { recommendedRecipe } = useContext(MealsContext);
+  const [recommendedRecipe, setRecommendedRecipe] = useState([]);
+  const { recommendedMeals, recommendedDrinks } = useContext(MealsContext);
+
+  // Será usado para pegar o pathname ("comidas" ou "bebidas")
+  const location = useLocation();
+  const indiceZero = 0;
+  const indiceUm = 1;
+  const indiceDois = 2;
+  const indiceTres = 3;
+  const indiceQuatro = 4;
+  const indiceCinco = 5;
+
+  useEffect(() => {
+    console.log(recommendedMeals);
+    console.log(recommendedDrinks);
+    let myRecommendedRecipes = [];
+    if (location.pathname.includes('comidas')) {
+      myRecommendedRecipes = recommendedDrinks.map((item) => {
+        const myCard = {
+          id: item.idDrink,
+          strName: item.strDrink,
+          strThumb: item.strDrinkThumb,
+          strCategory: item.strAlcoholic,
+        };
+        return myCard; // retorna o novo objeto criado no map do myCards
+      });
+    } else {
+      myRecommendedRecipes = recommendedMeals.map((item) => {
+        const myCard = {
+          id: item.idMeal,
+          strName: item.strMeal,
+          strThumb: item.strMealThumb,
+          strCategory: item.strCategory,
+        };
+        return myCard; // retorna o novo objeto criado no map do myCards
+      });
+    }
+    setRecommendedRecipe(myRecommendedRecipes);
+  }, []);
+
+  function showItemCarousel(index) {
+    return (
+      <div data-testid={ `${index}-recomendation-card" ` }>
+        <img
+          className="d-block w-100"
+          src={ recommendedRecipe[index].strThumb }
+          alt="Receitas recomendadas"
+        />
+        <h6>{ recommendedRecipe[index].strCategory }</h6>
+        <h4
+          data-testid={ `${index}-recomendation-title` }
+        >
+          { recommendedRecipe[index].strName }
+        </h4>
+      </div>
+    );
+  }
+
+  function showCarousel() {
+    return (
+      <Carousel>
+        <Carousel.Item>
+          <div className="carousel-container">
+            { showItemCarousel(indiceZero) }
+            { showItemCarousel(indiceUm) }
+          </div>
+        </Carousel.Item>
+        <Carousel.Item>
+          <div className="carousel-container">
+            { showItemCarousel(indiceDois) }
+            { showItemCarousel(indiceTres) }
+          </div>
+        </Carousel.Item>
+        <Carousel.Item>
+          <div className="carousel-container">
+            { showItemCarousel(indiceQuatro) }
+            { showItemCarousel(indiceCinco) }
+          </div>
+        </Carousel.Item>
+      </Carousel>
+    );
+  }
 
   return (
-    <Carousel>
-      { console.log(recommendedRecipe) }
-      <Carousel.Item>
-        <div className="carousel-container">
-          <div data-testid="0-recomendation-card">
-            <img
-              className="d-block w-100"
-              src={ recommendedRecipe[0].strThumb }
-              alt="First slide"
-            />
-            <h6>{ recommendedRecipe[0].strCategory }</h6>
-            <h4 data-testid="0-recomendation-title">{ recommendedRecipe[0].strName }</h4>
-          </div>
-          <div data-testid="1-recomendation-card">
-            <img
-              className="d-block w-100"
-              src={ recommendedRecipe[1].strThumb }
-              alt="First slide"
-            />
-            <h6>{ recommendedRecipe[1].strCategory }</h6>
-            <h4 data-testid="1-recomendation-title">{ recommendedRecipe[1].strName }</h4>
-          </div>
-        </div>
-      </Carousel.Item>
-      <Carousel.Item>
-        <div className="carousel-container">
-          <div data-testid="2-recomendation-card">
-            <img
-              className="d-block w-100"
-              src={ recommendedRecipe[2].strThumb }
-              alt="First slide"
-            />
-            <h6>{ recommendedRecipe[2].strCategory }</h6>
-            <h4 data-testid="2-recomendation-title">{ recommendedRecipe[2].strName }</h4>
-          </div>
-          <div data-testid="3-recomendation-card">
-            <img
-              className="d-block w-100"
-              src={ recommendedRecipe[3].strThumb }
-              alt="First slide"
-            />
-            <h6>{ recommendedRecipe[3].strCategory }</h6>
-            <h4 data-testid="3-recomendation-title">{ recommendedRecipe[3].strName }</h4>
-          </div>
-        </div>
-      </Carousel.Item>
-      <Carousel.Item>
-        <div className="carousel-container">
-          <div data-testid="4-recomendation-card">
-            <img
-              className="d-block w-100"
-              src={ recommendedRecipe[4].strThumb }
-              alt="First slide"
-            />
-            <h6>{ recommendedRecipe[4].strCategory }</h6>
-            <h4 data-testid="4-recomendation-title">{ recommendedRecipe[4].strName }</h4>
-          </div>
-          <div data-testid="5-recomendation-card">
-            <img
-              className="d-block w-100"
-              src={ recommendedRecipe[5].strThumb }
-              alt="First slide"
-            />
-            <h6>{ recommendedRecipe[5].strCategory }</h6>
-            <h4 data-testid="5-recomendation-title">{ recommendedRecipe[5].strName }</h4>
-          </div>
-        </div>
-      </Carousel.Item>
-    </Carousel>
+    <div>
+      { recommendedRecipe.length !== indiceZero
+        ? showCarousel()
+        : (<p>Loading...</p>)}
+    </div>
   );
 }
-
-// MyCarousel.propTypes = {
-//   cards: PropTypes.arrayOf(PropTypes.shape({
-//     strThumb: PropTypes.string.isRequired,
-//     strName: PropTypes.string.isRequired,
-//     strCategory: PropTypes.string.isRequired,
-//   })).isRequired,
-// };
 
 export default MyCarousel;
