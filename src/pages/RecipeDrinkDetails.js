@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import copy from 'clipboard-copy';
+import StartButton from '../components/StartButton';
 import RecipesContext from '../context/RecipesAppContext';
-import './scroll.css';
+import '../Style/scroll.css';
 
 function RecipeDrinkDetails(props) {
   const { match } = props;
+  const { title } = props;
   const { id } = match.params;
   const { recipes, setRecipes } = useContext(RecipesContext);
   const [recomendation, setRecomendation] = useState([]);
@@ -17,6 +18,7 @@ function RecipeDrinkDetails(props) {
   const TWENTY = 20;
   const SEIS = 6;
   const API = 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=';
+  const positionButton = { position: 'fixed' };
 
   const fetchDetailRecipeDrinkByID = async () => {
     const response = await fetch(`${API}${id}`);
@@ -111,7 +113,6 @@ function RecipeDrinkDetails(props) {
           ))}
         </ul>
         <p data-testid="instructions">{recipes[0].strInstructions}</p>
-
         <div className="scrollmenu">
           {recomendation.slice(ZERO, SEIS).map((element, index) => (
             <div key={ index } className="scrollmenu-child">
@@ -124,17 +125,9 @@ function RecipeDrinkDetails(props) {
             </div>
           ))}
         </div>
-        <Link
-          to={ `/bebidas/${id}/in-progress` }
-        >
-          <button
-            type="button"
-            data-testid="start-recipe-btn"
-          >
-            Iniciar Receita
-          </button>
-        </Link>
-
+        <div style={ positionButton }>
+          <StartButton id={ id } title={ title } />
+        </div>
       </div>
     );
   }
@@ -142,6 +135,7 @@ function RecipeDrinkDetails(props) {
 }
 
 RecipeDrinkDetails.propTypes = {
+  title: PropTypes.string.isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,

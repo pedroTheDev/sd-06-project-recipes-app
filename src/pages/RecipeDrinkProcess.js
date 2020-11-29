@@ -20,7 +20,8 @@ function RecipeDrinkProcess(props) {
 
   const settingRecipeInProgress = async () => {
     const response = await fetchDrinkById(id);
-    setRecipes(response);
+    // console.log(title);
+    return setRecipes(response);
   };
 
   const renderIngredients = () => {
@@ -164,75 +165,78 @@ function RecipeDrinkProcess(props) {
   };
 
   useEffect(() => {
-    handleCheckBoxes();
-  }, [createCheckBoxes]);
+    settingRecipeInProgress();
+    checkIfRecipeIsFavorite();
+    checkIfIngredientIsSave();
+    settingRecipeInProgress();
+  }, []);
 
   useEffect(() => {
-    checkIfRecipeIsFavorite();
-    settingRecipeInProgress();
-    checkIfIngredientIsSave();
-  }, []);
+    handleCheckBoxes();
+  }, [createCheckBoxes]);
 
   useEffect(() => {
     if (recipes.length > ZERO) renderIngredients();
   }, [recipes]);
 
-  return (
-    recipes.length > ZERO
-      && (
-        <div>
+  if (recipes.length > ZERO) {
+    return (
+      <div>
+        <img
+          data-testid="recipe-photo"
+          src={ recipes[0].strDrinkThumb }
+          alt="imagem"
+        />
+        <h4
+          data-testid="recipe-title"
+        >
+          { recipes[0].strDrink }
+        </h4>
+        <button
+          type="button"
+          onClick={ () => copyClip() }
+          data-testid="share-btn"
+        >
           <img
-            data-testid="recipe-photo"
-            src={ recipes[0].strDrinkThumb }
-            alt="imagem"
+            src={ shareIcon }
+            alt="compartilhar"
           />
-          <h4
-            data-testid="recipe-title"
-          >
-            { recipes[0].strDrink }
-          </h4>
+        </button>
+        {share && <span>Link copiado!</span>}
+        <div>
           <button
             type="button"
-            onClick={ () => copyClip() }
-            data-testid="share-btn"
+            onClick={ handleFavorites }
           >
             <img
-              src={ shareIcon }
-              alt="compartilhar"
+              data-testid="favorite-btn"
+              alt="Favoritar"
+              src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
             />
           </button>
-          {share && <span>Link copiado!</span>}
-          <div>
-            <button
-              type="button"
-              onClick={ handleFavorites }
-            >
-              <img
-                data-testid="favorite-btn"
-                alt="Favoritar"
-                src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
-              />
-            </button>
-          </div>
-          <h5
-            data-testid="recipe-category"
-          >
-            {recipes[0].strCategory}
-          </h5>
-          <div className="checkbox">
-            { createCheckBoxes() }
-          </div>
-          <p data-testid="instructions">{ recipes[0].strInstructions }</p>
-          <button
-            type="button"
-            data-testid="finish-recipe-btn"
-            onClick={ () => props.history.push('/receitas-feitas') }
-            disabled={ !arrIngredient.every((item) => item.checked) }
-          >
-            Finalizar Receita
-          </button>
         </div>
-      )
+        <h5
+          data-testid="recipe-category"
+        >
+          {recipes[0].strCategory}
+        </h5>
+        <div className="checkbox">
+          { createCheckBoxes() }
+        </div>
+        <p data-testid="instructions">{ recipes[0].strInstructions }</p>
+        <button
+          type="button"
+          data-testid="finish-recipe-btn"
+          onClick={ () => props.history.push('/receitas-feitas') }
+          disabled={ !arrIngredient.every((item) => item.checked) }
+        >
+          Finalizar Receita
+        </button>
+      </div>
+    );
+  }
+  return (
+    <span>...Loading</span>
   );
 }
 

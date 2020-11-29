@@ -9,13 +9,13 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 import '../App.css';
 
 function RecipeFoodProcess(props) {
+  const { match } = props;
+  const { id } = match.params;
   const ZERO = 0;
   const VINTE = 20;
   const [arrIngredient, setArrIngredient] = useState([]);
   const [share, setShare] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
-  const { match } = props;
-  const { id } = match.params;
   const { recipes, setRecipes } = useContext(RecipesContext);
 
   const settingRecipeInProgress = async () => {
@@ -173,8 +173,8 @@ function RecipeFoodProcess(props) {
   }, [createCheckBoxes]);
 
   useEffect(() => {
-    checkIfRecipeIsFavorite();
     settingRecipeInProgress();
+    checkIfRecipeIsFavorite();
     checkIfIngredientIsSave();
   }, []);
 
