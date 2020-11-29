@@ -76,16 +76,19 @@
 }
 
 .container-tags {
-  margin-top: 25px;
-  text-align: center;
+  margin-top: 20px;
+
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .container-tags span {
   background-color: rgba(255, 0, 0, 0.164);
+  margin-top: 5px;
   margin-left: 10px;
   margin-right: 10px;
   padding: 0 10px;
   font-size: 18px;
   border-radius: 25px;
-  text-align: center;
 }
