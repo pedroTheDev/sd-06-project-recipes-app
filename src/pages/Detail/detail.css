@@ -1,4 +1,10 @@
-.start-button {
+.button-container {
+  display: flex;
+  position: fixed;
+  bottom: 0;
+}
+
+.start-recipe {
   position: fixed;
   bottom: 0px;
 }

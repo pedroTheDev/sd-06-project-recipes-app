@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { fetchMeal } from '../../services/mealAPI';
 import SecondaryHeader from '../../components/SecondaryHeader';
 import RecommendationCard from '../../components/RecommendationCard';
@@ -121,13 +121,17 @@ function MealDetail() {
           }
         </div>
       </div>
-      <button
-        type="button"
-        data-testid="start-recipe-btn"
-        className="start-button"
-      >
-        Iniciar Receita
-      </button>
+      <div className="button-container">
+        <Link to={ `/comidas/${recipes.idMeal}/in-progress` }>
+          <button
+            type="button"
+            className="start-recipe"
+            data-testid="start-recipe-btn"
+          >
+            Iniciar Receita
+          </button>
+        </Link>
+      </div>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { fetchDrink } from '../../services/cocktailAPI';
 import SecondaryHeader from '../../components/SecondaryHeader';
 import RecommendationCard from '../../components/RecommendationCard';
@@ -105,13 +105,17 @@ function DrinkDetail() {
           }
         </div>
       </div>
-      <button
-        type="button"
-        data-testid="start-recipe-btn"
-        className="start-button"
-      >
-        Iniciar Receita
-      </button>
+      <div className="button-container">
+        <Link to={ `/bebidas/${recipes.idDrink}/in-progress` }>
+          <button
+            type="button"
+            data-testid="start-recipe-btn"
+            className="start-recipe"
+          >
+            Iniciar Receita
+          </button>
+        </Link>
+      </div>
     </div>
   );
 }
