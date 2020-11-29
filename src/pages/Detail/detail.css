@@ -1,12 +1,20 @@
-.recommendation-container {
-  display: flex;
-}
-
-.recommendation-card {
-  margin: 10px;
-}
-
 .start-button {
   position: fixed;
   bottom: 0px;
+}
+
+.recommendation-container {
+  max-width: 500px;
+  margin-bottom: 50px;
+}
+.scroller {
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  display: flex;
+}
+.recommendation-card {
+  min-width: 100%;
+  min-height: 200px;
+  scroll-snap-align: center;
+  margin: 2px;
 }

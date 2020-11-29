@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
-// import Proptypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import { fetchDrink } from '../../services/cocktailAPI';
 import SecondaryHeader from '../../components/SecondaryHeader';
 import RecommendationCard from '../../components/RecommendationCard';
 import { fetchMeal } from '../../services/mealAPI';
+import './detail.css';
 
 function DrinkDetail() {
   const [recipes, setRecipes] = useState({});
   const [recommendations, setRecommendations] = useState([]);
   const { id } = useParams();
   const zero = 0;
+  const two = 2;
   const maxRecommendations = 6;
   let ingredientsNumber = zero;
 
@@ -89,15 +90,21 @@ function DrinkDetail() {
         <h3>Instruções</h3>
         <div data-testid="instructions">{recipes.strInstructions}</div>
       </div>
-      {
-        recommendations.slice(zero, maxRecommendations).map((recommendation, index) => (
-          <RecommendationCard
-            key={ index }
-            recommendation={ recommendation }
-            index={ index }
-          />
-        ))
-      }
+      <div className="recommendation-container">
+        <div className="scroller">
+          {
+            recommendations.slice(zero, maxRecommendations)
+              .map((recommendation, index) => (
+                <RecommendationCard
+                  className={ index < two ? '' : 'hidden' }
+                  key={ index }
+                  recommendation={ recommendation }
+                  index={ index }
+                />
+              ))
+          }
+        </div>
+      </div>
       <button
         type="button"
         data-testid="start-recipe-btn"

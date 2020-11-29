@@ -11,6 +11,7 @@ function MealDetail() {
   const [recommendations, setRecommendations] = useState([]);
   const { id } = useParams();
   const zero = 0;
+  const two = 2;
   const maxRecommendations = 6;
   let ingredientsNumber = zero;
 
@@ -106,15 +107,19 @@ function MealDetail() {
         />
       </div>
       <div className="recommendation-container">
-        {
-          recommendations.slice(zero, maxRecommendations).map((recommendation, index) => (
-            <RecommendationCard
-              key={ index }
-              recommendation={ recommendation }
-              index={ index }
-            />
-          ))
-        }
+        <div className="scroller">
+          {
+            recommendations.slice(zero, maxRecommendations)
+              .map((recommendation, index) => (
+                <RecommendationCard
+                  className={ index < two ? '' : 'hidden' }
+                  key={ index }
+                  recommendation={ recommendation }
+                  index={ index }
+                />
+              ))
+          }
+        </div>
       </div>
       <button
         type="button"
