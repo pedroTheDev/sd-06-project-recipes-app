@@ -36,6 +36,9 @@ function DrinkDetail() {
       />
       <div className="ingredients-container">
         <h3>Ingredientes</h3>
+        <div>
+          Ingredientes e medidas - bebidas
+        </div>
       </div>
       <div className="instructions-container">
         <h3>Instruções</h3>
@@ -43,7 +46,7 @@ function DrinkDetail() {
       </div>
       <div className="container-reccomended">
         <img
-          data-testid="${index}-recomendation-card"
+          /* data-testid={ `${index}-recomendation-card` } */
           alt="reccomendation"
         />
       </div>

@@ -8,7 +8,7 @@ function MealDetail() {
   const [recommendations, setRecommendations] = useState({});
   const { id } = useParams();
   const zero = 0;
-  let ingredientsNumber = 0;
+  let ingredientsNumber = zero;
 
   const fetchIngredients = async () => {
     const recipesByIdApi = await fetchMeal('lookupIngredient', id);
@@ -32,11 +32,10 @@ function MealDetail() {
     const twenty = 20;
     const ingredients = [];
     let i = 1;
-    console.log(recipes);
     for (i = 1; i <= twenty; i += 1) {
       const keyName = `strIngredient${i}`;
       const measureKeyName = `strMeasure${i}`;
-      if (recipes[keyName] !== ('' || null)) {
+      if (recipes[keyName] !== ('' && null)) {
         const obj = {
           name: recipes[keyName],
           measure: recipes[measureKeyName],
@@ -73,7 +72,12 @@ function MealDetail() {
         {setIngredientAndMeasure().map((ingredient, index) => {
           if (index < ingredientsNumber) {
             return (
-              <div key={ index }>{`- ${ingredient.name} - ${ingredient.measure}`}</div>
+              <div
+                data-testid={ `${index}-ingredient-name-and-measure` }
+                key={ index }
+              >
+                {`- ${ingredient.name} - ${ingredient.measure}`}
+              </div>
             );
           }
           return null;
@@ -85,7 +89,7 @@ function MealDetail() {
       </div>
       <div className="container-reccomended">
         <img
-          data-testid="${index}-recomendation-card"
+          /* data-testid={ `${index}-recomendation-card` } */
           alt="recomendation"
         />
       </div>
