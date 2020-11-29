@@ -2,11 +2,13 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import copy from 'clipboard-copy';
+import StartButton from '../components/StartButton';
 import RecipesContext from '../context/RecipesAppContext';
-import './scroll.css';
+import '../Style/scroll.css';
 
 function RecipeDrinkDetails(props) {
   const { match } = props;
+  const { title } = props;
   const { id } = match.params;
   const { recipes, setRecipes } = useContext(RecipesContext);
   const [recomendation, setRecomendation] = useState([]);
@@ -134,6 +136,8 @@ function RecipeDrinkDetails(props) {
             Iniciar Receita
           </button>
         </Link>
+
+        <StartButton id={ id } title={ title } />
 
       </div>
     );

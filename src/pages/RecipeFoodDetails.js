@@ -2,11 +2,12 @@ import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import copy from 'clipboard-copy';
 import { Link } from 'react-router-dom';
+import StartButton from '../components/StartButton';
 import RecipesContext from '../context/RecipesAppContext';
-import './scroll.css';
 
 function RecipeFoodDetails(props) {
   const { match } = props;
+  const { title } = props;
   const { id } = match.params;
   const { recipes, setRecipes } = useContext(RecipesContext);
   const [recomendation, setRecomendation] = useState([]);
@@ -17,6 +18,7 @@ function RecipeFoodDetails(props) {
   const TWENTY = 20;
   const SEIS = 6;
   const API = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=';
+  const positionButton = { position: 'fixed' };
 
   const fetchDetailRecipeFoodByID = async () => {
     const response = await fetch(`${API}${id}`);
@@ -119,8 +121,8 @@ function RecipeFoodDetails(props) {
           allow="accelerometer; autoplay; clipboard-write; encrypted-media"
           allowFullScreen
         />
-
         <div className="scrollmenu">
+        <div>
           {recomendation.slice(ZERO, SEIS).map((element, index) => (
             <div key={ index } className="scrollmenu-child">
               <img
@@ -142,14 +144,18 @@ function RecipeFoodDetails(props) {
             Iniciar Receita
           </button>
         </Link>
+        <div style={ positionButton }>
+          <StartButton id={ id } title={ title } />
+        </div>
       </div>
     );
   }
 
-  return <span>Ops..</span>;
+  return <span>Ops...</span>;
 }
 
 RecipeFoodDetails.propTypes = {
+  title: PropTypes.string.isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
