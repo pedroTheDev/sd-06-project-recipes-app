@@ -7,38 +7,39 @@ import {
   requestApiFoodListIngredients,
 } from '../services/requestFood';
 
-function ComidaPorIngredientes() {
+function ComidaPorIngredientes({ history }) {
   const {
     cards: {
       setCardFood,
     },
   } = useContext(RecipesAppContext);
 
-  const [nameIngredients, setNameIngredients] = useState([]);
+  const [nameIngredientsFood, setNameIngredientsFood] = useState([]);
 
   useEffect(() => {
     requestApiFoodListIngredients()
       .then((arrayObjIngredients) => {
-        const arrayNameIngredients = arrayObjIngredients
+        const arrayNameIngredientsFood = arrayObjIngredients
           .map((objIngredient) => objIngredient.strIngredient);
-        setNameIngredients(arrayNameIngredients);
+        setNameIngredientsFood(arrayNameIngredientsFood);
       });
   }, []);
 
-  const edrfse = async (ingredient) => {
+  const onClickIngredient = async (ingredient) => {
     const arrayIngredients = await requestApiFoodFilterIngredient(ingredient);
     setCardFood(arrayIngredients);
+    history.push('/comidas');
   };
 
   return (
     <>
       <Header name="Comida por Ingredientes" button={ false } />
-      {nameIngredients.slice(0, 12).map((ingredient, index) => (
+      {nameIngredientsFood.slice(0, 12).map((ingredient, index) => (
         <button
           key={ index }
           type="button"
           data-testid={ `${index}-ingredient-card` }
-          onClick={ () => edrfse(ingredient) }
+          onClick={ () => onClickIngredient(ingredient) }
         >
           <img
             src={ `https://www.themealdb.com/images/ingredients/${ingredient}-Small.png` }
