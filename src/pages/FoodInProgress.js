@@ -57,7 +57,9 @@ const FoodInProgress = ({
     setRecipeImage(jsonRecipe.meals[0].strMealThumb);
     setRecipeInstructions(jsonRecipe.meals[0].strInstructions);
     setRecipeArea(jsonRecipe.meals[0].strArea);
-    setRecipeTags(jsonRecipe.meals[0].strTags.split(','));
+    const tags = jsonRecipe.meals[0].strTags.split(',');
+    const onlyTwoTags = [tags[0], tags[2]];
+    setRecipeTags(onlyTwoTags);
     ingredientsMount(jsonRecipe);
     setIsLoading(false);
   };
@@ -181,7 +183,7 @@ const FoodInProgress = ({
     }
     const previousDoneData = JSON.parse(localStorage.getItem('doneRecipes'));
     const newDoneData = [
-      ...previousDoneData, 
+      ...previousDoneData,
       {
         id,
         type: 'comida',
@@ -192,9 +194,9 @@ const FoodInProgress = ({
         image: recipeImage,
         doneDate: Date('DD-MM-YYYY'),
         tags: recipeTags,
-      }
+      },
     ];
-    
+
     localStorage.setItem('doneRecipes', JSON.stringify(newDoneData));
   };
 
@@ -226,8 +228,8 @@ const FoodInProgress = ({
       <ul>
         { !isLoading && recipeIngredients.map((item, index) => (
           <li
-          data-testid={ `${index}-ingredient-step` }
-          key={ item }
+            data-testid={ `${index}-ingredient-step` }
+            key={ item }
           >
             <label
               htmlFor={ item }

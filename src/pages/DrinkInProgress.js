@@ -175,13 +175,12 @@ const DrinkInProgress = ({
   };
 
   const handleDoneLocalStorage = () => {
-    console.log('entrou')
     if (!localStorage.getItem('doneRecipes')) {
       localStorage.setItem('doneRecipes', JSON.stringify([]));
     }
     const previousDoneData = JSON.parse(localStorage.getItem('doneRecipes'));
     const newDoneData = [
-      ...previousDoneData, 
+      ...previousDoneData,
       {
         id,
         type: 'bebida',
@@ -192,9 +191,9 @@ const DrinkInProgress = ({
         image: recipeImage,
         doneDate: Date('DD-MM-YYYY'),
         tags: '',
-      }
+      },
     ];
-    
+
     localStorage.setItem('doneRecipes', JSON.stringify(newDoneData));
   };
 
