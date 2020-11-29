@@ -9,6 +9,8 @@ function DrinkDetail() {
   const [recipes, setRecipes] = useState({});
   const [recommendations, setRecommendations] = useState({});
   const { id } = useParams();
+  const zero = 0;
+  let ingredientsNumber = zero;
 
   const fetchIngredients = async () => {
     const recipesByIdApi = await fetchDrink('lookupIngredient', id);
@@ -27,6 +29,38 @@ function DrinkDetail() {
     fetchRecommendations();
   }, []);
 
+  const setIngredientAndMeasure = () => {
+    const fifteen = 15;
+    const ingredients = [];
+    let i = 1;
+    for (i = 1; i <= fifteen; i += 1) {
+      const keyName = `strIngredient${i}`;
+      const measureKeyName = `strMeasure${i}`;
+      if (recipes[keyName] !== '' && recipes[keyName] !== null) {
+        const obj = {
+          name: recipes[keyName],
+          measure: recipes[measureKeyName],
+        };
+        ingredients.push(obj);
+      }
+    }
+
+    ingredientsNumber = i;
+    return ingredients;
+  };
+
+  useEffect(() => {
+    setIngredientAndMeasure();
+  }, [recipes]);
+
+  if (Object.keys(recipes).length === zero) {
+    return (
+      <div className="loading">
+        <h2 className="loading-text">Carregando...</h2>
+      </div>
+    );
+  }
+
   return (
     <div>
       <SecondaryHeader
@@ -36,9 +70,19 @@ function DrinkDetail() {
       />
       <div className="ingredients-container">
         <h3>Ingredientes</h3>
-        <div>
-          Ingredientes e medidas - bebidas
-        </div>
+        {setIngredientAndMeasure().map((ingredient, index) => {
+          if (index < ingredientsNumber) {
+            return (
+              <div
+                data-testid={ `${index}-ingredient-name-and-measure` }
+                key={ index }
+              >
+                {`- ${ingredient.name} - ${ingredient.measure}`}
+              </div>
+            );
+          }
+          return null;
+        })}
       </div>
       <div className="instructions-container">
         <h3>Instruções</h3>
@@ -47,7 +91,7 @@ function DrinkDetail() {
       <div className="container-reccomended">
         <img
           /* data-testid={ `${index}-recomendation-card` } */
-          alt="reccomendation"
+          alt="recommendation"
         />
       </div>
       <button

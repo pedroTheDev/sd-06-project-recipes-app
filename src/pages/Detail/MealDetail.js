@@ -94,10 +94,16 @@ function MealDetail() {
         />
       </div>
       <div className="video-container">
-        <video data-testid="video">
-          <source src={ recipes.strYoutube } type="video" />
-          <track kind="subtitles" />
-        </video>
+        <iframe
+          data-testid="video"
+          src={ recipes.strYoutube }
+          title={ recipes.strMeal }
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+          id="meal-video"
+          frameBorder="0"
+          width="300"
+          height="300"
+        />
       </div>
       <button
         type="button"
