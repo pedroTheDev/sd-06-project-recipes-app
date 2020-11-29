@@ -18,7 +18,6 @@ const Header = () => {
       title === 'Comidas'
       || title === 'Bebidas'
       || title === 'Explorar Origem'
-      || title === 'Receitas Feitas'
     ) {
       return true;
     }

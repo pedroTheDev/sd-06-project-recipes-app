@@ -47,7 +47,9 @@ const DoneRecipes = () => {
   }, []);
 
   useEffect(() => {
-    setIsLoading(false);
+    if (recipesList) {
+      setIsLoading(false);
+    }
   }, [recipesList]);
 
   return (
