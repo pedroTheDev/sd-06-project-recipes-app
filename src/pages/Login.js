@@ -1,11 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import Context from '../context/Context';
 
 export default function Login() {
-  const {
-    login, setLogin, disabled, setDisabled,
-  } = useContext(Context);
+  const { login, setLogin } = useContext(Context);
+  const [disabled, setDisabled] = useState(true);
 
   const inputValidate = () => {
     const validEmail = (/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/).test(login.email);

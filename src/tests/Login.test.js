@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event'
 import renderApp from '../helpers/renderApp';
 import App from '../App';
 
@@ -34,21 +35,21 @@ describe('Testes da Tela de Login', () => {
   });
 
   it('Testa se, com email e senha corretos, leva para a página de comidas', () => {
-    const { getByTestId, history } = renderApp(<App />);
+    const { getByTestId, getByText } = renderApp(<App />);
 
     const email = getByTestId('email-input');
     const password = getByTestId('password-input');
     const btn = getByTestId('login-submit-btn');
   
-    fireEvent.change(email, { target: { value: 'lalala@gmail.com' } });
-    fireEvent.change(password, { target: { value: 'kameHameHaaaaaa01' } });
+    userEvent.type(email, 'lalala@gmail.com');
+    userEvent.type(password, 'kameHameHaaaaaa01');
 
     expect(btn.disabled).toBe(false);
 
     fireEvent.click(btn);
 
-    const path = history.location.pathname;
+    const comidas = getByText('Comidas');
 
-    expect(path).toBe('/comidas');
+    expect(comidas).toBeInTheDocument();
   });
 });
