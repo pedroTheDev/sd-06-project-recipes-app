@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import findMatchInKeys from '../helpers/assets';
 
-export default function RecipeCard({ recipe, recipeIndex, pathname }) {
+export default function RecipeCard({ recipe, recipeIndex, pathname, id }) {
   const [thumbKey, setthumbKey] = useState();
   const [name, setName] = useState();
 
@@ -45,12 +46,14 @@ export default function RecipeCard({ recipe, recipeIndex, pathname }) {
   const render = () => {
     if (thumbKey) {
       return (
-        <div
-          className="main__page__recipe-card"
-          data-testid={ `${recipeIndex}-recipe-card` }
-        >
-          {renderRecipeDetails()}
-        </div>
+        <Link to={ `${pathname}/${id}` }>
+          <div
+            className="main__page__recipe-card"
+            data-testid={ `${recipeIndex}-recipe-card` }
+          >
+            {renderRecipeDetails()}
+          </div>
+        </Link>
       );
     }
     return null;

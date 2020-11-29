@@ -9,6 +9,9 @@ const initialState = {
     recipe: {
       type: 'meals',
     },
+    category: {
+      type: 'meals',
+    },
 
   },
   bebidas: {
@@ -18,6 +21,9 @@ const initialState = {
       title: 'Bebidas',
     },
     recipe: {
+      type: 'drinks',
+    },
+    category: {
       type: 'drinks',
     },
 

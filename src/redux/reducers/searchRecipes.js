@@ -1,12 +1,27 @@
-import { ADD_RECIPES, CHANGE_FETCH, SEND_DATA } from '../actions/searchRecipes';
+import { ADD_RECIPES,
+
+  CHANGE_FETCH,
+  GET_FOOD_CATEGORIES,
+  GET_DRINK_CATEGORIES,
+  REQUEST_CATEGORIES,
+  REQUEST_RECIPES,
+  SEND_DATA, CHANGE_FILTER } from '../actions/searchRecipes';
 
 const initialState = {
   recipes: {
-
     meals: [],
     drinks: [],
   },
+  categoriesFilterActive: {
+    Comidas: false,
+    Bebidas: false,
+  },
+
   isFetchin: false,
+  isRecipesFetching: false,
+  iscategoriesFetching: true,
+  foodCategories: [],
+  drinkCategories: [],
   data: {
     inputText: '',
     radioSearchSelection: 'ingredients',
@@ -17,14 +32,44 @@ const initialState = {
 export default function searchRecipesReducer(state = initialState, action) {
   switch (action.type) {
   case ADD_RECIPES:
-    console.log(action.recipes, 'action recipes');
     return {
-      ...state, recipes: action.recipes,
+      ...state, recipes: action.recipes, isRecipesFetching: false,
     };
+
   case CHANGE_FETCH:
     return {
       ...state, isFetchin: action.fetch,
     };
+  case CHANGE_FILTER:
+    return {
+      ...state,
+      categoriesFilterActive: {
+        [action.pageTitle]: action.active,
+      },
+
+    };
+
+  case GET_FOOD_CATEGORIES:
+    return {
+      ...state, foodCategories: [...action.categories], iscategoriesFetching: false,
+    };
+
+  case GET_DRINK_CATEGORIES:
+    return {
+      ...state, drinkCategories: [...action.categories], iscategoriesFetching: false,
+    };
+
+  case REQUEST_CATEGORIES:
+    console.log(action);
+    return {
+      ...state, iscategoriesFetching: true,
+    };
+
+  case REQUEST_RECIPES:
+    return {
+      ...state, isRecipesFetching: true,
+    };
+
   case SEND_DATA:
     return {
       ...state, data: action.data,

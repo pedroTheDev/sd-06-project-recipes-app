@@ -4,21 +4,22 @@ import { connect } from 'react-redux';
 import Header from '../components/Header';
 import RecipesList from '../components/RecipesList';
 import Footer from '../components/Footer';
-import { addRecipes, changeIsFetchin } from '../redux/actions/searchRecipes';
+import { addRecipes,
+  changeIsFetchin, addDrinkCategories } from '../redux/actions/searchRecipes';
 import useFetch from '../helpers/effects/useFetch';
 import { fetchAPI } from '../helpers/APIRequests';
+import DrinkCategoriesButtons from '../components/DrinkCategoriesButtons';
 
 function CockTail(props) {
   const { history: { location: { pathname } },
     pageConfig, fetchmap, dispatchRecipes, data,
-    isFetchin, dispatchFetching } = props;
+    isFetchin, dispatchFetching, dispatchCategories } = props;
 
   const [isLoading, setIsLoading] = useState(true);
 
   const { header, recipe } = pageConfig;
   const { title } = header;
   const { inputText, radioSearchSelection } = data;
-  console.log('isLoading cocktail', isLoading);
   useFetch(
     title,
     inputText,
@@ -30,25 +31,18 @@ function CockTail(props) {
     recipe,
   );
 
-  const allFoodRecipesEndPoint = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
   const allDrinkRecipesEndPoint = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+
   useEffect(() => {
     async function fetchData() {
-      let initialRecipes;
       setIsLoading(true);
-      if (pathname === '/comidas') {
-        initialRecipes = await fetchAPI(allFoodRecipesEndPoint);
-        dispatchRecipes(initialRecipes);
-      } else {
-        initialRecipes = await fetchAPI(allDrinkRecipesEndPoint);
-        dispatchRecipes(initialRecipes);
-      }
+
+      const initialRecipes = await fetchAPI(allDrinkRecipesEndPoint);
+      dispatchRecipes(initialRecipes);
+      dispatchCategories();
       setIsLoading(false);
     }
     fetchData();
-    return () => {
-      dispatchRecipes({ meals: [], drinks: [] });
-    };
   }, []);
 
   return (
@@ -57,6 +51,7 @@ function CockTail(props) {
         pathname={ pathname }
         componentConfig={ header }
       />
+      <DrinkCategoriesButtons />
       <RecipesList
         title={ title }
         fetchmap={ fetchmap }
@@ -81,6 +76,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   dispatchRecipes: (recipes) => dispatch(addRecipes(recipes)),
   dispatchFetching: (isFetchin) => dispatch(changeIsFetchin(isFetchin)),
+  dispatchCategories: (categories) => dispatch(addDrinkCategories(categories)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CockTail);
@@ -98,6 +94,7 @@ CockTail.propTypes = {
     all: PropTypes.func,
   }).isRequired,
   isFetchin: PropTypes.bool.isRequired,
+  dispatchCategories: PropTypes.func.isRequired,
   dispatchFetching: PropTypes.func.isRequired,
   dispatchRecipes: PropTypes.func.isRequired,
   pageConfig: PropTypes.shape({
