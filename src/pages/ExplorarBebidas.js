@@ -17,17 +17,31 @@ const ExplorarBebidas = () => {
   return (
     <div>
       <Header title="Explorar Bebidas" />
-      <Link to="/explorar/bebidas/ingredientes">
-        <button
-          data-testid="explore-by-ingredient"
-          type="button"
-        >
-          Por Ingredientes
-        </button>
-      </Link>
-      <Link to={ `/bebidas/${randomDrinkID}` } onClick={ () => setFetchById(false) }>
-        <button data-testid="explore-surprise" type="button">Me Surpreenda!</button>
-      </Link>
+      <div className="row h-100 justify-content-center align-items-center">
+        <div className="col">
+          <Link to="/explorar/bebidas/ingredientes">
+            <button
+              data-testid="explore-by-ingredient"
+              type="button"
+              className="btn btn-secondary btn-block btn-lg"
+            >
+              Por Ingredientes
+            </button>
+          </Link>
+          <Link
+            to={ `/bebidas/${randomDrinkID}` }
+            onClick={ () => setFetchById(false) }
+          >
+            <button
+              data-testid="explore-surprise"
+              type="button"
+              className="btn btn-secondary btn-block btn-lg"
+            >
+              Me Surpreenda!
+            </button>
+          </Link>
+        </div>
+      </div>
       <Footer />
     </div>
   );

@@ -6,12 +6,24 @@ import Footer from '../components/Footer';
 const Explorar = () => (
   <div>
     <Header title="Explorar" />
-    <Link to="/explorar/comidas" data-testid="explore-food">
-      <span>Explorar Comidas</span>
-    </Link>
-    <Link to="/explorar/bebidas" data-testid="explore-drinks">
-      <span>Explorar Bebidas</span>
-    </Link>
+    <div className="row h-100 justify-content-center align-items-center">
+      <div className="col">
+        <Link
+          to="/explorar/comidas"
+          data-testid="explore-food"
+          className="btn btn-secondary btn-block btn-lg"
+        >
+          <span>Explorar Comidas</span>
+        </Link>
+        <Link
+          to="/explorar/bebidas"
+          data-testid="explore-drinks"
+          className="btn btn-secondary btn-block btn-lg"
+        >
+          <span>Explorar Bebidas</span>
+        </Link>
+      </div>
+    </div>
     <Footer />
   </div>
 );

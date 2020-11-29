@@ -34,8 +34,8 @@ function Bebidas() {
       <section>
         <Header title="Bebidas" searchBtn />
         {searchBox && <SearchBar />}
-        <DrinkFilters />
-        <div>
+        <div className="my-5 py-2">
+          <DrinkFilters />
           {drinks
             .filter((x, index) => index < doze)
             .map((drink, i) => (

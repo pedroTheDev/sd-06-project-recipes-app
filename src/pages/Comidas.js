@@ -34,8 +34,8 @@ const Comidas = (history) => {
       <section>
         <Header title="Comidas" searchBtn />
         {searchBox && <SearchBar history={ history } />}
-        <FoodFilters />
-        <div>
+        <div className="my-5 py-2">
+          <FoodFilters />
           {meals.length && (meals
             .filter((x, index) => index < doze)
             .map((food, i) => (

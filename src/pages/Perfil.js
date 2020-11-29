@@ -24,40 +24,42 @@ const Perfil = () => {
   return (
     <section>
       <Header title="Perfil" />
-      <div className="container-profile">
-        <div className="email-profile">
+      <div className="col mt-5 h-100">
+        <div className="row justify-content-center py-3">
           <span data-testid="profile-email">{storageEmail}</span>
         </div>
-        <div className="buttons-container">
-          <Link to="/receitas-feitas">
-            <button
-              type="button"
-              data-testid="profile-done-btn"
-            >
-              Receitas Feitas
-            </button>
-          </Link>
-          <Link to="/receitas-favoritas">
-            <button
-              type="button"
-              data-testid="profile-favorite-btn"
-            >
-              Receitas Favoritas
-            </button>
-
-          </Link>
-          <Link to="/">
-            <button
-              type="button"
-              onClick={ handleClick }
-              data-testid="profile-logout-btn"
-            >
-              Sair
-            </button>
-
-          </Link>
+        <div className="row align-items-center h-50">
+          <div className="col">
+            <Link to="/receitas-feitas">
+              <button
+                type="button"
+                className="btn btn-secondary btn-lg btn-block"
+                data-testid="profile-done-btn"
+              >
+                Receitas Feitas
+              </button>
+            </Link>
+            <Link to="/receitas-favoritas">
+              <button
+                className="btn btn-secondary btn-lg btn-block"
+                type="button"
+                data-testid="profile-favorite-btn"
+              >
+                Receitas Favoritas
+              </button>
+            </Link>
+            <Link to="/">
+              <button
+                type="button"
+                onClick={ handleClick }
+                data-testid="profile-logout-btn"
+                className="btn btn-secondary btn-lg btn-block"
+              >
+                Sair
+              </button>
+            </Link>
+          </div>
         </div>
-
       </div>
       <Footer />
     </section>
