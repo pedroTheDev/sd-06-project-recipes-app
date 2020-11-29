@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchMeal } from '../../services/mealAPI';
-import { fetchDrink } from '../../services/cocktailAPI';
 import SecondaryHeader from '../../components/SecondaryHeader';
 
-function Detail() {
+function MealDetail() {
   const [recipes, setRecipes] = useState({});
   const [recommendations, setRecommendations] = useState({});
   const { id } = useParams();
+  const zero = 0;
+  let ingredientsNumber = 0;
 
   const fetchIngredients = async () => {
     const recipesByIdApi = await fetchMeal('lookupIngredient', id);
@@ -16,32 +17,35 @@ function Detail() {
   };
 
   const fetchRecommendations = async () => {
-    const recipesRecommendation = await fetchDrink('name', '');
+    const recipesRecommendation = await fetchMeal('name', '');
     console.log('recommendation', recipesRecommendation);
-    setRecommendations(recipesRecommendation.drinks[0]);
+    setRecommendations(recipesRecommendation.meals[0]);
   };
 
   useEffect(() => {
     fetchIngredients();
     fetchRecommendations();
+    console.log('recomendations', recommendations);
   }, []);
 
   const setIngredientAndMeasure = () => {
     const twenty = 20;
     const ingredients = [];
+    let i = 1;
     console.log(recipes);
-    for (let i = 1; i <= twenty; i += 1) {
+    for (i = 1; i <= twenty; i += 1) {
       const keyName = `strIngredient${i}`;
       const measureKeyName = `strMeasure${i}`;
-      if (recipes[0][keyName] !== ('' || null)) {
+      if (recipes[keyName] !== ('' || null)) {
         const obj = {
-          name: recipes[0][keyName],
-          measure: recipes[0][measureKeyName],
+          name: recipes[keyName],
+          measure: recipes[measureKeyName],
         };
         ingredients.push(obj);
       }
     }
 
+    ingredientsNumber = i;
     return ingredients;
   };
 
@@ -49,7 +53,7 @@ function Detail() {
     setIngredientAndMeasure();
   }, [recipes]);
 
-  if (!recipes) {
+  if (Object.keys(recipes).length === zero) {
     return (
       <div className="loading">
         <h2 className="loading-text">Carregando...</h2>
@@ -66,13 +70,14 @@ function Detail() {
       />
       <div className="ingredients-container">
         <h3>Ingredientes</h3>
-        <ul>
-          {
-            setIngredientAndMeasure().map((ingredient, index) => (
-              <li key={ index }>{`- ${ingredient.name} - ${ingredient.measure}`}</li>
-            ))
+        {setIngredientAndMeasure().map((ingredient, index) => {
+          if (index < ingredientsNumber) {
+            return (
+              <div key={ index }>{`- ${ingredient.name} - ${ingredient.measure}`}</div>
+            );
           }
-        </ul>
+          return null;
+        })}
       </div>
       <div className="instructions-container">
         <h3>Instruções</h3>
@@ -85,7 +90,10 @@ function Detail() {
         />
       </div>
       <div className="video-container">
-        <video data-testid="video" src={ recipes.strYoutube } />
+        <video data-testid="video">
+          <source src={ recipes.strYoutube } type="video" />
+          <track kind="subtitles" />
+        </video>
       </div>
       <button
         type="button"
@@ -97,4 +105,4 @@ function Detail() {
   );
 }
 
-export default Detail;
+export default MealDetail;

@@ -1,6 +1,6 @@
 import React from 'react';
 import propTypes from 'prop-types';
-import { shareIcon, whiteHeartIcon, blackHeartIcon } from '../images';
+import { shareIcon, whiteHeartIcon /* blackHeartIcon */ } from '../images';
 
 function SecondaryHeader({ name, img, category }) {
   return (
