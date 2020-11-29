@@ -180,21 +180,6 @@ function DetalhesBebida() {
           <p data-testid="14-ingredient-name-and-measure">
             {`${bebida.strIngredient15}  ${bebida.strMeasure15}`}
           </p>
-          <p data-testid="15-ingredient-name-and-measure">
-            {`${bebida.strIngredient16}  ${bebida.strMeasure16}`}
-          </p>
-          <p data-testid="16-ingredient-name-and-measure">
-            {`${bebida.strIngredient17}  ${bebida.strMeasure17}`}
-          </p>
-          <p data-testid="17-ingredient-name-and-measure">
-            {`${bebida.strIngredient18}  ${bebida.strMeasure18}`}
-          </p>
-          <p data-testid="18-ingredient-name-and-measure">
-            {`${bebida.strIngredient19}  ${bebida.strMeasure19}`}
-          </p>
-          <p data-testid="19-ingredient-name-and-measure">
-            {`${bebida.strIngredient20}  ${bebida.strMeasure20}`}
-          </p>
         </div>
         <p data-testid="instructions">{bebida.strInstructions}</p>
         {/* <button

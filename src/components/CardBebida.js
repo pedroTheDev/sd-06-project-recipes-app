@@ -6,9 +6,9 @@ import './Card.css';
 function CardBebida(elemento, index) {
   const { setIdBebida } = useContext(RecipeContext);
   const history = useHistory();
-  function redirectDetails(idDrinks) {
-    setIdBebida(idDrinks);
-    history.push(`/bebidas/${idDrinks}`);
+  function redirectDetails(idDrink) {
+    setIdBebida(idDrink);
+    history.push(`/bebidas/${idDrink}`);
   }
   return (
     <div key={ elemento.idDrink } data-testid={ `${index}-recipe-card` } className="Card">
