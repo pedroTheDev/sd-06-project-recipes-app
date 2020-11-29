@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import { fetchMeal } from '../../services/mealAPI';
 import SecondaryHeader from '../../components/SecondaryHeader';
 import RecommendationCard from '../../components/RecommendationCard';
+import { fetchDrink } from '../../services/cocktailAPI';
+import './detail.css';
 
 function MealDetail() {
   const [recipes, setRecipes] = useState({});
@@ -19,9 +21,9 @@ function MealDetail() {
   };
 
   const fetchRecommendations = async () => {
-    const recipesRecommendation = await fetchMeal('name', '');
+    const recipesRecommendation = await fetchDrink('name', '');
     console.log('recommendations linha 22', recipesRecommendation);
-    setRecommendations(recipesRecommendation.meals);
+    setRecommendations(recipesRecommendation.drinks);
   };
 
   useEffect(() => {
@@ -103,18 +105,21 @@ function MealDetail() {
           height="300"
         />
       </div>
-      {
-        recommendations.slice(zero, maxRecommendations).map((recommendation, index) => (
-          <RecommendationCard
-            key={ index }
-            recommendation={ recommendation }
-            index={ index }
-          />
-        ))
-      }
+      <div className="recommendation-container">
+        {
+          recommendations.slice(zero, maxRecommendations).map((recommendation, index) => (
+            <RecommendationCard
+              key={ index }
+              recommendation={ recommendation }
+              index={ index }
+            />
+          ))
+        }
+      </div>
       <button
         type="button"
         data-testid="start-recipe-btn"
+        className="start-button"
       >
         Iniciar Receita
       </button>

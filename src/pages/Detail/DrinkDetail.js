@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { fetchDrink } from '../../services/cocktailAPI';
 import SecondaryHeader from '../../components/SecondaryHeader';
 import RecommendationCard from '../../components/RecommendationCard';
+import { fetchMeal } from '../../services/mealAPI';
 
 function DrinkDetail() {
   const [recipes, setRecipes] = useState({});
@@ -19,9 +20,9 @@ function DrinkDetail() {
   };
 
   const fetchRecommendations = async () => {
-    const recipesRecommendation = await fetchDrink('name', '');
+    const recipesRecommendation = await fetchMeal('name', '');
     // console.log('recommendation linha 23', recipesRecommendation);
-    setRecommendations(recipesRecommendation.drinks);
+    setRecommendations(recipesRecommendation.meals);
   };
 
   useEffect(() => {
@@ -100,6 +101,7 @@ function DrinkDetail() {
       <button
         type="button"
         data-testid="start-recipe-btn"
+        className="start-button"
       >
         Iniciar Receita
       </button>

@@ -15,14 +15,20 @@ function SecondaryHeader({ name, img, category }) {
         <button
           type="button"
           data-testid="share-btn"
+          src={ shareIcon }
         >
           <img src={ shareIcon } alt="Share recipe" />
         </button>
         <button
           type="button"
           data-testid="favorite-btn"
+          src={ whiteHeartIcon }
         >
-          <img src={ whiteHeartIcon } alt="Share recipe" />
+          <img
+            src={ whiteHeartIcon }
+            alt="Share recipe"
+            data-testid="favorite-btn"
+          />
         </button>
         <p data-testid="recipe-category">{ category }</p>
       </header>
