@@ -2,30 +2,31 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchMeal } from '../../services/mealAPI';
 import SecondaryHeader from '../../components/SecondaryHeader';
+import RecommendationCard from '../../components/RecommendationCard';
 
 function MealDetail() {
   const [recipes, setRecipes] = useState({});
-  const [recommendations, setRecommendations] = useState({});
+  const [recommendations, setRecommendations] = useState([]);
   const { id } = useParams();
   const zero = 0;
+  const maxRecommendations = 6;
   let ingredientsNumber = zero;
 
   const fetchIngredients = async () => {
     const recipesByIdApi = await fetchMeal('lookupIngredient', id);
-    console.log('recipes', recipesByIdApi);
+    console.log('recipes linha 16', recipesByIdApi);
     setRecipes(recipesByIdApi.meals[0]);
   };
 
   const fetchRecommendations = async () => {
     const recipesRecommendation = await fetchMeal('name', '');
-    console.log('recommendation', recipesRecommendation);
-    setRecommendations(recipesRecommendation.meals[0]);
+    console.log('recommendations linha 22', recipesRecommendation);
+    setRecommendations(recipesRecommendation.meals);
   };
 
   useEffect(() => {
     fetchIngredients();
     fetchRecommendations();
-    console.log('recomendations', recommendations);
   }, []);
 
   const setIngredientAndMeasure = () => {
@@ -87,12 +88,9 @@ function MealDetail() {
         <h3>Instruções</h3>
         <div data-testid="instructions">{recipes.strInstructions}</div>
       </div>
-      <div className="container-reccomended">
-        <img
-          /* data-testid={ `${index}-recomendation-card` } */
-          alt="recomendation"
-        />
-      </div>
+      {
+
+      }
       <div className="video-container">
         <iframe
           data-testid="video"
@@ -105,6 +103,15 @@ function MealDetail() {
           height="300"
         />
       </div>
+      {
+        recommendations.slice(zero, maxRecommendations).map((recommendation, index) => (
+          <RecommendationCard
+            key={ index }
+            recommendation={ recommendation }
+            index={ index }
+          />
+        ))
+      }
       <button
         type="button"
         data-testid="start-recipe-btn"
