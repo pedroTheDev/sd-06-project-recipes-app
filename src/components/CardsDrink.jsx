@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import RecipesAppContext from '../hooks/RecipesAppContext';
+import RecipesAppContext from '../context/RecipesAppContext';
 import { requestApiDrinkFilterName } from '../services/requestDrink';
 
 function CardsDrink() {
@@ -11,8 +11,9 @@ function CardsDrink() {
     },
   } = useContext(RecipesAppContext);
 
+  const arrayVoid = 0;
   useEffect(() => {
-    if (cardDrink.length === 0) {
+    if (cardDrink.length === arrayVoid) {
       requestApiDrinkFilterName()
         .then((arrayApi) => setCardDrink(arrayApi));
     }
@@ -21,7 +22,6 @@ function CardsDrink() {
   const ofTheFirstParameter = 0;
   const upToParameter12 = 12;
 
-  const arrayVoid = 0;
   return (
     <div>
       {(cardDrink.length === arrayVoid) ? <span>Loading...</span> : cardDrink

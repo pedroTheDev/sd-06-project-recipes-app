@@ -14,7 +14,7 @@ import DetalhesReceita from './pages/DetalhesReceita';
 import ReceitasFeitas from './pages/ReceitasFeitas';
 import ReceitasFavoritas from './pages/ReceitasFavoritas';
 import Perfil from './pages/Perfil';
-import Provider from './hooks/Provider';
+import Provider from './context/Provider';
 import DetalhesBebida from './pages/DetalhesBebida';
 
 function App() {

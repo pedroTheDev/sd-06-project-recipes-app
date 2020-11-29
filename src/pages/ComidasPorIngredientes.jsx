@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import RecipesAppContext from '../hooks/RecipesAppContext';
+import RecipesAppContext from '../context/RecipesAppContext';
 import {
   requestApiFoodFilterIngredient,
   requestApiFoodListIngredients,

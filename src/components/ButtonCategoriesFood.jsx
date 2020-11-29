@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import RecipesAppContext from '../hooks/RecipesAppContext';
+import RecipesAppContext from '../context/RecipesAppContext';
 import {
   requestApiFoodListCategories,
   requestApiFoodFilterCategories,
@@ -22,8 +22,9 @@ function ButtonCategoriesFood() {
 
   const ofTheFirstParameter = 0;
   const upToParameter5 = 5;
+  const arrayVoid = 0;
   useEffect(() => {
-    if (categoriesButtonFood.length === 0) {
+    if (categoriesButtonFood.length === arrayVoid) {
       requestApiFoodListCategories()
         .then((arrayApiList) => {
           const arrayCategoriesList5 = arrayApiList
@@ -47,7 +48,6 @@ function ButtonCategoriesFood() {
     }
   };
 
-  const arrayVoid = 0;
   return (
     (categoriesButtonFood.length === arrayVoid) ? <span>Loading...</span> : (
       <div>
