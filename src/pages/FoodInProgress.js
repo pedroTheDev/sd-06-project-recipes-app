@@ -226,8 +226,8 @@ const FoodInProgress = ({
       <ul>
         { !isLoading && recipeIngredients.map((item, index) => (
           <li
-            key={ item }
-            data-testid={ `${index}-ingredient-step` }
+          data-testid={ `${index}-ingredient-step` }
+          key={ item }
           >
             <label
               htmlFor={ item }

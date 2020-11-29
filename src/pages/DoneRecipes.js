@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import HeaderContext from '../context/HeaderContext';
 import shareIcon from '../images/shareIcon.svg';
 
@@ -80,9 +81,11 @@ const DoneRecipes = () => {
           .map((recipe, index) => {
             if (recipe.type === 'comida') return (
               <div key={ recipe.id }>
-                <img data-testid={ `${index}-horizontal-image` } src={ recipe.image } />
-                <h2 data-testid={ `${index}-horizontal-name` }>{ recipe.name }</h2>
-                <h3 data-testid={ `${index}-horizontal-top-text` }>{ recipe.type }</h3>
+                <Link to={ `/comidas/${recipe.id}` }>
+                  <img data-testid={ `${index}-horizontal-image` } src={ recipe.image } />
+                  <h2 data-testid={ `${index}-horizontal-name` }>{ recipe.name }</h2>
+                </Link>
+                <h3 data-testid={ `${index}-horizontal-top-text` }>{ `${recipe.area} - ${recipe.category}` }</h3>
                 <h3 data-testid={ `${index}-horizontal-category` }>{ recipe.category }</h3>
                 <h3 data-testid={ `${index}-horizontal-area` }>{ recipe.area }</h3>
                 <h3 data-testid={ `${index}-horizontal-done-date` }>{ recipe.doneDate }</h3>
@@ -111,10 +114,11 @@ const DoneRecipes = () => {
             )
             if (recipe.type === 'bebida') return (
               <div key={ recipe.id }>
-                <img data-testid={ `${index}-horizontal-image` } src={ recipe.image } />
-                <h2 data-testid={ `${index}-horizontal-name` }>{ recipe.name }</h2>
-                <h3 data-testid={ `${index}-horizontal-top-text` }>{ recipe.type }</h3>
-                <h3 data-testid={ `${index}-horizontal-alcoholic` }>{ recipe.alcoholicOrNot }</h3>
+                <Link to={ `/bebidas/${recipe.id}` }>
+                  <img data-testid={ `${index}-horizontal-image` } src={ recipe.image } />
+                  <h2 data-testid={ `${index}-horizontal-name` }>{ recipe.name }</h2>
+                </Link>
+                <h3 data-testid={ `${index}-horizontal-top-text` }>{ recipe.alcoholicOrNot }</h3>
                 <h3 data-testid={ `${index}-horizontal-done-date` }>{ recipe.doneDate }</h3>
                 <button type="button" onClick={ () => handleShare(recipe.id, recipe.type) }>
                   <img

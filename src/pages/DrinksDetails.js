@@ -68,7 +68,7 @@ const DrinksDetails = (props) => {
     const getRecipe = await fetch(path);
     const jsonRecipe = await getRecipe.json();
     const maximumRecommendations = 6;
-    const recommendations = jsonRecipe.drinks.map(
+    const recommendations = jsonRecipe.meals.map(
       (recommendation, index) => (index < maximumRecommendations && recommendation),
     );
 

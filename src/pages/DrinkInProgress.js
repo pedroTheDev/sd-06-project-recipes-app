@@ -175,6 +175,7 @@ const DrinkInProgress = ({
   };
 
   const handleDoneLocalStorage = () => {
+    console.log('entrou')
     if (!localStorage.getItem('doneRecipes')) {
       localStorage.setItem('doneRecipes', JSON.stringify([]));
     }
@@ -237,7 +238,7 @@ const DrinkInProgress = ({
                 checked={ handleCheckedFromLocalStorage(item) }
                 name={ item }
                 id={ item }
-                onClick={ handleChecked }
+                onChange={ handleChecked }
               />
               { item }
             </label>
@@ -251,7 +252,7 @@ const DrinkInProgress = ({
           type="button"
           data-testid="finish-recipe-btn"
           disabled={ handleFinishRecipe(recipeIngredients.length) }
-          onChange={ handleDoneLocalStorage }
+          onClick={ handleDoneLocalStorage }
         >
           Finalizar receita
         </button>
