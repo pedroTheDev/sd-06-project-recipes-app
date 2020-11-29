@@ -1,11 +1,14 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import copy from 'clipboard-copy';
 import ReceitasContext from '../context/ReceitasContext';
 import DrinksCard from '../components/DrinksCard';
 import Header from '../components/Header';
 import { drinkAPI } from '../services/drinkAPI';
 import { fetchFoodAPI } from '../services/foodAPI';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import '../style/Detalhes.css';
 
 function DetalhesComida(props) {
@@ -13,8 +16,15 @@ function DetalhesComida(props) {
     drinks, setDrinks, fetchById, setFetchById,
     beganRecipes, setBeganRecipes, doneRecipes,
   } = useContext(ReceitasContext);
+
+  const [copied, setCopied] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(true);
+  const [isFetching, setFetching] = useState(true);
+
   const { match: { params: { id } } } = props;
+
   const startedRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+
   const seis = 6;
 
   useEffect(() => {
@@ -24,6 +34,19 @@ function DetalhesComida(props) {
 
       setDrinks(responseFoodsAPI);
       setFetchById(responseID);
+
+      const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      console.log(favoriteRecipes);
+
+      if (!favoriteRecipes || !favoriteRecipes.length) {
+        setIsFavorite(false);
+      } else if (favoriteRecipes.some((recipe) => recipe.id === id)) {
+        setIsFavorite(true);
+      } else {
+        setIsFavorite(false);
+      }
+
+      setFetching(false);
     }
 
     fetchDrink();
@@ -44,7 +67,6 @@ function DetalhesComida(props) {
     localStorage.setItem('inProgressRecipes', JSON.stringify({
       ...startedRecipes,
       meals: {
-        ...startedRecipes.meals,
         [recipeName]: fetchById,
       },
     }));
@@ -54,11 +76,90 @@ function DetalhesComida(props) {
     }
   };
 
-  const verifyState = (idMeal) => (
-    !startedRecipes.meals[idMeal] ? 'Iniciar Receita' : 'Continuar Receita'
-  );
+  const verifyState = (idMeal) => {
+    if (!startedRecipes.meals) {
+      return 'Iniciar Receita';
+    }
+    if (!startedRecipes.meals[idMeal]) {
+      return 'Iniciar Receita';
+    }
+    return 'Continuar Receita';
+  };
 
-  return ((!fetchById)
+  const copyToCB = () => {
+    const url = window.location.href;
+
+    copy(url);
+    setCopied(true);
+  };
+
+  const localVerify = () => {
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const {
+      idMeal, strArea, strCategory, strMeal, strMealThumb,
+    } = fetchById[0];
+
+    if (!favoriteRecipes) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([
+        {
+          id: idMeal,
+          type: 'comida',
+          area: strArea,
+          category: strCategory,
+          alcoholicOrNot: '',
+          name: strMeal,
+          image: strMealThumb,
+        },
+      ]));
+    } else {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([
+        ...favoriteRecipes,
+        {
+          id: idMeal,
+          type: 'comida',
+          area: '',
+          category: strCategory,
+          alcoholicOrNot: '',
+          name: strMeal,
+          image: strMealThumb,
+        },
+      ]));
+    }
+
+    setIsFavorite(true);
+  };
+
+  const removeFavorite = (idRecipe) => {
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+
+    let index;
+
+    favoriteRecipes.forEach((item, i) => {
+      if (item.id === idRecipe) {
+        index = i;
+      }
+    });
+
+    const zero = 0;
+    localStorage.setItem('favoriteRecipes', JSON.stringify([
+      ...favoriteRecipes.slice(zero, index),
+      ...favoriteRecipes.slice(index + 1, favoriteRecipes.length),
+    ]));
+
+    setIsFavorite(false);
+  };
+
+  const setFavorite = (idRecipe) => {
+    const image = document.getElementById('favorite-img').src;
+
+    if (image.includes(whiteHeartIcon)) {
+      localVerify();
+    } else {
+      removeFavorite(idRecipe);
+    }
+  };
+
+  return ((isFetching)
     ? <div>carregando...</div>
     : (
       <section>
@@ -68,8 +169,29 @@ function DetalhesComida(props) {
             <div key={ index }>
               <img data-testid="recipe-photo" src={ meal.strMealThumb } alt="" />
               <h2 data-testid="recipe-title">{meal.strMeal}</h2>
-              <button data-testid="share-btn" type="button">Compartilhar</button>
-              <button data-testid="favorite-btn" type="button">Favoritar</button>
+              <div>
+                <button
+                  data-testid="share-btn"
+                  type="button"
+                  onClick={ copyToCB }
+                >
+                  Compartilhar
+                </button>
+                {copied ? 'Link copiado!' : null}
+              </div>
+              <button
+                type="button"
+                onClick={ () => setFavorite(meal.idMeal) }
+              >
+                <img
+                  data-testid="favorite-btn"
+                  id="favorite-img"
+                  src={ !isFavorite
+                    ? whiteHeartIcon
+                    : blackHeartIcon }
+                  alt=""
+                />
+              </button>
               <p data-testid="recipe-category">{meal.strCategory}</p>
               {getIngredients(meal, /strIngredient/).map((item, indx) => {
                 const measure = getIngredients(meal, /strMeasure/);

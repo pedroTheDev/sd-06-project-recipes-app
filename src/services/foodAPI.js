@@ -74,3 +74,11 @@ export const listIngredients = () => fetch('https://www.themealdb.com/api/json/v
 export const fetchFoodAPI = (id) => fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
   .then((response) => response.json())
   .then((data) => data.meals);
+
+export const getAreas = () => fetch('https://www.themealdb.com/api/json/v1/1/list.php?a=list')
+  .then((response) => response.json())
+  .then((data) => data.meals);
+
+export const getByArea = (strArea) => fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?a=${strArea}`)
+  .then((response) => response.json())
+  .then((data) => data.meals);
