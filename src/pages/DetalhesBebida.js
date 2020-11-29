@@ -14,6 +14,7 @@ function DetalhesBebida() {
     setIniciarReceitas,
     // receitasTerminadas,
   } = useContext(RecipeContext);
+
   const seis = 6;
   const zero = 0;
   const fetchBebidasDetalhes = async () => {
@@ -124,6 +125,24 @@ function DetalhesBebida() {
     fetchBebidasDetalhes();
   }, []);
 
+  const quinze = 15;
+  function renderIngrediente(bebida) {
+    const array = [];
+    for (let numero = 1; numero <= quinze; numero += 1) {
+      if (bebida[`strIngredient${numero}`] !== null) {
+        array.push(
+          <p data-testid={ `${numero - 1}-ingredient-name-and-measure` }>
+            {`${bebida[`strIngredient${numero}`]} `}
+            {(bebida[`strMeasure${numero}`] !== null)
+              ? <span>{`${bebida[`strMeasure${numero}`]}`}</span>
+              : ''}
+          </p>,
+        );
+      }
+    }
+    return array;
+  }
+
   return (
     estadoApiBebidas.map((bebida, index) => (
       <div key={ index }>
@@ -135,51 +154,7 @@ function DetalhesBebida() {
         <h4 data-testid="recipe-title">{ bebida.strDrink }</h4>
         <h6 data-testid="recipe-category">{bebida.strAlcoholic}</h6>
         <div>
-          <p data-testid="0-ingredient-name-and-measure">
-            {`${bebida.strIngredient1}  ${bebida.strMeasure1}`}
-          </p>
-          <p data-testid="1-ingredient-name-and-measure">
-            {`${bebida.strIngredient2}  ${bebida.strMeasure2}`}
-          </p>
-          <p data-testid="2-ingredient-name-and-measure">
-            {`${bebida.strIngredient3}  ${bebida.strMeasure3}`}
-          </p>
-          <p data-testid="3-ingredient-name-and-measure">
-            {`${bebida.strIngredient4}  ${bebida.strMeasure4}`}
-          </p>
-          <p data-testid="4-ingredient-name-and-measure">
-            {`${bebida.strIngredient5}  ${bebida.strMeasure5}`}
-          </p>
-          <p data-testid="5-ingredient-name-and-measure">
-            {`${bebida.strIngredient6}  ${bebida.strMeasure6}`}
-          </p>
-          <p data-testid="6-ingredient-name-and-measure">
-            {`${bebida.strIngredient7}  ${bebida.strMeasure7}`}
-          </p>
-          <p data-testid="7-ingredient-name-and-measure">
-            {`${bebida.strIngredient8}  ${bebida.strMeasure8}`}
-          </p>
-          <p data-testid="8-ingredient-name-and-measure">
-            {`${bebida.strIngredient9}  ${bebida.strMeasure9}`}
-          </p>
-          <p data-testid="9-ingredient-name-and-measure">
-            {`${bebida.strIngredient10}  ${bebida.strMeasure10}`}
-          </p>
-          <p data-testid="10-ingredient-name-and-measure">
-            {`${bebida.strIngredient11}  ${bebida.strMeasure11}`}
-          </p>
-          <p data-testid="11-ingredient-name-and-measure">
-            {`${bebida.strIngredient12}  ${bebida.strMeasure12}`}
-          </p>
-          <p data-testid="12-ingredient-name-and-measure">
-            {`${bebida.strIngredient13}  ${bebida.strMeasure13}`}
-          </p>
-          <p data-testid="13-ingredient-name-and-measure">
-            {`${bebida.strIngredient14}  ${bebida.strMeasure14}`}
-          </p>
-          <p data-testid="14-ingredient-name-and-measure">
-            {`${bebida.strIngredient15}  ${bebida.strMeasure15}`}
-          </p>
+          {renderIngrediente(bebida)}
         </div>
         <p data-testid="instructions">{bebida.strInstructions}</p>
         {/* <button
