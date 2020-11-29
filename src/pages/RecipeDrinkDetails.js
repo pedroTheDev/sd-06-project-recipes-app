@@ -114,19 +114,21 @@ function RecipeDrinkDetails(props) {
         </ul>
         <p data-testid="instructions">{recipes[0].strInstructions}</p>
         <div className="scrollmenu">
-          {recomendation.slice(ZERO, SEIS).map((element, index) => (
-            <div key={ index } className="scrollmenu-child">
-              <img
-                data-testid={ `${index}-recomendation-card` }
-                src={ element.strMealThumb }
-                alt={ element.strMeal }
-              />
-              <p data-testid={ `${index}-recomendation-title` }>{ element.strMeal }</p>
-            </div>
-          ))}
-        </div>
-        <div style={ positionButton }>
-          <StartButton id={ id } title={ title } />
+          <div>
+            {recomendation.slice(ZERO, SEIS).map((element, index) => (
+              <div key={ index } className="scrollmenu-child">
+                <img
+                  data-testid={ `${index}-recomendation-card` }
+                  src={ element.strMealThumb }
+                  alt={ element.strMeal }
+                />
+                <p data-testid={ `${index}-recomendation-title` }>{ element.strMeal }</p>
+              </div>
+            ))}
+          </div>
+          <div style={ positionButton }>
+            <StartButton id={ id } title={ title } />
+          </div>
         </div>
       </div>
     );
