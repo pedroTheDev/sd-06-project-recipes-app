@@ -64,7 +64,7 @@ export default function SearchBar(props) {
   };
 
   return (
-    <form>
+    <form data-testid="test-search-bar">
       <label htmlFor="search-input">
         <input
           data-testid="search-input"
