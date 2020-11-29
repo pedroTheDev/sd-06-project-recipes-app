@@ -89,7 +89,7 @@ const DetalhesComida = () => {
 
   const handleFavorite = () => {
     const currentFood = stateLocal.food.meals[0];
-    const recipeData = {
+    const recipeData = [{
       id: currentFood.idMeal,
       type: 'comida',
       area: currentFood.strArea,
@@ -97,7 +97,7 @@ const DetalhesComida = () => {
       alcoholicOrNot: '',
       name: currentFood.strMeal,
       image: currentFood.strMealThumb,
-    };
+    }];
 
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
     const zero = 0;
@@ -121,7 +121,7 @@ const DetalhesComida = () => {
     <div className="main-principal">
       {stateLocal ? (
         <div className="container-main">
-          {console.log(JSON.parse(localStorage.getItem('heart')).heart)}
+          {/* {console.log(JSON.parse(localStorage.getItem('heart')).heart)} */}
           <div className="container-initial">
             <img
               data-testid="recipe-photo"
