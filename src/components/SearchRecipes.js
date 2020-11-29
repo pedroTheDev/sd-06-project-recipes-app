@@ -111,6 +111,7 @@ function SearchRecipes({ dispatchFetching, dispatchData }) {
       {renderSearchRecipeTextInput()}
       {renderRadioButtons()}
       {renderSubmitButton()}
+
     </div>);
 }
 
@@ -121,7 +122,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   recipes: state.searchRecipes.recipes,
-
+  categories: state.searchRecipes.categories,
+  siteMap: state.sitemap,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchRecipes);

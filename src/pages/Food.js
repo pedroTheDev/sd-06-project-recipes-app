@@ -1,43 +1,36 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import RecipesList from '../components/RecipesList';
-import { addRecipes, changeIsFetchin } from '../redux/actions/searchRecipes';
+import { addRecipes, addFoodRecipes,
+  changeIsFetchin, addFoodCategories } from '../redux/actions/searchRecipes';
 import useFetch from '../helpers/effects/useFetch';
-import { fetchAPI } from '../helpers/APIRequests';
 import Footer from '../components/Footer';
+import FoodCategoriesButtons from '../components/FoodCategoriesButtons';
 
 function Food(props) {
   const { history: { location: { pathname } },
     pageConfig,
     fetchmap,
-    dispatchRecipes, data, isFetchin, dispatchFetching } = props;
-  const [isLoading, setIsLoading] = useState(true);
-  console.log(isLoading, 'food page');
+    dispatchRecipes,
+    dispatchInitialRecipes,
+    data,
+    isFetchin,
+    iscategoriesFetching,
+    dispatchFetching,
+    dispatchCategories,
+
+  } = props;
+  const componentIsMounted = useRef(true);
 
   const { header, recipe } = pageConfig;
   const { title } = header;
   const { inputText, radioSearchSelection } = data;
 
-  const allFoodRecipesEndPoint = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
-  const allDrinkRecipesEndPoint = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
   useEffect(() => {
-    async function fetchData() {
-      dispatchRecipes({ meals: [], drinks: [] });
-
-      let initialRecipes;
-      setIsLoading(true);
-      if (pathname === '/comidas') {
-        initialRecipes = await fetchAPI(allFoodRecipesEndPoint);
-        dispatchRecipes(initialRecipes);
-      } else {
-        initialRecipes = await fetchAPI(allDrinkRecipesEndPoint);
-        dispatchRecipes(initialRecipes);
-      }
-      setIsLoading(false);
-    }
-    fetchData();
+    dispatchCategories();
+    dispatchInitialRecipes();
   }, []);
 
   useFetch(
@@ -49,23 +42,25 @@ function Food(props) {
     dispatchFetching,
     fetchmap,
     recipe,
+    componentIsMounted,
   );
 
   // useFetchOnMount(fetchmap, title, dispatchRecipes);
-
+  if (iscategoriesFetching) return <>Loading </>;
   return (
     <>
       <Header
         pathname={ pathname }
         componentConfig={ header }
       />
+      <FoodCategoriesButtons />
       <RecipesList
         title={ title }
         fetchmap={ fetchmap }
         dispatchRecipes={ dispatchRecipes }
         recipeConfig={ recipe }
         pathname={ pathname }
-        isLoading={ isLoading }
+        isLoading={ isFetchin }
       />
       <Footer />
     </>
@@ -78,11 +73,18 @@ const mapStateToProps = (state) => ({
   fetchmap: state.fetchmap,
   data: state.searchRecipes.data,
   isFetchin: state.searchRecipes.isFetchin,
+  iscategoriesFetching: state.searchRecipes.iscategoriesFetching,
+  categories: state.searchRecipes.foodCategories,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchRecipes: (recipes) => dispatch(addRecipes(recipes)),
   dispatchFetching: (isFetchin) => dispatch(changeIsFetchin(isFetchin)),
+  dispatchCategories: () => (
+    dispatch(addFoodCategories())),
+  dispatchInitialRecipes: () => (
+    dispatch(addFoodRecipes())
+  ),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Food);
@@ -99,9 +101,13 @@ Food.propTypes = {
   fetchmap: PropTypes.shape({
     all: PropTypes.func,
   }).isRequired,
-  isFetchin: PropTypes.bool.isRequired,
   dispatchFetching: PropTypes.func.isRequired,
+  dispatchInitialRecipes: PropTypes.func.isRequired,
+  dispatchCategories: PropTypes.func.isRequired,
   dispatchRecipes: PropTypes.func.isRequired,
+  isFetchin: PropTypes.bool.isRequired,
+  iscategoriesFetching: PropTypes.bool.isRequired,
+
   pageConfig: PropTypes.shape({
     header: PropTypes.shape({
       title: PropTypes.string.isRequired,
