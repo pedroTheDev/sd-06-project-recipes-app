@@ -71,7 +71,7 @@ const ReceitaProcessoComida = () => {
       const doneRecipes = [];
       localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
     } else if (recipeProgress) {
-      const recipeData = {
+      localStorage.setItem('doneRecipes', JSON.stringify([{
         id: recipeProgress.food.meals[0].idMeal,
         type: 'comida',
         area: recipeProgress.food.meals[0].strArea,
@@ -83,8 +83,7 @@ const ReceitaProcessoComida = () => {
         tags: recipeProgress.food.meals[0].strTags
           ? recipeProgress.food.meals[0].strTags
           : [],
-      };
-      localStorage.setItem('doneRecipes', JSON.stringify({ recipeData }));
+      }]));
     } else {
       return '';
     }
