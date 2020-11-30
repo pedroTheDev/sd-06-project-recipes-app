@@ -1,19 +1,24 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import copy from 'clipboard-copy';
 import StartButton from '../components/StartButton';
 import RecipesContext from '../context/RecipesAppContext';
 import '../Style/scroll.css';
 
-function RecipeDrinkDetails({ match, title }) {
+function RecipeDrinkDetails(props) {
+  const { match } = props;
+  const { title } = props;
   const { id } = match.params;
   const { recipes, setRecipes } = useContext(RecipesContext);
   const [recomendation, setRecomendation] = useState([]);
+  const [share, setShare] = useState(false);
   let arrIngredient = [];
   let arrMeasure = [];
   const ZERO = 0;
   const TWENTY = 20;
   const SEIS = 6;
   const API = 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=';
+  const positionButton = { position: 'fixed' };
 
   const fetchDetailRecipeDrinkByID = async () => {
     const response = await fetch(`${API}${id}`);
@@ -52,6 +57,13 @@ function RecipeDrinkDetails({ match, title }) {
         }
       }
     };
+
+    const copyClip = async () => {
+      const { location: { pathname } } = props;
+      setShare(true);
+      const url = `http://localhost:3000${pathname}`;
+      await copy(url);
+    };
     renderMeasure();
     renderIngredients();
 
@@ -68,7 +80,16 @@ function RecipeDrinkDetails({ match, title }) {
           {' '}
         </h4>
         <p data-testid="recipe-category">{recipes[0].strAlcoholic}</p>
-        <button type="button" data-testid="share-btn">Compartilhar</button>
+        <div>
+          <button
+            type="button"
+            onClick={ () => copyClip() }
+            data-testid="share-btn"
+          >
+            Compartilhar
+          </button>
+          {share && <span>Link copiado!</span>}
+        </div>
         <button type="button" data-testid="favorite-btn">Favoritar</button>
         <p data-testid="recipe-category">{recipes[0].strCategory}</p>
         <ul>
@@ -93,20 +114,22 @@ function RecipeDrinkDetails({ match, title }) {
         </ul>
         <p data-testid="instructions">{recipes[0].strInstructions}</p>
         <div className="scrollmenu">
-          {recomendation.slice(ZERO, SEIS).map((element, index) => (
-            <div key={ index } className="scrollmenu-child">
-              <img
-                data-testid={ `${index}-recomendation-card` }
-                src={ element.strMealThumb }
-                alt={ element.strMeal }
-              />
-              <p data-testid={ `${index}-recomendation-title` }>{ element.strMeal }</p>
-            </div>
-          ))}
+          <div>
+            {recomendation.slice(ZERO, SEIS).map((element, index) => (
+              <div key={ index } className="scrollmenu-child">
+                <img
+                  data-testid={ `${index}-recomendation-card` }
+                  src={ element.strMealThumb }
+                  alt={ element.strMeal }
+                />
+                <p data-testid={ `${index}-recomendation-title` }>{ element.strMeal }</p>
+              </div>
+            ))}
+          </div>
+          <div style={ positionButton }>
+            <StartButton id={ id } title={ title } />
+          </div>
         </div>
-
-        <StartButton id={ id } title={ title } />
-
       </div>
     );
   }
@@ -114,8 +137,15 @@ function RecipeDrinkDetails({ match, title }) {
 }
 
 RecipeDrinkDetails.propTypes = {
-  match: PropTypes.objectOf(Object).isRequired,
   title: PropTypes.string.isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+  }).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
 };
 
 export default RecipeDrinkDetails;

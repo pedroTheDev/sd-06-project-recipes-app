@@ -33,7 +33,6 @@ function Card({ title }) {
   };
 
   return (
-    // <>
     recipes.length > ZERO && recipes.slice(ZERO, DOZE).map((recipe, index) => (
       <div
         key={ recipe[`id${recipeType}`] }
@@ -42,7 +41,6 @@ function Card({ title }) {
         style={ divStyle }
       >
         <Link
-          // to={ `/${setRoute}/id${recipe}` }
           to={ `/${setRoute}/${recipe[`id${recipeType}`]}` }
           type="button"
         >
@@ -59,8 +57,8 @@ function Card({ title }) {
         >
           { recipe[`str${recipeType}`] }
         </p>
-      </div>))
-    // </>
+      </div>
+    ))
   );
 }
 

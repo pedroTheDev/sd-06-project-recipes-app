@@ -2,7 +2,6 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Login from '../pages/Login';
 import Home from '../pages/Home';
-// import RecipeDrink from '../pages/RecipeDrink';
 import RecipeFoodDetails from '../pages/RecipeFoodDetails';
 import RecipeDrinkDetails from '../pages/RecipeDrinkDetails';
 import RecipeFoodProcess from '../pages/RecipeFoodProcess';
@@ -24,21 +23,23 @@ function Routes() {
       <Route path="/bebidas" exact render={ () => <Home title="Bebidas" /> } />
       <Route
         path="/comidas/:id"
+        exact
         render={ (props) => <RecipeFoodDetails { ...props } title="comidas" /> }
       />
       <Route
         path="/bebidas/:id"
+        exact
         render={ (props) => <RecipeDrinkDetails { ...props } title="bebidas" /> }
       />
       <Route
         path="/comidas/:id/in-progress"
         exact
-        render={ (props) => <RecipeFoodProcess { ...props } /> }
+        render={ (props) => <RecipeFoodProcess { ...props } title="comidas" /> }
       />
       <Route
         path="/bebidas/:id/in-progress"
         exact
-        render={ (props) => <RecipeDrinkProcess { ...props } /> }
+        render={ (props) => <RecipeDrinkProcess { ...props } title="bebidas" /> }
       />
       <Route path="/explorar" exact component={ Explore } />
       <Route
