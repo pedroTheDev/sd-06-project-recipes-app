@@ -28,7 +28,7 @@ function DetalhesComidas() {
   const history = useHistory();
   function handleIniciarReceita() {
     setIniciarReceitas([...iniciarReceitas, idDaReceita]);
-    console.log(idDaReceita);
+    // console.log(idDaReceita);
     let inProgress;
     let idIniciados;
     if (localStorage.getItem('inProgressRecipes')) {

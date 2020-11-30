@@ -6,10 +6,12 @@ import './Card.css';
 function CardBebida(elemento, index) {
   const { setIdBebida } = useContext(RecipeContext);
   const history = useHistory();
+
   function redirectDetails(idDrink) {
     setIdBebida(idDrink);
     history.push(`/bebidas/${idDrink}`);
   }
+  // console.log(index);
   return (
     <div key={ elemento.idDrink } data-testid={ `${index}-recipe-card` } className="Card">
       <button type="button" onClick={ () => redirectDetails(elemento.idDrink) }>

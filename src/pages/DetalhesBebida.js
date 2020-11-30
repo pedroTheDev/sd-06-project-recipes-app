@@ -19,15 +19,17 @@ function DetalhesBebida() {
 
   const seis = 6;
   const zero = 0;
+
   const fetchBebidasDetalhes = async () => {
     const response = await fetchApiBebidasDetalhes(idDaReceita);
     setEstadoApiBebidas(response);
   };
 
   const history = useHistory();
+
   function handleIniciarReceita() {
     setIniciarReceitas([...iniciarReceitas, idDaReceita]);
-    console.log(idDaReceita);
+    // console.log(idDaReceita);
     let inProgress;
     let idIniciados;
     if (localStorage.getItem('inProgressRecipes')) {
@@ -132,14 +134,14 @@ function DetalhesBebida() {
   function renderIngrediente(bebida) {
     const array = [];
     for (let numero = 1; numero <= quinze; numero += 1) {
-      if (bebida[`strIngredient${numero}`] !== null) {
+      if (bebida[`strIngredient${numero}`] !== '') {
         array.push(
           <li
             data-testid={ `${numero - 1}-ingredient-name-and-measure` }
             className="titulo"
           >
             {`${bebida[`strIngredient${numero}`]} `}
-            {(bebida[`strMeasure${numero}`] !== null)
+            {(bebida[`strMeasure${numero}`] !== '')
               ? <span>{`${bebida[`strMeasure${numero}`]}`}</span>
               : ''}
           </li>,
@@ -148,54 +150,57 @@ function DetalhesBebida() {
     }
     return array;
   }
+  // console.log(estadoApiBebidas);
 
   return (
-    estadoApiBebidas.map((bebida, index) => (
-      <div key={ index }>
-        <img
-          className="imagemReceita"
-          data-testid="recipe-photo"
-          src={ bebida.strDrinkThumb }
-          alt={ bebida.strDrink }
-        />
-        <button type="button" data-testid="share-btn">
-          <img src={ share } alt="share" />
-        </button>
-        <button type="button" data-testid="favorite-btn">Favoritar</button>
-        <h2 data-testid="recipe-title" className="titulo">{ bebida.strDrink }</h2>
-        <h4 data-testid="recipe-category" className="category titulo">
-          {bebida.strAlcoholic}
-        </h4>
-        <div>
-          <h3 className="titulo">Ingredientes</h3>
-          {renderIngrediente(bebida)}
+    (!estadoApiBebidas)
+      ? (<p>Loading...</p>)
+      : estadoApiBebidas.map((bebida, index) => (
+        <div key={ index }>
+          <img
+            className="imagemReceita"
+            data-testid="recipe-photo"
+            src={ bebida.strDrinkThumb }
+            alt={ bebida.strDrink }
+          />
+          <button type="button" data-testid="share-btn">
+            <img src={ share } alt="share" />
+          </button>
+          <button type="button" data-testid="favorite-btn">Favoritar</button>
+          <h2 data-testid="recipe-title" className="titulo">{ bebida.strDrink }</h2>
+          <h4 data-testid="recipe-category" className="category titulo">
+            {bebida.strAlcoholic}
+          </h4>
+          <div>
+            <h3 className="titulo">Ingredientes</h3>
+            {renderIngrediente(bebida)}
+          </div>
+          <h3 className="titulo">Instruções</h3>
+          <p data-testid="instructions" className="intrucoes">{bebida.strInstructions}</p>
+          {/* <button
+            type="button"
+            data-testid={ `${index}-recomendation-card` }
+          >
+            Card receitas Recomendadas
+          </button> */}
+          <div className="recomendacao">
+            {
+              retornoApi6Comidas
+              && retornoApi6Comidas.slice(zero, seis)
+                .map((food, indice) => (
+                  <button
+                    data-testid={ `${indice}-recomendation-card` }
+                    type="button"
+                    key={ indice }
+                    className="img-recomendacao"
+                  >
+                    {CardComidaRecomendacao(food, indice)}
+                  </button>))
+            }
+          </div>
+          {buttonIniciar()}
         </div>
-        <h3 className="titulo">Instruções</h3>
-        <p data-testid="instructions" className="intrucoes">{bebida.strInstructions}</p>
-        {/* <button
-          type="button"
-          data-testid={ `${index}-recomendation-card` }
-        >
-          Card receitas Recomendadas
-        </button> */}
-        <div className="recomendacao">
-          {
-            retornoApi6Comidas
-            && retornoApi6Comidas.slice(zero, seis)
-              .map((food, indice) => (
-                <button
-                  data-testid={ `${indice}-recomendation-card` }
-                  type="button"
-                  key={ indice }
-                  className="img-recomendacao"
-                >
-                  {CardComidaRecomendacao(food, indice)}
-                </button>))
-          }
-        </div>
-        {buttonIniciar()}
-      </div>
-    )));
+      )));
 }
 
 export default DetalhesBebida;
