@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import RecipesAppContext from '../hooks/RecipesAppContext';
+import RecipesAppContext from '../context/RecipesAppContext';
 import {
   requestApiFoodFilterName,
 } from '../services/requestFood';
@@ -13,15 +13,17 @@ function CardsFood() {
     },
   } = useContext(RecipesAppContext);
 
+  const arrayVoid = 0;
   useEffect(() => {
-    requestApiFoodFilterName()
-      .then((arrayApi) => setCardFood(arrayApi));
+    if (cardFood.length === arrayVoid) {
+      requestApiFoodFilterName()
+        .then((arrayApi) => setCardFood(arrayApi));
+    }
   }, []);
 
   const ofTheFirstParameter = 0;
   const upToParameter12 = 12;
 
-  const arrayVoid = 0;
   return (
     <div>
       {(cardFood.length === arrayVoid) ? <span>Loading...</span> : cardFood

@@ -40,10 +40,8 @@ function ExplorarBebidas({ history }) {
   );
 }
 
-ExplorarBebidas.protoTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
+ExplorarBebidas.propTypes = {
+  history: PropTypes.shape.isRequired,
 };
 
 export default ExplorarBebidas;
