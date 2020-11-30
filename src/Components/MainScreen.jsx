@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import RecipeContext from '../hooks/RecipeContext';
 import recipeRequest from '../services/recipeRequest';
+import '../Style/mainScreen.css';
 
 export default function MainScreen() {
   const history = useHistory();
@@ -50,11 +51,12 @@ export default function MainScreen() {
   const renderFilters = () => {
     if (pathname === '/comidas') {
       return (
-        <div>
+        <div className="filter-container">
           <button
+            type="button"
+            className="filter-button"
             onClick={ handleFilters }
             id="all"
-            type="button"
             data-testid="All-category-filter"
           >
             All
@@ -63,6 +65,7 @@ export default function MainScreen() {
             .map((filter, index) => (
               <button
                 type="button"
+                className="filter-button"
                 data-testid={ `${filter.strCategory}-category-filter` }
                 key={ index }
                 id={ filter.strCategory }
@@ -77,11 +80,12 @@ export default function MainScreen() {
     }
     if (pathname === '/bebidas') {
       return (
-        <div>
+        <div className="filter-container">
           <button
+            type="button"
+            className="filter-button"
             onClick={ handleFilters }
             id="all"
-            type="button"
             data-testid="All-category-filter"
           >
             All
@@ -90,6 +94,7 @@ export default function MainScreen() {
             .map((filter, index) => (
               <button
                 type="button"
+                className="filter-button"
                 data-testid={ `${filter.strCategory}-category-filter` }
                 key={ index }
                 id={ filter.strCategory }
@@ -110,48 +115,55 @@ export default function MainScreen() {
     if (pathname === '/comidas' && foodRecipes) {
       return foodRecipes.filter((_, index) => index < twelve)
         .map((food, index) => (
-          <Link
-            to={ `/comidas/${food.idMeal}` }
-            onClick={ () => handleIds(food) }
+          <div
+            data-testid={ `${index}-recipe-card` }
+            className="card-container"
             key={ index }
           >
-            <div
-              data-testid={ `${index}-recipe-card` }
+            <Link
+              to={ `/comidas/${food.idMeal}` }
+              onClick={ () => handleIds(food) }
+              key={ index }
+              className="details-link"
             >
+              <p data-testid={ `${index}-card-name` }>{food.strMeal}</p>
               <img
                 src={ food.strMealThumb }
                 data-testid={ `${index}-card-img` }
                 alt={ food.strMeal }
               />
-              <p data-testid={ `${index}-card-name` }>{food.strMeal}</p>
-            </div>
-          </Link>
+            </Link>
+          </div>
         ));
     }
     return (drinkRecipes.filter((_, index) => index < twelve)
       .map((drinks, index) => (
-        <Link
-          onClick={ () => setIds(drinks.idDrink) }
-          to={ `/bebidas/${drinks.idDrink}` }
+        <div
+          data-testid={ `${index}-recipe-card` }
           key={ index }
+          className="card-container"
         >
-          <div data-testid={ `${index}-recipe-card` } key="index">
+
+          <Link
+            onClick={ () => setIds(drinks.idDrink) }
+            to={ `/bebidas/${drinks.idDrink}` }
+            className="details-link"
+          >
+
+            <p data-testid={ `${index}-card-name` }>{ drinks.strDrink}</p>
             <img
               src={ drinks.strDrinkThumb }
               data-testid={ `${index}-card-img` }
               alt={ drinks.strDrink }
             />
-            <p data-testid={ `${index}-card-name` }>{ drinks.strDrink}</p>
-          </div>
-        </Link>
+          </Link>
+        </div>
       )));
   };
 
   return (
     <div>
-      <div className="filter-container">
-        {renderFilters()}
-      </div>
+      {renderFilters()}
       <div className="recipes-container">
         { isLoading ? <p>Loading...</p> : renderCards() }
       </div>

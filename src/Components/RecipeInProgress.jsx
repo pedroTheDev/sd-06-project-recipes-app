@@ -5,14 +5,16 @@ import RecipeContext from '../hooks/RecipeContext';
 import recipeRequest from '../services/recipeRequest';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
-
+// Faltando redirecionar ao clicar na imagem - browser roda mas avaliador não
 const RecipeInProgress = () => {
   const history = useHistory();
   const { pathname } = history.location;
   const id = pathname.split('/')[2];
   const kindof = pathname.split('/')[1];
+  const [checkboxes, setCheckboxes] = useState({});
   const [recipeDetailDrink, setRecipeDetailDrink] = useState([]);
   const [recipeDetailFood, setRecipeDetailFood] = useState([]);
+  const [foodIngredients, setFoodIngredients] = useState([]);
   const [copied, setCopied] = useState('');
   const [disable, setDisable] = useState(true);
   const {
@@ -23,29 +25,11 @@ const RecipeInProgress = () => {
   const NINE = 9;
   const TWENTY_NINE = 29;
   const FOURTY_NINE = 49;
-
+  const TWENTY_EIGHT = 28;
   const THIRTY_SIX = 36;
   const TWENTY_ONE = 21;
   const FIFTY_ONE = 51;
-
-  const handleStartTasks = () => {
-    const items = document.getElementsByClassName('checks');
-    const arr = Array.from(items);
-    if (kindof === 'comidas') {
-      const tasks = JSON.parse(localStorage.inProgressRecipes).meals[id]
-        .map((item) => arr.filter((itens) => itens.id === item)[0]);
-      tasks.forEach((el) => {
-        el.checked = true;
-      });
-    } else {
-      console.log('indo');
-      const tasks = JSON.parse(localStorage.inProgressRecipes).cocktails[id]
-        .map((item) => arr.filter((itens) => itens.id === item)[0]);
-      tasks.forEach((el) => {
-        el.checked = true;
-      });
-    }
-  };
+  const THIRTY_FIVE = 35;
 
   const getAPI = async () => {
     const food = await recipeRequest(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
@@ -54,12 +38,41 @@ const RecipeInProgress = () => {
     const recipeDrink = await drink.drinks;
     setRecipeDetailDrink(recipeDrink);
     setRecipeDetailFood(recipeFood);
-    if (JSON.parse(localStorage.inProgressRecipes).meals[id]) {
-      handleStartTasks();
-    } else if (JSON.parse(localStorage.inProgressRecipes).cocktails[id]) {
-      handleStartTasks();
+    if (kindof === 'comidas') {
+      const ingredientKeys = Object.values(recipeFood[0])
+        .filter((element, index, array) => array.indexOf(element) <= TWENTY_EIGHT
+        && array.indexOf(element) >= NINE
+        && element !== '');
+      setFoodIngredients(ingredientKeys);
+    } else {
+      const ingredientKeys = Object.values(recipeDrink[0])
+        .filter((element, index, array) => array.indexOf(element) <= THIRTY_FIVE
+        && array.indexOf(element) >= TWENTY_ONE
+        && element !== '');
+      setFoodIngredients(ingredientKeys);
     }
   };
+
+  useEffect(() => {
+    const objetao = {};
+    foodIngredients.forEach((foods) => {
+      Object.assign(objetao, { [foods]: false });
+      setCheckboxes(objetao);
+      if (kindof === 'comidas') {
+        JSON.parse(localStorage.inProgressRecipes).meals[id]
+          .filter((fod) => fod === foods).forEach(() => {
+            Object.assign(objetao, { [foods]: true });
+            setCheckboxes(objetao);
+          });
+      } else {
+        JSON.parse(localStorage.inProgressRecipes).cocktails[id]
+          .filter((fod) => fod === foods).forEach(() => {
+            Object.assign(objetao, { [foods]: true });
+            setCheckboxes(objetao);
+          });
+      }
+    });
+  }, [foodIngredients]);
 
   const handleStorageProgress = () => {
     if (kindof === 'comidas') {
@@ -127,17 +140,9 @@ const RecipeInProgress = () => {
     } else {
       setDisable(true);
     }
+    setCheckboxes({ ...checkboxes, [target.id]: true });
     if (kindof === 'comidas') {
-      if (target.checked) {
-        const concatenando = JSON.parse(localStorage.inProgressRecipes);
-        const newObj = concatenando.meals[id].concat(target.id);
-        localStorage.inProgressRecipes = JSON.stringify(
-          { ...JSON.parse(localStorage.inProgressRecipes),
-            meals: { ...JSON.parse(localStorage.inProgressRecipes)
-              .meals,
-            [id]: newObj } },
-        );
-      } else {
+      if (checkboxes[target.id]) {
         const concatenando = JSON.parse(localStorage.inProgressRecipes);
         const newObj = concatenando.meals[id].filter((meal) => meal !== target.id);
         localStorage.inProgressRecipes = JSON.stringify(
@@ -146,17 +151,19 @@ const RecipeInProgress = () => {
               .meals,
             [id]: newObj } },
         );
+        setCheckboxes({ ...checkboxes, [target.id]: false });
+      } else {
+        const concatenando = JSON.parse(localStorage.inProgressRecipes);
+        const newObj = concatenando.meals[id].concat(target.id);
+        localStorage.inProgressRecipes = JSON.stringify(
+          { ...JSON.parse(localStorage.inProgressRecipes),
+            meals: { ...JSON.parse(localStorage.inProgressRecipes)
+              .meals,
+            [id]: newObj } },
+        );
+        setCheckboxes({ ...checkboxes, [target.id]: true });
       }
-    } else if (target.checked) {
-      const concatenando = JSON.parse(localStorage.inProgressRecipes);
-      const newObj = concatenando.cocktails[id].concat(target.id);
-      localStorage.inProgressRecipes = JSON.stringify(
-        { ...JSON.parse(localStorage.inProgressRecipes),
-          cocktails: { ...JSON.parse(localStorage.inProgressRecipes)
-            .cocktails,
-          [id]: newObj } },
-      );
-    } else {
+    } else if (checkboxes[target.id]) {
       const concatenando = JSON.parse(localStorage.inProgressRecipes);
       const newObj = concatenando.cocktails[id].filter((meal) => meal !== target.id);
       localStorage.inProgressRecipes = JSON.stringify(
@@ -165,6 +172,17 @@ const RecipeInProgress = () => {
             .cocktails,
           [id]: newObj } },
       );
+      setCheckboxes({ ...checkboxes, [target.id]: false });
+    } else {
+      const concatenando = JSON.parse(localStorage.inProgressRecipes);
+      const newObj = concatenando.cocktails[id].concat(target.id);
+      localStorage.inProgressRecipes = JSON.stringify(
+        { ...JSON.parse(localStorage.inProgressRecipes),
+          cocktails: { ...JSON.parse(localStorage.inProgressRecipes)
+            .cocktails,
+          [id]: newObj } },
+      );
+      setCheckboxes({ ...checkboxes, [target.id]: true });
     }
   };
 
@@ -180,12 +198,14 @@ const RecipeInProgress = () => {
         >
           <label htmlFor={ ingredient }>
             <input
+              style={ { textDecoration: 'none solid rgba(0,0,0)' } }
               className="checks"
               type="checkbox"
+              checked={ checkboxes[ingredient] }
               id={ ingredient }
               onChange={ handleCheckbox }
             />
-            { `${ingredient} - ${measures[index]}` }
+            <span>{ `${ingredient} - ${measures[index]}` }</span>
           </label>
         </div>
       ));
@@ -193,7 +213,10 @@ const RecipeInProgress = () => {
 
   const handleFinishRecipe = () => {
     const typeRecipe = pathname.split('/')[1];
+    console.log('entrou');
     if (typeRecipe === 'comidas') {
+      const data = Date();
+      console.log(recipeDetailFood[0].strTags.split(','));
       const doneFood = {
         id: recipeDetailFood[0].idMeal,
         type: 'comida',
@@ -202,13 +225,14 @@ const RecipeInProgress = () => {
         alcoholicOrNot: '',
         name: recipeDetailFood[0].strMeal,
         image: recipeDetailFood[0].strMealThumb,
-        doneDate: '',
-        tags: recipeDetailFood[0].strTags,
+        doneDate: data,
+        tags: recipeDetailFood[0].strTags.split(','),
       };
       const itens = JSON.parse(localStorage.doneRecipes);
       const AllFavorites = itens.concat(doneFood);
       localStorage.doneRecipes = JSON.stringify(AllFavorites);
     } else {
+      const data = Date();
       const doneFood = {
         id: recipeDetailDrink[0].idDrink,
         type: 'bebida',
@@ -217,8 +241,8 @@ const RecipeInProgress = () => {
         alcoholicOrNot: recipeDetailDrink[0].strAlcoholic,
         name: recipeDetailDrink[0].strDrink,
         image: recipeDetailDrink[0].strDrinkThumb,
-        doneDate: '',
-        tags: recipeDetailDrink[0].strTags,
+        doneDate: data,
+        tags: [],
       };
       const itens = JSON.parse(localStorage.doneRecipes);
       const AllFavorites = itens.concat(doneFood);
@@ -244,14 +268,16 @@ const RecipeInProgress = () => {
           src={ food.strMealThumb }
         />
         <h1 data-testid="recipe-title">{ food.strMeal }</h1>
-        <button
-          onClick={ handleCopy }
-          type="button"
-          data-testid="share-btn"
-        >
-          Share
+        <div>
+          <button
+            onClick={ handleCopy }
+            type="button"
+            data-testid="share-btn"
+          >
+            Share
 
-        </button>
+          </button>
+        </div>
 
         {copied}
         <button
@@ -270,6 +296,7 @@ const RecipeInProgress = () => {
             data-testid="finish-recipe-btn"
             type="button"
             disabled={ disable }
+            onClick={ handleFinishRecipe }
           >
             Finalizar
           </button>
@@ -285,14 +312,16 @@ const RecipeInProgress = () => {
         src={ drink.strDrinkThumb }
       />
       <h1 data-testid="recipe-title">{ drink.strDrink }</h1>
-      <button
-        onClick={ handleCopy }
-        type="button"
-        data-testid="share-btn"
-      >
-        Share
+      <div>
+        <button
+          onClick={ handleCopy }
+          type="button"
+          data-testid="share-btn"
+        >
+          Share
 
-      </button>
+        </button>
+      </div>
 
       {copied}
       <button
