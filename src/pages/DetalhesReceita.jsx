@@ -13,13 +13,13 @@ import whiteHeartIcon from '../styles/images/whiteHeartIcon.svg';
 import blackHeartIcon from '../styles/images/blackHeartIcon.svg';
 import { saveState, loadState } from '../services/localStorage';
 
-function DetalhesReceita(props) {
+function DetalhesReceita({ match: { params: { id } } }) {
   const zero = 0;
   const vinte = 20;
   const seis = 6;
   const favoriteRecipe = 'favoriteRecipes';
   const responseFavoriteStorage = loadState(favoriteRecipe, [])
-    .some((element) => element.id === props.match.params.id);
+    .some((element) => element.id === id);
   const [detailsFood, setDetailsFood] = useState([]);
   const [arrayIngredients, setArrayIngredients] = useState([]);
   const [embed, setEmbed] = useState('');
@@ -27,7 +27,7 @@ function DetalhesReceita(props) {
   const [favoriteButton, setFavoriteButton] = useState(responseFavoriteStorage);
 
   useEffect(() => {
-    requestApiFoodDetails(props.match.params.id)
+    requestApiFoodDetails(id)
       .then((response) => {
         setDetailsFood(response[0]);
       });
@@ -93,7 +93,7 @@ function DetalhesReceita(props) {
   };
 
   const copyBoard = () => {
-    const url = `http://localhost:3000/comidas/${props.match.params.id}`;
+    const url = `http://localhost:3000/comidas/${id}`;
     const input = document.body.appendChild(document.createElement('input'));
     input.value = url;
     input.select();
@@ -167,13 +167,17 @@ function DetalhesReceita(props) {
       />
       <div className="carrossel">
         {recommendFood.map((drink, index) => (
-          <div className="carrossel-iten" key={ index } data-testid={ `${index}-recomendation-card` }>
+          <div
+            className="carrossel-iten"
+            key={ index }
+            data-testid={ `${index}-recomendation-card` }
+          >
             <img src={ drink.strDrinkThumb } alt="drink-thumb" />
             <h3 data-testid={ `${index}-recomendation-title` }>{drink.strDrink}</h3>
           </div>
         ))}
       </div>
-      <Link to={ `/comidas/${props.match.params.id}/in-progress` }>
+      <Link to={ `/comidas/${id}/in-progress` }>
         <button
           type="button"
           data-testid="start-recipe-btn"

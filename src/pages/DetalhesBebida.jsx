@@ -13,20 +13,20 @@ import whiteHeartIcon from '../styles/images/whiteHeartIcon.svg';
 import blackHeartIcon from '../styles/images/blackHeartIcon.svg';
 import { saveState, loadState } from '../services/localStorage';
 
-function DetalhesBebida(props) {
+function DetalhesBebida({ match: { params: { id } } }) {
   const zero = 0;
   const quinze = 15;
   const seis = 6;
   const favoriteRecipe = 'favoriteRecipes';
   const responseFavoriteStorage = loadState(favoriteRecipe, [])
-    .some((element) => element.id === props.match.params.id);
+    .some((element) => element.id === id);
   const [detailsDrink, setDetailsDrink] = useState([]);
   const [arrayIngredients, setArrayIngredients] = useState([]);
   const [recommendDrink, setRecommendDrink] = useState([]);
   const [favoriteButton, setFavoriteButton] = useState(responseFavoriteStorage);
 
   useEffect(() => {
-    requestApiDrinkDetails(props.match.params.id)
+    requestApiDrinkDetails(id)
       .then((response) => {
         setDetailsDrink(response[0]);
       });
@@ -90,7 +90,7 @@ function DetalhesBebida(props) {
   }, [detailsDrink]);
 
   const copyBoard = () => {
-    const url = `http://localhost:3000/bebidas/${props.match.params.id}`;
+    const url = `http://localhost:3000/bebidas/${id}`;
     const input = document.body.appendChild(document.createElement('input'));
     input.value = url;
     input.select();
@@ -159,7 +159,7 @@ function DetalhesBebida(props) {
           </div>
         ))}
       </div>
-      <Link to={ `/bebidas/${props.match.params.id}/in-progress` }>
+      <Link to={ `/bebidas/${id}/in-progress` }>
         <button
           type="button"
           data-testid="start-recipe-btn"
