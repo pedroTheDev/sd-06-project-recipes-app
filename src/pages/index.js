@@ -9,3 +9,5 @@ export { default as ExplorerIngredientsDrinks } from './explorerIngredientsDrink
 export { default as InProgress } from './in-progress';
 export { default as RecipesDone } from './recipesDone';
 export { default as FavoriteRecipes } from './favoriteRecipes';
+export { default as ExploreByArea } from './explorerByArea';
+export { default as NotFound } from './NotFound';
