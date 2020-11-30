@@ -13,6 +13,7 @@ function RecipesAppProvider({ children }) {
   const [isFetching, setIsFetching] = useState(true);
   const [startRecipe, setStartRecipe] = useState(false);
   const [finalizedRecipe, setFinalizedRecipe] = useState(false);
+  const [renderFavoriteRecipes, setRenderFavoriteRecipes] = useState([]);
 
   const value = {
     ingredient,
@@ -35,6 +36,8 @@ function RecipesAppProvider({ children }) {
     setStartRecipe,
     finalizedRecipe,
     setFinalizedRecipe,
+    renderFavoriteRecipes,
+    setRenderFavoriteRecipes,
   };
 
   return (
