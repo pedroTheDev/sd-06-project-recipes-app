@@ -7,7 +7,7 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 function DrinksDetailsProgress() {
   const url = document.URL;
-  const splitedURL = url.split('/');
+  const actualId = url.split('/')[4];
   const { resultsFoodsAndDrinks } = useContext(RecipesContext);
   console.log(resultsFoodsAndDrinks);
   const [drinkDetails, setDrinkDetails] = useState([]);
@@ -17,7 +17,7 @@ function DrinksDetailsProgress() {
 
   useEffect(() => {
     async function fetchData() {
-      const resultsDetails = await requestDetailsDrinks(splitedURL[4]);
+      const resultsDetails = await requestDetailsDrinks(actualId);
       const drink = resultsDetails.drinks[0];
       setDrinkDetails(drink);
       const keysDrink = Object.keys(drink);
@@ -33,6 +33,21 @@ function DrinksDetailsProgress() {
       setIngredients(allIngredients);
     }
     fetchData();
+  }, []);
+
+  useEffect(() => {
+    const meuLocal = localStorage.getItem('favoriteRecipes');
+    console.log('local2', meuLocal);
+    if (meuLocal !== null) {
+      const meuLocalArray = JSON.parse(meuLocal);
+      console.log(meuLocalArray);
+      // const idAtual = actualId[4];
+      const findId = meuLocalArray.find((element) => element.id === actualId);
+      console.log(findId);
+      if (findId !== undefined) {
+        setFavoriteDrink(true);
+      }
+    }
   }, []);
 
   function copyToClipBoard(text) {
@@ -64,6 +79,14 @@ function DrinksDetailsProgress() {
             favoriteObj,
           ]),
         );
+      }
+      if (favoriteDrink === true) {
+        setFavoriteDrink(false);
+        const arrayDoStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+        console.log(arrayDoStorage);
+        const novoArray = arrayDoStorage.filter((element) => element.id !== actualId);
+        console.log(novoArray);
+        localStorage.setItem('favoriteRecipes', JSON.stringify(novoArray));
       }
     }
   }

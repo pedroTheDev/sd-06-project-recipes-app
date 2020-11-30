@@ -6,7 +6,7 @@ import shareIcon from '../images/shareIcon.svg';
 
 function FoodDetailsProgress() {
   const url = document.URL;
-  const splitedURL = url.split('/');
+  const actualId = url.split('/')[4];
   const [foodDetails, setFoodDetails] = useState([]);
   const [ingredients, setIngredients] = useState('');
   const [favoriteFood, setFavoriteFood] = useState(false);
@@ -19,7 +19,7 @@ function FoodDetailsProgress() {
 
   useEffect(() => {
     async function fetchData() {
-      const resultsDetails = await requestDetailsFood(splitedURL[4]);
+      const resultsDetails = await requestDetailsFood(actualId);
       const meal = resultsDetails.meals[0];
       setFoodDetails(meal);
       const keysMeal = Object.keys(meal);
@@ -34,6 +34,21 @@ function FoodDetailsProgress() {
       setIngredients(allIngredients);
     }
     fetchData();
+  }, []);
+
+  useEffect(() => {
+    const meuLocal = localStorage.getItem('favoriteRecipes');
+    console.log('local2', meuLocal);
+    if (meuLocal !== null) {
+      const meuLocalArray = JSON.parse(meuLocal);
+      console.log(meuLocalArray);
+      // const idAtual = actualId[4];
+      const findId = meuLocalArray.find((element) => element.id === actualId);
+      console.log(findId);
+      if (findId !== undefined) {
+        setFavoriteFood(true);
+      }
+    }
   }, []);
 
   function handleFavoriteFood() {
@@ -65,14 +80,39 @@ function FoodDetailsProgress() {
     }
     if (favoriteFood === true) {
       setFavoriteFood(false);
-      console.log('entrou2', favoriteFood);
+      const arrayDoStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      console.log(arrayDoStorage);
+
+      const novoArray = arrayDoStorage.filter((element) => element.id !== actualId);
+      console.log(novoArray);
+
+      localStorage.setItem('favoriteRecipes', JSON.stringify(novoArray));
     }
   }
 
   function copyToClipBoard(text) {
-    navigator.clipboard.writeText(text);
+    const textSplice = text.split('/');
+    textSplice.length = 4;
+    console.log(textSplice);
+    navigator.clipboard.writeText(textSplice);
     setSpanHidden(false);
   }
+
+  // function handleProgress(e) {
+  // console.log(e.target);
+  // // localStorage.setItem('inProgressRecipes', JSON.stringify({ cocktails: {},
+  // //   meals: {},
+  // // }));
+
+  // // const localStorageRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+  // // console.log(localStorageRecipes);
+  // // if (localStorageRecipes.meals[foodDetails.idMeal] !== e.target.value) {
+  // //   console.log('entrou');
+  // //   localStorage.setItem('inProgressRecipes', JSON.stringify({ cocktails: {},
+  // //     meals: { [foodDetails.idMeal]: [e.target.value] },
+  // //   }));
+  // // }
+  // }
 
   return (
     <div>
@@ -103,9 +143,9 @@ function FoodDetailsProgress() {
         type="button"
         data-testid="favorite-btn"
         onClick={ handleFavoriteFood }
-        src={ favoriteFood ? whiteHeartIcon : blackHeartIcon }
+        src={ favoriteFood ? blackHeartIcon : whiteHeartIcon }
       >
-        <img src={ favoriteFood ? whiteHeartIcon : blackHeartIcon } alt="favorite" />
+        <img src={ favoriteFood ? blackHeartIcon : whiteHeartIcon } alt="favorite" />
       </button>
 
       <h4 data-testid="recipe-category">
@@ -121,6 +161,8 @@ function FoodDetailsProgress() {
                 id={ item.ingredient }
                 key={ item.ingredient }
                 name={ item.ingredient }
+                value={ item.ingredient }
+                // onChange={ (e) => handleProgress(e) }
               />
               <label htmlFor={ item.ingredient }>
                 {
