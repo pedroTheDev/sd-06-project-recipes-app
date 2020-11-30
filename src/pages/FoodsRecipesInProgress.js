@@ -343,15 +343,17 @@ class FoodsRecipesInProgress extends React.Component {
             <h2 data-testid="instructions">Instructions</h2>
             <div className="detail-instructions">{recipe.strInstructions}</div>
             <p data-testid={ `${index}-card-name` }>{recipe.strMeal}</p>
-            <button
-              data-testid="finish-recipe-btn"
-              type="button"
-              onClick={ () => this.recipeDone(recipe) }
-              className="start-recipe"
-              disabled={ !disabledButton }
-            >
-              Finalizar Receita
-            </button>
+            <div>
+              <button
+                data-testid="finish-recipe-btn"
+                type="button"
+                onClick={ () => this.recipeDone(recipe) }
+                className="start-recipe"
+                disabled={ !disabledButton }
+              >
+                Finalizar Receita
+              </button>
+            </div>
           </div>
         )) : null }
       </div>);

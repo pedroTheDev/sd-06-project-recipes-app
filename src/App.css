@@ -517,6 +517,10 @@ a {
   font-family: trade-gothic,sans-serif;
 }
 
+.not-found-button {
+  margin: 15px;
+}
+
 @media (max-width:600px) {
   body {
     background: url(https://ak.picdn.net/shutterstock/videos/14891857/thumb/1.jpg);
