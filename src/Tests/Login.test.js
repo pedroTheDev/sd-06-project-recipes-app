@@ -47,4 +47,5 @@ describe('Teste página de Login', () => {
     const { pathname } = history.location;
     expect(pathname).toBe('/comidas');
   });
+
 });
