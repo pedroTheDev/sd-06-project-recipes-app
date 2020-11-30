@@ -10,7 +10,7 @@ function Footer() {
       data-testid="footer"
       className="d-flex p-3 align-items-center
       justify-content-between fixed-bottom"
-      style={ { background: '#cb6cec' } }
+      style={ { background: '#7850B8' } }
     >
       <Link to="/bebidas">
         <img alt="Bebidas" data-testid="drinks-bottom-btn" src={ drinkIcon } />

@@ -13,29 +13,29 @@ const Header = ({ title, searchBtn = false }) => {
   return (
     <section
       className="d-flex p-2 align-items-center justify-content-between"
-      style={ { background: '#cb6cec' } }
+      style={ { background: '#7850B8' } }
     >
-      <Link to="/perfil" className="image">
+      <Link to="/perfil">
         <img
           data-testid="profile-top-btn"
           src={ profileIcon }
           alt="Profile button"
         />
       </Link>
-      <h2 className="mb-0" data-testid="page-title">
+      <h2 data-testid="page-title">
         {title}
       </h2>
       {searchBtn ? (
         <button
           type="button"
           data-testid="search-top-btn"
-          className="border-0 bg-transparent p-0"
+          className="border-0 bg-transparent"
           onClick={ showSearchBar }
         >
           <img src={ searchIcon } alt="show-hide-sbr" />
         </button>
       ) : (
-        <div className="image" />
+        <div />
       )}
     </section>
   );

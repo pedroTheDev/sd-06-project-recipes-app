@@ -40,7 +40,7 @@ function DrinkFilters() {
           type="button"
           data-testid={ `${filter}-category-filter` }
           className="btn btn-secondary btn-sm m-1 w-25"
-          style={ { background: '#7ed95e' } }
+          style={ { background: '#6CDC3E' } }
           onClick={ (event) => filterByCategory(event.target.innerHTML) }
         >
           {filter}

@@ -9,7 +9,8 @@ import { fetchDrinkAPI } from '../services/drinkAPI';
 import { foodAPI } from '../services/foodAPI';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import '../style/Detalhes.css';
+import logo from '../images/myfood.png';
+import '../style/Loading.css';
 
 function DetalhesBebida(props) {
   const {
@@ -159,7 +160,7 @@ function DetalhesBebida(props) {
   };
 
   return ((isFetching)
-    ? <div>carregando...</div>
+    ? <div><img src={ logo } alt="teste" className="loading" /></div>
     : (
       <section>
         <Header title="Detalhes Bebidas" />

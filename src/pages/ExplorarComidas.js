@@ -15,15 +15,16 @@ const ExplorarComidas = () => {
   }, []);
 
   return (
-    <div>
+    <div className="bg">
       <Header title="Explorar Comidas" />
-      <div className="row h-100 justify-content-center align-items-center">
-        <div className="col">
+      <div className="row justify-content-center align-items-center m-4">
+        <div className="col my-4">
           <Link to="/explorar/comidas/ingredientes">
             <button
               data-testid="explore-by-ingredient"
               type="button"
-              className="btn btn-secondary btn-block btn-lg"
+              className="btn btn-block btn-lg my-2"
+              style={ { background: '#6CDC3E' } }
             >
               Por Ingredientes
             </button>
@@ -32,7 +33,8 @@ const ExplorarComidas = () => {
             <button
               data-testid="explore-by-area"
               type="button"
-              className="btn btn-secondary btn-block btn-lg"
+              className="btn btn-block btn-lg my-2"
+              style={ { background: '#6CDC3E' } }
             >
               Por Local de Origem
             </button>
@@ -44,13 +46,15 @@ const ExplorarComidas = () => {
             <button
               data-testid="explore-surprise"
               type="button"
-              className="btn btn-secondary btn-block btn-lg"
+              className="btn btn-block btn-lg my-2"
+              style={ { background: '#6CDC3E' } }
             >
               Me Surpreenda!
             </button>
           </Link>
         </div>
       </div>
+      {/* <img src={} alt='comida' /> */}
       <Footer />
     </div>
   );

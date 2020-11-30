@@ -15,16 +15,16 @@ const ExplorarBebidas = () => {
   }, []);
 
   return (
-    <div>
+    <div className="bg">
       <Header title="Explorar Bebidas" />
-      <div className="row h-100 justify-content-center align-items-center">
-        <div className="col">
+      <div className="row justify-content-center align-items-center m-4">
+        <div className="col my-4">
           <Link to="/explorar/bebidas/ingredientes">
             <button
               data-testid="explore-by-ingredient"
               type="button"
-              className="btn btn-block btn-lg"
-              style={ { background: '#7ed95e' } }
+              className="btn btn-block btn-lg my-2"
+              style={ { background: '#6CDC3E' } }
             >
               Por Ingredientes
             </button>
@@ -36,8 +36,8 @@ const ExplorarBebidas = () => {
             <button
               data-testid="explore-surprise"
               type="button"
-              className="btn btn-block btn-lg"
-              style={ { background: '#7ed95e' } }
+              className="btn btn-block btn-lg my-2"
+              style={ { background: '#6CDC3E' } }
             >
               Me Surpreenda!
             </button>

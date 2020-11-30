@@ -7,6 +7,8 @@ import ReceitasContext from '../context/ReceitasContext';
 import DrinksCard from '../components/DrinksCard';
 import DrinkFilters from '../components/DrinkFilters';
 import { drinkAPI, drinkCategoryApi } from '../services/drinkAPI';
+import logo from '../images/myfood.png';
+import '../style/Loading.css';
 
 function Bebidas() {
   const {
@@ -29,7 +31,7 @@ function Bebidas() {
   }, []);
 
   return ((!drinks.length)
-    ? <div>Carregando...</div>
+    ? <div><img src={ logo } alt="teste" className="loading" /></div>
     : (
       <section>
         <Header title="Bebidas" searchBtn />
