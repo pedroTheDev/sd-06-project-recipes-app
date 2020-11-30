@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
+import PropTypes from 'prop-types';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import RecipesAppContext from '../context/RecipesAppContext';
@@ -61,5 +62,9 @@ function ComidaPorIngredientes({ history }) {
     </>
   );
 }
+
+ComidaPorIngredientes.propTypes = {
+  history: PropTypes.shape.isRequired,
+};
 
 export default ComidaPorIngredientes;
