@@ -55,17 +55,17 @@ function Comidas() {
         </button>
 
         {categoriesComida
-             && categoriesComida.slice(zero, cinco).map((category, index) => (
-               <button
-                 className="Buttons"
-                 key={ index }
-                 type="button"
-                 data-testid={ `${category.strCategory}-category-filter` }
-                 onClick={ () => changeCategory(category.strCategory) }
-               >
-                 { category.strCategory }
-               </button>
-             ))}
+          && categoriesComida.slice(zero, cinco).map((category, index) => (
+            <button
+              className="Buttons"
+              key={ index }
+              type="button"
+              data-testid={ `${category.strCategory}-category-filter` }
+              onClick={ () => changeCategory(category.strCategory) }
+            >
+              { category.strCategory }
+            </button>
+          ))}
 
       </div>
       <div className="ComidasPage bodyRender">

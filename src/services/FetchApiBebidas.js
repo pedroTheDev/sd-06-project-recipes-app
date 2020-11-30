@@ -35,7 +35,7 @@ export async function fetchApiBebidasDetalhes(id) {
   const endpoint = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
   const response = await fetch(endpoint);
   const responseJson = await response.json();
-  console.log(responseJson);
+  console.log(responseJson.drinks);
   return responseJson.drinks;
 }
 
