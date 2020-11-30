@@ -171,7 +171,7 @@ export default function ReceitasFavoritas({ history }) {
         </button>
       </div>
       {filter === 'all' ? favorites.map((recipe, index) => (renderCard(recipe, index)))
-        : favorites.filter((recipe, index) => recipe.type === filter && index)
+        : favorites.filter((recipe) => recipe.type === filter)
           .map((recipe, index) => (renderCard(recipe, index)))}
       {shared ? <p>Link copiado!</p> : ''}
     </div>
