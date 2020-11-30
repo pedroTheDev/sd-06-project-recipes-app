@@ -37,15 +37,15 @@ function CompletedRecipes() {
     const keys = target.id.split(',');
     let urlLinkDetail = '';
     if (keys[1] === 'meal') {
-      urlLinkDetail = `/comidas/${ keys[0] }`;
+      urlLinkDetail = `/comidas/${keys[0]}`;
     } else if (keys[1] === 'drink') {
-      urlLinkDetail = `/bebidas/${ keys[0] }`;
+      urlLinkDetail = `/bebidas/${keys[0]}`;
     }
     copy(urlLinkDetail);
     console.log(urlLinkDetail);
     const shareButton = document.querySelector('.share-btn');
     shareButton.value = 'Link copiado!';
-    const paragraph = document.querySelector(`.copied-link-${ keys[0] }`);
+    const paragraph = document.querySelector(`.copied-link-${keys[0]}`);
     const span = document.createElement('span');
     paragraph.appendChild(span);
     span.innerHTML = 'Link copiado!';
@@ -82,24 +82,24 @@ function CompletedRecipes() {
           if (recipe.type === type || type === '') {
             let urlLinkDetail = '';
             if (recipe.type === 'meal') {
-              urlLinkDetail = `/comidas/${ recipe.id }`;
+              urlLinkDetail = `/comidas/${recipe.id}`;
             } else if (recipe.type === 'drink') {
-              urlLinkDetail = `/bebidas/${ recipe.id }`;
+              urlLinkDetail = `/bebidas/${recipe.id}`;
             }
             return (
               <div>
                 <Link to={ urlLinkDetail }>
                   <img
-                    data-testid={ `${ index }-horizontal-image` }
+                    data-testid={ `${index}-horizontal-image` }
                     src={ recipe.image }
                     alt={ recipe.name }
                   />
                 </Link>
-                <p data-testid={ `${ index }-horizontal-top-text` }>
+                <p data-testid={ `${index}-horizontal-top-text` }>
                   { recipe.category }
                 </p>
                 <Link to={ urlLinkDetail }>
-                  <h2 data-testid={ `${ index }-horizontal-name` }>
+                  <h2 data-testid={ `${index}-horizontal-name` }>
                     {recipe.name}
                   </h2>
                 </Link>
@@ -118,7 +118,7 @@ function CompletedRecipes() {
                 <p className={ `copied-link-${recipe.id }` } />
                 {recipe.tags.map((tagName) => {
                   return (
-                    <p data-testid={ `${ index }-${ tagName }-horizontal-tag` }>
+                    <p data-testid={ `${index}-${tagName}-horizontal-tag` }>
                       { tagName }
                     </p>
                   );
