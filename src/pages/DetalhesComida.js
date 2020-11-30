@@ -6,16 +6,20 @@ import { fetchApiComidasDetalhes } from '../services/FetchApiComidas';
 import '../components/MenuInferior.css';
 import '../components/detalhes.css';
 import share from '../images/shareIcon.svg';
+import coracaoBranco from '../images/whiteHeartIcon.svg';
+import coracaoPreto from '../images/blackHeartIcon.svg';
 
 function DetalhesComidas() {
   const { idDaReceita } = useParams();
   const [estadoApiComidas, setEstadoApiComidas] = useState([]);
+  const [receitasSalvas, setReceitasSalvas] = useState([]);
   const {
     retornoApi6Bebidas,
     iniciarReceitas,
     setIniciarReceitas,
     // receitasTerminadas,
   } = useContext(RecipeContext);
+  console.log('teste', estadoApiComidas);
 
   const seis = 6;
   const zero = 0;
@@ -24,6 +28,10 @@ function DetalhesComidas() {
     const response = await fetchApiComidasDetalhes(idDaReceita);
     setEstadoApiComidas(response);
   };
+
+  useEffect(() => {
+    fetchComidasDetalhes();
+  }, []);
 
   const history = useHistory();
   function handleIniciarReceita() {
@@ -100,7 +108,6 @@ function DetalhesComidas() {
           </button>
         );
       }
-    } else {
       return (
         <button
           data-testid="start-recipe-btn"
@@ -113,11 +120,18 @@ function DetalhesComidas() {
         </button>
       );
     }
+    return (
+      <button
+        data-testid="start-recipe-btn"
+        className="IniciarReceita"
+        type="button"
+        id="IniciarReceita"
+        onClick={ handleIniciarReceita }
+      >
+        Iniciar Receita
+      </button>
+    );
   };
-
-  useEffect(() => {
-    fetchComidasDetalhes();
-  }, []);
 
   const vinte = 20;
   function renderIngrediente(bebida) {
@@ -140,6 +154,97 @@ function DetalhesComidas() {
     return array;
   }
 
+  console.log(receitasSalvas);
+
+  function copiaLink() {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      const link = document.createElement('span');
+      link.innerHTML = 'Link copiado!';
+      document.getElementById('link-compartilhar').appendChild(link);
+    }, () => {
+      // eslint-disable-next-line
+      alert('erro');
+    });
+  }
+  console.log(window.location.href);
+  // onClick={() => {navigator.clipboard.writeText(window.location.href)}}
+
+  function favoritarReceita() {
+    const favoritos = localStorage.getItem('favoriteRecipes');
+    if (favoritos) {
+      const favorito = {
+        id: idDaReceita,
+        type: 'comida',
+        area: estadoApiComidas[0].strArea,
+        category: estadoApiComidas[0].strCategory,
+        alcoholicOrNot: '',
+        name: estadoApiComidas[0].strMeal,
+        image: estadoApiComidas[0].strMealThumb,
+      };
+      const favoritosArray = JSON.parse(favoritos);
+      const receitasFavoritas = [...favoritosArray, favorito];
+      localStorage.setItem('favoriteRecipes', JSON.stringify(receitasFavoritas));
+      setReceitasSalvas(receitasFavoritas);
+    } else {
+      const favorito = {
+        id: idDaReceita,
+        type: 'comida',
+        area: estadoApiComidas[0].strArea,
+        category: estadoApiComidas[0].strCategory,
+        alcoholicOrNot: '',
+        name: estadoApiComidas[0].strMeal,
+        image: estadoApiComidas[0].strMealThumb,
+      };
+      localStorage.setItem('favoriteRecipes', JSON.stringify([favorito]));
+      setReceitasSalvas([favorito]);
+    }
+  }
+
+  function desfavoritarReceita() {
+    const favoritos = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const favoritosAtualizados = favoritos.filter((item) => item.id !== idDaReceita);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favoritosAtualizados));
+    setReceitasSalvas(favoritosAtualizados);
+  }
+
+  function renderFavoritar() {
+    const favoritos = localStorage.getItem('favoriteRecipes');
+    if (favoritos) {
+      const idsFavoritos = [];
+      JSON.parse(favoritos).map((favorito) => idsFavoritos.push(favorito.id));
+      console.log('testando', idsFavoritos);
+      if (idsFavoritos.includes(idDaReceita)) {
+        console.log('receita existe');
+        return (
+          <button
+            type="button"
+            data-testid="favorite-btn"
+            onClick={ desfavoritarReceita }
+            src={ coracaoPreto }
+          >
+            <img src={ coracaoPreto } alt="coracao" />
+          </button>);
+      } return (
+        <button
+          type="button"
+          data-testid="favorite-btn"
+          onClick={ favoritarReceita }
+          src={ coracaoBranco }
+        >
+          <img src={ coracaoBranco } alt="coracao" />
+        </button>);
+    }
+    return (
+      <button
+        type="button"
+        data-testid="favorite-btn"
+        onClick={ favoritarReceita }
+        src={ coracaoBranco }
+      >
+        <img src={ coracaoBranco } alt="coracao" />
+      </button>);
+  }
+
   return (
     estadoApiComidas.map((comida, index) => (
       <div key={ index }>
@@ -149,10 +254,11 @@ function DetalhesComidas() {
           src={ comida.strMealThumb }
           alt={ comida.strMeal }
         />
-        <button type="button" data-testid="share-btn">
+        <button type="button" data-testid="share-btn" onClick={ copiaLink }>
           <img src={ share } alt="share" />
         </button>
-        <button type="button" data-testid="favorite-btn">Favoritar</button>
+        { renderFavoritar() }
+        <div id="link-compartilhar" />
         <h2 data-testid="recipe-title" className="titulo">{ comida.strMeal }</h2>
         <h4 data-testid="recipe-category" className="category titulo">
           {comida.strCategory}

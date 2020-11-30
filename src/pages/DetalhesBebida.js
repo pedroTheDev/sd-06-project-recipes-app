@@ -6,17 +6,20 @@ import { fetchApiBebidasDetalhes } from '../services/FetchApiBebidas';
 import '../components/MenuInferior.css';
 import '../components/detalhes.css';
 import share from '../images/shareIcon.svg';
+import coracaoBranco from '../images/whiteHeartIcon.svg';
+import coracaoPreto from '../images/blackHeartIcon.svg';
 
 function DetalhesBebida() {
   const { idDaReceita } = useParams();
   const [estadoApiBebidas, setEstadoApiBebidas] = useState([]);
+  const [receitasSalvas, setReceitasSalvas] = useState([]);
   const {
     retornoApi6Comidas,
     iniciarReceitas,
     setIniciarReceitas,
     // receitasTerminadas,
   } = useContext(RecipeContext);
-
+  console.log(receitasSalvas);
   const seis = 6;
   const zero = 0;
 
@@ -150,7 +153,93 @@ function DetalhesBebida() {
     }
     return array;
   }
+  function copiaLink() {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      const link = document.createElement('span');
+      link.innerHTML = 'Link copiado!';
+      document.getElementById('link-compartilhar').appendChild(link);
+    }, () => {
+      // eslint-disable-next-line
+      alert('erro');
+    });
+  }
   // console.log(estadoApiBebidas);
+
+  function favoritarReceita() {
+    const favoritos = localStorage.getItem('favoriteRecipes');
+    if (favoritos) {
+      const favorito = {
+        id: idDaReceita,
+        type: 'bebida',
+        area: '',
+        category: estadoApiBebidas[0].strCategory,
+        alcoholicOrNot: estadoApiBebidas[0].strAlcoholic,
+        name: estadoApiBebidas[0].strDrink,
+        image: estadoApiBebidas[0].strDrinkThumb,
+      };
+      const favoritosArray = JSON.parse(favoritos);
+      const receitasFavoritas = [...favoritosArray, favorito];
+      localStorage.setItem('favoriteRecipes', JSON.stringify(receitasFavoritas));
+      setReceitasSalvas(receitasFavoritas);
+    } else {
+      const favorito = {
+        id: idDaReceita,
+        type: 'bebida',
+        area: '',
+        category: estadoApiBebidas[0].strCategory,
+        alcoholicOrNot: estadoApiBebidas[0].strAlcoholic,
+        name: estadoApiBebidas[0].strDrink,
+        image: estadoApiBebidas[0].strDrinkThumb,
+      };
+      localStorage.setItem('favoriteRecipes', JSON.stringify([favorito]));
+      setReceitasSalvas([favorito]);
+    }
+  }
+
+  function desfavoritarReceita() {
+    const favoritos = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const favoritosAtualizados = favoritos.filter((item) => item.id !== idDaReceita);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favoritosAtualizados));
+    setReceitasSalvas(favoritosAtualizados);
+  }
+
+  function renderFavoritar() {
+    const favoritos = localStorage.getItem('favoriteRecipes');
+    if (favoritos) {
+      const idsFavoritos = [];
+      JSON.parse(favoritos).map((favorito) => idsFavoritos.push(favorito.id));
+      console.log('testando', idsFavoritos);
+      if (idsFavoritos.includes(idDaReceita)) {
+        console.log('receita existe');
+        return (
+          <button
+            type="button"
+            data-testid="favorite-btn"
+            onClick={ desfavoritarReceita }
+            src={ coracaoPreto }
+          >
+            <img src={ coracaoPreto } alt="coracao" />
+          </button>);
+      } return (
+        <button
+          type="button"
+          data-testid="favorite-btn"
+          onClick={ favoritarReceita }
+          src={ coracaoBranco }
+        >
+          <img src={ coracaoBranco } alt="coracao" />
+        </button>);
+    }
+    return (
+      <button
+        type="button"
+        data-testid="favorite-btn"
+        onClick={ favoritarReceita }
+        src={ coracaoBranco }
+      >
+        <img src={ coracaoBranco } alt="coracao" />
+      </button>);
+  }
 
   return (
     (!estadoApiBebidas)
@@ -163,10 +252,11 @@ function DetalhesBebida() {
             src={ bebida.strDrinkThumb }
             alt={ bebida.strDrink }
           />
-          <button type="button" data-testid="share-btn">
+          <button type="button" data-testid="share-btn" onClick={ copiaLink }>
             <img src={ share } alt="share" />
           </button>
-          <button type="button" data-testid="favorite-btn">Favoritar</button>
+          { renderFavoritar() }
+          <div id="link-compartilhar" />
           <h2 data-testid="recipe-title" className="titulo">{ bebida.strDrink }</h2>
           <h4 data-testid="recipe-category" className="category titulo">
             {bebida.strAlcoholic}
