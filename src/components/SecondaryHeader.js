@@ -1,18 +1,17 @@
 import React, { useContext } from 'react';
-import copy from 'clipboard-copy';
+// import copy from 'clipboard-copy';
 import propTypes from 'prop-types';
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { shareIcon, whiteHeartIcon, blackHeartIcon } from '../images';
 import recipesAppContext from '../context/recipesAppContext';
 
 function SecondaryHeader({ name, img, category }) {
-  const { id } = useParams();
+  const location = useLocation();
   const { isFavorite, handleFavoriteRecipe } = useContext(recipesAppContext);
 
   const handleShareIcon = () => {
-    const url = `http://localhost:3000/comidas/${id}`;
-    console.log('url', url);
-    copy(url);
+    const url = `http://localhost:3000${location.pathname}`;
+    navigator.clipboard.writeText(url);
     const shareButton = document.querySelector('.share-btn');
     shareButton.value = 'Link copiado!';
     const paragraph = document.querySelector('.copied-link');
