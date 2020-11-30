@@ -5,7 +5,7 @@ import '../style/Comidas.css';
 function Comidas() {
   return (
     <div className="food">
-      <Header title="Comidas" />
+      {/* <Header title="Comidas" /> */}
       <RecipesList title="Comidas" />
       <Footer />
     </div>
