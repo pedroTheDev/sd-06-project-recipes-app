@@ -12,7 +12,9 @@ function FavoriteRecipes() {
 
   const handleClickFavorite = (recipeType) => {
     if (!recipeType) {
-      setFavorites(recipeStorage);
+      if (recipeStorage) {
+        setFavorites(recipeStorage);
+      }
     } else {
       const allRecipes = [];
       recipeStorage.forEach((recipe) => {
@@ -52,11 +54,9 @@ function FavoriteRecipes() {
   };
 
   const handleFavoriteRecipes = ({ target }) => {
-    console.log('favorites antes:', recipeStorage);
     recipeStorage.forEach((recipe, index) => {
       if (recipe.id === target.id) {
         recipeStorage.splice(index, 1);
-        console.log('newFavorites: ', recipeStorage);
         localStorage.setItem('favoriteRecipes', JSON.stringify(recipeStorage));
         setFavorites(recipeStorage);
       }
@@ -99,7 +99,7 @@ function FavoriteRecipes() {
               alt="recipe"
               data-testid={ `${index}-horizontal-image` }
               onClick={
-                () => (recipe.type === 'comidas'
+                () => (recipe.type === 'comida'
                   ? history.push(`/comidas/${recipe.id}`)
                   : history.push(`/bebidas/${recipe.id}`))
               }
@@ -121,7 +121,7 @@ function FavoriteRecipes() {
               aria-hidden="true"
               data-testid={ `${index}-horizontal-name` }
               onClick={
-                () => (recipe.type === 'comidas'
+                () => (recipe.type === 'comida'
                   ? history.push(`/comidas/${recipe.id}`)
                   : history.push(`/bebidas/${recipe.id}`))
               }

@@ -7,28 +7,44 @@ function RecipesInProgress() {
   const location = useLocation().pathname;
   const [recipeInProgress, setRecipeInProgress] = useState([]);
   const [isFetching, setFetching] = useState(true);
-  const [ingredientDone, setIngredientDone] = useState(false);
   const [idRecipe, setIdRecipe] = useState('');
-  const recipeInProgressLocal = Object.values(JSON.parse(localStorage.getItem('inProgressRecipes')));
+  // const recipeInProgressLocal = Object.values(
+  //   JSON.parse(localStorage.getItem('inProgressRecipes')),
+  // );
+  // const recipeInProgressKeys = Object.keys(
+  //   JSON.parse(localStorage.getItem('inProgressRecipes')),
+  // );
+  let allCheckedIngredients = [];
+  if (localStorage.getItem('checkedIngredients')) {
+    allCheckedIngredients = JSON.parse(localStorage.getItem('checkedIngredients'));
+  }
 
   const fetchRecipesInProgress = async () => {
     const splitUrl = location.split('/');
     const id = splitUrl[2];
     setIdRecipe(id);
-    if(location.includes('comidas')) {
-      const apiRequest =  await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
+    if (location.includes('comidas')) {
+      const apiRequest = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
       const apiResponse = await apiRequest.json();
       setRecipeInProgress(apiResponse.meals[0]);
+      // if (recipeInProgressKeys[0] === 'meals') {
+      //   setRecipeNumber(0);
+      // } else {
+      //   setRecipeNumber(1);
+      // }
     } else {
-      const apiRequest =  await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?iid=${id}`);
+      const apiRequest = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
       const apiResponse = await apiRequest.json();
       setRecipeInProgress(apiResponse.drinks[0]);
+      // if (recipeInProgressKeys[0] === 'cocktails') {
+      //   setRecipeNumber(0);
+      // } else {
+      //   setRecipeNumber(1);
+      // }
     }
-  }
-
-  const renderLoading = () => {
-    return (<h1>Loading...</h1>)
   };
+
+  const renderLoading = () => <h1>Loading...</h1>;
 
   useEffect(() => {
     setFetching(true);
@@ -37,29 +53,49 @@ function RecipesInProgress() {
   }, []);
 
   const handleClick = () => {
-    console.log(recipeInProgressLocal);
-    console.log(idRecipe);
-    console.log(recipeInProgressLocal[0][idRecipe]);
-  }
+    // console.log(recipeInProgressLocal);
+    // console.log(idRecipe);
+    // console.log(recipeInProgressLocal[0]);
+  };
 
   const handleIngredients = (index) => {
-    const ingredientMade = document.querySelector("[id=" + index + "-ingredient-step]");
-    console.log(ingredientMade);
+    const ingredientMade = document.getElementById(`${index}-ingredient`);
 
-    // if (ingredientDone) {
-    //   ingredientMade.style = { "text-decoration": 'line-through' }
-    //   setIngredientDone(false);
-    // } else {
-    //   ingredientMade.style = { "text-decoration": 'none' }
-    //   setIngredientDone(true);
-    // }
-  }
+    if (ingredientMade.style.cssText === 'text-decoration: line-through;') {
+      ingredientMade.style = 'text-decoration: none';
+      allCheckedIngredients.forEach((ingredient, i) => {
+        if (ingredient === ingredientMade.innerHTML) {
+          allCheckedIngredients.splice(i, 1);
+          localStorage.setItem('checkedIngredients',
+            JSON.stringify(allCheckedIngredients));
+        }
+      });
+    } else {
+      ingredientMade.style = 'text-decoration: line-through';
+      allCheckedIngredients.push(ingredientMade.innerHTML);
+      localStorage.setItem('checkedIngredients', JSON.stringify(allCheckedIngredients));
+    }
+  };
 
-  // const handleIngredients = (event) => {
-  //   const ingredientMade = event.target;
-  //   console.log(ingredientMade);
-  //   ingredientMade.style = { "text-decoration": 'line-through' };
-  // }
+  const renderIngredients = (recipeData) => {
+    const arrayIngredients = [];
+    const maxIngredients = 20;
+
+    for (let index = 1; index <= maxIngredients; index += 1) {
+      if (recipeData[`strIngredient${index}`] !== ''
+      && recipeData[`strIngredient${index}`] !== null
+      && recipeData[`strIngredient${index}`] !== undefined
+      ) {
+        arrayIngredients.push({
+          ingredient: recipeData[`strIngredient${index}`],
+          measure: recipeData[`strMeasure${index}`],
+        });
+      }
+    }
+    return arrayIngredients;
+  };
+
+  const allIngredients = renderIngredients(recipeInProgress);
 
   const renderFood = () => (
     <div>
@@ -67,7 +103,7 @@ function RecipesInProgress() {
         data-testid="recipe-photo"
         src={ recipeInProgress.strMealThumb }
         alt="recipe-meal"
-        width='200px'
+        width="200px"
       />
       <h2 data-testid="recipe-title">{ recipeInProgress.strMeal }</h2>
       <img
@@ -84,41 +120,43 @@ function RecipesInProgress() {
         //onClick={ handleShareIcon } // tratar
         aria-hidden="true"
       />
-      <h3 data-testid="recipe-category" >{ recipeInProgress.strCategory }</h3>
-      { recipeInProgressLocal[0][idRecipe].map((recipe, index) => (
-        <div>
-          {/* <label data-testid={ `${index}-ingredient-step` }>{ `${recipe.ingredient} - ${recipe.measure}` } */}
-            <input
-              type="checkbox"
-              onChange={ handleIngredients }
-            />
-          {/* </label> */}
-          <h5
-            // className={ ingredientDone ? "ingredient-done" : "ingredient-not-done" }
-            id={ `${index}-ingredient-step` }
-            data-testid={ `${index}-ingredient-step` }
-          >
-            { `${recipe.ingredient} - ${recipe.measure}` }
-          </h5>
+      <h3 data-testid="recipe-category">{ recipeInProgress.strCategory }</h3>
+      {allIngredients.map((ingredient, index) => (
+        <div
+          key={ index }
+          data-testid={ `${index}-ingredient-step` }
+        >
+          {/* {allCheckedIngredients.forEach((checkedIngredient) => (
+            checkedIngredient.includes(ingredient.ingredient) ? isChecked = true : !isChecked
+          ))} */}
+          <input
+            type="checkbox"
+            id="checkbox"
+            onChange={ () => handleIngredients(index) }
+          />
+          <p id={ `${index}-ingredient` }>
+            {`${ingredient.ingredient}: ${(ingredient.measure === null)
+              ? 'a gosto'
+              : ingredient.measure}`}
+          </p>
         </div>
       ))}
       <span data-testid="instructions">{ recipeInProgress.strInstructions }</span>
       <button
         type="button"
         data-testid="finish-recipe-btn"
-        onClick={handleClick}
+        onClick={ handleClick }
       >
         Finalizar Receita
       </button>
     </div>
-  )
+  );
 
   return (
     <div>
-      {/* {isFetching ? renderLoading() : ( location.includes('comidas') && renderFood() ) } */}
       {isFetching ? renderLoading() : renderFood() }
     </div>
-  )
+  );
 }
 
 export default RecipesInProgress;
