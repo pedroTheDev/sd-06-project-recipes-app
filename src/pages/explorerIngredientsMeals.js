@@ -42,7 +42,15 @@ class ExplorerIngredientsMeals extends Component {
       const sourceImg = `https://www.themealdb.com/images/ingredients/${strIngredient}-Small.png`;
       return (
         <div key={ index }>
-          <Link data-testid={ `${index}-ingredient-card` } to="/comidas">
+          <Link
+            data-testid={ `${index}-ingredient-card` }
+            to={ {
+              pathname: '/comidas',
+              state: {
+                ing: strIngredient,
+              },
+            } }
+          >
             <img
               className="recipe-thumb"
               data-testid={ `${index}-card-img` }

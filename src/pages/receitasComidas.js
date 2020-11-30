@@ -10,9 +10,14 @@ import { addMealsCategories } from '../actions/categories';
 
 class ReceitasComidas extends Component {
   async componentDidMount() {
-    const { sendMeals } = this.props;
-    const { meals } = await getMeals('search.php?s=');
-    sendMeals(meals);
+    const { sendMeals, location: { state } } = this.props;
+    if (state && state.ing) {
+      const { meals } = await getMeals(`filter.php?i=${state.ing}`);
+      sendMeals(meals);
+    } else {
+      const { meals } = await getMeals('search.php?s=');
+      sendMeals(meals);
+    }
     this.getCategories();
   }
 
@@ -41,6 +46,9 @@ const mapDispatchToProps = (dispatch) => ({
 ReceitasComidas.propTypes = {
   sendMealsCategories: PropTypes.func.isRequired,
   sendMeals: PropTypes.func.isRequired,
+  location: PropTypes.shape({
+    state: PropTypes.objectOf,
+  }).isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(ReceitasComidas);

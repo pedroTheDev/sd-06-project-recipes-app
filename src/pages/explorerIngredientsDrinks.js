@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 // import PropTypes from 'prop-types';
+// import { connect } from 'react-redux';
+
 import theIngredientsAndAreaApi from '../services/theIngredientsAndAreaApi';
 import { Header, Footer } from '../components';
 
@@ -42,7 +44,15 @@ class ExplorerIngredientsDrinks extends Component {
       const sourceImg = `https://www.thecocktaildb.com/images/ingredients/${strIngredient1}-Small.png`;
       return (
         <div key={ index }>
-          <Link data-testid={ `${index}-ingredient-card` } to="/bebidas">
+          <Link
+            data-testid={ `${index}-ingredient-card` }
+            to={ {
+              pathname: '/bebidas',
+              state: {
+                ing: strIngredient1,
+              },
+            } }
+          >
             <img
               className="recipe-thumb"
               data-testid={ `${index}-card-img` }
@@ -68,10 +78,5 @@ class ExplorerIngredientsDrinks extends Component {
     );
   }
 }
-
-// explorerIngredientsDrinks.propTypes = {
-//   drinks: PropTypes.objectOf.isRequired,
-//   idx: PropTypes.number.isRequired,
-// };
 
 export default ExplorerIngredientsDrinks;
