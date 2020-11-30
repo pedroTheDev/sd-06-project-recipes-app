@@ -1,6 +1,5 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
-import { Login } from '../pages';
 import App from '../App';
 import renderWithRouter from '../services/renderWithRouter';
 
@@ -119,10 +118,3 @@ describe('Testar alert', () => {
     }, WAITING_TIME);
   });
 });
-
-// 13 - Implemente os elementos da barra de busca respeitando os atributos descritos no protótipo
-// 14 - Posicione a barra logo abaixo do header e implemente 3 radio buttons: Ingrediente, Nome e Primeira letra
-// 15 - Busque na API de comidas caso a pessoa esteja na página de comidas e na de bebidas caso esteja na de bebidas
-// 16 - Redirecione para a tela de detalhes da receita caso apenas uma receita seja encontrada, com o ID da mesma na URL
-// 17 - Mostre as receitas em cards caso mais de uma receita seja encontrada
-// 18 - Exiba um alert caso nenhuma receita seja encontrada
