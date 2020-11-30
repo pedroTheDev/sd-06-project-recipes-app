@@ -10,24 +10,33 @@ export async function getAllDrinkTypesApi(type) {
 // Lista de receitas de bebidas filtradas
 export async function getFilteredDrinksApi(type, value) {
   if (type === 'ingredients') {
-    const response = await fetch(`${URL_BASE}filter.php?i=${value}`);
-    const result = await response.json();
-    console.log(result.drinks);
-    return result.drinks;
+    try {
+      const response = await fetch(`${URL_BASE}filter.php?i=${value}`);
+      const result = await response.json();
+      return result.drinks;
+    } catch (error) {
+      return null;
+    }
   }
   if (type === 'name') {
-    const response = await fetch(`${URL_BASE}search.php?s=${value}`);
-    const result = await response.json();
-    console.log(result.drinks);
-    return result.drinks;
+    try {
+      const response = await fetch(`${URL_BASE}filter.php?i=${value}`);
+      const result = await response.json();
+      return result.drinks;
+    } catch (error) {
+      return null;
+    }
   }
   if (type === 'first') {
-    const response = await fetch(`${URL_BASE}search.php?f=${value}`);
-    const result = await response.json();
-    console.log(result.drinks);
-    return result.drinks;
+    try {
+      const response = await fetch(`${URL_BASE}filter.php?i=${value}`);
+      const result = await response.json();
+      return result.drinks;
+    } catch (error) {
+      return null;
+    }
   }
-  return [];
+  return null;
 }
 
 // Lista de receitas de Bebidas
