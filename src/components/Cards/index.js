@@ -92,7 +92,6 @@ const Cards = () => {
                   </button>
                 </div>
               </div>
-
             );
           }
           return '';
