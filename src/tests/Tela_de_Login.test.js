@@ -55,7 +55,7 @@ describe('Testar ações após o click do botão', () => {
   it('Redireciona para a página de Comidas', () => {
     const { getByTestId, history } = renderWithRouter(<App />);
     history.push('/');
-    const WAITING_TIME = 500;
+    const WAITING_TIME = 50;
 
     const inputEmail = getByTestId('email-input');
     const inputPassword = getByTestId('password-input');
@@ -71,7 +71,7 @@ describe('Testar ações após o click do botão', () => {
 
   it('Cria as chaves no LocalStorage', () => {
     const { getByTestId } = renderWithRouter(<Login />);
-    const WAITING_TIME = 500;
+    const WAITING_TIME = 50;
     const inputEmail = getByTestId('email-input');
     const inputPassword = getByTestId('password-input');
     const submitBtn = getByTestId('login-submit-btn');
