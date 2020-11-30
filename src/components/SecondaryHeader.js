@@ -15,9 +15,9 @@ function SecondaryHeader({ name, img, category }) {
     const shareButton = document.querySelector('.share-btn');
     shareButton.value = 'Link copiado!';
     const paragraph = document.querySelector('.copied-link');
-    const div = document.createElement('div');
-    paragraph.appendChild(div);
-    div.innerHTML = 'Link copiado!';
+    const span = document.createElement('span');
+    paragraph.appendChild(span);
+    span.innerHTML = 'Link copiado!';
   };
 
   const handleFavoriteRecipe = () => {
