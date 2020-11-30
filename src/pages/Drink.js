@@ -132,7 +132,6 @@ class Drink extends React.Component {
                 data-testid={ `${index}-card-img` }
                 alt="recipe"
                 onClick={ () => this.redirectOnImage(recipe) }
-                style={ { borderRadius: '4px' } }
               />
               <hr className="card-hr" />
               <p data-testid={ `${index}-card-name` }>{recipe.strDrink}</p>
