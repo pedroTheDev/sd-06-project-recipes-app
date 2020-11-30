@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import Header from '../components/Header';
 import { shareIcon } from '../images/shareIcon.svg';
+import MealsContext from '../context/MealsContext';
 
 function ReceitasFeitas() {
   //const doneRecipes = JSON.parse(localStorage.doneRecipes);
-  const [doneRecipes, setDoneRecipes] = useState([]);
+  const {doneRecipes, setDoneRecipes} = useContext(MealsContext);
 
   useEffect(() => {
     if(!localStorage.doneRecipes) {
