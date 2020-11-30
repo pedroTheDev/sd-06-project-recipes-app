@@ -108,3 +108,9 @@ export const fetchDrinkById = async (id) => {
   const json = await response.json();
   return json.drinks;
 };
+
+export const fetchMealIngredients = async () => {
+  const response = await fetch(`${baseAPIMeal}/list.php?i=list`);
+  const json = await response.json();
+  return json;
+};
