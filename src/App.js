@@ -15,6 +15,7 @@ import MealsPerIngredients from './pages/MealsPerIngredients';
 import MealsPerArea from './pages/MealsPerArea';
 import DrinksPerIngredients from './pages/DrinksPerIngredients';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './Css/App.css';
 
 function App() {
   return (

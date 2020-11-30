@@ -70,7 +70,7 @@ function RecipeList() {
   const numberTwo = 2;
   const numberFive = 5;
   return (
-    <div>
+    <div className="recipe-list-container">
       <div>
         <div className="container-button">
           <button

@@ -38,21 +38,26 @@ function Header() {
 
   return (
     <div className="header-container">
-      <Link to="/perfil">
-        <button
-          type="button"
-        >
-          <img
-            src={ profileIcon }
-            alt="Profile"
-            data-testid="profile-top-btn"
-          />
-        </button>
-      </Link>
-      <h2 data-testid="page-title">
-        {verifyTitle()}
-      </h2>
-      <SearchBar />
+      <div className="header-page-title">
+        <Link to="/perfil">
+          <button
+            type="button"
+            className="app-button-transparent"
+          >
+            <img
+              src={ profileIcon }
+              alt="Profile"
+              data-testid="profile-top-btn"
+            />
+          </button>
+        </Link>
+        <h2 data-testid="page-title">
+          {verifyTitle()}
+        </h2>
+      </div>
+      <div>
+        <SearchBar />
+      </div>
     </div>
   );
 }

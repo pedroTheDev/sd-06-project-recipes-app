@@ -1,13 +1,13 @@
-*  {
-  margin:0;
-  padding:0;
-}
-
-.Footer {
+.footer-container {
   position:fixed;
   bottom:0;
-  width:100%;
-  background-color: rgb(146, 81, 69);
+  display: flex;
+  justify-content: space-around;
+  align-content: center;
+  padding: 5px;
+  margin: 0;
+  width: 360px;
+  background-color: rgb(170, 103, 92);
 }
 
 .Btn-Drinks {
