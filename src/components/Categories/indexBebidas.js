@@ -1,60 +1,61 @@
-import React, { useState, useEffect } from 'react';
-// import ContextAPI from '../../Context/ContextAPI';
-
-import { showAllDrinksCategories, selectDrinksItensCategories } from '../../services/aPI';
+import React, { useContext } from 'react';
+import ContextAPI from '../../Context/ContextAPI';
 
 const CategoriesBebidas = () => {
-//   const { apiValueSearch, setApiValueSearch } = useContext(ContextAPI);
+  const { apiValueSearch,
+    setApiValueSearch,
+    categories } = useContext(ContextAPI);
 
-  const [categories, setCategories] = useState([]);
-
-  const categoriesDefined = async () => {
-    if (window.location.pathname === '/bebidas') {
-      const result = await showAllDrinksCategories();
-      setCategories(result);
-    }
+  const getSugestedDrinks = async () => {
+    fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=')
+      .then((drinks) => drinks.json())
+      .then((drinks) => setApiValueSearch({ ...apiValueSearch, drinks }));
   };
-
-  useEffect(() => {
-    categoriesDefined();
-  }, []);
 
   const filterApiValueSearch = async (value) => {
-    if (window.location.pathname === '/bebidas') {
-      const result = await selectDrinksItensCategories(value);
-      //   setApiValueSearch({
-      //     ...apiValueSearch,
-      //     drinks.drinks,
-      //   });
-      console.log(result);
+    if (apiValueSearch.value === value) {
+      getSugestedDrinks();
+    } else {
+      fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${value}`)
+        .then((drinks) => drinks.json())
+        .then((drinks) => setApiValueSearch({ ...apiValueSearch, drinks, value }));
     }
   };
 
-  return (
+  const showAllFoods = async () => {
+    getSugestedDrinks();
+  };
+
+  return !categories.drinks ? (
+    <p>loading</p>
+  ) : (
     <div className="main-categories">
       <span>Selecione uma categoria</span>
-      <div className="categories">
+      <div>
         {categories.drinks && categories.drinks.map((element, index) => {
           const number = 4;
           if (index <= number) {
             return (
               <button
-                key={ element.idCategory }
-                data-testid={ `${element.categoryName}-category-filter` }
+                data-testid={ `${element.strCategory}-category-filter` }
                 onClick={ (e) => filterApiValueSearch(e.target.name) }
+                name={ element.strCategory }
                 type="button"
               >
-                <p
-                  width="150"
-                  alt={ element.strCategory }
-                >
-                  { element.strCategory }
-                </p>
+                { element.strCategory }
               </button>
             );
           }
           return '';
         })}
+        <button
+          data-testid="All-category-filter"
+          type="button"
+          id="All"
+          onClick={ (e) => showAllFoods(e.target.id) }
+        >
+          All
+        </button>
       </div>
     </div>
   );
