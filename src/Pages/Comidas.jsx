@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import Cards from '../components/Cards';
 import Categories from '../components/Categories/indexComidas';
 
+import { showSugestedFoods } from '../services/aPI';
 import ContextAPI from '../Context/ContextAPI';
 
 import { showAllFoodsCategories,
@@ -16,6 +17,7 @@ const Comidas = () => {
 
   const getSugestedFoods = async () => {
     const foods = await showSugestedFoods();
+
     setApiValueSearch({
       ...apiValueSearch,
       foods,

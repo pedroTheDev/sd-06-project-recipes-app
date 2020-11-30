@@ -10,6 +10,7 @@ import { showSugestedDrinks,
   showAllDrinksCategories,
 } from '../services/aPI';
 
+import { showSugestedDrinks } from '../services/aPI';
 import ContextAPI from '../Context/ContextAPI';
 
 const Bebidas = () => {

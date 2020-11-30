@@ -19,7 +19,9 @@ export async function searchDrink(drink, radioButton) {
   else if (radioButton === 'primeira-letra') endpoint = `search.php?f=${drink}`;
 
   const response = await fetch(`${URL}${endpoint}`);
-  const json = response.json();
+  const json = response.json().catch(() => {
+    console.log('Erro');
+  });
 
   return json;
 }
@@ -80,6 +82,24 @@ export async function showAllFoodsInCategories() {
 
 export async function showSugestedDrinks() {
   const URL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+
+  const response = await fetch(`${URL}`);
+  const json = response.json();
+
+  return json;
+}
+
+export async function detailsFoodById(idFood) {
+  const URL = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idFood}`;
+
+  const response = await fetch(`${URL}`);
+  const json = response.json();
+
+  return json;
+}
+
+export async function detailsDrinkById(idDrink) {
+  const URL = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idDrink}`;
 
   const response = await fetch(`${URL}`);
   const json = response.json();

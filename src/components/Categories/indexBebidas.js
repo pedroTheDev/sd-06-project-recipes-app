@@ -31,7 +31,11 @@ const CategoriesBebidas = () => {
   ) : (
     <div className="main-categories">
       <span>Selecione uma categoria</span>
+<<<<<<< HEAD
       <div className="categories">
+=======
+      <div>
+>>>>>>> c57804bf350aaad469ea2f1c9b1c981ddab4664c
         {categories.drinks && categories.drinks.map((element, index) => {
           const number = 4;
           if (index <= number) {
@@ -62,3 +66,4 @@ const CategoriesBebidas = () => {
 };
 
 export default CategoriesBebidas;
+

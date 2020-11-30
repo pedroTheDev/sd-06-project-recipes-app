@@ -63,3 +63,4 @@ const CategoriesComidas = () => {
 };
 
 export default CategoriesComidas;
+
