@@ -11,6 +11,7 @@ function Perfil() {
     localStorage.clear();
     history.push('/');
   };
+
   useEffect(() => {
     const retrievedUsername = JSON.parse(localStorage.getItem('user'));
     setUser(retrievedUsername.email);
@@ -19,19 +20,19 @@ function Perfil() {
 
   return (
     <main className="default-page">
-      <Header pageName="Perfil" renderSearch={false} />
+      <Header pageName="Perfil" renderSearch={ false } />
       <h2 data-testid="profile-email">{user}</h2>
       <button
         data-testid="profile-done-btn"
         type="button"
-        onClick={ () => history.push('/receitas-feitas')}
+        onClick={ () => history.push('/receitas-feitas') }
       >
         Receitas Feitas
       </button>
       <button
         data-testid="profile-favorite-btn"
         type="button"
-        onClick={ () => history.push('/receitas-favoritas')}
+        onClick={ () => history.push('/receitas-favoritas') }
       >
         Receitas Favoritas
       </button>
