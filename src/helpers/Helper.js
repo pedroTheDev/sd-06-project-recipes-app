@@ -47,3 +47,37 @@ export async function fetchRecommendation(type) {
 
   return slicedResults;
 }
+
+export async function fetchRandom(type) {
+  const api = (type === 'comida')
+    ? 'https://www.themealdb.com/api/json/v1/1/random.php'
+    : 'https://www.thecocktaildb.com/api/json/v1/1/random.php';
+
+  const json = await fetch(api)
+    .then((response) => response.json());
+
+  if (type === 'comida') {
+    return json.meals[0].idMeal;
+  } if (type === 'bebida') {
+    return json.drinks[0].idDrink;
+  }
+}
+
+export async function fetchArea() {
+  const api = 'https://www.themealdb.com/api/json/v1/1/list.php?a=list';
+  const json = await fetch(api)
+    .then((response) => response.json());
+  return json.meals;
+}
+
+export async function fetchRecipes(type) {
+  const min = 0;
+  const max = 12;
+  if (type !== 'All') {
+    const api = `https://www.themealdb.com/api/json/v1/1/filter.php?a=${type}`;
+    const json = await fetch(api)
+      .then((response) => response.json());
+
+    return json.meals.splice(min, max);
+  }
+}

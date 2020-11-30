@@ -1,36 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { fetchDetail, fetchRecommendation } from '../helpers/Helper';
+import RecipesContext from '../context/Context';
+
 import '../css/scroller.css';
 import '../css/itemDetails.css';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeart from '../images/whiteHeartIcon.svg';
 import blackHeart from '../images/blackHeartIcon.svg';
+import saveFavorite from '../helpers/saveFavorite';
 
 export default function FoodsDetails(props) {
-  // const [recipeId, setRecipeId] = useState('');
+  const { setItems } = useContext(RecipesContext);
   const [recipe, setRecipe] = useState('');
   const [recipeDetails, setRecipeDetails] = useState([]);
+  const [concluded, setConcluded] = useState(false);
   const [recommendation, setRecommendation] = useState([]);
-  const [disabled, setDisabled] = useState(true);
   const [btnStartValue, setBtnStartValue] = useState('Iniciar Receita');
   const [copy, setCopy] = useState('');
   const [fav, setFav] = useState(whiteHeart);
   const { match: { params: { id } } } = props;
-
-  // useEffect(() => {
-  //   if (recipeId === '') {
-  //     setRecipeId(id);
-  //   }
-  //   async function fetchData() {
-  //     const result = await fetchDetail('comidas', recipeId);
-  //     setRecipe(result);
-  //   }
-  //   if (recipeId === id) {
-  //     fetchData();
-  //   }
-  // }, [recipeId]);
 
   useEffect(() => {
     async function fetchData() {
@@ -40,17 +30,29 @@ export default function FoodsDetails(props) {
       setRecommendation(results);
     }
     fetchData();
+
+    return () => setItems();
   }, []);
 
   useEffect(() => {
-    if (localStorage.getItem('doneRecipes') === null) {
-      setDisabled(false);
-    }
-    if (localStorage.getItem('inProgressRecipes') !== null) {
+    const storage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const inProgress = (storage) && storage.meals[id];
+    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+    const recipeDone = (doneRecipes) && doneRecipes.some((item) => item.id === id);
+
+    if (inProgress) {
       setBtnStartValue('Continuar Receita');
     }
+
+    if (recipeDone) {
+      setConcluded(true);
+    }
+
     if (localStorage.getItem('favoriteRecipes') !== null) {
-      setFav(blackHeart);
+      const tarefa = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      if (tarefa.some((item) => item.id === id)) {
+        setFav(blackHeart);
+      }
     }
   }, []);
 
@@ -61,7 +63,7 @@ export default function FoodsDetails(props) {
   }
 
   function handleFav(item) {
-    const favObj = [{
+    const favObj = {
       id: item.idMeal,
       type: 'comida',
       area: item.strArea,
@@ -69,14 +71,14 @@ export default function FoodsDetails(props) {
       alcoholicOrNot: '',
       name: item.strMeal,
       image: item.strMealThumb,
-    }];
+    };
     if (fav === blackHeart) {
       setFav(whiteHeart);
-      localStorage.removeItem('favoriteRecipes');
+      saveFavorite(id, favObj, 'remove');
     }
     if (fav === whiteHeart) {
       setFav(blackHeart);
-      localStorage.setItem('favoriteRecipes', JSON.stringify(favObj));
+      saveFavorite(id, favObj, 'add');
     }
   }
 
@@ -89,8 +91,8 @@ export default function FoodsDetails(props) {
         array.push(counter);
       }
       const recipeArray = array.map((number) => (
-        (currRecipe[`strIngredient${number}`] !== ''
-          || currRecipe[`strIngredient${number}`])
+        (currRecipe[`strIngredient${number}`] !== null
+          && currRecipe[`strIngredient${number}`] !== '')
           ? [currRecipe[`strIngredient${number}`], currRecipe[`strMeasure${number}`]]
           : ''
       ));
@@ -149,17 +151,24 @@ export default function FoodsDetails(props) {
           <p data-testid="recipe-category">{item.strCategory}</p>
           <p data-testid="instructions">{item.strInstructions}</p>
           {renderIngredients()}
-          <p data-testid="video">{item.strYoutube}</p>
-          <Link to={ `/comidas/${id}/in-progress` }>
-            <button
-              type="button"
-              data-testid="start-recipe-btn"
-              className="btnStart"
-              disabled={ disabled }
-            >
-              {btnStartValue}
-            </button>
-          </Link>
+
+          <video data-testid="video" width="340" controls>
+            <source src={ decodeURI(item.strYoutube) } type="video/mp4" />
+            <track src="" kind="captions" />
+          </video>
+          {
+            (!concluded) ? (
+              <Link to={ `/comidas/${id}/in-progress` }>
+                <button
+                  type="button"
+                  data-testid="start-recipe-btn"
+                  className="btnStart"
+                >
+                  {btnStartValue}
+                </button>
+              </Link>
+            ) : null
+          }
         </div>
         <div className="testimonials">
           <div className="scroller">
@@ -183,7 +192,7 @@ export default function FoodsDetails(props) {
     );
   }
   return (
-    <div>aló</div>
+    <div>Loading ...</div>
   );
 }
 

@@ -1,11 +1,15 @@
-import { useEffect, useContext } from 'react';
-import RecipesContext from '../context/Context';
+import { useState, useEffect } from 'react';
 
-export default function useSearch() {
-  const { filters, setItems, setFilters } = useContext(RecipesContext);
+export default function useAPI(category, type = 'name', text = '') {
+  const [filters, setFilters] = useState({
+    searchText: text,
+    searchType: type,
+    category,
+  });
+  const [items, setItems] = useState();
 
   const initSearch = async () => {
-    const { searchText, searchType, category } = filters;
+    const { searchText, searchType } = filters;
     if (category === '') {
       return undefined;
     }
@@ -59,8 +63,14 @@ export default function useSearch() {
   };
 
   useEffect(() => {
+    const newFilters = {
+      searchText: text,
+      searchType: type,
+      category,
+    };
+    setFilters(newFilters);
     initSearch();
-  }, [filters]);
+  }, [category, type, text]);
 
-  return [setFilters];
+  return items;
 }

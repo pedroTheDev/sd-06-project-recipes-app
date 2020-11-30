@@ -1,27 +1,35 @@
 import React, { useContext, useEffect } from 'react';
+import { PropTypes } from 'prop-types';
 import { Header, Cards, Footer, Categories } from '../components';
 import RecipesContext from '../context/Context';
 import useSearch from '../hooks/useSearch';
 
-export default function Drinks() {
+export default function Drinks({ location }) {
   document.title = 'Bebidas';
-  const { items, filters, setFilters } = useContext(RecipesContext);
-  useEffect(() => {
-    if (filters.category === '') {
-      setFilters({ ...filters, category: 'bebidas' });
-    }
-  });
+  const { items, setItems, filters, setFilters } = useContext(RecipesContext);
   useSearch();
 
+  useEffect(() => {
+    if (filters.category === '' && location.state === undefined) {
+      setFilters({ ...filters, category: 'bebidas' });
+    } if (location.state !== undefined) {
+      setFilters({ searchText: location.state,
+        searchType: 'ingredient',
+        category: 'bebidas' });
+    }
+
+    return () => setItems(undefined);
+  }, []);
+
   function handleAlert() {
-    if (items.drinks === null) {
+    if (items && items.drinks === null) {
       alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
     }
   }
 
   return (
     <div>
-      <Header id="bebidas" />
+      <Header id="bebidas" ingredient={ location.state } />
       <Categories id="bebidas" />
       <Cards id="bebidas" />
       {items ? handleAlert() : null}
@@ -29,3 +37,11 @@ export default function Drinks() {
     </div>
   );
 }
+
+Drinks.propTypes = {
+  location: PropTypes.objectOf(PropTypes.any),
+};
+
+Drinks.defaultProps = {
+  location: { state: '' },
+};

@@ -2,36 +2,24 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { fetchDetail, fetchRecommendation } from '../helpers/Helper';
+
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeart from '../images/whiteHeartIcon.svg';
 import blackHeart from '../images/blackHeartIcon.svg';
+import saveFavorite from '../helpers/saveFavorite';
 
 import '../css/itemDetails.css';
 import '../css/scroller.css';
 
 export default function DrinkDetails(props) {
-  // const [recipeId, setRecipeId] = useState('');
   const [recipe, setRecipe] = useState({});
   const [recipeDetails, setRecipeDetails] = useState([]);
   const [recommendation, setRecommendation] = useState([]);
-  const [disabled, setDisabled] = useState(true);
+  const [disabled, setDisabled] = useState(false);
   const [btnStartValue, setBtnStartValue] = useState('Iniciar Receita');
   const [copy, setCopy] = useState('');
   const [fav, setFav] = useState(whiteHeart);
   const { match: { params: { id } } } = props;
-
-  // useEffect(() => {
-  //   if (recipeId === '') {
-  //     setRecipeId(id);
-  //   }
-  //   async function fetchData() {
-  //     const result = await fetchDetail('bebidas', recipeId);
-  //     setRecipe(result);
-  //   }
-  //   if (recipeId === id) {
-  //     fetchData();
-  //   }
-  // }, [recipeId]);
 
   useEffect(() => {
     async function fetchData() {
@@ -48,6 +36,13 @@ export default function DrinkDetails(props) {
 
     const inProgress = (storage) && storage.cocktails[id];
 
+    if (localStorage.getItem('doneRecipes') !== null) {
+      const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+      if (doneRecipes.some((item) => item.id === id)) {
+        setDisabled(true);
+      }
+    }
+
     if (localStorage.getItem('doneRecipes') === null) {
       setDisabled(false);
     }
@@ -55,7 +50,10 @@ export default function DrinkDetails(props) {
       setBtnStartValue('Continuar Receita');
     }
     if (localStorage.getItem('favoriteRecipes') !== null) {
-      setFav(blackHeart);
+      const tarefa = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      if (tarefa.some((item) => item.id === id)) {
+        setFav(blackHeart);
+      }
     }
   }, []);
 
@@ -66,7 +64,7 @@ export default function DrinkDetails(props) {
   }
 
   function handleFav(item) {
-    const favObj = [{
+    const favObj = {
       id: item.idDrink,
       type: 'bebida',
       area: '',
@@ -74,14 +72,14 @@ export default function DrinkDetails(props) {
       alcoholicOrNot: item.strAlcoholic,
       name: item.strDrink,
       image: item.strDrinkThumb,
-    }];
+    };
     if (fav === blackHeart) {
       setFav(whiteHeart);
-      localStorage.removeItem('favoriteRecipes');
+      saveFavorite(id, favObj, 'remove');
     }
     if (fav === whiteHeart) {
       setFav(blackHeart);
-      localStorage.setItem('favoriteRecipes', JSON.stringify(favObj));
+      saveFavorite(id, favObj, 'add');
     }
   }
 
@@ -158,14 +156,18 @@ export default function DrinkDetails(props) {
           {renderIngredients()}
           <p data-testid="video">{item.strYoutube}</p>
           <Link to={ `/bebidas/${id}/in-progress` }>
-            <button
-              type="button"
-              data-testid="start-recipe-btn"
-              className="btnStart"
-              disabled={ disabled }
-            >
-              {btnStartValue}
-            </button>
+            { (!disabled)
+              ? (
+                <button
+                  type="button"
+                  data-testid="start-recipe-btn"
+                  className="btnStart"
+                  disabled={ disabled }
+                >
+                  {btnStartValue}
+                </button>
+              )
+              : null }
           </Link>
         </div>
         <div className="testimonials">
@@ -190,7 +192,7 @@ export default function DrinkDetails(props) {
     );
   }
   return (
-    <div>aloudingue</div>
+    <div>Loading ...</div>
   );
 }
 

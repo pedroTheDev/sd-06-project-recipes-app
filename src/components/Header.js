@@ -5,10 +5,9 @@ import perfil from '../images/profileIcon.svg';
 import busca from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
 
-export default function Header(props) {
+export default function Header({ id, ingredient }) {
   const [search, setSearch] = useState(false);
 
-  const { id } = props;
   return (
     <div>
       <div>
@@ -38,10 +37,16 @@ export default function Header(props) {
           />
         </button>
       </div>
-      {(search) ? <SearchBar id={ id } /> : '' }
+      {(search || ingredient !== '')
+        ? <SearchBar id={ id } ingredient={ ingredient } /> : '' }
     </div>
   );
 }
 Header.propTypes = {
   id: PropTypes.string.isRequired,
+  ingredient: PropTypes.string,
+};
+
+Header.defaultProps = {
+  ingredient: '',
 };

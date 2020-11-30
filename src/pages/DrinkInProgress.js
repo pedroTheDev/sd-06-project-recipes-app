@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { fetchDetail, fetchRecommendation } from '../helpers/Helper';
+import { fetchDetail } from '../helpers/Helper';
 import saveInStorage from '../helpers/saveInStorage';
+import saveFavorite from '../helpers/saveFavorite';
 
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeart from '../images/whiteHeartIcon.svg';
@@ -15,9 +15,7 @@ export default function DrinkInProgress(props) {
   const [recipe, setRecipe] = useState('');
   const [recipeDetails, setRecipeDetails] = useState([]);
   const [checkedIngredients, setCheckedIngredients] = useState([]);
-  const [recommendation, setRecommendation] = useState([]);
   const [disabled, setDisabled] = useState(true);
-  const [btnStartValue, setBtnStartValue] = useState('Iniciar Receita');
   const [copy, setCopy] = useState('');
   const [fav, setFav] = useState(whiteHeart);
   const { match: { params: { id } } } = props;
@@ -26,14 +24,11 @@ export default function DrinkInProgress(props) {
     async function fetchData() {
       const currRecipe = await fetchDetail('bebidas', id);
       setRecipe(currRecipe);
-      const results = await fetchRecommendation('bebidas');
-      setRecommendation(results);
 
       const storage = JSON.parse(localStorage.getItem('inProgressRecipes'));
       const inProgress = (storage) && storage.cocktails[id];
 
       if (inProgress) {
-        setBtnStartValue('Continuar Receita');
         setCheckedIngredients(inProgress);
       }
     }
@@ -41,11 +36,11 @@ export default function DrinkInProgress(props) {
   }, []);
 
   useEffect(() => {
-    if (localStorage.getItem('doneRecipes') === null) {
-      setDisabled(false);
-    }
     if (localStorage.getItem('favoriteRecipes') !== null) {
-      setFav(blackHeart);
+      const tarefa = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      if (tarefa.some((item) => item.id === id)) {
+        setFav(blackHeart);
+      }
     }
   }, []);
 
@@ -54,8 +49,17 @@ export default function DrinkInProgress(props) {
     if (checkedIngredients.length > empty) {
       checkedIngredients.forEach((ingredient) => {
         const checkbox = document.getElementById(ingredient);
-        if (checkbox) checkbox.checked = true;
+        if (checkbox) {
+          checkbox.checked = true;
+          checkbox.setAttribute('checked', '');
+        }
       });
+      const inputLength = document.querySelectorAll('input[type=checkbox]').length;
+      if (inputLength === checkedIngredients.length) {
+        setDisabled(false);
+      } else if (inputLength > checkedIngredients.length) {
+        setDisabled(true);
+      }
     }
   }, [checkedIngredients]);
 
@@ -66,7 +70,7 @@ export default function DrinkInProgress(props) {
   }
 
   function handleFav(item) {
-    const favObj = [{
+    const favObj = {
       id: item.idDrink,
       type: 'bebida',
       area: '',
@@ -74,14 +78,14 @@ export default function DrinkInProgress(props) {
       alcoholicOrNot: item.strAlcoholic,
       name: item.strDrink,
       image: item.strDrinkThumb,
-    }];
+    };
     if (fav === blackHeart) {
       setFav(whiteHeart);
-      localStorage.removeItem('favoriteRecipes');
+      saveFavorite(id, favObj, 'remove');
     }
     if (fav === whiteHeart) {
       setFav(blackHeart);
-      localStorage.setItem('favoriteRecipes', JSON.stringify(favObj));
+      saveFavorite(id, favObj, 'add');
     }
   }
 
@@ -105,14 +109,17 @@ export default function DrinkInProgress(props) {
 
   function strikeIngredientText(target) {
     if (target.checked) {
+      if (!checkedIngredients.includes(target.id)) {
+        setCheckedIngredients([...checkedIngredients, target.id]);
+      }
       saveInStorage(id, target.id, 'cocktails', 'add');
     } else if (!target.checked) {
+      if (checkedIngredients.includes(target.id)) {
+        setCheckedIngredients(checkedIngredients.filter((item) => item !== target.id));
+        target.removeAttribute('checked');
+      }
       saveInStorage(id, target.id, 'cocktails', 'remove');
     }
-
-    return (target.checked)
-      ? target.parentNode.classList.add('strike-text')
-      : target.parentNode.classList.remove('strike-text');
   }
 
   function renderIngredients() {
@@ -143,7 +150,29 @@ export default function DrinkInProgress(props) {
       );
     }
   }
-  if (recipe.drinks && recommendation) {
+
+  function endRecipe(item) {
+    const now = new Date();
+    const newRecipe = {
+      id: item.idDrink,
+      type: 'bebida',
+      area: '',
+      category: item.strCategory,
+      alcoholicOrNot: item.strAlcoholic,
+      name: item.strDrink,
+      image: item.strDrinkThumb,
+      doneDate: `${now.getDate()}-${now.getMonth() + 1}-${now.getFullYear()}`,
+      tags: (item.strTags) && item.strTags.split(','),
+    };
+    const currStorage = JSON.parse(localStorage.getItem('doneRecipes'));
+    const newStorage = (currStorage)
+      ? [...currStorage, newRecipe]
+      : [newRecipe];
+    localStorage.setItem('doneRecipes', JSON.stringify(newStorage));
+    props.history.push('/receitas-feitas');
+  }
+
+  if (recipe.drinks) {
     const item = recipe.drinks[0];
     return (
       <div>
@@ -175,44 +204,31 @@ export default function DrinkInProgress(props) {
           <p data-testid="recipe-category">{item.strAlcoholic}</p>
           <p data-testid="instructions">{item.strInstructions}</p>
           {renderIngredients()}
-          <p data-testid="video">{item.strYoutube}</p>
-          <Link to={ `/bebidas/${id}/in-progress` }>
-            <button
-              type="button"
-              data-testid="finish-recipe-btn"
-              className="btnStart"
-              disabled={ disabled }
-            >
-              {btnStartValue}
-            </button>
-          </Link>
-        </div>
-        <div className="testimonials">
-          <div className="scroller">
-            {recommendation.map((rec, index) => (
-              <div
-                key={ index }
-                data-testid={ `${index}-recomendation-card` }
-                className="item"
-              >
-                <p data-testid={ `${index}-recomendation-title` }>{rec.strMeal}</p>
-                <img
-                  alt="foto da receita"
-                  className="item-img"
-                  src={ rec.strMealThumb }
-                />
-              </div>
-            ))}
-          </div>
+
+          <button
+            type="button"
+            data-testid="finish-recipe-btn"
+            className="btnStart"
+            disabled={ disabled }
+            onClick={ () => endRecipe(item) }
+          >
+            Finalizar receita
+          </button>
+
         </div>
       </div>
     );
   }
   return (
-    <div>aloudingue</div>
+    <div>Loading ...</div>
   );
 }
 
 DrinkInProgress.propTypes = {
   match: PropTypes.objectOf(PropTypes.any).isRequired,
+};
+
+DrinkInProgress.propTypes = {
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
 };

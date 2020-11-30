@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { fetchDetail, fetchRecommendation } from '../helpers/Helper';
+import { fetchDetail } from '../helpers/Helper';
 import saveInStorage from '../helpers/saveInStorage';
+import saveFavorite from '../helpers/saveFavorite';
 
 import '../css/scroller.css';
 import '../css/itemDetails.css';
@@ -14,9 +14,7 @@ export default function FoodInProgress(props) {
   const [recipe, setRecipe] = useState('');
   const [recipeDetails, setRecipeDetails] = useState([]);
   const [checkedIngredients, setCheckedIngredients] = useState([]);
-  const [recommendation, setRecommendation] = useState([]);
   const [disabled, setDisabled] = useState(true);
-  const [btnStartValue, setBtnStartValue] = useState('Iniciar Receita');
   const [copy, setCopy] = useState('');
   const [fav, setFav] = useState(whiteHeart);
   const { match: { params: { id } } } = props;
@@ -25,14 +23,11 @@ export default function FoodInProgress(props) {
     async function fetchData() {
       const currRecipe = await fetchDetail('comidas', id);
       setRecipe(currRecipe);
-      const results = await fetchRecommendation('comidas');
-      setRecommendation(results);
 
       const storage = JSON.parse(localStorage.getItem('inProgressRecipes'));
       const inProgress = (storage) && storage.meals[id];
 
       if (inProgress) {
-        setBtnStartValue('Continuar Receita');
         setCheckedIngredients(inProgress);
       }
     }
@@ -40,11 +35,11 @@ export default function FoodInProgress(props) {
   }, []);
 
   useEffect(() => {
-    if (localStorage.getItem('doneRecipes') === null) {
-      setDisabled(false);
-    }
     if (localStorage.getItem('favoriteRecipes') !== null) {
-      setFav(blackHeart);
+      const tarefa = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      if (tarefa.some((item) => item.id === id)) {
+        setFav(blackHeart);
+      }
     }
   }, []);
 
@@ -53,9 +48,17 @@ export default function FoodInProgress(props) {
     if (checkedIngredients.length > empty) {
       checkedIngredients.forEach((ingredient) => {
         const checkbox = document.getElementById(ingredient);
-        console.log(checkbox);
-        if (checkbox) checkbox.checked = true;
+        if (checkbox) {
+          checkbox.checked = true;
+          checkbox.setAttribute('checked', '');
+        }
       });
+      const inputLength = document.querySelectorAll('input[type=checkbox]').length;
+      if (inputLength === checkedIngredients.length) {
+        setDisabled(false);
+      } else if (inputLength > checkedIngredients.length) {
+        setDisabled(true);
+      }
     }
   }, [checkedIngredients]);
 
@@ -66,7 +69,7 @@ export default function FoodInProgress(props) {
   }
 
   function handleFav(item) {
-    const favObj = [{
+    const favObj = {
       id: item.idMeal,
       type: 'comida',
       area: item.strArea,
@@ -74,14 +77,14 @@ export default function FoodInProgress(props) {
       alcoholicOrNot: '',
       name: item.strMeal,
       image: item.strMealThumb,
-    }];
+    };
     if (fav === blackHeart) {
       setFav(whiteHeart);
-      localStorage.removeItem('favoriteRecipes');
+      saveFavorite(id, favObj, 'remove');
     }
     if (fav === whiteHeart) {
       setFav(blackHeart);
-      localStorage.setItem('favoriteRecipes', JSON.stringify(favObj));
+      saveFavorite(id, favObj, 'add');
     }
   }
 
@@ -105,14 +108,17 @@ export default function FoodInProgress(props) {
 
   function strikeIngredientText(target) {
     if (target.checked) {
+      if (!checkedIngredients.includes(target.id)) {
+        setCheckedIngredients([...checkedIngredients, target.id]);
+      }
       saveInStorage(id, target.id, 'meals', 'add');
     } else if (!target.checked) {
+      if (checkedIngredients.includes(target.id)) {
+        setCheckedIngredients(checkedIngredients.filter((item) => item !== target.id));
+        target.removeAttribute('checked');
+      }
       saveInStorage(id, target.id, 'meals', 'remove');
     }
-
-    return (target.checked)
-      ? target.parentNode.classList.add('strike-text')
-      : target.parentNode.classList.remove('strike-text');
   }
 
   function renderIngredients() {
@@ -123,7 +129,7 @@ export default function FoodInProgress(props) {
           { recipeDetails.filter((ingredient) => ingredient !== '' && ingredient !== null)
             .map((ingredient, index) => (
               <label
-                htmlFor={ `${ingredient[0]}` }
+                htmlFor={ `${ingredient[0]}-{${index}` }
                 key={ ingredient[0] }
                 data-testid={ `${index}-ingredient-step` }
                 className={ checkedIngredients.includes(ingredient[0])
@@ -131,7 +137,7 @@ export default function FoodInProgress(props) {
               >
                 <input
                   type="checkbox"
-                  id={ `${ingredient[0]}` }
+                  id={ `${ingredient[0]}-{${index}` }
                   onClick={ ({ target }) => strikeIngredientText(target) }
                 />
                 { (ingredient[1] === null)
@@ -144,8 +150,30 @@ export default function FoodInProgress(props) {
     }
   }
 
-  if (recipe.meals && recommendation) {
+  function endRecipe(item) {
+    const now = new Date();
+    const newRecipe = {
+      id: item.idMeal,
+      type: 'comida',
+      area: item.strArea,
+      category: item.strCategory,
+      alcoholicOrNot: '',
+      name: item.strMeal,
+      image: item.strMealThumb,
+      doneDate: `${now.getDate()}-${now.getMonth() + 1}-${now.getFullYear()}`,
+      tags: (item.strTags) && item.strTags.split(','),
+    };
+    const currStorage = JSON.parse(localStorage.getItem('doneRecipes'));
+    const newStorage = (currStorage)
+      ? [...currStorage, newRecipe]
+      : [newRecipe];
+    localStorage.setItem('doneRecipes', JSON.stringify(newStorage));
+    props.history.push('/receitas-feitas');
+  }
+
+  if (recipe.meals) {
     const item = recipe.meals[0];
+    console.log(item);
     return (
       <div>
         <div key={ item }>
@@ -176,44 +204,26 @@ export default function FoodInProgress(props) {
           <p data-testid="recipe-category">{item.strCategory}</p>
           <p data-testid="instructions">{item.strInstructions}</p>
           {renderIngredients()}
-          <p data-testid="video">{item.strYoutube}</p>
-          <Link to={ `/comidas/${id}/in-progress` }>
-            <button
-              type="button"
-              data-testid="finish-recipe-btn"
-              className="btnStart"
-              disabled={ disabled }
-            >
-              {btnStartValue}
-            </button>
-          </Link>
-        </div>
-        <div className="testimonials">
-          <div className="scroller">
-            {recommendation.map((rec, index) => (
-              <div
-                key={ index }
-                data-testid={ `${index}-recomendation-card` }
-                className="item"
-              >
-                <p data-testid={ `${index}-recomendation-title` }>{rec.strDrink}</p>
-                <img
-                  alt="foto da receita"
-                  className="item-img"
-                  src={ rec.strDrinkThumb }
-                />
-              </div>
-            ))}
-          </div>
+
+          <button
+            type="button"
+            data-testid="finish-recipe-btn"
+            className="btnStart"
+            disabled={ disabled }
+            onClick={ () => endRecipe(item) }
+          >
+            Finalizar receita
+          </button>
         </div>
       </div>
     );
   }
   return (
-    <div>aló</div>
+    <div>Loading ...</div>
   );
 }
 
 FoodInProgress.propTypes = {
   match: PropTypes.objectOf(PropTypes.any).isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
