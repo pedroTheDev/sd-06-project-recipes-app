@@ -16,7 +16,6 @@ function ShareButton({ setMessage, page = null }) {
     let link = window.location.href.toString();
     if (page !== null) {
       link = formatInProgressLink(page, link);
-      console.log(link);
     }
     navigator.clipboard.writeText(link);
     setFeedBackMessage();

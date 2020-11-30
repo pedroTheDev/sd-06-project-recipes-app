@@ -1,30 +1,34 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
+import inProgressContext from '../contexts/inProgressContext';
 
 function IngredientsCheck({ recipe, path, id }) {
   const { ingredients = [], measures = [] } = recipe;
   const [ingredientsCheck, setIngredientsCheck] = useState({});
+  const { setDisableButton } = useContext(inProgressContext);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getLocalStorageInfo = () => JSON.parse(localStorage.getItem('inProgressRecipes'));
 
   const toggleIngredientCheck = (event) => {
-    const ingredientId = event.target.id;
-    const newcheckedIngredients = {
+    const ingredientName = event.target.id;
+    const newCheckedIngredients = {
       ...ingredientsCheck,
-      [ingredientId]: !ingredientsCheck[ingredientId],
+      [ingredientName]: !ingredientsCheck[ingredientName],
     };
-    setIngredientsCheck(newcheckedIngredients);
+    if (newCheckedIngredients[ingredientName] === false) {
+      delete newCheckedIngredients[ingredientName];
+    }
+    setIngredientsCheck(newCheckedIngredients);
   };
 
   const saveProgressInLocalStorage = () => {
-    console.log('Recipe id:', recipe.id);
     if (recipe.id === undefined) return null;
     const settedIngredients = Object.keys(ingredientsCheck);
     const status = Object.values(ingredientsCheck);
     const currentCheckedIngredients = JSON.parse(localStorage.getItem(
       'inProgressRecipes',
     )) || { meals: {}, cocktails: {} };
-    console.log(currentCheckedIngredients);
     const key = path === 'comidas' ? 'meals' : 'cocktails';
     const checkedIngToLocalStorage = settedIngredients.filter((ingredient, index) => (
       status[index]
@@ -34,15 +38,26 @@ function IngredientsCheck({ recipe, path, id }) {
   };
 
   useEffect(() => {
+    if (Object.keys(ingredientsCheck).length >= 1) {
+      const allIngredients = [...ingredients];
+      const checkedIngredients = Object.keys({ ...ingredientsCheck });
+
+      if (allIngredients.length === checkedIngredients.length) {
+        setDisableButton(false);
+      } else {
+        setDisableButton(true);
+      }
+    }
+  }, [ingredientsCheck, recipe]);
+
+  useEffect(() => {
     const key = path === 'comidas' ? 'meals' : 'cocktails';
 
     const retrievedLocalStorageInfo = getLocalStorageInfo();
 
     if (retrievedLocalStorageInfo === null) {
-      console.log('sem local storage');
-    } else if (retrievedLocalStorageInfo[key][id] !== undefined) {
-      console.log('local storage existe, mas TEM a chave desta receita');
-
+      return null;
+    } if (retrievedLocalStorageInfo[key][id] !== undefined) {
       const savedIngredients = retrievedLocalStorageInfo[key][id];
 
       const unCheckedIngredients = ingredients.filter((ingredient) => (
@@ -65,41 +80,53 @@ function IngredientsCheck({ recipe, path, id }) {
 
   useEffect(() => {
     const minLength = 0;
-    if (recipe.id !== undefined && (Object.keys(ingredientsCheck)).length > minLength) {
+    if (recipe.id !== undefined && (Object.keys(ingredientsCheck)).length >= minLength) {
       saveProgressInLocalStorage();
     }
   }, [ingredientsCheck]);
 
+  useEffect(() => {
+    if (recipe.id !== undefined) {
+      setIsLoading(false);
+    } else {
+      setIsLoading(true);
+    }
+  }, [recipe]);
+
   const handleCheckClick = (event) => {
     toggleIngredientCheck(event);
-    saveProgressInLocalStorage();
+    // saveProgressInLocalStorage();
   };
 
   return (
-    <ul>
-      {ingredients.map((ingredient, index) => (
-        <li
-          key={ ingredient }
-          data-testid={ `${index}-ingredient-step` }
-        >
-          <label htmlFor={ `${ingredient}` }>
-            <input
-              className={ ingredientsCheck[ingredient] && 'checked' }
-              type="checkbox"
-              id={ `${ingredient}` }
-              onClick={ (event) => handleCheckClick(event) }
-              // checked
-              checked={ ingredientsCheck[ingredient] }
-            />
-            <span
-              className={ ingredientsCheck[ingredient] && 'checked-text' }
-            >
-              {`${ingredient} - ${measures[index]}`}
-            </span>
-          </label>
-        </li>
-      ))}
-    </ul>
+    <div>
+      {!isLoading
+        ? (
+          <ul>
+            {ingredients.map((ingredient, index) => (
+              <li
+                key={ ingredient }
+                data-testid={ `${index}-ingredient-step` }
+              >
+                <label htmlFor={ `${ingredient}` }>
+                  <input
+                    className={ ingredientsCheck[ingredient] && 'checked' }
+                    type="checkbox"
+                    id={ `${ingredient}` }
+                    onClick={ (event) => handleCheckClick(event) }
+                    checked={ ingredientsCheck[ingredient] }
+                  />
+                  <span
+                    className={ ingredientsCheck[ingredient] && 'checked-text' }
+                  >
+                    {`${ingredient} - ${measures[index]}`}
+                  </span>
+                </label>
+              </li>
+            ))}
+          </ul>)
+        : false }
+    </div>
   );
 }
 IngredientsCheck.propTypes = {

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
 import PropTypes from 'prop-types';
 import splitPathname from '../utils/splitPathname';
 import recipeDetailsProcessing from '../utils/recipeDetailsProcessing';
@@ -6,16 +7,18 @@ import checkRecipeInProgress from '../utils/checkRecipeInProgress';
 import checkSavedRecipe from '../utils/checkSavedRecipe';
 import checkFavoriteRecipe from '../utils/checkFavoriteRecipe';
 import DetailAndProgressBody from '../components/DetailAndProgressBody';
+import inProgressContext from '../contexts/inProgressContext';
 
 function ReceitaProgresso(
   { location: { pathname } },
 ) {
   const [path, id, page] = splitPathname(pathname);
   const [recipe, setRecipe] = useState([]);
-  const [disableButton, setdisableButton] = useState('visible');
+  const [disableButton, setDisableButton] = useState(true);
   const [wasStarted, setWasStarted] = useState(false);
   const [wasCopied, setWasCopied] = useState(false);
   const [isFav, setIsFav] = useState(false);
+
   const buttonsProps = {
     path,
     id,
@@ -25,33 +28,43 @@ function ReceitaProgresso(
     setWasCopied,
   };
 
+  const history = useHistory();
+
   useEffect(() => {
     recipeDetailsProcessing(id, path, setRecipe);
   }, []);
 
   useEffect(() => {
-    checkSavedRecipe(recipe, setdisableButton);
+    checkSavedRecipe(recipe, setDisableButton);
     checkRecipeInProgress(path, recipe, setWasStarted, wasStarted);
     setIsFav(checkFavoriteRecipe(id));
   }, [recipe]);
 
+  const context = {
+    disableButton,
+    setDisableButton,
+  };
+
   return (
-    <main>
-      ReceitaProgresso Page
-      <DetailAndProgressBody
-        recipe={ recipe }
-        buttonsProps={ buttonsProps }
-        recommendations={ [] }
-        page={ page }
-      />
-      <button
-        type="button"
-        data-testid="finish-recipe-btn"
-        className={ `start-recipe-btn ${disableButton}` }
-      >
-        Finalizar Receita
-      </button>
-    </main>
+    <inProgressContext.Provider value={ context }>
+      <main>
+        <DetailAndProgressBody
+          recipe={ recipe }
+          buttonsProps={ buttonsProps }
+          recommendations={ [] }
+          page={ page }
+        />
+        <button
+          type="button"
+          data-testid="finish-recipe-btn"
+          className="start-recipe-btn"
+          disabled={ disableButton }
+          onClick={ () => history.push('/receitas-feitas') }
+        >
+          Finalizar Receita
+        </button>
+      </main>
+    </inProgressContext.Provider>
   );
 }
 
