@@ -38,7 +38,7 @@ function RecipeDetails() {
         });
       }
 
-      if (localStorageProgress) {
+      if (localStorageProgress && localStorageProgress.meals) {
         Object.keys(localStorageProgress.meals).forEach((item) => {
           if (item === mealRecipe[0].idMeal) {
             setRecipeStart(true);
@@ -189,8 +189,10 @@ function RecipeDetails() {
 
   const handleRecomendatioNRecipes = async ({ target }) => {
     if (target.alt === 'food') {
+      console.log(target.alt);
       history.push(`/comidas/${target.id}`);
     } else {
+      console.log(target.alt);
       history.push(`/bebidas/${target.id}`);
     }
   };

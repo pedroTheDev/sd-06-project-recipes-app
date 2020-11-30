@@ -34,7 +34,7 @@ function Login() {
     <div clssName="container">
       <div>
         <div className="name-login">
-          <h2>Recives Group 15</h2>
+          <h2>Recipes Group 15</h2>
         </div>
         <div className="login-box">
           <h1>Login</h1>
