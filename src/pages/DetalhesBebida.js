@@ -134,14 +134,14 @@ function DetalhesBebida() {
   function renderIngrediente(bebida) {
     const array = [];
     for (let numero = 1; numero <= quinze; numero += 1) {
-      if (bebida[`strIngredient${numero}`] !== '') {
+      if (bebida[`strIngredient${numero}`] !== null) {
         array.push(
           <li
             data-testid={ `${numero - 1}-ingredient-name-and-measure` }
             className="titulo"
           >
             {`${bebida[`strIngredient${numero}`]} `}
-            {(bebida[`strMeasure${numero}`] !== '')
+            {(bebida[`strMeasure${numero}`] !== null)
               ? <span>{`${bebida[`strMeasure${numero}`]}`}</span>
               : ''}
           </li>,
