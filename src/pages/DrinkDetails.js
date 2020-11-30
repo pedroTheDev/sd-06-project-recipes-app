@@ -223,6 +223,13 @@ function DrinkDetails() {
             alt="favorite"
           />}
 
+          <button type="button" data-testid="share-btn">
+            Botão compartilhar
+          </button>
+          <button type="button" data-testid="favorite-btn">
+            Botão favoritar
+          </button>
+
         </div>
       </div>
     ))

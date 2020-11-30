@@ -37,9 +37,7 @@ export default function RecipesProvider({ children }) {
     ReceitaConcluida: false,
   });
 
-  // mais um state , este para verificar se a comida foi favoritada ou não
   const [isFavorite, setFavorite] = useState(false);
-
   const [listIngredients, setListIngredients] = useState([]);
   const [effectOnLoad, setEffectOnLoad] = useState(true);
   const [areaDropdown, setAreaDropdown] = useState([]);

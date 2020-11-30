@@ -14,7 +14,7 @@ function ExploreDrinkIngredients() {
   } = useContext(RecipesContext);
 
   useEffect(() => {
-    FetchApiDrink('6', setListIngredients);
+    FetchApiDrink('7', setListIngredients);
     setEffectOnLoad(false);
   }, []);
 

@@ -127,6 +127,8 @@
 
 .btn-share {
   background-image: url('./images/shareIcon.svg');
+  bottom: 0;
+  position: fixed;
 }
 
 @keyframes shake {
