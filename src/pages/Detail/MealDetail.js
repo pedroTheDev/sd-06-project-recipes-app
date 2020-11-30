@@ -40,7 +40,7 @@ function MealDetail() {
     for (i = 1; i <= twenty; i += 1) {
       const keyName = `strIngredient${i}`;
       const measureKeyName = `strMeasure${i}`;
-      if (recipes[keyName] !== ('' && null)) {
+      if (recipes[keyName] !== '' && recipes[keyName] !== null) {
         const obj = {
           name: recipes[keyName],
           measure: recipes[measureKeyName],
