@@ -15,9 +15,9 @@ import Login from './pages/Login';
 import ExplorarComidasArea from './pages/ExplorarComidasArea';
 import NotFound from './pages/NotFound';
 import Perfil from './pages/Perfil';
-import ReceitasFavoritas from './pages/ReceitasFavoritas';
 import ReceitasFeitas from './pages/ReceitasFeitas';
 import ComidasInProgress from './pages/ComidasInProgress';
+import FavoriteRecipes from './pages/FavoriteRecipes';
 
 function App() {
   return (
@@ -46,7 +46,7 @@ function App() {
           component={ ExplorarComidasIng }
         />
         <Route path="/receitas-feitas" component={ ReceitasFeitas } />
-        <Route path="/receitas-favoritas" component={ ReceitasFavoritas } />
+        <Route path="/receitas-favoritas" component={ FavoriteRecipes } />
         <Route path="/perfil" component={ Perfil } />
       </Switch>
     </BrowserRouter>
