@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
-import { shareIcon, blackHeartIcon } from '../images/';
+import { shareIcon, blackHeartIcon } from '../images';
 
 function ReceitasFavoritas() {
   const [favoriteRecipes, setFavoriteRecipe] = useState([]);
+  console.log(favoriteRecipes)
 
   useEffect(() => {
     if (!localStorage.favoriteRecipes) {
