@@ -37,6 +37,7 @@ class FoodsDetails extends React.Component {
     const recommendedDrinks = await fetchRecommendedDrinks();
     this.setMealState(mealRecipe, recommendedDrinks);
     this.handleIngredients();
+    this.changeButtonInnerText();
   }
 
   handleYoutubeVideo(url) {
@@ -145,6 +146,17 @@ class FoodsDetails extends React.Component {
     this.setState({ Update: !Update });
   }
 
+  changeButtonInnerText() {
+    const { idCurrent } = this.props;
+    const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (localStorage.inProgressRecipes) {
+      if (inProgressRecipes.meals[idCurrent]) {
+        const bla = document.querySelector('.start-recipe');
+        bla.innerHTML = 'Continuar Receita';
+      }
+    }
+  }
+
   teste(recipe) {
     if (localStorage.favoriteRecipes) {
       const favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
@@ -189,6 +201,12 @@ class FoodsDetails extends React.Component {
     const { idCurrent } = this.props;
     const { history } = this.props;
     localStorage.setItem('ReceitaIniciada', JSON.stringify(recipe.idMeal));
+    const getCheckedItems = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (getCheckedItems) {
+      getCheckedItems.meals = { [idCurrent]: [] };
+      localStorage.setItem('inProgressRecipes', JSON.stringify(getCheckedItems));
+    }
+
     history.push(`/comidas/${idCurrent}/in-progress`);
   }
 

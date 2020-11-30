@@ -37,6 +37,7 @@ class DrinksDetails extends React.Component {
     const recommendedMeals = await fetchRecommendedMeals();
     this.setDrinkState(drinkRecipe, recommendedMeals);
     this.handleIngredients();
+    this.changeButtonInnerText(endpoint);
   }
 
   handleYoutubeVideo(url) {
@@ -148,6 +149,16 @@ class DrinksDetails extends React.Component {
     this.setState({ Update: !Update });
   }
 
+  changeButtonInnerText(endpoint) {
+    const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (localStorage.inProgressRecipes) {
+      if (inProgressRecipes.cocktails[endpoint]) {
+        const bla = document.querySelector('.start-recipe');
+        bla.innerHTML = 'Continuar Receita';
+      }
+    }
+  }
+
   teste(recipe) {
     if (localStorage.favoriteRecipes) {
       const favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
@@ -191,6 +202,12 @@ class DrinksDetails extends React.Component {
   redirectFromState() {
     const { idCurrent } = this.props;
     const { history } = this.props;
+    const getCheckedItems = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (getCheckedItems) {
+      getCheckedItems.cocktails = { [idCurrent]: [] };
+      localStorage.setItem('inProgressRecipes', JSON.stringify(getCheckedItems));
+    }
+
     history.push(`/bebidas/${idCurrent}/in-progress`);
   }
 
