@@ -10,9 +10,14 @@ import { addDrinksCategories } from '../actions/categories';
 
 class ReceitasBebidas extends Component {
   async componentDidMount() {
-    const { sendCockTail } = this.props;
-    const { drinks } = await getCockTail('search.php?s=');
-    sendCockTail(drinks);
+    const { sendCockTail, location: { state } } = this.props;
+    if (state && state.ing) {
+      const { drinks } = await getCockTail(`filter.php?i=${state.ing}`);
+      sendCockTail(drinks);
+    } else {
+      const { drinks } = await getCockTail('search.php?s=');
+      sendCockTail(drinks);
+    }
     this.getCategories();
   }
 
@@ -41,6 +46,9 @@ const mapDispatchToProps = (dispatch) => ({
 ReceitasBebidas.propTypes = {
   sendCocktailCategories: PropTypes.func.isRequired,
   sendCockTail: PropTypes.func.isRequired,
+  location: PropTypes.shape({
+    state: PropTypes.objectOf,
+  }).isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(ReceitasBebidas);

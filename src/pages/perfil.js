@@ -18,13 +18,18 @@ class Perfil extends Component {
 
   render() {
     const emailLS = JSON.parse(localStorage.getItem('user'));
-    // console.log(emailLS)
+    let email;
+    if (!emailLS) {
+      email = '';
+    } else {
+      email = emailLS.email;
+    }
 
     return (
       <div>
-        <Header title="Perfil" />
+        <Header title="Perfil" noSearchBar />
         <div>
-          <h3 data-testid="profile-email">{emailLS.email}</h3>
+          <h3 data-testid="profile-email">{email}</h3>
 
           <Link to="/receitas-feitas">
             <button

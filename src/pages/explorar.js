@@ -9,7 +9,7 @@ class Explorar extends Component {
 
     return (
       <div>
-        <Header title={ title || 'Explorar' } />
+        <Header title={ title || 'Explorar' } noSearchBar />
         {!title ? <Explore /> : <ExploreOptions { ...this.props } />}
         <Footer />
       </div>

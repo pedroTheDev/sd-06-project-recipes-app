@@ -37,7 +37,7 @@ class Header extends Component {
   }
 
   render() {
-    const { title } = this.props;
+    const { title, noSearchBar } = this.props;
     const { showSearchBar, searchInput } = this.state;
     return (
       <header>
@@ -46,9 +46,11 @@ class Header extends Component {
             <img data-testid="profile-top-btn" src={ profileIcon } alt="Profile" />
           </Link>
           <h4 data-testid="page-title">{title}</h4>
-          <button type="button" onClick={ this.handleSearchBarButton }>
-            <img data-testid="search-top-btn" src={ searchIcon } alt="Search" />
-          </button>
+          { !noSearchBar && (
+            <button type="button" onClick={ this.handleSearchBarButton }>
+              <img data-testid="search-top-btn" src={ searchIcon } alt="Search" />
+            </button>
+          ) }
         </div>
         {showSearchBar && (
           <div>
@@ -67,8 +69,13 @@ class Header extends Component {
   }
 }
 
+Header.defaultProps = {
+  noSearchBar: false,
+};
+
 Header.propTypes = {
   title: PropTypes.string.isRequired,
+  noSearchBar: PropTypes.bool,
 };
 
 export default Header;

@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+
+import { Header } from '../components';
+
 import './style/recipesDone.css';
 
 class FavoriteRecipes extends Component {
@@ -171,6 +174,7 @@ class FavoriteRecipes extends Component {
     const { favRecipes } = this.state;
     return (
       <div>
+        <Header title="Receitas Favoritas" noSearchBar />
         { this.renderFilterButtons() }
         { favRecipes && this.renderRecipes() }
       </div>
