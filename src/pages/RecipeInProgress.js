@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
-function RecipeInProgress({ recipesDetail, match: {params: { id } } }) {
+function RecipeInProgress({ recipesDetail, match: { params: { id } } }) {
   const [recipeDetail, setRecipeDetail] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const getRecipeById = () => {
-    return recipesDetail.find(recipeDtl => recipeDtl.id === id);
-  }
+  const getRecipeById = () => recipesDetail.find((recipeDtl) => recipeDtl.id === id);
 
   useEffect(() => {
     setRecipeDetail(getRecipeById());
@@ -16,21 +14,19 @@ function RecipeInProgress({ recipesDetail, match: {params: { id } } }) {
     if (recipeDetail) setIsLoading(false);
   }, [recipeDetail]);
 
-  const renderRecipeInProgress = () => {
-    return (
-      <p>{recipeDetail.instruction}</p>
-    );
-  }
+  const renderRecipeInProgress = () => (
+    <p>{recipeDetail.instruction}</p>
+  );
 
   const render = () => {
-    if (isLoading) return <p>carregando</p>
+    if (isLoading) return <p>carregando</p>;
     return renderRecipeInProgress();
-  }
+  };
 
-  return render()
-  }
+  return render();
+}
 
 const mapStateToProps = (state) => ({
   recipesDetail: state.searchRecipes.foodInProgress,
-}); 
+});
 export default connect(mapStateToProps)(RecipeInProgress);
