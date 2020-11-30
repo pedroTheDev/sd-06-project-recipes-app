@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Footer, Header } from '../components';
+import RecipesContext from '../context/RecipesContext';
 
 function ComidasPorIngrediente() {
   const [ingredientsMeal, setIngredientsMeal] = useState([]);
   const [redirect, setRedirect] = useState(false);
-  const [setDataMeal] = useState([]);
+  const { data, setData } = useContext(RecipesContext);
   const zero = 0;
   const twelve = 12;
 
@@ -24,19 +25,20 @@ function ComidasPorIngrediente() {
   };
 
   const clickOn = (ingrediente) => {
-    getMealsByIngredients(ingrediente).then((data) => {
-      setDataMeal(data.meals);
+    getMealsByIngredients(ingrediente).then((meals) => {
+      setData([meals, data[1]]);
       setRedirect(true);
     });
   };
 
   useEffect(() => {
-    getMealsIngredients().then((data) => setIngredientsMeal(data.meals));
+    getMealsIngredients().then((meals) => setIngredientsMeal(meals.meals));
   }, []);
 
   if (ingredientsMeal.length > twelve) {
     return setIngredientsMeal(ingredientsMeal.slice(zero, twelve));
   }
+
   if (redirect) return <Redirect to="/comidas" />;
 
   return (
@@ -60,7 +62,7 @@ function ComidasPorIngrediente() {
             { ingredients.strIngredient }
           </p>
         </button>
-      ))}
+      )) }
       <Footer />
     </div>
   );
