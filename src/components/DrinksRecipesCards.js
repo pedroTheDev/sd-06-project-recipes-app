@@ -12,7 +12,7 @@ function DrinksRecipesCards() {
   const { categorie } = useContext(RecipesContext);
   const filterDrinks = (categorie === 'All' || categorie === '')
     ? SEARCH_ALL_COCKTAILS
-    : FILTER_COCKTAIL_BY_CATEGORY;
+    : FILTER_COCKTAIL_BY_CATEGORY + categorie;
   const { data, isLoading, error } = useCocktailApi(filterDrinks);
   const twelveRecipes = 12;
 

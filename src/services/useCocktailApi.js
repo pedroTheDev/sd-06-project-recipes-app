@@ -24,11 +24,11 @@ function useCocktailApi(url) {
     fetchData();
   }, [url]);
 
-  return [
+  return {
     data,
     error,
     isLoading,
-  ];
+  };
 }
 
 export default useCocktailApi;
