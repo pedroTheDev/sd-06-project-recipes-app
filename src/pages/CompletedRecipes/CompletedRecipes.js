@@ -103,7 +103,7 @@ function CompletedRecipes() {
                     {recipe.name}
                   </h2>
                 </Link>
-                <p data-testid={`${index}-horizontal-done-date`}>
+                <p data-testid={ `${index}-horizontal-done-date` }>
                   { recipe.doneDate }
                 </p>
                 <input
@@ -117,12 +117,14 @@ function CompletedRecipes() {
                 />
                 <p className={ `copied-link-${recipe.id }` } />
                 {recipe.tags.map((tagName) => {
-                  return (
-                    <p data-testid={ `${index}-${tagName}-horizontal-tag` }>
+                    <p 
+                      data-testid={ `${index}-${tagName}-horizontal-tag` }
+                      key={ tagName }
+                    >
                       { tagName }
                     </p>
-                  );
-                })}
+                  })
+                }
               </div>
             );
           }
