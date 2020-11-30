@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
+import { CopyToClipboard } from "react-copy-to-clipboard";
 import { detailsDrinkById, showSugestedFoods } from '../services/aPI';
 import './DetalhesComida.css';
 
@@ -13,6 +14,15 @@ const DetalhesBebidas = () => {
   const [stateSugestions, setSugestions] = useState();
   const [drinksInProgress, setDrinksInProgress] = useState({ cocktails: {} });
   const [isFavorite, setIsFavorite] = useState(false);
+  const [windowLink, setWindowLink] = useState(window.location.href);
+  const [linkCopied, setLinkCopied] = useState(false);
+
+  const handleShareClick = () => {
+    const url = window.location.href;
+
+    setWindowLink(url);
+    setLinkCopied(true);
+  }
 
   const currentDrinkID = useParams().id;
 
@@ -140,15 +150,18 @@ const DetalhesBebidas = () => {
               { stateLocal.drink.drinks[0].strDrink }
             </span>
             <div className="container-icons">
-              <button
-                type="button"
-              >
-                <img
-                  data-testid="share-btn"
-                  src={ shareIcon }
-                  alt="shareIcon"
-                />
-              </button>
+              <CopyToClipboard text={windowLink} onCopy={() => setLinkCopied(true)}>
+                <button
+                  type="button"
+                >
+                  <img
+                    data-testid="share-btn"
+                    onClick={handleShareClick}
+                    src={ shareIcon }
+                    alt="shareIcon"
+                  />
+                </button>
+              </CopyToClipboard>
               <button
                 type="button"
                 onClick={ handleFavorite }
@@ -159,6 +172,7 @@ const DetalhesBebidas = () => {
                   alt={ !isFavorite ? 'whiteHeartIcon' : 'blackHeartIcon' }
                 />
               </button>
+              {linkCopied ? <span>Link Copiado!</span> : null}
             </div>
           </div>
           <div
