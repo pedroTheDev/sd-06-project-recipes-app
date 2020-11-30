@@ -60,8 +60,10 @@ function RecipeDetails(props) {
   const isChecked = (id, target) => {
     const local = !localStorage.getItem('checkeds') ? ''
       : JSON.parse(localStorage.getItem('checkeds'));
-    console.log(target);
-    setCheck('teste');
+    console.log(target.id);
+    setCheck([
+      target[id],
+    ]);
     const ingredient = [{
       ...local,
       [id]: {
@@ -92,7 +94,7 @@ function RecipeDetails(props) {
               src={ shareIcon }
               data-testid="share-btn"
               alt="share-icon"
-              onClick={ () => share(url) }
+              onClick={ () => url.includes('in-progress') ? share(url.slice(0, -12)) : share(url) }
             />
             { copied ? <span>Link copiado!</span> : '' }
             <input
