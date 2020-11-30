@@ -21,6 +21,21 @@ function SecondaryHeader({ name, img, category }) {
     span.innerHTML = 'Link copiado!';
   };
 
+  /*   const saveToLocalStorage = () => {
+    if (isFavorite) {
+      const favorites = [{
+        id: recipes.idMeal,
+        type: 'meals',
+        area: recipes.strArea,
+        category: recipes.strCategory,
+        alcoholicOrNot: '',
+        name: recipes.strMeal,
+        image: recipes.strMealThumb,
+      }];
+    }
+    console.log('local storage', saveToLocalStorage);
+  };
+ */
   return (
     <div className="header-container">
       <header>

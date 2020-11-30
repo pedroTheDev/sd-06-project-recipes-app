@@ -1,35 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { fetchMeal } from '../../services/mealAPI';
 import SecondaryHeader from '../../components/SecondaryHeader';
 import RecommendationCard from '../../components/RecommendationCard';
 import { fetchDrink } from '../../services/cocktailAPI';
 import './detail.css';
+import recipesAppContext from '../../context/recipesAppContext';
 
 function MealDetail() {
-  const [recipes, setRecipes] = useState({});
   const [recommendations, setRecommendations] = useState([]);
   const [newRecipe, setNewRecipe] = useState(true);
+  const { recipesMeals, fetchMealIngredients } = useContext(recipesAppContext);
+
   const { id } = useParams();
   const zero = 0;
   const two = 2;
   const maxRecommendations = 6;
   let ingredientsNumber = zero;
 
-  const fetchIngredients = async () => {
-    const recipesByIdApi = await fetchMeal('lookupIngredient', id);
-    console.log('recipes linha 16', recipesByIdApi);
-    setRecipes(recipesByIdApi.meals[0]);
-  };
-
   const fetchRecommendations = async () => {
     const recipesRecommendation = await fetchDrink('name', '');
-    console.log('recommendations linha 22', recipesRecommendation);
+    console.log('recommendations por nome', recipesRecommendation);
     setRecommendations(recipesRecommendation.drinks);
   };
 
   useEffect(() => {
-    fetchIngredients();
+    fetchMealIngredients(id);
     fetchRecommendations();
   }, []);
 
@@ -40,10 +35,10 @@ function MealDetail() {
     for (i = 1; i <= twenty; i += 1) {
       const keyName = `strIngredient${i}`;
       const measureKeyName = `strMeasure${i}`;
-      if (recipes[keyName] !== '' && recipes[keyName] !== null) {
+      if (recipesMeals[keyName] !== '' && recipesMeals[keyName] !== null) {
         const obj = {
-          name: recipes[keyName],
-          measure: recipes[measureKeyName],
+          name: recipesMeals[keyName],
+          measure: recipesMeals[measureKeyName],
         };
         ingredients.push(obj);
       }
@@ -55,9 +50,9 @@ function MealDetail() {
 
   useEffect(() => {
     setIngredientAndMeasure();
-  }, [recipes]);
+  }, [recipesMeals]);
 
-  if (Object.keys(recipes).length === zero) {
+  if (Object.keys(recipesMeals).length === zero) {
     return (
       <div className="loading">
         <h2 className="loading-text">Carregando...</h2>
@@ -68,9 +63,9 @@ function MealDetail() {
   return (
     <div>
       <SecondaryHeader
-        name={ recipes.strMeal }
-        img={ recipes.strMealThumb }
-        category={ recipes.strCategory }
+        name={ recipesMeals.strMeal }
+        img={ recipesMeals.strMealThumb }
+        category={ recipesMeals.strCategory }
       />
       <div className="ingredients-container">
         <h3>Ingredientes</h3>
@@ -90,7 +85,7 @@ function MealDetail() {
       </div>
       <div className="instructions-container">
         <h3>Instruções</h3>
-        <div data-testid="instructions">{recipes.strInstructions}</div>
+        <div data-testid="instructions">{recipesMeals.strInstructions}</div>
       </div>
       {
 
@@ -98,8 +93,8 @@ function MealDetail() {
       <div className="video-container">
         <iframe
           data-testid="video"
-          src={ recipes.strYoutube }
-          title={ recipes.strMeal }
+          src={ recipesMeals.strYoutube }
+          title={ recipesMeals.strMeal }
           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
           id="meal-video"
           frameBorder="0"
@@ -123,7 +118,7 @@ function MealDetail() {
         </div>
       </div>
       <div className="button-container">
-        <Link to={ `/comidas/${recipes.idMeal}/in-progress` }>
+        <Link to={ `/comidas/${recipesMeals.idMeal}/in-progress` }>
           <button
             type="button"
             className="start-recipe"
