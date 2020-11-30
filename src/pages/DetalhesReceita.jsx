@@ -124,12 +124,25 @@ function DetalhesReceita(props) {
         <button type="button" data-testid="share-btn" onClick={ copyBoard }>
           <img src={ buttonShare } alt="button-share" />
         </button>
-        <button type="button" data-testid="favorite-btn" onClick={ saveFavoriteRecipe }>
-          <img
-            src={ favoriteButton ? blackHeartIcon : whiteHeartIcon }
-            alt="img-button-fav"
-          />
-        </button>
+        {
+          favoriteButton ? (
+            <button type="button" onClick={ saveFavoriteRecipe }>
+              <img
+                data-testid="favorite-btn"
+                src={ blackHeartIcon }
+                alt="img-button-fav"
+              />
+            </button>
+          ) : (
+            <button type="button" onClick={ saveFavoriteRecipe }>
+              <img
+                data-testid="favorite-btn"
+                src={ whiteHeartIcon }
+                alt="img-button-fav"
+              />
+            </button>
+          )
+        }
       </div>
       {arrayIngredients.map((element, index) => (
         <h5

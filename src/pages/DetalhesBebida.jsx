@@ -119,12 +119,25 @@ function DetalhesBebida(props) {
         <button type="button" data-testid="share-btn" onClick={ copyBoard }>
           <img src={ buttonShare } alt="img-button-share" />
         </button>
-        <button type="button" data-testid="favorite-btn" onClick={ saveFavoriteRecipe }>
-          <img
-            src={ favoriteButton ? blackHeartIcon : whiteHeartIcon }
-            alt="img-button-fav"
-          />
-        </button>
+        {
+          favoriteButton ? (
+            <button type="button" onClick={ saveFavoriteRecipe }>
+              <img
+                data-testid="favorite-btn"
+                src={ blackHeartIcon }
+                alt="img-button-fav"
+              />
+            </button>
+          ) : (
+            <button type="button" onClick={ saveFavoriteRecipe }>
+              <img
+                data-testid="favorite-btn"
+                src={ whiteHeartIcon }
+                alt="img-button-fav"
+              />
+            </button>
+          )
+        }
       </div>
       {arrayIngredients.map((element, index) => (
         <h5
@@ -136,7 +149,11 @@ function DetalhesBebida(props) {
       ))}
       <div className="carrossel">
         {recommendDrink.map((drink, index) => (
-          <div className="carrossel-iten" key={ index } data-testid={ `${index}-recomendation-card` }>
+          <div
+            className="carrossel-iten"
+            key={ index }
+            data-testid={ `${index}-recomendation-card` }
+          >
             <img src={ drink.strMealThumb } alt="drink-thumb" />
             <h3 data-testid={ `${index}-recomendation-title` }>{drink.strMeal}</h3>
           </div>
