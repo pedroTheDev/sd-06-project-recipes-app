@@ -27,7 +27,6 @@ const CategoriesComidas = () => {
     <p>loading</p>
   ) : (
     <div className="main-categories">
-      <span>Selecione uma categoria</span>
       <div className="categories">
         {categories.meals.map((element, index) => {
           const number = 4;
@@ -63,4 +62,3 @@ const CategoriesComidas = () => {
 };
 
 export default CategoriesComidas;
-
