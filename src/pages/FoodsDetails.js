@@ -54,16 +54,6 @@ class FoodsDetails extends React.Component {
     const span = document.createElement('span');
     p.appendChild(span);
     span.innerHTML = 'Link copiado!';
-    // window.alert('Link copiado!');
-    // const el = document.createElement('textarea');
-    // el.value = url;
-    // el.setAttribute('readonly', '');
-    // el.style.position = 'absolute';
-    // el.style.left = '-9999px';
-    // document.body.appendChild(el);
-    // el.select();
-    // document.execCommand('copy');
-    // document.body.removeChild(el);
   }
 
   handleIngredients() {
@@ -217,10 +207,12 @@ class FoodsDetails extends React.Component {
       Ingredients,
       Measures,
       Video } = this.state;
+    const recipe = Meal[0];
+    const zero = 0;
     return (
       <div className="food-drink-detail-container">
-        {Meal ? Meal.map((recipe, index) => (
-          <div className="detail-card" key={ index }>
+        {Meal.length > zero && Meal[0] && (
+          <div className="detail-card">
             <img
               src={ recipe.strMealThumb }
               data-testid="recipe-photo"
@@ -271,7 +263,7 @@ class FoodsDetails extends React.Component {
             <div className="detail-instructions" data-testid="instructions">
               {recipe.strInstructions}
             </div>
-            <p data-testid={ `${index}-card-name` }>{recipe.strMeal}</p>
+            <p data-testid={ '0-card-name' }>{recipe.strMeal}</p>
             <h2>Recomendadas</h2>
             <div className="video-div">
               <iframe
@@ -327,7 +319,7 @@ class FoodsDetails extends React.Component {
                   Iniciar Receita
                 </button>)}
           </div>
-        )) : null }
+        )}
       </div>);
   }
 }
