@@ -3,13 +3,24 @@ import { fireEvent } from '@testing-library/react';
 import renderWithRouter from '../services/renderWithRouter';
 import App from '../App';
 
-// Função para mockar o localStorage
-const localStorageMock = {
-  getItem: jest.fn(),
-  setItem: jest.fn(),
-  clear: jest.fn(),
-};
-global.localStorage = localStorageMock;
+// const localStorageMock = (function () {
+//   let store = {};
+//   return {
+//     getItem(key) {
+//       return store[key];
+//     },
+//     setItem(key, value) {
+//       store[key] = value.toString();
+//     },
+//     clear() {
+//       store = {};
+//     },
+//     removeItem(key) {
+//       delete store[key];
+//     },
+//   };
+// }());
+// Object.defineProperty(window, 'localStorage', { value: localStorageMock });
 
 describe('Testar a tela de perfil e suas funcionalidades', () => {
   it('O e-mail está salvo com a key user no localStorage', () => {
@@ -24,14 +35,19 @@ describe('Testar a tela de perfil e suas funcionalidades', () => {
     // fireEvent.change(inputPassword, { target: { value: '1234567' } });
     // fireEvent.click(submitBtn);
 
+    // console.log(localStorage.getItem('user'));
+    // console.log(localStorage);
     // history.push('/perfil');
-    // expect(localStorageMock.getItem).toBeCalledWith('email@email.com');
+    // expect(localStorage.getItem).toBeCalledWith('email@email.com');
   });
   it('O e-mail é exibido na tela de perfil', () => {
     const { getByTestId, history } = renderWithRouter(<App />);
     history.push('/');
-
+    const inputEmail = getByTestId('email-input');
+    const inputPassword = getByTestId('password-input');
     const submitBtn = getByTestId('login-submit-btn');
+    fireEvent.change(inputEmail, { target: { value: 'email@email.com' } });
+    fireEvent.change(inputPassword, { target: { value: '1234567' } });
     fireEvent.click(submitBtn);
 
     history.push('/perfil');
