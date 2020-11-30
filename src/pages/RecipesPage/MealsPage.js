@@ -7,6 +7,7 @@ import BtnSearchBar from '../../components/BtnSearchBar';
 import * as cocktailAPI from '../../services/cocktailAPI';
 import * as mealAPI from '../../services/mealAPI';
 import recipesAppContext from '../../context/recipesAppContext';
+import Cards from '../../components/Cards';
 
 function MealsPage() {
   const [state, changeState] = useState({
@@ -194,23 +195,24 @@ function MealsPage() {
             const dataTestIDCard = `${index}-card-name`;
             if (type === 'cocktails') {
               return (
-                <Link key={ index } to={ `/bebidas/${recipe.idDrink}` }>
-                  <div className="recipe-card" data-testid={ dataTestID } key={ index }>
-                    <img
-                      alt="Drink Thumb"
-                      data-testid={ dataTestIDImg }
-                      src={ recipe.strDrinkThumb }
-                      className="recipe-thumb"
-                      height="250"
-                    />
-                    <h2
-                      className="recipe-name"
-                      data-testid={ dataTestIDCard }
-                    >
-                      {recipe.strDrink}
-                    </h2>
-                  </div>
-                </Link>
+                <Cards id={ recipe.idDrink } name={ recipe.strDrink } thumbnail={ recipe.strDrinkThumb } dataTestID={ dataTestID } dataTestIDImg={ dataTestIDImg } dataTestIDCard={ dataTestIDCard } index={ index } />
+                // <Link key={ index } to={ `/bebidas/${recipe.idDrink}` }>
+                //   <div className="recipe-card" data-testid={ dataTestID } key={ index }>
+                //     <img
+                //       alt="Drink Thumb"
+                //       data-testid={ dataTestIDImg }
+                //       src={ recipe.strDrinkThumb }
+                //       className="recipe-thumb"
+                //       height="250"
+                //     />
+                //     <h2
+                //       className="recipe-name"
+                //       data-testid={ dataTestIDCard }
+                //     >
+                //       {recipe.strDrink}
+                //     </h2>
+                //   </div>
+                // </Link>
               );
             }
             if (type === 'meals') {
