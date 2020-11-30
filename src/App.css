@@ -112,8 +112,21 @@
 }
 
 .fixed-btn {
+  left: 50%;
   bottom: 0;
   position: fixed;
+}
+
+.btn-favorite-right {
+  float: right;
+}
+
+.tooltip-text {
+  display: none;
+}
+
+.btn-share {
+  background-image: url('./images/shareIcon.svg');
 }
 
 @keyframes shake {

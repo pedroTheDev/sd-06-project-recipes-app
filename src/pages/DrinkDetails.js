@@ -3,6 +3,10 @@ import RecipesContext from '../context/RecipesContext';
 import FetchApiDrink from '../services/FetchApiDrink';
 import FetchApiFood from '../services/FetchApiFood';
 
+import shareIcon from '../images/shareIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+
 import '../App.css';
 
 function DrinkDetails() {
@@ -13,10 +17,23 @@ function DrinkDetails() {
     recomendedFood,
     setRecomendedFood,
     recipeState,
-    setRecipeState } = useContext(RecipesContext);
+    setRecipeState,
+    isFavorite,
+    setFavorite } = useContext(RecipesContext);
 
   const maxRecomended = 6;
   const minRecomended = 0;
+
+  function isFavorited() {
+    const location = window.location.pathname;
+    const magickNumber = 9;
+    const RecipeID = location.slice(magickNumber, location.length);
+    const getFavoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (getFavoriteRecipes) {
+      getFavoriteRecipes.find((recipe) => recipe.id === RecipeID);
+      setFavorite(true);
+    }
+  }
 
   useEffect(() => {
     // código esperto para pegar somente o id no final da url
@@ -25,7 +42,7 @@ function DrinkDetails() {
     const RecipeID = location.slice(magickNumber, location.length);
     FetchApiDrink('6', setDrinkDetail, RecipeID);
     FetchApiFood('2', setRecomendedFood, drinkDetail.strMeal);
-    console.log(recomendedFood);
+    isFavorited();
   }, []);
 
   function renderIngredients() {
@@ -64,6 +81,56 @@ function DrinkDetails() {
     const RecipeID = location.slice(magickNumber, location.length);
 
     window.location.pathname = `/bebidas/${RecipeID}/in-progress`;
+  }
+
+  function handleShareButton() {
+    const copyText = window.location.href;
+    window.navigator.clipboard.writeText(copyText);
+  }
+
+  function handleFavoriteButton() {
+    const drinkObj = {
+      favoriteRecipes: [{
+        id: drinkDetail[0].idDrink,
+        type: 'bebida',
+        area: '',
+        category: drinkDetail[0].strCategory,
+        alcoholicOrNot: drinkDetail[0].strAlcoholic,
+        name: drinkDetail[0].strDrink,
+        image: drinkDetail[0].strDrinkThumb,
+      }],
+    };
+
+    const currentFavoriteRecipes = JSON.parse(
+      localStorage.getItem('favoriteRecipes'),
+    ) || [];
+
+    currentFavoriteRecipes.push(drinkObj.favoriteRecipes[0]);
+
+    currentFavoriteRecipes.concat(JSON.parse(localStorage.getItem('favoriteRecipes')));
+
+    localStorage.setItem('favoriteRecipes', JSON.stringify(currentFavoriteRecipes));
+    isFavorited();
+  }
+
+  function handleUnfavoriteButton() {
+    const currentFavoriteRecipes = JSON.parse(
+      localStorage.getItem('favoriteRecipes'),
+    ) || [];
+
+    const location = window.location.pathname;
+    const magickNumber = 9;
+    const RecipeID = location.slice(magickNumber, location.length);
+
+    const index = currentFavoriteRecipes.filter((favoriteRecipe) => (
+      favoriteRecipe.id === RecipeID
+        ? currentFavoriteRecipes.indexOf(favoriteRecipe) : null
+    ));
+
+    const arrayModified = currentFavoriteRecipes.splice(index, index);
+
+    localStorage.setItem('favoriteRecipes', JSON.stringify(arrayModified));
+    setFavorite(false);
   }
 
   return (
@@ -128,12 +195,34 @@ function DrinkDetails() {
           >
             {recipeState.ReceitaIniciada ? 'Continuar Receita' : 'Iniciar Receita'}
           </button>
-          <button type="button" data-testid="share-btn">
-            Botão compartilhar
-          </button>
-          <button type="button" data-testid="favorite-btn">
-            Botão favoritar
-          </button>
+
+          <span className="tooltip-text">Link copiado!</span>
+
+          <input
+            type="image"
+            className="btn-share"
+            data-testid="share-btn"
+            onClick={ handleShareButton }
+            src={ shareIcon }
+            alt="share"
+          />
+
+          { isFavorite ? <input
+            type="image"
+            className="btn-favorite-right"
+            data-testid="favorite-btn"
+            onClick={ handleUnfavoriteButton }
+            src={ blackHeartIcon }
+            alt="favorite"
+          /> : <input
+            type="image"
+            className="btn-favorite-right"
+            data-testid="favorite-btn"
+            onClick={ handleFavoriteButton }
+            src={ whiteHeartIcon }
+            alt="favorite"
+          />}
+
         </div>
       </div>
     ))
