@@ -21,6 +21,7 @@ function MyProvider({ children }) {
   const [cardsRecipe, setCardsRecipe] = useState([]);
   const [drinksAlcoholic, setDrinksAlcoholic] = useState({});
   const [recipeMeal, setRecipeMeal] = useState();
+  const [recipeDrink, setRecipeDrink] = useState();
 
   // async function verifyRecommendedRecipes() {
   //   const inditialIndex = 0;
@@ -94,6 +95,8 @@ function MyProvider({ children }) {
     drinksAlcoholic,
     recipeMeal,
     setRecipeMeal,
+    recipeDrink,
+    setRecipeDrink,
   };
 
   return (

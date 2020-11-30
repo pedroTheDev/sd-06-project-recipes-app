@@ -7,8 +7,6 @@ import { getRecipeMealByIdApi } from '../services/mealsAPI';
 import { getRecipeDrinksApi } from '../services/drinksAPI';
 import shareIcon from '../images/shareIcon.svg';
 import favoriteIcon from '../images/whiteHeartIcon.svg';
-// import MyCarousel from './MyCarousel';
-import '../Css/myCarousel.css';
 import MealsContext from '../context/MealsContext';
 import '../Css/MealDetail.css';
 
@@ -112,6 +110,7 @@ function MealDetails() {
       </div>
     );
   }
+
   function titleDatail() {
     return (
       <div>
@@ -221,7 +220,6 @@ function MealDetails() {
   function buttonDetail() {
     return (
       <div>
-        { console.log(btnDoneRecipe) }
         { btnDoneRecipe !== 'Receita Finalizada' && (
           <Link to={ `/comidas/${id}/in-progress` }>
             <Button
