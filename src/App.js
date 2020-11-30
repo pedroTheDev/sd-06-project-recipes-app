@@ -5,9 +5,9 @@ import './App.css';
 import { Provider } from 'react-redux';
 import {
   Login, MainPage, Explorar, Perfil, ReceitasFavoritas,
-  ReceitasFeitas, RecipeDetails, BebidasIngredientes, BebidasProgresso,
-  ComidasArea, ComidasIngredientes, ComidasProgresso,
-  Explorer,
+  ReceitasFeitas, RecipeDetails, BebidasIngredientes,
+  ComidasArea, ComidasIngredientes,
+  Explorer, ReceitaProgresso,
 } from './pages';
 import store from './redux/store';
 import './visual_identity/styles/main.scss';
@@ -20,7 +20,7 @@ function App() {
           <Route exact path="/" component={ Login } />
           <Route exact path="/bebidas" component={ MainPage } />
           <Route exact path="/bebidas/:id" component={ RecipeDetails } />
-          <Route exact path="/bebidas/:id/in-progress" component={ BebidasProgresso } />
+          <Route exact path="/bebidas/:id/in-progress" component={ ReceitaProgresso } />
           <Route
             exact
             path="/explorar/bebidas/ingredientes"
@@ -28,7 +28,7 @@ function App() {
           />
           <Route exact path="/comidas" component={ MainPage } />
           <Route exact path="/comidas/:id" component={ RecipeDetails } />
-          <Route exact path="/comidas/:id/in-progress" component={ ComidasProgresso } />
+          <Route exact path="/comidas/:id/in-progress" component={ ReceitaProgresso } />
           <Route
             exact
             path="/explorar/comidas/ingredientes"
