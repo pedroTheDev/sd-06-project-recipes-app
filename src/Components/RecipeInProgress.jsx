@@ -1,16 +1,36 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import copy from 'clipboard-copy';
 import RecipeContext from '../hooks/RecipeContext';
 import recipeRequest from '../services/recipeRequest';
-
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+// Faltando redirecionar ao clicar na imagem - browser roda mas avaliador não
 const RecipeInProgress = () => {
   const history = useHistory();
   const { pathname } = history.location;
   const id = pathname.split('/')[2];
+  const kindof = pathname.split('/')[1];
+  const [checkboxes, setCheckboxes] = useState({});
   const [recipeDetailDrink, setRecipeDetailDrink] = useState([]);
   const [recipeDetailFood, setRecipeDetailFood] = useState([]);
+  const [foodIngredients, setFoodIngredients] = useState([]);
+  const [copied, setCopied] = useState('');
   const [disable, setDisable] = useState(true);
-  const { inProgressRecipes } = useContext(RecipeContext);
+  const {
+    handleLikes,
+    liked,
+    setLiked,
+  } = useContext(RecipeContext);
+  const NINE = 9;
+  const TWENTY_NINE = 29;
+  const FOURTY_NINE = 49;
+  const TWENTY_EIGHT = 28;
+  const THIRTY_SIX = 36;
+  const TWENTY_ONE = 21;
+  const FIFTY_ONE = 51;
+  const THIRTY_FIVE = 35;
+
   const getAPI = async () => {
     const food = await recipeRequest(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
     const recipeFood = await food.meals;
@@ -18,37 +38,151 @@ const RecipeInProgress = () => {
     const recipeDrink = await drink.drinks;
     setRecipeDetailDrink(recipeDrink);
     setRecipeDetailFood(recipeFood);
+    if (kindof === 'comidas') {
+      const ingredientKeys = Object.values(recipeFood[0])
+        .filter((element, index, array) => array.indexOf(element) <= TWENTY_EIGHT
+        && array.indexOf(element) >= NINE
+        && element !== '');
+      setFoodIngredients(ingredientKeys);
+    } else {
+      const ingredientKeys = Object.values(recipeDrink[0])
+        .filter((element, index, array) => array.indexOf(element) <= THIRTY_FIVE
+        && array.indexOf(element) >= TWENTY_ONE
+        && element !== '');
+      setFoodIngredients(ingredientKeys);
+    }
   };
 
-  const NINE = 9;
-  const TWENTY_NINE = 29;
-  const FOURTY_NINE = 49;
+  useEffect(() => {
+    const objetao = {};
+    foodIngredients.forEach((foods) => {
+      Object.assign(objetao, { [foods]: false });
+      setCheckboxes(objetao);
+      if (kindof === 'comidas') {
+        JSON.parse(localStorage.inProgressRecipes).meals[id]
+          .filter((fod) => fod === foods).forEach(() => {
+            Object.assign(objetao, { [foods]: true });
+            setCheckboxes(objetao);
+          });
+      } else {
+        JSON.parse(localStorage.inProgressRecipes).cocktails[id]
+          .filter((fod) => fod === foods).forEach(() => {
+            Object.assign(objetao, { [foods]: true });
+            setCheckboxes(objetao);
+          });
+      }
+    });
+  }, [foodIngredients]);
 
-  const THIRTY_SIX = 36;
-  const TWENTY_ONE = 21;
-  const FIFTY_ONE = 51;
+  const handleStorageProgress = () => {
+    if (kindof === 'comidas') {
+      if (!localStorage.inProgressRecipes) {
+        localStorage.inProgressRecipes = JSON.stringify({
+          cocktails: {}, meals: { [id]: [] } });
+      } else if (JSON.parse(localStorage.inProgressRecipes).meals[id]) {
+        // const reset = JSON.parse(localStorage.inProgressRecipes = )
+        localStorage.inProgressRecipes = JSON.stringify(
+          { ...JSON.parse(localStorage.inProgressRecipes),
+            meals: { ...JSON.parse(localStorage.inProgressRecipes).meals },
+          },
+        );
+      } else {
+        localStorage.inProgressRecipes = JSON.stringify(
+          { ...JSON.parse(localStorage.inProgressRecipes),
+            meals: { ...JSON.parse(localStorage.inProgressRecipes).meals, [id]: [] },
+          },
+        );
+      }
+    } else if (!localStorage.inProgressRecipes) {
+      localStorage.inProgressRecipes = JSON.stringify({
+        cocktails: { [id]: [] }, meals: {} });
+    } else if (JSON.parse(localStorage.inProgressRecipes).cocktails[id]) {
+      // const reset = JSON.parse(localStorage.inProgressRecipes = )
+      localStorage.inProgressRecipes = JSON.stringify(
+        { ...JSON.parse(localStorage.inProgressRecipes),
+          cocktails: { ...JSON.parse(localStorage.inProgressRecipes).cocktails },
+        },
+      );
+    } else {
+      localStorage.inProgressRecipes = JSON.stringify(
+        { ...JSON.parse(localStorage.inProgressRecipes),
+          cocktails: { ...JSON.parse(localStorage.inProgressRecipes)
+            .cocktails,
+          [id]: [] },
+        },
+      );
+    }
+  };
 
   useEffect(() => {
     getAPI();
+    if (!localStorage.doneRecipes) {
+      localStorage.doneRecipes = JSON.stringify([]);
+    }
+    if (!localStorage.favoriteRecipes) {
+      localStorage.favoriteRecipes = JSON.stringify([]);
+    }
+    const favoriteStorage = JSON.parse(localStorage.favoriteRecipes)
+      .filter((item) => item.id === id);
+    if (favoriteStorage.length >= 1) {
+      setLiked(blackHeartIcon);
+    } else {
+      setLiked(whiteHeartIcon);
+    }
+    handleStorageProgress();
   }, []);
 
   const handleCheckbox = ({ target }) => {
-    const progress = {
-      ...inProgressRecipes,
-      meals: { ...inProgressRecipes.meals, [id]: [target.id] },
-    };
-    localStorage.inProgressRecipes = JSON.stringify(progress);
-    const ingr = JSON.parse(localStorage.inProgressRecipes);
-    console.log(ingr.meals[id][0]);
-    if (target.id === ingr.meals[id][0]) {
-      target.checked = true;
-    }
     const items = document.getElementsByClassName('checks');
     const arr = Array.from(items);
     if (arr.every((item) => item.checked === true)) {
       setDisable(false);
     } else {
       setDisable(true);
+    }
+    setCheckboxes({ ...checkboxes, [target.id]: true });
+    if (kindof === 'comidas') {
+      if (checkboxes[target.id]) {
+        const concatenando = JSON.parse(localStorage.inProgressRecipes);
+        const newObj = concatenando.meals[id].filter((meal) => meal !== target.id);
+        localStorage.inProgressRecipes = JSON.stringify(
+          { ...JSON.parse(localStorage.inProgressRecipes),
+            meals: { ...JSON.parse(localStorage.inProgressRecipes)
+              .meals,
+            [id]: newObj } },
+        );
+        setCheckboxes({ ...checkboxes, [target.id]: false });
+      } else {
+        const concatenando = JSON.parse(localStorage.inProgressRecipes);
+        const newObj = concatenando.meals[id].concat(target.id);
+        localStorage.inProgressRecipes = JSON.stringify(
+          { ...JSON.parse(localStorage.inProgressRecipes),
+            meals: { ...JSON.parse(localStorage.inProgressRecipes)
+              .meals,
+            [id]: newObj } },
+        );
+        setCheckboxes({ ...checkboxes, [target.id]: true });
+      }
+    } else if (checkboxes[target.id]) {
+      const concatenando = JSON.parse(localStorage.inProgressRecipes);
+      const newObj = concatenando.cocktails[id].filter((meal) => meal !== target.id);
+      localStorage.inProgressRecipes = JSON.stringify(
+        { ...JSON.parse(localStorage.inProgressRecipes),
+          cocktails: { ...JSON.parse(localStorage.inProgressRecipes)
+            .cocktails,
+          [id]: newObj } },
+      );
+      setCheckboxes({ ...checkboxes, [target.id]: false });
+    } else {
+      const concatenando = JSON.parse(localStorage.inProgressRecipes);
+      const newObj = concatenando.cocktails[id].concat(target.id);
+      localStorage.inProgressRecipes = JSON.stringify(
+        { ...JSON.parse(localStorage.inProgressRecipes),
+          cocktails: { ...JSON.parse(localStorage.inProgressRecipes)
+            .cocktails,
+          [id]: newObj } },
+      );
+      setCheckboxes({ ...checkboxes, [target.id]: true });
     }
   };
 
@@ -64,15 +198,65 @@ const RecipeInProgress = () => {
         >
           <label htmlFor={ ingredient }>
             <input
+              style={ { textDecoration: 'none solid rgba(0,0,0)' } }
               className="checks"
               type="checkbox"
+              checked={ checkboxes[ingredient] }
               id={ ingredient }
               onChange={ handleCheckbox }
             />
-            { `${ingredient} - ${measures[index]}` }
+            <span>{ `${ingredient} - ${measures[index]}` }</span>
           </label>
         </div>
       ));
+  };
+
+  const handleFinishRecipe = () => {
+    const typeRecipe = pathname.split('/')[1];
+    console.log('entrou');
+    if (typeRecipe === 'comidas') {
+      const data = Date();
+      console.log(recipeDetailFood[0].strTags.split(','));
+      const doneFood = {
+        id: recipeDetailFood[0].idMeal,
+        type: 'comida',
+        area: recipeDetailFood[0].strArea,
+        category: recipeDetailFood[0].strCategory,
+        alcoholicOrNot: '',
+        name: recipeDetailFood[0].strMeal,
+        image: recipeDetailFood[0].strMealThumb,
+        doneDate: data,
+        tags: recipeDetailFood[0].strTags.split(','),
+      };
+      const itens = JSON.parse(localStorage.doneRecipes);
+      const AllFavorites = itens.concat(doneFood);
+      localStorage.doneRecipes = JSON.stringify(AllFavorites);
+    } else {
+      const data = Date();
+      const doneFood = {
+        id: recipeDetailDrink[0].idDrink,
+        type: 'bebida',
+        area: '',
+        category: recipeDetailDrink[0].strCategory,
+        alcoholicOrNot: recipeDetailDrink[0].strAlcoholic,
+        name: recipeDetailDrink[0].strDrink,
+        image: recipeDetailDrink[0].strDrinkThumb,
+        doneDate: data,
+        tags: [],
+      };
+      const itens = JSON.parse(localStorage.doneRecipes);
+      const AllFavorites = itens.concat(doneFood);
+      localStorage.doneRecipes = JSON.stringify(AllFavorites);
+    }
+  };
+
+  const handleCopy = () => {
+    const urls = window.location.href.split('/');
+    const fullUrl = `${urls[0]}//${urls[2]}/${urls[3]}/${urls[4]}`;
+    copy(fullUrl);
+    const TWO = 2000;
+    setCopied('Link copiado!');
+    setInterval(() => setCopied(''), TWO);
   };
 
   if (pathname === `/comidas/${id}/in-progress`) {
@@ -84,8 +268,24 @@ const RecipeInProgress = () => {
           src={ food.strMealThumb }
         />
         <h1 data-testid="recipe-title">{ food.strMeal }</h1>
-        <button type="button" data-testid="share-btn">Share</button>
-        <button type="button" data-testid="favorite-btn">Favorite</button>
+        <div>
+          <button
+            onClick={ handleCopy }
+            type="button"
+            data-testid="share-btn"
+          >
+            Share
+
+          </button>
+        </div>
+
+        {copied}
+        <button
+          onClick={ () => handleLikes(recipeDetailFood[0]) }
+          type="button"
+        >
+          <img data-testid="favorite-btn" src={ liked } alt="favorite logo" />
+        </button>
         <p data-testid="recipe-category">{ food.strCategory }</p>
         {
           handleIngredients(food, NINE, TWENTY_NINE, FOURTY_NINE)
@@ -96,6 +296,7 @@ const RecipeInProgress = () => {
             data-testid="finish-recipe-btn"
             type="button"
             disabled={ disable }
+            onClick={ handleFinishRecipe }
           >
             Finalizar
           </button>
@@ -111,8 +312,24 @@ const RecipeInProgress = () => {
         src={ drink.strDrinkThumb }
       />
       <h1 data-testid="recipe-title">{ drink.strDrink }</h1>
-      <button type="button" data-testid="share-btn">Share</button>
-      <button type="button" data-testid="favorite-btn">Favorite</button>
+      <div>
+        <button
+          onClick={ handleCopy }
+          type="button"
+          data-testid="share-btn"
+        >
+          Share
+
+        </button>
+      </div>
+
+      {copied}
+      <button
+        onClick={ () => handleLikes(recipeDetailFood, recipeDetailDrink[0]) }
+        type="button"
+      >
+        <img data-testid="favorite-btn" src={ liked } alt="favorite logo" />
+      </button>
       <p data-testid="recipe-category">{drink.strAlcoholic}</p>
       {
         handleIngredients(drink, TWENTY_ONE, THIRTY_SIX, FIFTY_ONE)
@@ -123,6 +340,7 @@ const RecipeInProgress = () => {
           data-testid="finish-recipe-btn"
           type="button"
           disabled={ disable }
+          onClick={ handleFinishRecipe }
         >
           Finalizar
         </button>

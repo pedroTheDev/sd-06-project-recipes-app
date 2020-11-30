@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import copy from 'clipboard-copy';
 import RecipeContext from '../hooks/RecipeContext';
 import recipeRequest from '../services/recipeRequest';
-import shareIcon from '../images/share.png';
-import favIcon from '../images/favHeart.png';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import shareIcon from '../images/shareIcon.svg';
 import '../Style/RecipeDetails.css';
 import '../Style/carousel.css';
 
@@ -14,13 +16,17 @@ const RecipeDetails = () => {
     foodRecommendation,
     setFoodRecommendation,
     DrinkRecommendation,
+    handleLikes,
     setIds,
+    liked,
+    setLiked,
     setDrinkRecommendation } = useContext(RecipeContext);
   const [recipeDetailFood, setRecipeDetailFood] = useState([]);
-  const [recipeDetailDrink, setRecipeDetailDrink] = useState('foi');
+  const [recipeDetailDrink, setRecipeDetailDrink] = useState(undefined);
+  const [copied, setCopied] = useState('');
   const { pathname } = history.location;
   const ids = pathname.split('/')[2];
-
+  const kindof = pathname.split('/')[1];
   const NINE = 9;
   const TWENTY_NINE = 29;
   const FOURTY_NINE = 49;
@@ -47,9 +53,63 @@ const RecipeDetails = () => {
     setDrinkRecommendation(drinksData);
   };
 
+  const usarNoUse = async () => {
+    await getAPI();
+    await getRecommendation();
+    if (!localStorage.favoriteRecipes) {
+      localStorage.favoriteRecipes = JSON.stringify([]);
+    }
+    const favoriteStorage = JSON.parse(localStorage.favoriteRecipes)
+      .filter((item) => item.id === ids);
+    if (favoriteStorage.length >= 1) {
+      setLiked(blackHeartIcon);
+    } else {
+      setLiked(whiteHeartIcon);
+    }
+  };
+
+  const inProgressCheck = () => {
+    if (kindof === 'comidas') {
+      if (!localStorage.inProgressRecipes) {
+        localStorage.inProgressRecipes = JSON.stringify({
+          cocktails: {}, meals: { [ids]: '' } });
+      } else if (JSON.parse(localStorage.inProgressRecipes).meals[ids]) {
+        // const reset = JSON.parse(localStorage.inProgressRecipes = )
+        localStorage.inProgressRecipes = JSON.stringify(
+          { ...JSON.parse(localStorage.inProgressRecipes),
+            meals: { ...JSON.parse(localStorage.inProgressRecipes).meals },
+          },
+        );
+      } else {
+        localStorage.inProgressRecipes = JSON.stringify(
+          { ...JSON.parse(localStorage.inProgressRecipes),
+            meals: { ...JSON.parse(localStorage.inProgressRecipes).meals, [ids]: '' },
+          },
+        );
+      }
+    } else if (!localStorage.inProgressRecipes) {
+      localStorage.inProgressRecipes = JSON.stringify({
+        cocktails: { [ids]: '' }, meals: {} });
+    } else if (JSON.parse(localStorage.inProgressRecipes).cocktails[ids]) {
+      // const reset = JSON.parse(localStorage.inProgressRecipes = )
+      localStorage.inProgressRecipes = JSON.stringify(
+        { ...JSON.parse(localStorage.inProgressRecipes),
+          cocktails: { ...JSON.parse(localStorage.inProgressRecipes).cocktails },
+        },
+      );
+    } else {
+      localStorage.inProgressRecipes = JSON.stringify(
+        { ...JSON.parse(localStorage.inProgressRecipes),
+          cocktails: { ...JSON.parse(localStorage.inProgressRecipes)
+            .cocktails,
+          [ids]: '' },
+        },
+      );
+    }
+  };
   useEffect(() => {
-    getAPI();
-    getRecommendation();
+    usarNoUse();
+    inProgressCheck();
   }, []);
 
   const handleIngredients = (recipe, initial, middle, end) => {
@@ -64,6 +124,13 @@ const RecipeDetails = () => {
       ));
   };
 
+  const handleCopy = () => {
+    copy(window.location.href);
+    const TWO = 2000;
+    setCopied('Link copiado!');
+    setInterval(() => setCopied(''), TWO);
+  };
+
   const renderRecipe = () => {
     const px = 'px';
     const THIRTY = 30;
@@ -76,8 +143,8 @@ const RecipeDetails = () => {
             src={ food.strMealThumb }
           />
           <div className="details-nav">
-            <button type="button" data-testid="favorite-btn">
-              <img src={ favIcon } alt="favorite" />
+            <button onClick={ () => handleLikes(recipeDetailFood[0]) } type="button">
+              <img data-testid="favorite-btn" src={ liked } alt="favorite" />
             </button>
             <div className="name-category">
               <p
@@ -90,9 +157,11 @@ const RecipeDetails = () => {
                 {food.strCategory}
               </p>
             </div>
-            <button type="button" data-testid="share-btn">
-              <img src={ shareIcon } alt="share" />
+            <button type="button" onClick={ handleCopy }>
+              <img data-testid="share-btn" src={ shareIcon } alt="share" />
             </button>
+
+            {copied}
           </div>
           <div className="ing-inst">
             <div className="recipe-ingredients">
@@ -121,7 +190,7 @@ const RecipeDetails = () => {
                 .map((drinks, indx) => (
                   <div
                     data-testid={ `${indx}-recomendation-card` }
-                    key="index"
+                    key={ indx }
                     className="card"
                   >
                     <Link
@@ -146,18 +215,28 @@ const RecipeDetails = () => {
                 ))
             }
           </div>
-          <button
-            type="button"
-            data-testid="start-recipe-btn"
-            style={ { position: 'fixed', bottom: 0 } }
-            onClick={ () => history.push(`${pathname}/in-progress`) }
-          >
-            Start Recipe
-          </button>
+          {(JSON.parse(localStorage.inProgressRecipes).meals[ids] !== '') ? (
+            <button
+              type="button"
+              style={ { position: 'fixed', bottom: 0 } }
+              data-testid="start-recipe-btn"
+              onClick={ () => history.push(`${pathname}/in-progress`) }
+            >
+              Continuar Receita
+            </button>
+          ) : (
+            <button
+              type="button"
+              data-testid="start-recipe-btn"
+              style={ { position: 'fixed', bottom: 0 } }
+              onClick={ () => history.push(`${pathname}/in-progress`) }
+            >
+              Start Recipe
+            </button>)}
         </div>
       ));
     }
-    if (recipeDetailDrink[0].strDrink) {
+    if (recipeDetailDrink !== undefined) {
       return recipeDetailDrink.map((drink, index) => (
         <div key={ index } className="details-container">
           <img
@@ -166,8 +245,11 @@ const RecipeDetails = () => {
             src={ drink.strDrinkThumb }
           />
           <div className="details-nav">
-            <button type="button" data-testid="favorite-btn">
-              <img src={ favIcon } alt="favorite" />
+            <button
+              onClick={ () => handleLikes(recipeDetailFood, recipeDetailDrink[0]) }
+              type="button"
+            >
+              <img src={ liked } data-testid="favorite-btn" alt="favorite" />
             </button>
             <div className="name-category">
               <p
@@ -180,9 +262,10 @@ const RecipeDetails = () => {
                 {drink.strAlcoholic}
               </p>
             </div>
-            <button type="button" data-testid="share-btn">
+            <button onClick={ handleCopy } type="button" data-testid="share-btn">
               <img src={ shareIcon } alt="share" />
             </button>
+            { copied }
           </div>
           <div className="ing-inst">
             <div className="recipe-ingredients">
@@ -214,7 +297,7 @@ const RecipeDetails = () => {
                     >
                       <img
                         src={ meals.strMealThumb }
-                        data-testid={ `${index}-card-img` }
+                        data-testid={ `${ind}-card-img` }
                         alt={ meals.strMeal }
                       />
                     </Link>
@@ -228,14 +311,24 @@ const RecipeDetails = () => {
                 ))
             }
           </div>
-          <button
-            type="button"
-            data-testid="start-recipe-btn"
-            style={ { position: 'fixed', bottom: 0 } }
-            onClick={ () => history.push(`${pathname}/in-progress`) }
-          >
-            Start Recipe
-          </button>
+          {(JSON.parse(localStorage.inProgressRecipes).cocktails[ids] !== '') ? (
+            <button
+              type="button"
+              style={ { position: 'fixed', bottom: 0 } }
+              data-testid="start-recipe-btn"
+              onClick={ () => history.push(`${pathname}/in-progress`) }
+            >
+              Continuar Receita
+            </button>
+          ) : (
+            <button
+              type="button"
+              data-testid="start-recipe-btn"
+              style={ { position: 'fixed', bottom: 0 } }
+              onClick={ () => history.push(`${pathname}/in-progress`) }
+            >
+              Start Recipe
+            </button>)}
         </div>
       ));
     }
