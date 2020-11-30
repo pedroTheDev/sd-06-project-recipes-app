@@ -16,6 +16,8 @@ const Provider = ({ children }) => {
   const [foodRecommendation, setFoodRecommendation] = useState([]);
   const [DrinkRecommendation, setDrinkRecommendation] = useState([]);
   const [liked, setLiked] = useState(whiteHeartIcon);
+  const [foodIngredientsCategory, setFoodIngredientsCategory] = useState([]);
+  const [drinkIngredientsCategory, setDrinkIngredientsCategory] = useState([]);
 
   const history = useHistory();
   const getAPI = async () => {
@@ -94,6 +96,10 @@ const Provider = ({ children }) => {
     handleLikes,
     setLiked,
     liked,
+    foodIngredientsCategory,
+    setFoodIngredientsCategory,
+    drinkIngredientsCategory,
+    setDrinkIngredientsCategory,
   };
 
   return (
