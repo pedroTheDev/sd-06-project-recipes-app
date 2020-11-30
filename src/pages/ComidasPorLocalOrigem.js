@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Header, Footer } from '../components';
-import RecipesMealsCards from '../components/RecipesMealsCards';
+import { Header, Footer, MealsRecipesCards } from '../components';
 import RecipesContext from '../context/RecipesContext';
 
 function ComidasPorLocalOrigem() {
@@ -56,7 +55,7 @@ function ComidasPorLocalOrigem() {
           </option>
         )) }
       </select>
-      <RecipesMealsCards categories="none" />
+      <MealsRecipesCards categories="none" />
       <Footer />
     </div>
   );

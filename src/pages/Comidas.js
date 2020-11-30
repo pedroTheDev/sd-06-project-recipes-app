@@ -1,12 +1,12 @@
 import React from 'react';
-import { Header, Footer, RecipesCards } from '../components';
+import { Header, Footer, RecipesList } from '../components';
 import '../style/Comidas.css';
 
 function Comidas() {
   return (
     <div className="food">
       <Header title="Comidas" />
-      <RecipesCards title="Comidas" />
+      <RecipesList title="Comidas" />
       <Footer />
     </div>
   );

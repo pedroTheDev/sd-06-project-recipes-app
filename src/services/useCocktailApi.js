@@ -1,33 +1,34 @@
 import { useEffect, useState } from 'react';
 
-function useApi(url) {
+function useCocktailApi(url) {
   const [data, setData] = useState();
   const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
+    setIsLoading(true);
 
     const fetchData = async () => {
       try {
         const response = await fetch(url);
         const resultAPI = await response.json();
-        setData(resultAPI);
+        const resultDrinks = await resultAPI.drinks;
+        setData(resultDrinks);
       } catch (e) {
         setError(e);
       } finally {
-        setLoading(false);
+        setIsLoading(false);
       }
     };
 
     fetchData();
   }, [url]);
 
-  return {
+  return [
     data,
     error,
-    loading,
-  };
+    isLoading,
+  ];
 }
 
-export default useApi;
+export default useCocktailApi;
