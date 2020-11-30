@@ -23,11 +23,12 @@ export function setValueUser(key, value) {
 }
 
 export function addDoneRecipe(object) {
+  const two = 2;
   const today = new Date();
-  const day = String(today.getDate()).padStart(2, '0');
-  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(two, '0');
+  const month = String(today.getMonth() + 1).padStart(two, '0');
   const year = today.getFullYear();
-  const date = day + '/' + month + '/' + year;
+  const date = `${ day }/${ month }/${ year }`;
   let obj = {};
   if ('idDrink' in object) {
     obj = {
