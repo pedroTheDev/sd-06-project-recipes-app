@@ -4,6 +4,8 @@ import CardComidaRecomendacao from '../components/CardComidaRecomendacao';
 import RecipeContext from '../context/RecipeContext';
 import { fetchApiBebidasDetalhes } from '../services/FetchApiBebidas';
 import '../components/MenuInferior.css';
+import '../components/detalhes.css';
+import share from '../images/shareIcon.svg';
 
 function DetalhesBebida() {
   const { idDaReceita } = useParams();
@@ -89,6 +91,7 @@ function DetalhesBebida() {
         return (
           <button
             type="button"
+            className="IniciarReceita"
             data-testid="start-recipe-btn"
             onClick={ continuarReceita }
           >
@@ -131,12 +134,15 @@ function DetalhesBebida() {
     for (let numero = 1; numero <= quinze; numero += 1) {
       if (bebida[`strIngredient${numero}`] !== null) {
         array.push(
-          <p data-testid={ `${numero - 1}-ingredient-name-and-measure` }>
+          <li
+            data-testid={ `${numero - 1}-ingredient-name-and-measure` }
+            className="titulo"
+          >
             {`${bebida[`strIngredient${numero}`]} `}
             {(bebida[`strMeasure${numero}`] !== null)
               ? <span>{`${bebida[`strMeasure${numero}`]}`}</span>
               : ''}
-          </p>,
+          </li>,
         );
       }
     }
@@ -147,24 +153,31 @@ function DetalhesBebida() {
     estadoApiBebidas.map((bebida, index) => (
       <div key={ index }>
         <img
+          className="imagemReceita"
           data-testid="recipe-photo"
           src={ bebida.strDrinkThumb }
           alt={ bebida.strDrink }
         />
-        <h4 data-testid="recipe-title">{ bebida.strDrink }</h4>
-        <h6 data-testid="recipe-category">{bebida.strAlcoholic}</h6>
+        <button type="button" data-testid="share-btn">
+          <img src={ share } alt="share" />
+        </button>
+        <button type="button" data-testid="favorite-btn">Favoritar</button>
+        <h2 data-testid="recipe-title" className="titulo">{ bebida.strDrink }</h2>
+        <h4 data-testid="recipe-category" className="category titulo">
+          {bebida.strAlcoholic}
+        </h4>
         <div>
+          <h3 className="titulo">Ingredientes</h3>
           {renderIngrediente(bebida)}
         </div>
-        <p data-testid="instructions">{bebida.strInstructions}</p>
+        <h3 className="titulo">Instruções</h3>
+        <p data-testid="instructions" className="intrucoes">{bebida.strInstructions}</p>
         {/* <button
           type="button"
           data-testid={ `${index}-recomendation-card` }
         >
           Card receitas Recomendadas
         </button> */}
-        <button type="button" data-testid="share-btn">Compartilhar</button>
-        <button type="button" data-testid="favorite-btn">Favoritar</button>
         <div className="recomendacao">
           {
             retornoApi6Comidas

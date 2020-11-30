@@ -1,0 +1,22 @@
+.imagemReceita {
+  width: 100%;
+}
+
+.category {
+  color: rgb(179, 179, 179);
+}
+
+.titulo {
+  margin-left: 10px;
+}
+
+.intrucoes {
+  margin: auto;
+  text-align: justify;
+  width: 90%;
+}
+
+.video-receita {
+  margin: 15px;
+  width: 90%;
+}

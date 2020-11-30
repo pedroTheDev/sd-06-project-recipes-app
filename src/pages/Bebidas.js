@@ -4,6 +4,7 @@ import MenuInferior from '../components/MenuInferior';
 import RecipeContext from '../context/RecipeContext';
 import CardBebida from '../components/CardBebida';
 import FetchApiBebidas, { fetchApiBebidasByCategory } from '../services/FetchApiBebidas';
+import '../components/Card.css';
 
 function Bebidas() {
   const [categoriaAtual, setCategoriaAtual] = useState('');
@@ -45,6 +46,7 @@ function Bebidas() {
       <Header title="Bebidas" />
       <div>
         <button
+          className="Buttons"
           type="button"
           data-testid="All-category-filter"
           onClick={ renderAll }
@@ -54,6 +56,7 @@ function Bebidas() {
         {categoriesBebida
           && categoriesBebida.slice(zero, cinco).map((category, index) => (
             <button
+              className="Buttons"
               key={ index }
               type="button"
               id="filterButton"
@@ -65,16 +68,18 @@ function Bebidas() {
             </button>
           ))}
       </div>
-      {
-        retornoApiBebidas ? retornoApiBebidas.map((bebida, index) => {
-          if (index < doze) {
-            return CardBebida(bebida, index);
-          }
-          return undefined;
-        })
-        // eslint-disable-next-line no-alert
-          : alert('Sinto muito, não encontramos nenhuma receita para esses filtros.')
-      }
+      <div className="ComidasPage bodyRender">
+        {
+          retornoApiBebidas ? retornoApiBebidas.map((bebida, index) => {
+            if (index < doze) {
+              return CardBebida(bebida, index);
+            }
+            return undefined;
+          })
+          // eslint-disable-next-line no-alert
+            : alert('Sinto muito, não encontramos nenhuma receita para esses filtros.')
+        }
+      </div>
       <MenuInferior />
     </div>
   );

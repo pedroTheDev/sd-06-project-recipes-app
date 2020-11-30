@@ -4,6 +4,8 @@ import CardBebidaRecomendacao from '../components/CardBebidaRecomendacao';
 import RecipeContext from '../context/RecipeContext';
 import { fetchApiComidasDetalhes } from '../services/FetchApiComidas';
 import '../components/MenuInferior.css';
+import '../components/detalhes.css';
+import share from '../images/shareIcon.svg';
 
 function DetalhesComidas() {
   const { idDaReceita } = useParams();
@@ -22,9 +24,6 @@ function DetalhesComidas() {
     const response = await fetchApiComidasDetalhes(idDaReceita);
     setEstadoApiComidas(response);
   };
-
-  // const inProgress = JSON.parse((localStorage.getItem(inProgressRecipes)));
-  // const idIniciados = Object.keys(inProgress.meals);
 
   const history = useHistory();
   function handleIniciarReceita() {
@@ -93,6 +92,7 @@ function DetalhesComidas() {
         return (
           <button
             type="button"
+            className="IniciarReceita"
             data-testid="start-recipe-btn"
             onClick={ continuarReceita }
           >
@@ -123,14 +123,17 @@ function DetalhesComidas() {
   function renderIngrediente(bebida) {
     const array = [];
     for (let numero = 1; numero <= vinte; numero += 1) {
-      if (bebida[`strIngredient${numero}`] !== null) {
+      if (bebida[`strIngredient${numero}`] !== '') {
         array.push(
-          <p data-testid={ `${numero - 1}-ingredient-name-and-measure` }>
+          <li
+            data-testid={ `${numero - 1}-ingredient-name-and-measure` }
+            className="titulo"
+          >
             {`${bebida[`strIngredient${numero}`]} `}
-            {(bebida[`strMeasure${numero}`] !== null)
+            {(bebida[`strMeasure${numero}`] !== '')
               ? <span>{`${bebida[`strMeasure${numero}`]}`}</span>
               : ''}
-          </p>,
+          </li>,
         );
       }
     }
@@ -141,18 +144,28 @@ function DetalhesComidas() {
     estadoApiComidas.map((comida, index) => (
       <div key={ index }>
         <img
+          className="imagemReceita"
           data-testid="recipe-photo"
           src={ comida.strMealThumb }
           alt={ comida.strMeal }
         />
-        <h2 data-testid="recipe-title">{ comida.strMeal }</h2>
-        <h3 data-testid="recipe-category">{comida.strCategory}</h3>
+        <button type="button" data-testid="share-btn">
+          <img src={ share } alt="share" />
+        </button>
+        <button type="button" data-testid="favorite-btn">Favoritar</button>
+        <h2 data-testid="recipe-title" className="titulo">{ comida.strMeal }</h2>
+        <h4 data-testid="recipe-category" className="category titulo">
+          {comida.strCategory}
+        </h4>
         <div>
+          <h3 className="titulo">Ingredientes</h3>
           {renderIngrediente(comida)}
         </div>
-        <p data-testid="instructions">{comida.strInstructions}</p>
+        <h3 className="titulo">Instruções</h3>
+        <p data-testid="instructions" className="intrucoes">{comida.strInstructions}</p>
 
         <video
+          className="video-receita"
           controls
           data-testid="video"
           src={ comida.strYoutube }
@@ -164,8 +177,6 @@ function DetalhesComidas() {
             src={ comida.strYoutube }
           />
         </video>
-        <button type="button" data-testid="share-btn">Compartilhar</button>
-        <button type="button" data-testid="favorite-btn">Favoritar</button>
         <div className="recomendacao">
           {
             retornoApi6Bebidas
