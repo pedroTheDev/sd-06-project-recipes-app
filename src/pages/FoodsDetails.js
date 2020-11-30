@@ -72,24 +72,24 @@ class FoodsDetails extends React.Component {
     let ingredient;
     let measure;
     const { Meal } = this.state;
-    Meal.map((recipe) => {
-      this.handleYoutubeVideo(recipe.strYoutube);
-      const twenty = 20;
-      for (let index = 1; index <= twenty; index += 1) {
-        ingredient = `strIngredient${index}`;
-        measure = `strMeasure${index}`;
-        ingredientArray.push(recipe[ingredient]);
-        measureArray.push(recipe[measure]);
-      }
-      const filteredIngredients = ingredientArray.filter((item) => item !== undefined)
-        .filter((element) => element !== null).filter((element) => element !== '');
+    const recipe = Meal[0];
 
-      const filteredMeasure = measureArray.filter((item) => item !== undefined)
-        .filter((element) => element !== null).filter((element) => element !== '');
+    this.handleYoutubeVideo(recipe.strYoutube);
+    const twenty = 20;
+    for (let index = 1; index <= twenty; index += 1) {
+      ingredient = `strIngredient${index}`;
+      measure = `strMeasure${index}`;
+      ingredientArray.push(recipe[ingredient]);
+      measureArray.push(recipe[measure]);
+    }
+    const filteredIngredients = ingredientArray.filter((item) => item !== undefined)
+      .filter((element) => element !== null).filter((element) => element !== '');
 
-      this.setIngredients(filteredIngredients, filteredMeasure);
-      return null;
-    });
+    const filteredMeasure = measureArray.filter((item) => item !== undefined)
+      .filter((element) => element !== null).filter((element) => element !== '');
+
+    this.setIngredients(filteredIngredients, filteredMeasure);
+    return null;
   }
 
   setMealState(Meal, RecommendedDrinks) {
