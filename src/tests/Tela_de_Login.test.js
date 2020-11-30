@@ -64,7 +64,8 @@ describe('Testar ações após o click do botão', () => {
     fireEvent.change(inputPassword, { target: { value: '1234567' } });
     fireEvent.click(submitBtn);
 
-    // expect(history.location.pathname).toBe('/comidas');
+    console.log(history.location.pathname);
+    expect(history.location.pathname).toBe('/comidas');
     // não está redirecionando após o click
   });
 
@@ -79,13 +80,13 @@ describe('Testar ações após o click do botão', () => {
     fireEvent.change(inputPassword, { target: { value: '1234567' } });
     fireEvent.click(submitBtn);
 
-    // const mealsToken = localStorage.getItem('mealsToken');
-    // const cocktailsToken = localStorage.getItem('cocktailsToken');
-    // const user = JSON.parse(localStorage.getItem('user'));
+    const mealsToken = localStorage.getItem('mealsToken');
+    const cocktailsToken = localStorage.getItem('cocktailsToken');
+    const user = JSON.parse(localStorage.getItem('user'));
 
-    // expect(mealsToken).toBe('1');
-    // expect(cocktailsToken).toBe('1');
-    // expect(user.email).toBe(inputEmail.value);
+    expect(mealsToken).toBe('1');
+    expect(cocktailsToken).toBe('1');
+    expect(user.email).toBe(inputEmail.value);
     // após o click não estão sendo criadas as chaves no LocalStorage
   });
 });
