@@ -9,7 +9,8 @@ import Header from '../components/Header';
 import RecipeCard from '../components/RecipeCard';
 
 const MainPage = (props) => {
-  const { recipeList, location: { pathname }, isLoading, currentCategory } = props;
+  const { recipeList, location: { pathname }, isLoading, currentCategory, shouldFetch } = props;
+
   const checkRequestSize = (recipesToRender) => {
     const noLength = 0;
     if (recipesToRender === null) {
@@ -41,7 +42,13 @@ const MainPage = (props) => {
   const dispatch = useDispatch();
 
   useEffect(
-    () => { dispatch(fetcherThunk(pathname)); }, [pathname, dispatch],
+    () => {
+      console.log(shouldFetch)
+    if ( recipeList.length < 1 && shouldFetch) {
+      console.log('entrou')
+      dispatch(fetcherThunk(pathname));
+    }
+    }, [pathname, dispatch, recipeList],
   );
 
   if (isLoading) return <div>carregando</div>;
@@ -57,11 +64,15 @@ const MainPage = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  currentCategory: state.categoryReducer.currentCategory,
-  recipeList: state.mainPageReducer.recipeList,
-  isLoading: state.mainPageReducer.loading,
-});
+const mapStateToProps = (state) => {
+  const list = state.mainPageReducer.recipeList.length > 0 ? state.mainPageReducer.recipeList : state.mainPageReducer.ingredientBasedRecipes
+  return ({
+    currentCategory: state.categoryReducer.currentCategory,
+    recipeList: list,
+    isLoading: state.mainPageReducer.loading,
+    shouldFetch: state.mainPageReducer.shouldFetchBaseRecipes,
+  })
+};
 
 MainPage.propTypes = {
   currentCategory: PropTypes.string.isRequired,

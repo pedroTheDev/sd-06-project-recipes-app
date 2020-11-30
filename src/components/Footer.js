@@ -4,24 +4,26 @@ import drinkIcon from '../images/drinkIcon.svg';
 import exploreIcon from '../images/exploreIcon.svg';
 import mealIcon from '../images/mealIcon.svg';
 import '../visual_identity/styles/2.Layout/Footer.css';
+import { resetShouldFetch, clearState } from '../redux/actions/mainPageFetcher';
+import { connect } from 'react-redux';
 
-const Footer = () => (
+const Footer = ({ clear, clearAndDontUpdate }) => (
   <div data-testid="footer" className="position-fixed-bottom">
-    <Link to="/bebidas">
+    <Link to="/bebidas" onClick={ () => clear() }>
       <button
         type="button"
       >
         <img data-testid="drinks-bottom-btn" src={ drinkIcon } alt="" />
       </button>
     </Link>
-    <Link to="/explorar">
+    <Link to="/explorar" onClick={ () => clearAndDontUpdate() }>
       <button
         type="button"
       >
         <img data-testid="explore-bottom-btn" src={ exploreIcon } alt="" />
       </button>
     </Link>
-    <Link to="/comidas">
+    <Link to="/comidas" onClick={ () => clear() }>
       <button
         type="button"
       >
@@ -31,4 +33,9 @@ const Footer = () => (
   </div>
 );
 
-export default Footer;
+const mapDispatchToProps = (dispatch) => ({
+  clear: () => dispatch(resetShouldFetch()),
+  clearAndDontUpdate: () => dispatch(clearState())
+});
+
+export default connect(null, mapDispatchToProps)(Footer);
