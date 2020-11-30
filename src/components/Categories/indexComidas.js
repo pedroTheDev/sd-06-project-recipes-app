@@ -26,36 +26,40 @@ const CategoriesComidas = () => {
   return !categories.meals ? (
     <p>loading</p>
   ) : (
-    <div>
-      {categories.meals.map((element, index) => {
-        const number = 4;
-        if (index <= number) {
-          return (
-            <div>
-              <button
-                key={ element.idCategory }
-                type="button"
-                name={ element.strCategory }
-                data-testid={ `${element.strCategory}-category-filter` }
-                onClick={ (e) => filterApiValueSearch(e.target.name) }
-              >
-                { element.strCategory }
-              </button>
-            </div>
+    <div className="main-categories">
+      <div className="categories">
+        {categories.meals.map((element, index) => {
+          const number = 4;
+          if (index <= number) {
+            return (
+              <div>
+                <button
+                  key={ element.idCategory }
+                  type="button"
+                  name={ element.strCategory }
+                  data-testid={ `${element.strCategory}-category-filter` }
+                  onClick={ (e) => filterApiValueSearch(e.target.name) }
+                >
+                  { element.strCategory }
+                </button>
+              </div>
 
-          );
-        }
-        return '';
-      })}
-      <button
-        data-testid="All-category-filter"
-        type="button"
-        id="All"
-        onClick={ (e) => showAllFoods(e.target.id) }
-      >
-        All
-      </button>
-    </div>);
+            );
+          }
+          return '';
+        })}
+        <button
+          data-testid="All-category-filter"
+          type="button"
+          id="All"
+          onClick={ (e) => showAllFoods(e.target.id) }
+        >
+          All
+        </button>
+      </div>
+    </div>
+  );
 };
 
 export default CategoriesComidas;
+

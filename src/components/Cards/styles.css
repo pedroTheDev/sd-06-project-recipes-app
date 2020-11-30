@@ -1,0 +1,23 @@
+.main-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card {
+  background-color: rgba(0, 0, 0, 0.842);
+  color: white;
+  text-align: center;
+  margin: 5px;
+  border-radius: 10px;
+}
+
+.button {
+  background: none;
+  border: none;
+}
+
+.card img {
+  margin-bottom: 10px;
+  border: 2px solid rgba(0, 0, 0, 0);
+}

@@ -1,5 +1,7 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import ContextAPI from '../../Context/ContextAPI';
+import './styles.css';
 
 const Cards = () => {
   const { apiValueSearch } = useContext(ContextAPI);
@@ -92,7 +94,6 @@ const Cards = () => {
                   </button>
                 </div>
               </div>
-
             );
           }
           return '';

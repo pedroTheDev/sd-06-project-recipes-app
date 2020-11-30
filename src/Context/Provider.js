@@ -9,7 +9,7 @@ const RecipesProvider = ({ children }) => {
   const [categories, setCategories] = useState([]);
   const [apiValueSearch, setApiValueSearch] = useState({
     foods: [],
-    drinks: '',
+    drinks: [],
   });
 
   const contextState = {
@@ -24,6 +24,7 @@ const RecipesProvider = ({ children }) => {
     categories,
     setCategories,
   };
+
   return (
     <ContextAPI.Provider value={ contextState }>
       { children }

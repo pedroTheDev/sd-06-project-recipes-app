@@ -29,32 +29,37 @@ const CategoriesBebidas = () => {
   return !categories.drinks ? (
     <p>loading</p>
   ) : (
-    <div>
-      {categories.drinks && categories.drinks.map((element, index) => {
-        const number = 4;
-        if (index <= number) {
-          return (
-            <button
-              data-testid={ `${element.strCategory}-category-filter` }
-              onClick={ (e) => filterApiValueSearch(e.target.name) }
-              name={ element.strCategory }
-              type="button"
-            >
-              { element.strCategory }
-            </button>
-          );
-        }
-        return '';
-      })}
-      <button
-        data-testid="All-category-filter"
-        type="button"
-        id="All"
-        onClick={ (e) => showAllFoods(e.target.id) }
-      >
-        All
-      </button>
-    </div>);
+    <div className="main-categories">
+      <span>Selecione uma categoria</span>
+      <div>
+        {categories.drinks && categories.drinks.map((element, index) => {
+          const number = 4;
+          if (index <= number) {
+            return (
+              <button
+                data-testid={ `${element.strCategory}-category-filter` }
+                onClick={ (e) => filterApiValueSearch(e.target.name) }
+                name={ element.strCategory }
+                type="button"
+              >
+                { element.strCategory }
+              </button>
+            );
+          }
+          return '';
+        })}
+        <button
+          data-testid="All-category-filter"
+          type="button"
+          id="All"
+          onClick={ (e) => showAllFoods(e.target.id) }
+        >
+          All
+        </button>
+      </div>
+    </div>
+  );
 };
 
 export default CategoriesBebidas;
+

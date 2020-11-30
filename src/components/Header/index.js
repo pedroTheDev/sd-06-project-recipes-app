@@ -6,13 +6,12 @@ import { Link } from 'react-router-dom';
 
 import IconSearchHeader from './IconSearchHeader';
 import SearchBar from '../SearchBar/index';
-
 import profileIcon from '../../images/profileIcon.svg';
 
 const Header = () => {
   const [state, setState] = useState({
     namePage: '',
-    search: '',
+    search: true,
   });
 
   const changeHeader = () => {
@@ -93,7 +92,8 @@ const Header = () => {
         </Link>
         <div>
           {
-            !state ? <h2>Title</h2> : <h2 data-testid="page-title">{state.namePage}</h2>
+            !state ? <h2>Title</h2>
+              : <h2 className="title" data-testid="page-title">{state.namePage}</h2>
           }
         </div>
         {!state.search ? <div />
