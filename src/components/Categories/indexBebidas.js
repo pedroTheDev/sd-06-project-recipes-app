@@ -1,8 +1,6 @@
 import React, { useContext } from 'react';
 import ContextAPI from '../../Context/ContextAPI';
 
-
-
 const CategoriesBebidas = () => {
   const { apiValueSearch,
     setApiValueSearch,
@@ -22,6 +20,10 @@ const CategoriesBebidas = () => {
         .then((drinks) => drinks.json())
         .then((drinks) => setApiValueSearch({ ...apiValueSearch, drinks, value }));
     }
+  };
+
+  const showAllFoods = async () => {
+    getSugestedDrinks();
   };
 
   return !categories.drinks ? (
@@ -44,6 +46,14 @@ const CategoriesBebidas = () => {
         }
         return '';
       })}
+      <button
+        data-testid="All-category-filter"
+        type="button"
+        id="All"
+        onClick={ (e) => showAllFoods(e.target.id) }
+      >
+        All
+      </button>
     </div>);
 };
 
