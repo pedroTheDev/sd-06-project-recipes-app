@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import Context from '../context/Context';
 import * as api from '../services/Api';
 
-export default function SearchBar() {
+function SearchBar() {
   const [searchParam, setSearchParam] = useState('');
   const [termoBusca, setTermoBusca] = useState('');
   const { setSearch, setMeals, setDrinks, setLoading, titulo } = useContext(Context);
@@ -112,3 +112,5 @@ export default function SearchBar() {
     </div>
   );
 }
+
+export default SearchBar;

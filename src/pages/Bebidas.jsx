@@ -94,7 +94,7 @@ export default function Bebidas({ history }) {
         </button>
       ))}
       {hidden ? '' : <SearchBar />}
-      <h1>{ titulo }</h1>
+      {/* <h1>{ titulo }</h1> */}
       {loading || showDrinksByIngredient ? <p>Loading</p>
         : drinks.filter((drink, index) => drink && index < twelve)
           .map((drink, index) => (

@@ -89,7 +89,7 @@ export default function Comidas({ history }) {
         </button>
       ))}
       {hidden ? '' : <SearchBar />}
-      <h1>{ titulo }</h1>
+      {/* <h1>{ titulo }</h1> */}
       {loading || showMealsByIngredient ? <p>Loading</p>
         : meals.filter((meal, index) => meal && index < twelve)
           .map((meal, index) => (
