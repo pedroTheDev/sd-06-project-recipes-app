@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { fetchDrink } from '../../services/cocktailAPI';
+import { fetchMeal } from '../../services/mealAPI';
 import SecondaryHeader from '../../components/SecondaryHeader';
 import RecommendationCard from '../../components/RecommendationCard';
-import { fetchMeal } from '../../services/mealAPI';
+import { fetchDrink } from '../../services/cocktailAPI';
 import './detail.css';
 
-function DrinkDetail() {
+function MealDetail() {
   const [recipes, setRecipes] = useState({});
   const [recommendations, setRecommendations] = useState([]);
   const [newRecipe, setNewRecipe] = useState(true);
@@ -17,14 +17,15 @@ function DrinkDetail() {
   let ingredientsNumber = zero;
 
   const fetchIngredients = async () => {
-    const recipesByIdApi = await fetchDrink('lookupIngredient', id);
-    setRecipes(recipesByIdApi.drinks[0]);
+    const recipesByIdApi = await fetchMeal('lookupIngredient', id);
+    console.log('recipes linha 16', recipesByIdApi);
+    setRecipes(recipesByIdApi.meals[0]);
   };
 
   const fetchRecommendations = async () => {
-    const recipesRecommendation = await fetchMeal('name', '');
-    // console.log('recommendation linha 23', recipesRecommendation);
-    setRecommendations(recipesRecommendation.meals);
+    const recipesRecommendation = await fetchDrink('name', '');
+    console.log('recommendations linha 22', recipesRecommendation);
+    setRecommendations(recipesRecommendation.drinks);
   };
 
   useEffect(() => {
@@ -33,10 +34,10 @@ function DrinkDetail() {
   }, []);
 
   const setIngredientAndMeasure = () => {
-    const fifteen = 15;
+    const twenty = 20;
     const ingredients = [];
     let i = 1;
-    for (i = 1; i <= fifteen; i += 1) {
+    for (i = 1; i <= twenty; i += 1) {
       const keyName = `strIngredient${i}`;
       const measureKeyName = `strMeasure${i}`;
       if (recipes[keyName] !== '' && recipes[keyName] !== null) {
@@ -67,9 +68,9 @@ function DrinkDetail() {
   return (
     <div>
       <SecondaryHeader
-        name={ recipes.strDrink }
-        img={ recipes.strDrinkThumb }
-        category={ recipes.strAlcoholic }
+        name={ recipes.strMeal }
+        img={ recipes.strMealThumb }
+        category={ recipes.strCategory }
       />
       <div className="ingredients-container">
         <h3>Ingredientes</h3>
@@ -91,6 +92,21 @@ function DrinkDetail() {
         <h3>Instruções</h3>
         <div data-testid="instructions">{recipes.strInstructions}</div>
       </div>
+      {
+
+      }
+      <div className="video-container">
+        <iframe
+          data-testid="video"
+          src={ recipes.strYoutube }
+          title={ recipes.strMeal }
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+          id="meal-video"
+          frameBorder="0"
+          width="300"
+          height="300"
+        />
+      </div>
       <div className="recommendation-container">
         <div className="scroller">
           {
@@ -107,11 +123,11 @@ function DrinkDetail() {
         </div>
       </div>
       <div className="button-container">
-        <Link to={ `/bebidas/${recipes.idDrink}/in-progress` }>
+        <Link to={ `/comidas/${recipes.idMeal}/in-progress` }>
           <button
             type="button"
-            data-testid="start-recipe-btn"
             className="start-recipe"
+            data-testid="start-recipe-btn"
           >
             {newRecipe ? 'Iniciar Receita' : (setNewRecipe(false) && 'Continuar Receita')}
           </button>
@@ -121,4 +137,4 @@ function DrinkDetail() {
   );
 }
 
-export default DrinkDetail;
+export default MealDetail;

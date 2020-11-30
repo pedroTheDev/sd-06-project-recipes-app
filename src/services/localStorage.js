@@ -59,6 +59,10 @@ export function addFavoriteRecipe(object) {
   localStorage.setItem('favorite_recipes', JSON.stringify(temp));
 }
 
+export function setFavoriteRecipes(key, value) {
+  return localStorage.setItem(key, JSON.stringify({ favoriteRecipes: value }));
+}
+
 export function getFavoriteRecipes() {
   const temp = JSON.parse(localStorage.getItem('favorite_recipes'));
   return temp;
