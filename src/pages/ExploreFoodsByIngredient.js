@@ -26,7 +26,7 @@ class ExploreFoodsByIngredient extends React.Component {
   redirectOnImage(recipe) {
     const { history, dispatchControlState } = this.props;
     dispatchControlState(recipe);
-    history.push('/comidas/');
+    history.push('/comidas');
   }
 
   render() {

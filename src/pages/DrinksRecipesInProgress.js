@@ -262,10 +262,8 @@ class DrinksRecipesInProgress extends React.Component {
     const verifyLocalStorage = this.getRecipesLocalStorage();
     if (checkedItems.length === length && verifyLocalStorage) {
       const getCheckedItems = this.getRecipesLocalStorage();
-      console.log('getCheckedItems');
       return getCheckedItems;
     }
-    console.log('checkedItems');
     return checkedItems;
   }
 
