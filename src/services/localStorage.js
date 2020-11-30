@@ -44,7 +44,7 @@ export function getDoneRecipes() {
   return temp;
 }
 
-export function addFavoriteRecipe(object) {
+/* export function addFavoriteRecipe(object) {
   const obj = {
     id: object.id,
     type: object.type,
@@ -58,8 +58,8 @@ export function addFavoriteRecipe(object) {
   temp.push(obj);
   localStorage.setItem('favorite_recipes', JSON.stringify(temp));
 }
-
-export function setFavoriteRecipes(key, value) {
+ */
+export function setFavoriteRecipes(key, ...value) {
   return localStorage.setItem(key, JSON.stringify({ favoriteRecipes: value }));
 }
 

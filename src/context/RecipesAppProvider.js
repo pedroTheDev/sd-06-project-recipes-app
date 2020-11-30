@@ -10,7 +10,7 @@ function RecipesAppProvider({ children }) {
   const [control, setControl] = useState(false);
   const [recipesMeals, setRecipesMeals] = useState({});
   const [recipesDrinks, setRecipesDrinks] = useState({});
-  const [isFavorite, setIsFavorite] = useState(false);
+  /* const [isFavorite, setIsFavorite] = useState(false); */
 
   const setFetchMeal = async (type, key) => {
     const result = await fetchMeal(type, key);
@@ -48,9 +48,9 @@ function RecipesAppProvider({ children }) {
     return resultReturn;
   };
 
-  const handleFavoriteRecipe = () => {
+  /* const handleFavoriteRecipe = () => {
     setIsFavorite(!isFavorite);
-  };
+  }; */
 
   const fetchMealIngredients = async (id) => {
     const recipesByIdApi = await fetchMeal('lookupIngredient', id);
@@ -70,8 +70,8 @@ function RecipesAppProvider({ children }) {
     setFetchDrink,
     control,
     setControl,
-    isFavorite,
-    handleFavoriteRecipe,
+    // isFavorite,
+    // handleFavoriteRecipe,
     recipesMeals,
     recipesDrinks,
     fetchMealIngredients,
