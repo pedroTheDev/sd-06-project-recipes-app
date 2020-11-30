@@ -34,10 +34,14 @@ class ExploreFoodsByIngredient extends React.Component {
     const { history } = this.props;
     const listLength = 0;
     return (
-      <div className="explorefoods-container">
+      <div className="cards-container by-ingredient-container">
         <Header history={ history } />
         {ingredients.length > listLength && (ingredients.map((recipe, index) => (
-          <div className="card" key={ index } data-testid={ `${index}-ingredient-card` }>
+          <div
+            className="card"
+            key={ index }
+            data-testid={ `${index}-ingredient-card` }
+          >
             <input
               type="image"
               width="100%"
