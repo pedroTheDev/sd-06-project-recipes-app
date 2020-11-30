@@ -8,7 +8,7 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 function DrinkDetails() {
   const url = document.URL;
-  const splitedURL = url.split('/');
+  const actualId = url.split('/')[4];
   const [drinkDetails, setDrinkDetails] = useState([]);
   const [ingredients, setIngredients] = useState('');
   const [apiResult, setApiResult] = useState([]);
@@ -20,7 +20,7 @@ function DrinkDetails() {
 
   useEffect(() => {
     async function fetchData() {
-      const resultsDetails = await requestDetailsDrinks(splitedURL[4]);
+      const resultsDetails = await requestDetailsDrinks(actualId);
       const drink = resultsDetails.drinks[0];
       setDrinkDetails(drink);
       const keysDrink = Object.keys(drink);
@@ -45,14 +45,23 @@ function DrinkDetails() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const meuLocal = localStorage.getItem('favoriteRecipes');
+    console.log('local2', meuLocal);
+    if (meuLocal !== null) {
+      const meuLocalArray = JSON.parse(meuLocal);
+      console.log(meuLocalArray);
+      // const idAtual = actualId[4];
+      const findId = meuLocalArray.find((element) => element.id === actualId);
+      console.log(findId);
+      if (findId !== undefined) {
+        setFavoriteDrink(true);
+      }
+    }
+  }, []);
+
   function handleClick() {
-    localStorage.setItem('iniciou?', true);
-    console.log(buttonText);
-    if (localStorage.getItem('hiddenButtonDrink') === true) {
-      console.log('entrou');
-      setButtonText('Continuar Receita');
-      // localStorage.setItem('hiddenButtonDrink', false);
-    } setButtonText('Iniciar Receita');
+    localStorage.setItem('hiddenButtonFood', true);
   }
 
   // function ttt() {
@@ -67,8 +76,8 @@ function DrinkDetails() {
   }
 
   function handleFavoriteDrink() {
-    setFavoriteDrink(!favoriteDrink);
     if (favoriteDrink === false) {
+      setFavoriteDrink(true);
       const favoriteObj = [
         {
           id: drinkDetails.idDrink,
@@ -92,35 +101,14 @@ function DrinkDetails() {
         );
       }
     }
-
-    // const favoriteObj = [
-    //   {
-    //     id: drinkDetails.idDrink,
-    //     type: 'bebida',
-    //     area: '',
-    //     category: drinkDetails.strCategory,
-    //     alcoholicOrNot: drinkDetails.strAlcoholic,
-    //     name: drinkDetails.strDrink,
-    //     image: drinkDetails.strDrinkThumb,
-    //   },
-    // ];
-    // if (localStorage.getItem('favoriteRecipes') === null) {
-    //   localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteObj));
-    //   } else {
-    //     localStorage.setItem(
-    //       'favoriteRecipes',
-    //       JSON.stringify([
-    //         ...JSON.parse(localStorage.getItem('favoriteRecipes')),
-    //         favoriteObj,
-    //       ]),
-    //     );
-    // }
-    // if (favoriteDrink === true) {
-    //   setFavoriteDrink(false);
-    //   const arrayDoStorage = localStorage.getItem('favoriteRecipes');
-    //   const novoArray = arrayDoStorage.filter((element) => element.idDrink !== idDrink)
-    //   localStorage.setItem('favoriteRecipes', novoArray)
-    // }
+    if (favoriteDrink === true) {
+      setFavoriteDrink(false);
+      const arrayDoStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      console.log(arrayDoStorage);
+      const novoArray = arrayDoStorage.filter((element) => element.id !== actualId);
+      console.log(novoArray);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(novoArray));
+    }
   }
 
   return (
@@ -153,7 +141,6 @@ function DrinkDetails() {
         aria-label="favorite-button"
         type="button"
         data-testid="favorite-btn"
-        className={ whiteHeartIcon }
         onClick={ handleFavoriteDrink }
         src={ favoriteDrink ? blackHeartIcon : whiteHeartIcon }
       >
