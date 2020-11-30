@@ -7,7 +7,7 @@ import Header from '../components/Header';
 import { fetchFoodAPI } from '../services/foodAPI';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import '../style/Detalhes.css';
+import '../style/RecipesInProgress.css';
 
 function ComidasInProgress(props) {
   const { fetchById, doneRecipes, setFetchById } = useContext(ReceitasContext);
@@ -126,6 +126,16 @@ function ComidasInProgress(props) {
     }
   };
 
+  const handleClick = ({ target }) => {
+    if (target.classList.contains('ingredient-not-done')) {
+      target.classList.remove('ingredient-not-done');
+      target.classList.add('ingredient-done');
+    } else {
+      target.classList.remove('ingredient-done');
+      target.classList.add('ingredient-not-done');
+    }
+  };
+
   return ((isFetching)
     ? <div>carregando...</div>
     : (
@@ -164,12 +174,18 @@ function ComidasInProgress(props) {
                 {getIngredients(meal, /strIngredient/).map((item, indx) => {
                   const measure = getIngredients(meal, /strMeasure/);
                   return (
-                    <li key={indx} data-testid={ `${index}-ingredient-step` }>
-                      <label htmlFor={item}>
+                    <li
+                      key={indx}
+                      data-testid={`${indx}-ingredient-step`}
+                    >
+                      <label
+                        className="ingredient-not-done"
+                        onClick={handleClick}
+                        htmlFor={`${indx}-drink`}
+                      >
                         <input
-                          id={item}
+                          id={`${indx}-drink`}
                           type="checkbox"
-                          key={indx}
                         />
                         {`${item} - ${measure[indx]}`}
                       </label>
