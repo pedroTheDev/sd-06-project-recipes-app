@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 
 function RecipesMade() {
   const [doneRecipes,
     setDoneRecipes] = useState(JSON.parse(localStorage.getItem('doneRecipes')));
-  // const [path, setPath] = useState('comidas');
-  // const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
-  const location = useLocation();
   const history = useHistory();
 
   const renderTags = (tags, index) => (
@@ -23,21 +20,11 @@ function RecipesMade() {
   );
 
   const goToDetails = (idRecipe, path) => {
-    // const idRecipe = target.id;
-    // const path = target.value;
-    // setIdRecipe(idRecipe);
     history.push(`/${path}/${idRecipe}`);
   };
 
-  const handleShareIcon = () => {
-    const zero = 0;
-    const menosUm = -1;
-    let fullPath = '';
-    if (location.substr(location.length - 1) === '/') {
-      fullPath = `http://localhost:3000${location.slice(zero, menosUm)}`;
-    } else {
-      fullPath = `http://localhost:3000${location}`;
-    }
+  const handleShareIcon = (idRecipe, path) => {
+    const fullPath = `http://localhost:3000/${path}/${idRecipe}`;
     const tempElement = document.createElement('textarea');
     tempElement.value = fullPath;
     tempElement.setAttribute('readonly', '');
@@ -87,7 +74,7 @@ function RecipesMade() {
         data-testid={ `${index}-horizontal-share-btn` }
         src={ shareIcon }
         alt="share icon"
-        onClick={ handleShareIcon }
+        onClick={ () => handleShareIcon(recipe.id, 'comidas') }
         aria-hidden="true"
       />
       {renderTags(recipe.tags, index)}
@@ -130,7 +117,7 @@ function RecipesMade() {
         data-testid={ `${index}-horizontal-share-btn` }
         src={ shareIcon }
         alt="share icon"
-        onClick={ handleShareIcon }
+        onClick={ () => handleShareIcon(recipe.id, 'bebidas') }
         aria-hidden="true"
       />
     </div>
@@ -138,19 +125,20 @@ function RecipesMade() {
 
   const handleClick = ({ target }) => {
     const filter = target.value;
+    const allRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
     if (filter !== 'all') {
-      setDoneRecipes(doneRecipes.filter((recipe) => recipe.type === filter));
+      setDoneRecipes(allRecipes.filter((recipe) => recipe.type === filter));
     } else {
-      setDoneRecipes(JSON.parse(localStorage.getItem('doneRecipes')));
+      setDoneRecipes(allRecipes);
     }
   };
 
   return (
     <div>
-      <Header title="Comidas Feitas" />
-      {doneRecipes.map((recipe, index) => (
+      <Header title="Receitas Feitas" />
+      {doneRecipes ? (doneRecipes.map((recipe, index) => (
         recipe.type === 'comida' ? renderFood(recipe, index) : renderDrinks(recipe, index)
-      ))}
+      ))) : <h2>Você não tem receitas prontas!</h2>}
       <div className="buttons">
         <button
           type="button"
