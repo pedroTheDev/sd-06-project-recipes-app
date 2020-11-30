@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import splitPathname from '../utils/splitPathname';
@@ -29,8 +28,6 @@ function ReceitaProgresso(
     setIsFav,
     setWasCopied,
   };
-
-  const history = useHistory();
 
   useEffect(() => {
     recipeDetailsProcessing(id, path, setRecipe);
