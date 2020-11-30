@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
-import { CopyToClipboard } from "react-copy-to-clipboard";
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { detailsFoodById, showSugestedDrinks } from '../services/aPI';
 import './DetalhesComida.css';
 
@@ -22,7 +22,7 @@ const DetalhesComida = () => {
 
     setWindowLink(url);
     setLinkCopied(true);
-  }
+  };
 
   const currentFoodID = useParams().id;
 
@@ -148,13 +148,13 @@ const DetalhesComida = () => {
               { stateLocal.food.meals[0].strMeal }
             </span>
             <div className="container-icons">
-              <CopyToClipboard text={windowLink} onCopy={() => setLinkCopied(true)}>
+              <CopyToClipboard text={ windowLink } onCopy={ () => setLinkCopied(true) }>
                 <button
                   type="button"
+                  data-testid="share-btn"
+                  onClick={ handleShareClick }
                 >
                   <img
-                    data-testid="share-btn"
-                    onClick={handleShareClick}
                     src={ shareIcon }
                     alt="shareIcon"
                   />
