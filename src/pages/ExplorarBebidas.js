@@ -23,7 +23,8 @@ const ExplorarBebidas = () => {
             <button
               data-testid="explore-by-ingredient"
               type="button"
-              className="btn btn-secondary btn-block btn-lg"
+              className="btn btn-block btn-lg"
+              style={ { background: '#7ed95e' } }
             >
               Por Ingredientes
             </button>
@@ -35,7 +36,8 @@ const ExplorarBebidas = () => {
             <button
               data-testid="explore-surprise"
               type="button"
-              className="btn btn-secondary btn-block btn-lg"
+              className="btn btn-block btn-lg"
+              style={ { background: '#7ed95e' } }
             >
               Me Surpreenda!
             </button>

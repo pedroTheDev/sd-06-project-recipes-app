@@ -11,14 +11,16 @@ const Explorar = () => (
         <Link
           to="/explorar/comidas"
           data-testid="explore-food"
-          className="btn btn-secondary btn-block btn-lg"
+          className="btn btn-block btn-lg"
+          style={ { background: '#7ed95e' } }
         >
           <span>Explorar Comidas</span>
         </Link>
         <Link
           to="/explorar/bebidas"
           data-testid="explore-drinks"
-          className="btn btn-secondary btn-block btn-lg"
+          className="btn btn-block btn-lg"
+          style={ { background: '#7ed95e' } }
         >
           <span>Explorar Bebidas</span>
         </Link>

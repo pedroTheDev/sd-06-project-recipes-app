@@ -8,8 +8,9 @@ function Footer() {
   return (
     <div
       data-testid="footer"
-      className="d-flex p-2 bg-secondary align-items-center
+      className="d-flex p-3 align-items-center
       justify-content-between fixed-bottom"
+      style={ { background: '#cb6cec' } }
     >
       <Link to="/bebidas">
         <img alt="Bebidas" data-testid="drinks-bottom-btn" src={ drinkIcon } />

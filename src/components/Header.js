@@ -12,7 +12,8 @@ const Header = ({ title, searchBtn = false }) => {
 
   return (
     <section
-      className="d-flex p-2 bg-secondary align-items-center justify-content-between"
+      className="d-flex p-2 align-items-center justify-content-between"
+      style={ { background: '#cb6cec' } }
     >
       <Link to="/perfil" className="image">
         <img

@@ -33,7 +33,8 @@ const Perfil = () => {
             <Link to="/receitas-feitas">
               <button
                 type="button"
-                className="btn btn-secondary btn-lg btn-block"
+                className="btn btn-lg btn-block"
+                style={ { background: '#7ed95e' } }
                 data-testid="profile-done-btn"
               >
                 Receitas Feitas
@@ -41,9 +42,10 @@ const Perfil = () => {
             </Link>
             <Link to="/receitas-favoritas">
               <button
-                className="btn btn-secondary btn-lg btn-block"
+                className="btn btn-lg btn-block"
                 type="button"
                 data-testid="profile-favorite-btn"
+                style={ { background: '#7ed95e' } }
               >
                 Receitas Favoritas
               </button>
@@ -53,7 +55,8 @@ const Perfil = () => {
                 type="button"
                 onClick={ handleClick }
                 data-testid="profile-logout-btn"
-                className="btn btn-secondary btn-lg btn-block"
+                className="btn btn-lg btn-block my-4"
+                style={ { background: '#7ed95e' } }
               >
                 Sair
               </button>
