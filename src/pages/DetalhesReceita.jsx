@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import {
   requestApiFoodDetails,
 } from '../services/requestFood';
@@ -84,6 +85,7 @@ function DetalhesReceita(props) {
       ))}
       <iframe
         data-testid="video"
+        title="video"
         width="1042"
         height="586"
         src={ `https://www.youtube.com/embed/${embed}` }
@@ -113,5 +115,9 @@ function DetalhesReceita(props) {
     </div>
   );
 }
+
+DetalhesReceita.propTypes = {
+  match: PropTypes.shape.isRequired,
+};
 
 export default DetalhesReceita;
