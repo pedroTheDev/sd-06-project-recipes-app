@@ -1,20 +1,9 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import RevenueContext from '../context/RevenueContext';
 
-// 01. Devem ser exibidas apenas as 5 primeiras categorias retornadas da API.
-
-// 02. Caso as receitas sejam de comida,
-// deve-se exibir as 5 primeiras categorias de comida obtidas através do
-// endpoint https://www.themealdb.com/api/json/v1/1/list.php?c=list;
-
-// 03. Caso as receitas sejam de bebida,
-// deve-se exibir as 5 primeiras categorias de bebida obtidas através do
-// endpoint https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list.
-
-// deve-se carregar as 12 primeiras receitas de cada categoria
-
 export default function CategoryButton() {
+  const [selectedButton, setSelectedButton] = useState('All');
   const { foods, categories, fetchCategories, searchParam,
     setSearchParam, fetchByCategory, fetchApi } = useContext(RevenueContext);
 
@@ -47,15 +36,31 @@ export default function CategoryButton() {
     fetchCategories(linkCategoriesAPI);
   }, [searchParam, foods]);
 
+  const filterByCategory = (category, linkAPI) => {
+    if (category !== selectedButton) {
+      setSelectedButton(category);
+      fetchByCategory(linkAPI);
+    } else {
+      setSelectedButton('All');
+      fetchApi(generalAPI);
+    }
+  };
+
+  const noFilters = () => {
+    setSelectedButton('All');
+    fetchApi(generalAPI);
+  };
+
   const renderCategories = () => {
     if (categories[foodOrDrink]) {
       const CINCO = 5;
+      let toggleClass = (selectedButton === 'All') ? 'selected-category' : '';
       return (
         <div className="d-flex justify-content-around align-items-center flex-wrap">
           <button
-            className="category-buttons"
+            className={ `category-buttons ${toggleClass}` }
             type="button"
-            onClick={ () => fetchApi(generalAPI) }
+            onClick={ noFilters }
             data-testid="All-category-filter"
           >
             All
@@ -63,13 +68,15 @@ export default function CategoryButton() {
           {categories[foodOrDrink].map((category, index) => {
             if (index < CINCO) {
               const linkAPI = `${linkByCategoryAPI}${category.strCategory}`;
+              toggleClass = (selectedButton === category.strCategory)
+                ? 'selected-category' : '';
               return (
                 <button
                   key={ index }
                   data-testid={ `${category.strCategory}-category-filter` }
-                  className="category-buttons"
+                  className={ `category-buttons ${toggleClass}` }
                   type="button"
-                  onClick={ () => fetchByCategory(linkAPI) }
+                  onClick={ () => filterByCategory(category.strCategory, linkAPI) }
                 >
                   {category.strCategory}
                 </button>
