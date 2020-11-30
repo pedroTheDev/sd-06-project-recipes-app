@@ -10,7 +10,7 @@ export default function RecommendedRecipes() {
   const { recommendations, fetchRecommendations,
     searchParam } = useContext(RevenueContext);
   const ZERO = 0;
-  const SEVEN = 7;
+  const FIVE = 5;
   const TWO = 2;
 
   const [index, setIndex] = useState(ZERO);
@@ -33,17 +33,17 @@ export default function RecommendedRecipes() {
       <div>
         <Carousel activeIndex={ index } onSelect={ handleSelect }>
           {recommendations.map((recommendedItem, i) => {
-            if (i < SEVEN && (i % TWO === ZERO)) {
+            if (i < FIVE && (i % TWO === ZERO)) {
               return (
                 <Carousel.Item>
                   <div className="d-flex row-cols-2 justify-content-around">
-                    <Card>
+                    <Card data-testid={ `${i}-recomendation-card` }>
                       <Card.Img
                         src={ recommendations[i][`str${recommendParam}Thumb`] }
                         alt={ recommendations[i][`str${recommendParam}`] }
                       />
                       <Card.Body>
-                        <Card.Title>
+                        <Card.Title data-testid={ `${i}-recomendation-title` }>
                           <h3>
                             { recommendations[i][`str${recommendParam}`] }
                           </h3>
@@ -57,13 +57,13 @@ export default function RecommendedRecipes() {
                         </Card.Text>
                       </Card.Body>
                     </Card>
-                    <Card>
+                    <Card Card data-testid={ `${i + 1}-recomendation-card` }>
                       <Card.Img
                         src={ recommendations[i + 1][`str${recommendParam}Thumb`] }
                         alt={ recommendations[i + 1][`str${recommendParam}`] }
                       />
                       <Card.Body>
-                        <Card.Title>
+                        <Card.Title data-testid={ `${i + 1}-recomendation-title` }>
                           <h3>
                             { recommendations[i + 1][`str${recommendParam}`] }
                           </h3>

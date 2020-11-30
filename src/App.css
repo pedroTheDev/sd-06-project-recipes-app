@@ -75,7 +75,7 @@ header, footer {
   width: 360px;
 }
 
-footer {
+footer, .start-recipe-btn {
   position: fixed;
   bottom: 0px;
 }
