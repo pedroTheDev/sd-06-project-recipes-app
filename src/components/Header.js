@@ -11,21 +11,31 @@ export default function Header(props) {
   const { title } = props;
   const { search, setSearch, searchButton } = useContext(RevenueContext);
   const searchButtonHidden = () => (
-    <a
-      href
+    // <a
+    //   href
+    //   data-testid="test-search-top-btn"
+    //   onClick={ () => {
+    //     setSearch(!search);
+    //   } }
+    // >
+    //   <img src={ SearchIcon } alt="Profile" data-testid="search-top-btn" />
+    // </a>
+    <button
+      data-testid="test-search-top-btn"
+      type="button"
       onClick={ () => {
         setSearch(!search);
       } }
     >
       <img src={ SearchIcon } alt="Profile" data-testid="search-top-btn" />
-    </a>
+    </button>
   );
   return (
     <div>
-      <header>
+      <header data-testid="test-header">
         <div className="container">
           <div className="row justify-content-around">
-            <Link to="/perfil">
+            <Link to="/perfil" data-testid="test-profile-top-btn">
               <img src={ ProfileIcon } alt="Profile" data-testid="profile-top-btn" />
             </Link>
             <h1 data-testid="page-title">{title}</h1>
