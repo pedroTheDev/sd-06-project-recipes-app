@@ -18,12 +18,13 @@ class NotFound extends React.Component {
           src="https://www.moes.com/assets/moes/img/testing/404/CryingChip404.gif"
           width="100%px"
         />
-        <p>
+        {/* <p>
           {
             'Page not Found :('
             + ''
           }
-        </p>
+        </p> */}
+        <p>Not Found</p>
         <p>But you can also check:</p>
         <div>
           <button
