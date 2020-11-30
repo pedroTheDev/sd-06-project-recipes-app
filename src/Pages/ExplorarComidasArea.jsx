@@ -6,7 +6,7 @@ import recipeRequest from '../services/recipeRequest';
 function ExplorarComidasArea() {
   const [areas, setAreas] = useState([]);
   const [foodsArea, setFoodsArea] = useState([]);
-  const TEN = 10;
+  const TEN = 12;
   const getAreas = async () => {
     const response = await recipeRequest('https://www.themealdb.com/api/json/v1/1/list.php?a=list');
     const foods = await recipeRequest('https://www.themealdb.com/api/json/v1/1/search.php?s=');
@@ -46,7 +46,7 @@ function ExplorarComidasArea() {
         </select>
         <div>
           {foodsArea.length >= 1 && foodsArea
-            .filter((_, index) => index < 12)
+            .filter((_, index) => index < TEN)
             .map((food, indexs) => (
               <Link
                 data-testid={ `${indexs}-recipe-card` }
