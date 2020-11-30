@@ -1,11 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import drinkIcon from '../images/drinkIcon.svg';
 import exploreIcon from '../images/exploreIcon.svg';
 import mealIcon from '../images/mealIcon.svg';
 import '../visual_identity/styles/2.Layout/Footer.css';
 import { resetShouldFetch, clearState } from '../redux/actions/mainPageFetcher';
-import { connect } from 'react-redux';
 
 const Footer = ({ clear, clearAndDontUpdate }) => (
   <div data-testid="footer" className="position-fixed-bottom">
@@ -35,7 +35,7 @@ const Footer = ({ clear, clearAndDontUpdate }) => (
 
 const mapDispatchToProps = (dispatch) => ({
   clear: () => dispatch(resetShouldFetch()),
-  clearAndDontUpdate: () => dispatch(clearState())
+  clearAndDontUpdate: () => dispatch(clearState()),
 });
 
 export default connect(null, mapDispatchToProps)(Footer);

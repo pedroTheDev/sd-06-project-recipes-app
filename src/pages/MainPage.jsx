@@ -48,7 +48,7 @@ const MainPage = (props) => {
       console.log('entrou')
       dispatch(fetcherThunk(pathname));
     }
-    }, [pathname, dispatch, recipeList],
+    }, [pathname, dispatch, recipeList, shouldFetch],
   );
 
   if (isLoading) return <div>carregando</div>;

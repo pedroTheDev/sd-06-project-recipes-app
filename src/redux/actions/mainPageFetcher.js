@@ -1,7 +1,6 @@
 import { fetchMainPage, fetchNewSelectedCategory } from '../../services/fetchMainPage';
 import apiDataProcessor from '../../services/apiDataProcessor';
 import { formatInput } from '../../services/searchAPI';
-import { func } from 'prop-types';
 
 export const LOADING = 'LOADING';
 export const SUCCESS = 'SUCCESS';

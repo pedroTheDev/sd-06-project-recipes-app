@@ -6,8 +6,11 @@ import { clearState } from '../redux/actions/mainPageFetcher';
 import { connect } from 'react-redux';
 
 const RecipeCard = ({ recipeName, recipeImage, id, foodOrDrink, index, limpar }) => (
-  <Link to={ `${foodOrDrink}/${id}` } onClick={ () => limpar() }>
+  <Link to={ `${foodOrDrink}/${id}` } >
     <div data-testid={ `${index}-recipe-card` }>
+      {
+        console.log(recipeImage)
+      }
       <img
         data-testid={ `${index}-card-img` }
         className="smallIMG"
