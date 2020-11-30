@@ -11,9 +11,7 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 const ReceitaProcessoComida = () => {
   const [recipeProgress, setRecipeProgress] = useState();
   const [attributesNames, setAttributesNames] = useState();
-  // const [scratchIngredients, setScratchIngredients] = useState({
-  //   checkbox: false,
-  // });
+  const [checkedId, setCheckedId] = useState();
 
   const idFood = useParams().id;
 
@@ -93,12 +91,60 @@ const ReceitaProcessoComida = () => {
     handleFavorite();
   }, [recipeProgress]);
 
-  const scratCheckbox = () => {
-    alert('falta implementar receitas risadas');
+  const loadCheckedIngredientsLocalStorage = () => {
+    if (localStorage.getItem('checkedIngredients') === null) {
+      const checkedIngredients = {
+        cocktails: {},
+        meals: {},
+      };
+      localStorage.setItem('checkedIngredients', JSON.stringify(checkedIngredients));
+    }
+
+    const checkedIngredients = JSON.parse(localStorage.getItem('checkedIngredients'));
+    setCheckedId(checkedIngredients.meals[idFood]);
+  };
+
+  useEffect(() => {
+    loadCheckedIngredientsLocalStorage();
+  }, []);
+
+  const scratCheckbox = (target) => {
+    // console.log(target.checked);
+
+    const checkedIngredients = JSON.parse(localStorage.getItem('checkedIngredients'));
+
+    if (target.checked === true) {
+      const ingredientsToSave = {
+        ...checkedIngredients,
+        meals: {
+          ...checkedIngredients.meals,
+          [idFood]: [
+            ...checkedIngredients.meals[idFood],
+            target.id,
+          ],
+        },
+      };
+      localStorage.setItem('checkedIngredients', JSON.stringify(ingredientsToSave));
+      setCheckedId(ingredientsToSave.meals[idFood]);
+    } else {
+      const ingredientsToSave = {
+        ...checkedIngredients,
+        meals: {
+          ...checkedIngredients.meals,
+          [idFood]: [
+            ...checkedIngredients.meals[idFood].filter((id) => id !== target.id),
+          ],
+        },
+      };
+      localStorage.setItem('checkedIngredients', JSON.stringify(ingredientsToSave));
+      setCheckedId(ingredientsToSave.meals[idFood]);
+    }
   };
 
   return (
+
     <div>
+      {console.log(checkedId)}
       {!attributesNames
         ? <div className="loading">Loading...</div>
         : (
@@ -157,9 +203,9 @@ const ReceitaProcessoComida = () => {
                   >
                     <input
                       type="checkbox"
-                      value="on"
+                      checked={ checkedId.includes(i) }
                       id={ i }
-                      onClick={ scratCheckbox }
+                      onClick={ (({ target }) => scratCheckbox(target)) }
                     />
                     {`${ingred} - ${getIngredientsOrMeasure('strMeasure')[i]}`}
                   </label>
