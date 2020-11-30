@@ -56,8 +56,8 @@ function IngredientsCheck({ recipe, path, id }) {
     const retrievedLocalStorageInfo = getLocalStorageInfo();
 
     if (retrievedLocalStorageInfo === null) {
-      return null;
-    } if (retrievedLocalStorageInfo[key][id] !== undefined) {
+      console.log('retrievedLocalStorageInfo is null');
+    } else if (retrievedLocalStorageInfo[key][id] !== undefined) {
       const savedIngredients = retrievedLocalStorageInfo[key][id];
 
       const unCheckedIngredients = ingredients.filter((ingredient) => (
