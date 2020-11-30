@@ -6,9 +6,6 @@ function IngredientsCheck({ recipe, path, id }) {
   const { ingredients = [], measures = [] } = recipe;
   const [ingredientsCheck, setIngredientsCheck] = useState({});
   const { setDisableButton } = useContext(inProgressContext);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const getLocalStorageInfo = () => JSON.parse(localStorage.getItem('inProgressRecipes'));
 
   const toggleIngredientCheck = (event) => {
     const ingredientName = event.target.id;
@@ -22,39 +19,11 @@ function IngredientsCheck({ recipe, path, id }) {
     setIngredientsCheck(newCheckedIngredients);
   };
 
-  const saveProgressInLocalStorage = () => {
-    if (recipe.id === undefined) return null;
-    const settedIngredients = Object.keys(ingredientsCheck);
-    const status = Object.values(ingredientsCheck);
-    const currentCheckedIngredients = JSON.parse(localStorage.getItem(
-      'inProgressRecipes',
-    )) || { meals: {}, cocktails: {} };
+  const getSavedIngredientsFromLocalStorage = () => {
     const key = path === 'comidas' ? 'meals' : 'cocktails';
-    const checkedIngToLocalStorage = settedIngredients.filter((ingredient, index) => (
-      status[index]
-    ));
-    currentCheckedIngredients[key][recipe.id] = checkedIngToLocalStorage;
-    localStorage.setItem('inProgressRecipes', JSON.stringify(currentCheckedIngredients));
-  };
-
-  useEffect(() => {
-    if (Object.keys(ingredientsCheck).length >= 1) {
-      const allIngredients = [...ingredients];
-      const checkedIngredients = Object.keys({ ...ingredientsCheck });
-
-      if (allIngredients.length === checkedIngredients.length) {
-        setDisableButton(false);
-      } else {
-        setDisableButton(true);
-      }
-    }
-  }, [ingredientsCheck, recipe]);
-
-  useEffect(() => {
-    const key = path === 'comidas' ? 'meals' : 'cocktails';
-
-    const retrievedLocalStorageInfo = getLocalStorageInfo();
-
+    const retrievedLocalStorageInfo = JSON.parse(
+      localStorage.getItem('inProgressRecipes');
+    );
     if (retrievedLocalStorageInfo === null) {
       console.log('retrievedLocalStorageInfo is null');
     } else if (retrievedLocalStorageInfo[key][id] !== undefined) {
@@ -76,57 +45,79 @@ function IngredientsCheck({ recipe, path, id }) {
 
       setIngredientsCheck(ingredientsObj);
     }
+  };
+
+  const toggleFinishRecipeButton = () => {
+    if (Object.keys(ingredientsCheck).length >= 1) {
+      const allIngredients = [...ingredients];
+      const checkedIngredients = Object.keys({ ...ingredientsCheck });
+
+      if (allIngredients.length === checkedIngredients.length) {
+        setDisableButton(false);
+      } else {
+        setDisableButton(true);
+      }
+    }
+  };
+
+  const saveCheckedToLocalStorage = () => {
+    const minLength = 0;
+    if (recipe.id !== undefined && (Object.keys(ingredientsCheck)).length >= minLength) {
+      if (recipe.id === undefined) return null;
+      const settedIngredients = Object.keys(ingredientsCheck);
+      const status = Object.values(ingredientsCheck);
+      const currentCheckedIngredients = JSON.parse(localStorage.getItem(
+        'inProgressRecipes',
+      )) || { meals: {}, cocktails: {} };
+      const key = path === 'comidas' ? 'meals' : 'cocktails';
+      const checkedIngToLocalStorage = settedIngredients.filter((ingredient, index) => (
+        status[index]
+      ));
+      currentCheckedIngredients[key][recipe.id] = checkedIngToLocalStorage;
+      localStorage.setItem('inProgressRecipes', JSON.stringify(currentCheckedIngredients));
+    }
+  };
+
+  useEffect(() => {
+    getSavedIngredientsFromLocalStorage();
   }, []);
 
   useEffect(() => {
-    const minLength = 0;
-    if (recipe.id !== undefined && (Object.keys(ingredientsCheck)).length >= minLength) {
-      saveProgressInLocalStorage();
-    }
-  }, [ingredientsCheck]);
+    toggleFinishRecipeButton();
+  }, [ingredientsCheck, recipe]);
 
   useEffect(() => {
-    if (recipe.id !== undefined) {
-      setIsLoading(false);
-    } else {
-      setIsLoading(true);
-    }
-  }, [recipe]);
+    saveCheckedToLocalStorage();
+  }, [ingredientsCheck]);
 
   const handleCheckClick = (event) => {
     toggleIngredientCheck(event);
-    // saveProgressInLocalStorage();
   };
 
   return (
-    <div>
-      {!isLoading
-        ? (
-          <ul>
-            {ingredients.map((ingredient, index) => (
-              <li
-                key={ ingredient }
-                data-testid={ `${index}-ingredient-step` }
-              >
-                <label htmlFor={ `${ingredient}` }>
-                  <input
-                    className={ ingredientsCheck[ingredient] && 'checked' }
-                    type="checkbox"
-                    id={ `${ingredient}` }
-                    onClick={ (event) => handleCheckClick(event) }
-                    checked={ ingredientsCheck[ingredient] }
-                  />
-                  <span
-                    className={ ingredientsCheck[ingredient] && 'checked-text' }
-                  >
-                    {`${ingredient} - ${measures[index]}`}
-                  </span>
-                </label>
-              </li>
-            ))}
-          </ul>)
-        : false }
-    </div>
+    <ul>
+      {ingredients.map((ingredient, index) => (
+        <li
+          key={ingredient}
+          data-testid={`${index}-ingredient-step`}
+        >
+          <label htmlFor={`${ingredient}`}>
+            <input
+              className={ingredientsCheck[ingredient] && 'checked'}
+              type="checkbox"
+              id={`${ingredient}`}
+              onClick={(event) => handleCheckClick(event)}
+              checked={ingredientsCheck[ingredient]}
+            />
+            <span
+              className={ingredientsCheck[ingredient] && 'checked-text'}
+            >
+              {`${ingredient} - ${measures[index]}`}
+            </span>
+          </label>
+        </li>
+      ))}
+    </ul>
   );
 }
 IngredientsCheck.propTypes = {
