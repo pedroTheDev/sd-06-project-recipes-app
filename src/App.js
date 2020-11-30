@@ -10,6 +10,9 @@ import {
   ReceitasComidas,
   ReceitasBebidas,
   Details,
+  InProgress,
+  RecipesDone,
+  FavoriteRecipes,
 } from './pages';
 import './App.css';
 
@@ -20,10 +23,10 @@ function App() {
     <div>
       <Switch>
         <Route exact path="/" component={ Login } />
-        <Route path="/comidas/:id/in-progress" component={ ReceitasComidas } />
+        <Route path="/comidas/:id/in-progress" component={ InProgress } />
         <Route path="/comidas/:id" component={ Details } />
         <Route path="/comidas" component={ ReceitasComidas } />
-        <Route path="/bebidas/:id/in-progress" component={ ReceitasBebidas } />
+        <Route path="/bebidas/:id/in-progress" component={ InProgress } />
         <Route path="/bebidas/:id" component={ Details } />
         <Route path="/bebidas" component={ ReceitasBebidas } />
         <Route path="/explorar/comidas/area" component={ ReceitasBebidas } />
@@ -45,8 +48,8 @@ function App() {
         />
         <Route path="/explorar" component={ Explorar } />
         <Route path="/perfil" component={ Perfil } />
-        <Route path="/receitas-favoritas" component={ ReceitasBebidas } />
-        <Route path="/receitas-feitas" component={ ReceitasBebidas } />
+        <Route path="/receitas-favoritas" component={ FavoriteRecipes } />
+        <Route path="/receitas-feitas" component={ RecipesDone } />
       </Switch>
     </div>
   );

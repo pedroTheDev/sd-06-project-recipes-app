@@ -1,3 +1,3 @@
-const addDrinks = (drinks) => ({ type: 'ADD_COCKTAIL', payload: drinks });
+const addDrinks = (drinks) => ({ type: 'ADD_DRINKS', payload: drinks });
 
 export default addDrinks;
