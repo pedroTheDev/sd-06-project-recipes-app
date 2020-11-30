@@ -37,6 +37,7 @@ class DrinksDetails extends React.Component {
     const recommendedMeals = await fetchRecommendedMeals();
     this.setDrinkState(drinkRecipe, recommendedMeals);
     this.handleIngredients();
+    this.changeButtonInnerText(endpoint);
   }
 
   handleYoutubeVideo(url) {
@@ -146,6 +147,16 @@ class DrinksDetails extends React.Component {
     localStorage.setItem('favoriteRecipes', JSON.stringify(filteredStorage));
     const { Update } = this.state;
     this.setState({ Update: !Update });
+  }
+
+  changeButtonInnerText(endpoint) {
+    const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (localStorage.inProgressRecipes) {
+      if (inProgressRecipes.cocktails[endpoint]) {
+        const bla = document.querySelector('.start-recipe');
+        bla.innerHTML = 'Continuar Receita';
+      }
+    }
   }
 
   teste(recipe) {

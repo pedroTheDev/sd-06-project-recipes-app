@@ -20,25 +20,27 @@ class ExploreDrinks extends React.Component {
   render() {
     const { history } = this.props;
     return (
-      <div className="exploredrinks-container">
-        <Header history={ history } />
-        <button
-          type="button"
-          className="explore-buttons"
-          data-testid="explore-by-ingredient"
-          onClick={ () => history.push('/explorar/bebidas/ingredientes') }
-        >
-          Por Ingredientes
-        </button>
-        <button
-          type="button"
-          className="explore-buttons"
-          data-testid="explore-surprise"
-          onClick={ () => this.randomRequestRecipe() }
-        >
-          Me Surpreenda!
-        </button>
-        <Footer history={ history } />
+      <div className="explore-buttons">
+        <div className="explore-buttons-div">
+          <Header history={ history } />
+          <button
+            type="button"
+            className="explore-button"
+            data-testid="explore-by-ingredient"
+            onClick={ () => history.push('/explorar/bebidas/ingredientes') }
+          >
+            Por Ingredientes
+          </button>
+          <button
+            type="button"
+            className="explore-button"
+            data-testid="explore-surprise"
+            onClick={ () => this.randomRequestRecipe() }
+          >
+            Me Surpreenda!
+          </button>
+          <Footer history={ history } />
+        </div>
       </div>
     );
   }

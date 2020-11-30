@@ -25,8 +25,7 @@ class FoodCard extends React.Component {
   async handleShareFood({ id }) {
     const url = `http://localhost:3000/comidas/${id}`;
     await copy(url);
-    const shareBtn = document.querySelector('.share-btn');
-    shareBtn.value = 'Link copiado!';
+    // shareBtn.innerText = 'Link copiado!';
     const p = document.querySelector('.p');
     const span = document.createElement('span');
     p.appendChild(span);
@@ -90,6 +89,7 @@ class FoodCard extends React.Component {
                     className="done-recipe-share-btn"
                     onClick={ () => this.handleShareFood(element) }
                   />
+                  <p className="p" />
                 </div>
               </div>
               <aside className="food-drink-footer">

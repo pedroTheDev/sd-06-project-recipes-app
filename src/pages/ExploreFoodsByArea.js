@@ -68,7 +68,7 @@ class ExploreFoodsByArea extends React.Component {
     return (
       <div className="explorefoods-container">
         <Header history={ history } />
-        <div className="explore-top-content">
+        <div className="by-area-content">
           <select
             data-testid="explore-by-area-dropdown"
             onChange={ (event) => this.setSelectedOption(event) }
@@ -81,16 +81,21 @@ class ExploreFoodsByArea extends React.Component {
             <option data-testid="All-option">All</option>
           </select>
         </div>
-        <div className="explore-middle-content">
+        <div className="cards-container by-area-container">
           {areaFoods ? areaFoods.map((recipe, index) => (
-            <div key={ index } data-testid={ `${index}-recipe-card` }>
+            <div
+              className="card"
+              key={ index }
+              data-testid={ `${index}-recipe-card` }
+            >
               <input
                 data-testid={ `${index}-card-img` }
                 onClick={ () => this.redirectOnClick(recipe) }
                 type="image"
                 src={ recipe.strMealThumb }
                 alt="recipe-image"
-                width="200"
+                width="100%"
+                style={ { borderRadius: '4px' } }
               />
               <h4 data-testid={ `${index}-card-name` }>{recipe.strMeal}</h4>
             </div>
