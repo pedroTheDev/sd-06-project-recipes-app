@@ -7,7 +7,7 @@ function ExploreFoodIngredients() {
   const {
     foodIngredientsCategory,
     setFoodIngredientsCategory,
-    setFoodRecipes
+    setFoodRecipes,
   } = useContext(RecipeContext);
 
   const getAPI = async () => {
@@ -29,7 +29,7 @@ function ExploreFoodIngredients() {
     getAPI();
   }, []);
 
-  const renderCards = () => {(
+  const renderCards = () => (
     <div className="recipes-container">
       {foodIngredientsCategory.map((ingredient, index) => (
         <div
@@ -55,7 +55,7 @@ function ExploreFoodIngredients() {
         </div>
       ))}
     </div>
-  )};
+  );
 
   return (
     <div>

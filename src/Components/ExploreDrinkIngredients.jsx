@@ -29,7 +29,7 @@ function ExploreDrinkIngredients() {
     getAPI();
   }, []);
 
-  const renderCards = () => {(
+  const renderCards = () => (
     <div className="recipes-container">
       {drinkIngredientsCategory.map((ingredient, index) => (
         <div
@@ -53,7 +53,7 @@ function ExploreDrinkIngredients() {
         </div>
       ))}
     </div>
-  )};
+  );
 
   return (
     <div>
