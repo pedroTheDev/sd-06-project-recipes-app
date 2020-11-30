@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
-import { shareIcon, blackHeartIcon } from '../images';
+//import { shareIcon, blackHeartIcon } from '../images';
 
 function ReceitasFavoritas() {
   const [favoriteRecipes, setFavoriteRecipe] = useState([]);
@@ -91,7 +91,7 @@ function ReceitasFavoritas() {
                 type="button"
               >
                 <img
-                  src={ shareIcon }
+                  //src={ shareIcon }
                   alt="Compatilhar Receita"
                   data-testid={ `${index}-horizontal-share-btn` }
                 />
@@ -102,7 +102,7 @@ function ReceitasFavoritas() {
               >
                 <img
                   data-testid={ `${index}-horizontal-favorite-btn` }
-                  src={ blackHeartIcon }
+                  //src={ blackHeartIcon }
                   alt="Botão de Favorito"
                 />
               </button>
