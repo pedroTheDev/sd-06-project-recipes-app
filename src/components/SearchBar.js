@@ -15,7 +15,7 @@ export default function SearchBar({ id, ingredient }) {
   }
 
   useEffect(() => {
-    if (ingredient !== undefined) {
+    if (ingredient !== '') {
       document.getElementById('ingredient-search-radio').checked = true;
       document.getElementById('search-input').value = ingredient;
       setFilters({ ...searchOptions });
