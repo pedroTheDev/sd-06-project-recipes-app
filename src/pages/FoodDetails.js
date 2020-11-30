@@ -24,14 +24,19 @@ function FoodDetails() {
       const meal = resultsDetails.meals[0];
       setFoodDetails(meal);
       const keysMeal = Object.keys(meal);
+
       const filterMeal = keysMeal
         .filter((key) => key.toLowerCase().includes('ingredient'));
+
       const filterMeasure = keysMeal
         .filter((key) => key.toLowerCase().includes('measure'));
+
       const allIngredients = filterMeal
         .map((item, index) => ({
           ingredient: meal[item], measure: meal[filterMeasure[index]],
         }));
+
+      console.log(allIngredients);
       setIngredients(allIngredients);
     }
     fetchData();
@@ -147,7 +152,10 @@ function FoodDetails() {
 
       <div id="ingredients-div">
         {ingredients && ingredients.map((item, index) => (
-          <p data-testid={ `${index}-ingredient-name-and-measure` } key={ index }>
+          <p
+            data-testid={ `${index}-ingredient-name-and-measure` }
+            key={ index }
+          >
             {`${index + 1} ${item.ingredient} - ${item.measure}`}
           </p>
         ))}
@@ -186,20 +194,6 @@ function FoodDetails() {
           onClick={ handleClick }
         >
           Iniciar Receita
-        </button>
-      </Link>
-
-      <Link
-        to={ `/comidas/${foodDetails.meals && foodDetails.meals[0].idMeal}/in-progress` }
-      >
-        <button
-          type="button"
-          className="start-btn"
-          data-testid="start-recipe-btn"
-          hidden={ !localStorage.getItem('hiddenButtonFood') }
-          onClick={ handleClick }
-        >
-          Continuar Receita
         </button>
       </Link>
       <br />

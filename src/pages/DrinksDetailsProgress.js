@@ -28,7 +28,7 @@ function DrinksDetailsProgress() {
       const allIngredients = filterDrink
         .map((item, index) => ({
           ingredient: drink[item], measure: drink[filterMeasure[index]],
-        }));
+        })).filter((item) => item.ingredient !== '' && item.ingredient !== null);
       console.log(allIngredients);
       setIngredients(allIngredients);
     }
@@ -66,6 +66,14 @@ function DrinksDetailsProgress() {
         );
       }
     }
+  }
+
+  function handleCheckboxChange(e) {
+    localStorage.setItem('inProgressRecipes', {
+      cocktails: {},
+      meals: {},
+    });
+    console.log(e.target.value);
   }
 
   return (
@@ -119,18 +127,17 @@ function DrinksDetailsProgress() {
       <div id="ingredients-div">
         {ingredients && ingredients
           .map((item, index) => (
-            <div key={ index }>
-              <input
-                type="checkbox"
-                id="ingredients"
-                data-testid={ `${index}-ingredient-step` }
-                key={ index }
-              />
-              <label htmlFor="ingredients">
+            <div key={ index } data-testid={ `${index}-ingredient-step` }>
+              <label htmlFor={ item.ingredient }>
+                <input
+                  type="checkbox"
+                  id={ item.ingredient }
+                  key={ index }
+                  onChange={ (e) => handleCheckboxChange(e) }
+                  value={ item.ingredient }
+                />
                 {
-                  item.ingredient && item.measure
-                    ? `${index + 1} ${item.ingredient} - ${item.measure}`
-                    : null
+                  `${index + 1} - ${item.ingredient}: ${item.measure}`
                 }
               </label>
             </div>

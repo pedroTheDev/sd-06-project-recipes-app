@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { requestDetailsFood } from '../services/requestsAPI';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
@@ -8,10 +9,14 @@ function FoodDetailsProgress() {
   const url = document.URL;
   const splitedURL = url.split('/');
   const [foodDetails, setFoodDetails] = useState([]);
-  const [favoriteFood, setFavoriteFood] = useState(false);
   const [ingredients, setIngredients] = useState('');
-
+  const [favoriteFood, setFavoriteFood] = useState(false);
   const [spanHidden, setSpanHidden] = useState(true);
+
+  // const { location } = props;
+  // const { state } = location;
+  // const { foodDetailsData: foodDetails, ingredientsData: ingredients } = state;
+  // console.log(foodDetails, ingredients, 'foodDetailssssss');
 
   useEffect(() => {
     async function fetchData() {
@@ -26,7 +31,7 @@ function FoodDetailsProgress() {
       const allIngredients = filterMeal
         .map((item, index) => ({
           ingredient: meal[item], measure: meal[filterMeasure[index]],
-        }));
+        })).filter((item) => item.ingredient !== '' && item.ingredient !== null);
       setIngredients(allIngredients);
     }
     fetchData();
@@ -111,31 +116,19 @@ function FoodDetailsProgress() {
       <div id="ingredients-div">
         {ingredients && ingredients
           .map((item, index) => (
-            <div key={ index }>
+            <div key={ index } data-testid={ `${index}-ingredient-step` }>
               <input
                 type="checkbox"
-                id="ingredients"
-                data-testid={ `${index}-ingredient-step` }
-                key={ index }
+                id={ item.ingredient }
+                key={ item.ingredient }
+                name={ item.ingredient }
               />
-              <label htmlFor={ item }>
+              <label htmlFor={ item.ingredient }>
                 {
-                  item.ingredient && item.measure
-                    ? `${index + 1} ${item.ingredient} - ${item.measure}`
-                    : null
+                  `${index + 1} - ${item.ingredient}: ${item.measure}`
                 }
               </label>
             </div>
-            // <p
-            //   data-testid={ `${index}-ingredient-name-and-measure` }
-            //   key={ index }
-            // >
-            //   {
-            //     item.ingredient && item.measure
-            //       ? `${index + 1} ${item.ingredient} - ${item.measure}`
-            //       : null
-            //   }
-            // </p>
           ))}
       </div>
 
