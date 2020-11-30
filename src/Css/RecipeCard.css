@@ -16,15 +16,15 @@
   display: flex;
   flex-direction: column;
   height: 130px;
-  margin: 8px 10px ;
+  margin: 4px 8px ;
   transition: 0.2s;
-  width: 145px;
+  width: 140px;
   cursor: pointer;
 }
 
 .recipe-card:hover {
-  border: 1px solid rgba(190, 5, 5, 0.125);
   transform: translateY(-5px);
+  text-decoration: none;
 }
 
 .img-container {
@@ -42,11 +42,12 @@
   margin: 0;
   padding: 0;
   line-height: 25px;
-  font-size: 12px;
+  font-size: 13px;
   text-align: center;
+  color: black;
 }
 
-.link-card {
+.link-card .link-card:visited,.link-card:hover,.link-card:active{
   text-decoration: none;
   color: black;
 }
