@@ -22,7 +22,7 @@ function IngredientsCheck({ recipe, path, id }) {
   const getSavedIngredientsFromLocalStorage = () => {
     const key = path === 'comidas' ? 'meals' : 'cocktails';
     const retrievedLocalStorageInfo = JSON.parse(
-      localStorage.getItem('inProgressRecipes');
+      localStorage.getItem('inProgressRecipes'),
     );
     if (retrievedLocalStorageInfo === null) {
       console.log('retrievedLocalStorageInfo is null');
@@ -74,7 +74,9 @@ function IngredientsCheck({ recipe, path, id }) {
         status[index]
       ));
       currentCheckedIngredients[key][recipe.id] = checkedIngToLocalStorage;
-      localStorage.setItem('inProgressRecipes', JSON.stringify(currentCheckedIngredients));
+      localStorage.setItem(
+        'inProgressRecipes', JSON.stringify(currentCheckedIngredients),
+      );
     }
   };
 
@@ -98,19 +100,19 @@ function IngredientsCheck({ recipe, path, id }) {
     <ul>
       {ingredients.map((ingredient, index) => (
         <li
-          key={ingredient}
-          data-testid={`${index}-ingredient-step`}
+          key={ ingredient }
+          data-testid={ `${index}-ingredient-step` }
         >
-          <label htmlFor={`${ingredient}`}>
+          <label htmlFor={ `${ingredient}` }>
             <input
-              className={ingredientsCheck[ingredient] && 'checked'}
+              className={ ingredientsCheck[ingredient] && 'checked' }
               type="checkbox"
-              id={`${ingredient}`}
-              onClick={(event) => handleCheckClick(event)}
-              checked={ingredientsCheck[ingredient]}
+              id={ `${ingredient}` }
+              onClick={ (event) => handleCheckClick(event) }
+              checked={ ingredientsCheck[ingredient] }
             />
             <span
-              className={ingredientsCheck[ingredient] && 'checked-text'}
+              className={ ingredientsCheck[ingredient] && 'checked-text' }
             >
               {`${ingredient} - ${measures[index]}`}
             </span>
