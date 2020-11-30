@@ -4,7 +4,8 @@ import renderWithRouter from '../renderWithRouter/renderWithRouter';
 import App from '../../App';
 import MainPage from '../../pages/MainPage';
 
-describe('13 - Implemente os elementos da barra de busca respeitando os atributos descritos no protótipo', () => {
+describe('13 - Implemente os elementos da barra de busca respeitando'
+  + ' os atributos descritos no protótipo', () => {
   it('O input de busca deve possuir o atributo data-testid="search-input"', () => {
     const { getByTestId } = renderWithRouter(<App />);
     const emailInput = getByTestId('email-input');
@@ -22,7 +23,8 @@ describe('13 - Implemente os elementos da barra de busca respeitando os atributo
     expect(searchInput).toBeInTheDocument();
   });
 
-  it('O radio button de busca de ingrediente deve possuir o atributo data-testid="ingredient-search-radio"', () => {
+  it('O radio button de busca de ingrediente deve possuir o'
+    + '  atributo data-testid="ingredient-search-radio"', () => {
     const { getByTestId } = renderWithRouter(<App />);
     const emailInput = getByTestId('email-input');
     const passwordInput = getByTestId('password-input');
@@ -39,7 +41,8 @@ describe('13 - Implemente os elementos da barra de busca respeitando os atributo
     expect(ingredientRadioButton).toBeInTheDocument();
   });
 
-  it('O radio button de busca por nome deve possuir o atributo data-testid="name-search-radio";', () => {
+  it('O radio button de busca por nome deve possuir o atributo'
+    + '  data-testid="name-search-radio";', () => {
     const { getByTestId } = renderWithRouter(<App />);
     const emailInput = getByTestId('email-input');
     const passwordInput = getByTestId('password-input');
@@ -56,7 +59,8 @@ describe('13 - Implemente os elementos da barra de busca respeitando os atributo
     expect(nameRadioButton).toBeInTheDocument();
   });
 
-  it('O radio button de busca da primeira letra deve possuir o atributo data-testid="first-letter-search-radio"', () => {
+  it('O radio button de busca da primeira letra deve possuir o'
+    + '  atributo data-testid="first-letter-search-radio"', () => {
     const { getByTestId } = renderWithRouter(<App />);
     const emailInput = getByTestId('email-input');
     const passwordInput = getByTestId('password-input');
@@ -91,8 +95,10 @@ describe('13 - Implemente os elementos da barra de busca respeitando os atributo
   });
 });
 
-describe('14 - Posicione a barra logo abaixo do header e implemente 3 radio buttons: Ingrediente, Nome e Primeira letra', () => {
-  it('Se o radio selecionado for Ingrediente, a busca na API é feita corretamente pelo ingrediente. O endpoint utilizado deve ser https://www.themealdb.com/api/json/v1/1/filter.php?i={ingrediente}', async () => {
+describe('14 - Posicione a barra logo abaixo do header e implemente'
+  + '  3 radio buttons: Ingrediente, Nome e Primeira letra', () => {
+  it('Se o radio selecionado for Ingrediente, a busca na API é feita corretamente'
+    + '  pelo ingrediente. O endpoint utilizado deve ser https://www.themealdb.com/api/json/v1/1/filter.php?i={ingrediente}', async () => {
     const { getByTestId, getByText } = renderWithRouter(<MainPage title="Comidas" />);
     const searchButton = getByTestId('search-top-btn');
     fireEvent.click(searchButton);
@@ -108,7 +114,8 @@ describe('14 - Posicione a barra logo abaixo do header e implemente 3 radio butt
     expect(firstRecipeWithRiceIngredient).toBeInTheDocument();
   });
 
-  it('Se o radio selecionado for Nome, a busca na API é feita corretamente pelo nome. O endpoint utilizado deve ser https://www.themealdb.com/api/json/v1/1/search.php?s={nome}', async () => {
+  it('Se o radio selecionado for Nome, a busca na API é feita corretamente pelo '
+    + ' nome. O endpoint utilizado deve ser https://www.themealdb.com/api/json/v1/1/search.php?s={nome}', async () => {
     const { getByTestId, getByText } = renderWithRouter(<MainPage title="Comidas" />);
     const searchButton = getByTestId('search-top-btn');
     fireEvent.click(searchButton);
@@ -124,7 +131,8 @@ describe('14 - Posicione a barra logo abaixo do header e implemente 3 radio butt
     expect(firstRecipeWithRiceName).toBeInTheDocument();
   });
 
-  it('Se o radio selecionado for Primeira letra, a busca na API é feita corretamente pelo primeira letra. O endpoint utilizado deve ser https://www.themealdb.com/api/json/v1/1/search.php?f={primeira-letra}', async () => {
+  it('Se o radio selecionado for Primeira letra, a busca na API é feita corretamente '
+    + ' pelo primeira letra. O endpoint utilizado deve ser https://www.themealdb.com/api/json/v1/1/search.php?f={primeira-letra}', async () => {
     const { getByTestId, getByText } = renderWithRouter(<MainPage title="Comidas" />);
     const searchButton = getByTestId('search-top-btn');
     fireEvent.click(searchButton);
@@ -140,7 +148,9 @@ describe('14 - Posicione a barra logo abaixo do header e implemente 3 radio butt
     expect(firstRecipeWithRFirstLetter).toBeInTheDocument();
   });
 
-  it('Se o radio selecionado for Primeira letra e a busca na API for feita com mais de uma letra, deve-se exibir um alert com a mensgem "Sua busca deve conter somente 1 (um) caracter".', () => {
+  it('Se o radio selecionado for Primeira letra e a busca na API for feita com mais de '
+    + ' uma letra, deve-se exibir um alert com a mensgem'
+      + '  "Sua busca deve conter somente 1 (um) caracter".', () => {
     const { getByTestId } = renderWithRouter(<MainPage title="Comidas" />);
     global.alert = jest.fn();
     const searchButton = getByTestId('search-top-btn');
@@ -156,8 +166,11 @@ describe('14 - Posicione a barra logo abaixo do header e implemente 3 radio butt
   });
 });
 
-describe('15 - Busque na API de comidas caso a pessoa esteja na página de comidas e na de bebidas caso esteja na de bebidas', () => {
-  it('Na tela de bebidas, se o radio selecionado for Ingrediente, a busca na API é feita corretamente pelo ingrediente. O endpoint utilizado deve ser https://www.thecocktaildb.com/api/json/v1/1/filter.php?i={ingrediente}', async () => {
+describe('15 - Busque na API de comidas caso a pessoa esteja na página '
+  + ' de comidas e na de bebidas caso esteja na de bebidas', () => {
+  it('Na tela de bebidas, se o radio selecionado for Ingrediente, a busca na'
+    + '  API é feita corretamente pelo ingrediente. O endpoint utilizado deve ser '
+      + ' https://www.thecocktaildb.com/api/json/v1/1/filter.php?i={ingrediente}', async () => {
     const { getByTestId, getByText } = renderWithRouter(<MainPage title="Bebidas" />);
     const searchButton = getByTestId('search-top-btn');
     fireEvent.click(searchButton);
@@ -173,7 +186,9 @@ describe('15 - Busque na API de comidas caso a pessoa esteja na página de comid
     expect(firstRecipeWithRumIngredient).toBeInTheDocument();
   });
 
-  it('Na tela de bebidas, se o radio selecionado for Nome, a busca na API é feita corretamente pelo nome. O endpoint utilizado deve ser https://www.thecocktaildb.com/api/json/v1/1/search.php?s={nome}', async () => {
+  it('Na tela de bebidas, se o radio selecionado for Nome, a busca na API é feita'
+    + '  corretamente pelo nome. O endpoint utilizado deve ser '
+      + ' https://www.thecocktaildb.com/api/json/v1/1/search.php?s={nome}', async () => {
     const { getByTestId, getByText } = renderWithRouter(<MainPage title="Bebidas" />);
     const searchButton = getByTestId('search-top-btn');
     fireEvent.click(searchButton);
@@ -189,7 +204,9 @@ describe('15 - Busque na API de comidas caso a pessoa esteja na página de comid
     expect(firstRecipeWithRumName).toBeInTheDocument();
   });
 
-  it('Na tela de bebidas, se o radio selecionado for Primeira letra, a busca na API é feita corretamente pelo primeira letra. O endpoint utilizado deve ser https://www.thecocktaildb.com/api/json/v1/1/search.php?f={primeira-letra}', async () => {
+  it('Na tela de bebidas, se o radio selecionado for Primeira letra, a busca na API '
+    + ' é feita corretamente pelo primeira letra. O endpoint utilizado deve ser '
+      + ' https://www.thecocktaildb.com/api/json/v1/1/search.php?f={primeira-letra}', async () => {
     const { getByTestId, getByText } = renderWithRouter(<MainPage title="Bebidas" />);
     const searchButton = getByTestId('search-top-btn');
     fireEvent.click(searchButton);
@@ -205,7 +222,9 @@ describe('15 - Busque na API de comidas caso a pessoa esteja na página de comid
     expect(firstRecipeWithRFirstLetter).toBeInTheDocument();
   });
 
-  it('Na tela de bebidas, se o radio selecionado for Primeira letra e a busca na API for feita com mais de uma letra, deve-se exibir um alert com a mensgem "Sua busca deve conter somente 1 (um) caracter', async() => {
+  it('Na tela de bebidas, se o radio selecionado for Primeira letra e a busca na API '
+    + ' for feita com mais de uma letra, deve-se exibir um alert com a mensgem '
+      + ' "Sua busca deve conter somente 1 (um) caracter', async () => {
     const { getByTestId } = renderWithRouter(<MainPage title="Bebidas" />);
     global.alert = jest.fn();
     const searchButton = getByTestId('search-top-btn');
@@ -221,8 +240,10 @@ describe('15 - Busque na API de comidas caso a pessoa esteja na página de comid
   });
 });
 
-describe('16 - Redirecione para a tela de detalhes da receita caso apenas uma receita seja encontrada, com o ID da mesma na URL', () => {
-  it('Caso apenas uma comida seja encontrada, deve-se ir para sua rota de detalhes (/comidas/{id-da-receita})', async () => {
+describe('16 - Redirecione para a tela de detalhes da receita caso apenas'
+  + ' uma receita seja encontrada, com o ID da mesma na URL', () => {
+  it('Caso apenas uma comida seja encontrada, deve-se ir para'
+    + ' sua rota de detalhes (/comidas/{id-da-receita})', async () => {
     const { getByTestId, history } = renderWithRouter(<MainPage title="Comidas" />);
     const searchButton = getByTestId('search-top-btn');
     fireEvent.click(searchButton);
@@ -238,7 +259,8 @@ describe('16 - Redirecione para a tela de detalhes da receita caso apenas uma re
     expect(oneRecipeFoundRoute).toBe('/comidas/52968');
   });
 
-  it('Caso apenas uma bebida seja encontrada, deve-se ir para sua rota de detalhes (/bebidas/{id-da-receita})', async () => {
+  it('Caso apenas uma bebida seja encontrada, deve-se ir '
+    + ' para sua rota de detalhes (/bebidas/{id-da-receita})', async () => {
     const { getByTestId, history } = renderWithRouter(<MainPage title="Bebidas" />);
     const searchButton = getByTestId('search-top-btn');
     fireEvent.click(searchButton);
@@ -255,8 +277,10 @@ describe('16 - Redirecione para a tela de detalhes da receita caso apenas uma re
   });
 });
 
-describe('17 - Mostre as receitas em cards caso mais de uma receita seja encontrada', () => {
-  it('Caso mais de uma comida seja encontrada, mostrar as 12 primeiras (ou menos, se não hoverem 12);', async () => {
+describe('17 - Mostre as receitas em cards caso mais'
+  + '  de uma receita seja encontrada', () => {
+  it('Caso mais de uma comida seja encontrada, mostrar as '
+    + ' 12 primeiras (ou menos, se não hoverem 12);', async () => {
     const { queryByTestId } = renderWithRouter(<MainPage title="Comidas" />);
     await waitForElementToBeRemoved(() => screen.queryByText(/Loading.../i));
     const minCards = 0;
@@ -269,7 +293,8 @@ describe('17 - Mostre as receitas em cards caso mais de uma receita seja encontr
     expect(lastCard).not.toBeInTheDocument();
   });
 
-  it('Caso mais de uma bebida seja encontrada, mostrar as 12 primeiras (ou menos, se não hoverem 12)', async () => {
+  it('Caso mais de uma bebida seja encontrada, mostrar '
+    + ' as 12 primeiras (ou menos, se não hoverem 12)', async () => {
     const { queryByTestId } = renderWithRouter(<MainPage title="Bebidas" />);
     await waitForElementToBeRemoved(() => screen.queryByText(/Loading.../i));
     const minCards = 0;
@@ -284,7 +309,7 @@ describe('17 - Mostre as receitas em cards caso mais de uma receita seja encontr
 });
 
 describe('18 - Exiba um alert caso nenhuma receita seja encontrada', () => {
-it('Caso nenhuma comida seja encontrada o alert deve ser exibido;', async () => {
+  it('Caso nenhuma comida seja encontrada o alert deve ser exibido;', async () => {
     const { queryByTestId } = renderWithRouter(<MainPage title="Comidas" />);
     await waitForElementToBeRemoved(() => screen.queryByText(/Loading.../i));
 
@@ -300,8 +325,9 @@ it('Caso nenhuma comida seja encontrada o alert deve ser exibido;', async () => 
 
     await waitForElementToBeRemoved(() => screen.queryByText(/Loading.../i));
 
-    expect(global.alert).toBeCalledWith('Sinto muito, não encontramos nenhuma receita para esses filtros.');
-});
+    expect(global.alert)
+      .toBeCalledWith('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+  });
 
   it('Caso nenhuma bebida seja encontrada o alert deve ser exibido.', async () => {
     const { queryByTestId } = renderWithRouter(<MainPage title="Bebidas" />);
@@ -319,6 +345,7 @@ it('Caso nenhuma comida seja encontrada o alert deve ser exibido;', async () => 
 
     await waitForElementToBeRemoved(() => screen.queryByText(/Loading.../i));
 
-    expect(global.alert).toBeCalledWith('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+    expect(global.alert)
+      .toBeCalledWith('Sinto muito, não encontramos nenhuma receita para esses filtros.');
   });
 });
