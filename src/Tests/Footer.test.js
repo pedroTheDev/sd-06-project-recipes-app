@@ -44,11 +44,10 @@ describe('Teste componente Footer', () => {
     const { pathname } = history.location;
     expect(pathname).toBe('/explorar');
   });
-});
 
-describe('Exiba o menu inferior apenas nas telas indicadas pelo protótipo', () => {
   it('Não tem footer na tela de login', () => {
     const { queryByTestId } = renderWithRouter(<Login />);
+
     const FOOTER = queryByTestId('footer');
 
     expect(FOOTER).toBeFalsy();
@@ -63,8 +62,7 @@ describe('Exiba o menu inferior apenas nas telas indicadas pelo protótipo', () 
   });
 
   it('Tem footer na tela principal de bebidas', () => {
-    const { getByTestId, history } = renderWithRouter(<App />);
-    history.push('/bebidas');
+    const { getByTestId } = renderWithRouter(<Bebidas />);
 
     const footer = getByTestId('footer');
 
