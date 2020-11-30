@@ -7,14 +7,19 @@ import '../style/Detalhes.css';
 
 function DetalhesComida() {
   const timeoutTextCopy = 3000;
-  const { data } = useContext(RecipesContext);
+  const SEIS = 6;
+  const ZERO = 0;
+  const UM = 1;
+  const QUATRO = 4;
+  const { data, isLoading } = useContext(RecipesContext);
   const [isCopied, handleCopy] = useCopyToClipboard(timeoutTextCopy);
   const [dataMeal, setDataMeal] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [drinks, setDrinks] = useState([]);
+  const [next, setNext] = useState(ZERO);
+  const [loadingMeal, setloadingMeal] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const history = useHistory();
   const idMeal = history.location.pathname.split('/')[2];
-  const SEIS = 6;
 
   let continuar = false;
   if (localStorage.inProgressRecipes) {
@@ -23,12 +28,13 @@ function DetalhesComida() {
       continuar = ids.includes(idMeal);
     }
   }
+
   useEffect(() => {
     async function fetchAPI() {
       const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`);
       const responseJson = await response.json();
       setDataMeal(responseJson.meals[0]);
-      setIsLoading(false);
+      setloadingMeal(false);
     }
     fetchAPI();
   }, [idMeal]);
@@ -43,6 +49,18 @@ function DetalhesComida() {
       });
     }
   }, []);
+
+  useEffect(() => {
+    if (!isLoading) {
+      setDrinks(data[1].drinks.filter((_, index) => index < SEIS));
+    }
+  }, [isLoading]);
+
+  const changeNext = (valor) => {
+    if ((next + valor) > QUATRO) return setNext(ZERO);
+    if ((next + valor) < ZERO) return setNext(QUATRO);
+    setNext(next + valor);
+  };
 
   const handleClick = () => {
     setIsFavorite(!isFavorite);
@@ -63,7 +81,7 @@ function DetalhesComida() {
 
   return (
     <div>
-      {(isLoading)
+      {(loadingMeal)
         ? <p>Loading</p>
         : (
           <div className="container-details">
@@ -89,7 +107,7 @@ function DetalhesComida() {
                       alt="Botão de Compartilhar"
                     />
                   </button>
-                  {isCopied ? <p>Link copiado!</p> : true}
+                  { isCopied ? <p>Link copiado!</p> : true }
                 </span>
                 <button
                   type="button"
@@ -138,32 +156,30 @@ function DetalhesComida() {
               </video>
 
               <h2>Recomendadas</h2>
-
               <div className="cards">
                 <div className="scroller">
-                  {
-                    data[1] && data[1].drinks
-                      .filter((_, index) => index < SEIS)
-                      .map(({ strDrink, strDrinkThumb }, index) => (
-                        <div
-                          className="card"
-                          key={ strDrink }
-                          data-testid={ `${index}-recomendation-card` }
-                        >
-                          <img
-                            src={ strDrinkThumb }
-                            alt={ strDrink }
-                          />
-                          <h2
-                            data-testid={ `${index}-recomendation-title` }
-                          >
-                            { strDrink }
-                          </h2>
-                        </div>
-                      ))
-                  }
+                  { drinks.map((drink, index) => (
+                    <div
+                      key={ index }
+                      className={
+                        (index !== next && index !== next + 1)
+                          ? 'card invisible'
+                          : 'card'
+                      }
+                      data-testid={ `${index}-recomendation-card` }
+                    >
+                      <img src={ drink.strDrinkThumb } alt={ drink.strDrink } />
+                      <h2
+                        data-testid={ `${index}-recomendation-title` }
+                      >
+                        { drink.strDrink }
+                      </h2>
+                    </div>
+                  )) }
                 </div>
               </div>
+              <button type="button" onClick={ () => { changeNext(-UM); } }>Voltar</button>
+              <button type="button" onClick={ () => { changeNext(UM); } }>Próximo</button>
             </div>
             <Link to={ `/comidas/${idMeal}/in-progress` }>
               <button
@@ -171,11 +187,11 @@ function DetalhesComida() {
                 data-testid="start-recipe-btn"
                 type="button"
               >
-                {continuar ? 'Continuar Receita' : 'Iniciar Receita'}
+                { continuar ? 'Continuar Receita' : 'Iniciar Receita' }
               </button>
             </Link>
           </div>
-        )}
+        ) }
     </div>
   );
 }

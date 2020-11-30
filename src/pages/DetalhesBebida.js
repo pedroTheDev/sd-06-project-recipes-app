@@ -7,14 +7,19 @@ import '../style/Detalhes.css';
 
 function DetalhesBebida() {
   const timeoutTextCopy = 3000;
-  const { data } = useContext(RecipesContext);
+  const SEIS = 6;
+  const ZERO = 0;
+  const UM = 1;
+  const QUATRO = 4;
+  const { data, isLoading } = useContext(RecipesContext);
   const [isCopied, handleCopy] = useCopyToClipboard(timeoutTextCopy);
   const [dataDrinks, setDataDrinks] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [meals, setMeals] = useState([]);
+  const [next, setNext] = useState(ZERO);
+  const [LoadingDrink, setLoadingDrink] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const history = useHistory();
   const idDrink = history.location.pathname.split('/')[2];
-  const SEIS = 6;
   const { location: { pathname } } = history;
 
   let continuar = false;
@@ -26,11 +31,17 @@ function DetalhesBebida() {
   }
 
   useEffect(() => {
+    if (!isLoading) {
+      setMeals(data[0].meals.filter((_, index) => index < SEIS));
+    }
+  }, [isLoading]);
+
+  useEffect(() => {
     async function fetchAPI() {
       const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idDrink}`);
       const responseJson = await response.json();
       setDataDrinks(responseJson.drinks[0]);
-      setIsLoading(false);
+      setLoadingDrink(false);
     }
     fetchAPI();
   }, [idDrink]);
@@ -40,6 +51,12 @@ function DetalhesBebida() {
       setIsFavorite(true);
     }
   }, []);
+
+  const changeNext = (valor) => {
+    if ((next + valor) > QUATRO) return setNext(ZERO);
+    if ((next + valor) < ZERO) return setNext(QUATRO);
+    setNext(next + valor);
+  };
 
   const handleClick = () => {
     setIsFavorite(!isFavorite);
@@ -60,8 +77,8 @@ function DetalhesBebida() {
 
   return (
     <div>
-      {(isLoading)
-        ? <p>Loading</p>
+      {(LoadingDrink)
+        ? <p>Loading...</p>
         : (
           <div className="container-details">
             <img
@@ -134,26 +151,28 @@ function DetalhesBebida() {
               <h2>Recomendadas</h2>
               <div className="cards">
                 <div className="scroller">
-                  {
-                    data[0] && data[0].meals
-                      .filter((_, index) => index < SEIS)
-                      .map(({ strMeal, strMealThumb }, index) => (
-                        <div
-                          className="card"
-                          key={ strMeal }
-                          data-testid={ `${index}-recomendation-card` }
-                        >
-                          <img src={ strMealThumb } alt={ strMeal } />
-                          <h2
-                            data-testid={ `${index}-recomendation-title` }
-                          >
-                            { strMeal }
-                          </h2>
-                        </div>
-                      ))
-                  }
+                  { meals.map((meal, index) => (
+                    <div
+                      key={ index }
+                      className={
+                        (index !== next && index !== next + 1)
+                          ? 'card invisible'
+                          : 'card'
+                      }
+                      data-testid={ `${index}-recomendation-card` }
+                    >
+                      <img src={ meal.strMealThumb } alt={ meal.strMeal } />
+                      <h2
+                        data-testid={ `${index}-recomendation-title` }
+                      >
+                        { meal.strMeal }
+                      </h2>
+                    </div>
+                  )) }
                 </div>
               </div>
+              <button type="button" onClick={ () => { changeNext(-UM); } }>Voltar</button>
+              <button type="button" onClick={ () => { changeNext(UM); } }>Próximo</button>
             </div>
             <Link to={ `/bebidas/${idDrink}/in-progress` }>
               <button
@@ -165,7 +184,7 @@ function DetalhesBebida() {
               </button>
             </Link>
           </div>
-        )}
+        ) }
     </div>
   );
 }
