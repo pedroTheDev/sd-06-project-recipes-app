@@ -16,15 +16,12 @@ export default function DetalhesComidas({ history }) {
   const {
     setSelectedMeal,
     selectedMeal,
-    favoriteMeals,
-    setFavoriteMeals,
     loading,
     setLoading,
   } = useContext(Context);
   const [arrayIngredients, setArrayIngredients] = useState([]);
   const [recomendedDrinks, setRecomendedDrinks] = useState([]);
   const [favoriteImg, setFavoriteImg] = useState(whiteHeart);
-  const [favLocalStorage, setFavLocalStorage] = useState([]);
   const [sharedURL, setSharedURL] = useState(false);
 
   const setarComida = async () => {
@@ -36,11 +33,9 @@ export default function DetalhesComidas({ history }) {
     setLoading(false);
   };
 
-  // let favLocalStorage = [];
-
   const favoriteRecipe = {
     id: selectedMeal.idMeal,
-    type: 'meal',
+    type: 'comida',
     area: selectedMeal.strArea,
     category: selectedMeal.strCategory,
     alcoholicOrNot: '',
@@ -49,22 +44,19 @@ export default function DetalhesComidas({ history }) {
   };
 
   const getLocalStorage = () => {
-    if (!favLocalStorage) {
-    // favLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
-      setFavLocalStorage(JSON.parse(localStorage.getItem('favoriteRecipes')));
-    }
-  };
-
-  const verifyFavorite = () => {
-    if (favLocalStorage.includes(favoriteRecipe)) {
-      setFavoriteImg(blackHeart);
+    if (localStorage.favoriteRecipes) {
+      const favLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      favLocalStorage.forEach((fav) => {
+        if (fav.id === id) {
+          setFavoriteImg(blackHeart);
+        }
+      });
     }
   };
 
   useEffect(() => {
     setarComida();
     getLocalStorage();
-    verifyFavorite();
   }, []);
 
   const collectIngredients = () => {
@@ -85,22 +77,24 @@ export default function DetalhesComidas({ history }) {
   }, [selectedMeal]);
 
   const clickFavorite = () => {
+    const favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (favRecipes) {
+      if (favoriteImg === whiteHeart) {
+        localStorage.setItem('favoriteRecipes',
+          JSON.stringify([...favRecipes, favoriteRecipe]));
+        return setFavoriteImg(blackHeart);
+      }
+      const takeOutMeal = favRecipes.filter(
+        (meal) => meal.id !== favoriteRecipe.id,
+      );
+      localStorage.setItem('favoriteRecipes', JSON.stringify(takeOutMeal));
+      return setFavoriteImg(whiteHeart);
+    }
     if (favoriteImg === whiteHeart) {
-      setFavoriteMeals([...favoriteMeals, selectedMeal]);
-      const newFav = [...favLocalStorage, favoriteRecipe];
       localStorage.setItem('favoriteRecipes',
-        JSON.stringify(newFav));
+        JSON.stringify([favoriteRecipe]));
       return setFavoriteImg(blackHeart);
     }
-    const takeOutMeal = favLocalStorage.filter(
-      (meal) => meal.id !== favoriteRecipe.id,
-    );
-    const newMeals = favoriteMeals.filter(
-      (meal) => meal.strMeal !== selectedMeal.strMeal,
-    );
-    setFavoriteMeals(newMeals);
-    localStorage.setItem('favoriteRecipes', JSON.stringify(takeOutMeal));
-    return setFavoriteImg(whiteHeart);
   };
 
   const clickDetails = (identidade) => {
