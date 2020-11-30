@@ -1,17 +1,41 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import HeaderContext from '../context/HeaderContext';
 
 const ExploreFoods = () => {
-  const { title, setTitle } = useContext(HeaderContext);
+  const { setTitle } = useContext(HeaderContext);
+  const [randomRecipe, setRandomRecipe] = useState('');
+
+  const getRandomRecipe = async () => {
+    const endpoint = 'https://www.themealdb.com/api/json/v1/1/random.php';
+    const recipeData = await fetch(endpoint);
+    const recipe = await recipeData.json();
+    setRandomRecipe(recipe.meals[0]);
+  };
 
   useEffect(() => {
     setTitle('Explorar Comidas');
+    getRandomRecipe();
   }, []);
 
   return (
-    <h1>
-      { title }
-    </h1>
+    <div>
+      <Link to="/explorar/comidas/ingredientes">
+        <button type="button" data-testid="explore-by-ingredient">
+          Por Ingredientes
+        </button>
+      </Link>
+      <Link to="/explorar/comidas/area">
+        <button type="button" data-testid="explore-by-area">
+          Por Local de Origem
+        </button>
+      </Link>
+      <Link to={ `/comidas/${randomRecipe.idMeal}` }>
+        <button type="button" data-testid="explore-surprise">
+          Me Surpreenda!
+        </button>
+      </Link>
+    </div>
   );
 };
 
