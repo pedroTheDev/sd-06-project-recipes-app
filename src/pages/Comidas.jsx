@@ -35,12 +35,6 @@ export default function Comidas({ history }) {
     setLoading(false);
   };
 
-  const testeConsole = () => {
-    console.log('meals', meals);
-    console.log('meals.length', meals.length);
-    console.log('loading', loading);
-  };
-
   useEffect(() => {
     setTitulo('Comidas');
     fetchFoods();
@@ -75,8 +69,6 @@ export default function Comidas({ history }) {
     <div>
       <Header titulo={ titulo } />
       <Lupa onClick={ onClick } />
-
-      <button type="button" onClick={ testeConsole }>teste console</button>
 
       <button
         type="button"
@@ -123,7 +115,7 @@ export default function Comidas({ history }) {
     </div>
   );
 }
-// comentario para push;
+
 Comidas.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,

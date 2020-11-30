@@ -6,7 +6,6 @@ function SearchBar() {
   const [searchParam, setSearchParam] = useState('');
   const [termoBusca, setTermoBusca] = useState('');
   const { setSearch, setMeals, setDrinks, setLoading, titulo } = useContext(Context);
-  console.log('!!termoBusca', !!termoBusca);
 
   const handleChange = ({ target }) => {
     setSearchParam(target.value);
