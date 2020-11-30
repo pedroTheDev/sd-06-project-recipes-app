@@ -134,14 +134,14 @@ function DetalhesBebida() {
   function renderIngrediente(bebida) {
     const array = [];
     for (let numero = 1; numero <= quinze; numero += 1) {
-      if (bebida[`strIngredient${numero}`] !== '') {
+      if (bebida[`strIngredient${numero}`] !== null) {
         array.push(
           <li
             data-testid={ `${numero - 1}-ingredient-name-and-measure` }
             className="titulo"
           >
             {`${bebida[`strIngredient${numero}`]} `}
-            {(bebida[`strMeasure${numero}`] !== '')
+            {(bebida[`strMeasure${numero}`] !== null)
               ? <span>{`${bebida[`strMeasure${numero}`]}`}</span>
               : ''}
           </li>,
@@ -149,6 +149,16 @@ function DetalhesBebida() {
       }
     }
     return array;
+  }
+  function copiaLink() {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      const link = document.createElement('span');
+      link.innerHTML = 'Link copiado!';
+      document.getElementById('link-compartilhar').appendChild(link);
+    }, () => {
+      // eslint-disable-next-line
+      alert('erro');
+    });
   }
   // console.log(estadoApiBebidas);
 
@@ -163,10 +173,11 @@ function DetalhesBebida() {
             src={ bebida.strDrinkThumb }
             alt={ bebida.strDrink }
           />
-          <button type="button" data-testid="share-btn">
+          <button type="button" data-testid="share-btn" onClick={ copiaLink }>
             <img src={ share } alt="share" />
           </button>
           <button type="button" data-testid="favorite-btn">Favoritar</button>
+          <div id="link-compartilhar" />
           <h2 data-testid="recipe-title" className="titulo">{ bebida.strDrink }</h2>
           <h4 data-testid="recipe-category" className="category titulo">
             {bebida.strAlcoholic}

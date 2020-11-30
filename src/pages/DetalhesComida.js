@@ -139,7 +139,18 @@ function DetalhesComidas() {
     }
     return array;
   }
-
+  function copiaLink() {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      const link = document.createElement('span');
+      link.innerHTML = 'Link copiado!';
+      document.getElementById('link-compartilhar').appendChild(link);
+    }, () => {
+      // eslint-disable-next-line
+      alert('erro');
+    });
+  }
+  console.log(window.location.href);
+  // onClick={() => {navigator.clipboard.writeText(window.location.href)}}
   return (
     estadoApiComidas.map((comida, index) => (
       <div key={ index }>
@@ -149,10 +160,11 @@ function DetalhesComidas() {
           src={ comida.strMealThumb }
           alt={ comida.strMeal }
         />
-        <button type="button" data-testid="share-btn">
+        <button type="button" data-testid="share-btn" onClick={ copiaLink }>
           <img src={ share } alt="share" />
         </button>
         <button type="button" data-testid="favorite-btn">Favoritar</button>
+        <div id="link-compartilhar" />
         <h2 data-testid="recipe-title" className="titulo">{ comida.strMeal }</h2>
         <h4 data-testid="recipe-category" className="category titulo">
           {comida.strCategory}
