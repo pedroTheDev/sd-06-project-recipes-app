@@ -22,17 +22,17 @@ const Cards = () => {
               key={ meal.strMeal }
             >
               <p data-testid={ `${index}-card-name` }>{meal.strMeal}</p>
-              <img
-                data-testid={ `${index}-card-img` }
-                width="200"
-                src={ meal.strMealThumb }
-                alt={ meal.strMeal }
-              />
+
               <button
                 type="button"
                 onClick={ () => clickRedirectRecipe(meal.idMeal) }
               >
-                Detalhes
+                <img
+                  data-testid={ `${index}-card-img` }
+                  width="200"
+                  src={ meal.strMealThumb }
+                  alt={ meal.strMeal }
+                />
               </button>
             </div>
           );
@@ -46,17 +46,16 @@ const Cards = () => {
           return (
             <div data-testid={ `${index}-recipe-card` } key={ meal.strMeal }>
               <p data-testid={ `${index}-card-name` }>{meal.strMeal}</p>
-              <img
-                data-testid={ `${index}-card-img` }
-                width="200"
-                src={ meal.strMealThumb }
-                alt={ meal.strMeal }
-              />
               <button
                 type="button"
                 onClick={ () => clickRedirectRecipe(meal.idMeal) }
               >
-                Detalhes
+                <img
+                  data-testid={ `${index}-card-img` }
+                  width="200"
+                  src={ meal.strMealThumb }
+                  alt={ meal.strMeal }
+                />
               </button>
             </div>
           );
@@ -79,17 +78,17 @@ const Cards = () => {
               <div>
                 <div data-testid={ `${index}-recipe-card` } key={ res.idDrink }>
                   <p data-testid={ `${index}-card-name` }>{res.strDrink}</p>
-                  <img
-                    data-testid={ `${index}-card-img` }
-                    width="200"
-                    src={ res.strDrinkThumb }
-                    alt={ res.strDrink }
-                  />
+
                   <button
                     type="button"
                     onClick={ () => clickRedirectRecipe(res.idDrink) }
                   >
-                    Detalhes
+                    <img
+                      data-testid={ `${index}-card-img` }
+                      width="200"
+                      src={ res.strDrinkThumb }
+                      alt={ res.strDrink }
+                    />
                   </button>
                 </div>
               </div>
