@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { detailsFoodById, showSugestedDrinks } from '../services/aPI';
 import './DetalhesComida.css';
 
@@ -13,6 +14,15 @@ const DetalhesComida = () => {
   const [stateSugestions, setSugestions] = useState();
   const [foodsInProgress, setFoodsInProgress] = useState({ meals: {} });
   const [isFavorite, setIsFavorite] = useState(false);
+  const [windowLink, setWindowLink] = useState(window.location.href);
+  const [linkCopied, setLinkCopied] = useState(false);
+
+  const handleShareClick = () => {
+    const url = window.location.href;
+
+    setWindowLink(url);
+    setLinkCopied(true);
+  };
 
   const currentFoodID = useParams().id;
 
@@ -138,15 +148,18 @@ const DetalhesComida = () => {
               { stateLocal.food.meals[0].strMeal }
             </span>
             <div className="container-icons">
-              <button
-                type="button"
-              >
-                <img
+              <CopyToClipboard text={ windowLink } onCopy={ () => setLinkCopied(true) }>
+                <button
+                  type="button"
                   data-testid="share-btn"
-                  src={ shareIcon }
-                  alt="shareIcon"
-                />
-              </button>
+                  onClick={ handleShareClick }
+                >
+                  <img
+                    src={ shareIcon }
+                    alt="shareIcon"
+                  />
+                </button>
+              </CopyToClipboard>
               <button
                 type="button"
                 onClick={ handleFavorite }
@@ -157,6 +170,7 @@ const DetalhesComida = () => {
                   alt={ !isFavorite ? 'whiteHeartIcon' : 'blackHeartIcon' }
                 />
               </button>
+              {linkCopied ? <span>Link copiado!</span> : null}
             </div>
           </div>
           <div
