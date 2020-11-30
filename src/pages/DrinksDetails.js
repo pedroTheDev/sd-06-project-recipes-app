@@ -38,6 +38,7 @@ class DrinksDetails extends React.Component {
     this.setDrinkState(drinkRecipe, recommendedMeals);
     this.handleIngredients();
     this.changeButtonInnerText(endpoint);
+    this.setRenderState(drinkRecipe[0]);
   }
 
   handleYoutubeVideo(url) {
@@ -81,6 +82,12 @@ class DrinksDetails extends React.Component {
 
       this.setIngredients(filteredIngredients, filteredMeasure);
       return null;
+    });
+  }
+
+  setRenderState(drink) {
+    this.setState({
+      recipe: drink,
     });
   }
 
@@ -201,17 +208,17 @@ class DrinksDetails extends React.Component {
   }
 
   render() {
-    const { Drink,
+    const {
       RecommendedMeals,
       x,
       Ingredients,
       Measures,
-      Video } = this.state;
-    const recipe = Drink[0];
-    const zero = 0;
+      Video,
+      recipe,
+    } = this.state;
     return (
       <div className="food-drink-detail-container">
-        {Drink.length > zero && Drink[0] && (
+        {recipe && recipe && (
           <div className="detail-card">
             <img
               src={ recipe.strDrinkThumb }
