@@ -41,103 +41,145 @@ const FavoriteRecipes = () => {
     console.log(favoriteRecipes);
   };
 
+  const handleFilter = (filt) => {
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    let filteredFav;
+    if (filt !== 'all') {
+      filteredFav = favoriteRecipes.filter((recipe) => recipe.type === filt);
+    } else if (filt === 'all') {
+      filteredFav = favoriteRecipes;
+    }
+    setFavRecipes(filteredFav);
+  };
+
   return (
     <div>
       <Header title="Receitas Favoritas" />
-      {favRecipes && favRecipes.map((recipe, index) => {
-        if (recipe.type === 'comida') {
+
+      <div>
+        <button
+          data-testid="filter-by-all-btn"
+          type="button"
+          onClick={ () => handleFilter('all') }
+        >
+          All
+        </button>
+        <button
+          data-testid="filter-by-food-btn"
+          type="button"
+          onClick={ () => handleFilter('comida') }
+        >
+          Food
+        </button>
+        <button
+          data-testid="filter-by-drink-btn"
+          type="button"
+          onClick={ () => handleFilter('bebida') }
+        >
+          Drink
+        </button>
+      </div>
+
+      {favRecipes && favRecipes
+        .map((recipe, index) => {
           const { id } = recipe;
-          return (
-            <div>
-              <Link to={ `/comidas/${recipe.id}` }>
-                <img
-                  src={ recipe.image }
-                  alt={ recipe.name }
-                  data-testid={ `${index}-horizontal-image` }
-                  width="200"
-                />
-                <p data-testid={ `${index}-horizontal-name` }>{recipe.name}</p>
-
-              </Link>
-              <p data-testid={ `${index}-horizontal-top-text` }>{`${recipe.area} - ${recipe.category}`}</p>
+          if (recipe.type === 'comida') {
+            return (
               <div>
+                <Link to={ `/comidas/${recipe.id}` }>
+                  <img
+                    src={ recipe.image }
+                    alt={ recipe.name }
+                    data-testid={ `${index}-horizontal-image` }
+                    width="200"
+                  />
+                  <p data-testid={ `${index}-horizontal-name` }>{recipe.name}</p>
+
+                </Link>
+                <p
+                  data-testid={ `${index}-horizontal-top-text` }
+                >
+                  {`${recipe.area} - ${recipe.category}`}
+                </p>
+                <div>
+                  <button
+                    data-testid={ `${index}-horizontal-share-btn` }
+                    type="button"
+                    onClick={ () => copyToCB(id) }
+                    src={ shareIcon }
+                  >
+                    <img
+                      src={ shareIcon }
+                      alt="Compartilhar Receita"
+                    />
+                  </button>
+                  {copied ? 'Link copiado!' : null}
+                </div>
                 <button
-                  data-testid={ `${index}-horizontal-share-btn` }
                   type="button"
-                  onClick={ () => copyToCB(id) }
+                  onClick={ () => removeFavorite(recipe.id) }
                   src={ shareIcon }
                 >
                   <img
-                    src={ shareIcon }
-                    alt="Compartilhar Receita"
+                    data-testid={ `${index}-horizontal-favorite-btn` }
+                    id="favorite-img"
+                    src={ blackHeartIcon }
+                    alt=""
                   />
                 </button>
-                {copied ? 'Link copiado!' : null}
+
               </div>
-              <button
-                type="button"
-                onClick={ () => removeFavorite(recipe.id) }
-                src={ shareIcon }
-              >
-                <img
-                  data-testid={ `${index}-horizontal-favorite-btn` }
-                  id="favorite-img"
-                  src={ blackHeartIcon }
-                  alt=""
-                />
-              </button>
 
-            </div>
-
-          );
-        } if (recipe.type === 'bebida') {
-          return (
-            <div>
-              <Link to={ `/bebidas/${recipe.id}` }>
-                <img
-                  src={ recipe.image }
-                  alt={ recipe.name }
-                  data-testid={ `${index}-horizontal-image` }
-                  width="200"
-
-                />
-                <p data-testid={ `${index}-horizontal-name` }>{recipe.name}</p>
-              </Link>
-              <p
-                data-testid={ `${index}-horizontal-top-text` }
-              >
-                {recipe.alcoholicOrNot}
-              </p>
+            );
+          } if (recipe.type === 'bebida') {
+            return (
               <div>
+                <Link to={ `/bebidas/${recipe.id}` }>
+                  <img
+                    src={ recipe.image }
+                    alt={ recipe.name }
+                    data-testid={ `${index}-horizontal-image` }
+                    width="200"
+
+                  />
+                  <p data-testid={ `${index}-horizontal-name` }>{recipe.name}</p>
+                </Link>
+                <p
+                  data-testid={ `${index}-horizontal-top-text` }
+                >
+                  {recipe.alcoholicOrNot}
+                </p>
+                <div>
+                  <button
+                    data-testid={ `${index}-horizontal-share-btn` }
+                    type="button"
+                    onClick={ copyToCB }
+                    src={ shareIcon }
+                  >
+                    <img
+                      src={ shareIcon }
+                      alt="Compartilhar Receita"
+                    />
+                  </button>
+                  {copied ? 'Link copiado!' : null}
+                </div>
                 <button
-                  data-testid={ `${index}-horizontal-share-btn` }
                   type="button"
-                  onClick={ copyToCB }
-                  src={ shareIcon }
+                  onClick={ () => removeFavorite(recipe.id) }
                 >
                   <img
-                    src={ shareIcon }
-                    alt="Compartilhar Receita"
+                    data-testid={ `${index}-horizontal-favorite-btn` }
+                    id="favorite-img"
+                    src={ blackHeartIcon }
+                    alt=""
                   />
                 </button>
-                {copied ? 'Link copiado!' : null}
-              </div>
-              <button
-                type="button"
-                onClick={ () => removeFavorite(recipe.id) }
-              >
-                <img
-                  data-testid={ `${index}-horizontal-favorite-btn` }
-                  id="favorite-img"
-                  src={ blackHeartIcon }
-                  alt=""
-                />
-              </button>
 
-            </div>
-          );
-        }
-      })}
+              </div>
+            );
+          }
+          return '';
+        })}
     </div>
   );
 };
