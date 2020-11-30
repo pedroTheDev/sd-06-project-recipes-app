@@ -3,7 +3,8 @@ import { fireEvent } from '@testing-library/react';
 import renderWithRouter from '../renderWithRouter/renderWithRouter';
 import App from '../../App';
 
-describe('2 - Crie todos os elementos que devem respeitar os atributos descritos no protótipo para a tela de login', () => {
+describe('2 - Crie todos os elementos que devem respeitar os atributos descritos'
++ 'no protótipo para a tela de login', () => {
   it('O input de email deve possuir o atributo data-testid="email-input"', () => {
     const { getByTestId } = renderWithRouter(<App />);
     const emailInput = getByTestId('email-input');
@@ -26,7 +27,8 @@ describe('2 - Crie todos os elementos que devem respeitar os atributos descritos
   });
 });
 
-describe('3 - Desenvolva a tela de maneira que a pessoa deve conseguir escrever seu email no input de email', () => {
+describe('3 - Desenvolva a tela de maneira que a pessoa deve conseguir escrever'
++ ' seu email no input de email', () => {
   it('Input do email permite digitar email', () => {
     const { getByTestId } = renderWithRouter(<App />);
     const emailInput = getByTestId('email-input');
@@ -37,7 +39,8 @@ describe('3 - Desenvolva a tela de maneira que a pessoa deve conseguir escrever 
   });
 });
 
-describe('4 - Desenvolva a tela de maneira que a pessoa deve conseguir escrever sua senha no input de senha', () => {
+describe('4 - Desenvolva a tela de maneira que a pessoa deve conseguir escrever sua senha'
++ 'no input de senha', () => {
   it('Possível escrever a senha no input senha', () => {
     const { getByTestId } = renderWithRouter(<App />);
     const passwordInput = getByTestId('password-input');
@@ -48,7 +51,8 @@ describe('4 - Desenvolva a tela de maneira que a pessoa deve conseguir escrever 
   });
 });
 
-describe('5 - Desenvolva a tela de maneira que o formulário só seja válido após um email válido e uma senha de mais de 6 caracteres serem preenchidos', () => {
+describe('5 - Desenvolva a tela de maneira que o formulário só seja válido após um'
++ 'email válido e uma senha de mais de 6 caracteres serem preenchidos', () => {
   it('O botão deve estar desativado se o email for inválido;', () => {
     const { getByTestId } = renderWithRouter(<App />);
     const emailInput = getByTestId('email-input');
@@ -85,7 +89,8 @@ describe('5 - Desenvolva a tela de maneira que o formulário só seja válido ap
     expect(loginSubmitButton).toBeEnabled();
   });
 
-  describe('6 - Salve 2 tokens no localStorage após a submissão, identificados pelas chaves mealsToken e cocktailsToken', () => {
+  describe('6 - Salve 2 tokens no localStorage após a submissão, identificados pelas'
+   + 'chaves mealsToken e cocktailsToken', () => {
     it('O token de teste é sempre 1.', () => {
       const { getByTestId } = renderWithRouter(<App />);
       const emailInput = getByTestId('email-input');
@@ -102,8 +107,10 @@ describe('5 - Desenvolva a tela de maneira que o formulário só seja válido ap
       expect(mealsToken).toBe('1');
       expect(cocktailsToken).toBe('1');
     });
-    describe('7 - Salve o e-mail da pessoa usuária no localStorage na chave user após a submissão', () => {
-      it('Após a submissão, o e-mail de pessoa usuária deve ser salvo em localStorage na chave user no formato { email: email-da-pessoa }.', () => {
+    describe('7 - Salve o e-mail da pessoa usuária no localStorage na chave user após'
+    + ' na chavea submissão', () => {
+      it('Após a submissão, o e-mail de pessoa usuária deve ser salvo em localStorage'
+      + 'user no formato { email: email-da-pessoa }.', () => {
         const { getByTestId } = renderWithRouter(<App />);
         const emailInput = getByTestId('email-input');
         const passwordInput = getByTestId('password-input');
@@ -118,7 +125,8 @@ describe('5 - Desenvolva a tela de maneira que o formulário só seja válido ap
         expect(userEmail).toBe('{"email":"teste@teste.com"}');
       });
     });
-    describe('8 - Redirecione a pessoa usuária para a tela principal de receitas de comidas após a submissão e validação com sucesso do login', () => {
+    describe('8 - Redirecione a pessoa usuária para a tela principal dereceitas de'
+    + ' comidas após a submissão e validação com sucesso do login', () => {
       it('A rota muda para a tela principal de receitas de comidas.', () => {
         const { getByTestId, history } = renderWithRouter(<App />);
         const emailInput = getByTestId('email-input');

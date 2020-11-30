@@ -7,6 +7,11 @@ export default function Login() {
   const { password, setPassword } = useContext(RevenueContext);
   const [disable, setDisable] = useState(true);
 
+  const loginCheck = () => {
+    const checkUser = JSON.parse(localStorage.getItem('user'));
+    console.log(checkUser);
+  };
+
   const inputValidate = () => {
     const validEmail = (/\S+@\S+\.\S+/).test(email);
     const validPassword = (/.{6,}/).test(password);
@@ -22,6 +27,7 @@ export default function Login() {
     if (name === 'email') setEmail(value);
     if (name === 'password') setPassword(value);
     inputValidate();
+    loginCheck();
   };
 
   const setLocalStorage = () => {

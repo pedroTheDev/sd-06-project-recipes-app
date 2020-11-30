@@ -12,30 +12,107 @@ export default function RecipeDetails() {
   const location = useLocation();
   const idRecipe = location.pathname.split('/');
   const [heartIcon, setheartIcon] = useState(WhiteHeartIcon);
+  const [alert, setAlert] = useState();
   if (idRecipe[1] === 'comidas') setSearchParam('Meal');
   if (idRecipe[1] === 'bebidas') setSearchParam('Drink');
   const linkRecipeAPI = (searchParam === 'Meal')
     ? `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idRecipe[2]}`
     : `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idRecipe[2]}`;
 
-  console.log(idRecipe[1]);
-  console.log(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idRecipe[2]}`);
+  const [localStorageFavorites, setLocalStorageFavorites] = useState(
+    JSON
+      .parse(localStorage
+        .getItem('favoriteRecipes')),
+  );
+
+  if (!localStorageFavorites) {
+    setLocalStorageFavorites([]);
+  }
+
+  let actualRecipe = [];
+  function checkLocalStorage() {
+    if (searchParam === 'Meal') {
+      actualRecipe = ([
+        {
+          id: foods[0].idMeal,
+          type: searchParam,
+          area: foods[0].strArea,
+          category: foods[0].strCategory,
+          alcoholicOrNot: '',
+          name: foods[0].strMeal,
+          image: foods[0].strMealThumb,
+        },
+      ]);
+    }
+    if (searchParam === 'Drink') {
+      actualRecipe = ([
+        {
+          id: foods[0].idDrink,
+          type: searchParam,
+          area: '',
+          category: foods[0].strCategory,
+          alcoholicOrNot: foods[0].strAlcoholic,
+          name: foods[0].strDrink,
+          image: foods[0].strDrinkThumb,
+        },
+      ]);
+    }
+
+    let isFavorite;
+    if (localStorageFavorites !== null) {
+      isFavorite = localStorageFavorites
+        .find((favorite) => favorite.id === actualRecipe[0].id);
+    }
+    if (isFavorite !== undefined && heartIcon === WhiteHeartIcon) {
+      setheartIcon(BlackHeartIcon);
+    }
+    if (isFavorite === undefined && heartIcon === BlackHeartIcon) {
+      setheartIcon(WhiteHeartIcon);
+    }
+    return actualRecipe;
+  }
 
   useEffect(() => {
     fetchApi(linkRecipeAPI);
   }, [searchParam]);
 
   function shareRecipeLink() {
+    const time = 5000;
     navigator.clipboard.writeText(`http://localhost:3000${location.pathname}`);
-    alert('Link copiado!');
+    setAlert(true);
+    setTimeout(() => {
+      setAlert(false);
+    }, time);
+    // alert('Link copiado!');
   }
 
   function whiteToBlackHeart() {
     if (heartIcon === WhiteHeartIcon) {
-      // ...
+      // // ...
+      // if (localStorageFavorites !== 'null') {
+      const newLocalStorageFavorites = localStorageFavorites;
+      newLocalStorageFavorites.push(actualRecipe[0]);
+      setLocalStorageFavorites(newLocalStorageFavorites);
+      localStorage
+        .setItem('favoriteRecipes', JSON
+          .stringify(localStorageFavorites));
+      // } else {
+      //   const setLocal = async () =>
+      //   { localStorage.setItem('favoriteRecipes', JSON.stringify(actualRecipe));
+      //   await setheartIcon(BlackHeartIcon);
+      // }
       setheartIcon(BlackHeartIcon);
     } else {
       // ...
+      const newLocalStorageFavorites = localStorageFavorites;
+      newLocalStorageFavorites
+        .splice(localStorageFavorites
+          .indexOf(localStorageFavorites
+            .find((favorite) => favorite.id === actualRecipe[0].id)), 1);
+      setLocalStorageFavorites(newLocalStorageFavorites);
+      localStorage
+        .setItem('favoriteRecipes', JSON
+          .stringify(localStorageFavorites));
       setheartIcon(WhiteHeartIcon);
     }
     // AO CLICAR NO BOTÃO DO CORÇÃO DEVE MUDAR O SRC PARA {BlackHeartIcon} E FICAR GRAVADO
@@ -65,6 +142,7 @@ export default function RecipeDetails() {
   const render = () => {
     const ZERO = 0;
     if (foods.length > ZERO) {
+      checkLocalStorage();
       let videoCode;
       if (searchParam === 'Meal') {
         videoCode = (foods[0].strYoutube) ? foods[0].strYoutube.split('=') : undefined;
@@ -81,6 +159,7 @@ export default function RecipeDetails() {
           <div className="d-flex justify-content-around">
             <a href onClick={ () => shareRecipeLink() }>
               <img src={ ShareIcon } alt="Share Button" data-testid="share-btn" />
+              {alert && <alert>Link copiado!</alert>}
             </a>
             <a href onClick={ () => whiteToBlackHeart() }>
               <img src={ heartIcon } alt="Favorite Button" data-testid="favorite-btn" />
@@ -117,7 +196,12 @@ export default function RecipeDetails() {
           <h4>RECOMENDED: </h4>
           <RecommendedRecipes />
           <button
+            style={ {
+              postion: 'fixed',
+              bottom: '0px',
+            } }
             data-testid="start-recipe-btn"
+            className="start-recipe-btn"
             type="button"
             onClick={ console.log('Iniciar receita') }
           >

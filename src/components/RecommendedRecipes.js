@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
+import Card from 'react-bootstrap/Card';
 import RevenueContext from '../context/RevenueContext';
 // TIREI O BOOTSTRAP DO CAROUSEL DAQUI
 // https://getbootstrap.com/docs/4.0/components/carousel/#with-controls
@@ -9,7 +10,8 @@ export default function RecommendedRecipes() {
   const { recommendations, fetchRecommendations,
     searchParam } = useContext(RevenueContext);
   const ZERO = 0;
-  const SETE = 7;
+  const FIVE = 5;
+  const TWO = 2;
 
   const [index, setIndex] = useState(ZERO);
 
@@ -28,52 +30,60 @@ export default function RecommendedRecipes() {
   const renderRecommendations = () => {
     const recommendParam = (searchParam === 'Meal') ? 'Drink' : 'Meal';
     return (
-      <div>
+      <div className="carousel">
         <Carousel activeIndex={ index } onSelect={ handleSelect }>
           {recommendations.map((recommendedItem, i) => {
-            if (i < SETE) {
+            if (i < FIVE && (i % TWO === ZERO)) {
               return (
                 <Carousel.Item>
-                  <img
-                    width="350px"
-                    src={ recommendedItem[`str${recommendParam}Thumb`] }
-                    alt={ recommendedItem[`str${recommendParam}`] }
-                  />
-                  <h6 data-testid="recipe-category">
-                    { searchParam === 'Drink'
-                      ? recommendedItem.strCategory
-                      : recommendedItem.strAlcoholic }
-                  </h6>
-                  <h1>{ recommendedItem[`str${recommendParam}`] }</h1>
+                  <div className="d-flex row-cols-2 justify-content-around">
+                    <Card data-testid={ `${i}-recomendation-card` }>
+                      <Card.Img
+                        src={ recommendations[i][`str${recommendParam}Thumb`] }
+                        alt={ recommendations[i][`str${recommendParam}`] }
+                      />
+                      <Card.Body>
+                        <Card.Title data-testid={ `${i}-recomendation-title` }>
+                          <h3>
+                            { recommendations[i][`str${recommendParam}`] }
+                          </h3>
+                        </Card.Title>
+                        <Card.Text>
+                          <h6 data-testid="recipe-category">
+                            { searchParam === 'Drink'
+                              ? recommendations[i].strCategory
+                              : recommendations[i].strAlcoholic }
+                          </h6>
+                        </Card.Text>
+                      </Card.Body>
+                    </Card>
+                    <Card Card data-testid={ `${i + 1}-recomendation-card` }>
+                      <Card.Img
+                        src={ recommendations[i + 1][`str${recommendParam}Thumb`] }
+                        alt={ recommendations[i + 1][`str${recommendParam}`] }
+                      />
+                      <Card.Body>
+                        <Card.Title data-testid={ `${i + 1}-recomendation-title` }>
+                          <h3>
+                            { recommendations[i + 1][`str${recommendParam}`] }
+                          </h3>
+                        </Card.Title>
+                        <Card.Text>
+                          <h6 data-testid="recipe-category">
+                            { searchParam === 'Drink'
+                              ? recommendations[i + 1].strCategory
+                              : recommendations[i + 1].strAlcoholic }
+                          </h6>
+                        </Card.Text>
+                      </Card.Body>
+                    </Card>
+                  </div>
                 </Carousel.Item>
               );
             }
             return null;
           })}
         </Carousel>
-        {/* TALVEZ AQUI TEM QUE SER ITEM-ATCTIVE PARA MOSTRAR OS 2 DOIS NA TELA */}
-
-        {/* NO CASO DE BEBIDAS A CATEGORIA VAI SER
-            SUBSTITUIDA P ALCOOLICO OU NAO strAlcoholic */}
-
-        <a
-          className="carousel-control-prev"
-          href="#carouselExampleControls"
-          role="button"
-          data-slide="prev"
-        >
-          <span className="carousel-control-prev-icon" aria-hidden="true" />
-          <span className="sr-only">Previous</span>
-        </a>
-        <a
-          className="carousel-control-next"
-          href="#carouselExampleControls"
-          role="button"
-          data-slide="next"
-        >
-          <span className="carousel-control-next-icon" aria-hidden="true" />
-          <span className="sr-only">Next</span>
-        </a>
       </div>
     );
   };

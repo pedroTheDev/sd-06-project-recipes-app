@@ -71,7 +71,8 @@
       "json",
       "lcovonly",
       "text",
-      "clover"
+      "clover",
+      "htmlt"
     ]
   }
 }
