@@ -87,7 +87,7 @@ export default function CategoryButton() {
         </div>
       );
     }
-    return 'As categorias não foram carregadas';
+    return null;
   };
 
   return (
