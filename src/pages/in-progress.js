@@ -10,6 +10,7 @@ import './style/details.css';
 class InProgress extends Component {
   constructor() {
     super();
+
     this.state = {
       details: [],
       isLoading: true,
@@ -21,6 +22,7 @@ class InProgress extends Component {
       ingredientsUsed: [],
       inputsMarked: {},
     };
+
     this.requestDetails = this.requestDetails.bind(this);
     this.checkRecipeProgress = this.checkRecipeProgress.bind(this);
     this.renderCardDetails = this.renderCardDetails.bind(this);
@@ -60,8 +62,8 @@ class InProgress extends Component {
       }),
       () => {
         const { isFavorite } = this.state;
-        if (isFavorite) this.saveToLocalStorage();
-        else this.deleteFromLocalStorage();
+        if (isFavorite) this.saveToLocalStorage('favoriteRecipes');
+        else this.deleteFromLocalStorage('favoriteRecipes');
       },
     );
   }
@@ -130,13 +132,20 @@ class InProgress extends Component {
     const ingredientsAndMeasures = this.parseIngredientsAndMeasures(details);
     const ingredientsLength = ingredientsAndMeasures.length;
     if (ingredientsUsed.length === ingredientsLength) {
-      this.setState({
-        isDone: true,
-      });
+      this.setState(
+        { isDone: true },
+        () => this.saveToLocalStorage('doneRecipes'),
+      );
     } else {
-      this.setState({
-        isDone: false,
-      });
+      this.setState(
+        { isDone: false },
+        () => {
+          const recipesDone = JSON.parse(localStorage.getItem('doneRecipes'));
+          if (recipesDone) {
+            this.deleteFromLocalStorage('doneRecipes');
+          }
+        },
+      );
     }
   }
 
@@ -175,9 +184,10 @@ class InProgress extends Component {
     localStorage.setItem('inProgressRecipes', JSON.stringify(obj));
   }
 
-  saveToLocalStorage() {
+  saveToLocalStorage(storageKeyName) {
     const { isMeal, details } = this.state;
-    const LS = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    console.log(details);
+    const LS = JSON.parse(localStorage.getItem(storageKeyName));
     let obj;
     if (isMeal) {
       obj = {
@@ -189,6 +199,14 @@ class InProgress extends Component {
         name: details[0].strMeal,
         image: details[0].strMealThumb,
       };
+
+      if (storageKeyName === 'doneRecipes') {
+        obj = {
+          ...obj,
+          tags: details[0].strTags && details[0].strTags.split(','),
+          doneDate: details[0].dateModified,
+        };
+      }
     } else {
       obj = {
         id: details[0].idDrink,
@@ -199,21 +217,28 @@ class InProgress extends Component {
         name: details[0].strDrink,
         image: details[0].strDrinkThumb,
       };
+      if (storageKeyName === 'doneRecipes') {
+        obj = {
+          ...obj,
+          tags: details[0].strTags && details[0].strTags.split(','),
+          doneDate: details[0].dateModified,
+        };
+      }
     }
     if (!LS) {
-      localStorage.setItem('favoriteRecipes', JSON.stringify([obj]));
+      localStorage.setItem(storageKeyName, JSON.stringify([obj]));
     } else {
-      localStorage.setItem('favoriteRecipes', JSON.stringify([...LS, obj]));
+      localStorage.setItem(storageKeyName, JSON.stringify([...LS, obj]));
     }
   }
 
-  deleteFromLocalStorage() {
+  deleteFromLocalStorage(storageKeyName) {
     const { details } = this.state;
-    const LS = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const LS = JSON.parse(localStorage.getItem(storageKeyName));
     const filteredLS = LS.filter(
       (recipe) => !recipe.id.includes(details[0].idMeal || details[0].idDrink),
     );
-    localStorage.setItem('favoriteRecipes', JSON.stringify(filteredLS));
+    localStorage.setItem(storageKeyName, JSON.stringify(filteredLS));
   }
 
   requestDetails(pathname) {
@@ -347,6 +372,7 @@ class InProgress extends Component {
       strAlcoholic,
       strInstructions,
     } = details[0];
+
     return (
       <div>
         <h3 data-testid="recipe-title">{strMeal || strDrink}</h3>

@@ -9,6 +9,8 @@ import {
   ReceitasBebidas,
   Details,
   InProgress,
+  RecipesDone,
+  FavoriteRecipes,
 } from './pages';
 import './App.css';
 
@@ -44,8 +46,8 @@ function App() {
         />
         <Route path="/explorar" component={ Explorar } />
         <Route path="/perfil" component={ Perfil } />
-        <Route path="/receitas-favoritas" component={ ReceitasBebidas } />
-        <Route path="/receitas-feitas" component={ ReceitasBebidas } />
+        <Route path="/receitas-favoritas" component={ FavoriteRecipes } />
+        <Route path="/receitas-feitas" component={ RecipesDone } />
       </Switch>
     </div>
   );
