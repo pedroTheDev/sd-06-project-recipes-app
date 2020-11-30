@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import splitPathname from '../utils/splitPathname';
 import recipeDetailsProcessing from '../utils/recipeDetailsProcessing';
@@ -18,6 +19,7 @@ function ReceitaProgresso(
   const [wasStarted, setWasStarted] = useState(false);
   const [wasCopied, setWasCopied] = useState(false);
   const [isFav, setIsFav] = useState(false);
+  const [shouldRedirect, setShouldRedirect] = useState(false);
 
   const buttonsProps = {
     path,
@@ -46,25 +48,28 @@ function ReceitaProgresso(
   };
 
   return (
-    <inProgressContext.Provider value={ context }>
-      <main>
-        <DetailAndProgressBody
-          recipe={ recipe }
-          buttonsProps={ buttonsProps }
-          recommendations={ [] }
-          page={ page }
-        />
-        <button
-          type="button"
-          data-testid="finish-recipe-btn"
-          className="start-recipe-btn"
-          disabled={ disableButton }
-          onClick={ () => history.push('/receitas-feitas') }
-        >
-          Finalizar Receita
-        </button>
-      </main>
-    </inProgressContext.Provider>
+    <div>
+      { shouldRedirect && <Redirect to="/receitas-feitas" /> }
+      <inProgressContext.Provider value={ context }>
+        <main>
+          <DetailAndProgressBody
+            recipe={ recipe }
+            buttonsProps={ buttonsProps }
+            recommendations={ [] }
+            page={ page }
+          />
+          <button
+            type="button"
+            data-testid="finish-recipe-btn"
+            className="start-recipe-btn"
+            disabled={ disableButton }
+            onClick={ () => setShouldRedirect(true) }
+          >
+            Finalizar Receita
+          </button>
+        </main>
+      </inProgressContext.Provider>
+    </div>
   );
 }
 
