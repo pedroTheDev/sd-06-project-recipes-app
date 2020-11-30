@@ -186,6 +186,7 @@ function ProcessoComida() {
       </p>
       <Link to="/receitas-feitas">
         <button
+          className="finish-recipe"
           type="button"
           data-testid="finish-recipe-btn"
           disabled={ isDisable }
