@@ -16,6 +16,8 @@ import ReceitasFavoritas from './pages/ReceitasFavoritas';
 import Perfil from './pages/Perfil';
 import Provider from './context/Provider';
 import DetalhesBebida from './pages/DetalhesBebida';
+// import ProcessoBebida from './pages/ProcessoBebida';
+// import ProcessoReceita from './pages/ProcessoReceita';
 import NotFound from './components/NotFound';
 
 function App() {
@@ -28,8 +30,8 @@ function App() {
           <Route path="/bebidas" exact component={ Bebidas } />
           <Route path="/comidas/:id" exact component={ DetalhesReceita } />
           <Route path="/bebidas/:id" exact component={ DetalhesBebida } />
-          <Route path="/comidas/:id/in-progress" exact component={ App } />
-          <Route path="/bebidas/:id/in-progress" exact component={ App } />
+          <Route path="/comidas/:id/in-progress" exact component={ Home } />
+          <Route path="/bebidas/:id/in-progress" exact component={ Home } />
           <Route path="/explorar" exact component={ Explorar } />
           <Route path="/explorar/comidas" exact component={ ExplorarComidas } />
           <Route path="/explorar/bebidas" exact component={ ExplorarBebidas } />
