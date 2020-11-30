@@ -8,10 +8,9 @@ import { Cards, Footer, Header } from '../components';
 export default function RegionFoods() {
   document.title = 'Explorar Origem';
   const [area, setArea] = useState();
-  const [results, setResults] = useState();
   const [search, setSearch] = useState('All');
 
-  const { filters, setFilters } = useContext(RecipesContext);
+  const { filters, setFilters, setItems } = useContext(RecipesContext);
   useSearch();
 
   useEffect(() => {
@@ -25,13 +24,12 @@ export default function RegionFoods() {
   useEffect(() => {
     async function fetch() {
       const response = await fetchRecipes(search);
-      setResults(response);
+      setItems(response);
     }
     if (search !== 'All') {
       fetch();
     }
     if (search === 'All') {
-      setResults();
       setFilters({ ...filters, category: 'comidas' });
     }
   }, [search]);
@@ -57,29 +55,11 @@ export default function RegionFoods() {
     }
   }
 
-  function handleDropdownResults() {
-    if (results) {
-      return (
-        results.map((item, index) => (
-          <div key={ index } data-testid={ `${index}-recipe-card"` }>
-            <img
-              src={ item.strMealThumb }
-              alt="foto da rexeita"
-              data-testid={ `${index}-card-img` }
-            />
-            <p data-testid={ `${index}-card-name` }>{item.strMeal}</p>
-          </div>
-        ))
-      );
-    }
-    return <Cards id="comidas" />;
-  }
-
   return (
     <div>
-      <Header />
+      <Header id="comidas" />
       {handleDropdown()}
-      {handleDropdownResults()}
+      <Cards id="comidas" />
       <Footer />
     </div>
   );
