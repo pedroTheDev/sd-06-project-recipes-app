@@ -19,6 +19,7 @@ function MyProvider({ children }) {
   const [recommendedRecipe, setRecommendedRecipe] = useState([]);
   const [cardsRecipe, setCardsRecipe] = useState([]);
   const [drinksAlcoholic, setDrinksAlcoholic] = useState({});
+  const [doneRecipes, setDoneRecipes] = useState({});
 
   useEffect(() => {
     async function fetchALL() {
@@ -28,6 +29,7 @@ function MyProvider({ children }) {
       setCategories(myCategories);
       setAreas(myAreas);
       setIngredients(myIngredients);
+      setDoneRecipes(doneRecipes)
 
       const myDrinkCategories = await getAllDrinkTypesApi('c');
       const myAlcoholic = await getAllDrinkTypesApi('a');
@@ -64,6 +66,8 @@ function MyProvider({ children }) {
     cardsRecipe,
     setCardsRecipe,
     drinksAlcoholic,
+    doneRecipes,
+    setDoneRecipes,
   };
 
   return (

@@ -8,7 +8,7 @@ function MyCarousel() {
 
   return (
     <Carousel>
-      { console.log(recommendedRecipe) }
+      {/* console.log(recommendedRecipe) */}
       <Carousel.Item>
         <div className="carousel-container">
           <div data-testid="0-recomendation-card">

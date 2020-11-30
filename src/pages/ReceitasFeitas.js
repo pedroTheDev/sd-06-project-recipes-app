@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import { shareIcon } from '../images/shareIcon.svg';
 
 function ReceitasFeitas() {
-  const doneRecipes = JSON.parse(localStorage.doneRecipes);
+  //const doneRecipes = JSON.parse(localStorage.doneRecipes);
+  const [doneRecipes, setDoneRecipes] = useState([]);
+
+  useEffect(() => {
+    if(!localStorage.doneRecipes) {
+      return <p>Você ainda não tem nenhuma receita pronta.</p>
+    }
+    setDoneRecipes(JSON.parse(localStorage.doneRecipes));
+  }, []);
+
   console.log(doneRecipes);
 
   return (
