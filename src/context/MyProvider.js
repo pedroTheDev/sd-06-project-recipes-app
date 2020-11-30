@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import mealsContext from './MealsContext';
 import { getAllDrinkTypesApi, getFilteredDrinksApi,
-  getDrinksAlcoholic, getRecipeDrinksApi } from '../services/drinksAPI';
-import { getAllRecipeTypesApi, getFilteredRecipesApi,
-  getRecipesMealsApi } from '../services/mealsAPI';
+  getDrinksAlcoholic } from '../services/drinksAPI';
+import { getAllRecipeTypesApi, getFilteredRecipesApi } from '../services/mealsAPI';
 
 function MyProvider({ children }) {
   const [categories, setCategories] = useState([]);
@@ -17,30 +16,29 @@ function MyProvider({ children }) {
   const [disable, setDisable] = useState(true);
   const [user, setUser] = useState({ email: '' });
   const [showSearchBar, setSearchBar] = useState(false);
-  const [recommendedMeals, setRecommendedMeals] = useState([]);
-  const [recommendedDrinks, setRecommendedDrinks] = useState([]);
+  const [recommendedMeals, setRecommendedMeals] = useState();
+  const [recommendedDrinks, setRecommendedDrinks] = useState();
   const [cardsRecipe, setCardsRecipe] = useState([]);
   const [drinksAlcoholic, setDrinksAlcoholic] = useState({});
+  const [recipeMeal, setRecipeMeal] = useState();
 
-  async function verifyRecommendedRecipes() {
-    console.log('verify', recommendedMeals);
-    console.log('verify', recommendedDrinks);
-    const inditialIndex = 0;
-    const quantityRecipes = 6;
-    if (recommendedMeals[0] === undefined) {
-      const resultRecommendedMeals = await getRecipesMealsApi();
-      const myRecommendedMeals = resultRecommendedMeals
-        .slice(inditialIndex, quantityRecipes);
-      console.log('array vazio', myRecommendedMeals);
-      setRecommendedMeals(myRecommendedMeals);
-    }
-    if (recommendedDrinks[0] === undefined) {
-      const resultRecommendedDrinks = await getRecipeDrinksApi();
-      const myRecommendedDrinks = resultRecommendedDrinks
-        .slice(inditialIndex, quantityRecipes);
-      setRecommendedDrinks(myRecommendedDrinks);
-    }
-  }
+  // async function verifyRecommendedRecipes() {
+  //   const inditialIndex = 0;
+  //   const quantityRecipes = 6;
+  //   if (recommendedMeals[0] === undefined) {
+  //     const resultRecommendedMeals = await getRecipesMealsApi();
+  //     const myRecommendedMeals = resultRecommendedMeals
+  //       .slice(inditialIndex, quantityRecipes);
+  //     console.log('array vazio', myRecommendedMeals);
+  //     setRecommendedMeals(myRecommendedMeals);
+  //   }
+  //   if (recommendedDrinks[0] === undefined) {
+  //     const resultRecommendedDrinks = await getRecipeDrinksApi();
+  //     const myRecommendedDrinks = resultRecommendedDrinks
+  //       .slice(inditialIndex, quantityRecipes);
+  //     setRecommendedDrinks(myRecommendedDrinks);
+  //   }
+  // }
 
   useEffect(() => {
     async function fetchALL() {
@@ -61,9 +59,6 @@ function MyProvider({ children }) {
       setDrinkIngredients(myDrinkIngredients);
       setGlasses(myGlasses);
       setDrinksAlcoholic(myDrinksAlcoholic);
-
-      // Verifica bebidas e comidas recomendadas
-      verifyRecommendedRecipes();
 
       // Cria Local storage de Receitas Feitas
       if (localStorage.getItem('doneRecipes') === null) {
@@ -89,13 +84,16 @@ function MyProvider({ children }) {
     showSearchBar,
     setSearchBar,
     recommendedMeals,
+    setRecommendedMeals,
     recommendedDrinks,
-    verifyRecommendedRecipes,
+    setRecommendedDrinks,
     getFilteredRecipesApi,
     getFilteredDrinksApi,
     cardsRecipe,
     setCardsRecipe,
     drinksAlcoholic,
+    recipeMeal,
+    setRecipeMeal,
   };
 
   return (

@@ -5,7 +5,7 @@ import MealsContext from '../context/MealsContext';
 import '../Css/myCarousel.css';
 
 function MyCarousel() {
-  const [recommendedRecipe, setRecommendedRecipe] = useState([]);
+  const [recommendedRecipe, setRecommendedRecipe] = useState();
   const { recommendedMeals, recommendedDrinks } = useContext(MealsContext);
 
   // Será usado para pegar o pathname ("comidas" ou "bebidas")
@@ -18,8 +18,6 @@ function MyCarousel() {
   const indiceCinco = 5;
 
   useEffect(() => {
-    console.log(recommendedMeals);
-    console.log(recommendedDrinks);
     let myRecommendedRecipes = [];
     if (location.pathname.includes('comidas')) {
       myRecommendedRecipes = recommendedDrinks.map((item) => {
@@ -63,38 +61,34 @@ function MyCarousel() {
     );
   }
 
-  function showCarousel() {
-    return (
-      <Carousel>
-        <Carousel.Item>
-          <div className="carousel-container">
-            { showItemCarousel(indiceZero) }
-            { showItemCarousel(indiceUm) }
-          </div>
-        </Carousel.Item>
-        <Carousel.Item>
-          <div className="carousel-container">
-            { showItemCarousel(indiceDois) }
-            { showItemCarousel(indiceTres) }
-          </div>
-        </Carousel.Item>
-        <Carousel.Item>
-          <div className="carousel-container">
-            { showItemCarousel(indiceQuatro) }
-            { showItemCarousel(indiceCinco) }
-          </div>
-        </Carousel.Item>
-      </Carousel>
-    );
-  }
-
   return (
-    <div>
-      { recommendedRecipe.length !== indiceZero
-        ? showCarousel()
-        : (<p>Loading...</p>)}
-    </div>
+    <Carousel>
+      <Carousel.Item>
+        <div className="carousel-container">
+          { showItemCarousel(indiceZero) }
+          { showItemCarousel(indiceUm) }
+        </div>
+      </Carousel.Item>
+      <Carousel.Item>
+        <div className="carousel-container">
+          { showItemCarousel(indiceDois) }
+          { showItemCarousel(indiceTres) }
+        </div>
+      </Carousel.Item>
+      <Carousel.Item>
+        <div className="carousel-container">
+          { showItemCarousel(indiceQuatro) }
+          { showItemCarousel(indiceCinco) }
+        </div>
+      </Carousel.Item>
+    </Carousel>
   );
+
+// return (
+  //   (!recommendedRecipe || )
+  //     ? <h5>Loading...</h5>
+  //     : showCarousel()
+  // );
 }
 
 export default MyCarousel;

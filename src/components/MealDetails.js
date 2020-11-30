@@ -1,31 +1,59 @@
-import React, { useEffect, useState, useContext } from 'react';
-import YouTube from 'react-youtube';
+import React, { useEffect, useContext, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
-import { useParams } from 'react-router-dom';
+import Carousel from 'react-bootstrap/Carousel';
+import YouTube from 'react-youtube';
 import { getRecipeMealByIdApi } from '../services/mealsAPI';
+import { getRecipeDrinksApi } from '../services/drinksAPI';
 import shareIcon from '../images/shareIcon.svg';
 import favoriteIcon from '../images/whiteHeartIcon.svg';
-import MyCarousel from './MyCarousel';
+// import MyCarousel from './MyCarousel';
+import '../Css/myCarousel.css';
 import MealsContext from '../context/MealsContext';
 import '../Css/MealDetail.css';
 
 function MealDetails() {
-  const [recipeMeal, setRecipeMeal] = useState(undefined);
-  const { verifyRecommendedRecipes } = useContext(MealsContext);
-  const valorZero = 0;
-
+  const [btnDoneRecipe, setBtnDoneRecipe] = useState();
+  const { recipeMeal, setRecipeMeal, recommendedDrinks,
+    setRecommendedDrinks } = useContext(MealsContext);
   const { id } = useParams(); // retorna o paramentro que está na rota
+  const indiceZero = 0;
+  const indiceUm = 1;
+  const indiceDois = 2;
+  const indiceTres = 3;
+  const indiceQuatro = 4;
+  const indiceCinco = 5;
 
   useEffect(() => {
-    async function fetchDatas() {
+    async function fetchData() {
       // Verifica os detalhes da receita por id para
-      const resultDetail = await getRecipeMealByIdApi(id);
-      setRecipeMeal(resultDetail[0]);
+      const myRecipe = await getRecipeMealByIdApi(id);
 
-      // Verifica bebidas e comidas recomendadas
-      verifyRecommendedRecipes();
+      // Verifica bebidas recomendadas
+      const inditialIndex = 0;
+      const quantityRecipes = 6;
+      const resultRecommendedDrinks = await getRecipeDrinksApi();
+      const myRecommendedDrinks = resultRecommendedDrinks
+        .slice(inditialIndex, quantityRecipes);
+
+      // Verifica se receita já foi iniciada ou concluída
+      // const valorZero = 0;
+      // const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+      // const indexDoneRecipe = doneRecipes.findIndex((item) => item.id === id);
+      // let textBtnDoneRecipe = 'Iniciar Receita';
+      // if (indexDoneRecipe >= valorZero) {
+      //   if (doneRecipes[indexDoneRecipe].doneDate === '') {
+      //     textBtnDoneRecipe = 'Continuar Receita';
+      //   } else {
+      //     textBtnDoneRecipe = 'Receita Finalizada';
+      //   }
+      // }
+      // setBtnDoneRecipe(textBtnDoneRecipe);
+      setBtnDoneRecipe('Inicia Receita');
+      setRecommendedDrinks(myRecommendedDrinks);
+      setRecipeMeal(myRecipe[0]);
     }
-    fetchDatas();
+    fetchData();
   }, []);
 
   function getIngredients() {
@@ -57,7 +85,6 @@ function MealDetails() {
 
   function updateDoneRecipes() {
     const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
-
     const newDoneRecipe = {
       id: recipeMeal.idMeal,
       type: 'comida',
@@ -145,32 +172,58 @@ function MealDetails() {
     );
   }
 
+  function showItemCarousel(index) {
+    return (
+      <div data-testid={ `${index}-recomendation-card` }>
+        <img
+          className="d-block w-100"
+          src={ recommendedDrinks[index].strDrinkThumb }
+          alt="Receitas recomendadas"
+        />
+        <h6>{ recommendedDrinks[index].strAlcoholic }</h6>
+        <h4
+          data-testid={ `${index}-recomendation-title` }
+        >
+          { recommendedDrinks[index].strDrink }
+        </h4>
+      </div>
+    );
+  }
+
   function recommendedDetail() {
     return (
       <div>
         <h3>Recommended</h3>
-        <MyCarousel />
+        <Carousel>
+          <Carousel.Item>
+            <div className="carousel-container">
+              { showItemCarousel(indiceZero) }
+              { showItemCarousel(indiceUm) }
+            </div>
+          </Carousel.Item>
+          <Carousel.Item>
+            <div className="carousel-container">
+              { showItemCarousel(indiceDois) }
+              { showItemCarousel(indiceTres) }
+            </div>
+          </Carousel.Item>
+          <Carousel.Item>
+            <div className="carousel-container">
+              { showItemCarousel(indiceQuatro) }
+              { showItemCarousel(indiceCinco) }
+            </div>
+          </Carousel.Item>
+        </Carousel>
       </div>
     );
   }
 
   function buttonDetail() {
-    // Verifica se receita já foi iniciada ou concluída
-    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
-    const indexDoneRecipe = doneRecipes.findIndex((item) => item.id === id);
-    let textBtnDoneRecipe = 'Iniciar Receita';
-    if (indexDoneRecipe >= valorZero) {
-      if (doneRecipes[indexDoneRecipe].doneDate === '') {
-        textBtnDoneRecipe = 'Continuar Receita';
-      } else {
-        textBtnDoneRecipe = 'Receita Finalizada';
-      }
-    }
     return (
       <div>
-        { textBtnDoneRecipe === 'Receita Finalizada'
-          ? (<h5>{ textBtnDoneRecipe }</h5>)
-          : (
+        { console.log(btnDoneRecipe) }
+        { btnDoneRecipe !== 'Receita Finalizada' && (
+          <Link to={ `/comidas/${id}/in-progress` }>
             <Button
               className="btn-iniciar-receita"
               type="button"
@@ -180,29 +233,28 @@ function MealDetails() {
               block
               onClick={ updateDoneRecipes }
             >
-              { textBtnDoneRecipe }
-            </Button>)}
+              { btnDoneRecipe }
+            </Button>
+          </Link>)}
       </div>
     );
   }
 
   return (
-    <div>
-      { recipeMeal === undefined
-        ? (<h5>Loading...</h5>)
-        : (
-          <div>
-            { imgDetail() }
-            { titleDatail() }
-            { categoryDetail() }
-            { ingredientsDetail() }
-            { instructionsDetail() }
-            { videoDetail() }
-            { recommendedDetail() }
-            { buttonDetail() }
-          </div>)}
-    </div>
-  );
+    (!recipeMeal)
+      ? <h5>Loading...</h5>
+      : (
+        <div>
+          { imgDetail() }
+          { titleDatail() }
+          { categoryDetail() }
+          { ingredientsDetail() }
+          { instructionsDetail() }
+          { videoDetail() }
+          { recommendedDetail() }
+          { buttonDetail() }
+        </div>
+      ));
 }
 
 export default MealDetails;
