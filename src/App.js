@@ -16,6 +16,7 @@ import ReceitasFavoritas from './pages/ReceitasFavoritas';
 import Perfil from './pages/Perfil';
 import Provider from './context/Provider';
 import DetalhesBebida from './pages/DetalhesBebida';
+import NotFound from './components/NotFound';
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
           <Route path="/perfil" exact component={ Perfil } />
           <Route path="/receitas-feitas" exact component={ ReceitasFeitas } />
           <Route path="/receitas-favoritas" exact component={ ReceitasFavoritas } />
+          <Route component={ NotFound } />
         </Switch>
       </Provider>
     </div>
