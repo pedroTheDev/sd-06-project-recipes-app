@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
 import './style/recipesDone.css';
 
+import { Header } from '../components';
+
 class RecipesDone extends Component {
   constructor() {
     super();
@@ -156,6 +158,7 @@ class RecipesDone extends Component {
     const { recipesDone } = this.state;
     return (
       <div>
+        <Header title="Receitas Feitas" noSearchBar />
         { this.renderFilterButtons() }
         { recipesDone && this.renderRecipes() }
       </div>

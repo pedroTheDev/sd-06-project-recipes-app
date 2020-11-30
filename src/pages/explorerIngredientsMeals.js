@@ -69,7 +69,7 @@ class ExplorerIngredientsMeals extends Component {
     const zero = 0;
     return (
       <div>
-        <Header title="Explorar Ingredientes" />
+        <Header title="Explorar Ingredientes" noSearchBar />
         { ingredients.length !== zero && this.renderIngredients()}
         <Footer />
       </div>
