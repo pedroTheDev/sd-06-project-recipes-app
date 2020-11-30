@@ -27,8 +27,14 @@ export default function Foods() {
         ? <Redirect to={ `/${foodOrDrink}/${idFirstPosition}` } /> : null}
       {foods && foods.map((food, index) => {
         const id = food[`id${searchParam}`];
-        if (index < TWELVE && (index % TWO === ZERO)) {
-          const id1 = foods[index + 1][`id${searchParam}`];
+        if (index < TWELVE && (index % TWO === ZERO) && (index < foods.length - 1)) {
+          // console.log(searchParam);
+          // console.log(foods);
+          let id1;
+          if (foods[index + 1][`id${searchParam}`]) {
+            id1 = foods[index + 1][`id${searchParam}`];
+            // console.log(index + 1);
+          }
           return (
             <Row>
               <Col>
@@ -49,21 +55,25 @@ export default function Foods() {
                 </Link>
               </Col>
               <Col>
-                <Link to={ `/${foodOrDrink}/${id1}` }>
-                  <Card
-                    key={ foods[index + 1][`id${searchParam}`] }
-                    data-testid={ `${index + 1}-recipe-card` }
-                  >
-                    <Card.Img
-                      src={ foods[index + 1][`str${searchParam}Thumb`] }
-                      alt={ foods[index + 1][`str${searchParam}`] }
-                      data-testid={ `${index + 1}-card-img` }
-                    />
-                    <Card.Title data-testid={ `${index + 1}-card-name` }>
-                      {foods[index + 1][`str${searchParam}`]}
-                    </Card.Title>
-                  </Card>
-                </Link>
+                {
+                  (id1) ? (
+                    <Link to={ `/${foodOrDrink}/${id1}` }>
+                      <Card
+                        key={ foods[index + 1][`id${searchParam}`] }
+                        data-testid={ `${index + 1}-recipe-card` }
+                      >
+                        <Card.Img
+                          src={ foods[index + 1][`str${searchParam}Thumb`] }
+                          alt={ foods[index + 1][`str${searchParam}`] }
+                          data-testid={ `${index + 1}-card-img` }
+                        />
+                        <Card.Title data-testid={ `${index + 1}-card-name` }>
+                          {foods[index + 1][`str${searchParam}`]}
+                        </Card.Title>
+                      </Card>
+                    </Link>)
+                    : ''
+                }
               </Col>
             </Row>
           );
