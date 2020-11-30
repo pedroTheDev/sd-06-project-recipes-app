@@ -42,7 +42,7 @@ function IngredientsCheck({ recipe, path, id }) {
       const allIngredients = [...ingredients];
       const checkedIngredients = Object.keys({ ...ingredientsCheck });
 
-      if (ingredients.length === checkedIngredients.length) {
+      if (allIngredients.length === checkedIngredients.length) {
         setDisableButton(false);
       } else {
         setDisableButton(true);
