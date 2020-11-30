@@ -6,15 +6,20 @@ export const CHANGE_FETCH = 'CHANGE_FETCH';
 export const SEND_DATA = 'SEND_DATA';
 export const ADD_CATEGORIES = 'ADD_CATEGORIES';
 export const REQUEST_CATEGORIES = 'REQUEST_CATEGORIES';
+export const REQUEST_INGREDIENTS = 'REQUEST_INGREDIENTS';
 export const REQUEST_RECIPES = 'REQUEST_RECIPES';
+export const GET_FOOD_INGREDIENTS = 'GET_FOOD_INGREDIENTS';
 export const GET_FOOD_CATEGORIES = 'GET_CATEGORIES';
 export const GET_DRINK_CATEGORIES = 'GET_DRINK_CATEGORIES';
+export const GET_DRINK_INGREDIENTS = 'GET_DRINK_INGREDIENTS';
 export const CHANGE_FILTER = 'CHANGE_FILTER';
 
 const allFoodRecipesEndPoint = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
 const initialFoodCategoriesEndPoint = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
 const initialDrinkCategoriesEndPoint = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
 const allDrinkRecipesEndPoint = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+const foodIngredientsEndpoint = 'https://www.themealdb.com/api/json/v1/1/list.php?i=list';
+const drinkIngreientsEndpoint = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list';
 
 const zero = 0;
 const maxLength = 5;
@@ -49,6 +54,10 @@ const requestCategories = () => ({
   type: REQUEST_CATEGORIES,
 });
 
+const requestIngredients = () => ({
+  type: REQUEST_INGREDIENTS,
+});
+
 const requestRecipes = () => ({
   type: REQUEST_RECIPES,
 });
@@ -62,6 +71,24 @@ const getDrinkCategories = (categories) => ({
   type: GET_DRINK_CATEGORIES,
   categories,
 });
+
+const getFoodIngredients = (ingredients) => ({
+  type: GET_FOOD_INGREDIENTS,
+  ingredients,
+});
+
+export const addFoodIngredients = () => async (dispatch) => {
+  dispatch(requestIngredients());
+  const json = await fetchAPI(foodIngredientsEndpoint);
+
+  console.log(json);
+};
+
+export const addDrinkIngredients = () => async (dispatch) => {
+  dispatch(requestIngredients());
+  const json = await fetchAPI(drinkIngreientsEndpoint);
+  console.log(json);
+};
 
 export const addFoodCategories = () => async (dispatch) => {
   dispatch(requestCategories());

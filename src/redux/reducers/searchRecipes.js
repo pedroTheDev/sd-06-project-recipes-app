@@ -3,6 +3,8 @@ import { ADD_RECIPES,
   CHANGE_FETCH,
   GET_FOOD_CATEGORIES,
   GET_DRINK_CATEGORIES,
+  GET_FOOD_INGREDIENTS,
+  REQUEST_INGREDIENTS,
   REQUEST_CATEGORIES,
   REQUEST_RECIPES,
   SEND_DATA, CHANGE_FILTER } from '../actions/searchRecipes';
@@ -22,6 +24,8 @@ const initialState = {
   iscategoriesFetching: true,
   foodCategories: [],
   foodInProgress: [],
+  foodIngredients: [],
+  drinkIngredients: [],
   drinkCategories: [],
   data: {
     inputText: '',
@@ -65,6 +69,16 @@ export default function searchRecipesReducer(state = initialState, action) {
       ...state, drinkCategories: [...action.categories], iscategoriesFetching: false,
     };
 
+  case GET_FOOD_INGREDIENTS:
+    return {
+      ...state, foodIngredients: action.ingredients, isIngredientsLoading: false,
+    };
+
+  case GET_DRINK_INGREDIENTS:
+    return {
+      ...state, drinkIngredients: action.ingredients, isIngredientsLoading: false,
+    };
+
   case REQUEST_CATEGORIES:
     console.log(action);
     return {
@@ -74,6 +88,11 @@ export default function searchRecipesReducer(state = initialState, action) {
   case REQUEST_RECIPES:
     return {
       ...state, isRecipesFetching: true,
+    };
+
+  case REQUEST_INGREDIENTS:
+    return {
+      ...state, isIngredientsLoading: true,
     };
 
   case SEND_DATA:
