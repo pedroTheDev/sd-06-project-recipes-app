@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import Header from '../components/Header';
 import Context from '../context/RecipesContext';
 import shareIcon from '../images/shareIcon.svg';
@@ -6,6 +6,7 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 function FavoritesRecipes() {
   const { getFavoritesRecipe, fetchFavoritesRecipe } = useContext(Context);
+  const [linkCopiado, setLinkCopiado] = useState(false);
 
   function arrFavoriteFood() {
     fetchFavoritesRecipe((JSON.parse(localStorage.getItem('favoriteRecipes')))
@@ -20,26 +21,27 @@ function FavoritesRecipes() {
   function arrFavoriteRecipe() {
     fetchFavoritesRecipe(JSON.parse(localStorage.getItem('favoriteRecipes')) || []);
   }
-  useEffect(() => { arrFavoriteRecipe(); }, []);
 
-  // function renderFavorites(item, index) {
-  //   if (item.category === 'comida') {
-  //     if (item.category !== 'Vegetarian') {
-  //       return <h5 data-testid={ `${index}-horizontal-top-text` }>{ `${item.area}` }</h5>
-  //     }
-  //     else
-  //       <h5 data-testid={ `${index}-horizontal-top-text` }>{ `${item.area} - Vegetarian` }</h5>
-  //     }
+  function handleShareButton(type, id) {
+    const copyText = `http://localhost:3000/${type}s/${id}`;
+    window.navigator.clipboard.writeText(copyText);
+    setLinkCopiado(true);
+  }
 
-  //   if (item.category === 'bebida') {
-  //     if(item.category === 'Alcoholic') {
-  //       return <h5>'Alcoholic'</h5>
-  //     }
-  //     else {
-  //       return <h5>{ `${item.area}` }</h5>
-  //     }
-  //   }
-  // }
+  function handleUnfavoriteButton(id) {
+    const currentFavoriteRecipes = JSON.parse(
+      localStorage.getItem('favoriteRecipes'),
+    ) || [];
+    const filteredItems = [];
+    currentFavoriteRecipes.filter((favoriteRecipe) => (
+      favoriteRecipe.id !== id
+        ? filteredItems.push(favoriteRecipe) : null
+    ));
+    localStorage.setItem('favoriteRecipes', JSON.stringify(filteredItems));
+    fetchFavoritesRecipe((JSON.parse(localStorage.getItem('favoriteRecipes'))));
+  }
+
+  useEffect(() => { arrFavoriteRecipe(); }, [getFavoritesRecipe]);
 
   return (
     <div>
@@ -80,43 +82,23 @@ function FavoritesRecipes() {
           </div>
 
           <div data-testid={ `${index}-horizontal-top-text` }>
-            {item.category !== 'Alcoholic' ? <h5>{ `${item.area}` }</h5>
+            {item.alcoholicOrNot !== 'Alcoholic' ? <h5>{ `${item.area}` }</h5>
               : <h5>Alcoholic</h5>}
           </div>
-
-          {/* <div>
-            {renderFavorites(item, index)}
-          </div> */}
-
-          {/* { item.type === 'comida'
-          ? <div>{item.category !== 'Vegetarian'
-          ? <h5>{ `${item.area}` }</h5>
-          : <h5>{ `${item.area} - Vegetarian` }</h5>}
-          <div/>
-          : <div>{item.category !== 'Alcoholic'
-          ? <h5>{ `${item.area}` }</h5>
-          : <h5>Alcoholic</h5>}<div/>} */}
-          {/* <div> */}
-          {/* {item.type === 'comida' ? <div data-testid={ `${index}-horizontal-top-text` }>
-            {item.category !== 'Vegetarian' ? <h5>{ `${item.area}` }</h5>
-              : <h5>{ `${item.area} - Vegetarian` }</h5>}
-          </div>
-            : <div data-testid={ `${index}-horizontal-top-text` }>
-              {item.category !== 'Alcoholic' ? <h5>{ `${item.area}` }</h5>
-                : <h5>Alcoholic</h5>}
-            </div>} */}
-
+          {linkCopiado ? <p>Link copiado!</p> : null}
           <input
             type="image"
             alt="sharebutton"
             src={ shareIcon }
             data-testid={ `${index}-horizontal-share-btn` }
+            onClick={ () => handleShareButton(item.type, item.id) }
           />
           <input
             type="image"
             alt="favoritebutton"
             src={ blackHeartIcon }
             data-testid={ `${index}-horizontal-favorite-btn` }
+            onClick={ () => handleUnfavoriteButton(item.id) }
           />
         </div>)) }
     </div>
