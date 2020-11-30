@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
 import ContextAPI from '../../Context/ContextAPI';
 import './styles.css';
 
