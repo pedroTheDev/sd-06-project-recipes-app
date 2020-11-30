@@ -31,6 +31,7 @@ function ExploreDrink() {
           Por Ingredientes
         </button>
       </Link>
+
       <button
         type="button"
         data-testid="explore-surprise"
@@ -38,6 +39,7 @@ function ExploreDrink() {
       >
         Me Surpreenda!
       </button>
+
       <Footer />
     </div>
   );
