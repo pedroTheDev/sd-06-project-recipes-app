@@ -1,53 +1,25 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import CategoriesButtons from './CategoriesButtons';
 import RecipesContext from '../context/RecipesContext';
 import '../style/RecipeCards.css';
 
 function RecipesDrinksCards({ categories }) {
-  const { data, setData } = useContext(RecipesContext);
-  const [selectedCategorie, setSelectedCategorie] = useState('');
-  const CINCO = 5;
+  const { data } = useContext(RecipesContext);
   const DOZE = 12;
 
-  const selectCategorie = async ({ innerText }) => {
-    if (innerText === 'All' || innerText === selectedCategorie) {
-      const responseDrinks = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
-      const responseDrinksJson = await responseDrinks.json();
-      return setData([data[0], responseDrinksJson]);
-    }
-
-    const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${innerText}`);
-    const responseJson = await response.json();
-    setSelectedCategorie(innerText);
-    return setData([data[0], responseJson]);
-  };
-
-  if (!categories) {
+  if (!categories || data.length < 1) {
     return <h2>Loading...</h2>;
   }
 
   return (
     <div className="div-bttn-category">
-      <button
-        className="bttn-category-drink"
-        data-testid="All-category-filter"
-        type="button"
-        onClick={ ({ target }) => selectCategorie(target) }
-      >
-        All
-      </button>
-      {categories[1].drinks.filter((_, index) => index < CINCO)
-        .map(({ strCategory }) => (
-          <button
-            className="bttn-category-drink"
-            data-testid={ `${strCategory}-category-filter` }
-            key={ strCategory }
-            type="button"
-            onClick={ ({ target }) => selectCategorie(target) }
-          >
-            { strCategory }
-          </button>)) }
+      {
+        categories === 'none'
+          ? ''
+          : <CategoriesButtons categories={ categories } />
+      }
       <div className="card-div">
         {
           data[1].drinks.filter((_, index) => index < DOZE)
