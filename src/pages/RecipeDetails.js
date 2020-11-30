@@ -16,8 +16,8 @@ function RecipeDetails(props) {
     getRecommendedMeal,
     favorite,
     isFavorite,
-    fav,
     heart,
+    setHeart,
     share,
     copied,
     details,
@@ -38,7 +38,7 @@ function RecipeDetails(props) {
       getRecommendedMeal();
     }
     isFavorite(params.id);
-  }, [params.id, fav]);
+  }, [params.id]);
 
   const getIngredients = (obj, filter) => {
     const keys = [];
@@ -52,19 +52,23 @@ function RecipeDetails(props) {
 
   const getVideoId = (link) => link.split('=').pop();
 
+  const favorited = (recipe) => {
+    favorite(recipe, path, params.id);
+    return heart === 'white' ? setHeart('black') : setHeart('white');
+  };
+
   const isChecked = (id, target) => {
-    // const local = !localStorage.getItem('checkeds') ? '' : JSON.parse(localStorage.getItem('checkeds'));
-    console.log(target)
-    // setCheck({
-      
-    // });
-    // const ingredient = [{
-    //   ...local,
-    //   [id]: {
-    //     ...check,
-    //   }
-    // }]
-    // localStorage.setItem('checkeds', JSON.stringify(ingredient));
+    const local = !localStorage.getItem('checkeds') ? ''
+      : JSON.parse(localStorage.getItem('checkeds'));
+    console.log(target);
+    setCheck('teste');
+    const ingredient = [{
+      ...local,
+      [id]: {
+        ...check,
+      },
+    }];
+    localStorage.setItem('checkeds', JSON.stringify(ingredient));
   };
 
   return (
@@ -74,7 +78,8 @@ function RecipeDetails(props) {
         : details.map((recipe) => (
           <div key={ recipe }>
             <img
-              src={ path.includes('comidas') ? recipe.strMealThumb : recipe.strDrinkThumb }
+              src={ path.includes('comidas') ? recipe.strMealThumb
+                : recipe.strDrinkThumb }
               alt="recipe_image"
               className="recipeImage"
               data-testid="recipe-photo"
@@ -95,7 +100,7 @@ function RecipeDetails(props) {
               src={ heart === 'white' ? whiteHeartIcon : blackHeartIcon }
               data-testid="favorite-btn"
               alt={ heart === 'white' ? 'whiteHeartIcon' : 'blackHeartIcon' }
-              onClick={ () => favorite(recipe, path, params.id) }
+              onClick={ () => favorited(recipe) }
             />
             <p data-testid="recipe-category">
               {path.includes('comidas') ? recipe.strCategory : recipe.strAlcoholic}
@@ -103,31 +108,31 @@ function RecipeDetails(props) {
             <h2>Ingredients</h2>
             {getIngredients(recipe, /strIngredient/).map((item, index) => {
               const measure = getIngredients(recipe, /strMeasure/);
-              if(path.includes('in-progress')) {
+              if (path.includes('in-progress')) {
                 return (
                   <div data-testid="ingredient-step">
                     <input
                       type="checkbox"
                       key={ index }
-                      onChange={ ({target}) => isChecked((path.includes('comidas') ? recipe.idMeal : recipe.idDrink), target) }
-                      id={`step-${index}`}
+                      onChange={ ({ target }) => isChecked((path.includes('comidas')
+                        ? recipe.idMeal : recipe.idDrink), target) }
+                      id={ `step-${index}` }
                       data-testid={ `${index}-ingredient-name-and-measure` }
                     />
-                    <label htmlFor={`step-${index}`}>
+                    <label htmlFor={ `step-${index}` }>
                       {`- ${item} - ${measure[index]} `}
                     </label>
                   </div>
-                )
-              } else {
-                return (
-                  <p
-                    key={ index }
-                    data-testid={ `${index}-ingredient-name-and-measure` }
-                  >
-                    {`- ${item} - ${measure[index]} `}
-                  </p>
                 );
               }
+              return (
+                <p
+                  key={ index }
+                  data-testid={ `${index}-ingredient-name-and-measure` }
+                >
+                  {`- ${item} - ${measure[index]} `}
+                </p>
+              );
             })}
             <h2>Intructions</h2>
             <p data-testid="instructions">{ recipe.strInstructions }</p>
@@ -178,8 +183,8 @@ function RecipeDetails(props) {
                     Iniciar Receita
                   </button>
                 </Link>
-              )
-            }
+              )}
+
           </div>))}
     </div>
   );

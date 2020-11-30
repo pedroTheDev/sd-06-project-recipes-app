@@ -11,7 +11,6 @@ function RecipesAppProvider({ children }) {
   const [random, setRandom] = useState('');
   const [recipes, setRecipes] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [fav, setFav] = useState([]);
   const [heart, setHeart] = useState('');
   const [copied, setCopied] = useState('');
 
@@ -43,11 +42,6 @@ function RecipesAppProvider({ children }) {
         ...(!local ? '' : local),
         newFav,
       ];
-
-    setFav([
-      ...fav,
-      newFav,
-    ]);
 
     localStorage.setItem('favoriteRecipes', JSON.stringify(localFavorite));
   };
@@ -174,8 +168,8 @@ function RecipesAppProvider({ children }) {
     isFavorite,
     share,
     copied,
-    fav,
     heart,
+    setHeart,
     details,
     recommended,
     random,

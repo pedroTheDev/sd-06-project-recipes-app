@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Context from '../context/Context';
@@ -7,54 +7,56 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 function FavRecipe() {
-  const local = JSON.parse(localStorage.getItem('favoriteRecipes'));
   const {
     heart,
     copied,
-    share,
     favorite,
-    fav,
+    share,
   } = useContext(Context);
 
-  const [filter, setFilter] = useState(local);
+  const local = JSON.parse(localStorage.getItem('favoriteRecipes'));
+  const [filter, setFilter] = useState('all');
+  const [update, setUpdate] = useState('no');
 
-  const filters = (type) => {
-    if (type === 'comida') {
-      setFilter(local.filter((item) => item.type === type));
-    } else if (type === 'bebida') {
-      setFilter(local.filter((item) => item.type === type));
-    } else {
-      setFilter(local);
+  const filters = useMemo(() => {
+    if (filter === 'comida') {
+      return local.filter((item) => item.type === filter);
+    } if (filter === 'bebida') {
+      return local.filter((item) => item.type === filter);
     }
-  };
+    return local;
+  }, [local, filter]);
 
-  useEffect(() => filters(''), [fav]);
+  const favorited = (recipe) => {
+    favorite(recipe, recipe.type, recipe.id);
+    return update === 'update' ? setUpdate('no') : setUpdate('update');
+  };
 
   return (
     <div>
       <Header title="Receitas Favoritas" />
       <button
         type="button"
-        onClick={ () => filters('') }
+        onClick={ () => setFilter('all') }
         data-testid="filter-by-all-btn"
       >
         All
       </button>
       <button
         type="button"
-        onClick={ () => filters('comida') }
+        onClick={ () => setFilter('comida') }
         data-testid="filter-by-food-btn"
       >
         Food
       </button>
       <button
         type="button"
-        onClick={ () => filters('bebida') }
+        onClick={ () => setFilter('bebida') }
         data-testid="filter-by-drink-btn"
       >
         Drinks
       </button>
-      {filter.map((recipe, index) => (
+      {filters.map((recipe, index) => (
         <div key={ recipe.id }>
           <Link to={ `/${recipe.type}s/${recipe.id}` }>
             <img
@@ -83,7 +85,7 @@ function FavRecipe() {
             src={ heart === 'white' ? whiteHeartIcon : blackHeartIcon }
             data-testid={ `${index}-horizontal-favorite-btn` }
             alt={ heart === 'white' ? 'whiteHeartIcon' : 'blackHeartIcon' }
-            onClick={ () => favorite(recipe, recipe.type, recipe.id) }
+            onClick={ () => favorited(recipe) }
           />
         </div>
       ))}
