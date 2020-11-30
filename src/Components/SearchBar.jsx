@@ -66,7 +66,7 @@ function SearchBar() {
       const filteredDrink = await api.fetchDrinkByFirstLetter(termoBusca);
       setDrinks(filteredDrink);
       setLoading(false);
-    } else if (searchParam === 'first-letter' && !termoBusca) {
+    } else if (searchParam === 'first-letter' && termoBusca) {
       // eslint-disable-next-line no-alert
       alert('Sua busca deve conter somente 1 (um) caracter');
     }
