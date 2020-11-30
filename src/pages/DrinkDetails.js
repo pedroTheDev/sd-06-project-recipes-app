@@ -122,14 +122,11 @@ function DrinkDetails() {
     const magickNumber = 9;
     const RecipeID = location.slice(magickNumber, location.length);
 
-    const index = currentFavoriteRecipes.filter((favoriteRecipe) => (
+    currentFavoriteRecipes.filter((favoriteRecipe) => (
       favoriteRecipe.id === RecipeID
         ? currentFavoriteRecipes.indexOf(favoriteRecipe) : null
     ));
 
-    const arrayModified = currentFavoriteRecipes.splice(index, index);
-
-    localStorage.setItem('favoriteRecipes', JSON.stringify(arrayModified));
     setFavorite(false);
   }
 
