@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import RecipesAppContext from '../hooks/RecipesAppContext';
+import RecipesAppContext from '../context/RecipesAppContext';
 import {
   requestApiFoodListCategories,
   requestApiFoodFilterCategories,
@@ -8,25 +8,32 @@ import {
 
 function ButtonCategoriesFood() {
   const {
+    categories: {
+      categoriesButtonFood,
+      setCategoriesButtonFood,
+    },
+
     cards: {
       setCardFood,
     },
   } = useContext(RecipesAppContext);
 
-  const [categoriesButton, setCategoriesButton] = useState([]);
-  const [categorySelectPreviously, setCategorySelectPreviously] = useState([]);
+  const [categorySelectPreviously, setCategorySelectPreviously] = useState('');
 
   const ofTheFirstParameter = 0;
   const upToParameter5 = 5;
+  const arrayVoid = 0;
   useEffect(() => {
-    requestApiFoodListCategories()
-      .then((arrayApiList) => {
-        const arrayCategoriesList5 = arrayApiList
-          .slice(ofTheFirstParameter, upToParameter5)
-          .map((objCategory) => objCategory.strCategory);
-        const arrayListButton = ['All', ...arrayCategoriesList5];
-        setCategoriesButton(arrayListButton);
-      });
+    if (categoriesButtonFood.length === arrayVoid) {
+      requestApiFoodListCategories()
+        .then((arrayApiList) => {
+          const arrayCategoriesList5 = arrayApiList
+            .slice(ofTheFirstParameter, upToParameter5)
+            .map((objCategory) => objCategory.strCategory);
+          const arrayListButton = ['All', ...arrayCategoriesList5];
+          setCategoriesButtonFood(arrayListButton);
+        });
+    }
   }, []);
 
   const onClickCategory = async (category) => {
@@ -41,11 +48,10 @@ function ButtonCategoriesFood() {
     }
   };
 
-  const arrayVoid = 0;
   return (
-    (categoriesButton.length === arrayVoid) ? <span>Loading...</span> : (
+    (categoriesButtonFood.length === arrayVoid) ? <span>Loading...</span> : (
       <div>
-        {categoriesButton.map((category) => (
+        {categoriesButtonFood.map((category) => (
           <button
             key={ category }
             type="button"

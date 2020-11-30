@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import RecipesAppContext from '../hooks/RecipesAppContext';
+import RecipesAppContext from '../context/RecipesAppContext';
 import profileIcon from '../styles/images/profileIcon.svg';
 import searchIcon from '../styles/images/searchIcon.svg';
 import HeaderSearch from './HeaderSearch';
