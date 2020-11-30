@@ -18,8 +18,10 @@ function DetalhesComida() {
 
   let continuar = false;
   if (localStorage.inProgressRecipes) {
-    const ids = Object.keys(JSON.parse(localStorage.inProgressRecipes).meals);
-    continuar = ids.includes(idMeal);
+    if (JSON.parse(localStorage.inProgressRecipes).meals) {
+      const ids = Object.keys(JSON.parse(localStorage.inProgressRecipes).meals);
+      continuar = ids.includes(idMeal);
+    }
   }
 
   useEffect(() => {
@@ -34,7 +36,12 @@ function DetalhesComida() {
 
   useEffect(() => {
     if (localStorage.favoriteRecipes) {
-      setIsFavorite(true);
+      const favoriteRecipes = JSON.parse(localStorage.favoriteRecipes);
+      favoriteRecipes.forEach((favorite) => {
+        if (favorite.id === idMeal) {
+          setIsFavorite(true);
+        }
+      });
     }
   }, []);
 

@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Footer, Header } from '../components';
+import RecipesContext from '../context/RecipesContext';
 
 function BebidasPorIngrediente() {
   const [ingredientsDrink, setIngredientsDrink] = useState([]);
   const [redirect, setRedirect] = useState(false);
-  const [setDataDrink] = useState([]);
+  const { data, setData } = useContext(RecipesContext);
   const zero = 0;
   const twelve = 12;
 
@@ -24,14 +25,14 @@ function BebidasPorIngrediente() {
   };
 
   const clickOn = (ingredients) => {
-    getDrinkByIngredients(ingredients).then((data) => {
-      setDataDrink(data.drinks);
+    getDrinkByIngredients(ingredients).then((drinks) => {
+      setData([data[0], drinks]);
       setRedirect(true);
     });
   };
 
   useEffect(() => {
-    getDrinkIngredients().then((data) => setIngredientsDrink(data.drinks));
+    getDrinkIngredients().then((drinks) => setIngredientsDrink(drinks.drinks));
   }, []);
 
   if (ingredientsDrink.length > twelve) {

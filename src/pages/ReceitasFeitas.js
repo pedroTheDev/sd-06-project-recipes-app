@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import useCopyToClipboard from '../hooks/useCopyToClipboard';
 import { Header } from '../components';
 import { shareIcon } from '../images';
+import '../style/Receitas.css';
 
 function ReceitasFeitas() {
   const timeoutTextCopy = 3000;
@@ -76,6 +77,7 @@ function ReceitasFeitas() {
             >
               <Link to={ `/${type}s/${id}` }>
                 <img
+                  className="receipe-img"
                   src={ image }
                   alt={ name }
                   data-testid={ `${index}-horizontal-image` }

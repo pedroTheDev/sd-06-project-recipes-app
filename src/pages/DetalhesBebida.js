@@ -19,8 +19,10 @@ function DetalhesBebida() {
 
   let continuar = false;
   if (localStorage.inProgressRecipes) {
-    const ids = Object.keys(JSON.parse(localStorage.inProgressRecipes).cocktails);
-    continuar = ids.includes(idDrink);
+    if (JSON.parse(localStorage.inProgressRecipes).cocktails) {
+      const ids = Object.keys(JSON.parse(localStorage.inProgressRecipes).cocktails);
+      continuar = ids.includes(idDrink);
+    }
   }
 
   useEffect(() => {
