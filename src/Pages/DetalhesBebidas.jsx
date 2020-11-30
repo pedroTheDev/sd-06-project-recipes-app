@@ -7,44 +7,71 @@ import './DetalhesComida.css';
 
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 const DetalhesBebidas = () => {
   const [value, setValue] = useState(window.location.href);
   const [copied, setCopied] = useState(false);
   const [stateLocal, setStatelocal] = useState();
   const [stateSugestions, setSugestions] = useState();
-  const [stateButton, setStateButton] = useState({
-    initialRecipe: false,
-  });
+  const [drinksInProgress, setDrinksInProgress] = useState({ cocktails: {} });
+  const [isFavorite, setIsFavorite] = useState(false);
 
-  const idDrink = useParams().id;
+  const currentDrinkID = useParams().id;
 
   const handleIdDetails = async () => {
-    const drink = await detailsDrinkById(idDrink);
+    const drink = await detailsDrinkById(currentDrinkID);
+    console.log(drink);
 
-    setStatelocal({
-      ...stateLocal,
-      drink,
-    });
+    setStatelocal({ ...stateLocal, drink });
   };
 
-  const getSugestedDrinks = async () => {
+  const getSugestedFoods = async () => {
     const foods = await showSugestedFoods();
 
     setSugestions(foods);
   };
 
+  const loadRecipesInProgressFromLocalStorage = () => {
+    if (localStorage.getItem('inProgressRecipes') === null) {
+      const inProgressRecipes = {
+        cocktails: {},
+        meals: {},
+      };
+      localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
+    }
+
+    const progressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    setDrinksInProgress({ cocktails: progressRecipes.cocktails });
+  };
+
+  const loadFavoriteRecipesFromLocalStorage = () => {
+    if (localStorage.getItem('favoriteRecipes') === null) {
+      const favoriteRecipes = [];
+      localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+    }
+
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const isRecipeFavorite = favoriteRecipes[0] ? favoriteRecipes
+      .find((recipe) => recipe.id === currentDrinkID) : undefined;
+
+    if (isRecipeFavorite) setIsFavorite(true);
+    else setIsFavorite(false);
+  };
+
   useEffect(() => {
     handleIdDetails();
-    getSugestedDrinks();
+    getSugestedFoods();
+    loadRecipesInProgressFromLocalStorage();
+    loadFavoriteRecipesFromLocalStorage();
   }, []);
 
   const getIngredientsOrMeasure = (param) => {
     const dataObject = stateLocal.drink.drinks[0];
 
-    const dataKeys = Object.keys(dataObject).filter(
-      (key) => key.includes(param) && dataObject[key] !== null,
-    );
+    const dataKeys = Object.keys(dataObject)
+      .filter((key) => key.includes(param)
+        && dataObject[key] !== null && dataObject[key] !== '');
 
     const ingredients = dataKeys.map((key) => dataObject[key]);
 
@@ -52,9 +79,44 @@ const DetalhesBebidas = () => {
   };
 
   const progressButton = () => {
-    setStateButton({
-      initialRecipe: !stateButton.initialRecipe,
-    });
+    const progressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const drinkProgressID = stateLocal.drink.drinks[0].idDrink;
+    const inProgressRecipes = {
+      ...progressRecipes,
+      cocktails: {
+        ...progressRecipes.cocktails,
+        [drinkProgressID]: getIngredientsOrMeasure('strIngredient'),
+      },
+    };
+    localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
+  };
+
+  const handleFavorite = () => {
+    const currentDrink = stateLocal.drink.drinks[0];
+    const recipeData = {
+      id: currentDrink.idDrink,
+      type: 'bebida',
+      area: '',
+      category: currentDrink.strCategory,
+      alcoholicOrNot: currentDrink.strAlcoholic,
+      name: currentDrink.strDrink,
+      image: currentDrink.strDrinkThumb,
+    };
+
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const zero = 0;
+    const isAlreadyAFavorite = favoriteRecipes.length > zero
+      ? favoriteRecipes.find((recipe) => recipe.id === currentDrink.idDrink) : undefined;
+
+    if (isAlreadyAFavorite) {
+      setIsFavorite(false);
+      localStorage.setItem('favoriteRecipes', JSON.stringify([...favoriteRecipes
+        .filter((recipe) => recipe.id !== currentDrink.idDrink)]));
+    } else {
+      setIsFavorite(true);
+      localStorage.setItem('favoriteRecipes', JSON.stringify([
+        ...favoriteRecipes, recipeData]));
+    }
   };
 
   const handleShareClick = () => {
@@ -85,13 +147,21 @@ const DetalhesBebidas = () => {
               </div>
               <span data-testid="recipe-title">{stateLocal.drink.drinks[0].strDrink}</span>
               <div>
-              <CopyToClipboard text={value} onCopy={() => setCopied(true)}>
-                <button type="button" onClick={handleShareClick} data-testid="share-btn">
-                  <img src={shareIcon} alt="shareIcon" />
-                  <img data-testid="favorite-btn" src={whiteHeartIcon} alt="whiteHeartIcon" />
+                <img
+                  data-testid="share-btn"
+                  src={ shareIcon }
+                  alt="shareIcon"
+                />
+                <button
+                  type="button"
+                  onClick={ handleFavorite }
+                >
+                  <img
+                    data-testid="favorite-btn"
+                    src={ !isFavorite ? whiteHeartIcon : blackHeartIcon }
+                    alt={ !isFavorite ? 'whiteHeartIcon' : 'blackHeartIcon' }
+                  />
                 </button>
-              </CopyToClipboard>
-              {copied ? <span style={{ color:"red" }}>Link copiado!</span> : null}
               </div>
             </div>
             <div className="ingredients">
@@ -147,7 +217,8 @@ const DetalhesBebidas = () => {
                   className="link-button"
                   to={`/bebidas/${stateLocal.drink.drinks[0].idDrink}/in-progress`}
                 >
-                  {!stateButton.initialRecipe ? 'Iniciar Receita' : 'Continuar Receita'}
+                  {drinksInProgress.cocktails[stateLocal.drink.drinks[0].idDrink]
+                    ? 'Continuar Receita' : 'Iniciar Receita'}
                 </Link>
               </button>
             </div>

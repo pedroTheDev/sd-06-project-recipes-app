@@ -7,44 +7,69 @@ import './DetalhesComida.css';
 
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 const DetalhesComida = () => {
   const [value, setValue] = useState(window.location.href);
   const [copied, setCopied] = useState(false);
   const [stateLocal, setStatelocal] = useState();
   const [stateSugestions, setSugestions] = useState();
-  const [stateButton, setStateButton] = useState({
-    initialRecipe: false,
-  });
+  const [foodsInProgress, setFoodsInProgress] = useState({ meals: {} });
+  const [isFavorite, setIsFavorite] = useState(false);
 
-  const idFood = useParams().id;
+  const currentFoodID = useParams().id;
 
   const handleIdDetails = async () => {
-    const recipeById = await detailsFoodById(idFood);
-
-    setStatelocal({
-      ...stateLocal,
-      food: recipeById,
-    });
+    const food = await detailsFoodById(currentFoodID);
+    console.log(food);
+    setStatelocal({ ...stateLocal, food });
   };
 
-  const getSugestedFoods = async () => {
+  const getSugestedDrinks = async () => {
     const drinks = await showSugestedDrinks();
-
     setSugestions(drinks);
+  };
+
+  const loadRecipesInProgressFromLocalStorage = () => {
+    if (localStorage.getItem('inProgressRecipes') === null) {
+      const inProgressRecipes = {
+        cocktails: {},
+        meals: {},
+      };
+      localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
+    }
+
+    const progressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    setFoodsInProgress({ meals: progressRecipes.meals });
+  };
+
+  const loadFavoriteRecipesFromLocalStorage = () => {
+    if (localStorage.getItem('favoriteRecipes') === null) {
+      const favoriteRecipes = [];
+      localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+    }
+
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const isRecipeFavorite = favoriteRecipes[0] ? favoriteRecipes
+      .find((recipe) => recipe.id === currentFoodID) : undefined;
+
+    if (isRecipeFavorite) setIsFavorite(true);
+    else setIsFavorite(false);
   };
 
   useEffect(() => {
     handleIdDetails();
-    getSugestedFoods();
+    getSugestedDrinks();
+    loadRecipesInProgressFromLocalStorage();
+    loadFavoriteRecipesFromLocalStorage();
   }, []);
 
   const getIngredientsOrMeasure = (param) => {
     const dataObject = stateLocal.food.meals[0];
 
-    const dataKeys = Object.keys(dataObject).filter(
-      (key) => key.includes(param) && dataObject[key] !== '' && dataObject[key] !== ' ',
-    );
+    const dataKeys = Object.keys(dataObject)
+      .filter((key) => key.includes(param)
+        && dataObject[key] !== '' && dataObject[key] !== ' ' && dataObject[key] !== null);
 
     const ingredients = dataKeys.map((key) => dataObject[key]);
 
@@ -52,16 +77,44 @@ const DetalhesComida = () => {
   };
 
   const progressButton = () => {
-    setStateButton({
-      initialRecipe: !stateButton.initialRecipe,
-    });
+    const progressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const mealProgressID = stateLocal.food.meals[0].idMeal;
+    const inProgressRecipes = {
+      ...progressRecipes,
+      meals: {
+        ...progressRecipes.meals,
+        [mealProgressID]: getIngredientsOrMeasure('strIngredient'),
+      },
+    };
+    localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
   };
 
-  const handleShareClick = () => {
-    const urlPage = window.location.href;
+  const handleFavorite = () => {
+    const currentFood = stateLocal.food.meals[0];
+    const recipeData = {
+      id: currentFood.idMeal,
+      type: 'comida',
+      area: currentFood.strArea,
+      category: currentFood.strCategory,
+      alcoholicOrNot: '',
+      name: currentFood.strMeal,
+      image: currentFood.strMealThumb,
+    };
 
-    setValue(urlPage);
-    setCopied(true);
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const zero = 0;
+    const isAlreadyAFavorite = favoriteRecipes.length > zero
+      ? favoriteRecipes.find((recipe) => recipe.id === currentFood.idMeal) : undefined;
+
+    if (isAlreadyAFavorite) {
+      setIsFavorite(false);
+      localStorage.setItem('favoriteRecipes', JSON.stringify([...favoriteRecipes
+        .filter((recipe) => recipe.id !== currentFood.idMeal)]));
+    } else {
+      setIsFavorite(true);
+      localStorage.setItem('favoriteRecipes', JSON.stringify([
+        ...favoriteRecipes, recipeData]));
+    }
   };
 
   const number = 5;
@@ -70,7 +123,7 @@ const DetalhesComida = () => {
     <div className="main-principal">
       {stateLocal ? (
         <div className="container-main">
-          {console.log(window.location.href)}
+          {console.log(JSON.parse(localStorage.getItem('heart')).heart)}
           <div className="container-initial">
             <img
               data-testid="recipe-photo"
@@ -84,13 +137,25 @@ const DetalhesComida = () => {
               </div>
               <span data-testid="recipe-title">{stateLocal.food.meals[0].strMeal}</span>
               <div>
-                <CopyToClipboard text={value} onCopy={() => setCopied(true)}>
-                  <button type="button" onClick={handleShareClick}>
-                    <img data-testid="share-btn" src={shareIcon} alt="shareIcon" />
-                  </button>
-                </CopyToClipboard>
-                <img data-testid="favorite-btn" src={whiteHeartIcon} alt="whiteHeartIcon" />
-                {copied ? <span style={{ color: 'red' }}>Link copiado!</span> : null}
+                <button
+                  type="button"
+                >
+                  <img
+                    data-testid="share-btn"
+                    src={ shareIcon }
+                    alt="shareIcon"
+                  />
+                </button>
+                <button
+                  type="button"
+                  onClick={ handleFavorite }
+                >
+                  <img
+                    data-testid="favorite-btn"
+                    src={ !isFavorite ? whiteHeartIcon : blackHeartIcon }
+                    alt={ !isFavorite ? 'whiteHeartIcon' : 'blackHeartIcon' }
+                  />
+                </button>
               </div>
             </div>
             <div className="ingredients">
@@ -155,7 +220,8 @@ const DetalhesComida = () => {
                   className="link-button"
                   to={`/comidas/${stateLocal.food.meals[0].idMeal}/in-progress`}
                 >
-                  {!stateButton.initialRecipe ? 'Iniciar Receita' : 'Continuar Receita'}
+                  {foodsInProgress.meals[stateLocal.food.meals[0].idMeal]
+                    ? 'Continuar Receita' : 'Iniciar Receita'}
                 </Link>
               </button>
             </div>
