@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { fetchMeal } from '../../services/mealAPI';
 import SecondaryHeader from '../../components/SecondaryHeader';
+import { addMealIngredient } from '../../services/localStorage';
 import '../Detail/detail.css';
 
 export default function MealInProgress() {
@@ -51,6 +52,17 @@ export default function MealInProgress() {
     );
   }
 
+  function selectItem(event) {
+    const completedItem = event.target.parentNode;
+    addMealIngredient(id, completedItem.id);
+    console.log(id, completedItem.id);
+    if (completedItem.classList.contains('selected')) {
+      completedItem.classList.remove('selected');
+    } else {
+      completedItem.classList.add('selected');
+    }
+  }
+
   return (
     <div>
       <div>
@@ -67,16 +79,22 @@ export default function MealInProgress() {
             if (index < ingredientsNumber) {
               return (
                 <div>
-                  <label>
-                    <li>
+                  <li>
+                    <label
+                      data-testid={ `${index}-ingredient-step` }
+                      forHtml={ ingredient.name }
+                      name={ ingredient.name }
+                      id={ ingredient.name }
+                    >
                       <input
+                        name={ ingredient.name }
                         type="checkbox"
-                        data-testid={ `${index}-ingredient-step` }
                         key={ index }
+                        onClick={ (e) => selectItem(e) }
                       />
-                      {`${ingredient.name} - ${ingredient.measure}`}
-                    </li>
-                  </label>
+                      { `${ingredient.name} - ${ingredient.measure}` }
+                    </label>
+                  </li>
                   <br />
                 </div>
               );
