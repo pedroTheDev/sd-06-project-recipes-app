@@ -1,5 +1,6 @@
 import React from 'react';
 import renderWithRouter from './renderWithRouter';
+import { fireEvent } from '@testing-library/react';
 import Footer from '../Components/Footer';
 
 describe('Teste componente Footer', () => {
@@ -26,7 +27,38 @@ describe('Teste componente Footer', () => {
   //   expect(footerTest).toHaveStyle('bottom: 0');
   // });
 
-  it('Exiba o menu inferior apenas nas telas indicadas pelo protótipo', () => {
+  it('Redirecione a pessoa usuária para rota correta, bebidas', () => {
+    const { getByTestId } = renderWithRouter(<Footer />);
+    const drinksBtnTest = getByTestId('drinks-bottom-btn');
+    const exploreBtnTest = getByTestId('explore-bottom-btn');
+    const foodBtnTest = getByTestId('food-bottom-btn');
+    
+    
+    fireEvent.click(drinksBtnTest);
+    const { pathname } = history.location;
+    expect(pathname).toBe('/bebidas');
+    fireEvent.click(exploreBtnTest);
+    fireEvent.click(foodBtnTest);
 
+
+  });
+
+  it('Redirecione a pessoa usuária para rota correta, comidas', () => {
+    const { getByTestId } = renderWithRouter(<Footer />);
+    const foodBtnTest = getByTestId('food-bottom-btn');
+    
+    
+    fireEvent.click(foodBtnTest);
+    const { pathname } = history.location;
+    expect(pathname).toBe('/bebidas');
+  });
+
+  it('Redirecione a pessoa usuária para rota correta, explorar', () => {
+    const { getByTestId } = renderWithRouter(<Footer />);
+    const exploreBtnTest = getByTestId('explore-bottom-btn');
+
+    fireEvent.click(exploreBtnTest);
+    const { pathname } = history.location;
+    expect(pathname).toBe('/explorar');
   });
 });
