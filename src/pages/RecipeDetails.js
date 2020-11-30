@@ -28,6 +28,7 @@ function RecipeDetails(props) {
 
   const ZERO = 0;
   const SIX = 6;
+  const SLICE = -12;
 
   useEffect(() => {
     if (path.includes('comidas')) {
@@ -94,7 +95,8 @@ function RecipeDetails(props) {
               src={ shareIcon }
               data-testid="share-btn"
               alt="share-icon"
-              onClick={ () => url.includes('in-progress') ? share(url.slice(0, -12)) : share(url) }
+              onClick={ () => (url.includes('in-progress')
+                ? share(url.slice(ZERO, SLICE)) : share(url)) }
             />
             { copied ? <span>Link copiado!</span> : '' }
             <input
