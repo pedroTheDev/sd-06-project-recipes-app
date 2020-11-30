@@ -41,6 +41,8 @@ export default function RecipesProvider({ children }) {
   const [listIngredients, setListIngredients] = useState([]);
   const [effectOnLoad, setEffectOnLoad] = useState(true);
   const [areaDropdown, setAreaDropdown] = useState([]);
+  const [getFavoritesRecipe, fetchFavoritesRecipe] = useState([]);
+  const [foodFovites, setFoodFavorites] = useState([]);
 
   useEffect(() => {
     if (fetchFood && fetchFood.length === 1) {
@@ -103,6 +105,10 @@ export default function RecipesProvider({ children }) {
     setAreaDropdown,
     isFavorite,
     setFavorite,
+    getFavoritesRecipe,
+    fetchFavoritesRecipe,
+    foodFovites,
+    setFoodFavorites,
   };
 
   return (
