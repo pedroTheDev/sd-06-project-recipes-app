@@ -30,7 +30,7 @@ export default function RecommendedRecipes() {
   const renderRecommendations = () => {
     const recommendParam = (searchParam === 'Meal') ? 'Drink' : 'Meal';
     return (
-      <div>
+      <div className="carousel">
         <Carousel activeIndex={ index } onSelect={ handleSelect }>
           {recommendations.map((recommendedItem, i) => {
             if (i < FIVE && (i % TWO === ZERO)) {

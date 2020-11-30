@@ -57,6 +57,7 @@ export default function RecipeDetails() {
         },
       ]);
     }
+
     let isFavorite;
     if (localStorageFavorites !== null) {
       isFavorite = localStorageFavorites
@@ -76,12 +77,12 @@ export default function RecipeDetails() {
   }, [searchParam]);
 
   function shareRecipeLink() {
-    // const time = 5000;
+    const time = 5000;
     navigator.clipboard.writeText(`http://localhost:3000${location.pathname}`);
     setAlert(true);
-    // setTimeout(() => {
-    //   setAlert(false);
-    // }, time);
+    setTimeout(() => {
+      setAlert(false);
+    }, time);
     // alert('Link copiado!');
   }
 

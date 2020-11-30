@@ -70,9 +70,17 @@ main {
 padding-bottom: 40px;
 }
 
-header, footer {
+header, footer, .start-recipe-btn{
   background-color: darkgray;
   width: 360px;
+}
+
+.carousel {
+margin-bottom: 20px;
+}
+
+.start-recipe-btn {
+align-content: center;
 }
 
 footer, .start-recipe-btn {
