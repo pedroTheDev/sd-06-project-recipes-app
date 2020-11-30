@@ -18,8 +18,10 @@ function DetalhesComida() {
 
   let continuar = false;
   if (localStorage.inProgressRecipes) {
-    const ids = Object.keys(JSON.parse(localStorage.inProgressRecipes).meals);
-    continuar = ids.includes(idMeal);
+    if (JSON.parse(localStorage.inProgressRecipes).meals) {
+      const ids = Object.keys(JSON.parse(localStorage.inProgressRecipes).meals);
+      continuar = ids.includes(idMeal);
+    }
   }
   useEffect(() => {
     async function fetchAPI() {
