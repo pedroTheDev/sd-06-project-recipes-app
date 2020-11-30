@@ -117,15 +117,13 @@ function CompletedRecipes() {
                 />
                 <p className={ `copied-link-${recipe.id}` } />
                 {recipe.tags.map((tagName) => {
-                  return (
-                    <p
-                      data-testid={ `${index}-${tagName}-horizontal-tag` }
-                      key={ tagName }
-                    >
-                      { tagName }
-                    </p>
-                )}
-                )}
+                  <p
+                    data-testid={ `${index}-${tagName}-horizontal-tag` }
+                    key={ tagName }
+                  >
+                    { tagName }
+                  </p>
+                })}
               </div>
             );
           }
