@@ -1,9 +1,11 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import copy from 'clipboard-copy';
 import HeartIcon from '../images/blackHeartIcon.svg';
 import ShareIcon from '../images/shareIcon.svg';
 import Context from '../context/Context';
 import * as api from '../services/Api';
+import './styles/pages.css';
 // import Header from '../Components/Header';
 
 export default function ProcessoBebidas() {
@@ -17,6 +19,7 @@ export default function ProcessoBebidas() {
     setSelectedDrink,
   } = useContext(Context);
   const [arrayIngredients, setArrayIngredients] = useState([]);
+  const [sharedURL, setSharedURL] = useState(false);
 
   const prepareDrink = async () => {
     setLoading(true);
@@ -48,6 +51,24 @@ export default function ProcessoBebidas() {
     getIngredientsArray();
   }, [selectedDrink]);
 
+  const onClick = ({ target }) => {
+    if (target.checked === true) {
+      const element = target;
+      element.parentNode.style = 'text-decoration: line-through;';
+    }
+    if (target.checked === false) {
+      const element = target;
+      element.parentNode.style = 'text-decoration: none;';
+    }
+  };
+
+  const urlToClipboard = () => {
+    const url = window.location.href;
+
+    copy(url);
+    setSharedURL(true);
+  };
+
   return (
     <div>
       <h1>{titulo}</h1>
@@ -61,14 +82,18 @@ export default function ProcessoBebidas() {
               width="200px"
             />
             <h2 data-testid="recipe-title">{selectedDrink.strDrink}</h2>
-            <button
-              type="button"
-              src={ ShareIcon }
-              alt="compartilhar"
-              data-testid="share-btn"
-            >
-              Compartilhar
-            </button>
+            <div>
+              <button
+                type="button"
+                src={ ShareIcon }
+                alt="compartilhar"
+                data-testid="share-btn"
+                onClick={ urlToClipboard }
+              >
+                Compartilhar
+              </button>
+              {sharedURL ? <p>Link copiado!</p> : null}
+            </div>
             <button
               type="button"
               src={ HeartIcon }
@@ -82,13 +107,14 @@ export default function ProcessoBebidas() {
               <label
                 htmlFor={ index }
                 key={ index }
+                data-testid={ `${index}-ingredient-step` }
               >
                 <input
                   type="checkbox"
                   id={ index }
                   nome={ ingredient }
                   value={ ingredient }
-                  data-testid={ `${index}-ingredient-step` }
+                  onClick={ (e) => onClick(e) }
                 />
                 { ingredient }
               </label>
