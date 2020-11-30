@@ -217,9 +217,11 @@ class FoodsDetails extends React.Component {
       Ingredients,
       Measures,
       Video } = this.state;
+    const recipe = Meal[0];
+    const index = 0;
     return (
       <div className="food-drink-detail-container">
-        {Meal ? Meal.map((recipe, index) => (
+        {recipe ? (
           <div className="detail-card" key={ index }>
             <img
               src={ recipe.strMealThumb }
@@ -327,7 +329,7 @@ class FoodsDetails extends React.Component {
                   Iniciar Receita
                 </button>)}
           </div>
-        )) : null }
+        ) : null }
       </div>);
   }
 }
