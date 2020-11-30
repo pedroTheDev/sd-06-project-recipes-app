@@ -17,7 +17,6 @@ const RecipesProvider = ({ children }) => {
   const [recipeInstructions, setRecipeInstructions] = useState('');
   const [recipeVideo, setRecipeVideo] = useState('');
   const [recipeTags, setRecipeTags] = useState('');
-  const [recipeRecommendations, setRecipeRecommendations] = useState([]);
   const recipeObject = {
     recipeTitle,
     setRecipeTitle,
@@ -35,8 +34,6 @@ const RecipesProvider = ({ children }) => {
     setRecipeInstructions,
     recipeVideo,
     setRecipeVideo,
-    recipeRecommendations,
-    setRecipeRecommendations,
     recipeTags,
     setRecipeTags,
   };
