@@ -15,8 +15,6 @@ export default function DetalhesBebidas({ history }) {
   const {
     setSelectedDrink,
     selectedDrink,
-    favoriteDrinks,
-    setFavoriteDrinks,
     loading,
     setLoading,
   } = useContext(Context);
@@ -34,11 +32,9 @@ export default function DetalhesBebidas({ history }) {
     setLoading(false);
   };
 
-  let favLocalStorage = [];
-
   const favoriteRecipe = {
     id: selectedDrink.idDrink,
-    type: 'drinks',
+    type: 'bebida',
     area: '',
     category: selectedDrink.strCategory,
     alcoholicOrNot: selectedDrink.strAlcoholic,
@@ -47,22 +43,19 @@ export default function DetalhesBebidas({ history }) {
   };
 
   const getLocalStorage = () => {
-    if (!favLocalStorage) {
-      favLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
-      console.log(favLocalStorage);
-    }
-  };
-
-  const verifyFavorite = () => {
-    if (favLocalStorage.includes(favoriteRecipe)) {
-      setFavoriteImg(blackHeart);
+    if (localStorage.favoriteRecipes) {
+      const favLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      favLocalStorage.forEach((fav) => {
+        if (fav.id === id) {
+          setFavoriteImg(blackHeart);
+        }
+      });
     }
   };
 
   useEffect(() => {
     setarBebida();
     getLocalStorage();
-    verifyFavorite();
   }, []);
 
   const collectIngredients = () => {
@@ -83,21 +76,24 @@ export default function DetalhesBebidas({ history }) {
   }, [selectedDrink]);
 
   const clickFavorite = () => {
+    const favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (favRecipes) {
+      if (favoriteImg === whiteHeart) {
+        localStorage.setItem('favoriteRecipes',
+          JSON.stringify([...favRecipes, favoriteRecipe]));
+        return setFavoriteImg(blackHeart);
+      }
+      const takeOutDrink = favRecipes.filter(
+        (drink) => drink.name !== favoriteRecipe.name,
+      );
+      localStorage.setItem('favoriteRecipes', JSON.stringify(takeOutDrink));
+      return setFavoriteImg(whiteHeart);
+    }
     if (favoriteImg === whiteHeart) {
-      setFavoriteDrinks([...favoriteDrinks, selectedDrink]);
       localStorage.setItem('favoriteRecipes',
-        JSON.stringify([...favLocalStorage, favoriteRecipe]));
+        JSON.stringify([favoriteRecipe]));
       return setFavoriteImg(blackHeart);
     }
-    const takeOutDrink = favLocalStorage.filter(
-      (drink) => drink.name !== favoriteRecipe.name,
-    );
-    const newDrinks = favoriteDrinks.filter(
-      (drink) => drink.strDrink !== selectedDrink.strDrink,
-    );
-    setFavoriteDrinks(newDrinks);
-    localStorage.setItem('favoriteRecipes', JSON.stringify(takeOutDrink));
-    return setFavoriteImg(whiteHeart);
   };
 
   const clickDetails = (identidade) => {
