@@ -12,7 +12,7 @@ function DrinkDetails() {
   const [drinkDetails, setDrinkDetails] = useState([]);
   const [ingredients, setIngredients] = useState('');
   const [apiResult, setApiResult] = useState([]);
-  const [buttonText, setButtonText] = useState('Iniciar Receita');
+  const [buttonText] = useState('Iniciar Receita');
   const [spanHidden, setSpanHidden] = useState(true);
   const [favoriteDrink, setFavoriteDrink] = useState(false);
   const zero = 0;
