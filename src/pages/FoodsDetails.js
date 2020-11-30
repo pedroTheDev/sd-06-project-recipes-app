@@ -10,6 +10,8 @@ import './FoodsDetails.css';
 const FoodsDetails = (props) => {
   const [btnTitle, setBtnTitle] = useState('Iniciar Receita');
   const [btnImg, setBtnImg] = useState('');
+  const [recommendations1, setRecommendations1] = useState([]);
+  const [recommendations2, setRecommendations2] = useState([]);
   const { title, setTitle } = useContext(HeaderContext);
   const {
     recipeObject,
@@ -31,12 +33,12 @@ const FoodsDetails = (props) => {
     setRecipeInstructions,
     recipeVideo,
     setRecipeVideo,
-    recipeRecommendations,
-    setRecipeRecommendations,
   } = recipeObject;
   const { match, history: { location: { pathname } } } = props;
   const { params } = match;
   const { id } = params;
+  const carouselActiveIndex = 0;
+  const carouselPartition = 3;
 
   const ingredientsMount = (jsonRecipe) => {
     const initialIndex = 0;
@@ -77,12 +79,21 @@ const FoodsDetails = (props) => {
     const path = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
     const getRecipe = await fetch(path);
     const jsonRecipe = await getRecipe.json();
-    const maximumRecommendations = 6;
-    const recommendations = jsonRecipe.drinks.map(
-      (recommendation, index) => (index < maximumRecommendations && recommendation),
+    const maximumRecommendations1 = 3;
+    const maximumRecommendations2 = 6;
+    const getRecommendations1 = jsonRecipe.drinks.filter(
+      (recommendation, index) => (index < maximumRecommendations1 && recommendation),
+    );
+    const getRecommendations2 = jsonRecipe.drinks.filter(
+      (recommendation, index) => (
+        index >= maximumRecommendations1
+        && index < maximumRecommendations2
+        && recommendation
+      ),
     );
 
-    setRecipeRecommendations(recommendations);
+    setRecommendations1(getRecommendations1);
+    setRecommendations2(getRecommendations2);
   };
 
   const buttonMount = () => {
@@ -219,15 +230,93 @@ const FoodsDetails = (props) => {
 
       <iframe src={ recipeVideo } title={ recipeTitle } data-testid="video" />
 
-      <div>
-        {recipeRecommendations.map((item, index) => (
-          <div
-            key={ index }
-            data-testid={ `${index}-recomendation-card` }
-          >
-            {item.strDrink}
-          </div>
-        ))}
+      <div
+        className="carousel slide w-25"
+        data-ride="carousel"
+        id="carousel1"
+      >
+        <div className="carousel-inner">
+          {recommendations1.map((item, index) => {
+            if (index === carouselActiveIndex) {
+              return (
+                <div
+                  key={ item.strDrink }
+                  data-testid={ `${index}-recomendation-card` }
+                  className="carousel-item active"
+                >
+                  <img
+                    src={ item.strDrinkThumb }
+                    alt={ item.strDrink }
+                    className="d-block w-100"
+                  />
+                  <h5 data-testid={ `${index}-recomendation-title` }>
+                    { item.strDrink }
+                  </h5>
+                </div>
+              );
+            }
+            return (
+              <div
+                key={ item.idDrink }
+                data-testid={ `${index}-recomendation-card` }
+                className="carousel-item"
+              >
+                <img
+                  src={ item.strDrinkThumb }
+                  alt={ item.strDrink }
+                  className="d-block w-100"
+                />
+                <h5 data-testid={ `${index}-recomendation-title` }>
+                  { item.strDrink }
+                </h5>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <div
+        className="carousel slide w-25"
+        data-ride="carousel"
+        id="carousel2"
+      >
+        <div className="carousel-inner">
+          {recommendations2.map((item, index) => {
+            if (index === carouselActiveIndex) {
+              return (
+                <div
+                  key={ item.idDrink }
+                  data-testid={ `${index + carouselPartition}-recomendation-card` }
+                  className="carousel-item active"
+                >
+                  <img
+                    src={ item.strDrinkThumb }
+                    alt={ item.strDrink }
+                    className="d-block w-100"
+                  />
+                  <h5 data-testid={ `${index + carouselPartition}-recomendation-title` }>
+                    { item.strDrink }
+                  </h5>
+                </div>
+              );
+            }
+            return (
+              <div
+                key={ item.idDrink }
+                data-testid={ `${index + carouselPartition}-recomendation-card` }
+                className="carousel-item"
+              >
+                <img
+                  src={ item.strDrinkThumb }
+                  alt={ item.strDrink }
+                  className="d-block w-100"
+                />
+                <h5 data-testid={ `${index + carouselPartition}-recomendation-title` }>
+                  { item.strDrink }
+                </h5>
+              </div>
+            );
+          })}
+        </div>
       </div>
       {
         buttonMount() && (
