@@ -41,7 +41,7 @@ function FavoritesRecipes() {
     fetchFavoritesRecipe((JSON.parse(localStorage.getItem('favoriteRecipes'))));
   }
 
-  useEffect(() => { arrFavoriteRecipe(); }, [getFavoritesRecipe]);
+  useEffect(() => { arrFavoriteRecipe(); }, []);
 
   return (
     <div>
@@ -69,13 +69,15 @@ function FavoritesRecipes() {
       </button>
       { getFavoritesRecipe.map((item, index) => (
         <div key={ item.id }>
-          <img
-            src={ item.image }
-            alt={ item.name }
-            data-testid={ `${index}-horizontal-image` }
-          />
-          <h3 data-testid={ `${index}-horizontal-name` }>{ item.name }</h3>
-
+          <a href={ `${item.type}s/${item.id}` }>
+            <img
+              src={ item.image }
+              alt={ item.name }
+              width="350"
+              data-testid={ `${index}-horizontal-image` }
+            />
+            <h3 data-testid={ `${index}-horizontal-name` }>{ item.name }</h3>
+          </a>
           <div data-testid={ `${index}-horizontal-top-text` }>
             {item.category !== 'Vegetarian' ? <h5>{ `${item.area}` }</h5>
               : <h5>{ `${item.area} - Vegetarian` }</h5>}
