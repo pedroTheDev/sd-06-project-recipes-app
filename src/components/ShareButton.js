@@ -1,10 +1,10 @@
-import React from 'react';
+import React { useState } from 'react';
 import PropTypes from 'prop-types';
 import shareIcon from '../images/shareIcon.svg';
 
-function ShareButton({ setMessage }) {
+function ShareButton() {
+  const [message, setMessage] = useState(false);
   function setFeedBackMessage() {
-    setMessage(true);
     const resetInterval = 2500;
     setTimeout(() => {
       setMessage(false);
@@ -18,8 +18,12 @@ function ShareButton({ setMessage }) {
   }
 
   return (
-    <button data-testid="share-btn" type="button" onClick={ copyToClip }>
+    <button data-testid="share-btn" type="button" onClick={() => {
+      copyToClip();
+      setMessage(true);
+    } }>
       <img src={ shareIcon } alt="shareIcon" />
+      { message ? 'Link Copiado!' : 'Copiar' }
     </button>
   );
 }
