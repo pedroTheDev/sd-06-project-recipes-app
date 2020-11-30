@@ -10,24 +10,33 @@ export async function getAllDrinkTypesApi(type) {
 // Lista de receitas de bebidas filtradas
 export async function getFilteredDrinksApi(type, value) {
   if (type === 'ingredients') {
-    const response = await fetch(`${URL_BASE}filter.php?i=${value}`);
-    const result = await response.json();
-    console.log(result.drinks);
-    return result.drinks;
+    try {
+      const response = await fetch(`${URL_BASE}filter.php?i=${value}`);
+      const result = await response.json();
+      return result.drinks;
+    } catch (error) {
+      return null;
+    }
   }
   if (type === 'name') {
-    const response = await fetch(`${URL_BASE}search.php?s=${value}`);
-    const result = await response.json();
-    console.log(result.drinks);
-    return result.drinks;
+    try {
+      const response = await fetch(`${URL_BASE}filter.php?i=${value}`);
+      const result = await response.json();
+      return result.drinks;
+    } catch (error) {
+      return null;
+    }
   }
   if (type === 'first') {
-    const response = await fetch(`${URL_BASE}search.php?f=${value}`);
-    const result = await response.json();
-    console.log(result.drinks);
-    return result.drinks;
+    try {
+      const response = await fetch(`${URL_BASE}filter.php?i=${value}`);
+      const result = await response.json();
+      return result.drinks;
+    } catch (error) {
+      return null;
+    }
   }
-  return [];
+  return null;
 }
 
 // Lista de receitas de Bebidas
@@ -51,6 +60,7 @@ export async function getRecipeDrinkByIdApi(id) {
   return result.drinks;
 }
 
+// Lista uma uma receita aleatória
 export async function getRecipeDrinksByRandom() {
   const response = await fetch(`${URL_BASE}random.php`);
   const result = await response.json();
@@ -63,6 +73,12 @@ export async function getIngredientsDrinks() {
   const result = await response.json();
   return result.drinks;
 }
+// Lista todas as bebidas alcoólicas
+export async function getDrinksAlcoholic() {
+  const response = await fetch(`${URL_BASE}filter.php?a=Alcoholic`);
+  const result = await response.json();
+  return result.drinks;
+}
 
 export default {
   getAllDrinkTypesApi,
@@ -72,4 +88,5 @@ export default {
   getFilteredDrinksApi,
   getRecipeDrinksByRandom,
   getIngredientsDrinks,
+  getDrinksAlcoholic,
 };

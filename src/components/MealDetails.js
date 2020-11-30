@@ -8,6 +8,7 @@ import shareIcon from '../images/shareIcon.svg';
 import favoriteIcon from '../images/whiteHeartIcon.svg';
 import MyCarousel from './MyCarousel';
 import MealsContext from '../context/MealsContext';
+import '../Css/MealDetail.css';
 
 function MealDetails() {
   const [recipeMeal, setRecipeMeal] = useState({});
@@ -31,7 +32,7 @@ function MealDetails() {
           id: item.idDrink,
           strName: item.strDrink,
           strThumb: item.strDrinkThumb,
-          strCategory: item.strCategory,
+          strCategory: item.strAlcoholic,
         };
         return myCard; // retorna o novo objeto criado no map do myCards
       });
@@ -120,9 +121,10 @@ function MealDetails() {
       </div>
       <div>
         <Button
+          className="btn-iniciar-receita"
           type="button"
           data-testid="start-recipe-btn"
-          variant="warning"
+          variant="success"
           size="lg"
           block
         >

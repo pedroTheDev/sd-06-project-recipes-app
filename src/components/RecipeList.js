@@ -11,7 +11,6 @@ function RecipeList() {
     cardsRecipe,
     setCardsRecipe,
     categories } = useContext(MealsContext);
-  // const [cardsRecipe, setCardsRecipe] = useState([]);
   const [cardCategories, setCardCategories] = useState([]);
   const [categorySelected, setcategorySelected] = useState([]);
 

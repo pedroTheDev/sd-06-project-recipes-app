@@ -18,7 +18,7 @@ function MyCarousel() {
               alt="First slide"
             />
             <h6>{ recommendedRecipe[0].strCategory }</h6>
-            <h4>{ recommendedRecipe[0].strName }</h4>
+            <h4 data-testid="0-recomendation-title">{ recommendedRecipe[0].strName }</h4>
           </div>
           <div data-testid="1-recomendation-card">
             <img
@@ -27,7 +27,7 @@ function MyCarousel() {
               alt="First slide"
             />
             <h6>{ recommendedRecipe[1].strCategory }</h6>
-            <h4>{ recommendedRecipe[1].strName }</h4>
+            <h4 data-testid="1-recomendation-title">{ recommendedRecipe[1].strName }</h4>
           </div>
         </div>
       </Carousel.Item>
@@ -40,7 +40,7 @@ function MyCarousel() {
               alt="First slide"
             />
             <h6>{ recommendedRecipe[2].strCategory }</h6>
-            <h4>{ recommendedRecipe[2].strName }</h4>
+            <h4 data-testid="2-recomendation-title">{ recommendedRecipe[2].strName }</h4>
           </div>
           <div data-testid="3-recomendation-card">
             <img
@@ -49,7 +49,7 @@ function MyCarousel() {
               alt="First slide"
             />
             <h6>{ recommendedRecipe[3].strCategory }</h6>
-            <h4>{ recommendedRecipe[3].strName }</h4>
+            <h4 data-testid="3-recomendation-title">{ recommendedRecipe[3].strName }</h4>
           </div>
         </div>
       </Carousel.Item>
@@ -62,7 +62,7 @@ function MyCarousel() {
               alt="First slide"
             />
             <h6>{ recommendedRecipe[4].strCategory }</h6>
-            <h4>{ recommendedRecipe[4].strName }</h4>
+            <h4 data-testid="4-recomendation-title">{ recommendedRecipe[4].strName }</h4>
           </div>
           <div data-testid="5-recomendation-card">
             <img
@@ -71,7 +71,7 @@ function MyCarousel() {
               alt="First slide"
             />
             <h6>{ recommendedRecipe[5].strCategory }</h6>
-            <h4>{ recommendedRecipe[5].strName }</h4>
+            <h4 data-testid="5-recomendation-title">{ recommendedRecipe[5].strName }</h4>
           </div>
         </div>
       </Carousel.Item>
