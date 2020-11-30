@@ -172,7 +172,7 @@ const DetalhesBebidas = () => {
                   alt={ !isFavorite ? 'whiteHeartIcon' : 'blackHeartIcon' }
                 />
               </button>
-              {linkCopied ? <span>Link Copiado!</span> : null}
+              {linkCopied ? <span>Link copiado!</span> : null}
             </div>
           </div>
           <div
