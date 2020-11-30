@@ -1,8 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
+import copy from 'clipboard-copy';
 import propTypes from 'prop-types';
-import { shareIcon, whiteHeartIcon /* blackHeartIcon */ } from '../images';
+import { useParams } from 'react-router-dom';
+import { shareIcon, whiteHeartIcon, blackHeartIcon } from '../images';
 
 function SecondaryHeader({ name, img, category }) {
+  const { id } = useParams();
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  const handleShareIcon = () => {
+    const url = `http://localhost:3000/comidas/${id}`;
+    console.log('url', url);
+    copy(url);
+    const shareButton = document.querySelector('.share-btn');
+    shareButton.value = 'Link copiado!';
+    const paragraph = document.querySelector('.copied-link');
+    const div = document.createElement('div');
+    paragraph.appendChild(div);
+    div.innerHTML = 'Link copiado!';
+  };
+
+  const handleFavoriteRecipe = () => {
+    console.log('is favorite', 'teste');
+    setIsFavorite(!isFavorite);
+  };
+
   return (
     <div className="header-container">
       <header>
@@ -12,24 +34,22 @@ function SecondaryHeader({ name, img, category }) {
           src={ img }
         />
         <h1 data-testid="recipe-title">{ name }</h1>
-        <button
-          type="button"
+        <input
+          type="image"
           data-testid="share-btn"
+          className="share-btn"
           src={ shareIcon }
-        >
-          <img src={ shareIcon } alt="Share recipe" />
-        </button>
-        <button
-          type="button"
+          alt="Share recipe"
+          onClick={ handleShareIcon }
+        />
+        <p className="copied-link" />
+        <input
+          type="image"
           data-testid="favorite-btn"
-          src={ whiteHeartIcon }
-        >
-          <img
-            src={ whiteHeartIcon }
-            alt="Share recipe"
-            data-testid="favorite-btn"
-          />
-        </button>
+          src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+          alt="Favorite recipe"
+          onClick={ handleFavoriteRecipe }
+        />
         <p data-testid="recipe-category">{ category }</p>
       </header>
     </div>

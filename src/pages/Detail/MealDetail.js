@@ -9,6 +9,7 @@ import './detail.css';
 function MealDetail() {
   const [recipes, setRecipes] = useState({});
   const [recommendations, setRecommendations] = useState([]);
+  const [newRecipe, setNewRecipe] = useState(true);
   const { id } = useParams();
   const zero = 0;
   const two = 2;
@@ -128,7 +129,7 @@ function MealDetail() {
             className="start-recipe"
             data-testid="start-recipe-btn"
           >
-            Iniciar Receita
+            {newRecipe ? 'Iniciar Receita' : (setNewRecipe(false) && 'Continuar Receita')}
           </button>
         </Link>
       </div>
