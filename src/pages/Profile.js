@@ -23,43 +23,47 @@ class Profile extends React.Component {
     return (
       <div className="profile-container">
         <Header history={ history } />
-        {localStorageEmail
-          ? (
-            <span
-              data-testid="profile-email"
-            >
-              {localStorageEmail.email}
-            </span>
-          )
-          : (
-            <span
-              data-testid="profile-email"
-            >
-              {userEmail}
-            </span>
-          )}
-        <button
-          type="button"
-          data-testid="profile-done-btn"
-          onClick={ () => history.push('/receitas-feitas') }
-        >
-          Receitas Feitas
-        </button>
-        <button
-          type="button"
-          className=""
-          data-testid="profile-favorite-btn"
-          onClick={ () => history.push('/receitas-favoritas') }
-        >
-          Receitas Favoritas
-        </button>
-        <button
-          type="button"
-          data-testid="profile-logout-btn"
-          onClick={ this.handleClick }
-        >
-          Sair
-        </button>
+        <div className="explore-buttons-div">
+          {localStorageEmail
+            ? (
+              <span
+                data-testid="profile-email"
+              >
+                {localStorageEmail.email}
+              </span>
+            )
+            : (
+              <span
+                data-testid="profile-email"
+              >
+                {userEmail}
+              </span>
+            )}
+          <button
+            type="button"
+            data-testid="profile-done-btn"
+            className="explore-button"
+            onClick={ () => history.push('/receitas-feitas') }
+          >
+            Receitas Feitas
+          </button>
+          <button
+            type="button"
+            className="explore-button"
+            data-testid="profile-favorite-btn"
+            onClick={ () => history.push('/receitas-favoritas') }
+          >
+            Receitas Favoritas
+          </button>
+          <button
+            type="button"
+            data-testid="profile-logout-btn"
+            onClick={ this.handleClick }
+            className="explore-button"
+          >
+            Sair
+          </button>
+        </div>
         <Footer history={ history } />
       </div>
     );

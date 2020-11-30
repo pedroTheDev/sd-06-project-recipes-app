@@ -20,9 +20,9 @@ class DoneRecipes extends React.Component {
     const fourHundred = 450;
     if (window.screen.availWidth < fourHundred) {
       const h1 = document.querySelector('.global-h1');
-      h1.style.fontSize = '35px';
+      h1.style.fontSize = '22px';
       const bla = document.querySelector('.search-input-div');
-      bla.style.width = '60px';
+      bla.style.width = '100px';
     }
     const recipes = JSON.parse(localStorage.getItem('doneRecipes'));
     if (recipes) {
