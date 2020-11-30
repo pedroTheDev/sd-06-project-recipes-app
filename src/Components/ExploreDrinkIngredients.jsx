@@ -7,7 +7,7 @@ function ExploreDrinkIngredients() {
   const {
     drinkIngredientsCategory,
     setDrinkIngredientsCategory,
-    setDrinkRecipes
+    setDrinkRecipes,
   } = useContext(RecipeContext);
 
   const getAPI = async () => {
