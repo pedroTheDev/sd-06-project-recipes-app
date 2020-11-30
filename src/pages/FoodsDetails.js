@@ -263,7 +263,7 @@ class FoodsDetails extends React.Component {
             <div className="detail-instructions" data-testid="instructions">
               {recipe.strInstructions}
             </div>
-            <p data-testid={ '0-card-name' }>{recipe.strMeal}</p>
+            <p data-testid="0-card-name">{recipe.strMeal}</p>
             <h2>Recomendadas</h2>
             <div className="video-div">
               <iframe
