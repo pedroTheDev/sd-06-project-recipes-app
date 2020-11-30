@@ -107,7 +107,7 @@ function DrinkDetail() {
         </div>
       </div>
       <div className="button-container">
-        <Link to={ `/bebidas/${recipes.idDrink}/in-progress` }>
+        <Link to={ `/receitas-feitas` }>
           <button
             type="button"
             data-testid="start-recipe-btn"
