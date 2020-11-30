@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import copy from 'clipboard-copy';
 import propTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import { shareIcon, whiteHeartIcon, blackHeartIcon } from '../images';
+import recipesAppContext from '../context/recipesAppContext';
 
 function SecondaryHeader({ name, img, category }) {
   const { id } = useParams();
-  const [isFavorite, setIsFavorite] = useState(false);
+  const { isFavorite, handleFavoriteRecipe } = useContext(recipesAppContext);
 
   const handleShareIcon = () => {
     const url = `http://localhost:3000/comidas/${id}`;
@@ -18,11 +19,6 @@ function SecondaryHeader({ name, img, category }) {
     const span = document.createElement('span');
     paragraph.appendChild(span);
     span.innerHTML = 'Link copiado!';
-  };
-
-  const handleFavoriteRecipe = () => {
-    console.log('is favorite', 'teste');
-    setIsFavorite(!isFavorite);
   };
 
   return (
