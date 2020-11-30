@@ -25,7 +25,6 @@ function ComidasInProgress(props) {
       setFetchById(responseID);
 
       const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-      console.log(favoriteRecipes);
 
       if (!favoriteRecipes || !favoriteRecipes.length) {
         setIsFavorite(false);
@@ -40,7 +39,6 @@ function ComidasInProgress(props) {
 
     getFavorites();
   }, []);
-
 
   const getIngredients = (obj, filter) => {
     const keys = [];
@@ -126,13 +124,14 @@ function ComidasInProgress(props) {
     }
   };
 
-  const handleClick = ({ target }) => {
-    if (target.classList.contains('ingredient-not-done')) {
-      target.classList.remove('ingredient-not-done');
-      target.classList.add('ingredient-done');
+  const handleClick = (index) => {
+    const label = document.querySelectorAll('label')[index];
+    if (label.classList.contains('ingredient-not-done')) {
+      label.classList.remove('ingredient-not-done');
+      label.classList.add('ingredient-done');
     } else {
-      target.classList.remove('ingredient-done');
-      target.classList.add('ingredient-not-done');
+      label.classList.remove('ingredient-done');
+      label.classList.add('ingredient-not-done');
     }
   };
 
@@ -143,14 +142,14 @@ function ComidasInProgress(props) {
         <Header title="Detalhes Comidas" />
         {
           fetchById.map((meal, index) => (
-            <div key={index}>
-              <img data-testid="recipe-photo" src={meal.strMealThumb} alt="" />
+            <div key={ index }>
+              <img data-testid="recipe-photo" src={ meal.strMealThumb } alt="" />
               <h2 data-testid="recipe-title">{meal.strMeal}</h2>
               <div>
                 <button
                   data-testid="share-btn"
                   type="button"
-                  onClick={copyToCB}
+                  onClick={ copyToCB }
                 >
                   Compartilhar
                 </button>
@@ -158,14 +157,14 @@ function ComidasInProgress(props) {
               </div>
               <button
                 type="button"
-                onClick={() => setFavorite(meal.idMeal)}
+                onClick={ () => setFavorite(meal.idMeal) }
               >
                 <img
                   data-testid="favorite-btn"
                   id="favorite-img"
-                  src={!isFavorite
+                  src={ !isFavorite
                     ? whiteHeartIcon
-                    : blackHeartIcon}
+                    : blackHeartIcon }
                   alt=""
                 />
               </button>
@@ -175,17 +174,17 @@ function ComidasInProgress(props) {
                   const measure = getIngredients(meal, /strMeasure/);
                   return (
                     <li
-                      key={indx}
-                      data-testid={`${indx}-ingredient-step`}
+                      key={ indx }
+                      data-testid={ `${indx}-ingredient-step` }
                     >
                       <label
+                        htmlFor={ `${indx}-drink` }
                         className="ingredient-not-done"
-                        onClick={handleClick}
-                        htmlFor={`${indx}-drink`}
                       >
                         <input
-                          id={`${indx}-drink`}
+                          id={ `${indx}-drink` }
                           type="checkbox"
+                          onClick={ () => handleClick(indx) }
                         />
                         {`${item} - ${measure[indx]}`}
                       </label>
@@ -195,7 +194,7 @@ function ComidasInProgress(props) {
               </ul>
               <p data-testid="instructions">{meal.strInstructions}</p>
               {!doneRecipes.includes(meal.idMeal) && (
-                <Link to={`/comidas/${meal.idMeal}/in-progress`}>
+                <Link to={ `/comidas/${meal.idMeal}/in-progress` }>
                   <button
                     className="start-recipe-btn"
                     data-testid="finish-recipe-btn"
