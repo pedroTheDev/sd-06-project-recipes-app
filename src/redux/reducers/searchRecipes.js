@@ -4,6 +4,7 @@ import { ADD_RECIPES,
   GET_FOOD_CATEGORIES,
   GET_DRINK_CATEGORIES,
   GET_FOOD_INGREDIENTS,
+  GET_DRINK_INGREDIENTS,
   REQUEST_INGREDIENTS,
   REQUEST_CATEGORIES,
   REQUEST_RECIPES,
@@ -22,10 +23,13 @@ const initialState = {
   isFetchin: false,
   isRecipesFetching: true,
   iscategoriesFetching: true,
+  isIngredientsLoading: true,
   foodCategories: [],
   foodInProgress: [],
   foodIngredients: [],
+  foodIngredientsThumbs: [],
   drinkIngredients: [],
+  drinkIngredientsThumbs: [],
   drinkCategories: [],
   data: {
     inputText: '',
@@ -71,12 +75,18 @@ export default function searchRecipesReducer(state = initialState, action) {
 
   case GET_FOOD_INGREDIENTS:
     return {
-      ...state, foodIngredients: action.ingredients, isIngredientsLoading: false,
+      ...state,
+      foodIngredients: action.ingredients,
+      foodIngredientsThumbs: action.thumbs,
+      isIngredientsLoading: false,
     };
 
   case GET_DRINK_INGREDIENTS:
     return {
-      ...state, drinkIngredients: action.ingredients, isIngredientsLoading: false,
+      ...state,
+      drinkIngredients: action.ingredients,
+      drinkIngredientsThumbs: action.thumbs,
+      isIngredientsLoading: false,
     };
 
   case REQUEST_CATEGORIES:

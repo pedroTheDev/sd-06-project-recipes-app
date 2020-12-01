@@ -1,17 +1,46 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import IngredientCard from '../components/IngredientCard';
 import { addFoodIngredients } from '../redux/actions/searchRecipes';
 
 function ExploreFoodByIngredients(props) {
-  const { history: { location: { pathname } }, pageConfig } = props;
+  const { history: { location: { pathname } },
+    pageConfig,
+    isLoading,
+    dispatchFetchIngredients,
+    foodIngredients, ingredientConfig, foodThumbs } = props;
   const { header } = pageConfig;
+  const [componentLoading, setComponentLoading] = useState(true);
+
+  useEffect(() => {
+    dispatchFetchIngredients();
+  }, []);
+
+  const renderIngredients = (arrayFoodIngredients, boolIsLoading, config) => {
+    if (!boolIsLoading) {
+      console.log(foodThumbs, 'thumbs- console on page');
+      return (
+        arrayFoodIngredients
+          .map((ingredient, index) => (
+            <IngredientCard
+              thumb={ foodThumbs[index] }
+              name={ ingredient[config.name] }
+              key={ `${index} ingredient` }
+              pathname={ pathname }
+              index={ index }
+            />))
+      );
+    }
+  };
+
   return (
     <div>
       <Header pathname={ pathname } componentConfig={ header } />
-      <p>pagina de explorar comida por ingrediente</p>
+      {renderIngredients(foodIngredients, isLoading, ingredientConfig)}
+
       <Footer />
     </div>
   );
@@ -19,6 +48,10 @@ function ExploreFoodByIngredients(props) {
 
 const mapStateToProps = (state) => ({
   pageConfig: state.sitemap.explorarComidasIngredientes,
+  ingredientConfig: state.sitemap.comidas.ingredients,
+  isLoading: state.searchRecipes.isIngredientsLoading,
+  foodIngredients: state.searchRecipes.foodIngredients,
+  foodThumbs: state.searchRecipes.foodIngredientsThumbs,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -39,5 +72,11 @@ ExploreFoodByIngredients.propTypes = {
     location: PropTypes.shape({
       pathname: PropTypes.string.isRequired,
     }).isRequired,
+  }).isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  dispatchFetchIngredients: PropTypes.func.isRequired,
+  foodIngredients: PropTypes.arrayOf(PropTypes.any).isRequired,
+  ingredientConfig: PropTypes.shape({
+    name: PropTypes.string.isRequired,
   }).isRequired,
 };

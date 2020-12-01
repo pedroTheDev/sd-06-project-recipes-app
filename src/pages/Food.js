@@ -20,6 +20,7 @@ function Food(props) {
     iscategoriesFetching,
     dispatchFetching,
     dispatchCategories,
+    foodRecipes,
 
   } = props;
   const componentIsMounted = useRef(true);
@@ -30,7 +31,12 @@ function Food(props) {
 
   useEffect(() => {
     dispatchCategories();
-    dispatchInitialRecipes();
+    const zero = 0;
+    console.log(foodRecipes, 'initial');
+    if (foodRecipes.length === zero) {
+      console.log('foodrecipes length', foodRecipes.length);
+      dispatchInitialRecipes();
+    }
   }, []);
 
   useFetch(
@@ -68,7 +74,7 @@ function Food(props) {
 }
 
 const mapStateToProps = (state) => ({
-  recipes: state.searchRecipes.recipes,
+  foodRecipes: state.searchRecipes.recipes.meals,
   pageConfig: state.sitemap.comidas,
   fetchmap: state.fetchmap,
   data: state.searchRecipes.data,
@@ -90,10 +96,7 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(mapStateToProps, mapDispatchToProps)(Food);
 
 Food.propTypes = {
-  recipes: PropTypes.shape({
-    type: PropTypes.string,
-    results: PropTypes.arrayOf(PropTypes.any),
-  }).isRequired,
+  foodRecipes: PropTypes.arrayOf(PropTypes.any).isRequired,
   data: PropTypes.shape({
     inputText: PropTypes.string.isRequired,
     radioSearchSelection: PropTypes.string.isRequired,

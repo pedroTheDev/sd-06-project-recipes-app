@@ -1,4 +1,5 @@
-import { fetchAPI } from '../../helpers/APIRequests';
+import { fetchAPI, getIngredientsFoodEndPoint,
+  getIngredientsDrinkEndPoint } from '../../helpers/APIRequests';
 
 export const ADD_RECIPE_DETAIL = 'ADD_RECIPE_DETAIL';
 export const ADD_RECIPES = 'ADD_RECIPES';
@@ -22,7 +23,8 @@ const foodIngredientsEndpoint = 'https://www.themealdb.com/api/json/v1/1/list.ph
 const drinkIngreientsEndpoint = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list';
 
 const zero = 0;
-const maxLength = 5;
+const maxCategoriesLength = 5;
+const maxIngredientsLength = 12;
 
 export const addRecipeDetail = (recipeDetail) => ({
   type: ADD_RECIPE_DETAIL,
@@ -72,34 +74,70 @@ const getDrinkCategories = (categories) => ({
   categories,
 });
 
-const getFoodIngredients = (ingredients) => ({
+const getDrinkIngredients = (ingredients, thumbs) => ({
+  type: GET_DRINK_INGREDIENTS,
+  ingredients,
+  thumbs,
+});
+
+const getFoodIngredients = (ingredients, thumbs) => ({
   type: GET_FOOD_INGREDIENTS,
   ingredients,
+  thumbs,
 });
+
+const fetchFoodSequence = async (arrayNames, mealIndex = 0) => {
+  const currentThumb = await fetch(`https://www.themealdb.com/images/ingredients/${arrayNames[mealIndex]}-Small.png`);
+  const response = [currentThumb.url];
+  console.log(response, 'imagefetch');
+  if (arrayNames.length - 1 > mealIndex) {
+    return response.concat(await fetchFoodSequence(arrayNames, mealIndex + 1));
+  }
+  return response;
+};
 
 export const addFoodIngredients = () => async (dispatch) => {
   dispatch(requestIngredients());
   const json = await fetchAPI(foodIngredientsEndpoint);
-
-  console.log(json);
+  const meals = json.meals.slice(zero, maxIngredientsLength);
+  let thumbs = [];
+  const mealsNames = meals.map((meal) => meal.strIngredient);
+  thumbs = await fetchFoodSequence(mealsNames);
+  console.log(meals, 'ingredient fetch');
+  return dispatch(getFoodIngredients(meals, thumbs));
 };
 
 export const addDrinkIngredients = () => async (dispatch) => {
   dispatch(requestIngredients());
   const json = await fetchAPI(drinkIngreientsEndpoint);
-  console.log(json);
+  const drinks = json.drinks.slice(zero, maxIngredientsLength);
+  let thumbs = [];
+  const drinksNames = drinks.map((drink) => drink.strIngredient1);
+
+  const fetchSequence = async (arrayNames, drinkIndex = 0) => {
+    const currentThumb = await fetch(`https://www.thecocktaildb.com/images/ingredients/${arrayNames[drinkIndex]}-Small.png`);
+    const response = [currentThumb.url];
+
+    if (arrayNames.length - 1 > drinkIndex) {
+      return response.concat(await fetchSequence(arrayNames, drinkIndex + 1));
+    }
+    return response;
+  };
+
+  thumbs = await fetchSequence(drinksNames);
+  return dispatch(getDrinkIngredients(drinks, thumbs));
 };
 
 export const addFoodCategories = () => async (dispatch) => {
   dispatch(requestCategories());
   const json = await fetchAPI(initialFoodCategoriesEndPoint);
-  return dispatch(getFoodCategories(json.meals.slice(zero, maxLength)));
+  return dispatch(getFoodCategories(json.meals.slice(zero, maxCategoriesLength)));
 };
 
 export const addDrinkCategories = () => async (dispatch) => {
   dispatch(requestCategories());
   const json = await fetchAPI(initialDrinkCategoriesEndPoint);
-  return dispatch(getDrinkCategories(json.drinks.slice(zero, maxLength)));
+  return dispatch(getDrinkCategories(json.drinks.slice(zero, maxCategoriesLength)));
 };
 
 export const addFoodRecipes = () => async (dispatch) => {
@@ -111,5 +149,20 @@ export const addFoodRecipes = () => async (dispatch) => {
 export const addDrinkRecipes = () => async (dispatch) => {
   dispatch(requestRecipes());
   const response = await fetchAPI(allDrinkRecipesEndPoint);
+  return dispatch(addRecipes({ drinks: response.drinks }));
+};
+
+export const fetchFoodByIngredient = (ingredientName) => async (dispatch) => {
+  dispatch(requestRecipes());
+  console.log(ingredientName);
+  const response = await fetchAPI(getIngredientsFoodEndPoint(ingredientName.toLowerCase()));
+  console.log(response);
+  return dispatch(addRecipes({ meals: response.meals }));
+};
+
+export const fetchDrinkByIngredient = (ingredientName) => async (dispatch) => {
+  dispatch(requestRecipes());
+  const response = await fetchAPI(getIngredientsDrinkEndPoint(ingredientName.toLowerCase()));
+  console.log('fetching', response);
   return dispatch(addRecipes({ drinks: response.drinks }));
 };

@@ -12,6 +12,9 @@ const initialState = {
     category: {
       type: 'meals',
     },
+    ingredients: {
+      name: 'strIngredient',
+    },
 
   },
   bebidas: {
@@ -25,6 +28,9 @@ const initialState = {
     },
     category: {
       type: 'drinks',
+    },
+    ingredients: {
+      name: 'strIngredient1',
     },
 
   },

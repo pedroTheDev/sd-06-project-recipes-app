@@ -13,7 +13,7 @@ import DrinkCategoriesButtons from '../components/DrinkCategoriesButtons';
 function CockTail(props) {
   const { history: { location: { pathname } },
     pageConfig, fetchmap, dispatchRecipes, data,
-    isFetchin, dispatchFetching, dispatchCategories } = props;
+    isFetchin, dispatchFetching, dispatchCategories, drinkRecipes } = props;
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -35,12 +35,16 @@ function CockTail(props) {
 
   useEffect(() => {
     async function fetchData() {
-      setIsLoading(true);
-
-      const initialRecipes = await fetchAPI(allDrinkRecipesEndPoint);
-      dispatchRecipes(initialRecipes);
-      dispatchCategories();
+      const zero = 0;
+      console.log(drinkRecipes.length);
+      if (drinkRecipes.length === zero) {
+        setIsLoading(true);
+        const initialRecipes = await fetchAPI(allDrinkRecipesEndPoint);
+        dispatchRecipes(initialRecipes);
+      }
       setIsLoading(false);
+
+      dispatchCategories();
     }
     fetchData();
   }, []);
@@ -66,7 +70,8 @@ function CockTail(props) {
 }
 
 const mapStateToProps = (state) => ({
-  recipes: state.searchRecipes.recipes,
+
+  drinkRecipes: state.searchRecipes.recipes.drinks,
   pageConfig: state.sitemap.bebidas,
   fetchmap: state.fetchmap,
   data: state.searchRecipes.data,
