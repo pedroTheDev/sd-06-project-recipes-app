@@ -15,7 +15,6 @@ function IngredientsList() {
       let myCards = [];
       if (location.pathname.includes('comidas')) {
         const apiMeals = await getIngredients();
-        console.log(location);
         myCards = apiMeals.map((item) => {
           const myIngredient = {
             ingredientName: item.strIngredient,
