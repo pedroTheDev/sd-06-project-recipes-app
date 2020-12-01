@@ -37,15 +37,14 @@ class FavFoodCard extends React.Component {
     }
   }
 
-  async handleShareFood({ target }, { id }) {
-    const two = 2;
-    if ((target.parentNode).childNodes.length <= two) {
-      const { parentNode } = target;
+  async handleShareFood({ id }) {
+    const textdiv = document.querySelector('.text-div');
+    if ((textdiv).childNodes.length < 1) {
       const paragraph = document.createElement('p');
       paragraph.innerText = 'Link Copiado';
       paragraph.style.fontSize = '8px';
       paragraph.style.fontWeight = '100';
-      parentNode.appendChild(paragraph);
+      textdiv.appendChild(paragraph);
     }
     const url = `http://localhost:3000/comidas/${id}`;
     await copy(url);
@@ -137,7 +136,7 @@ class FavFoodCard extends React.Component {
               onClick={ () => history.push(`/comidas/${element.id}`) }
             />
             <div className="left-side-div">
-              <div className="food-drink-top-div">
+              <div className="food-drink-top-div fav-drink-card">
                 <div className="food-drink-titles">
                   <p data-testid={ `${index + indexAcc}-horizontal-top-text` }>
                     {`${element.area} - ${element.category}`}
@@ -152,23 +151,27 @@ class FavFoodCard extends React.Component {
                     { element.name }
                   </button>
                 </div>
-                <div className="food-drink-image">
-                  <input
-                    type="image"
-                    data-testid={ `${index + indexAcc}-horizontal-favorite-btn` }
-                    className="fav-button"
-                    src={ this.changeFavoriteIcon(element) }
-                    onClick={ () => this.setLocalState(element) }
-                    alt="whiteHeartIcon"
-                  />
-                  <input
-                    type="image"
-                    className="share-btn"
-                    data-testid={ `${index + indexAcc}-horizontal-share-btn` }
-                    src={ shareIcon }
-                    alt="share"
-                    onClick={ (event) => this.handleShareFood(event, element) }
-                  />
+                <div className="food-drink-image fav-card-image">
+                  <div>
+                    <input
+                      type="image"
+                      data-testid={ `${index + indexAcc}-horizontal-favorite-btn` }
+                      className="fav-button"
+                      src={ this.changeFavoriteIcon(element) }
+                      onClick={ () => this.setLocalState(element) }
+                      alt="whiteHeartIcon"
+                    />
+                    <input
+                      type="image"
+                      className="share-btn"
+                      data-testid={ `${index + indexAcc}-horizontal-share-btn` }
+                      src={ shareIcon }
+                      alt="share"
+                      onClick={ () => this.handleShareFood(element) }
+                      style={ { marginLeft: '10px' } }
+                    />
+                  </div>
+                  <div className="text-div" />
                 </div>
               </div>
             </div>

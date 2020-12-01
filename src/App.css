@@ -815,6 +815,23 @@ a {
     width: 85%;
     justify-content: center;
   }
+
+  .fav-drink-card {
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100%;
+  }
+
+  .food-drink-image {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+  }
+  .fav-card-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 @media (max-width:360px) {
@@ -853,6 +870,23 @@ a {
     border-radius: 3px;
   }
 
+  .fav-drink-card {
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100%;
+  }
+
+  .food-drink-image {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+  }
+
+  .fav-card-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 .not-styled {
