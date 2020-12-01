@@ -22,4 +22,6 @@ describe('9 - Implemente os elementos do header na tela principal de receitas, r
     expect(pageTitle).toBeInTheDocument();
     expect(SearchTopBar).toBeInTheDocument();
   })
+
+  it('')
 })
