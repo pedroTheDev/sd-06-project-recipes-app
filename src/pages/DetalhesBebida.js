@@ -48,7 +48,12 @@ function DetalhesBebida() {
 
   useEffect(() => {
     if (localStorage.favoriteRecipes) {
-      setIsFavorite(true);
+      const favoriteRecipes = JSON.parse(localStorage.favoriteRecipes);
+      favoriteRecipes.forEach((favorite) => {
+        if (favorite.id === idDrink) {
+          setIsFavorite(true);
+        }
+      });
     }
   }, []);
 
