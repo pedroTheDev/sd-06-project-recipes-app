@@ -7,6 +7,7 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 function RecipesInProgress() {
   const location = useLocation().pathname;
   const [recipeInProgress, setRecipeInProgress] = useState([]);
+  const [isDisabled, setDisabled] = useState(true);
   const [isFetching, setFetching] = useState(true);
   const [favoriteRecipe, setFavoriteRecipe] = useState(false);
   let allCheckedIngredients = [];
@@ -14,6 +15,7 @@ function RecipesInProgress() {
     allCheckedIngredients = JSON.parse(localStorage.getItem('checkedIngredients'));
   }
   const localStorageFavs = JSON.parse(localStorage.getItem('favoriteRecipes'));
+  const allDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
   const history = useHistory();
 
   const fetchRecipesInProgress = async () => {
@@ -23,20 +25,24 @@ function RecipesInProgress() {
       const apiRequest = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
       const apiResponse = await apiRequest.json();
       setRecipeInProgress(apiResponse.meals[0]);
-      // if (recipeInProgressKeys[0] === 'meals') {
-      //   setRecipeNumber(0);
-      // } else {
-      //   setRecipeNumber(1);
-      // }
+      if (localStorageFavs) {
+        localStorageFavs.forEach((item) => {
+          if (item.id === apiResponse.meals[0].idMeal) {
+            setFavoriteRecipe(true);
+          }
+        });
+      }
     } else {
       const apiRequest = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
       const apiResponse = await apiRequest.json();
       setRecipeInProgress(apiResponse.drinks[0]);
-      // if (recipeInProgressKeys[0] === 'cocktails') {
-      //   setRecipeNumber(0);
-      // } else {
-      //   setRecipeNumber(1);
-      // }
+      if (localStorageFavs) {
+        localStorageFavs.forEach((item) => {
+          if (item.id === apiResponse.drinks[0].idDrink) {
+            setFavoriteRecipe(true);
+          }
+        });
+      }
     }
   };
 
@@ -49,17 +55,26 @@ function RecipesInProgress() {
   }, []);
 
   const handleClick = () => {
-    // const newDoneRecipe = {
-    //   id: recipeInProgress.idMeal,
-    //   type: 'comida',
-    //   area: recipeInProgress.strArea,
-    //   category: recipeInProgress.strCategory,
-    //   alcoholicOrNot: '',
-    //   name: recipeInProgress.strMeal,
-    //   image: recipeInProgress.strMealThumb,
-    //   doneDate: ,
-    //   tags: ,
-    // };
+    const zero = 0;
+    const ten = 10;
+    const newDoneRecipe = {
+      id: recipeInProgress.idMeal,
+      type: 'comida',
+      area: recipeInProgress.strArea,
+      category: recipeInProgress.strCategory,
+      alcoholicOrNot: '',
+      name: recipeInProgress.strMeal,
+      image: recipeInProgress.strMealThumb,
+      doneDate: new Date().toJSON().slice(zero, ten).replace(/-/g, '-'),
+      tags: recipeInProgress.strTags ? recipeInProgress.strTags : '',
+    };
+
+    if (!allDoneRecipes) {
+      localStorage.setItem('doneRecipes', JSON.stringify([newDoneRecipe]));
+    } else {
+      localStorage.setItem('doneRecipes',
+        JSON.stringify([...allDoneRecipes, newDoneRecipe]));
+    }
     history.push('/receitas-feitas');
   };
 
@@ -79,6 +94,18 @@ function RecipesInProgress() {
       ingredientMade.style = 'text-decoration: line-through';
       allCheckedIngredients.push(ingredientMade.innerHTML);
       localStorage.setItem('checkedIngredients', JSON.stringify(allCheckedIngredients));
+    }
+    const allCheckBoxs = document.querySelectorAll('#checkbox');
+    let isChecked = false;
+    allCheckBoxs.forEach((checkbox) => {
+      if (checkbox.checked === true) {
+        isChecked = true;
+      } else {
+        isChecked = false;
+      }
+    });
+    if (isChecked) {
+      setDisabled(false);
     }
   };
 
@@ -208,6 +235,7 @@ function RecipesInProgress() {
         type="button"
         data-testid="finish-recipe-btn"
         onClick={ handleClick }
+        disabled={ isDisabled }
       >
         Finalizar Receita
       </button>
@@ -262,6 +290,7 @@ function RecipesInProgress() {
         type="button"
         data-testid="finish-recipe-btn"
         onClick={ handleClick }
+        disabled={ isDisabled }
       >
         Finalizar Receita
       </button>
