@@ -34,6 +34,7 @@ function IngredientsArea() {
         onChange={ (e) => setSelectedArea(e.target.value) }
       >
         <option key="disabled" disabled value="">--</option>
+        <option key="All" data-testid="All-option" value="All">All</option>
         {areas.map((area) => (
           <option key={ area } data-testid={ `${area}-option` }>{`${area}`}</option>))}
       </select>
