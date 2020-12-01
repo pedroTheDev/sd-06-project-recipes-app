@@ -75,12 +75,10 @@ class DrinksDetails extends React.Component {
         ingredientArray.push(recipe[ingredient]);
         measureArray.push(recipe[measure]);
       }
-
       const filteredIngredients = ingredientArray.filter((element) => element !== null)
         .filter((element) => element !== undefined).filter((element) => element !== '');
       const filteredMeasure = measureArray.filter((element) => element !== null)
         .filter((element) => element !== undefined).filter((element) => element !== '');
-
       this.setIngredients(filteredIngredients, filteredMeasure);
       return null;
     });
