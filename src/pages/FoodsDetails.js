@@ -286,7 +286,7 @@ const FoodsDetails = (props) => {
               return (
                 <div
                   key={ item.idDrink }
-                  data-testid={ '1-recomendation-card' }
+                  data-testid={ "1-recomendation-card" }
                   className="carousel-item active"
                 >
                   <img
