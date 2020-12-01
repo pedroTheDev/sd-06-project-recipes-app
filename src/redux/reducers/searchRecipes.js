@@ -1,4 +1,4 @@
-import { ADD_RECIPES, 
+import { ADD_RECIPES,
   ADD_RECIPE_DETAIL,
   CHANGE_FETCH,
   GET_FOOD_CATEGORIES,
@@ -40,7 +40,7 @@ export default function searchRecipesReducer(state = initialState, action) {
   case ADD_RECIPE_DETAIL:
     return {
       ...state, foodInProgress: [...state.foodInProgress, action.recipeDetail],
-    }
+    };
 
   case CHANGE_FETCH:
     return {

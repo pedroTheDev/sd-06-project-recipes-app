@@ -7,7 +7,7 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 
 function Perfil(props) {
-  const { history: { location: { pathname } }, pageConfig, email } = props;
+  const { history: { location: { pathname } }, pageConfig } = props;
   const { header } = pageConfig;
   const getEmailFromLocalStorage = localStorage.getItem('user');
   const userEmail = JSON.parse(getEmailFromLocalStorage);
@@ -49,7 +49,7 @@ function Perfil(props) {
 
 const mapStateToProps = (state) => ({
   pageConfig: state.sitemap.perfil,
-  email: state.login.email,
+  // email: state.login.email,
 });
 
 export default connect(mapStateToProps, null)(Perfil);
@@ -67,5 +67,5 @@ Perfil.propTypes = {
       pathname: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
-  email: PropTypes.string.isRequired,
+  // email: PropTypes.string.isRequired,
 };
