@@ -1,16 +1,21 @@
 import React from 'react';
 import { fireEvent, waitForElement } from '@testing-library/react';
 import renderWithRouter from '../services/renderWithRouter';
+// import Foods from '../pages/Foods';
 import App from '../App';
 import * as API from '../services/index';
-import mock from '../../cypress/mocks/meals';
+import foodsOnRender from './mocks/foodsOnRender';
+// import meals from '../../cypress/mocks/meals';
 
 describe('Testar a tela de detalhes de comidas', () => {
   it('Verifica se ao clicar em uma comida ela redireciona para os detalhes', async () => {
     const { getByTestId, history } = renderWithRouter(<App />);
-    history.push('/comidas');
-    jest.spyOn(API, 'filterFoodsByCategory').mockImplementation(() => mock.meals);
+    beforeEach(() => {
+      history.push('/comidas');
+    });
+    jest.spyOn(API, 'foodsOnRender').mockImplementation(() => foodsOnRender.meals);
     const firstCard = await waitForElement(() => {
+      console.log(history.location.pathname);
       getByTestId('0-card-img');
     });
     expect(firstCard).toBeInTheDocument();

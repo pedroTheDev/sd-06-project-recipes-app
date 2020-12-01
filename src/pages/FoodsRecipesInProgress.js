@@ -205,7 +205,7 @@ class FoodsRecipesInProgress extends React.Component {
       this.setState({ checkedItems: originalChecked });
       this.setRecipesLocalStorage(originalChecked);
     }
-    const inputsList = document.querySelectorAll('input');
+    const inputsList = document.querySelectorAll('input[type=checkbox]');
     inputsList.forEach((item) => {
       if (item.checked === true) {
         item.parentNode.className = 'styled';

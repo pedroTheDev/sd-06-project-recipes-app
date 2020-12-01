@@ -292,8 +292,8 @@ a {
 .recipe-buttons {
   width: 70px;
   display: flex;
-  align-items: flex-start;
-  justify-content: space-around;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 .explore-buttons {

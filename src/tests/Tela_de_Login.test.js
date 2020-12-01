@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, waitForElement } from '@testing-library/react';
 import { Login } from '../pages';
 import App from '../App';
 import renderWithRouter from '../services/renderWithRouter';
@@ -51,11 +51,11 @@ describe('Testar a página de login renderiza normalmente', () => {
   });
 });
 
-describe('Testar ações após o click do botão', () => {
-  it('Redireciona para a página de Comidas', () => {
+describe.only('Testar ações após o click do botão', () => {
+  it('Redireciona para a página de Comidas', async () => {
     const { getByTestId, history } = renderWithRouter(<App />);
     history.push('/');
-    const WAITING_TIME = 50;
+    // const WAITING_TIME = 50;
 
     const inputEmail = getByTestId('email-input');
     const inputPassword = getByTestId('password-input');
@@ -66,7 +66,8 @@ describe('Testar ações após o click do botão', () => {
     const submitBtn = getByTestId('login-submit-btn');
     fireEvent.click(submitBtn);
 
-    setTimeout(() => (expect(history.location.pathname).toBe('/comidas')), WAITING_TIME);
+    await waitForElement(() => expect(history.location.pathname).toBe('/comidas'));
+    // setTimeout(() => (expect(history.location.pathname).toBe('/comidas')), WAITING_TIME);
   });
 
   it('Cria as chaves no LocalStorage', () => {
