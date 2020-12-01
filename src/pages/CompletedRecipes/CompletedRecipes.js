@@ -60,19 +60,19 @@ function CompletedRecipes() {
       <div>
         <input
           className="btn btn-secondary"
-          onClick={() => setType('')}
+          onClick={ () => setType('') }
           type="button"
           value="All"
         />
         <input
           className="btn btn-secondary"
-          onClick={() => setType('meal')}
+          onClick={ () => setType('meal') }
           type="button"
           value="Comidas"
         />
         <input
           className="btn btn-secondary"
-          onClick={() => setType('drink')}
+          onClick={ () => setType('drink') }
           type="button"
           value="Bebidas"
         />
