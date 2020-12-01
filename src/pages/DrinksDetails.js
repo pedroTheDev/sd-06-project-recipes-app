@@ -27,6 +27,7 @@ class DrinksDetails extends React.Component {
     this.handleYoutubeVideo = this.handleYoutubeVideo.bind(this);
     this.checkRecipesDone = this.checkRecipesDone.bind(this);
     this.redirectFromState = this.redirectFromState.bind(this);
+    this.setDrinkState = this.setDrinkState.bind(this);
   }
 
   async componentDidMount() {
@@ -35,10 +36,10 @@ class DrinksDetails extends React.Component {
     dispatchID(endpoint);
     const drinkRecipe = await fetchDrinksById(endpoint);
     const recommendedMeals = await fetchRecommendedMeals();
+    console.log(drinkRecipe.length);
     this.setDrinkState(drinkRecipe, recommendedMeals);
     this.handleIngredients();
     this.changeButtonInnerText(endpoint);
-    this.setRenderState(drinkRecipe[0]);
   }
 
   handleYoutubeVideo(url) {
@@ -74,20 +75,12 @@ class DrinksDetails extends React.Component {
         ingredientArray.push(recipe[ingredient]);
         measureArray.push(recipe[measure]);
       }
-
       const filteredIngredients = ingredientArray.filter((element) => element !== null)
         .filter((element) => element !== undefined).filter((element) => element !== '');
       const filteredMeasure = measureArray.filter((element) => element !== null)
         .filter((element) => element !== undefined).filter((element) => element !== '');
-
       this.setIngredients(filteredIngredients, filteredMeasure);
       return null;
-    });
-  }
-
-  setRenderState(drink) {
-    this.setState({
-      recipe: drink,
     });
   }
 
@@ -201,8 +194,14 @@ class DrinksDetails extends React.Component {
     localStorage.setItem('ReceitaIniciada', JSON.stringify(recipe.idDrink));
     const getCheckedItems = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (getCheckedItems) {
-      getCheckedItems.cocktails = { [idCurrent]: [] };
-      localStorage.setItem('inProgressRecipes', JSON.stringify(getCheckedItems));
+      const objValue = getCheckedItems.cocktails[idCurrent];
+      if (objValue) {
+        getCheckedItems.cocktails = { [idCurrent]: objValue };
+        localStorage.setItem('inProgressRecipes', JSON.stringify(getCheckedItems));
+      } else {
+        getCheckedItems.cocktails = { [idCurrent]: [] };
+        localStorage.setItem('inProgressRecipes', JSON.stringify(getCheckedItems));
+      }
     }
 
     history.push(`/bebidas/${idCurrent}/in-progress`);
@@ -210,16 +209,17 @@ class DrinksDetails extends React.Component {
 
   render() {
     const {
+      Drink,
       RecommendedMeals,
       x,
       Ingredients,
       Measures,
-      Video,
-      recipe,
-    } = this.state;
+      Video } = this.state;
+    const recipe = Drink[0];
+    const zero = 0;
     return (
       <div className="food-drink-detail-container">
-        {recipe && recipe && (
+        {Drink.length > zero && (
           <div className="detail-card">
             <img
               src={ recipe.strDrinkThumb }
@@ -285,31 +285,28 @@ class DrinksDetails extends React.Component {
               />
             </div>
             <div className="slider">
-              {RecommendedMeals.map((recomend, i) => {
-                console.log('bla');
-                return (
-                  <div
-                    key={ i }
-                    className="slide"
-                    style={ { transform: `translateX(${x}%)` } }
-                    data-testid={ `${i}-recomendation-card` }
-                  >
-                    <img
-                      src={ recomend.strMealThumb }
-                      data-testid="recipe-photo"
-                      alt="recipe-img"
-                    />
-                    <div className="text-slider-div">
-                      <p>{recomend.strCategory}</p>
-                      <h4
-                        data-testid={ `${i}-recomendation-title` }
-                      >
-                        {recomend.strMeal}
-                      </h4>
-                    </div>
+              {RecommendedMeals.map((recomend, i) => (
+                <div
+                  key={ i }
+                  className="slide"
+                  style={ { transform: `translateX(${x}%)` } }
+                  data-testid={ `${i}-recomendation-card` }
+                >
+                  <img
+                    src={ recomend.strMealThumb }
+                    data-testid="recipe-photo"
+                    alt="recipe-img"
+                  />
+                  <div className="text-slider-div">
+                    <p>{recomend.strCategory}</p>
+                    <h4
+                      data-testid={ `${i}-recomendation-title` }
+                    >
+                      {recomend.strMeal}
+                    </h4>
                   </div>
-                );
-              })}
+                </div>
+              ))}
             </div>
             <div className="slider-controls">
               <button type="button" id="goLeft" onClick={ this.goLeft }>
