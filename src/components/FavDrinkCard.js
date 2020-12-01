@@ -39,7 +39,8 @@ class FavDrinkCard extends React.Component {
 
   async handleShareDrink({ target }, { id }) {
     const textDiv = target.parentNode.childNodes[2];
-    if ((textDiv).childNodes.length <= 1) {
+    const zero = 0;
+    if ((textDiv).childNodes.length <= zero) {
       const paragraph = document.createElement('p');
       paragraph.innerText = 'Link Copiado';
       paragraph.style.fontSize = '8px';
