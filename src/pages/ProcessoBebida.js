@@ -142,28 +142,31 @@ function ProcessoBebida() {
           </button>
         </div>
       </div>
-      <p data-testid="recipe-category">
-        Categoria
-      </p>
-      {drinkIngredients.map((ingredient, index) => (
-        <span
-          key={ index }
-          data-testid={ `${index}-ingredient-step` }
-        >
-          {ingredient }
-          <input
-            type="checkbox"
-            name={ ingredient }
-            checked={ checked.includes(index) }
-            onChange={ ({ target }) => { handleChange(target, index); } }
-          />
-        </span>
-      )) }
-      <p data-testid="instructions">
-        Instruções
-      </p>
+      <div className="div-recipes">
+        <h2 data-testid="recipe-category">
+          Categoria
+        </h2>
+        { drinkIngredients.map((ingredient, index) => (
+          <span
+            key={ index }
+            data-testid={ `${index}-ingredient-step` }
+          >
+            { ingredient }
+            <input
+              type="checkbox"
+              name={ ingredient }
+              checked={ checked.includes(index) }
+              onChange={ ({ target }) => { handleChange(target, index); } }
+            />
+          </span>
+        )) }
+        <h2 data-testid="instructions">
+          Instruções
+        </h2>
+      </div>
       <Link to="/receitas-feitas">
         <button
+          className="finish-recipe"
           type="button"
           data-testid="finish-recipe-btn"
           disabled={ isDisable }

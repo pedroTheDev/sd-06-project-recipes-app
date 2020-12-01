@@ -2,7 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import useCopyToClipboard from '../hooks/useCopyToClipboard';
-import { shareIcon, whiteHeartIcon, blackHeartIcon } from '../images';
+import { shareIcon, whiteHeartIcon, blackHeartIcon,
+  setaDireita, setaEsquerda } from '../images';
 import '../style/Detalhes.css';
 
 function DetalhesBebida() {
@@ -176,8 +177,14 @@ function DetalhesBebida() {
                   )) }
                 </div>
               </div>
-              <button type="button" onClick={ () => { changeNext(-UM); } }>Voltar</button>
-              <button type="button" onClick={ () => { changeNext(UM); } }>Próximo</button>
+              <div className="div-buttons-scroller">
+                <button type="button" onClick={ () => { changeNext(-UM); } }>
+                  <img src={ setaEsquerda } alt="Anterior" />
+                </button>
+                <button type="button" onClick={ () => { changeNext(UM); } }>
+                  <img src={ setaDireita } alt="Próximo" />
+                </button>
+              </div>
             </div>
             <Link to={ `/bebidas/${idDrink}/in-progress` }>
               <button

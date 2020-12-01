@@ -35,10 +35,9 @@ function ComidasPorLocalOrigem() {
   }, []);
 
   return (
-    <div>
+    <div className="explore-by-area">
       <Header title="Explorar Origem" />
       <select
-        className="select-areas"
         data-testid="explore-by-area-dropdown"
         onChange={ ({ target: { value } }) => mealsArea(value) }
       >
