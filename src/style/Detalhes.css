@@ -7,6 +7,7 @@ body {
 .container-details {
   background-color: #f5f5f5;
   border: 1px solid #cecccc;
+  min-height: 640px;
   margin: auto;
   width: 360px;
 }
@@ -71,11 +72,6 @@ body {
   font-weight: 900;
 }
 
-.div-recipes ul, {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 17px;
-}
-
 .div-recipes p, 
 .div-recipes ul {
   font-family: 'Montserrat', sans-serif;
@@ -104,8 +100,7 @@ body {
 
 .cards {
   margin: auto;
-  margin-bottom: 50px;
-  width: 300px;
+  width: 360px;
 }
 
 .scroller {
@@ -114,9 +109,8 @@ body {
 }
 
 .card {
-  min-width: 50%;
-  min-height: 100px;
-  margin-right: 10px;
+  width: 40%;
+  margin: 8px;
   background-color: #EDF2F7;
   /* scroll-snap-align: center; */
 }
@@ -127,4 +121,28 @@ body {
 
 .invisible {
   display: none;
+}
+
+.div-buttons-scroller {
+  align-items: center;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  width: 300px;
+}
+
+.div-buttons-scroller button{
+  background-color: #55575a;
+  border: none;
+  border-radius: 50%;
+  margin: 2%;
+}
+
+.div-buttons-scroller button:hover{
+  background-color: #6a6d72;
+  cursor: pointer;
+}
+
+.div-buttons-scroller img{
+  width: 40px;
 }
