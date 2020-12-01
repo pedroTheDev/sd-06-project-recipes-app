@@ -21,6 +21,11 @@ function SearchBar() {
     if (searchParam === 'name') {
       setLoading(true);
       const filteredMeals = await api.fetchFoodByName(termoBusca);
+      if (searchParam && !filteredMeals) {
+        setLoading(false);
+        // eslint-disable-next-line no-alert
+        return alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+      }
       setMeals(filteredMeals);
       setLoading(false);
     }
@@ -45,6 +50,11 @@ function SearchBar() {
     if (searchParam === 'name') {
       setLoading(true);
       const filteredDrink = await api.fetchDrinkByName(termoBusca);
+      if (searchParam && !filteredDrink) {
+        setLoading(false);
+        // eslint-disable-next-line no-alert
+        return alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+      }
       setDrinks(filteredDrink);
       setLoading(false);
     }
