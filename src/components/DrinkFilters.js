@@ -33,12 +33,14 @@ function DrinkFilters() {
   };
 
   return (
-    <div>
+    <div className="row justify-content-center mb-2">
       {filtersData.map((filter) => (
         <button
           key={ filter }
           type="button"
           data-testid={ `${filter}-category-filter` }
+          className="btn btn-secondary btn-sm m-1 w-25"
+          style={ { background: '#6CDC3E' } }
           onClick={ (event) => filterByCategory(event.target.innerHTML) }
         >
           {filter}

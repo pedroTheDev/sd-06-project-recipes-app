@@ -1,7 +1,7 @@
 .carousel {
   display: flex;
   overflow: auto;
-  /* width: 200px; */
+  width: 200px;
 }
 
 .start-recipe-btn {

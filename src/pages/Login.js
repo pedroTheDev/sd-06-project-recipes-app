@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import logo from '../images/myfood.png';
 import '../style/Login.css';
 
 const Login = () => {
@@ -44,44 +45,55 @@ const Login = () => {
   };
 
   return (
-    <section>
-      <h1>TRYBE</h1>
-      <form className="login">
-        {/* <img src={ drinkIcon } alt="logo" className="logo" /> */}
-        <label
-          htmlFor="email-input"
-        >
-          Email
-          <input
-            id="email-input"
-            name="email"
-            type="text"
-            data-testid="email-input"
-            onChange={ handleChange }
-          />
-        </label>
-        <label htmlFor="password-input">
-          Senha
-          <input
-            id="password-input"
-            name="password"
-            type="password"
-            data-testid="password-input"
-            onChange={ handleChange }
-          />
-
-        </label>
-        <Link to="/comidas">
-          <button
-            disabled={ disabled }
-            type="button"
-            data-testid="login-submit-btn"
-            onClick={ handleClick }
-          >
-            Login
-          </button>
-        </Link>
-      </form>
+    <section className="bg">
+      <div className="container h-100">
+        <div className="d-flex justify-content-center h-100">
+          <div className="user_card">
+            <div className="d-flex justify-content-center">
+              <div className="brand_logo_container">
+                <img src={ logo } className="brand_logo" alt="Logo" />
+              </div>
+            </div>
+            <div className="d-flex justify-content-center form_container">
+              <form>
+                <div className="input-group mb-3">
+                  <input
+                    id="email-input"
+                    placeholder="email"
+                    type="text"
+                    name="email"
+                    data-testid="email-input"
+                    onChange={ handleChange }
+                  />
+                </div>
+                <div className="input-group mb-2">
+                  <input
+                    id="password-input"
+                    placeholder="password"
+                    name="password"
+                    type="password"
+                    data-testid="password-input"
+                    onChange={ handleChange }
+                  />
+                </div>
+                <div className="d-flex justify-content-center mt-3 login_container">
+                  <Link to="/comidas">
+                    <button
+                      disabled={ disabled }
+                      type="button"
+                      className="btn login_btn"
+                      data-testid="login-submit-btn"
+                      onClick={ handleClick }
+                    >
+                      Login
+                    </button>
+                  </Link>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   );
 };
