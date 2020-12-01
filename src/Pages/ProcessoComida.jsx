@@ -190,7 +190,7 @@ const ReceitaProcessoComida = () => {
             <div className="container-ingredients">
               <span>Ingredients</span>
               <div className="container-checkbox">
-                {console.log(checkedId) || getIngredientsOrMeasure('strIngredient').map((ingred, i) => (
+                {getIngredientsOrMeasure('strIngredient').map((ingred, i) => (
                   <label
                     key={ i }
                     htmlFor={ i }
