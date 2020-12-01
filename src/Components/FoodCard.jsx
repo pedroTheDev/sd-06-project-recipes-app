@@ -6,7 +6,7 @@ export default function FoodCard({ food, index }) {
     <div data-testid={ `${index}-recipe-card` }>
       <img
         src={ food.strMealThumb }
-        data-testid={ `${index}-card-img` }
+        data-testid={ `${index}-card-img/preview` }
         alt="food-pic"
         height="60px"
       />

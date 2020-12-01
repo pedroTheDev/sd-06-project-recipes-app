@@ -62,7 +62,7 @@ export default function ExplorarBebidasingredientes({ history }) {
                   { ingredient.strIngredient1 }
                 </p>
                 <img
-                  data-testid={ `${index}-card-img` }
+                  data-testid={ `${index}-card-img/preview` }
                   src={ `https://www.thecocktaildb.com/images/ingredients/${ingredient.strIngredient1}-Small.png` }
                   alt={ `${ingredient.strIngredient1}-pic` }
                 />
