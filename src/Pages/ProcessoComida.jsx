@@ -125,7 +125,7 @@ const ReceitaProcessoComida = () => {
         },
       };
       localStorage.setItem('checkedIngredients', JSON.stringify(ingredientsToSave));
-      setCheckedId(ingredientsToSave.meals[idFood]);
+      // setCheckedId(ingredientsToSave.meals[idFood]);
     } else {
       const ingredientsToSave = {
         ...checkedIngredients,
@@ -137,14 +137,15 @@ const ReceitaProcessoComida = () => {
         },
       };
       localStorage.setItem('checkedIngredients', JSON.stringify(ingredientsToSave));
-      setCheckedId(ingredientsToSave.meals[idFood]);
+      // setCheckedId(ingredientsToSave.meals[idFood]);
     }
+    return target.id;
   };
 
   return (
 
     <div>
-      {console.log(checkedId)}
+      {/* {checkedId ? console.log(checkedId.meals[idFood]) : console.log('false')} */}
       {!attributesNames
         ? <div className="loading">Loading...</div>
         : (
@@ -202,8 +203,8 @@ const ReceitaProcessoComida = () => {
                     data-testid={ `${i}-ingredient-step` }
                   >
                     <input
+                      className="checkbox-input"
                       type="checkbox"
-                      checked={ checkedId.includes(i) }
                       id={ i }
                       onClick={ (({ target }) => scratCheckbox(target)) }
                     />
