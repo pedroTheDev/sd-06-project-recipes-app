@@ -5,13 +5,13 @@ const randomRequestEndpoint = 'random.php'; */
 
 const filterByCategoryEndpoint = 'filter.php?c=';
 const listCategoriesEndpoint = 'list.php?c=list';
-const randomRequestEndpoint = 'random.php';
 
 const endpoints = {
   ingredient: 'filter.php?i=',
   name: 'search.php?s=',
   firstLetter: 'search.php?f=',
   lookupIngredient: 'lookup.php?i=',
+  random: 'random.php',
 };
 
 export async function fetchMeal(type, key) {
@@ -24,13 +24,6 @@ export async function fetchMeal(type, key) {
 
 export async function listCategories() {
   const url = `${MEAL_API}${listCategoriesEndpoint}`;
-  const result = await fetch(url);
-  const data = await result.json();
-  return data;
-}
-
-export async function randomRequest() {
-  const url = `${MEAL_API}${randomRequestEndpoint}`;
   const result = await fetch(url);
   const data = await result.json();
   return data;
