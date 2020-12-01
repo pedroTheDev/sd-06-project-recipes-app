@@ -22,7 +22,9 @@ function Header(props) {
             type="button"
             src={ profileIcon }
             data-testid="profile-top-btn"
-          />
+          >
+            <img alt="bla" src={ profileIcon } />
+          </button>
         </Link>
         <div>
           <h2 data-testid="page-title">
@@ -35,7 +37,9 @@ function Header(props) {
           src={ searchIcon }
           data-testid="search-top-btn"
           onClick={ () => setHiddenInput(!hiddenInput) }
-        />
+        >
+          <img alt="bla" src={ searchIcon } />
+        </button>
         { hiddenInput ? <SearchInput /> : null }
         { hiddenInput ? <Filters /> : null }
       </header>

@@ -147,7 +147,7 @@ function FoodDetails() {
       </button>
 
       <h4 data-testid="recipe-category">
-        {foodDetails.meals && foodDetails.meals[0].strCategory}
+        {foodDetails.strCategory}
       </h4>
 
       <div id="ingredients-div">
@@ -173,13 +173,11 @@ function FoodDetails() {
         <track src="" kind="captions" />
       </video>
 
-      <div>
+      <div className="carousel">
         { apiResult.drinks && apiResult.drinks.slice(zero, six).map((element, idx) => (
-          <DrinkRecomendCard
-            element={ element }
-            idx={ idx }
-            key={ element.idDrink }
-          />
+          <div className="carousel-item" key={ idx }>
+            <DrinkRecomendCard element={ element } idx={ idx } key={ element.idMeal } />
+          </div>
         )) }
       </div>
 

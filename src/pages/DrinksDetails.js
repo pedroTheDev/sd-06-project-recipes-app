@@ -5,6 +5,7 @@ import FoodRecomendCard from '../components/FoodRecomendCard';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+import '../style/FoodAndDrinkDetails.css';
 
 function DrinkDetails() {
   const url = document.URL;
@@ -147,15 +148,7 @@ function DrinkDetails() {
         <img alt="bla" src={ favoriteDrink ? blackHeartIcon : whiteHeartIcon } />
       </button>
       <h4 data-testid="recipe-category">
-        {
-          drinkDetails.strCategory
-        }
-      </h4>
-
-      <h4>
-        {
-          drinkDetails.strAlcoholic
-        }
+        {drinkDetails.strAlcoholic}
       </h4>
 
       <div id="ingredients-div">
@@ -180,9 +173,12 @@ function DrinkDetails() {
         {drinkDetails.strInstructions}
       </p>
 
-      <div>
+      <div className="carousel">
         { apiResult.meals && apiResult.meals.slice(zero, six).map((element, idx) => (
-          <FoodRecomendCard element={ element } idx={ idx } key={ element.idMeal } />)) }
+          <div className="carousel-item" key={ idx }>
+            <FoodRecomendCard element={ element } idx={ idx } key={ element.idMeal } />
+          </div>
+        ))}
       </div>
 
       <Link
