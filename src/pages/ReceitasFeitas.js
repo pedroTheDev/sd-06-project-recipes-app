@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import { shareIcon } from '../images/shareIcon.svg';
 
 function ReceitasFeitas() {
-  const doneRecipes = JSON.parse(localStorage.doneRecipes);
-  console.log(doneRecipes);
+  const [doneRecipes, setdoneRecipes] = useState('');
+
+  useEffect(() => {
+    const myDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+    setdoneRecipes(myDoneRecipes);
+  }, []);
 
   return (
     <div>
@@ -28,45 +32,46 @@ function ReceitasFeitas() {
         Drinks
       </button>
       <div>
-        {doneRecipes.map(({ image, name, area, category, doneDate, tags }, index) => (
-          <span
-            key={ index }
-          >
-            <img
-              src={ image }
-              alt={ name }
-              data-testid={ `${index}-horizontal-image` }
-            />
-            <p
-              data-testid={ `${index}-horizontal-top-text` }
+        {doneRecipes && doneRecipes
+          .map(({ image, name, area, category, doneDate, tags }, index) => (
+            <span
+              key={ index }
             >
-              { `${area} - ${category}` }
-            </p>
-            <p
-              data-testid={ `${index}-horizontal-name` }
-            >
-              { name }
-            </p>
-            <p
-              data-testid={ `${index}-horizontal-done-date` }
-            >
-              { doneDate }
-            </p>
-            <img
-              src={ shareIcon }
-              alt="Compatilhar Receita"
-              data-testid={ `${index}-horizontal-share-btn` }
-            />
-            {tags.map((tag) => (
+              <img
+                src={ image }
+                alt={ name }
+                data-testid={ `${index}-horizontal-image` }
+              />
               <p
-                key={ tag }
-                data-testid={ `${index}-${tag}-horizontal-tag` }
+                data-testid={ `${index}-horizontal-top-text` }
               >
-                {tag}
+                { `${area} - ${category}` }
               </p>
-            ))}
-          </span>
-        ))}
+              <p
+                data-testid={ `${index}-horizontal-name` }
+              >
+                { name }
+              </p>
+              <p
+                data-testid={ `${index}-horizontal-done-date` }
+              >
+                { doneDate }
+              </p>
+              <img
+                src={ shareIcon }
+                alt="Compatilhar Receita"
+                data-testid={ `${index}-horizontal-share-btn` }
+              />
+              {tags.map((tag) => (
+                <p
+                  key={ tag }
+                  data-testid={ `${index}-${tag}-horizontal-tag` }
+                >
+                  {tag}
+                </p>
+              ))}
+            </span>
+          ))}
       </div>
     </div>
   );
