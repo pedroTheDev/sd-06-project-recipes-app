@@ -11,6 +11,7 @@ import FoodDetails from './pages/FoodDetails';
 import ExplorePage from './pages/ExplorePage';
 import FoodDetailsProgress from './pages/FoodDetailsProgress';
 import DrinksDetailsProgress from './pages/DrinksDetailsProgress';
+import DoneRecipes from './pages/DoneRecipes';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             <Route path="/bebidas/:id/in-progress" component={ DrinksDetailsProgress } />
             <Route path="/bebidas/:id" component={ DrinksDetails } />
             <Route path="/bebidas" component={ DrinksRecipesPage } />
+            <Route path="/receitas-feitas" component={ DoneRecipes } />
           </Switch>
         </BrowserRouter>
         {/* <div id="meals">
