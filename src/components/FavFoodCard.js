@@ -145,7 +145,7 @@ class FavFoodCard extends React.Component {
               onClick={ () => history.push(`/comidas/${element.id}`) }
             />
             <div className="left-side-div">
-              <div className="food-drink-top-div">
+              <div className="food-drink-top-div fav-drink-card">
                 <div className="food-drink-titles">
                   <p data-testid={ `${index + indexAcc}-horizontal-top-text` }>
                     {`${element.area} - ${element.category}`}

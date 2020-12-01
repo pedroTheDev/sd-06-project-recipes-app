@@ -46,17 +46,6 @@ class FavDrinkCard extends React.Component {
     const span = document.createElement('span');
     p.appendChild(span);
     span.innerHTML = 'Link copiado!';
-    // window.alert('Link copiado!');
-    // https://www.30secondsofcode.org/blog/s/copy-text-to-clipboard-with-javascript
-    // const el = document.createElement('textarea');
-    // el.value = url;
-    // el.setAttribute('readonly', '');
-    // el.style.position = 'absolute';
-    // el.style.left = '-9999px';
-    // document.body.appendChild(el);
-    // el.select();
-    // document.execCommand('copy');
-    // document.body.removeChild(el);
   }
 
   setFavoriteDrink(Drink) {
@@ -131,7 +120,7 @@ class FavDrinkCard extends React.Component {
               className="done-recipe-image"
             />
             <div className="left-side-div">
-              <div className="food-drink-top-div">
+              <div className="food-drink-top-div fav-drink-card">
                 <div className="food-drink-titles">
                   <p data-testid={ `${index + indexAcc}-horizontal-top-text` }>
                     {element.alcoholicOrNot}
