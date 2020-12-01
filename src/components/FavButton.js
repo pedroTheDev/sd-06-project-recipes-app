@@ -7,6 +7,7 @@ import checkFavoriteRecipe from '../utils/checkFavoriteRecipe';
 
 function FavButton({ recipe, type }) {
   const { id } = recipe;
+  const [isFavorite, setIsFavorite] = useState(false);
   function saveRecipe() {
     setIsFavorite(!isFavorite);
     setRecipeAsFavorite(id, recipe, type);
@@ -14,8 +15,7 @@ function FavButton({ recipe, type }) {
 
   useEffect(() => {
     setIsFavorite(checkFavoriteRecipe(id));
-  }, [recipe])
-  const [isFavorite, setIsFavorite] = useState(false);
+  }, [recipe]);
 
   return (
     <button type="button" onClick={ saveRecipe }>
@@ -30,9 +30,6 @@ function FavButton({ recipe, type }) {
 }
 
 FavButton.propTypes = {
-  isFav: PropTypes.bool.isRequired,
-  setIsFav: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   recipe: PropTypes.shape.isRequired,
 };

@@ -10,7 +10,6 @@ function loading() {
 }
 
 export function success(data) {
-  console.log(data)
   const processing = data.meals || data.drinks;
   let list = [];
   if (processing) {

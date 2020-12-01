@@ -9,7 +9,6 @@ import FavButton from '../components/FavButton';
 import recipeDetailsProcessing from '../utils/recipeDetailsProcessing';
 import checkRecipeInProgress from '../utils/checkRecipeInProgress';
 import checkSavedRecipe from '../utils/checkSavedRecipe';
-import checkFavoriteRecipe from '../utils/checkFavoriteRecipe';
 
 function RecipeDetails(
   { location: { pathname }, recommendations },
