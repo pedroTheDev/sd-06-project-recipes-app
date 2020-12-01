@@ -41,7 +41,10 @@ export default function searchRecipesReducer(state = initialState, action) {
   switch (action.type) {
   case ADD_RECIPES:
     return {
-      ...state, recipes: action.recipes, isRecipesFetching: false, isRecipesOnClickFetching: false,
+      ...state,
+      recipes: action.recipes,
+      isRecipesFetching: false,
+      isRecipesOnClickFetching: false,
     };
 
   case ADD_RECIPE_DETAIL:
