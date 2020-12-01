@@ -59,6 +59,27 @@ export default function Cards({ id }) {
           ))}
         </div>
       );
+    } if (Array.isArray(items)) {
+      return (
+        <div className="cards-wrapper">
+          {items.map((item, index) => (
+            <Link key={ index } to={ `/${id}/${item.idMeal}` }>
+              <div
+                key={ index }
+                className="item-card"
+                data-testid={ `${index}-recipe-card` }
+              >
+                <img
+                  src={ item.strMealThumb }
+                  data-testid={ `${index}-card-img` }
+                  alt="imagem de comida"
+                />
+                <p data-testid={ `${index}-card-name` }>{item.strMeal}</p>
+              </div>
+            </Link>
+          ))}
+        </div>
+      );
     }
   }
   return <div>Loading ...</div>;
