@@ -1,20 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import clipboardCopy from 'clipboard-copy';
 import shareIcon from '../images/shareIcon.svg';
 
-// [{
-//   id: id-da-receita,
-//   type: comida-ou-bebida,
-//   area: area-da-receita-ou-texto-vazio,
-//   category: categoria-da-receita-ou-texto-vazio,
-//   alcoholicOrNot: alcoholic-ou-non-alcoholic-ou-texto-vazio,
-//   name: nome-da-receita,
-//   image: imagem-da-receita,
-//   doneDate: quando-a-receita-foi-concluida,
-//   tags: array-de-tags-da-receita-ou-array-vazio
-// }]
-function DoneCard({recipe, index}) {
+function DoneCard({ recipe, index }) {
   const [copied, setCopied] = useState(false);
 
   const {
@@ -29,20 +19,10 @@ function DoneCard({recipe, index}) {
     type,
   } = recipe;
 
-  function foodTagsFunction() {
-    let foodTags;
-    if (typeof(tags) === 'string') {
-      foodTags = tags.split(',', 2);
-    } else {
-      foodTags = [];
-    }
-    return foodTags;
-  }
-
   const isFood = (type === 'comida');
 
-  function handleShareClick() {
-    clipboardCopy(`http://localhost:3000/${type}s/${id}`);
+  function handleShareClick(itemId) {
+    clipboardCopy(`http://localhost:3000/${type}s/${itemId}`);
     const seconds = 5000;
     setCopied(true);
     setTimeout(() => {
@@ -50,33 +30,46 @@ function DoneCard({recipe, index}) {
     }, seconds);
   }
 
-  const tagsTest = foodTagsFunction();
-  console.log(tagsTest)
   return (
     <div className="recipe-card">
-      <Link to={`/${type}s/${id}`} >
+      <Link to={ `/${type}s/${id}` }>
         <img
           className="card-img"
-          data-testid={`${index}-horizontal-image`} src={ image } alt={ name }
+          data-testid={ `${index}-horizontal-image` }
+          src={ image }
+          alt={ name }
         />
-        <h4 data-testid={`${index}-horizontal-name`}>{name}</h4>
+        <h4 data-testid={ `${index}-horizontal-name` }>{name}</h4>
       </Link>
-      {(isFood) && <p data-testid={`${index}-horizontal-top-text`}>{area} - {category}</p>}
-      {(!isFood) && <p data-testid={`${index}-horizontal-top-text`}>{alcoholicOrNot}</p>}
-      <p data-testid={`${index}-horizontal-done-date`}>{doneDate}</p>
-      {(isFood) && tagsTest.map((tag) => (
+      {(isFood) && (
+        <p
+          data-testid={ `${index}-horizontal-top-text` }
+        >
+          {`${area} - ${category}`}
+        </p>
+      )}
+      {(!isFood) && (
+        <p
+          data-testid={ `${index}-horizontal-top-text` }
+        >
+          {alcoholicOrNot}
+        </p>
+      )}
+      <p data-testid={ `${index}-horizontal-done-date` }>{doneDate}</p>
+      {(isFood) && tags.map((tag, idx) => (
         <div
-          data-testid={`${index}-${tag}-horizontal-tag`}
+          key={ `${idx}-tag` }
+          data-testid={ `${index}-${tag}-horizontal-tag` }
         >
           {tag}
         </div>
       ))}
       <button
         type="button"
-        onClick={ handleShareClick }
-        >
+        onClick={ () => handleShareClick(id) }
+      >
         <img
-          data-testid={`${index}-horizontal-share-btn`}
+          data-testid={ `${index}-horizontal-share-btn` }
           src={ shareIcon }
           alt="Compartilhar"
         />
@@ -84,7 +77,22 @@ function DoneCard({recipe, index}) {
       </button>
       {(copied) && <span>Link copiado!</span>}
     </div>
-  )
+  );
 }
 
 export default DoneCard;
+
+DoneCard.propTypes = {
+  recipe: PropTypes.shape({
+    alcoholicOrNot: PropTypes.string.isRequired,
+    area: PropTypes.string.isRequired,
+    category: PropTypes.string.isRequired,
+    doneDate: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
+    image: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+    type: PropTypes.string.isRequired,
+  }).isRequired,
+  index: PropTypes.number.isRequired,
+};

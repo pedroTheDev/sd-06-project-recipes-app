@@ -28,6 +28,7 @@ function InProgress() {
   const url = (isFood
     ? `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${itemId}`
     : `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${itemId}`);
+  const two = 2;
 
   function favoriteStatus(id) {
     let favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
@@ -87,7 +88,9 @@ function InProgress() {
   const day = date.getDate();
   const month = date.getMonth() + 1;
   const year = date.getUTCFullYear();
-  const doneDate = `${day}/${month}/${year}`;
+  const dateFinished = `${day}/${month}/${year}`;
+
+  const recipeTags = (typeof (strTags) === 'string') ? strTags.split(',', two) : [];
 
   const finishedRecipe = {
     id: itemId,
@@ -97,9 +100,9 @@ function InProgress() {
     category: strCategory,
     name: isFood ? strMeal : strDrink,
     image: isFood ? strMealThumb : strDrinkThumb,
-    tags: isFood ? strTags : [],
-    doneDate: doneDate,
-  }
+    tags: isFood ? recipeTags : [],
+    doneDate: dateFinished,
+  };
 
   function handleFavoriteClick() {
     handleFavorite(favoriteObj);
@@ -133,9 +136,11 @@ function InProgress() {
       setCheckedIngredients([...checkedIngredients, box.value]);
     }
 
-    if (checkedIngredients.length > 0) {
+    if (checkedIngredients.length > zero) {
       if (isFood) {
-        setStoreIngredients({...storeIngredients, meals: { [itemId]: checkedIngredients } });
+        setStoreIngredients({ ...storeIngredients,
+          meals: { [itemId]: checkedIngredients },
+        });
         localStorage.setItem('inProgressRecipes', JSON.stringify(storeIngredients));
       } else {
         localStorage.setItem('inProgressRecipes', JSON.stringify({
@@ -183,12 +188,12 @@ function InProgress() {
     );
   }
 
-  function finishRecipe(finishedRecipe) {
+  function finishRecipe(finishedObj) {
     let finishedArray = JSON.parse(localStorage.getItem('doneRecipes'));
     const magicNumber = -1;
     if (finishedArray === null) finishedArray = [];
-    const index = finishedArray.map((obj) => obj.id).indexOf(finishedRecipe.id);
-    if (index === magicNumber) finishedArray.push(finishedRecipe);
+    const index = finishedArray.map((obj) => obj.id).indexOf(finishedObj.id);
+    if (index === magicNumber) finishedArray.push(finishedObj);
     localStorage.setItem('doneRecipes', JSON.stringify(finishedArray));
   }
 

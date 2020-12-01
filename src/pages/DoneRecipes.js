@@ -5,78 +5,51 @@ import DoneCard from '../components/DoneCard';
 import './DoneRecipes.css';
 
 export default function DoneRecipes() {
-  const [onlyFood, setOnlyFood] = useState(false);
-  const [onlyDrink, setOnlyDrink] = useState(false);
   const [recipesArray, setRecipesArray] = useState([]);
-  const [isFiltered, setIsFiltered] = useState(false);
+  const [filter, setFilter] = useState('All');
   const recipes = JSON.parse(localStorage.getItem('doneRecipes'));
 
   useEffect(() => {
-    if (isFiltered) {
-      if (onlyFood) {
-        setRecipesArray(recipes.filter((recipe) => recipe.type === 'comida'));
-      } else {
-        setRecipesArray(recipes.filter((recipe) => recipe.type === 'bebida'));
-      }
-    } else {
-      setRecipesArray(recipes);
+    if (filter === 'Food') {
+      setRecipesArray(recipes.filter((recipe) => recipe.type === 'comida'));
     }
-  }, [isFiltered]);
+    if (filter === 'Drinks') {
+      setRecipesArray(recipes.filter((recipe) => recipe.type === 'bebida'));
+    }
+    if (filter === 'All') setRecipesArray(recipes);
+  }, [filter]);
 
-  function handleAllClick() {
-    setIsFiltered(false);
-    setOnlyDrink(false);
-    setOnlyFood(false);
-  }
-
-  function handleDrinkClick() {
-    setIsFiltered(true);
-    setOnlyDrink(true);
-    setOnlyFood(false);
-  }
-
-  function handleFoodClick() {
-    setIsFiltered(true);
-    setOnlyDrink(false);
-    setOnlyFood(true);
+  function handleFilterClick({ target }) {
+    setFilter(target.innerHTML);
   }
 
   return (
     <div>
       <Header title="Receitas Feitas" />
       <button
-        onClick={ handleAllClick }
+        type="button"
+        onClick={ handleFilterClick }
         data-testid="filter-by-all-btn"
       >
         All
       </button>
       <button
-        onClick={ handleDrinkClick }
+        type="button"
+        onClick={ handleFilterClick }
         data-testid="filter-by-drink-btn"
       >
         Drinks
       </button>
       <button
-        onClick={ handleFoodClick }
+        type="button"
+        onClick={ handleFilterClick }
         data-testid="filter-by-food-btn"
       >
         Food
       </button>
       <div className="cards-container">
-        {(onlyFood) && recipesArray.filter((rec) => rec.type === 'comida')
-          .map((recipe, index) => (
-          <div className="recipe-card">
-            <DoneCard recipe={ recipe } index={ index } />
-          </div>
-        ))}
-        {(onlyDrink) && recipes.filter((rec) => rec.type === 'bebida')
-          .map((recipe, index) => (
-          <div className="recipe-card">
-            <DoneCard recipe={ recipe } index={ index } />
-          </div>
-        ))}
-        {(!onlyFood && !onlyDrink) && recipes.map((recipe, index) => (
-          <div className="recipe-card">
+        {recipesArray.map((recipe, index) => (
+          <div key={ index } className="recipe-card">
             <DoneCard recipe={ recipe } index={ index } />
           </div>
         ))}
