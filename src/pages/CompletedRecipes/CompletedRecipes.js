@@ -90,7 +90,7 @@ function CompletedRecipes() {
               <div>
                 <Link to={ urlLinkDetail }>
                   <img
-                    data-testid={`${index}-horizontal-image`}
+                    data-testid={ `${index}-horizontal-image` }
                     src={ recipe.image }
                     alt={ recipe.name }
                   />
@@ -116,16 +116,14 @@ function CompletedRecipes() {
                   onClick={ ({ target }) => handleShareIcon(target) }
                 />
                 <p className={ `copied-link-${recipe.id}` } />
-                {recipe.tags.map((tagName) => {
-                  return (
-                    <p
-                      data-testid={ `${index}-${tagName}-horizontal-tag` }
-                      key={ tagName }
-                    >
-                      { tagName }
-                    </p>
-                  )}
-                )}
+                {recipe.tags.map((tagName) => (
+                  <p
+                    data-testid={ `${index}-${tagName}-horizontal-tag` }
+                    key={ tagName }
+                  >
+                    { tagName}
+                  </p>
+                ))}
               </div>
             );
           }

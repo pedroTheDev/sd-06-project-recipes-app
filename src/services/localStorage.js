@@ -94,7 +94,7 @@ export function addDoneRecipe(object) {
       doneDate: date,
       tags: object.tags,
     };
-  } else if ('idMeal') {
+  } else if ('idMeal' in object) {
     obj = {
       id: object.idMeal,
       type: 'meal',
