@@ -3,8 +3,22 @@ import React, { useContext } from 'react';
 // PropTypes
 import PropTypes from 'prop-types';
 
+// Icons
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { faEnvelope, faKey, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
+
 // Context
 import RecipesContext from '../context/RecipesContext';
+
+// CSS
+import '../styles/login.css';
+
+// Logo
+import Logo from '../images/logo.png';
+
+// Bottom img
+import LoginBottomImg from '../images/login-bottom-img.png';
 
 export default function Login(props) {
   const {
@@ -36,28 +50,57 @@ export default function Login(props) {
   };
 
   return (
-    <div>
-      <input
-        type="email"
-        name="email"
-        data-testid="email-input"
-        onChange={ handleInput }
-      />
-      <input
-        type="password"
-        name="password"
-        data-testid="password-input"
-        onChange={ handleInput }
-      />
-      <button
-        type="button"
-        data-testid="login-submit-btn"
-        disabled={ isValid }
-        onClick={ handleClick }
-      >
-        Login
-      </button>
-    </div>
+    <main>
+      <section>
+        <div className="img-container">
+          <img src={ Logo } alt="Logo" />
+        </div>
+
+        <div className="login-container">
+
+          <div className="input-container">
+            <FontAwesomeIcon className="icon" icon={ faEnvelope } size="2x" />
+            <input
+              className="input-login"
+              type="email"
+              name="email"
+              data-testid="email-input"
+              placeholder=""
+              onChange={ handleInput }
+              value="Your email here"
+            />
+          </div>
+
+          <div className="input-container">
+            <FontAwesomeIcon className="icon" icon={ faKey } size="2x" />
+            <input
+              className="input-login"
+              type="password"
+              name="password"
+              data-testid="password-input"
+              onChange={ handleInput }
+              value="Password"
+            />
+          </div>
+
+          <div
+            className="login-btn-container"
+          >
+            <FontAwesomeIcon className="signIn-icon" icon={ faSignInAlt } size="2x" />
+            <button
+              type="button"
+              data-testid="login-submit-btn"
+              disabled={ isValid }
+              onClick={ handleClick }
+            >
+              LOGIN
+            </button>
+          </div>
+
+          <img className="bottom-img" src={ LoginBottomImg } alt="login-bottom-img" />
+        </div>
+      </section>
+    </main>
   );
 }
 

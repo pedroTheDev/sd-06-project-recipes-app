@@ -1,0 +1,102 @@
+/* RESET CSS  */
+
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+input:focus {
+  outline: none;
+}
+
+/* Background */
+body {
+  background-color: rgb(212,42,42);
+}
+
+main {
+  margin: 0 auto;
+  height: 500px;
+  width: 350px;
+}
+
+.img-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 250px;
+}
+
+.img-container img{
+  width: 200px;
+  height: 200px;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0;
+}
+
+.input-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+  border: none;
+}
+
+.input-login {
+  height: 50px;
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 10%;
+  padding-left: 20%;
+  font-size: 1.5em;
+  border: 1px solid rgb(212,42,42);
+  color:  rgb(131, 24, 24);
+  background: rgba(255,255,255, 0.7);
+}
+
+.icon {
+  position: absolute;
+  color: rgb(131, 24, 24);
+  margin: -3% 0px 0px -27%;
+}
+
+.signIn-icon {
+  position: absolute;
+  left: 20%;
+  color: rgb(131,24,24);
+}
+
+.login-btn-container button{
+  background-color: rgb(212,42,42);
+  color: rgb(255,255,255);
+  border: none;
+  font-size: 1.6em;
+  cursor: pointer;
+}
+
+.login-btn-container button:hover {
+  color: rgb(131, 24, 24);
+}
+
+.login-btn-container button:active {
+  outline: none;
+}
+
+.login-btn-container {
+  text-align: center;
+}
+
+.bottom-img {
+  position: relative;
+  margin-top: 5px;
+  width: 350px;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+}
