@@ -29,12 +29,13 @@ function SearchBar() {
       setMeals(filteredMeals);
       setLoading(false);
     }
+
     if (termoBusca.length === 1 && searchParam === 'first-letter') {
       setLoading(true);
       const filteredMeals = await api.fetchFoodByFirstLetter(termoBusca);
       setMeals(filteredMeals);
       setLoading(false);
-    } else if (searchParam === 'first-letter' && termoBusca.length > 1) {
+    } else if (searchParam === 'first-letter' && termoBusca) {
       // eslint-disable-next-line no-alert
       alert('Sua busca deve conter somente 1 (um) caracter');
     }
@@ -63,7 +64,7 @@ function SearchBar() {
       const filteredDrink = await api.fetchDrinkByFirstLetter(termoBusca);
       setDrinks(filteredDrink);
       setLoading(false);
-    } else if (searchParam === 'first-letter' && termoBusca.length > 1) {
+    } else if (searchParam === 'first-letter' && termoBusca) {
       // eslint-disable-next-line no-alert
       alert('Sua busca deve conter somente 1 (um) caracter');
     }
