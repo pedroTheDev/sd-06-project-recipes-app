@@ -13,6 +13,7 @@ function RecipesAppProvider({ children }) {
   const [categories, setCategories] = useState([]);
   const [heart, setHeart] = useState('');
   const [copied, setCopied] = useState('');
+  const [ingredients, setIngredients] = useState([]);
 
   const isFavorite = (id) => {
     const local = JSON.parse(localStorage.getItem('favoriteRecipes'));
@@ -58,6 +59,7 @@ function RecipesAppProvider({ children }) {
       ? fetchMeal('name', searchTerm)
       : fetchDrink('name', searchTerm)
     );
+
     const first = 0;
     const twelfth = 12;
 
@@ -107,6 +109,22 @@ function RecipesAppProvider({ children }) {
     } else {
       fetchedRecipes = fetchedRecipes.slice(first, twelfth);
       setRecipes(fetchedRecipes);
+    }
+  };
+
+  const ingredientToRender = async (type) => {
+    let IngredientList = await (type === 'meal'
+      ? fetchMeal('allIngredients')
+      : fetchDrink('allIngredients')
+    );
+    const first = 0;
+    const twelfth = 12;
+
+    if (!IngredientList) {
+      alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+    } else {
+      IngredientList = IngredientList.slice(first, twelfth);
+      setIngredients(IngredientList);
     }
   };
 
@@ -175,7 +193,10 @@ function RecipesAppProvider({ children }) {
     random,
     recipes,
     recipesToRender,
+    ingredientToRender,
     categories,
+    ingredients,
+    setIngredients,
     categoriesToRender,
     recipesToRenderByCategory,
     recipesToRenderByIngredient,
