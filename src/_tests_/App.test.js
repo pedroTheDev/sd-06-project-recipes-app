@@ -1,5 +1,4 @@
 import React from 'react';
-import { waitForElement } from '@testing-library/user-event';
 import renderWithRouter from '../renderWithRouter';
 import App from '../App';
 
