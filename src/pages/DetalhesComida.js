@@ -10,6 +10,7 @@ import { fetchFoodAPI } from '../services/foodAPI';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import logo from '../images/myfood.png';
+import '../style/Detalhes.css';
 import '../style/Loading.css';
 
 function DetalhesComida(props) {
