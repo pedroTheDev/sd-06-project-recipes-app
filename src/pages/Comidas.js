@@ -29,8 +29,8 @@ const Comidas = (history) => {
   }, []);
 
   return !meals.length ? (
-    <div>
-      <img src={ logo } alt="teste" className="loading" />
+    <div className="container align-self-center d-flex justify-content-center">
+      <img src={ logo } alt="teste" className="loading col" />
     </div>
   ) : (
     <section>
@@ -38,7 +38,7 @@ const Comidas = (history) => {
       {searchBox && <SearchBar history={ history } />}
       <div className="my-4 py-2">
         <FoodFilters />
-        <div className="row">
+        <div className="row my-5 mx-3">
           {meals.length && meals
             .filter((x, index) => index < doze)
             .map((food, i) => <MealsCard key={ i } food={ food } index={ i } />)}

@@ -29,8 +29,8 @@ function Bebidas() {
   }, []);
 
   return !drinks.length ? (
-    <div>
-      <img src={ logo } alt="teste" className="loading" />
+    <div className="container align-self-center d-flex justify-content-center">
+      <img src={ logo } alt="teste" className="loading col" />
     </div>
   ) : (
     <section>
@@ -38,7 +38,7 @@ function Bebidas() {
       {searchBox && <SearchBar />}
       <div className="my-4 py-2">
         <DrinkFilters />
-        <div className="row">
+        <div className="row my-5 mx-3">
           {drinks
             .filter((x, index) => index < doze)
             .map((drink, i) => (

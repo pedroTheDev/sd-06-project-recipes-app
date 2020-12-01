@@ -8,7 +8,7 @@ html, body {
 
 .bg {
   height: 100vh;
-  background-image: url('../images/hamb.png'); 
+  background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4)), url('../images/hamb.png'); 
   background-size: cover;
 }
 
