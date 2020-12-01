@@ -48,6 +48,7 @@ function SearchBar() {
       setDrinks(filteredDrinks);
       setLoading(false);
     }
+
     if (searchParam === 'name') {
       setLoading(true);
       const filteredDrink = await api.fetchDrinkByName(termoBusca);
