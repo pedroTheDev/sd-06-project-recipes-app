@@ -8,6 +8,7 @@ function IngredientsDrink() {
   const FALSE = false;
   const { ingredients, ingredientToRender } = useContext(Context);
 
+  console.log(ingredients);
   useEffect(() => {
     ingredientToRender('drink');
   }, []);
@@ -17,7 +18,7 @@ function IngredientsDrink() {
       {
         ingredients.map((ingredient, index) => (
           <IngredientCard
-            key={ ingredient.strIngredient }
+            key={ ingredient.strIngredient1 }
             info={ ingredient }
             recipe="ingredientDrinks"
             index={ index }
