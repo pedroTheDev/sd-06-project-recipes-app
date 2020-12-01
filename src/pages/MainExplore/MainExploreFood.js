@@ -21,13 +21,15 @@ function MainExploreFood() {
               Por Ingredientes
             </button>
           </Link>
-          <button
-            type="button"
-            data-testid="explore-by-area"
-            className="btn btn-secondary"
-          >
-            Por Local de Origem
-          </button>
+          <Link to="/explorar/comidas/area">
+            <button
+              type="button"
+              data-testid="explore-by-area"
+              className="btn btn-secondary"
+            >
+              Por Local de Origem
+            </button>
+          </Link>
           <button
             type="button"
             data-testid="explore-surprise"
