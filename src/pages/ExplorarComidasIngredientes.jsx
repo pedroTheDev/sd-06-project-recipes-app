@@ -61,7 +61,7 @@ export default function ExplorarComidasingredientes({ history }) {
                   { ingredient.strIngredient }
                 </p>
                 <img
-                  data-testid={ `${index}-card-img/preview` }
+                  data-testid={ `${index}-card-img` }
                   src={ `https://www.themealdb.com/images/ingredients/${ingredient.strIngredient}-Small.png` }
                   alt={ `${ingredient.strIngredient}-pic` }
                 />
