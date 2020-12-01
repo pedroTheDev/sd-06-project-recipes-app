@@ -136,6 +136,36 @@ function FoodDetailsProgress() {
     setSpanHidden(false);
   }
 
+  function handleClickEnd() {
+    const time = new Date();
+    const object = [
+      {
+        id: foodDetails.idMeal,
+        type: 'comida',
+        area: '',
+        category: foodDetails.strCategory,
+        alcoholicOrNot: '',
+        area: foodDetails.strArea,
+        name: foodDetails.strMeal,
+        image: foodDetails.strMealThumb,
+        doneDate: time,
+        tags: foodDetails.strTags.split(','),
+      },
+    ];
+
+    if (localStorage.getItem('doneRecipes') === null) {
+      localStorage.setItem('doneRecipes', JSON.stringify(object));
+    } else {
+      localStorage.setItem(
+        'doneRecipes',
+        JSON.stringify([
+          ...JSON.parse(localStorage.getItem('doneRecipes')),
+          ...object,
+        ]),
+      );
+    }
+  }
+
   return (
     <div>
 
@@ -213,6 +243,7 @@ function FoodDetailsProgress() {
           type="button"
           data-testid="finish-recipe-btn"
           disabled={ stateButton }
+          onClick={ handleClickEnd }
         >
           Finalizar receita
         </button>

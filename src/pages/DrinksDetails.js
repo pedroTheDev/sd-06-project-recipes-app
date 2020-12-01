@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { requestDetailsDrinks, requestFoods } from '../services/requestsAPI';
 import FoodRecomendCard from '../components/FoodRecomendCard';
+import RecipesContext from '../context/RecipesContext';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
@@ -10,7 +11,7 @@ import '../style/FoodAndDrinkDetails.css';
 function DrinkDetails() {
   const url = document.URL;
   const actualId = url.split('/')[4];
-  const [drinkDetails, setDrinkDetails] = useState([]);
+  const { drinkDetails, setDrinkDetails } = useContext(RecipesContext);
   const [ingredients, setIngredients] = useState('');
   const [apiResult, setApiResult] = useState([]);
   const [buttonText] = useState('Iniciar Receita');

@@ -9,9 +9,7 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 function DrinksDetailsProgress() {
   const url = document.URL;
   const actualId = url.split('/')[4];
-  const { resultsFoodsAndDrinks } = useContext(RecipesContext);
-  console.log(resultsFoodsAndDrinks);
-  const [drinkDetails, setDrinkDetails] = useState([]);
+  const { drinkDetails, setDrinkDetails } = useContext(RecipesContext);
   const [ingredients, setIngredients] = useState('');
   const [spanHidden, setSpanHidden] = useState(true);
   const [favoriteDrink, setFavoriteDrink] = useState(false);
@@ -130,6 +128,37 @@ function DrinksDetailsProgress() {
     }
   }
 
+  function handleClickEnd() {
+    const time = new Date();
+    console.log('respota api', drinkDetails)
+
+    const object = [
+      {
+        id: drinkDetails.idDrink,
+        type: 'bebida',
+        area: '',
+        category: drinkDetails.strCategory,
+        alcoholicOrNot: drinkDetails.strAlcoholic,
+        name: drinkDetails.strDrink,
+        image: drinkDetails.strDrinkThumb,
+        doneDate: time,
+        tags: drinkDetails.strTags,
+      },
+    ];
+
+    if (localStorage.getItem('doneRecipes') === null) {
+      localStorage.setItem('doneRecipes', JSON.stringify(object));
+    } else {
+      localStorage.setItem(
+        'doneRecipes',
+        JSON.stringify([
+          ...JSON.parse(localStorage.getItem('doneRecipes')),
+          ...object,
+        ]),
+      );
+    }
+  }
+
   return (
     <div>
 
@@ -208,11 +237,12 @@ function DrinksDetailsProgress() {
       </p>
 
       <span hidden={ spanHidden }>Link copiado!</span>
-      <Link to="/receitas-feitas">
+      <Link to={ { pathname: "/receitas-feitas", state: { drinkDoneCard: drinkDetails } } }>
         <button
           type="button"
           data-testid="finish-recipe-btn"
           disabled={ stateButton }
+          onClick={ handleClickEnd }
         >
           Finalizar receita
         </button>
