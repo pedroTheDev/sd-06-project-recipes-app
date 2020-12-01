@@ -6,6 +6,7 @@ const RecipesProvider = ({ children }) => {
   const [email, setEmail] = useState([]);
   const [searchComponent, setSearchComponent] = useState(false);
   const [pageName, setPageName] = useState(false);
+  const [categories, setCategories] = useState([]);
   const [apiValueSearch, setApiValueSearch] = useState({
     foods: [],
     drinks: [],
@@ -20,6 +21,8 @@ const RecipesProvider = ({ children }) => {
     setApiValueSearch,
     pageName,
     setPageName,
+    categories,
+    setCategories,
   };
 
   return (

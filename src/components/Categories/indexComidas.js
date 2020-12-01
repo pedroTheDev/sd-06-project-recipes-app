@@ -1,73 +1,62 @@
-import React, { useContext, useState, useEffect } from 'react';
-import ContextAPI from '../../Context/ContextAPI';
+import React, { useContext } from 'react';
 import './styles.css';
-
-import { showAllFoodsCategories,
-  showAllDrinksCategories,
-  selectFoodItensCategories,
-  selectDrinksItensCategories,
-} from '../../services/aPI';
+import ContextAPI from '../../Context/ContextAPI';
 
 const CategoriesComidas = () => {
-  const { apiValueSearch, setApiValueSearch } = useContext(ContextAPI);
-
-  const [categories, setCategories] = useState([]);
-
-  const categoriesDefined = async () => {
-    if (window.location.pathname === '/comidas') {
-      const result = await showAllFoodsCategories();
-      setCategories(result);
-    }
-    if (window.location.pathname === '/bebidas') {
-      const result = await showAllDrinksCategories();
-      setCategories(result);
-    }
+  const { apiValueSearch, setApiValueSearch, categories } = useContext(ContextAPI);
+  const getSugestedFoods = async () => {
+    fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=')
+      .then((foods) => foods.json())
+      .then((foods) => setApiValueSearch({ ...apiValueSearch, foods, value: '' }));
   };
-
-  useEffect(() => {
-    categoriesDefined();
-  }, []);
 
   const filterApiValueSearch = async (value) => {
-    if (window.location.pathname === '/comidas') {
-      const foods = await selectFoodItensCategories(value);
-      setApiValueSearch({
-        ...apiValueSearch,
-        foods,
-      });
-    }
-
-    if (window.location.pathname === '/bebidas') {
-      const result = await selectDrinksItensCategories(value);
-      // apiValueSearch(result.meals);
-      console.log(result);
+    if (apiValueSearch.value === value) {
+      getSugestedFoods();
+    } else {
+      fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${value}`)
+        .then((foods) => foods.json())
+        .then((foods) => setApiValueSearch({ ...apiValueSearch, foods, value }));
     }
   };
 
-  return (
+  const showAllFoods = async () => {
+    getSugestedFoods();
+  };
+
+  return !categories.meals ? (
+    <p>loading</p>
+  ) : (
     <div className="main-categories">
       <span>Selecione uma categoria</span>
       <div className="categories">
-        {categories.categories && categories.categories.map((element, index) => {
+        {categories.meals.map((element, index) => {
           const number = 4;
           if (index <= number) {
             return (
-              <button
-                key={ element.idCategory }
-                data-testid={ `${element.categoryName}-category-filter` }
-                onClick={ (e) => filterApiValueSearch(e.target.name) }
-                type="button"
-              >
-                <img
+              <div>
+                <button
+                  key={ element.idCategory }
+                  type="button"
                   name={ element.strCategory }
-                  src={ element.strCategoryThumb }
-                  alt={ element.strCategory }
-                />
-              </button>
+                  data-testid={ `${element.strCategory}-category-filter` }
+                  onClick={ (e) => filterApiValueSearch(e.target.name) }
+                >
+                  { element.strCategory }
+                </button>
+              </div>
             );
           }
           return '';
         })}
+        <button
+          data-testid="All-category-filter"
+          type="button"
+          id="All"
+          onClick={ (e) => showAllFoods(e.target.id) }
+        >
+          All
+        </button>
       </div>
     </div>
   );
