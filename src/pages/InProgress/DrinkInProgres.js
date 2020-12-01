@@ -108,6 +108,7 @@ export default function DrinkInProgress() {
                     >
                       <input
                         name={ ingredient.name }
+                        checked="false"
                         type="checkbox"
                         key={ index }
                         onClick={ (e) => selectItem(e) }

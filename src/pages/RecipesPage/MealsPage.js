@@ -195,24 +195,23 @@ function MealsPage() {
             const dataTestIDCard = `${index}-card-name`;
             if (type === 'cocktails') {
               return (
-                <Cards id={ recipe.idDrink } name={ recipe.strDrink } thumbnail={ recipe.strDrinkThumb } dataTestID={ dataTestID } dataTestIDImg={ dataTestIDImg } dataTestIDCard={ dataTestIDCard } index={ index } />
-                // <Link key={ index } to={ `/bebidas/${recipe.idDrink}` }>
-                //   <div className="recipe-card" data-testid={ dataTestID } key={ index }>
-                //     <img
-                //       alt="Drink Thumb"
-                //       data-testid={ dataTestIDImg }
-                //       src={ recipe.strDrinkThumb }
-                //       className="recipe-thumb"
-                //       height="250"
-                //     />
-                //     <h2
-                //       className="recipe-name"
-                //       data-testid={ dataTestIDCard }
-                //     >
-                //       {recipe.strDrink}
-                //     </h2>
-                //   </div>
-                // </Link>
+                <Link key={ index } to={ `/bebidas/${recipe.idDrink}` }>
+                  <div className="recipe-card" data-testid={ dataTestID } key={ index }>
+                    <img
+                      alt="Drink Thumb"
+                      data-testid={ dataTestIDImg }
+                      src={ recipe.strDrinkThumb }
+                      className="recipe-thumb"
+                      height="250"
+                    />
+                    <h2
+                      className="recipe-name"
+                      data-testid={ dataTestIDCard }
+                    >
+                      {recipe.strDrink}
+                    </h2>
+                  </div>
+                </Link>
               );
             }
             if (type === 'meals') {
