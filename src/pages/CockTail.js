@@ -117,4 +117,5 @@ CockTail.propTypes = {
       pathname: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
+  drinkRecipes: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
