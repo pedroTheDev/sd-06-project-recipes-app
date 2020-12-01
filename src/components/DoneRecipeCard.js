@@ -9,7 +9,7 @@ const DoneRecipeCard = (props) => {
   const { image, name, category, doneDate,
     tags, area, type, alcoholicOrNot, id } = recipe;
   const span = () => (
-    <span data-testid={ `${index}-${tags[1]}-horizontal-tag` }>;
+    <span data-testid={ `${index}-${tags[1]}-horizontal-tag` }>
       {tags[1]}
     </span>
   );
@@ -18,7 +18,8 @@ const DoneRecipeCard = (props) => {
       <p data-testid={ `${index}-horizontal-top-text` }>
         {`${area} - ${category}`}
       </p>
-      <p>Tags:
+      <p>
+        Tags:
         <span data-testid={ `${index}-${tags[0]}-horizontal-tag` }>
           {tags[0]}
         </span>
