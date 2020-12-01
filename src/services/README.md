@@ -4,6 +4,7 @@ Essa pasta contém todos os arquivos utilizados para gerenciar os serviços da a
 
 
 ### localStorage
+Arquivo responsável por agrupar as funções utilizadas para salvar e resgatar dados do localStorage. As funções serão importadas em cada componente, conforme necessidade de uso.
 
 ### mealAPI
 

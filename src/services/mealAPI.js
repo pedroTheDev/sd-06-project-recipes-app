@@ -1,29 +1,22 @@
 const MEAL_API = 'https://www.themealdb.com/api/json/v1/1/';
-
 // Endpoints
-const filterByIngredientEndpoint = 'filter.php?i=';
-const searchByNameEndpoint = 'search.php?s=';
-const searchByFirstLetterEndpoint = 'search.php?f=';
+/* const listCategoriesEndpoint = 'list.php?c=list';
+const randomRequestEndpoint = 'random.php'; */
+
+const filterByCategoryEndpoint = 'filter.php?c=';
 const listCategoriesEndpoint = 'list.php?c=list';
-const requestRecipeEndpoint = 'lookup.php?i=';
 const randomRequestEndpoint = 'random.php';
 
-export async function filterByIngredient(key) {
-  const url = `${MEAL_API}${filterByIngredientEndpoint}${key}`;
-  const result = await fetch(url);
-  const data = await result.json();
-  return data;
-}
+const endpoints = {
+  ingredient: 'filter.php?i=',
+  name: 'search.php?s=',
+  firstLetter: 'search.php?f=',
+  lookupIngredient: 'lookup.php?i=',
+};
 
-export async function searchByName(key) {
-  const url = `${MEAL_API}${searchByNameEndpoint}${key}`;
-  const result = await fetch(url);
-  const data = await result.json();
-  return data;
-}
-
-export async function searchByFirstLetter(key) {
-  const url = `${MEAL_API}${searchByFirstLetterEndpoint}${key}`;
+export async function fetchMeal(type, key) {
+  key = key === 'firstLetter' ? key[0] : key;
+  const url = `${MEAL_API}${endpoints[type]}${key}`;
   const result = await fetch(url);
   const data = await result.json();
   return data;
@@ -36,15 +29,15 @@ export async function listCategories() {
   return data;
 }
 
-export async function requestRecipe(key) {
-  const url = `${MEAL_API}${requestRecipeEndpoint}${key}`;
+export async function randomRequest() {
+  const url = `${MEAL_API}${randomRequestEndpoint}`;
   const result = await fetch(url);
   const data = await result.json();
   return data;
 }
 
-export async function randomRequest() {
-  const url = `${MEAL_API}${randomRequestEndpoint}`;
+export async function filterByCategory(key) {
+  const url = `${MEAL_API}${filterByCategoryEndpoint}${key}`;
   const result = await fetch(url);
   const data = await result.json();
   return data;

@@ -23,17 +23,34 @@ export function setValueUser(key, value) {
 }
 
 export function addDoneRecipe(object) {
-  const obj = {
-    id: object.id,
-    type: object.type,
-    area: object.strArea,
-    category: object.strCategory,
-    alcoholicOrNot: object.alcoholic,
-    name: object.name,
-    image: object.image,
-    doneDate: object.doneDate,
-    tags: object.tags,
-  };
+  const two = 2;
+  const today = new Date();
+  const day = String(today.getDate()).padStart(two, '0');
+  const month = String(today.getMonth() + 1).padStart(two, '0');
+  const year = today.getFullYear();
+  const date = `${day}/${month}/${year}`;
+  let obj = {};
+  if ('idDrink' in object) {
+    obj = {
+      id: object.idDrink,
+      type: 'drink',
+      category: object.strAlcoholic,
+      name: object.strDrink,
+      image: object.strDrinkThumb,
+      doneDate: date,
+      tags: object.tags,
+    };
+  } else if ('idMeal') {
+    obj = {
+      id: object.idMeal,
+      type: 'meal',
+      category: object.strCategory,
+      name: object.strMeal,
+      image: object.strMealThumb,
+      doneDate: date,
+      tags: object.tags,
+    };
+  }
   const temp = JSON.parse(localStorage.getItem('done_recipes'));
   temp.push(obj);
   localStorage.setItem('done_recipes', JSON.stringify(temp));
@@ -57,6 +74,10 @@ export function addFavoriteRecipe(object) {
   const temp = JSON.parse(localStorage.getItem('favorite_recipes'));
   temp.push(obj);
   localStorage.setItem('favorite_recipes', JSON.stringify(temp));
+}
+
+export function setFavoriteRecipes(key, value) {
+  return localStorage.setItem(key, JSON.stringify({ favoriteRecipes: value }));
 }
 
 export function getFavoriteRecipes() {
