@@ -2,7 +2,7 @@ import React from 'react';
 import renderWithRouter from '../helpers/renderWithRouter'
 import { cleanup } from '@testing-library/react';
 import App from '../App';
-import Comidas from '../Pages/Comidas';
+import { Comidas, Bebibas } from '../Pages';
 import Provider from '../Context/Provider';
 
 afterEach(cleanup);
@@ -39,9 +39,9 @@ describe('10 - Implemente um ícone para a tela de perfil, um título e um ícon
     const pageTitle = queryByTestId('page-title')
     const SearchTopBar = queryByTestId('search-top-btn')
 
-    expect(profileTopBtn).toBe(null);
-    expect(pageTitle).toBe(null);
-    expect(SearchTopBar).toBe(null);
+    expect(profileTopBtn).toBeNull();
+    expect(pageTitle).toBeNull();
+    expect(SearchTopBar).toBeNull();
   })
 
   it('O header tem os ícones corretos na tela de principal de receitas de comidas', () => {
@@ -59,4 +59,20 @@ describe('10 - Implemente um ícone para a tela de perfil, um título e um ícon
     expect(pageTitle).toBeInTheDocument();
     expect(SearchTopBar).toBeInTheDocument();
   })
+
+  // it('O header tem os ícones corretos na tela de principal de receitas de bebidas', () => {
+  //   const { queryByTestId } = renderWithRouter(
+  //     <Provider>
+  //       <Bebibas />
+  //     </Provider>
+  //   );
+
+  //   const profileTopBtn = queryByTestId('profile-top-btn')
+  //   const pageTitle = queryByTestId('page-title')
+  //   const SearchTopBar = queryByTestId('search-top-btn')
+
+  //   expect(profileTopBtn).toBeInTheDocument();
+  //   expect(pageTitle).toBeInTheDocument();
+  //   expect(SearchTopBar).toBeInTheDocument();
+  // })
 })
