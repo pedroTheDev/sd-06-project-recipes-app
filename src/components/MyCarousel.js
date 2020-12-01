@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import MealsContext from '../context/MealsContext';
-import './myCarousel.css';
+import '../Css/myCarousel.css';
 
 function MyCarousel() {
   const { recommendedRecipe } = useContext(MealsContext);

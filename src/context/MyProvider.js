@@ -16,9 +16,31 @@ function MyProvider({ children }) {
   const [disable, setDisable] = useState(true);
   const [user, setUser] = useState({ email: '' });
   const [showSearchBar, setSearchBar] = useState(false);
-  const [recommendedRecipe, setRecommendedRecipe] = useState([]);
+  const [recommendedMeals, setRecommendedMeals] = useState();
+  const [recommendedDrinks, setRecommendedDrinks] = useState();
   const [cardsRecipe, setCardsRecipe] = useState([]);
   const [drinksAlcoholic, setDrinksAlcoholic] = useState({});
+  const [recipeMeal, setRecipeMeal] = useState();
+  const [recipeDrink, setRecipeDrink] = useState();
+  const [ingredientsExplorer, setIngredientsExplorer] = useState([]);
+
+  // async function verifyRecommendedRecipes() {
+  //   const inditialIndex = 0;
+  //   const quantityRecipes = 6;
+  //   if (recommendedMeals[0] === undefined) {
+  //     const resultRecommendedMeals = await getRecipesMealsApi();
+  //     const myRecommendedMeals = resultRecommendedMeals
+  //       .slice(inditialIndex, quantityRecipes);
+  //     console.log('array vazio', myRecommendedMeals);
+  //     setRecommendedMeals(myRecommendedMeals);
+  //   }
+  //   if (recommendedDrinks[0] === undefined) {
+  //     const resultRecommendedDrinks = await getRecipeDrinksApi();
+  //     const myRecommendedDrinks = resultRecommendedDrinks
+  //       .slice(inditialIndex, quantityRecipes);
+  //     setRecommendedDrinks(myRecommendedDrinks);
+  //   }
+  // }
 
   useEffect(() => {
     async function fetchALL() {
@@ -39,6 +61,12 @@ function MyProvider({ children }) {
       setDrinkIngredients(myDrinkIngredients);
       setGlasses(myGlasses);
       setDrinksAlcoholic(myDrinksAlcoholic);
+
+      // Cria Local storage de Receitas Feitas
+      if (localStorage.getItem('doneRecipes') === null) {
+        const newArrayDoneRecipes = [];
+        localStorage.setItem('doneRecipes', JSON.stringify(newArrayDoneRecipes));
+      }
     }
     fetchALL();
   }, []);
@@ -52,18 +80,28 @@ function MyProvider({ children }) {
     drinkIngredients,
     glasses,
     disable,
+    ingredientsExplorer,
     setDisable,
     user,
     setUser,
     showSearchBar,
     setSearchBar,
-    recommendedRecipe,
-    setRecommendedRecipe,
+    recommendedMeals,
+    setRecommendedMeals,
+    recommendedDrinks,
+    setRecommendedDrinks,
     getFilteredRecipesApi,
     getFilteredDrinksApi,
     cardsRecipe,
     setCardsRecipe,
     drinksAlcoholic,
+    recipeMeal,
+    setRecipeMeal,
+    recipeDrink,
+    setRecipeDrink,
+    setIngredients,
+    setDrinkIngredients,
+    setIngredientsExplorer,
   };
 
   return (
