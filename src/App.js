@@ -17,12 +17,14 @@ import {
   NotFound,
 } from './pages';
 import './App.css';
+import GlobalStyle from './styles/global';
 
 // mudar componentes de rotas com parametros
 
 function App() {
   return (
     <div>
+      <GlobalStyle />
       <Switch>
         <Route exact path="/" component={ Login } />
         <Route path="/comidas/:id/in-progress" component={ InProgress } />
