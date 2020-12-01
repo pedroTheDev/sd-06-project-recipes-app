@@ -11,9 +11,7 @@ import logo from '../images/myfood.png';
 import '../style/Loading.css';
 
 function Bebidas() {
-  const { searchBox, drinks, setDrinks, setFiltersData } = useContext(
-    ReceitasContext
-  );
+  const { searchBox, drinks, setDrinks, setFiltersData } = useContext(ReceitasContext);
 
   const location = useLocation();
   const doze = 12;
