@@ -1,8 +1,8 @@
 import React from 'react';
 import { Router } from 'react-router-dom';
-import Provider from '../hooks/Provider';
 import { createMemoryHistory } from 'history';
 import { render } from '@testing-library/react';
+import Provider from '../hooks/Provider';
 
 function renderWithRouter(component) {
   const history = createMemoryHistory();
@@ -10,9 +10,9 @@ function renderWithRouter(component) {
     ...render(
       <Provider>
         <Router history={ history }>{ component }</Router>
-      </Provider>
+      </Provider>,
     ),
-    history, 
+    history,
   });
 }
 

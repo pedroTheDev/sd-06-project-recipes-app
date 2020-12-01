@@ -1,8 +1,25 @@
 import React from 'react';
-import renderWithRouter from './renderWithRouter';
 import { fireEvent } from '@testing-library/react';
+import renderWithRouter from './renderWithRouter';
 import Footer from '../Components/Footer';
-import { Comidas, Bebidas, BebidasDetails, BebidasInProgress, ComidasDetails, ComidasInProgress, Explorar, ExplorarBebidas, ExplorarComidas, ExplorarComidasArea, ExplorarComidasIngredientes, Login, Perfil, ReceitasFavoritas, ReceitasFeitas, ExplorarBebidasIngredientes } from '../Pages';
+import {
+  Comidas,
+  Bebidas,
+  BebidasDetails,
+  BebidasInProgress,
+  ComidasDetails,
+  ComidasInProgress,
+  Explorar,
+  ExplorarBebidas,
+  ExplorarComidas,
+  ExplorarComidasArea,
+  ExplorarComidasIngredientes,
+  Login,
+  Perfil,
+  ReceitasFavoritas,
+  ReceitasFeitas,
+  ExplorarBebidasIngredientes,
+} from '../Pages';
 
 describe('Teste componente Footer', () => {
   it('Implemente os elementos respeitando os atributos descritos no protótipo', () => {
