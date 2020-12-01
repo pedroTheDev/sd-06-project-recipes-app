@@ -37,6 +37,5 @@ describe('e implemente 3 radio buttons: Ingrediente, Nome e Primeira letra', () 
     fireEvent.click(getByTestId('ingredient-search-radio'));
     fireEvent.change(getByTestId('search-input'), { target: { value: 'chicken' } });
     expect(getByTestId('search-input').value).toBe('chicken');
-
   });
 });
