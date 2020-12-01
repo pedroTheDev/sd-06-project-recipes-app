@@ -37,9 +37,25 @@ class FavoriteRecipes extends React.Component {
     });
   }
 
-  setFilterState({ target: { id } }) {
+  setFilterState({ target }) {
+    const all = document.getElementById('all');
+    const food = document.getElementById('food');
+    const drink = document.getElementById('drink');
+    if (target.id === 'food') {
+      target.className = 'food-filters-checked';
+      drink.className = 'food-filters';
+      all.className = 'food-filters';
+    } else if (target.id === 'drink') {
+      target.className = 'food-filters-checked';
+      food.className = 'food-filters';
+      all.className = 'food-filters';
+    } else {
+      target.className = 'food-filters-checked';
+      drink.className = 'food-filters';
+      food.className = 'food-filters';
+    }
     this.setState({
-      type: id,
+      type: target.id,
     });
   }
 
