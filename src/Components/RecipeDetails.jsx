@@ -6,7 +6,7 @@ import recipeRequest from '../services/recipeRequest';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
-import '../Style/RecipeDetails.css';
+import '../Style/RecipeDetails-Progress.css';
 import '../Style/carousel.css';
 
 const RecipeDetails = () => {
@@ -218,7 +218,7 @@ const RecipeDetails = () => {
           {(JSON.parse(localStorage.inProgressRecipes).meals[ids] !== '') ? (
             <button
               type="button"
-              style={ { position: 'fixed', bottom: 0 } }
+              className="start-continue-recipe-btn"
               data-testid="start-recipe-btn"
               onClick={ () => history.push(`${pathname}/in-progress`) }
             >
@@ -228,7 +228,7 @@ const RecipeDetails = () => {
             <button
               type="button"
               data-testid="start-recipe-btn"
-              style={ { position: 'fixed', bottom: 0 } }
+              className="start-continue-recipe-btn"
               onClick={ () => history.push(`${pathname}/in-progress`) }
             >
               Start Recipe
