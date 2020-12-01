@@ -109,8 +109,7 @@ export function getFavoriteRecipes() {
 }
 
 export function checkFavoriteRecipesDatabase() {
-  const recipes = getFavoriteRecipes();
-  if (!recipes) createFavoriteRecipesDatabase();
+  if (!getFavoriteRecipes()) createFavoriteRecipesDatabase();
 }
 
 export function updateFavoriteRecipes(recipes) {
@@ -120,7 +119,6 @@ export function updateFavoriteRecipes(recipes) {
 export function recipeIsFavorite(recipe) {
   checkFavoriteRecipesDatabase();
   const recipes = getFavoriteRecipes();
-  console.log('receitas recipeIsFavorite', recipes);
   recipe = treatRecipe(recipe);
   const match = recipes.find((item) => item.id === recipe.id);
   if (match) return true;
@@ -140,44 +138,39 @@ export function favoriteRecipe(recipe) {
   updateFavoriteRecipes(temp);
 }
 
-export function createRecipesProgress() {
-  let obj = {
-    cocktails: {},
-    meals: {},
-  };
-  obj = JSON.parse(localStorage.getItem(''));
-  localStorage.setItem('in_progress_recipes', JSON.stringify(obj));
+function createRecipesProgressDatabase() {
+  const recipes = [];
+  localStorage.setItem('inProgressRecipes', JSON.stringify(recipes));
 }
 
-export function getInProgressRecipes() {
-  const temp = JSON.parse(localStorage.getItem('in_progress_recipes'));
-  return temp;
+function getRecipesProgress() {
+  const recipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+  return recipes;
 }
 
-export function addCocktailIngredient(cocktailID, ingredientID) {
-  let obj = JSON.parse(localStorage.getItem('in_progress_recipes'));
-  if (!obj.cocktails[cocktailID]) {
-    const temp = { [cocktailID]: [ingredientID] };
-    obj = {
-      cocktails: { ...obj.cocktails, ...temp },
-      meals: { ...obj.meals },
-    };
+function updateRecipesProgress(recipes) {
+  localStorage.setItem('inProgressRecipes', JSON.stringify(recipes));
+}
+
+export function checkRecipesProgressDatabase() {
+  if (!getRecipesProgress()) createRecipesProgressDatabase();
+}
+
+export function addRecipeProgress(recipeID, ingredient) {
+  checkRecipesProgressDatabase();
+  const recipes = getRecipesProgress();
+  const recipeIndex = recipes.findIndex((item) => item.id === recipeID);
+  const minusOne = -1;
+  if (recipeIndex > minusOne) {
+    const { ingredients } = recipes[recipeIndex].ingredients;
+    recipes[recipeIndex].ingredients = [...ingredients, ingredient];
   } else {
-    obj.cocktails[cocktailID].push(ingredientID);
-  }
-  localStorage.setItem('in_progress_recipes', JSON.stringify(obj));
-}
-
-export function addMealIngredient(mealID, ingredientID) {
-  let obj = JSON.parse(localStorage.getItem('in_progress_recipes'));
-  if (!obj.meals[mealID]) {
-    const temp = { [mealID]: [ingredientID] };
-    obj = {
-      cocktails: { ...obj.cocktails },
-      meals: { ...obj.meals, ...temp },
+    const recipeObj = {
+      id: recipeID,
+      ingredients: [ingredient],
     };
-  } else {
-    obj.meals[mealID].push(ingredientID);
+    recipes.push(recipeObj);
   }
-  localStorage.setItem('in_progress_recipes', JSON.stringify(obj));
+
+  updateRecipesProgress(recipes);
 }

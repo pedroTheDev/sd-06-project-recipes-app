@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { fetchMeal } from '../../services/mealAPI';
 import SecondaryHeader from '../../components/SecondaryHeader';
-import { addMealIngredient } from '../../services/localStorage';
+import { addRecipeProgress } from '../../services/localStorage';
 import '../Detail/detail.css';
 
 export default function MealInProgress() {
@@ -54,7 +54,7 @@ export default function MealInProgress() {
 
   function selectItem(event) {
     const completedItem = event.target.parentNode;
-    addMealIngredient(id, completedItem.id);
+    addRecipeProgress(id, completedItem.id);
     console.log(id, completedItem.id);
     if (completedItem.classList.contains('selected')) {
       completedItem.classList.remove('selected');
