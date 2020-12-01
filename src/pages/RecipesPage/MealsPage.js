@@ -7,7 +7,6 @@ import BtnSearchBar from '../../components/BtnSearchBar';
 import * as cocktailAPI from '../../services/cocktailAPI';
 import * as mealAPI from '../../services/mealAPI';
 import recipesAppContext from '../../context/recipesAppContext';
-import Cards from '../../components/Cards';
 
 function MealsPage() {
   const [state, changeState] = useState({
