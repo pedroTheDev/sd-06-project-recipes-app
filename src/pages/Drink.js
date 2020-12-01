@@ -66,17 +66,12 @@ function Drink() {
       if (searchItens) {
         const { searchInput, searchRadio } = searchItens;
         if (searchRadio === 'Nome') {
-          if (searchInput.length > 1) {
-            // eslint-disable-next-line no-alert
-            alert('Sua busca deve conter somente 1 (um) caracter');
-          } else {
-            const urlSearchName = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchInput}`;
-            const APISearchRequest = await fetch(urlSearchName);
-            const APISearchResponse = await APISearchRequest.json();
-            if (APISearchResponse !== null && searchItens) {
-              setCurrentDrinks(APISearchResponse.drinks);
-              setCurrentCategories('ok');
-            }
+          const urlSearchName = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchInput}`;
+          const APISearchRequest = await fetch(urlSearchName);
+          const APISearchResponse = await APISearchRequest.json();
+          if (APISearchResponse !== null && searchItens) {
+            setCurrentDrinks(APISearchResponse.drinks);
+            setCurrentCategories('ok');
           }
         }
         if (searchRadio === 'Ingrediente') {
@@ -90,18 +85,16 @@ function Drink() {
           }
         }
         if (searchRadio === 'PrimeiraLetra') {
-          if (searchInput.length > 1) {
-            // eslint-disable-next-line no-alert
-            alert('Sua busca deve conter somente 1 (um) caracter');
-          } else {
-            const urlSearchName = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${searchInput}`;
-            const APISearchRequest = await fetch(urlSearchName);
-            const APISearchResponse = await APISearchRequest.json();
-            if (APISearchResponse !== null && searchItens) {
-              setCurrentDrinks(APISearchResponse.drinks);
-              setCurrentCategories('ok');
-              console.log(searchItens.searchRadio);
-            }
+          // if (searchInput.length > 1) {
+          //   alert('Sua busca deve conter somente 1 (um) caracter');
+          // } else {
+          const urlSearchName = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${searchInput}`;
+          const APISearchRequest = await fetch(urlSearchName);
+          const APISearchResponse = await APISearchRequest.json();
+          if (APISearchResponse !== null && searchItens) {
+            setCurrentDrinks(APISearchResponse.drinks);
+            setCurrentCategories('ok');
+            console.log(searchItens.searchRadio);
           }
         }
       }
