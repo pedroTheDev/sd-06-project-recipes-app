@@ -4,22 +4,27 @@ import RecipesButtons from '../components/RecipesButtons';
 import ShareButton from '../components/ShareButton';
 
 export default function DoneRecipes() {
-  const doneRecipesStorage = localStorage.getItem('favoriteRecipes'); // TROCAR favoriteRecipes POR doneRecipes
+  const doneRecipesStorage = localStorage.getItem('doneRecipes'); // TROCAR favoriteRecipes POR doneRecipes
   const doneList = JSON.parse(doneRecipesStorage);
   const [selectedFilter, setselectedFilter] = useState('All');
 
   let filteredResults;
   if (selectedFilter === 'All') filteredResults = [...doneList];
   if (selectedFilter === 'Meal') {
-    filteredResults = doneList.filter((item) => item.type === selectedFilter);
+    filteredResults = doneList
+      .filter((item) => item.type === selectedFilter || item.type === 'comida');
   }
   if (selectedFilter === 'Drink') {
-    filteredResults = doneList.filter((item) => item.type === selectedFilter);
+    filteredResults = doneList
+      .filter((item) => item.type === selectedFilter || item.type === 'bebida');
   }
+
   const detailRoute = (id, type) => {
-    const drinkOrFood = (type === 'Meal') ? '/comidas/' : '/bebidas/';
+    const drinkOrFood = (type === 'Meal' || type === 'comida')
+      ? '/comidas/' : '/bebidas/';
     return `${drinkOrFood}${id}`;
   };
+
   return (
     <div>
       <RecipesButtons setselectedFilter={ setselectedFilter } />
@@ -34,33 +39,39 @@ export default function DoneRecipes() {
             />
           </Link>
           <div className="textBoxCard">
-            {(item.type === 'Meal')
+            {(item.type === 'Meal' || item.type === 'comida')
               ? (
-                <p>
-                  <span data-testid={ `${index}-horizontal-top-text` }>
-                    {item.category}
-                  </span>
-                  {' '}
-                  |
-                  {' '}
+                <span data-testid={ `${index}-horizontal-top-text` }>
                   {item.area}
-                </p>
+                  {' '}
+                  -
+                  {' '}
+                  {item.category}
+                </span>
               )
               : ''}
-            {(item.type === 'Drink') ? <p>{item.alcoholicOrNot}</p> : ''}
-            <h3 data-testid={ `${index}-horizontal-name` }>
-              <Link to={ () => detailRoute(item.id, item.type) }>{item.name}</Link>
-            </h3>
+            {(item.type === 'Drink' || item.type === 'bebida')
+              ? (
+                <span data-testid={ `${index}-horizontal-top-text` }>
+                  {item.alcoholicOrNot}
+                </span>
+              )
+              : ''}
+            <Link to={ () => detailRoute(item.id, item.type) }>
+              <h3 data-testid={ `${index}-horizontal-name` }>
+                {item.name}
+              </h3>
+            </Link>
             <p data-testid={ `${index}-horizontal-done-date` }>{item.doneDate}</p>
-            {/* {item.tags.map((tagName, i) => (
+            {item.tags.map((tagName, i) => (
               <div
                 key={ i }
                 className="tagRecipe"
-                data-testid={ `${i}-${tagName}-horizontal-tag` }
+                data-testid={ `${index}-${tagName}-horizontal-tag` }
               >
                 {tagName}
               </div>
-            ))} */}
+            ))}
             {/* Descomentar o código acima quando
             TROCAR favoriteRecipes POR doneRecipes */}
             <ShareButton index={ index } id={ item.id } type={ item.type } />
