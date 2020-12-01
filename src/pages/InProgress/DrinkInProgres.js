@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { fetchDrink } from '../../services/cocktailAPI';
 import SecondaryHeader from '../../components/SecondaryHeader';
-import { addRecipeProgress } from '../../services/localStorage';
+import { addRecipeProgress, selectedIngredient } from '../../services/localStorage';
 import '../Detail/detail.css';
 
 export default function DrinkInProgress() {
@@ -27,7 +27,11 @@ export default function DrinkInProgress() {
     for (i = 1; i <= twenty; i += 1) {
       const keyName = `strIngredient${i}`;
       const measureKeyName = `strMeasure${i}`;
-      if (recipes[keyName] !== '' && recipes[keyName] !== null) {
+      if (recipes[keyName] !== ''
+          && recipes[keyName] !== undefined
+          && recipes[keyName] !== null
+      ) {
+        console.log(recipes[keyName]);
         const obj = {
           name: recipes[keyName],
           measure: recipes[measureKeyName],
@@ -40,8 +44,24 @@ export default function DrinkInProgress() {
     return ingredients;
   };
 
+  const resumeProgress = (ingredients) => {
+    ingredients.forEach((ingredient) => {
+      const checkIngredient = document.getElementById(ingredient.name);
+      if (selectedIngredient(id, ingredient.name)) {
+        checkIngredient.classList.add('selected');
+        checkIngredient.children[0].checked = true;
+      } else {
+        checkIngredient.classList.remove('selected');
+        checkIngredient.children[0].checked = false;
+      }
+    });
+  };
+
   useEffect(() => {
     setIngredientAndMeasure();
+    if (document.getElementById('renderizado') !== null) {
+      resumeProgress(setIngredientAndMeasure());
+    }
   }, [recipes]);
 
   if (Object.keys(recipes).length === zero) {
@@ -64,7 +84,7 @@ export default function DrinkInProgress() {
   }
 
   return (
-    <div>
+    <div id="renderizado">
       <div>
         <SecondaryHeader
           name={ recipes.strDrink }
@@ -92,7 +112,7 @@ export default function DrinkInProgress() {
                         key={ index }
                         onClick={ (e) => selectItem(e) }
                       />
-                      { `${ingredient.name} - ${ingredient.measure}` }
+                      { `${ingredient.name} - ${ingredient.measure || 'as you like'}` }
                     </label>
                   </li>
                   <br />

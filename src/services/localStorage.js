@@ -156,6 +156,20 @@ export function checkRecipesProgressDatabase() {
   if (!getRecipesProgress()) createRecipesProgressDatabase();
 }
 
+export function selectedIngredient(recipeID, ingredient) {
+  checkRecipesProgressDatabase();
+  const recipes = getRecipesProgress();
+  const minusOne = -1;
+  const recipeIndex = recipes.findIndex((item) => item.id === recipeID);
+  if (recipeIndex > minusOne) {
+    const { ingredients } = recipes[recipeIndex];
+    const ingredientIndex = ingredients.findIndex((item) => item === ingredient);
+    if (ingredientIndex > minusOne) return true;
+  }
+
+  return false;
+}
+
 export function addRecipeProgress(recipeID, ingredient) {
   console.log(recipeID, ingredient);
   checkRecipesProgressDatabase();
@@ -163,7 +177,11 @@ export function addRecipeProgress(recipeID, ingredient) {
   const recipeIndex = recipes.findIndex((item) => item.id === recipeID);
   const minusOne = -1;
   if (recipeIndex > minusOne) {
-    recipes[recipeIndex].ingredients.push(ingredient);
+    const { ingredients } = recipes[recipeIndex];
+    const ingredientIndex = ingredients.findIndex((item) => item === ingredient);
+    if (ingredientIndex > minusOne) {
+      recipes[recipeIndex].ingredients.splice(ingredientIndex, 1);
+    } else recipes[recipeIndex].ingredients.push(ingredient);
   } else {
     const recipeObj = {
       id: recipeID,
