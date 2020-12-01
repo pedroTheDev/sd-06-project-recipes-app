@@ -132,7 +132,7 @@ class FavFoodCard extends React.Component {
     const { history, indexAcc } = this.props;
     const { Food } = this.state;
     return (
-      <div>
+      <div className="food-or-drink-done-card">
         {Food.map((element, index) => (
           <div key={ index } className="food-drink-card">
             <input

@@ -22,25 +22,17 @@ class FoodCard extends React.Component {
     }
   }
 
-  async handleShareFood({ id }) {
+  async handleShareFood({ id }, { target }) {
+    const two = 2;
+    if ((target.parentNode).childNodes.length < two) {
+      const { parentNode } = target;
+      const paragraph = document.createElement('p');
+      paragraph.innerText = 'Link Copiado';
+      paragraph.style.fontSize = '8px';
+      parentNode.appendChild(paragraph);
+    }
     const url = `http://localhost:3000/comidas/${id}`;
     await copy(url);
-    // shareBtn.innerText = 'Link copiado!';
-    const p = document.querySelector('.p');
-    const span = document.createElement('span');
-    p.appendChild(span);
-    span.innerHTML = 'Link copiado!';
-    // window.alert('Link copiado!');
-    // https://www.30secondsofcode.org/blog/s/copy-text-to-clipboard-with-javascript
-    // const el = document.createElement('textarea');
-    // el.value = url;
-    // el.setAttribute('readonly', '');
-    // el.style.position = 'absolute';
-    // el.style.left = '-9999px';
-    // document.body.appendChild(el);
-    // el.select();
-    // document.execCommand('copy');
-    // document.body.removeChild(el);
   }
 
   setFoodState(Food) {
@@ -53,7 +45,7 @@ class FoodCard extends React.Component {
     const { Food } = this.state;
     const { history, indexAcc } = this.props;
     return (
-      <div>
+      <div className="food-or-drink-done-card">
         {Food.map((element, i) => (
           <div key={ i + indexAcc } className="food-drink-card">
             <input
@@ -87,9 +79,8 @@ class FoodCard extends React.Component {
                     src={ shareIcon }
                     alt="share"
                     className="done-recipe-share-btn"
-                    onClick={ () => this.handleShareFood(element) }
+                    onClick={ (event) => this.handleShareFood(element, event) }
                   />
-                  <p className="p" />
                 </div>
               </div>
               <aside className="food-drink-footer">
