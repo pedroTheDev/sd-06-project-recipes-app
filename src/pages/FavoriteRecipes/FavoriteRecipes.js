@@ -3,6 +3,7 @@ import copy from 'clipboard-copy';
 import { Link } from 'react-router-dom';
 import Header from '../../components/Header';
 import { shareIcon, whiteHeartIcon, blackHeartIcon } from '../../images';
+import recipesAppContext from '../../context/recipesAppContext';
 
 function FavoritesRecipes() {
   const { isFavorite, handleFavoriteRecipe } = useContext(recipesAppContext);

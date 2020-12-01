@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import { Link } from 'react-router-dom';
 
 function ExplorePage() {
   return (
@@ -9,12 +10,22 @@ function ExplorePage() {
         className="header"
         pageTitle="Explorar"
       />
-      <button data-testid="explore-food">
-        Explorar Comidas
-      </button>
-      <button data-testid="explore-drinks">
-        Explorar Bebidas
-      </button>
+      <Link to="/explorar/comidas">
+        <button
+          data-testid="explore-food"
+          className="btn btn-secondary"
+        >
+          Explorar Comidas
+        </button>
+      </Link>
+      <Link to="/explorar/bebidas">
+        <button
+          data-testid="explore-drinks"
+          className="btn btn-secondary"
+        >
+          Explorar Bebidas
+        </button>
+      </Link>
       <div className="footer">
         <Footer />
       </div>
