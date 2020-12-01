@@ -20,6 +20,7 @@ export default function ProcessoBebidas() {
   } = useContext(Context);
   const [arrayIngredients, setArrayIngredients] = useState([]);
   const [sharedURL, setSharedURL] = useState(false);
+  const [check, setCheck] = useState(true);
 
   const prepareDrink = async () => {
     setLoading(true);
@@ -51,14 +52,29 @@ export default function ProcessoBebidas() {
     getIngredientsArray();
   }, [selectedDrink]);
 
+  const arrayIngredientsLength = arrayIngredients.length;
+  const idIngredientsfeitos = [];
   const onClick = ({ target }) => {
+    const element = target;
+    const ingredientId = element.parentNode.htmlFor;
+
     if (target.checked === true) {
-      const element = target;
       element.parentNode.style = 'text-decoration: line-through;';
+      idIngredientsfeitos.push(ingredientId);
     }
     if (target.checked === false) {
-      const element = target;
       element.parentNode.style = 'text-decoration: none;';
+      if (idIngredientsfeitos.includes(ingredientId)) {
+        const findIngredientInArray = idIngredientsfeitos.indexOf(ingredientId);
+        console.log('qual index', findIngredientInArray);
+        idIngredientsfeitos.splice(findIngredientInArray, 1);
+        console.log('array de ingredientes feitos2', idIngredientsfeitos);
+      }
+    }
+    console.log('ingredientId', ingredientId);
+    console.log('array de ingredientes feitos', idIngredientsfeitos);
+    if (arrayIngredientsLength === idIngredientsfeitos.length) {
+      setCheck(false);
     }
   };
 
@@ -126,7 +142,14 @@ export default function ProcessoBebidas() {
           </div>
         )}
       <Link to="/receitas-feitas">
-        <button type="button" data-testid="finish-recipe-btn">Finalizar Receita</button>
+        <button
+          type="button"
+          data-testid="finish-recipe-btn"
+          disabled={ check }
+        >
+          Finalizar Receita
+
+        </button>
       </Link>
     </div>
   );

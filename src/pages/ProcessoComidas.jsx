@@ -19,7 +19,7 @@ export default function ProcessoComidas() {
     setSelectedMeal,
   } = useContext(Context);
   const [arrayIngredients, setArrayIngredients] = useState([]);
-  const [check, setCheck] = useState(false);
+  const [check, setCheck] = useState(true);
   const [sharedURL, setSharedURL] = useState(false);
 
   const prepareFood = async () => {
@@ -52,25 +52,30 @@ export default function ProcessoComidas() {
     console.log(arrayIngredients);
   }, [selectedMeal]);
 
-  /* const getChecked = ({ target }) => {
-    const ingredientFilter = document.querySelectorAll('input');
-    ingredientFilter.filter((ing) => ing[target.id].checked === true);
-  }; */
-
+  const arrayIngredientsLength = arrayIngredients.length;
+  const idIngredientsfeitos = [];
   const onClick = ({ target }) => {
-    /* const twelve = arrayIngredients.length - 1; */
+    const element = target;
+    const ingredientId = element.parentNode.htmlFor;
+
     if (target.checked === true) {
-      let element = document.getElementsByTagName('label')[target.id].innerText;
-      element = target;
       element.parentNode.style = 'text-decoration: line-through;';
+      idIngredientsfeitos.push(ingredientId);
     }
     if (target.checked === false) {
-      let element = document.getElementsByTagName('label')[target.id].innerText;
-      element = target;
       element.parentNode.style = 'text-decoration: none;';
+      if (idIngredientsfeitos.includes(ingredientId)) {
+        const findIngredientInArray = idIngredientsfeitos.indexOf(ingredientId);
+        console.log('qual index', findIngredientInArray);
+        idIngredientsfeitos.splice(findIngredientInArray, 1);
+        console.log('array de ingredientes feitos2', idIngredientsfeitos);
+      }
     }
-    /* const ingredientFilter = document.querySelectorAll('input');
-    console.log(); */
+    console.log('ingredientId', ingredientId);
+    console.log('array de ingredientes feitos', idIngredientsfeitos);
+    if (arrayIngredientsLength === idIngredientsfeitos.length) {
+      setCheck(false);
+    }
   };
 
   const urlToClipboard = () => {
@@ -79,21 +84,6 @@ export default function ProcessoComidas() {
     copy(url);
     console.log(url);
     setSharedURL(true);
-  };
-
-  const verify = () => {
-    const tamanho = arrayIngredients.length - 1;
-    const noLength = 0;
-    let totalCheck = noLength;
-    for (let ind = noLength; ind <= tamanho; ind += 1) {
-      if (document.getElementsByTagName('input')[ind].checked === true) {
-        totalCheck += 1;
-        if (totalCheck === tamanho) {
-          setCheck(true);
-          console.log(check);
-        }
-      }
-    }
   };
 
   return (
@@ -157,7 +147,7 @@ export default function ProcessoComidas() {
               <button
                 type="button"
                 data-testid="finish-recipe-btn"
-                disabled={ verify }
+                disabled={ check }
               >
                 Finalizar Receita
               </button>
