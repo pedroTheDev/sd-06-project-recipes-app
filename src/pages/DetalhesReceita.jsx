@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
   requestApiFoodDetails,
@@ -8,28 +9,27 @@ import {
 } from '../services/requestDrink';
 import '../styles/Detalhes.css';
 import buttonShare from '../styles/images/shareIcon.svg';
+import FavoriteHeart from '../components/FavoriteHeart';
 
-function DetalhesReceita(props) {
+function DetalhesReceita({ match: { params: { id } } }) {
+  const zero = 0;
+  const vinte = 20;
+  const seis = 6;
   const [detailsFood, setDetailsFood] = useState([]);
   const [arrayIngredients, setArrayIngredients] = useState([]);
   const [embed, setEmbed] = useState('');
   const [recommendFood, setRecommendFood] = useState([]);
-  const zero = 0;
-  const vinte = 20;
-  const seis = 6;
 
   useEffect(() => {
-    requestApiFoodDetails(props.match.params.id)
+    requestApiFoodDetails(id)
       .then((response) => {
         setDetailsFood(response[0]);
-        console.log(response);
       });
   }, []);
 
   const recommendFoodFunction = async () => {
     if (detailsFood.length !== zero) {
       const response = await recommendDrinksList();
-      console.log(response);
       setRecommendFood(response.drinks.slice(zero, seis));
     }
   };
@@ -56,6 +56,19 @@ function DetalhesReceita(props) {
     }
   };
 
+  const copyBoard = () => {
+    const url = `http://localhost:3000/comidas/${id}`;
+    const input = document.body.appendChild(document.createElement('input'));
+    input.value = url;
+    input.select();
+    document.execCommand('copy');
+    input.parentNode.removeChild(input);
+    const divBtns = document.getElementById('btns');
+    const newSpan = document.createElement('span');
+    newSpan.innerHTML = 'Link copiado!';
+    divBtns.appendChild(newSpan);
+  };
+
   useEffect(() => {
     ingredientsFunc();
     embedVideo();
@@ -71,10 +84,12 @@ function DetalhesReceita(props) {
       <h2 data-testid="recipe-title">{detailsFood.strMeal}</h2>
       <h3 data-testid="recipe-category">{detailsFood.strCategory}</h3>
       <h4 data-testid="instructions">{detailsFood.strInstructions}</h4>
-      <button type="button" data-testid="share-btn">
-        <img src={ buttonShare } alt="button-share" />
-      </button>
-      <button type="button" data-testid="favorite-btn">Favorite</button>
+      <div id="btns">
+        <button type="button" data-testid="share-btn" onClick={ copyBoard }>
+          <img src={ buttonShare } alt="button-share" />
+        </button>
+        <FavoriteHeart id={ id } detailsFood={ detailsFood } />
+      </div>
       {arrayIngredients.map((element, index) => (
         <h5
           data-testid={ `${index}-ingredient-name-and-measure` }
@@ -84,6 +99,7 @@ function DetalhesReceita(props) {
         </h5>
       ))}
       <iframe
+        title="videos"
         data-testid="video"
         title="video"
         width="1042"
@@ -96,28 +112,37 @@ function DetalhesReceita(props) {
         gyroscope;
         picture-in-picture"
       />
-      {/* </iframe> */}
-      <div>
+      <div className="carrossel">
         {recommendFood.map((drink, index) => (
-          <div key={ index } data-testid={ `${index}-recomendation-card` }>
+          <div
+            className="carrossel-iten"
+            key={ index }
+            data-testid={ `${index}-recomendation-card` }
+          >
             <img src={ drink.strDrinkThumb } alt="drink-thumb" />
-            <h3>{drink.strDrink}</h3>
+            <h3 data-testid={ `${index}-recomendation-title` }>{drink.strDrink}</h3>
           </div>
         ))}
       </div>
-      <button
-        type="button"
-        data-testid="start-recipe-btn"
-        className="btn-footer"
-      >
-        Iniciar receita
-      </button>
+      <Link to={ `/comidas/${id}/in-progress` }>
+        <button
+          type="button"
+          data-testid="start-recipe-btn"
+          className="btn-footer"
+        >
+          Iniciar receita
+        </button>
+      </Link>
     </div>
   );
 }
 
 DetalhesReceita.propTypes = {
-  match: PropTypes.shape.isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
 };
 
 export default DetalhesReceita;

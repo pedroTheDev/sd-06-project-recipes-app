@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import propTypes from 'prop-types';
-import RecipesAppContext from '../hooks/RecipesAppContext';
+import RecipesAppContext from '../context/RecipesAppContext';
 import {
   requestApiFoodFilterIngredient,
   requestApiFoodFilterName,

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
   requestApiDrinkDetails,
@@ -8,20 +9,20 @@ import {
 } from '../services/requestFood';
 import '../styles/Detalhes.css';
 import buttonShare from '../styles/images/shareIcon.svg';
+import FavoriteHeart from '../components/FavoriteHeart';
 
-function DetalhesBebida(props) {
-  const [detailsDrink, setDetailsDrink] = useState([]);
-  const [arrayIngredients, setArrayIngredients] = useState([]);
-  const [recommendDrink, setRecommendDrink] = useState([]);
+function DetalhesBebida({ match: { params: { id } } }) {
   const zero = 0;
   const quinze = 15;
   const seis = 6;
+  const [detailsDrink, setDetailsDrink] = useState({});
+  const [arrayIngredients, setArrayIngredients] = useState([]);
+  const [recommendDrink, setRecommendDrink] = useState([]);
 
   useEffect(() => {
-    requestApiDrinkDetails(props.match.params.id)
+    requestApiDrinkDetails(id)
       .then((response) => {
         setDetailsDrink(response[0]);
-        console.log(response);
       });
   }, []);
 
@@ -43,7 +44,6 @@ function DetalhesBebida(props) {
     if (detailsDrink.length !== zero) {
       const response = await recommendFoodsList();
       setRecommendDrink(response.meals.slice(zero, seis));
-      console.log(response);
     }
   };
 
@@ -52,9 +52,23 @@ function DetalhesBebida(props) {
     recommendDrinkFunction();
   }, [detailsDrink]);
 
+  const copyBoard = () => {
+    const url = `http://localhost:3000/bebidas/${id}`;
+    const input = document.body.appendChild(document.createElement('input'));
+    input.value = url;
+    input.select();
+    document.execCommand('copy');
+    input.parentNode.removeChild(input);
+    const divBtns = document.getElementById('btns');
+    const newSpan = document.createElement('span');
+    newSpan.innerHTML = 'Link copiado!';
+    divBtns.appendChild(newSpan);
+  };
+
   if (detailsDrink.length === zero) {
     return <div>Loading...</div>;
   }
+
   return (
     <div>
       <img data-testid="recipe-photo" src={ detailsDrink.strDrinkThumb } alt="dk aspo" />
@@ -64,10 +78,12 @@ function DetalhesBebida(props) {
         <h3>{detailsDrink.strCategory}</h3>
       </div>
       <h4 data-testid="instructions">{detailsDrink.strInstructions}</h4>
-      <button type="button" data-testid="share-btn">
-        <img src={ buttonShare } alt="img-button-share" />
-      </button>
-      <button type="button" data-testid="favorite-btn">Favorite</button>
+      <div id="btns">
+        <button type="button" data-testid="share-btn" onClick={ copyBoard }>
+          <img src={ buttonShare } alt="img-button-share" />
+        </button>
+        <FavoriteHeart id={ id } detailsDrink={ detailsDrink } />
+      </div>
       {arrayIngredients.map((element, index) => (
         <h5
           data-testid={ `${index}-ingredient-name-and-measure` }
@@ -76,21 +92,27 @@ function DetalhesBebida(props) {
           {element}
         </h5>
       ))}
-      <div data-testid="0-recomendation-card">
+      <div className="carrossel">
         {recommendDrink.map((drink, index) => (
-          <div key={ index }>
+          <div
+            className="carrossel-iten"
+            key={ index }
+            data-testid={ `${index}-recomendation-card` }
+          >
             <img src={ drink.strMealThumb } alt="drink-thumb" />
-            <h3>{drink.strMeal}</h3>
+            <h3 data-testid={ `${index}-recomendation-title` }>{drink.strMeal}</h3>
           </div>
         ))}
       </div>
-      <button
-        type="button"
-        data-testid="start-recipe-btn"
-        className="btn-footer"
-      >
-        Iniciar receita
-      </button>
+      <Link to={ `/bebidas/${id}/in-progress` }>
+        <button
+          type="button"
+          data-testid="start-recipe-btn"
+          className="btn-footer"
+        >
+          Iniciar receita
+        </button>
+      </Link>
     </div>
   );
 }

@@ -14,8 +14,11 @@ import DetalhesReceita from './pages/DetalhesReceita';
 import ReceitasFeitas from './pages/ReceitasFeitas';
 import ReceitasFavoritas from './pages/ReceitasFavoritas';
 import Perfil from './pages/Perfil';
-import Provider from './hooks/Provider';
+import Provider from './context/Provider';
 import DetalhesBebida from './pages/DetalhesBebida';
+import NotFound from './components/NotFound';
+import ProcessoReceita from './pages/ProcessoReceita';
+import ProcessoBebida from './pages/ProcessoBebida';
 
 function App() {
   return (
@@ -27,8 +30,8 @@ function App() {
           <Route path="/bebidas" exact component={ Bebidas } />
           <Route path="/comidas/:id" exact component={ DetalhesReceita } />
           <Route path="/bebidas/:id" exact component={ DetalhesBebida } />
-          <Route path="/comidas/:id/in-progress" exact component={ App } />
-          <Route path="/bebidas/:id/in-progress" exact component={ App } />
+          <Route path="/comidas/:id/in-progress" exact component={ ProcessoReceita } />
+          <Route path="/bebidas/:id/in-progress" exact component={ ProcessoBebida } />
           <Route path="/explorar" exact component={ Explorar } />
           <Route path="/explorar/comidas" exact component={ ExplorarComidas } />
           <Route path="/explorar/bebidas" exact component={ ExplorarBebidas } />
@@ -46,6 +49,7 @@ function App() {
           <Route path="/perfil" exact component={ Perfil } />
           <Route path="/receitas-feitas" exact component={ ReceitasFeitas } />
           <Route path="/receitas-favoritas" exact component={ ReceitasFavoritas } />
+          <Route component={ NotFound } />
         </Switch>
       </Provider>
     </div>

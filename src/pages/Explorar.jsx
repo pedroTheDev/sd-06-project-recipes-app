@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import RecipesAppContext from '../hooks/RecipesAppContext';
+import RecipesAppContext from '../context/RecipesAppContext';
 import '../styles/Explorar.css';
 
 function Explorar() {
