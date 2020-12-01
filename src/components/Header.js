@@ -26,6 +26,7 @@ export default function Header(props) {
       onClick={ () => {
         setSearch(!search);
       } }
+      className="button-standard"
     >
       <img src={ SearchIcon } alt="Profile" data-testid="search-top-btn" />
     </button>
@@ -34,7 +35,7 @@ export default function Header(props) {
     <div>
       <header data-testid="test-header">
         <div className="container">
-          <div className="row justify-content-around">
+          <div className="row justify-content-around header-component">
             <Link to="/perfil" data-testid="test-profile-top-btn">
               <img src={ ProfileIcon } alt="Profile" data-testid="profile-top-btn" />
             </Link>
