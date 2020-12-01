@@ -24,7 +24,7 @@ function SearchBar() {
       if (searchParam && !filteredMeals) {
         setLoading(false);
         // eslint-disable-next-line no-alert
-        return alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+        // return alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
       }
       setMeals(filteredMeals);
       setLoading(false);
