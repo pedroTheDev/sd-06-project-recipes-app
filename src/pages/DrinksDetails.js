@@ -215,6 +215,7 @@ class DrinksDetails extends React.Component {
       Ingredients,
       Measures,
       Video } = this.state;
+    const { history } = this.props;
     const recipe = Drink[0];
     const zero = 0;
     return (
@@ -292,10 +293,12 @@ class DrinksDetails extends React.Component {
                   style={ { transform: `translateX(${x}%)` } }
                   data-testid={ `${i}-recomendation-card` }
                 >
-                  <img
+                  <input
+                    type="image"
                     src={ recomend.strMealThumb }
                     data-testid="recipe-photo"
                     alt="recipe-img"
+                    onClick={ () => history.push(`/comidas/${recomend.idMeal}`) }
                   />
                   <div className="text-slider-div">
                     <p>{recomend.strCategory}</p>
