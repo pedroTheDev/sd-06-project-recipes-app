@@ -3,9 +3,11 @@ import copy from 'clipboard-copy';
 import { Link } from 'react-router-dom';
 import Header from '../../components/Header';
 import { shareIcon, whiteHeartIcon, blackHeartIcon } from '../../images';
+import recipesAppContext from '../../context/recipesAppContext';
 
 function FavoritesRecipes() {
   const { isFavorite, handleFavoriteRecipe } = useContext(recipesAppContext);
+  const [type, setType] = useState('');
 
   const doneRecipes = [{
     id: '52977',
@@ -33,7 +35,6 @@ function FavoritesRecipes() {
       recipe.tags = recipe.tags.split(',');
     }
   });
-  const [type, setType] = useState('');
 
   const handleShareIcon = (target) => {
     const keys = target.id.split(',');
@@ -125,17 +126,14 @@ function FavoritesRecipes() {
                   alt="Favorite recipe"
                   onClick={ handleFavoriteRecipe }
                 />
-                {recipe.tags.map((tagName) => {
-                  return (
-                    <p
-                      data-testid={ `${index}-${tagName}-horizontal-tag` }
-                      key={ tagName }
-                    >
-                      { tagName }
-                    </p>
-                  )
-                }
-                )}
+                {recipe.tags.map((tagName) => (
+                  <p
+                    data-testid={ `${index}-${tagName}-horizontal-tag` }
+                    key={ tagName }
+                  >
+                    { tagName }
+                  </p>
+                ))}
               </div>
             );
           }
