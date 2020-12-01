@@ -7,9 +7,9 @@ import Context from '../context/Context';
 function Cards({ info, recipe, index }) {
   const { strIngredient } = info;
   const { strIngredient1 } = info;
-  const { recipesToRenderByIngredient } = useContext(Context);
+  // const { recipesToRenderByIngredient } = useContext(Context);
   const url = 'https://www.themealdb.com/images/ingredients/';
-  const type = recipe === 'ingredientsMeals' ? 'meal' : 'drink';
+  // const type = recipe === 'ingredientsMeals' ? 'meal' : 'drink';
   const imageMeal = `${strIngredient}.png`;
   const imageDrink = `${strIngredient1}.png`;
 
@@ -17,7 +17,7 @@ function Cards({ info, recipe, index }) {
     <Link
       to={
         recipe === 'ingredientsMeals'
-          ? ('/comidas', recipesToRenderByIngredient(type, strIngredient))
+          ? '/comidas'
           : '/bebidas'
       }
     >
