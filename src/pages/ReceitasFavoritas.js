@@ -1,7 +1,8 @@
-/* import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
-import { shareIcon, blackHeartIcon } from '../images/';
+import shareIcon from '../images/shareIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 function ReceitasFavoritas() {
   const [favoriteRecipes, setFavoriteRecipe] = useState([]);
@@ -121,4 +122,3 @@ function ReceitasFavoritas() {
 }
 
 export default ReceitasFavoritas;
- */
