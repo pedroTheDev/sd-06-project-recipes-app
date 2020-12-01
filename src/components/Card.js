@@ -4,7 +4,7 @@ import { Redirect, Link } from 'react-router-dom';
 import RecipesAppContext from '../context/RecipesAppContext';
 
 function Card({ title }) {
-  const { recipes, errorFromApi } = useContext(RecipesAppContext);
+  const { recipes, errorFromApi, clickedCategory } = useContext(RecipesAppContext);
   const ZERO = 0;
   const DOZE = 12;
   let recipeType = '';
@@ -18,7 +18,7 @@ function Card({ title }) {
     setRoute = 'bebidas';
   }
 
-  if (recipes.length === 1) {
+  if ((recipes.length === 1) && !clickedCategory) {
     const id = recipes[0][`id${recipeType}`];
     return <Redirect to={ `/${setRoute}/${id}` } />;
   }

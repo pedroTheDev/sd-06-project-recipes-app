@@ -10,9 +10,11 @@ function RecipesAppProvider({ children }) {
   const [recipes, setRecipes] = useState([]);
   const [errorFromApi, setErrorFromApi] = useState(false);
   const [categoryList, setCategoryList] = useState([]);
+  const [clickedCategory, setClickedCategory] = useState(false);
   const [isFetching, setIsFetching] = useState(true);
   const [startRecipe, setStartRecipe] = useState(false);
   const [finalizedRecipe, setFinalizedRecipe] = useState(false);
+  const [renderFavoriteRecipes, setRenderFavoriteRecipes] = useState([]);
 
   const value = {
     ingredient,
@@ -29,12 +31,16 @@ function RecipesAppProvider({ children }) {
     setErrorFromApi,
     categoryList,
     setCategoryList,
+    clickedCategory,
+    setClickedCategory,
     isFetching,
     setIsFetching,
     startRecipe,
     setStartRecipe,
     finalizedRecipe,
     setFinalizedRecipe,
+    renderFavoriteRecipes,
+    setRenderFavoriteRecipes,
   };
 
   return (
