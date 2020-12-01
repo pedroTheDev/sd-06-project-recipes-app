@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { connect, useDispatch } from 'react-redux';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -25,26 +26,19 @@ function ComidasIngredientes(props) {
   return (
     <main>
       <Header pageName="Explorar Ingredientes" renderSearch={ false } />
-      { 
+      {
         ingredients.map((ingredient, index) => (
-            <IngredientCard
-              key={ ingredient }
-              ingredientName={ ingredient }
-              ingredientImage={
-                pathname === '/explorar/bebidas/ingredientes'
-                  ? `https://www.thecocktaildb.com/images/ingredients/${ingredient}-Small.png`
-                  : `https://www.themealdb.com/images/ingredients/${ingredient}-Small.png`
-              }
-              foodOrDrink={
-                pathname.includes('comidas')
-              ? '/comidas'
-              : '/bebidas'
-            }
-              index={ index }
-              />
-            ))
-          }
-      
+          <IngredientCard
+            key={ ingredient }
+            ingredientName={ ingredient }
+            ingredientImage={ pathname === '/explorar/bebidas/ingredientes'
+              ? `https://www.thecocktaildb.com/images/ingredients/${ingredient}-Small.png`
+              : `https://www.themealdb.com/images/ingredients/${ingredient}-Small.png` }
+            foodOrDrink={ pathname.includes('comidas') ? '/comidas' : '/bebidas' }
+            index={ index }
+          />
+        ))
+      }
       <Footer />
     </main>
   );
@@ -56,7 +50,13 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  test: () => dispatch(successIngredients())
+  test: () => dispatch(successIngredients()),
 });
+
+ComidasIngredientes.propTypes = {
+  ingredients: PropTypes.instanceOf(Array),
+  location: PropTypes.instanceOf(Object),
+  isLoading: PropTypes.bool,
+}.isRequired;
 
 export default connect(mapStateToProps, mapDispatchToProps)(ComidasIngredientes);

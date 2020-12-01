@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import './recipeCard.css';
 import { Link } from 'react-router-dom';
 import { clearState } from '../redux/actions/mainPageFetcher';
-import { connect } from 'react-redux';
 
 const RecipeCard = ({ recipeName, recipeImage, id, foodOrDrink, index, limpar }) => (
-  <Link to={ `${foodOrDrink}/${id}` } >
+  <Link to={ `${foodOrDrink}/${id}` } onClick={ () => limpar() }>
     <div data-testid={ `${index}-recipe-card` }>
       {
         console.log(recipeImage)
@@ -24,9 +24,10 @@ const RecipeCard = ({ recipeName, recipeImage, id, foodOrDrink, index, limpar })
 
 const mapDispatchToProps = (dispatch) => ({
   limpar: () => dispatch(clearState()),
-})
+});
 
 RecipeCard.propTypes = {
+  limpar: PropTypes.func.isRequired,
   recipeName: PropTypes.string.isRequired,
   recipeImage: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,

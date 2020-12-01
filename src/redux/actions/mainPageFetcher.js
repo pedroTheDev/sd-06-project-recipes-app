@@ -19,7 +19,7 @@ export function resetShouldFetch() {
 }
 
 function ingredientExplore(data) {
-  console.log(data)
+  console.log(data);
   const processing = data.meals || data.drinks;
   let list = [];
   if (processing) {
@@ -46,7 +46,7 @@ export function clearState() {
 }
 
 export function success(data) {
-  console.log(data)
+  console.log(data);
   const processing = data.meals || data.drinks;
   let list = [];
   if (processing) {
@@ -82,35 +82,34 @@ export function redirectToIngredientThunk(rawIngredient, pathname) {
   const formattedIngredient = formatInput(rawIngredient);
   const baseFoodUrl = 'https://www.themealdb.com/api/json/v1/1/filter.php?i=';
   const baseDrinkUrl = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=';
-  const foodURL = `${ baseFoodUrl }${ formattedIngredient }`;
+  const foodURL = `${baseFoodUrl}${formattedIngredient}`;
   const drinkURL = `${baseDrinkUrl}${formattedIngredient}`;
   if (pathname === '/comidas') {
     return (dispatch) => {
       dispatch(loading());
-      dispatch(shouldFetchNewRecipes())
+      dispatch(shouldFetchNewRecipes());
       return fetch(foodURL)
-        .then(response => (
+        .then((response) => (
           response.json()
         )).then(
           (r) => dispatch(ingredientExplore(r)),
           (fail) => dispatch(error(fail)),
-        )
-    }
+        );
+    };
   }
   if (pathname === '/bebidas') {
     return (dispatch) => {
       dispatch(loading());
       return fetch(drinkURL)
-        .then(response => (
+        .then((response) => (
           response.json()
         )).then(
           (r) => dispatch(success(r)),
           (fail) => dispatch(error(fail)),
-        )
-    }
+        );
+    };
   }
 }
-
 
 export function newCategorySelectedThunk(category, foodOrDrink, currentCategory) {
   return (dispatch) => {

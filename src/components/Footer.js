@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import drinkIcon from '../images/drinkIcon.svg';
 import exploreIcon from '../images/exploreIcon.svg';
@@ -37,5 +38,10 @@ const mapDispatchToProps = (dispatch) => ({
   clear: () => dispatch(resetShouldFetch()),
   clearAndDontUpdate: () => dispatch(clearState()),
 });
+
+Footer.propTypes = {
+  clear: PropTypes.func,
+  clearAndDontUpdate: PropTypes.func,
+}.isRequired;
 
 export default connect(null, mapDispatchToProps)(Footer);
