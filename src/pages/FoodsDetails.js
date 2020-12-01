@@ -38,6 +38,7 @@ const FoodsDetails = (props) => {
   const { params } = match;
   const { id } = params;
   const carouselActiveIndex = 0;
+  const carouselActiveIndex1 = 1;
   const carouselPartition = 3;
 
   const ingredientsMount = (jsonRecipe) => {
@@ -258,7 +259,7 @@ const FoodsDetails = (props) => {
             return (
               <div
                 key={ item.idDrink }
-                data-testid={ `${index}-recomendation-card` }
+                data-testid={ `${index + carouselActiveIndex1}-recomendation-card` }
                 className="carousel-item"
               >
                 <img
@@ -285,7 +286,7 @@ const FoodsDetails = (props) => {
               return (
                 <div
                   key={ item.idDrink }
-                  data-testid={ `${index + carouselPartition}-recomendation-card` }
+                  data-testid={ `1-recomendation-card` }
                   className="carousel-item active"
                 >
                   <img
