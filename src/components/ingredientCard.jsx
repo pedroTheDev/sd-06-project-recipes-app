@@ -8,7 +8,8 @@ function Cards({ info, recipe, index }) {
   const { strIngredient } = info;
   const { strIngredient1 } = info;
   // const { recipesToRenderByIngredient } = useContext(Context);
-  const url = 'https://www.themealdb.com/images/ingredients/';
+  const urlMeals = 'https://www.themealdb.com/images/ingredients/';
+  const urlDrinks = 'https://www.thecocktaildb.com/images/ingredients/';
   // const type = recipe === 'ingredientsMeals' ? 'meal' : 'drink';
   const imageMeal = `${strIngredient}-Small.png`;
   const imageDrink = `${strIngredient1}-Small.png`;
@@ -26,7 +27,9 @@ function Cards({ info, recipe, index }) {
         data-testid={ `${index}-ingredient-card` }
       >
         <img
-          src={ `${url}${recipe === 'ingredientsMeals' ? imageMeal : imageDrink}` }
+          src={ `${recipe === 'ingredientsMeals'
+            ? `${urlMeals}${imageMeal}`
+            : `${urlDrinks}${imageDrink}`}` }
           className="thumbnail"
           alt={ recipe === 'ingredientsMeals' ? strIngredient : strIngredient1 }
           data-testid={ `${index}-card-img` }
