@@ -5,8 +5,8 @@ export default function DrinkCard({ drink, index }) {
   return (
     <div data-testid={ `${index}-recipe-card` }>
       <img
-        data-testid={ `${index}-card-img/preview` }
-        src={ drink.strDrinkThumb }
+        data-testid={ `${index}-card-img` }
+        src={ `${drink.strDrinkThumb}/preview` }
         alt="drink-pic"
         height="60px"
       />
