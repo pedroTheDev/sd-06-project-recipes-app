@@ -76,45 +76,51 @@ export default function Comidas({ history }) {
       >
         All
       </button>
-      {categories.map((categorie) => (
-        <button
-          data-testid={ `${categorie}-category-filter` }
-          selected={ selected }
-          key={ categorie }
-          type="button"
-          value={ categorie }
-          onClick={ clickCategory }
-        >
-          {categorie}
-        </button>
-      ))}
-      {hidden ? '' : <SearchBar />}
-      {/* <h1>{ titulo }</h1> */}
-      {loading || showMealsByIngredient ? <p>Loading</p>
-        : meals.filter((meal, index) => meal && index < twelve)
-          .map((meal, index) => (
-            <button
-              type="button"
-              key={ meal.idMeal }
-              onClick={ () => clickDetails(meal.idMeal) }
-            >
-              <FoodCard food={ meal } index={ index } />
-            </button>))}
-      {!mealsByIngredient ? <p>Loading</p>
-        : mealsByIngredient
-          .map((meal, index) => (
-            <button
-              type="button"
-              key={ meal.idMeal }
-              onClick={ () => clickDetails(meal.idMeal) }
-            >
-              <FoodCard food={ meal } index={ index } />
-            </button>))}
+      {
+        categories.map((categorie) => (
+          <button
+            data-testid={ `${categorie}-category-filter` }
+            selected={ selected }
+            key={ categorie }
+            type="button"
+            value={ categorie }
+            onClick={ clickCategory }
+          >
+            {categorie}
+          </button>
+        ))
+      }
+      { hidden ? '' : <SearchBar /> }
+      {/* <h1>{ titulo }</h1> */ }
+      {
+        loading || showMealsByIngredient ? <p>Loading</p>
+          : meals.filter((meal, index) => meal && index < twelve)
+            .map((meal, index) => (
+              <button
+                type="button"
+                key={ meal.idMeal }
+                onClick={ () => clickDetails(meal.idMeal) }
+              >
+                <FoodCard food={ meal } index={ index } />
+              </button>))
+      }
+      {
+        !mealsByIngredient ? <p>Loading</p>
+          : mealsByIngredient
+            .map((meal, index) => (
+              <button
+                type="button"
+                key={ meal.idMeal }
+                onClick={ () => clickDetails(meal.idMeal) }
+              >
+                <FoodCard food={ meal } index={ index } />
+              </button>))
+      }
       <Footer />
     </div>
   );
 }
-// comentario para push;
+
 Comidas.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
