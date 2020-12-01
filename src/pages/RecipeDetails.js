@@ -18,8 +18,6 @@ function RecipeDetails(
   const [recipe, setRecipe] = useState([]);
   const [disableButton, setdisableButton] = useState('visible');
   const [wasStarted, setWasStarted] = useState(false);
-  const [wasCopied, setWasCopied] = useState(false);
-  const [isFav, setIsFav] = useState(false);
 
   const history = useHistory();
   const { image,
@@ -41,7 +39,6 @@ function RecipeDetails(
   useEffect(() => {
     checkSavedRecipe(recipe, setdisableButton);
     checkRecipeInProgress(path, recipe, setWasStarted);
-    setIsFav(checkFavoriteRecipe(id));
   }, [recipe]);
 
   return (
@@ -54,16 +51,13 @@ function RecipeDetails(
       />
       <h1 data-testid="recipe-title">{ name }</h1>
       <div>
-        <ShareButton setMessage={ setWasCopied } />
+        <ShareButton />
         <FavButton
           type={ path }
-          isFav={ isFav }
           id={ id }
-          setIsFav={ setIsFav }
           recipe={ recipe }
         />
       </div>
-      {wasCopied && 'Link copiado!'}
       <p data-testid="recipe-category">
         { isAlcoholic === 'Alcoholic'
           ? isAlcoholic

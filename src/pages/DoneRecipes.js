@@ -16,16 +16,15 @@ const DoneRecipes = (props) => {
         Drinks
       </button>
       {
-        doneRecipes.map(({ image, name, category, doneDate, tags }, index) => (
-          <DoneRecipesCard
-            cardImage={ image }
-            name={ name }
-            category={ category }
-            date={ doneDate }
-            tags={ tags }
-            index={ index }
-          />
-        ))
+        
+        doneRecipes.map((recipe, index) => {
+          return (
+            <DoneRecipesCard
+              recipe={ recipe }
+              index={ index }
+            />
+          )
+        })
       }
     </div>
   )
