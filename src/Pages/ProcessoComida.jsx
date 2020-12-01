@@ -11,9 +11,7 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 const ReceitaProcessoComida = () => {
   const [recipeProgress, setRecipeProgress] = useState();
   const [attributesNames, setAttributesNames] = useState();
-  // const [scratchIngredients, setScratchIngredients] = useState({
-  //   checkbox: false,
-  // });
+  const [checkedId, setCheckedId] = useState([]);
 
   const idFood = useParams().id;
 
@@ -26,8 +24,30 @@ const ReceitaProcessoComida = () => {
     });
   };
 
+  const loadCheckedIngredientsLocalStorage = () => {
+    if (localStorage.getItem('checkedIngredients') === null) {
+      const checkedIngredients = {
+        cocktails: {},
+        meals: {},
+      };
+      localStorage.setItem('checkedIngredients', JSON.stringify(checkedIngredients));
+    }
+
+    const checkedIngredients = JSON.parse(localStorage.getItem('checkedIngredients'));
+    setCheckedId(checkedIngredients.meals[idFood] || []);
+  };
+
+  const loadDoneRecipesFromStorage = () => {
+    if (localStorage.getItem('doneRecipes') === null) {
+      const doneRecipes = [];
+      localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
+    }
+  };
+
   useEffect(() => {
     handleIdInProgress();
+    loadCheckedIngredientsLocalStorage();
+    loadDoneRecipesFromStorage();
   }, []);
 
   const handleAttributesNames = () => {
@@ -66,12 +86,10 @@ const ReceitaProcessoComida = () => {
     return ingredients;
   };
 
-  const handleFavorite = () => {
-    if (localStorage.getItem('doneRecipes') === null) {
-      const doneRecipes = [];
-      localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
-    } else if (recipeProgress) {
-      localStorage.setItem('doneRecipes', JSON.stringify([{
+  const setDoneRecipes = () => {
+    if (recipeProgress) {
+      const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+      localStorage.setItem('doneRecipes', JSON.stringify([...doneRecipes, {
         id: recipeProgress.food.meals[0].idMeal,
         type: 'comida',
         area: recipeProgress.food.meals[0].strArea,
@@ -89,15 +107,39 @@ const ReceitaProcessoComida = () => {
     }
   };
 
-  useEffect(() => {
-    handleFavorite();
-  }, [recipeProgress]);
+  const scratCheckbox = (target) => {
+    const checkedIngredients = JSON.parse(localStorage.getItem('checkedIngredients'));
 
-  const scratCheckbox = () => {
-    alert('falta implementar receitas risadas');
+    if (target.checked === true) {
+      const ingredientsToSave = {
+        ...checkedIngredients,
+        meals: {
+          ...checkedIngredients.meals,
+          [idFood]: checkedIngredients.meals[idFood] ? [
+            ...checkedIngredients.meals[idFood],
+            target.id,
+          ] : [target.id],
+        },
+      };
+      localStorage.setItem('checkedIngredients', JSON.stringify(ingredientsToSave));
+      setCheckedId(ingredientsToSave.meals[idFood]);
+    } else {
+      const ingredientsToSave = {
+        ...checkedIngredients,
+        meals: {
+          ...checkedIngredients.meals,
+          [idFood]: [
+            ...checkedIngredients.meals[idFood].filter((id) => id !== target.id),
+          ],
+        },
+      };
+      localStorage.setItem('checkedIngredients', JSON.stringify(ingredientsToSave));
+      setCheckedId(ingredientsToSave.meals[idFood]);
+    }
   };
 
   return (
+
     <div>
       {!attributesNames
         ? <div className="loading">Loading...</div>
@@ -157,9 +199,9 @@ const ReceitaProcessoComida = () => {
                   >
                     <input
                       type="checkbox"
-                      value="on"
+                      checked={ checkedId.includes(i.toString()) }
                       id={ i }
-                      onClick={ scratCheckbox }
+                      onChange={ (({ target }) => scratCheckbox(target)) }
                     />
                     {`${ingred} - ${getIngredientsOrMeasure('strMeasure')[i]}`}
                   </label>
@@ -179,6 +221,7 @@ const ReceitaProcessoComida = () => {
               <button
                 type="button"
                 data-testid="finish-recipe-btn"
+                onClick={ setDoneRecipes }
               >
                 <Link
                   className="link-button"

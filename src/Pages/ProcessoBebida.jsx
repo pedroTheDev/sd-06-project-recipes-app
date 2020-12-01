@@ -11,9 +11,7 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 const ProcessoBebidas = () => {
   const [recipeProgress, setRecipeProgress] = useState();
   const [attributesNames, setAttributesNames] = useState();
-  // const [scratchIngredients, setScratchIngredients] = useState({
-  //   checkbox: false,
-  // });
+  const [checkedId, setCheckedId] = useState([]);
 
   const idDrink = useParams().id;
 
@@ -26,8 +24,30 @@ const ProcessoBebidas = () => {
     });
   };
 
+  const loadCheckedIngredientsLocalStorage = () => {
+    if (localStorage.getItem('checkedIngredients') === null) {
+      const checkedIngredients = {
+        cocktails: {},
+        meals: {},
+      };
+      localStorage.setItem('checkedIngredients', JSON.stringify(checkedIngredients));
+    }
+
+    const checkedIngredients = JSON.parse(localStorage.getItem('checkedIngredients'));
+    setCheckedId(checkedIngredients.cocktails[idDrink] || []);
+  };
+
+  const loadDoneRecipesFromStorage = () => {
+    if (localStorage.getItem('doneRecipes') === null) {
+      const doneRecipes = [];
+      localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
+    }
+  };
+
   useEffect(() => {
     handleIdInProgress();
+    loadCheckedIngredientsLocalStorage();
+    loadDoneRecipesFromStorage();
   }, []);
 
   const handleAttributesNames = () => {
@@ -66,14 +86,12 @@ const ProcessoBebidas = () => {
     return ingredients;
   };
 
-  const handleFavorite = () => {
-    if (localStorage.getItem('doneRecipes') === null) {
-      const doneRecipes = [];
-      localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
-    } else if (recipeProgress) {
-      const recipeData = {
+  const setDoneRecipes = () => {
+    if (recipeProgress) {
+      const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+      localStorage.setItem('doneRecipes', JSON.stringify([...doneRecipes, {
         id: recipeProgress.drink.drinks[0].idDrink,
-        type: 'comida',
+        type: 'bebida',
         area: recipeProgress.drink.drinks[0].strArea,
         category: recipeProgress.drink.drinks[0].strCategory,
         alcoholicOrNot: '',
@@ -83,19 +101,41 @@ const ProcessoBebidas = () => {
         tags: recipeProgress.drink.drinks[0].strTags
           ? recipeProgress.drink.drinks[0].strTags
           : [],
-      };
-      localStorage.setItem('doneRecipes', JSON.stringify({ recipeData }));
+      }]));
     } else {
       return '';
     }
   };
 
-  useEffect(() => {
-    handleFavorite();
-  }, [recipeProgress]);
+  const scratCheckbox = (target) => {
+    const checkedIngredients = JSON.parse(localStorage.getItem('checkedIngredients'));
 
-  const scratCheckbox = () => {
-    alert('falta implementar receitas risadas');
+    if (target.checked === true) {
+      const ingredientsToSave = {
+        ...checkedIngredients,
+        cocktails: {
+          ...checkedIngredients.cocktails,
+          [idDrink]: checkedIngredients.cocktails[idDrink] ? [
+            ...checkedIngredients.cocktails[idDrink],
+            target.id,
+          ] : [target.id],
+        },
+      };
+      localStorage.setItem('checkedIngredients', JSON.stringify(ingredientsToSave));
+      setCheckedId(ingredientsToSave.cocktails[idDrink]);
+    } else {
+      const ingredientsToSave = {
+        ...checkedIngredients,
+        cocktails: {
+          ...checkedIngredients.cocktails,
+          [idDrink]: [
+            ...checkedIngredients.cocktails[idDrink].filter((id) => id !== target.id),
+          ],
+        },
+      };
+      localStorage.setItem('checkedIngredients', JSON.stringify(ingredientsToSave));
+      setCheckedId(ingredientsToSave.cocktails[idDrink]);
+    }
   };
 
   return (
@@ -158,9 +198,9 @@ const ProcessoBebidas = () => {
                   >
                     <input
                       type="checkbox"
-                      value="on"
+                      checked={ checkedId.includes(i.toString()) }
                       id={ i }
-                      onClick={ scratCheckbox }
+                      onChange={ (({ target }) => scratCheckbox(target)) }
                     />
                     {`${ingred} - ${getIngredientsOrMeasure('strMeasure')[i]}`}
                   </label>
@@ -180,6 +220,7 @@ const ProcessoBebidas = () => {
               <button
                 type="button"
                 data-testid="finish-recipe-btn"
+                onClick={ setDoneRecipes }
               >
                 <Link
                   className="link-button"
