@@ -22,7 +22,7 @@ export function setValueUser(key, value) {
   return localStorage.setItem(key, JSON.stringify({ email: value }));
 }
 
-function treatRecipe(recipe) {
+export function treatRecipe(recipe) {
   let treatedRecipe = {};
   if ('idMeal' in recipe) {
     treatedRecipe = {
@@ -56,7 +56,7 @@ function treatRecipe(recipe) {
   return treatedRecipe;
 }
 
-function convertTreatedRecipe(recipe) {
+export function convertTreatedRecipe(recipe) {
   let convertedRecipe = {};
   if (recipe.type === 'meal') {
     convertedRecipe = {
@@ -108,27 +108,29 @@ export function getDoneRecipes() {
   return temp;
 }
 
-function createFavoriteRecipesDatabase() {
+export function createFavoriteRecipesDatabase() {
   const recipes = [];
-  localStorage.setItem('favorite-recipes', JSON.stringify(recipes));
+  localStorage.setItem('favoriteRecipes', JSON.stringify(recipes));
 }
 
-function getFavoriteRecipes() {
-  const recipes = JSON.parse(localStorage.getItem('favorite-recipes'));
+export function getFavoriteRecipes() {
+  const recipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
   return recipes;
 }
 
-function checkFavoriteRecipesDatabase() {
+export function checkFavoriteRecipesDatabase() {
   const recipes = getFavoriteRecipes();
   if (!recipes) createFavoriteRecipesDatabase();
 }
 
-function updateFavoriteRecipes(recipes) {
-  localStorage.setItem('favorite-recipes', JSON.stringify(recipes));
+export function updateFavoriteRecipes(recipes) {
+  localStorage.setItem('favoriteRecipes', JSON.stringify(recipes));
 }
 
 export function recipeIsFavorite(recipe) {
+  checkFavoriteRecipesDatabase();
   const recipes = getFavoriteRecipes();
+  console.log('receitas recipeIsFavorite', recipes);
   recipe = treatRecipe(recipe);
   const match = recipes.find((item) => item.id === recipe.id);
   if (match) return true;

@@ -16,9 +16,8 @@ function SecondaryHeader({ name, img, category }) {
   const url = `http://localhost:3000${location.pathname}`;
 
   const myRecipe = location.pathname.includes('comidas') ? recipesMeals : recipesDrinks;
-
+  console.log('my recipe', myRecipe);
   const handleShareIcon = () => {
-    // const url = `http://localhost:3000${location.pathname}`;
     navigator.clipboard.writeText(url);
     const shareButton = document.querySelector('.share-btn');
     shareButton.value = 'Link copiado!';
