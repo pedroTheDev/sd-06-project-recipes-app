@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import CategoriesButtons from './CategoriesButtons';
+import CategoriesButtonsDrinks from './CategoriesButtonsDrinks';
 import RecipesContext from '../context/RecipesContext';
 import '../style/RecipeCards.css';
 
@@ -18,7 +18,7 @@ function RecipesDrinksCards({ categories }) {
       {
         categories === 'none'
           ? ''
-          : <CategoriesButtons categories={ categories } />
+          : <CategoriesButtonsDrinks categories={ categories } />
       }
       <div className="card-div">
         {

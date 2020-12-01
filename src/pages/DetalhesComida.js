@@ -92,10 +92,6 @@ function DetalhesComida() {
               alt={ dataMeal.strMeal }
             />
             <div className="div-header">
-              <div className="div-title">
-                <h1 data-testid="recipe-title">{ dataMeal.strMeal }</h1>
-                <p data-testid="recipe-category">{ dataMeal.strCategory }</p>
-              </div>
               <div className="div-icon">
                 <span>
                   <button
@@ -120,6 +116,10 @@ function DetalhesComida() {
                     alt="Botão de Favorito"
                   />
                 </button>
+              </div>
+              <div className="div-title">
+                <h1 data-testid="recipe-title">{ dataMeal.strMeal }</h1>
+                <p data-testid="recipe-category">{ dataMeal.strCategory }</p>
               </div>
             </div>
             <div className="div-recipes">

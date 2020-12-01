@@ -111,11 +111,6 @@ function ProcessoBebida() {
         className="food-image"
       />
       <div className="div-header">
-        <h1
-          data-testid="recipe-title"
-        >
-          { dataDrinks.strDrink }
-        </h1>
         <div className="div-icon">
           <span>
             <button
@@ -140,6 +135,12 @@ function ProcessoBebida() {
               alt="Botão de Favorito"
             />
           </button>
+          <h1
+            className="h1"
+            data-testid="recipe-title"
+          >
+            { dataDrinks.strDrink }
+          </h1>
         </div>
       </div>
       <div className="div-recipes">
