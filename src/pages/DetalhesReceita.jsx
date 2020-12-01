@@ -101,6 +101,7 @@ function DetalhesReceita({ match: { params: { id } } }) {
       <iframe
         title="videos"
         data-testid="video"
+        title="video"
         width="1042"
         height="586"
         src={ `https://www.youtube.com/embed/${embed}` }
