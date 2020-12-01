@@ -4,6 +4,7 @@ import ShareButton from './ShareButton';
 import FavButton from './FavButton';
 import Ingredients from './Ingredients';
 import IngredientsCheck from './IngredientsCheck';
+import categoryIcon from '../images/categoryIcon.png';
 
 function DetailAndProgressBody({ recipe, recommendations, buttonsProps, page = null }) {
   const {
@@ -31,7 +32,9 @@ function DetailAndProgressBody({ recipe, recommendations, buttonsProps, page = n
             ? (
               <div>
                 <h4>Video</h4>
-                <iframe data-testid="video" src={ video } title="Recipe Video" />
+                <div className="video-container">
+                  <iframe data-testid="video" src={ video } title="Recipe Video" />
+                </div>
               </div>
             )
             : null}
@@ -42,12 +45,14 @@ function DetailAndProgressBody({ recipe, recommendations, buttonsProps, page = n
                 <div
                   data-testid={ `${index}-recomendation-card` }
                   key={ recommendation.name }
-                  className="recomendation-card"
+                  className="recomendation-card recipe-card"
                 >
                   <img src={ recommendation.image } alt={ recommendation.name } />
-                  <h4 data-testid={ `${index}-recomendation-title` }>
-                    {recommendation.name}
-                  </h4>
+                  <div className="recipe-card-tag">
+                    <h5 data-testid={ `${index}-recomendation-title` }>
+                      {recommendation.name}
+                    </h5>
+                  </div>
                 </div>
               ))}
             </div>
@@ -70,15 +75,17 @@ function DetailAndProgressBody({ recipe, recommendations, buttonsProps, page = n
   };
 
   return (
-    <main>
+    <main className="details-page">
       <img
         data-testid="recipe-photo"
         src={ image }
         alt={ name }
         className="main-photo"
       />
-      <h1 data-testid="recipe-title">{ name }</h1>
-      <div>
+      <div className="details-title-container">
+        <h1 data-testid="recipe-title">{ name }</h1>
+      </div>
+      <div className="buttons-control">
         <ShareButton setMessage={ setWasCopied } page={ page } />
         <FavButton
           type={ path }
@@ -89,15 +96,25 @@ function DetailAndProgressBody({ recipe, recommendations, buttonsProps, page = n
         />
       </div>
       {wasCopied && 'Link copiado!'}
-      <p data-testid="recipe-category">
-        { isAlcoholic === 'Alcoholic'
-          ? isAlcoholic
-          : category}
-      </p>
+      <hr/>
+      <div className="category-container">
+        <div className="category-container_image">
+          <img src={ categoryIcon }/>
+        </div>
+        <h3 data-testid="recipe-category">
+          { isAlcoholic === 'Alcoholic'
+            ? isAlcoholic
+            : category}
+        </h3>
+
+      </div>
       { renderIngredientsConditionally(page) }
-      <h4>Instructions</h4>
-      <p data-testid="instructions">{ instructions }</p>
-      { renderRecommendAndVideoIfInDetails(page) }
+      <hr/>
+      <div className="instructions-container">
+        <h4>Instructions</h4>
+        <p data-testid="instructions">{ instructions }</p>
+        { renderRecommendAndVideoIfInDetails(page) }
+      </div>
     </main>
   );
 }

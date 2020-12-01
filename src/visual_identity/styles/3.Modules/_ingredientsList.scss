@@ -5,3 +5,8 @@
 .checked-text {
   text-decoration: line-through;
 }
+
+li {
+  font-size: calc(12px + 1vw);
+  line-height: calc(22px + 1vw);
+}
