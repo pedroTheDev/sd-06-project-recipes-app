@@ -13,6 +13,8 @@ function RecipesAppProvider({ children }) {
   const [isFetching, setIsFetching] = useState(true);
   const [startRecipe, setStartRecipe] = useState(false);
   const [finalizedRecipe, setFinalizedRecipe] = useState(false);
+  // trocar para arr em vez de bool
+  const [filteredRecipes, setFilteredRecipes] = useState(false);
 
   const value = {
     ingredient,
@@ -35,6 +37,8 @@ function RecipesAppProvider({ children }) {
     setStartRecipe,
     finalizedRecipe,
     setFinalizedRecipe,
+    filteredRecipes,
+    setFilteredRecipes,
   };
 
   return (
