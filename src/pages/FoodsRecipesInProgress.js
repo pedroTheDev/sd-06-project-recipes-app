@@ -267,8 +267,19 @@ class FoodsRecipesInProgress extends React.Component {
     const verifyLocalStorage = this.getRecipesLocalStorage();
     if (checkedItems.length === length && verifyLocalStorage) {
       const getCheckedItems = this.getRecipesLocalStorage();
+
       return getCheckedItems;
     }
+    const inputsList = document.querySelectorAll('input[type=checkbox]');
+    inputsList.forEach((item) => {
+      if (item.checked === true) {
+        item.parentNode.className = 'styled';
+        item.parentNode.checked = true;
+        item.parentNode.checked = 'check';
+      } else {
+        item.parentNode.className = 'not-styled';
+      }
+    });
     return checkedItems;
   }
 
