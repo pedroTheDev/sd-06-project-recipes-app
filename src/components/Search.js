@@ -64,7 +64,7 @@ export default function SearchBar(props) {
   };
 
   return (
-    <form data-testid="test-search-bar">
+    <form data-testid="test-search-bar" className="search-bar">
       <label htmlFor="search-input">
         <input
           data-testid="search-input"
@@ -73,9 +73,10 @@ export default function SearchBar(props) {
           name="searh-input"
           placeholder="Buscar Receita"
           onChange={ (e) => handleChangeInputValue(e) }
+          className="input-text-find"
         />
       </label>
-      <div>
+      <div className="filter-radios">
         <label htmlFor="ingredient">
           <input
             data-testid="ingredient-search-radio"
