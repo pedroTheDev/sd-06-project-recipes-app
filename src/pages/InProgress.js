@@ -15,6 +15,10 @@ function InProgress() {
   const [isFavorite, setIsFavorite] = useState(whiteHeartIcon);
   const [copied, setCopied] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
+  const [storeIngredients, setStoreIngredients] = useState({
+    meals: {},
+    cocktails: {},
+  });
   const [checkedIngredients, setCheckedIngredients] = useState([]);
   const zero = 0;
   const [allChecked, setAllChecked] = useState(zero);
@@ -64,7 +68,8 @@ function InProgress() {
     strInstructions,
     strYoutube = '',
     strMealThumb = '',
-    strDrinkThumb = '' } = data[0];
+    strDrinkThumb = '',
+    strTags = [] } = data[0];
   const vidUrl = strYoutube.replace(/watch\?v=/g, '/embed/');
   const ingredients = ingredientsFunc(data[0]);
 
@@ -77,6 +82,24 @@ function InProgress() {
     name: isFood ? strMeal : strDrink,
     image: isFood ? strMealThumb : strDrinkThumb,
   };
+
+  const date = new Date();
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getUTCFullYear();
+  const doneDate = `${day}/${month}/${year}`;
+
+  const finishedRecipe = {
+    id: itemId,
+    type: isFood ? 'comida' : 'bebida',
+    area: isFood ? strArea : '',
+    alcoholicOrNot: isFood ? '' : strAlcoholic,
+    category: strCategory,
+    name: isFood ? strMeal : strDrink,
+    image: isFood ? strMealThumb : strDrinkThumb,
+    tags: isFood ? strTags : [],
+    doneDate: doneDate,
+  }
 
   function handleFavoriteClick() {
     handleFavorite(favoriteObj);
@@ -110,14 +133,15 @@ function InProgress() {
       setCheckedIngredients([...checkedIngredients, box.value]);
     }
 
-    if (checkedIngredients) {
-      localStorage.inProgressRecipes = JSON.stringify({
-        meals: { [itemId]: checkedIngredients },
-      });
-    } else {
-      localStorage.inProgressRecipes = JSON.stringify({
-        cocktails: { [itemId]: checkedIngredients },
-      });
+    if (checkedIngredients.length > 0) {
+      if (isFood) {
+        setStoreIngredients({...storeIngredients, meals: { [itemId]: checkedIngredients } });
+        localStorage.setItem('inProgressRecipes', JSON.stringify(storeIngredients));
+      } else {
+        localStorage.setItem('inProgressRecipes', JSON.stringify({
+          cocktails: { [itemId]: checkedIngredients },
+        }));
+      }
     }
   }
 
@@ -159,6 +183,19 @@ function InProgress() {
     );
   }
 
+  function finishRecipe(finishedRecipe) {
+    let finishedArray = JSON.parse(localStorage.getItem('doneRecipes'));
+    const magicNumber = -1;
+    if (finishedArray === null) finishedArray = [];
+    const index = finishedArray.map((obj) => obj.id).indexOf(finishedRecipe.id);
+    if (index === magicNumber) finishedArray.push(finishedRecipe);
+    localStorage.setItem('doneRecipes', JSON.stringify(finishedArray));
+  }
+
+  function handleFinishRecipe() {
+    finishRecipe(finishedRecipe);
+  }
+
   useEffect(() => {
     (async () => {
       const recipeObj = await fetchRecipe(url);
@@ -172,6 +209,18 @@ function InProgress() {
       setIsDisabled(true);
     }
   }, [allChecked]);
+
+  // useEffect(() => {
+  //   let storedIngredients = JSON.parse(localStorage.getItem('inProgressRecipes'));
+  //   if (storeIngredients === null) {
+  //     localStorage.setItem('inProgressRecipes', JSON.stringify({
+  //       meals: { },
+  //       cocktails: { },
+  //     }))
+  //   } else {
+  //     setStoreIngredients(storedIngredients);
+  //   }
+  // }, []);
 
   return (
     <main>
@@ -223,6 +272,7 @@ function InProgress() {
                 className="start-recipe-btn"
                 data-testid="finish-recipe-btn"
                 disabled={ isDisabled }
+                onClick={ handleFinishRecipe }
               >
                 Finalizar Receita
               </button>
