@@ -29,6 +29,7 @@ class FoodCard extends React.Component {
       const paragraph = document.createElement('p');
       paragraph.innerText = 'Link Copiado';
       paragraph.style.fontSize = '8px';
+      paragraph.style.fontWeight = '100';
       parentNode.appendChild(paragraph);
     }
     const url = `http://localhost:3000/comidas/${id}`;
@@ -98,14 +99,18 @@ class FoodCard extends React.Component {
                       >
                         { `${element.tags.split(',')[0]}`}
                       </p>
-                      <p
-                        key="tag1"
-                        data-testid={
-                          `${i}-${element.tags.split(',')[1]}-horizontal-tag`
-                        }
-                      >
-                        { `${element.tags.split(',')[1]}`}
-                      </p>
+                      { element.tags.split(',')[1] !== undefined
+                        ? (
+                          <p
+                            key="tag1"
+                            data-testid={
+                              `${i}-${element.tags.split(',')[1]}-horizontal-tag`
+                            }
+                          >
+                            {element.tags.split(',')[1]}
+                          </p>
+                        )
+                        : null}
                     </div>
                   )
                   : (

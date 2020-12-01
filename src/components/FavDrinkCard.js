@@ -37,26 +37,22 @@ class FavDrinkCard extends React.Component {
     }
   }
 
-  async handleShareDrink({ id }) {
+  async handleShareDrink({ target }, { id }) {
+    const two = 2;
+    // const delay = 2000;
+    if ((target.parentNode).childNodes.length <= two) {
+      const { parentNode } = target;
+      const paragraph = document.createElement('p');
+      paragraph.innerText = 'Link Copiado';
+      paragraph.style.fontSize = '8px';
+      paragraph.style.fontWeight = '100';
+      parentNode.appendChild(paragraph);
+      // setTimeout(() => {
+      //   paragraph.remove();
+      // }, delay);
+    }
     const url = `http://localhost:3000/bebidas/${id}`;
     await copy(url);
-    const shareBtn = document.querySelector('.share-btn');
-    shareBtn.value = 'Link copiado!';
-    const p = document.querySelector('.p');
-    const span = document.createElement('span');
-    p.appendChild(span);
-    span.innerHTML = 'Link copiado!';
-    // window.alert('Link copiado!');
-    // https://www.30secondsofcode.org/blog/s/copy-text-to-clipboard-with-javascript
-    // const el = document.createElement('textarea');
-    // el.value = url;
-    // el.setAttribute('readonly', '');
-    // el.style.position = 'absolute';
-    // el.style.left = '-9999px';
-    // document.body.appendChild(el);
-    // el.select();
-    // document.execCommand('copy');
-    // document.body.removeChild(el);
   }
 
   setFavoriteDrink(Drink) {
@@ -145,7 +141,6 @@ class FavDrinkCard extends React.Component {
                   >
                     { element.name }
                   </button>
-                  <p className="p" />
                 </div>
                 <div className="food-drink-image">
                   <input
@@ -162,7 +157,7 @@ class FavDrinkCard extends React.Component {
                     data-testid={ `${index + indexAcc}-horizontal-share-btn` }
                     src={ shareIcon }
                     alt="share"
-                    onClick={ () => this.handleShareDrink(element) }
+                    onClick={ (event) => this.handleShareDrink(event, element) }
                   />
                 </div>
               </div>

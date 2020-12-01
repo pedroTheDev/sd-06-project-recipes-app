@@ -64,15 +64,19 @@ class DrinksRecipesInProgress extends React.Component {
     });
   }
 
-  async handleShareDrink({ idDrink }) {
+  async handleShareDrink({ target }, { idDrink }) {
+    const three = 3;
+    console.log((target.parentNode).childNodes.length);
+    if ((target.parentNode).childNodes.length < three) {
+      const { parentNode } = target;
+      const paragraph = document.createElement('p');
+      paragraph.innerText = 'Link Copiado';
+      paragraph.style.fontSize = '8px';
+      paragraph.style.fontWeight = '100';
+      parentNode.appendChild(paragraph);
+    }
     const url = `http://localhost:3000/bebidas/${idDrink}`;
     await copy(url);
-    const shareBtn = document.querySelector('.share-btn');
-    shareBtn.value = 'Link copiado!';
-    const p = document.querySelector('.p');
-    const span = document.createElement('span');
-    p.appendChild(span);
-    span.innerHTML = 'Link copiado!';
   }
 
   handleButton() {
@@ -231,6 +235,11 @@ class DrinksRecipesInProgress extends React.Component {
   recipeDone(recipe) {
     const { history } = this.props;
     const fullDate = this.getFullDate();
+    console.log(recipe);
+    let myTags = recipe.strTags;
+    if (myTags === null) {
+      myTags = 'No Tags';
+    }
     const myObject = [{
       id: recipe.idDrink,
       type: 'bebida',
@@ -240,7 +249,7 @@ class DrinksRecipesInProgress extends React.Component {
       name: recipe.strDrink,
       image: recipe.strDrinkThumb,
       doneDate: fullDate,
-      tags: [],
+      tags: myTags,
     }];
 
     if (!localStorage.getItem('doneRecipes')) {
@@ -295,23 +304,24 @@ class DrinksRecipesInProgress extends React.Component {
                 <p data-testid="recipe-category">{recipe.strCategory}</p>
               </div>
               <div className="recipe-buttons">
-                <input
-                  type="image"
-                  data-testid="share-btn"
-                  className="share-btn"
-                  src={ shareIcon }
-                  alt="shareIcon"
-                  onClick={ () => this.handleShareDrink(recipe) }
-                />
-                <p className="p" />
-                <input
-                  type="image"
-                  data-testid="favorite-btn"
-                  className="fav-button"
-                  src={ this.changeFavoriteIcon(recipe) }
-                  onClick={ () => this.setLocalState(recipe) }
-                  alt="whiteHeartIcon"
-                />
+                <div>
+                  <input
+                    type="image"
+                    data-testid="share-btn"
+                    className="share-btn"
+                    src={ shareIcon }
+                    alt="shareIcon"
+                    onClick={ (event) => this.handleShareDrink(event, recipe) }
+                  />
+                  <input
+                    type="image"
+                    data-testid="favorite-btn"
+                    className="fav-button"
+                    src={ this.changeFavoriteIcon(recipe) }
+                    onClick={ () => this.setLocalState(recipe) }
+                    alt="whiteHeartIcon"
+                  />
+                </div>
               </div>
             </div>
             <hr className="card-hr" />

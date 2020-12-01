@@ -70,7 +70,7 @@ class FavoriteRecipes extends React.Component {
             id="all"
             data-testid="filter-by-all-btn"
             type="button"
-            className="food-filters"
+            className="food-filters-checked"
             onClick={ this.setFilterState }
           >
             All

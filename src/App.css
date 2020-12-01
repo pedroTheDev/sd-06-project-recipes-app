@@ -290,7 +290,7 @@ a {
 }
 
 .recipe-buttons {
-  width: 70px;
+  width: 75px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -667,8 +667,11 @@ a {
     padding: 0;
   }
   .recipe-buttons {
-    width: 70px;
+    width: 95px;
     margin-top: 10px;
+  }
+  .recipe-buttons input {
+    margin-left: 5px;
   }
   .ingredients {
     width: 90%;

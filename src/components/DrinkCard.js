@@ -29,6 +29,7 @@ class DrinkCard extends React.Component {
       const paragraph = document.createElement('p');
       paragraph.innerText = 'Link Copiado';
       paragraph.style.fontSize = '8px';
+      paragraph.style.fontWeight = '100';
       parentNode.appendChild(paragraph);
     }
     const url = `http://localhost:3000/comidas/${id}`;
