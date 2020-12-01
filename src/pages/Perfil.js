@@ -49,7 +49,7 @@ function Perfil(props) {
 
 const mapStateToProps = (state) => ({
   pageConfig: state.sitemap.perfil,
-  email: state.login.email,
+  // email: state.login.email,
 });
 
 export default connect(mapStateToProps, null)(Perfil);
@@ -67,4 +67,5 @@ Perfil.propTypes = {
       pathname: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
+  // email: PropTypes.string.isRequired,
 };

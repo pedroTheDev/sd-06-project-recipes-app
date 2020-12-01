@@ -3,15 +3,17 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { addRecipeDetail } from '../redux/actions/searchRecipes';
-import { filterMatchInKeys } from '../helpers/assets';
+import { filterMatchInKeys, modifyResponse } from '../helpers/assets';
 import shareIcon from '../images/shareIcon.svg';
 // whiteHeartIcon blackHeartIcon
 
 import '../css/details.css';
 
 function FoodDetail(props) {
-  const { match: { url, path,
-    params: { id } }, fetchId: { Comidas, Bebidas }, dispatchRecipeDetail } = props;
+  const {
+    match: { url, path, params: { id } },
+    fetchId: { Comidas, Bebidas },
+    dispatchRecipeDetail } = props;
   const [objResponse, setObjResponse] = useState({});
   const [ingredientsItem, setIngredientsItem] = useState([]);
   const [mesuresItem, setMesuresItem] = useState([]);
@@ -20,14 +22,6 @@ function FoodDetail(props) {
   const [buttonState, setButtonState] = useState(false);
   const [buttonImg, setButtonImg] = useState();
   const [objectRecipe, setObjectRecipe] = useState({});
-
-  const modifyResponse = (response, nameType, recipeType, changeCategory) => ({
-    id: response[recipeType][0][`id${nameType}`],
-    img: response[recipeType][0][`str${nameType}Thumb`],
-    title: response[recipeType][0][`str${nameType}`],
-    category: response[recipeType][0][changeCategory],
-    instruction: response[recipeType][0].strInstructions,
-  });
 
   const getIngredientsAndMesures = (object) => {
     const ingredients = filterMatchInKeys(/strIngredient/i, object);
@@ -38,6 +32,9 @@ function FoodDetail(props) {
     const showMesures = mesures.map((mesu) => object[mesu])
       .filter((eachMesure) => eachMesure !== '' && eachMesure !== null);
     setMesuresItem(showMesures);
+    localStorage.setItem('medidas', JSON.stringify({
+      ingredients: showIngredients, medidas: showMesures,
+    }));
   };
 
   const fetchRecipe = async () => {
@@ -46,9 +43,12 @@ function FoodDetail(props) {
       const nameType = 'Drink';
       const changeCategory = 'strAlcoholic';
       const response = await Bebidas.idDrink(id);
-      console.log('detalhe do objeto', response);
       setObjectRecipe(response);
       setObjResponse(modifyResponse(response, nameType, recipeType, changeCategory));
+      const respostaDoObjeto = modifyResponse(
+        response, nameType, recipeType, changeCategory,
+      );
+      localStorage.setItem('objeto', JSON.stringify(respostaDoObjeto));
       getIngredientsAndMesures(response.drinks[0]);
     } else {
       const recipeType = 'meals';
@@ -111,7 +111,13 @@ function FoodDetail(props) {
   };
 
   const handleClick = () => {
-    dispatchRecipeDetail(objResponse);
+
+    const ingredientsAndMesures = {
+      ingredients: ingredientsItem,
+      mesures: mesuresItem,
+    };
+    dispatchRecipeDetail({ ...objResponse, ...ingredientsAndMesures });
+    // localStorage.setItem('receita', JSON.stringify({...objResponse, ...ingredientsAndMesures}));
   };
 
   const fetchRecomendation = async () => {
@@ -134,6 +140,10 @@ function FoodDetail(props) {
 
   useEffect(() => {
     // const { }
+    if (buttonState) {
+      return setButtonImg(blackHeartIcon);
+    }
+    setButtonImg(whiteHeartIcon);
   }, [buttonState]);
 
   useEffect(() => {
@@ -202,7 +212,16 @@ function FoodDetail(props) {
             </li>
           ))}
       </ul>
-      <Link to={ `${url}/in-progress` }>
+      <Link
+        to={ {
+          pathname: `${url}/in-progress`,
+          state: {
+            ...objResponse,
+            ingredients: ingredientsItem,
+            mesures: mesuresItem,
+          },
+        } }
+      >
         <button
           onClick={ () => handleClick() }
           data-testid="start-recipe-btn"
@@ -230,14 +249,12 @@ FoodDetail.propTypes = {
     path: PropTypes.string.isRequired,
     params: PropTypes.objectOf(PropTypes.object).isRequired,
     url: PropTypes.string.isRequired,
-
   }).isRequired,
   fetchId: PropTypes.shape({
     Bebidas: PropTypes.objectOf(PropTypes.func).isRequired,
     Comidas: PropTypes.objectOf(PropTypes.func).isRequired,
   }).isRequired,
   dispatchRecipeDetail: PropTypes.func.isRequired,
-
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FoodDetail);
