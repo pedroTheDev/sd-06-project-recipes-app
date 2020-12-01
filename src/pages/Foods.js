@@ -3,6 +3,8 @@ import { PropTypes } from 'prop-types';
 import { Cards, Footer, Header, Categories } from '../components';
 import RecipesContext from '../context/Context';
 import useSearch from '../hooks/useSearch';
+import '../css/Header.css';
+import '../css/Foods.css';
 
 export default function Foods({ location }) {
   document.title = 'Comidas';
@@ -28,7 +30,7 @@ export default function Foods({ location }) {
   }
 
   return (
-    <div>
+    <div className="content-food">
       <Header id="comidas" ingredient={ location.state } />
       <Categories id="comidas" />
       <Cards id="comidas" />

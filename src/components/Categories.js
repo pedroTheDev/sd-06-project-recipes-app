@@ -46,7 +46,7 @@ function Categories({ id }) {
   return (loading)
     ? ''
     : (
-      <div>
+      <div className="categories-box">
         <button
           type="button"
           data-testid="All-category-filter"

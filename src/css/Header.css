@@ -1,0 +1,33 @@
+.header {
+  position: absolute;
+  background-color: blue;
+  display: flex;
+  height: 100px;
+  flex-flow: column;
+}
+
+.btn-header button {
+  background-color: transparent;
+  border: 0;
+  padding: 0;
+}
+
+.page-title span {
+  font-weight: 700;
+  font-size: 7vh;
+}
+
+.content {
+  align-items: center;
+  background-color: green;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.content img {
+  width: 40px;
+}
+
+
