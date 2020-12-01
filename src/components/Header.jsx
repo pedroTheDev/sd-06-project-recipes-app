@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import RecipesAppContext from '../context/RecipesAppContext';
 import profileIcon from '../styles/images/profileIcon.svg';
 import searchIcon from '../styles/images/searchIcon.svg';
@@ -23,9 +24,11 @@ function Header({ name, button }) {
   return (
     <div data-testid="header">
       <header className="header">
-        <button type="button" className="logo-profile" data-testid="profile-top-btn">
-          <img src={ profileIcon } alt="profile icon" />
-        </button>
+        <Link to="/perfil">
+          <button type="button" className="logo-profile" data-testid="profile-top-btn">
+            <img src={ profileIcon } alt="profile icon" />
+          </button>
+        </Link>
         <h1 data-testid="page-title">{name}</h1>
         { button && (
           <button
