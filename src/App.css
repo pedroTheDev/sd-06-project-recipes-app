@@ -75,6 +75,12 @@ header, footer, .start-recipe-btn {
   width: 360px;
 }
 
+.header-component {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
 .carousel {
 margin-bottom: 20px;
 }
@@ -99,3 +105,77 @@ footer, .start-recipe-btn {
   background-color: #05566e;
   color: white;
 }
+
+.cardRecipe {
+  width: 320px;
+  margin: 10px auto;
+  display: flex;
+}
+
+.imageCardRecipe {
+  width: 150px;
+  border-radius: 5px;
+}
+
+.bt-group {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 50px;
+}
+
+.textBoxCard {
+  padding: 0 10px;
+}
+
+.textBoxCard h3 {
+  font-size: 20px;
+}
+
+.textBoxCard p {
+  margin: 0 0;
+  font-size: 14px;
+  color: rgb(85, 85, 85);
+}
+
+.tagRecipe {
+  margin: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: thistle;
+}
+
+.button-standard {
+  background: transparent;
+  border: none;
+}
+
+.input-text-find {
+  width: 340px;
+  border-radius: 5px;
+  border: 1px solid gray;
+  padding: 3px 6px;
+}
+
+.search-bar {
+  text-align: center;
+  /* display: flex;
+  flex-wrap: wrap;
+  justify-content: center; */
+}
+
+.filter-radios {
+  font-size: 14px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 50px;
+}
+
+.filter-radios label {
+  margin: 0;
+}
+
+.filter-radios label input { 
+  margin-right: 5px;
+ }
