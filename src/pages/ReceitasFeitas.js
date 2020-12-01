@@ -133,9 +133,9 @@ function ReceitasFeitas() {
             {tags.map((tag) => (
               <p
                 key={ tag }
-                data-testid={ `${index}-${tag}-horizontal-tag` }
+                data-testid={ `${index}-horizontal-done-date` }
               >
-                {tag}
+                { tag }
               </p>
             ))}
           </span>

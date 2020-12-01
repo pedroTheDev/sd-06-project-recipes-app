@@ -1,11 +1,12 @@
-/* import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
-//import { shareIcon, blackHeartIcon } from '../images';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import shareIcon from '../images/shareIcon.svg';
 
 function ReceitasFavoritas() {
   const [favoriteRecipes, setFavoriteRecipe] = useState([]);
-  console.log(favoriteRecipes)
+  console.log(favoriteRecipes);
 
   useEffect(() => {
     if (!localStorage.favoriteRecipes) {
@@ -91,7 +92,7 @@ function ReceitasFavoritas() {
                 type="button"
               >
                 <img
-                  //src={ shareIcon }
+                  src={ shareIcon }
                   alt="Compatilhar Receita"
                   data-testid={ `${index}-horizontal-share-btn` }
                 />
@@ -102,7 +103,7 @@ function ReceitasFavoritas() {
               >
                 <img
                   data-testid={ `${index}-horizontal-favorite-btn` }
-                  //src={ blackHeartIcon }
+                  src={ blackHeartIcon }
                   alt="Botão de Favorito"
                 />
               </button>
@@ -122,4 +123,3 @@ function ReceitasFavoritas() {
 }
 
 export default ReceitasFavoritas;
- */
