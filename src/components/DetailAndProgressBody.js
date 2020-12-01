@@ -96,10 +96,10 @@ function DetailAndProgressBody({ recipe, recommendations, buttonsProps, page = n
         />
       </div>
       {wasCopied && 'Link copiado!'}
-      <hr/>
+      <hr />
       <div className="category-container">
         <div className="category-container_image">
-          <img src={ categoryIcon }/>
+          <img src={ categoryIcon } alt={`${categoryIcon} category`} />
         </div>
         <h3 data-testid="recipe-category">
           { isAlcoholic === 'Alcoholic'
