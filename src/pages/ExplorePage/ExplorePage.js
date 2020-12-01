@@ -11,6 +11,12 @@ function ExplorePage() {
         className="header"
         pageTitle="Explorar"
       />
+      <button data-testid="explore-food">
+        Explorar Comidas
+      </button>
+      <button data-testid="explore-drinks">
+        Explorar Bebidas
+      </button>
       <div className="footer">
         <Footer />
       </div>
