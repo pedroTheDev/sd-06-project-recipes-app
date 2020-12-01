@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import Header from '../components/Header';
 import { Link } from 'react-router-dom';
-//import { shareIcon } from '../images/shareIcon.svg';
+import Header from '../components/Header';
+// import { shareIcon } from '../images/shareIcon.svg';
 import useCopyToClipboard from '../services/clipboard-copy';
 
-
 function ReceitasFeitas() {
-  //const doneRecipes = JSON.parse(localStorage.doneRecipes);
+  // const doneRecipes = JSON.parse(localStorage.doneRecipes);
   const [doneRecipes, setDoneRecipes] = useState([]);
   const timeoutTextCopy = 2000;
-  const [isCopied, handleCopy] = useCopyToClipboard(timeoutTextCopy)
+  const [isCopied, handleCopy] = useCopyToClipboard(timeoutTextCopy);
 
   useEffect(() => {
-    if(!localStorage.doneRecipes) {
-      return <p>Você ainda não tem nenhuma receita pronta.</p>
+    if (!localStorage.doneRecipes) {
+      return <p>Você ainda não tem nenhuma receita pronta.</p>;
     }
     setDoneRecipes(JSON.parse(localStorage.doneRecipes));
   }, []);
@@ -79,69 +78,69 @@ function ReceitasFeitas() {
             area,
             category,
             doneDate,
-            //tags,
+            // tags,
           },
           index,
         ) => (
           <span
             key={ index }
           >
-          <Link to={ `/${type}s/${id}` }>
-            <img
-              className="receipe-img"
-              src={ image }
-              alt={ name }
-              data-testid={ `${index}-horizontal-image` }
-            />
-          </Link>
-          <div>
             <Link to={ `/${type}s/${id}` }>
-              <h1
-                data-testid={ `${index}-horizontal-name` }
-              >
-                {name}
-              </h1>
+              <img
+                className="receipe-img"
+                src={ image }
+                alt={ name }
+                data-testid={ `${index}-horizontal-image` }
+              />
             </Link>
-            {
-              (type === 'comida')
-                ? (
-                  <p
-                    data-testid={ `${index}-horizontal-top-text` }
-                  >
-                    { `${area} - ${category}`}
-                  </p>)
-                : (
-                  <p data-testid={ `${index}-horizontal-top-text` }>
-                    { alcoholicOrNot}
-                  </p>)
-            }
-            <p
-              data-testid={ `${index}-horizontal-done-date` }
+            <div>
+              <Link to={ `/${type}s/${id}` }>
+                <h1
+                  data-testid={ `${index}-horizontal-name` }
+                >
+                  {name}
+                </h1>
+              </Link>
+              {
+                (type === 'comida')
+                  ? (
+                    <p
+                      data-testid={ `${index}-horizontal-top-text` }
+                    >
+                      { `${area} - ${category}`}
+                    </p>)
+                  : (
+                    <p data-testid={ `${index}-horizontal-top-text` }>
+                      { alcoholicOrNot}
+                    </p>)
+              }
+              <p
+                data-testid={ `${index}-horizontal-done-date` }
+              >
+                {doneDate}
+              </p>
+            </div>
+            <button
+              data-testid="share-btn"
+              type="button"
+              onClick={ () => handleCopy(`/${type}s/${id}`) }
             >
-              {doneDate}
-            </p>
-          </div>
-          <button
-            data-testid="share-btn"
-            type="button"
-            onClick={ () => handleCopy(`/${type}s/${id}`) }
-          >
-            <img
-              alt="Compatilhar Receita"
-              data-testid={ `${index}-horizontal-share-btn` }
-            />
-          </button>
-          {isCopied ? <p>Link copiado!</p> : true}
-          {/*tags.map((tag) => (
-            <p
-              key={ tag }
-              data-testid={ `${index}-${tag}-horizontal-tag` }
-            >
-              {tag}
-            </p>
-          ))*/}
-        </span>
-      ))}
+              <img
+                alt="Compatilhar Receita"
+                data-testid={ `${index}-horizontal-share-btn` }
+              />
+            </button>
+            {isCopied ? <p>Link copiado!</p> : true}
+            {/* tags.map((tag) => (
+              <p
+                key={ tag }
+                data-testid={ `${index}-${tag}-horizontal-tag` }
+              >
+                {tag}
+              </p>
+            )) */}
+          </span>
+        ))}
     </>
   );
 }

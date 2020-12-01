@@ -1,24 +1,25 @@
-import React, { useState } from 'react';
+import React, {/* useState */} from 'react';
 import { Link } from 'react-router-dom';
-import { shareIcon, blackHeartIcon, whiteHeartIcon } from './images'
+import Header from '../components/Header';
+// import { shareIcon, blackHeartIcon, whiteHeartIcon } from './images';
 
 function inProgress() {
-  const [recipeInProgress, setRecipeInProgress] = useState([]);
+  // const [recipeInProgress, setRecipeInProgress] = useState([]);
   console.log(recipeInProgress);
 
-  useEffect(() => {
-    if(!localStorage.recipeInProgress) {
-      return <p>Você esta fazendo nenhuma receita.</p>
-    }
-    setRecipeInProgress(JSON.parse(localStorage.recipeInProgress));
-  }, []);
+  // useEffect(() => {
+  //  if (!localStorage.recipeInProgress) {
+  //    return <p>Você esta fazendo nenhuma receita.</p>
+  //  };
+  //  setRecipeInProgress(JSON.parse(localStorage.recipeInProgress));
+  // }, []);
 
   return (
     <div>
       <Header data-testid="recipe-title" />
       <img
         src={ image }
-        alt={ name }
+        alt="nome da receita"
         data-testid="recipe-photo"
       />
       <button
@@ -26,16 +27,16 @@ function inProgress() {
         data-testid="share-btn"
       >
         <img
-          src= { shareIcon }
-          alt="Compartilhar"  
+          src={ shareIcon }
+          alt="Compartilhar"
         />
       </button>
       <button
         type="button"
       >
         <img
-          src= { isFavorite ? blackHeartIcon : whiteHeartIcon }
-          alt="Favorito"  
+          src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+          alt="Favorito"
         />
       </button>
       <p data-testid="recipe-category">
@@ -47,7 +48,7 @@ function inProgress() {
         { ingredients }
       </p>
       <p
-        data-testid={ `instructions` }
+        data-testid={ instructions }
       >
         Instruções
       </p>

@@ -52,7 +52,7 @@ function MyProvider({ children }) {
       setCategories(myCategories);
       setAreas(myAreas);
       setIngredients(myIngredients);
-      setDoneRecipes(doneRecipes)
+      setDoneRecipes(doneRecipes);
 
       const myDrinkCategories = await getAllDrinkTypesApi('c');
       const myAlcoholic = await getAllDrinkTypesApi('a');
