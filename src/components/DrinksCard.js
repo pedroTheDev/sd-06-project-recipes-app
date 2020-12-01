@@ -4,22 +4,22 @@ import PropTypes from 'prop-types';
 
 function DrinkCard({ drink, index }) {
   return (
-    <div className="col-6 mb-3">
+    <div className="col-6 col-sm-4 col-md-3 mb-3">
       <Link to={ `/bebidas/${drink.idDrink}` }>
         <div
-          className="card shadow-sm rounded"
+          className="card shadow rounded"
           data-testid={ `${index}-recipe-card` }
         >
           <img
             data-testid={ `${index}-card-img` }
-            className="card-img-top"
+            className="card-img-top rounded-circle"
             src={ drink.strDrinkThumb }
             alt={ drink.strDrink }
           />
           <div className="card-body">
-            <h3 data-testid={ `${index}-card-name` } className="card-title mb-0">
+            <h5 data-testid={ `${index}-card-name` } className="card-title text-center">
               {drink.strDrink}
-            </h3>
+            </h5>
           </div>
         </div>
       </Link>

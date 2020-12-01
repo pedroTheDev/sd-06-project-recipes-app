@@ -12,7 +12,7 @@ const Header = ({ title, searchBtn = false }) => {
 
   return (
     <section
-      className="d-flex p-2 align-items-center justify-content-between"
+      className="navbar"
       style={ { background: '#7850B8' } }
     >
       <Link to="/perfil">
