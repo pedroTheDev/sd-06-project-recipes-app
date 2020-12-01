@@ -8,6 +8,7 @@ import CategoryButtons from '../components/CategoryButtons';
 
 const Foods = ({ history }) => {
   const { title, setTitle } = useContext(HeaderContext);
+  const { searchByIngredient } = useContext(RecipesContext);
   const {
     fetchedResults,
     isFetching,
@@ -17,7 +18,10 @@ const Foods = ({ history }) => {
   } = useContext(RecipesContext);
 
   const defaultRecipes = async () => {
-    const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+    let url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+    if (searchByIngredient !== '') {
+      url = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${searchByIngredient}`;
+    }
     const recipes = await getRecipesInformation(url);
     setFetchedResults(recipes);
     setIsFetching(false);
