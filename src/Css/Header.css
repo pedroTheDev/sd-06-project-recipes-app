@@ -1,6 +1,16 @@
 .header-container {
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  background-color: rgb(146, 81, 69);
+  background-color: rgb(170, 103, 92);
+  width: 360px;
+  height: 120px;
+}
+
+.header-page-title {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 200px;
 }

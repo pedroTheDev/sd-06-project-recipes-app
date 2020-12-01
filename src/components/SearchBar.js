@@ -65,14 +65,13 @@ function SearchBar() {
       return '';
     }
   };
-
   const handleButton = async () => {
-    if (inputValue.length !== 1 && inputValue === '#' && radioValue === 'first') {
+    if (inputValue.length !== 1 && radioValue === 'first') {
       console.log('first');
       alert('Sua busca deve conter somente 1 (um) caracter');
     } else if (pathname === '/comidas') {
       const recipes = await getFilteredRecipesApi(radioValue, inputValue);
-      console.log(recipes);
+      console.log('comidas', recipes);
       if (recipes === null || recipes === undefined) {
         alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
       } else if (recipes.length === 1) {
@@ -104,7 +103,6 @@ function SearchBar() {
       }
     }
   };
-
   return (
     <div>
       {showIcon ? <img
@@ -168,5 +166,4 @@ function SearchBar() {
     </div>
   );
 }
-
 export default SearchBar;
