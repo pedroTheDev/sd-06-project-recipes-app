@@ -13,13 +13,16 @@ export default function FavoriteRecipes() {
   let filteredResults;
   if (selectedFilter === 'All') filteredResults = [...favoriteList];
   if (selectedFilter === 'Meal') {
-    filteredResults = favoriteList.filter((item) => item.type === selectedFilter);
+    filteredResults = favoriteList
+      .filter((item) => item.type === selectedFilter || item.type === 'comida');
   }
   if (selectedFilter === 'Drink') {
-    filteredResults = favoriteList.filter((item) => item.type === selectedFilter);
+    filteredResults = favoriteList
+      .filter((item) => item.type === selectedFilter || item.type === 'bebida');
   }
   const detailRoute = (id, type) => {
-    const drinkOrFood = (type === 'Meal') ? '/comidas/' : '/bebidas/';
+    const drinkOrFood = (type === 'Meal' || type === 'comida')
+      ? '/comidas/' : '/bebidas/';
     return `${drinkOrFood}${id}`;
   };
 
@@ -53,20 +56,24 @@ export default function FavoriteRecipes() {
             />
           </Link>
           <div className="textBoxCard">
-            {(item.type === 'Meal')
+            {(item.type === 'Meal' || item.type === 'comida')
               ? (
-                <div>
-                  <span data-testid={ `${index}-horizontal-top-text` }>
-                    {item.category}
-                  </span>
-                  {' '}
-                  |
-                  {' '}
+                <span data-testid={ `${index}-horizontal-top-text` }>
                   {item.area}
-                </div>
+                  {' '}
+                  -
+                  {' '}
+                  {item.category}
+                </span>
               )
               : ''}
-            {(item.type === 'Drink') ? <p>{item.alcoholicOrNot}</p> : ''}
+            {(item.type === 'Drink' || item.type === 'bebida')
+              ? (
+                <span data-testid={ `${index}-horizontal-top-text` }>
+                  {item.alcoholicOrNot}
+                </span>
+              )
+              : ''}
             <Link to={ () => detailRoute(item.id, item.type) }>
               <h3 data-testid={ `${index}-horizontal-name` }>
                 {item.name}
@@ -80,7 +87,7 @@ export default function FavoriteRecipes() {
               <img
                 src={ BlackHeartIcon }
                 alt="Favorite Button"
-                data-testid="favorite-btn"
+                data-testid={ `${index}-horizontal-favorite-btn` }
               />
             </button>
             <ShareButton index={ index } id={ item.id } type={ item.type } />
