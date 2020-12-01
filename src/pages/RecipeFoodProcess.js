@@ -15,8 +15,8 @@ function RecipeFoodProcess(props) {
   const VINTE = 20;
   const [arrIngredient, setArrIngredient] = useState([]);
   const [share, setShare] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
-  const { recipes, setRecipes } = useContext(RecipesContext);
+  // const [isFavorite, setIsFavorite] = useState(false);
+  const { recipes, setRecipes, isFavorite, setIsFavorite } = useContext(RecipesContext);
 
   const settingRecipeInProgress = async () => {
     const response = await fetchMealById(id);
