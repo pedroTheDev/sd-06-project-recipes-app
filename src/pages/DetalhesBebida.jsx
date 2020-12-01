@@ -9,21 +9,15 @@ import {
 } from '../services/requestFood';
 import '../styles/Detalhes.css';
 import buttonShare from '../styles/images/shareIcon.svg';
-import whiteHeartIcon from '../styles/images/whiteHeartIcon.svg';
-import blackHeartIcon from '../styles/images/blackHeartIcon.svg';
-import { saveState, loadState } from '../services/localStorage';
+import FavoriteHeart from '../components/FavoriteHeart';
 
 function DetalhesBebida({ match: { params: { id } } }) {
   const zero = 0;
   const quinze = 15;
   const seis = 6;
-  const favoriteRecipe = 'favoriteRecipes';
-  const responseFavoriteStorage = loadState(favoriteRecipe, [])
-    .some((element) => element.id === id);
-  const [detailsDrink, setDetailsDrink] = useState([]);
+  const [detailsDrink, setDetailsDrink] = useState({});
   const [arrayIngredients, setArrayIngredients] = useState([]);
   const [recommendDrink, setRecommendDrink] = useState([]);
-  const [favoriteButton, setFavoriteButton] = useState(responseFavoriteStorage);
 
   useEffect(() => {
     requestApiDrinkDetails(id)
@@ -31,14 +25,6 @@ function DetalhesBebida({ match: { params: { id } } }) {
         setDetailsDrink(response[0]);
       });
   }, []);
-
-  const favoriteMark = () => {
-    if (favoriteButton === false) {
-      setFavoriteButton(true);
-    } else {
-      setFavoriteButton(false);
-    }
-  };
 
   const ingredientsFunc = () => {
     if (detailsDrink.length !== zero) {
@@ -52,29 +38,6 @@ function DetalhesBebida({ match: { params: { id } } }) {
       const arrayReturn = array.filter((element) => element !== 'null null');
       setArrayIngredients(arrayReturn);
     }
-  };
-
-  const saveFavoriteRecipe = () => {
-    const { idDrink, strCategory, strDrink, strDrinkThumb, strAlcoholic } = detailsDrink;
-    const loadFavoriteRecipe = loadState(favoriteRecipe, []);
-
-    const response = loadFavoriteRecipe.filter((element) => element.id !== idDrink);
-    if (loadFavoriteRecipe.length > response.length) {
-      saveState(favoriteRecipe, response);
-    } else {
-      const payload = {
-        id: idDrink,
-        type: 'bebida',
-        area: '',
-        category: strCategory,
-        alcoholicOrNot: strAlcoholic,
-        name: strDrink,
-        image: strDrinkThumb,
-      };
-      saveState(favoriteRecipe, [...loadFavoriteRecipe, payload]);
-    }
-    console.log(detailsDrink);
-    favoriteMark();
   };
 
   const recommendDrinkFunction = async () => {
@@ -119,25 +82,7 @@ function DetalhesBebida({ match: { params: { id } } }) {
         <button type="button" data-testid="share-btn" onClick={ copyBoard }>
           <img src={ buttonShare } alt="img-button-share" />
         </button>
-        {
-          favoriteButton ? (
-            <button type="button" onClick={ saveFavoriteRecipe }>
-              <img
-                data-testid="favorite-btn"
-                src={ blackHeartIcon }
-                alt="img-button-fav"
-              />
-            </button>
-          ) : (
-            <button type="button" onClick={ saveFavoriteRecipe }>
-              <img
-                data-testid="favorite-btn"
-                src={ whiteHeartIcon }
-                alt="img-button-fav"
-              />
-            </button>
-          )
-        }
+        <FavoriteHeart id={ id } detailsDrink={ detailsDrink } />
       </div>
       {arrayIngredients.map((element, index) => (
         <h5

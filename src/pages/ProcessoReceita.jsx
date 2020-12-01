@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { requestApiFoodDetails } from '../services/requestFood';
 import buttonShare from '../styles/images/shareIcon.svg';
-import blackHeartIcon from '../styles/images/blackHeartIcon.svg';
+import FavoriteHeart from '../components/FavoriteHeart';
 import '../styles/Processos.css';
 
 function ProcessoReceita({ match: { params: { id } } }) {
@@ -56,13 +56,7 @@ function ProcessoReceita({ match: { params: { id } } }) {
       <button type="button" data-testid="share-btn">
         <img src={ buttonShare } alt="button-share" />
       </button>
-      <button type="button">
-        <img
-          data-testid="favorite-btn"
-          src={ blackHeartIcon }
-          alt="img-button-fav"
-        />
-      </button>
+      <FavoriteHeart id={ id } detailsFood={ detailsFood } />
       {arrayIngredients.map((element, index) => (
         <label
           htmlFor="scales"
