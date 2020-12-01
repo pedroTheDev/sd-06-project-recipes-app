@@ -4,7 +4,7 @@ import whiteHeartIcon from '../styles/images/whiteHeartIcon.svg';
 import blackHeartIcon from '../styles/images/blackHeartIcon.svg';
 import { saveState, loadState } from '../services/localStorage';
 
-function FavoriteHeart({ id, detailsDrink, foodOrDrink }) {
+function FavoriteHeart({ id, detailsDrink, detailsFood }) {
   const favoriteRecipe = 'favoriteRecipes';
   const responseFavoriteStorage = loadState(favoriteRecipe, [])
     .some((element) => element.id === id);
@@ -19,14 +19,24 @@ function FavoriteHeart({ id, detailsDrink, foodOrDrink }) {
   };
 
   const saveFavoriteRecipe = () => {
-    const { idDrink, strCategory, strDrink, strDrinkThumb, strAlcoholic } = detailsDrink;
     const loadFavoriteRecipe = loadState(favoriteRecipe, []);
 
-    const response = loadFavoriteRecipe.filter((element) => element.id !== idDrink);
+    const response = loadFavoriteRecipe.filter((element) => element.id !== id);
+
+    let payload = {};
+
     if (loadFavoriteRecipe.length > response.length) {
       saveState(favoriteRecipe, response);
-    } else {
-      const payload = {
+    } else if (detailsDrink) {
+      const {
+        idDrink,
+        strCategory,
+        strDrink,
+        strDrinkThumb,
+        strAlcoholic,
+      } = detailsDrink;
+
+      payload = {
         id: idDrink,
         type: 'bebida',
         area: '',
@@ -36,8 +46,26 @@ function FavoriteHeart({ id, detailsDrink, foodOrDrink }) {
         image: strDrinkThumb,
       };
       saveState(favoriteRecipe, [...loadFavoriteRecipe, payload]);
+    } else if (detailsFood) {
+      const {
+        idMeal,
+        strArea,
+        strCategory,
+        strMeal,
+        strMealThumb,
+      } = detailsFood;
+
+      payload = {
+        id: idMeal,
+        type: 'comida',
+        area: strArea,
+        category: strCategory,
+        alcoholicOrNot: '',
+        name: strMeal,
+        image: strMealThumb,
+      };
+      saveState(favoriteRecipe, [...loadFavoriteRecipe, payload]);
     }
-    console.log(detailsDrink);
     favoriteMark();
   };
 
@@ -62,9 +90,23 @@ function FavoriteHeart({ id, detailsDrink, foodOrDrink }) {
   );
 }
 
-// FavoriteHeart.propTypes = {
-//   id: PropTypes.string.isRequired,
-//   detailsDrink: PropTypes.shape.isRequired,
-// };
+FavoriteHeart.propTypes = {
+  id: PropTypes.string.isRequired,
+  detailsDrink: PropTypes.shape({
+    idDrink: PropTypes.string.isRequired,
+    strCategory: PropTypes.string.isRequired,
+    strDrink: PropTypes.string.isRequired,
+    strDrinkThumb: PropTypes.string.isRequired,
+    strAlcoholic: PropTypes.string.isRequired,
+  }).isRequired,
+  detailsFood: PropTypes.shape({
+    idMeal: PropTypes.string.isRequired,
+    strArea: PropTypes.string.isRequired,
+    strCategory: PropTypes.string.isRequired,
+    strMeal: PropTypes.string.isRequired,
+    strMealThumb: PropTypes.string.isRequired,
+  }).isRequired,
+
+};
 
 export default FavoriteHeart;

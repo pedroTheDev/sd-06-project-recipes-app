@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { requestApiDrinkDetails } from '../services/requestDrink';
 import buttonShare from '../styles/images/shareIcon.svg';
-import blackHeartIcon from '../styles/images/blackHeartIcon.svg';
+import FavoriteHeart from '../components/FavoriteHeart';
 
 function ProcessoBebida({ match: { params: { id } } }) {
   const zero = 0;
@@ -59,13 +59,7 @@ function ProcessoBebida({ match: { params: { id } } }) {
       <button type="button" data-testid="share-btn">
         <img src={ buttonShare } alt="button-share" />
       </button>
-      <button type="button">
-        <img
-          data-testid="favorite-btn"
-          src={ blackHeartIcon }
-          alt="img-button-fav"
-        />
-      </button>
+      <FavoriteHeart id={ id } detailsDrink={ detailsDrink } />
       {arrayIngredients.map((element, index) => (
         <label
           htmlFor="scales"
