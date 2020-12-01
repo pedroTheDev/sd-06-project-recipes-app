@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Header from '../components/header';
 import Footer from '../components/Footer';
 import ExploreCard from '../components/explore/ExploreCard';
-import { fetchMealIngredients } from '../services';
+import { fetchMealIngredients, fetchDrinkIngredients } from '../services';
 
 const ZERO = 0;
 const TWELVE = 12;
@@ -11,9 +11,16 @@ const TWELVE = 12;
 function ExploreFoodIngredients({ type }) {
   const [ingredients, setIngredients] = useState([]);
 
+  const ingName = (type === 'comidas')
+    ? 'strIngredient'
+    : 'strIngredient1';
+
   const fetchIngredients = async () => {
-    const { meals } = await fetchMealIngredients();
-    setIngredients(meals.slice(ZERO, TWELVE));
+    const list = (type === 'comidas')
+      ? (await fetchMealIngredients()).meals
+      : (await fetchDrinkIngredients()).drinks;
+
+    setIngredients(list.slice(ZERO, TWELVE));
   };
 
   useEffect(() => {
@@ -25,11 +32,11 @@ function ExploreFoodIngredients({ type }) {
       <Header title="Explorar Ingredientes" />
       <section>
         {
-          ingredients.map(({ strIngredient }, index) => (
+          ingredients.map((el, index) => (
             <ExploreCard
               key={ index }
               index={ index }
-              name={ strIngredient }
+              name={ el[ingName] }
               type={ type }
             />
           ))
