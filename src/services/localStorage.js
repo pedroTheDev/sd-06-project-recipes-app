@@ -157,13 +157,13 @@ export function checkRecipesProgressDatabase() {
 }
 
 export function addRecipeProgress(recipeID, ingredient) {
+  console.log(recipeID, ingredient);
   checkRecipesProgressDatabase();
   const recipes = getRecipesProgress();
   const recipeIndex = recipes.findIndex((item) => item.id === recipeID);
   const minusOne = -1;
   if (recipeIndex > minusOne) {
-    const { ingredients } = recipes[recipeIndex].ingredients;
-    recipes[recipeIndex].ingredients = [...ingredients, ingredient];
+    recipes[recipeIndex].ingredients.push(ingredient);
   } else {
     const recipeObj = {
       id: recipeID,
