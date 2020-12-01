@@ -18,16 +18,16 @@ function App() {
         <Switch>
           <Route exact path="/" component={ Login } />
           <Route exact path="/bebidas" component={ MainPage } />
-          <Route exact path="/bebidas/:id" component={ BebidasDetalhes } />
-          <Route exact path="/bebidas/:id/in-progress" component={ BebidasProgresso } />
+          <Route exact path="/bebidas/:id" component={ RecipeDetails } />
+          <Route exact path="/bebidas/:id/in-progress" component={ ReceitaProgresso } />
           <Route
             exact
             path="/explorar/bebidas/ingredientes"
             component={ ComidasIngredientes }
           />
           <Route exact path="/comidas" component={ MainPage } />
-          <Route exact path="/comidas/:id" component={ ComidasDetalhes } />
-          <Route exact path="/comidas/:id/in-progress" component={ ComidasProgresso } />
+          <Route exact path="/comidas/:id" component={ RecipeDetails } />
+          <Route exact path="/comidas/:id/in-progress" component={ ReceitaProgresso } />
           <Route
             exact
             path="/explorar/comidas/ingredientes"
