@@ -1,24 +1,43 @@
-import React, { useContext } from 'react';
-import copy from 'clipboard-copy';
+import React, { useContext, useEffect, useState } from 'react';
 import propTypes from 'prop-types';
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { shareIcon, whiteHeartIcon, blackHeartIcon } from '../images';
 import recipesAppContext from '../context/recipesAppContext';
+import { favoriteRecipe, recipeIsFavorite } from '../services/localStorage';
 
 function SecondaryHeader({ name, img, category }) {
-  const { id } = useParams();
-  const { isFavorite, handleFavoriteRecipe } = useContext(recipesAppContext);
+  const location = useLocation();
+  const [isFavorite, setIsFavorite] = useState(false);
 
+  const {
+    recipesMeals,
+    recipesDrinks,
+  } = useContext(recipesAppContext);
+  const url = `http://localhost:3000${location.pathname}`;
+
+  const myRecipe = location.pathname.includes('comidas') ? recipesMeals : recipesDrinks;
+  console.log('my recipe', myRecipe);
   const handleShareIcon = () => {
-    const url = `http://localhost:3000/comidas/${id}`;
-    console.log('url', url);
-    copy(url);
+    navigator.clipboard.writeText(url);
     const shareButton = document.querySelector('.share-btn');
     shareButton.value = 'Link copiado!';
     const paragraph = document.querySelector('.copied-link');
     const span = document.createElement('span');
     paragraph.appendChild(span);
     span.innerHTML = 'Link copiado!';
+  };
+
+  const handleFavoriteRecipe = () => {
+    setIsFavorite(recipeIsFavorite(myRecipe));
+  };
+
+  useEffect(() => {
+    handleFavoriteRecipe();
+  }, [myRecipe]);
+
+  const saveToLocalStorage = () => {
+    favoriteRecipe(myRecipe);
+    handleFavoriteRecipe(myRecipe);
   };
 
   return (
@@ -44,7 +63,7 @@ function SecondaryHeader({ name, img, category }) {
           data-testid="favorite-btn"
           src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
           alt="Favorite recipe"
-          onClick={ handleFavoriteRecipe }
+          onClick={ saveToLocalStorage }
         />
         <p data-testid="recipe-category">{ category }</p>
       </header>
