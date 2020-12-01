@@ -39,9 +39,9 @@ export default function Header({ id, ingredient }) {
           </button>
         </div>
       </div>
-      <div className="searchbar">
+      <div>
         {(search || ingredient !== '')
-          ? <SearchBar id={ id } ingredient={ ingredient } /> : '' }
+          ? <SearchBar id={ id } ingredient={ ingredient } class="searchbar" /> : '' }
       </div>
     </div>
   );
