@@ -18,6 +18,7 @@ const RecipesProvider = ({ children }) => {
   const [recipeVideo, setRecipeVideo] = useState('');
   const [recipeTags, setRecipeTags] = useState('');
   const [recipeRecommendations, setRecipeRecommendations] = useState([]);
+  const [searchByIngredient, setSearchByIngredient] = useState('');
   const recipeObject = {
     recipeTitle,
     setRecipeTitle,
@@ -59,6 +60,8 @@ const RecipesProvider = ({ children }) => {
     setRecipesInProgress,
     selectedCategory,
     setSelectedCategory,
+    searchByIngredient,
+    setSearchByIngredient,
   };
   return (
     <RecipesContext.Provider value={ providerValue }>
