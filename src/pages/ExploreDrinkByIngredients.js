@@ -10,7 +10,7 @@ function ExploreDrinkByIngredients(props) {
   const { history: { location: { pathname } },
     pageConfig,
     isLoading,
-    dispatchFetchIngredients, drinkIngredients, ingredientConfig, drinkThumbs } = props;
+    dispatchFetchIngredients, drinkIngredients, ingredientConfig } = props;
   const { header } = pageConfig;
 
   useEffect(() => {
@@ -27,7 +27,7 @@ function ExploreDrinkByIngredients(props) {
               key={ `${index} ingredient` }
               pathname={ pathname }
               index={ index }
-              thumb={ drinkThumbs[index] }
+              thumb={ `https://www.thecocktaildb.com/images/ingredients/${ingredient[config.name]}-Small.png` }
             />))
       );
     }
@@ -48,7 +48,6 @@ const mapStateToProps = (state) => ({
   ingredientConfig: state.sitemap.bebidas.ingredients,
   isLoading: state.searchRecipes.isIngredientsLoading,
   drinkIngredients: state.searchRecipes.drinkIngredients,
-  drinkThumbs: state.searchRecipes.drinkIngredientsThumbs,
 });
 
 const mapDispatchToProps = (dispatch) => ({

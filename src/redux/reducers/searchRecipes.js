@@ -22,14 +22,13 @@ const initialState = {
 
   isFetchin: false,
   isRecipesFetching: true,
+  isRecipesOnClickFetching: false,
   iscategoriesFetching: true,
   isIngredientsLoading: true,
   foodCategories: [],
   foodInProgress: [],
   foodIngredients: [],
-  foodIngredientsThumbs: [],
   drinkIngredients: [],
-  drinkIngredientsThumbs: [],
   drinkCategories: [],
   data: {
     inputText: '',
@@ -42,7 +41,7 @@ export default function searchRecipesReducer(state = initialState, action) {
   switch (action.type) {
   case ADD_RECIPES:
     return {
-      ...state, recipes: action.recipes, isRecipesFetching: false,
+      ...state, recipes: action.recipes, isRecipesFetching: false, isRecipesOnClickFetching: false,
     };
 
   case ADD_RECIPE_DETAIL:
@@ -77,7 +76,6 @@ export default function searchRecipesReducer(state = initialState, action) {
     return {
       ...state,
       foodIngredients: action.ingredients,
-      foodIngredientsThumbs: action.thumbs,
       isIngredientsLoading: false,
     };
 
@@ -85,7 +83,6 @@ export default function searchRecipesReducer(state = initialState, action) {
     return {
       ...state,
       drinkIngredients: action.ingredients,
-      drinkIngredientsThumbs: action.thumbs,
       isIngredientsLoading: false,
     };
 
@@ -97,7 +94,7 @@ export default function searchRecipesReducer(state = initialState, action) {
 
   case REQUEST_RECIPES:
     return {
-      ...state, isRecipesFetching: true,
+      ...state, isRecipesFetching: true, isRecipesOnClickFetching: true,
     };
 
   case REQUEST_INGREDIENTS:

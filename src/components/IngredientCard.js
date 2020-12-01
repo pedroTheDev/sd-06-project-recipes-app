@@ -9,10 +9,13 @@ function IngredientCard({ name, index, pathname, dispatchFetchDrinkByIngredient,
   const [redirectState, setRedirectState] = useState(false);
   const componentRedirect = useRef(false);
   const [loadingIngredients, setLoadingIngredients] = useState(true);
-  console.log(thumb);
+  console.log(isRecipesLoading);
+
   useEffect(() => {
     if (componentRedirect.current && !isRecipesLoading) {
       setRedirectState(true);
+    } else if (isRecipesLoading) {
+      componentRedirect.current = true;
     }
   }, [isRecipesLoading]);
 
@@ -30,11 +33,11 @@ function IngredientCard({ name, index, pathname, dispatchFetchDrinkByIngredient,
   const handleClick = (ingredientName, path) => {
     if (getCorrespondentRecipePage(path) === '/comidas') {
       dispatchFetchFoodByIngredient(ingredientName);
+      console.log('dispatchFetchFood');
     } else {
       dispatchFetchDrinkByIngredient(ingredientName);
       console.log('dispatchFetchdrink');
     }
-    componentRedirect.current = true;
   };
 
   const renderRedirectToMainPage = (boolRedirectState, path) => {
@@ -44,26 +47,22 @@ function IngredientCard({ name, index, pathname, dispatchFetchDrinkByIngredient,
   };
 
   const renderIngredientCard = (ingredientIndex, strThumb, ingredientName, path) => {
-    console.log(strThumb);
     if (!loadingIngredients) {
       return (
-        <div
+        <button
+          type="button"
+          onClick={ () => handleClick(ingredientName, path) }
           data-testid={ `${ingredientIndex}-ingredient-card` }
         >
-          <button
-            type="button"
-            onClick={ () => handleClick(ingredientName, path) }
-          >
 
-            <p data-testid={ `${ingredientIndex}-card-name` }>{ingredientName}</p>
-          </button>
+          <p data-testid={ `${ingredientIndex}-card-name` }>{ingredientName}</p>
 
           <img
             src={ thumb }
             alt={ thumb }
             data-testid={ `${index}-card-img` }
           />
-        </div>
+        </button>
 
       );
     }
@@ -79,7 +78,7 @@ function IngredientCard({ name, index, pathname, dispatchFetchDrinkByIngredient,
 }
 
 const mapStateToProps = (state) => ({
-  isRecipesLoading: state.searchRecipes.isRecipesFetching,
+  isRecipesLoading: state.searchRecipes.isRecipesOnClickFetching,
   foodThumbs: state.searchRecipes.foodIngredientsThumbs,
   drinkThumbs: state.searchRecipes.drinkIngredientsThumbs,
 

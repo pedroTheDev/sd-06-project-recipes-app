@@ -11,7 +11,7 @@ function ExploreFoodByIngredients(props) {
     pageConfig,
     isLoading,
     dispatchFetchIngredients,
-    foodIngredients, ingredientConfig, foodThumbs } = props;
+    foodIngredients, ingredientConfig } = props;
   const { header } = pageConfig;
   const [componentLoading, setComponentLoading] = useState(true);
 
@@ -21,12 +21,11 @@ function ExploreFoodByIngredients(props) {
 
   const renderIngredients = (arrayFoodIngredients, boolIsLoading, config) => {
     if (!boolIsLoading) {
-      console.log(foodThumbs, 'thumbs- console on page');
       return (
         arrayFoodIngredients
           .map((ingredient, index) => (
             <IngredientCard
-              thumb={ foodThumbs[index] }
+              thumb={ `https://www.themealdb.com/images/ingredients/${ingredient[config.name]}-Small.png` }
               name={ ingredient[config.name] }
               key={ `${index} ingredient` }
               pathname={ pathname }
@@ -51,7 +50,6 @@ const mapStateToProps = (state) => ({
   ingredientConfig: state.sitemap.comidas.ingredients,
   isLoading: state.searchRecipes.isIngredientsLoading,
   foodIngredients: state.searchRecipes.foodIngredients,
-  foodThumbs: state.searchRecipes.foodIngredientsThumbs,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -24,9 +24,8 @@ function FoodCategoriesButtons({ categories,
       }
       const apiResponse = await fetchAPI(fetchRecipesByCategoryEndPoint);
       console.log(categoriesFilters, selectedCategory);
-
       dispatchRecipes(apiResponse);
-
+      console.log(isFetching, 'isFetching');
       setIsFetching(false);
     }
     if (isFetching) fetchData();
