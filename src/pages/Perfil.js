@@ -7,15 +7,17 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 
 function Perfil(props) {
-  const { history: { location: { pathname } }, pageConfig, email } = props;
+  const { history: { location: { pathname } }, pageConfig } = props;
   const { header } = pageConfig;
+  const getEmailFromLocalStorage = localStorage.getItem('user');
+  const userEmail = JSON.parse(getEmailFromLocalStorage);
 
   return (
     <div>
       <Header pathname={ pathname } componentConfig={ header } />
       <section className="profile-container">
         <section className="profile-email">
-          <h3 data-testid="profile-email">{email}</h3>
+          <h3 data-testid="profile-email">{userEmail.email}</h3>
         </section>
         <section className="profile-buttons">
           <Link to="/receitas-feitas">
@@ -47,7 +49,7 @@ function Perfil(props) {
 
 const mapStateToProps = (state) => ({
   pageConfig: state.sitemap.perfil,
-  email: state.login.email,
+  // email: state.login.email,
 });
 
 export default connect(mapStateToProps, null)(Perfil);
@@ -65,5 +67,5 @@ Perfil.propTypes = {
       pathname: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
-  email: PropTypes.string.isRequired,
+  // email: PropTypes.string.isRequired,
 };
