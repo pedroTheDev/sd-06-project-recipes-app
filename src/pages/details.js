@@ -22,12 +22,15 @@ class Details extends Component {
       clipboard: '',
       isFavorite: false,
       isDone: false,
+      inProgress: false,
     };
     this.requestDetails = this.requestDetails.bind(this);
     this.renderCardDetails = this.renderCardDetails.bind(this);
     this.handleShare = this.handleShare.bind(this);
     this.handleFavorite = this.handleFavorite.bind(this);
     this.checkIsFavorite = this.checkIsFavorite.bind(this);
+    this.checkInProgress = this.checkInProgress.bind(this);
+    this.checkIsDone = this.checkIsDone.bind(this);
   }
 
   componentDidMount() {
@@ -60,7 +63,7 @@ class Details extends Component {
     const { details } = this.state;
     const LS = JSON.parse(localStorage.getItem('favoriteRecipes'));
     if (LS && LS.find((recipe) => recipe.id === details[0].idMeal
-    || recipe.id === details[0].idDrink)) {
+      || recipe.id === details[0].idDrink)) {
       this.setState({
         isFavorite: true,
       });
@@ -71,9 +74,30 @@ class Details extends Component {
     const { details } = this.state;
     const LS = JSON.parse(localStorage.getItem('doneRecipes'));
     if (LS && LS.find((recipe) => recipe.id === details[0].idMeal
-    || recipe.id === details[0].idDrink)) {
+      || recipe.id === details[0].idDrink)) {
       this.setState({
         isDone: true,
+      });
+    }
+  }
+
+  checkInProgress() {
+    const { details } = this.state;
+    const LSP = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    // const arrayZerado = [Object.keys(LSP.cocktails), Object.keys(LSP.meals) ]
+    if (LSP !== null) {
+      // console.log(Object.keys(LSP.cocktails));
+      // const result = Object.keys(LSP.cocktails || LSP.meals);
+      const arrayZerado = [ Object.keys(LSP.cocktails).toString(), Object.keys(LSP.meals).toString()]
+      // Object.keys(LSP).find((keys) => keys["meals"] === details[0].idMeal || keys["cocktails"] === details[0].idDrink)
+      console.log(arrayZerado);
+      if (arrayZerado.includes( details[0].idMeal || details[0].idDrink)) {
+        return this.setState({
+            inProgress: true,
+        });
+      }
+      return this.setState({
+        inProgress: false,
       });
     }
   }
@@ -154,6 +178,7 @@ class Details extends Component {
         }, () => {
           this.checkIsFavorite();
           this.checkIsDone();
+          this.checkInProgress();
         });
       } else {
         this.setState({
@@ -163,6 +188,7 @@ class Details extends Component {
         }, () => {
           this.checkIsFavorite();
           this.checkIsDone();
+          this.checkInProgress();
         });
       }
     });
@@ -197,7 +223,14 @@ class Details extends Component {
 
   renderCardDetails() {
     const { match: { url }, history } = this.props;
-    const { details, recomendations, isMeal, clipboard, isFavorite, isDone } = this.state;
+    const { details,
+      recomendations,
+      isMeal,
+      clipboard,
+      isFavorite,
+      isDone,
+      inProgress
+    } = this.state;
     const ingredientsAndMeasures = this.parseIngredientsAndMeasures(details);
     const zero = 0;
 
@@ -217,67 +250,67 @@ class Details extends Component {
         <h3 data-testid="recipe-title">{strMeal || strDrink}</h3>
         <img
           data-testid="recipe-photo"
-          src={ strMealThumb || strDrinkThumb }
-          alt={ `${strMeal || strDrink}` }
-          width={ 100 }
+          src={strMealThumb || strDrinkThumb}
+          alt={`${strMeal || strDrink}`}
+          width={100}
         />
         {clipboard.length !== zero && (
           <div>
             <p>Link copiado!</p>
           </div>
         )}
-        <button type="button" data-testid="share-btn" onClick={ this.handleShare }>
-          <img src={ shareIcon } alt="Share Recipe" />
+        <button type="button" data-testid="share-btn" onClick={this.handleShare}>
+          <img src={shareIcon} alt="Share Recipe" />
         </button>
-        <button type="button" onClick={ this.handleFavorite }>
+        <button type="button" onClick={this.handleFavorite}>
           {isFavorite ? (
             <img
-              src={ blackHeartIcon }
+              src={blackHeartIcon}
               data-testid="favorite-btn"
               alt="Favorite Recipe"
             />
           ) : (
-            <img
-              src={ whiteHeartIcon }
-              data-testid="favorite-btn"
-              alt="Favorite Recipe"
-            />
-          )}
+              <img
+                src={whiteHeartIcon}
+                data-testid="favorite-btn"
+                alt="Favorite Recipe"
+              />
+            )}
         </button>
         {isMeal ? (
           <p data-testid="recipe-category">{strCategory}</p>
         ) : (
-          <p data-testid="recipe-category">{strAlcoholic}</p>
-        )}
+            <p data-testid="recipe-category">{strAlcoholic}</p>
+          )}
         {ingredientsAndMeasures.map((item, idx) => (
-          <p key={ `${idx}` } data-testid={ `${idx}-ingredient-name-and-measure` }>
+          <p key={`${idx}`} data-testid={`${idx}-ingredient-name-and-measure`}>
             {item}
           </p>
         ))}
         <p data-testid="instructions">{strInstructions}</p>
-        { isMeal && (<p data-testid="video">{strYoutube}</p>) }
+        { isMeal && (<p data-testid="video">{strYoutube}</p>)}
         {/*
           REQ 37:
           TODO: Pegar Carousel de 'react-bootstrap/Carousel'
           https://react-bootstrap.github.io/components/carousel/#carousel-props
          */}
         {recomendations.map((item, idx) => (
-          <div key={ idx } data-testid={ `${idx}-recomendation-card` }>
+          <div key={idx} data-testid={`${idx}-recomendation-card`}>
             {isMeal ? (
-              <DrinkCard drink={ item } idx={ idx } />
+              <MealCard meal={item} idx={idx} />
             ) : (
-              <MealCard meal={ item } idx={ idx } />
-            )}
+                <DrinkCard drink={item} idx={idx} />
+              )}
           </div>
-        ))}
+        ))}{/* {this.checkInProgress()} */}
         {!isDone && (
           <button
             type="button"
             data-testid="start-recipe-btn"
             className="start-recipe-btn"
-            onClick={ () => history.push(`${url}/in-progress`) }
+            onClick={() => history.push(`${url}/in-progress`)}
           >
-            Iniciar Receita
+            { inProgress ? "Continuar Receita" : "Iniciar Receita" }
           </button>
         )}
       </div>
