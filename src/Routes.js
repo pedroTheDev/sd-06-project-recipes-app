@@ -20,6 +20,7 @@ import FoodInProgress from './pages/FoodInProgress';
 import DrinkInProgress from './pages/DrinkInProgress';
 import FoodsDetails from './pages/FoodsDetails';
 import DrinksDetails from './pages/DrinksDetails';
+import NotFound from './pages/NotFound';
 
 const Routes = () => {
   const { title } = useContext(HeaderContext);
@@ -64,6 +65,7 @@ const Routes = () => {
           render={ (props) => <DrinkInProgress { ...props } /> }
         />
         <Route path="/explorar/comidas/area" component={ OriginFoods } />
+        <Route path="/explorar/bebidas/area" component={ NotFound } />
         <Route path="/explorar/comidas" component={ ExploreFoods } />
         <Route path="/explorar/bebidas" component={ ExploreDrinks } />
         <Route path="/bebidas/:id" render={ (props) => <DrinksDetails { ...props } /> } />
@@ -74,6 +76,7 @@ const Routes = () => {
         <Route path="/perfil" component={ Profile } />
         <Route path="/receitas-feitas" component={ DoneRecipes } />
         <Route path="/receitas-favoritas" component={ FavoriteRecipes } />
+        <Route component={ NotFound } />
       </Switch>
       {handleFooter() && <Footer />}
     </main>

@@ -1,0 +1,14 @@
+.area-card {
+  display: flex;
+  flex-direction: column;
+  width: 30vw;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.area-card-img {
+  width: 25vw;
+}
