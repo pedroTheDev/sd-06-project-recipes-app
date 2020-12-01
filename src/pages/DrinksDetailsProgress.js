@@ -51,7 +51,9 @@ function DrinksDetailsProgress() {
   }, []);
 
   function copyToClipBoard(text) {
-    navigator.clipboard.writeText(text);
+    const textSplice = text.split('/in-progress');
+    const finalText = textSplice.join('');
+    navigator.clipboard.writeText(finalText);
     setSpanHidden(false);
   }
 

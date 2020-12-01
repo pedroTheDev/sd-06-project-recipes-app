@@ -91,10 +91,9 @@ function FoodDetailsProgress() {
   }
 
   function copyToClipBoard(text) {
-    const textSplice = text.split('/');
-    textSplice.length = 4;
-    console.log(textSplice);
-    navigator.clipboard.writeText(textSplice);
+    const textSplice = text.split('/in-progress');
+    const finalText = textSplice.join('');
+    navigator.clipboard.writeText(finalText);
     setSpanHidden(false);
   }
 
