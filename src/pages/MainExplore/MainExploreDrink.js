@@ -9,6 +9,9 @@ function MainExploreDrink() {
         className="header"
         pageTitle="Explorar Bebidas"
       />
+      <div className="explore-area">
+        Explorar por Ingrediente/Origem/Me surpreenda
+      </div>
       <div className="footer">
         <Footer />
       </div>

@@ -9,6 +9,9 @@ function MainExploreFood() {
         className="header"
         pageTitle="Explorar Comidas"
       />
+      <div className="explore-area">
+        Explorar por Ingrediente/Origem/Me surpreenda
+      </div>
       <div className="footer">
         <Footer />
       </div>
