@@ -74,6 +74,22 @@ function FoodDetailsProgress() {
     setSpanHidden(false);
   }
 
+  function handleProgress(e) {
+    console.log(e.target);
+    localStorage.setItem('inProgressRecipes', JSON.stringify({ cocktails: {},
+      meals: {},
+    }));
+    const localStorageRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    console.log(localStorageRecipes);
+    const localStorageProgressArr = localStorageRecipes.meals[foodDetails.idMeal];
+    console.log(localStorageProgressArr);
+    // if ( !== e.target.value) {
+    //   console.log('entrou');
+    //   localStorage.setItem('inProgressRecipes', JSON.stringify({ cocktails: {},
+    //     meals: { [foodDetails.idMeal]: [e.target.value] },
+    //   }));
+  }
+
   return (
     <div>
 
@@ -121,6 +137,7 @@ function FoodDetailsProgress() {
                 id={ item.ingredient }
                 key={ item.ingredient }
                 name={ item.ingredient }
+                onChange={ (e) => handleProgress(e) }
               />
               <label htmlFor={ item.ingredient }>
                 {
