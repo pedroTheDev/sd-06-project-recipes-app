@@ -109,7 +109,6 @@ const ReceitaProcessoComida = () => {
     const checkedIngredients = JSON.parse(localStorage.getItem('checkedIngredients'));
 
     if (target.checked === true) {
-      console.log(checkedIngredients.meals[idFood], checkedId);
       const ingredientsToSave = {
         ...checkedIngredients,
         meals: {
@@ -140,7 +139,6 @@ const ReceitaProcessoComida = () => {
   return (
 
     <div>
-      {console.log(checkedId)}
       {!attributesNames
         ? <div className="loading">Loading...</div>
         : (
