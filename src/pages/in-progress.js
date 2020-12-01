@@ -7,8 +7,15 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 import './style/details.css';
 
+const getFromLS = (id, pathname) => {
+  const LS = JSON.parse(localStorage.getItem('inProgressRecipes'));
+  const path = pathname.includes('comidas') ? 'meals' : 'cocktails';
+  if (!LS) return {};
+  return LS[path][id].reduce((acc, currV) => ({ ...acc, [currV]: true }), {});
+};
+
 class InProgress extends Component {
-  constructor() {
+  constructor({ match: { params: { id }, path } }) {
     super();
 
     this.state = {
@@ -20,7 +27,7 @@ class InProgress extends Component {
       isFavorite: false,
       isDone: false,
       ingredientsUsed: [],
-      inputsMarked: {},
+      inputsMarked: getFromLS(id, path),
     };
 
     this.requestDetails = this.requestDetails.bind(this);
@@ -186,7 +193,6 @@ class InProgress extends Component {
 
   saveToLocalStorage(storageKeyName) {
     const { isMeal, details } = this.state;
-    console.log(details);
     const LS = JSON.parse(localStorage.getItem(storageKeyName));
     let obj;
     if (isMeal) {
