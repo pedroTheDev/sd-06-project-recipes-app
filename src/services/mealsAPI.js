@@ -20,7 +20,7 @@ export async function getFilteredRecipesApi(type, value) {
   }
   if (type === 'name') {
     try {
-      const response = await fetch(`${URL_BASE}filter.php?i=${value}`);
+      const response = await fetch(`${URL_BASE}search.php?s=${value}`);
       const result = await response.json();
       return result.meals;
     } catch (error) {
@@ -29,7 +29,7 @@ export async function getFilteredRecipesApi(type, value) {
   }
   if (type === 'first') {
     try {
-      const response = await fetch(`${URL_BASE}filter.php?i=${value}`);
+      const response = await fetch(`${URL_BASE}search.php?f=${value}`);
       const result = await response.json();
       return result.meals;
     } catch (error) {
