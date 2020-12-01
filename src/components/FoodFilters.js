@@ -4,14 +4,17 @@ import ReceitasContext from '../context/ReceitasContext';
 function FoodFilters() {
   const { filtersData, selectedFilter, setSelectedFilter } = useContext(ReceitasContext);
 
-  const filterByCategory = ({ target }) => (
-
-    (target.innerHTML === 'All')
-      ? setSelectedFilter('')
-      : (selectedFilter === target.innerHTML)
-        ? setSelectedFilter('')
-        : setSelectedFilter(target.innerHTML)
-  );
+  const filterByCategory = ({ target }) => {
+    if (target.innerHTML === 'All') {
+      setSelectedFilter('');
+    } else {
+      return (
+        (selectedFilter === target.innerHTML)
+          ? setSelectedFilter('')
+          : setSelectedFilter(target.innerHTML)
+      );
+    }
+  };
 
   return (
     <div className="row justify-content-center mb-2">
