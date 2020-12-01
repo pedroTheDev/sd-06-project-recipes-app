@@ -75,5 +75,4 @@ ExploreDrinkByIngredients.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   dispatchFetchIngredients: PropTypes.func.isRequired,
   drinkIngredients: PropTypes.arrayOf(PropTypes.any).isRequired,
-  drinkThumbs: PropTypes.arrayOf(PropTypes.any).isRequired,
 };

@@ -102,6 +102,7 @@ CockTail.propTypes = {
   dispatchCategories: PropTypes.func.isRequired,
   dispatchFetching: PropTypes.func.isRequired,
   dispatchRecipes: PropTypes.func.isRequired,
+  drinkRecipes: PropTypes.arrayOf(PropTypes.any).isRequired,
   pageConfig: PropTypes.shape({
     header: PropTypes.shape({
       title: PropTypes.string.isRequired,
