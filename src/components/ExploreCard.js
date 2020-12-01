@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 function Cards({ info, index }) {
   const { idMeal, strMeal, strMealThumb } = info;
+  const previewThumb = `${strMealThumb}/preview`;
 
   return (
     <Link to={ `/comidas/${idMeal}` }>
@@ -13,7 +14,7 @@ function Cards({ info, index }) {
         data-testid={ `${index}-recipe-card` }
       >
         <img
-          src={ strMealThumb }
+          src={ previewThumb }
           className="thumbnail"
           alt={ strMeal }
           data-testid={ `${index}-card-img` }
