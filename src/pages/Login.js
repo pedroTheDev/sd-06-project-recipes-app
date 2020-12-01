@@ -26,6 +26,7 @@ const Login = () => {
     }
     return true;
   };
+
   const handleClick = () => {
     localStorage.setItem('mealsToken', 1);
     localStorage.setItem('cocktailsToken', 1);

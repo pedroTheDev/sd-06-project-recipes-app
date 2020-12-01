@@ -36,8 +36,6 @@ const RecipesProvider = ({ children }) => {
     setRecipeInstructions,
     recipeVideo,
     setRecipeVideo,
-    recipeRecommendations,
-    setRecipeRecommendations,
     recipeTags,
     setRecipeTags,
   };

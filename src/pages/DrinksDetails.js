@@ -10,6 +10,8 @@ import './DrinksDetails.css';
 const DrinksDetails = (props) => {
   const [btnTitle, setBtnTitle] = useState('Iniciar Receita');
   const [btnImg, setBtnImg] = useState('');
+  const [recommendations1, setRecommendations1] = useState([]);
+  const [recommendations2, setRecommendations2] = useState([]);
   const { title, setTitle } = useContext(HeaderContext);
   const {
     recipeObject,
@@ -29,12 +31,12 @@ const DrinksDetails = (props) => {
     setRecipeIngredients,
     recipeInstructions,
     setRecipeInstructions,
-    recipeRecommendations,
-    setRecipeRecommendations,
   } = recipeObject;
   const { match, history: { location: { pathname } } } = props;
   const { params } = match;
   const { id } = params;
+  const carouselActiveIndex = 0;
+  const carouselPartition = 3;
 
   const ingredientsMount = (jsonRecipe) => {
     const initialIndex = 0;
@@ -67,12 +69,21 @@ const DrinksDetails = (props) => {
     const path = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
     const getRecipe = await fetch(path);
     const jsonRecipe = await getRecipe.json();
-    const maximumRecommendations = 6;
-    const recommendations = jsonRecipe.meals.map(
-      (recommendation, index) => (index < maximumRecommendations && recommendation),
+    const maximumRecommendations1 = 3;
+    const maximumRecommendations2 = 6;
+    const getRecommendations1 = jsonRecipe.meals.filter(
+      (recommendation, index) => (index < maximumRecommendations1 && recommendation),
+    );
+    const getRecommendations2 = jsonRecipe.meals.filter(
+      (recommendation, index) => (
+        index >= maximumRecommendations1
+        && index < maximumRecommendations2
+        && recommendation
+      ),
     );
 
-    setRecipeRecommendations(recommendations);
+    setRecommendations1(getRecommendations1);
+    setRecommendations2(getRecommendations2);
   };
 
   const buttonMount = () => {
@@ -207,15 +218,93 @@ const DrinksDetails = (props) => {
 
       <h3 data-testid="instructions">{recipeInstructions}</h3>
 
-      <div>
-        {recipeRecommendations.map((item, index) => (
-          <div
-            key={ item.idMeal }
-            data-testid={ `${index}-recomendation-card` }
-          >
-            {item.strMeal}
-          </div>
-        ))}
+      <div
+        className="carousel slide w-25"
+        data-ride="carousel"
+        id="carousel1"
+      >
+        <div className="carousel-inner">
+          {recommendations1.map((item, index) => {
+            if (index === carouselActiveIndex) {
+              return (
+                <div
+                  key={ item.idMeal }
+                  data-testid={ `${index}-recomendation-card` }
+                  className="carousel-item active"
+                >
+                  <img
+                    src={ item.strMealThumb }
+                    alt={ item.strMeal }
+                    className="d-block w-100"
+                  />
+                  <h5 data-testid={ `${index}-recomendation-title` }>
+                    { item.strMeal }
+                  </h5>
+                </div>
+              );
+            }
+            return (
+              <div
+                key={ item.idMeal }
+                data-testid={ `${index}-recomendation-card` }
+                className="carousel-item"
+              >
+                <img
+                  src={ item.strMealThumb }
+                  alt={ item.strMeal }
+                  className="d-block w-100"
+                />
+                <h5 data-testid={ `${index}-recomendation-title` }>
+                  { item.strMeal }
+                </h5>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <div
+        className="carousel slide w-25"
+        data-ride="carousel"
+        id="carousel2"
+      >
+        <div className="carousel-inner">
+          {recommendations2.map((item, index) => {
+            if (index === carouselActiveIndex) {
+              return (
+                <div
+                  key={ item.idMeal }
+                  data-testid={ `${index + carouselPartition}-recomendation-card` }
+                  className="carousel-item active"
+                >
+                  <img
+                    src={ item.strMealThumb }
+                    alt={ item.strMeal }
+                    className="d-block w-100"
+                  />
+                  <h5 data-testid={ `${index + carouselPartition}-recomendation-title` }>
+                    { item.strMeal }
+                  </h5>
+                </div>
+              );
+            }
+            return (
+              <div
+                key={ item.idMeal }
+                data-testid={ `${index + carouselPartition}-recomendation-card` }
+                className="carousel-item"
+              >
+                <img
+                  src={ item.strMealThumb }
+                  alt={ item.strMeal }
+                  className="d-block w-100"
+                />
+                <h5 data-testid={ `${index + carouselPartition}-recomendation-title` }>
+                  { item.strMeal }
+                </h5>
+              </div>
+            );
+          })}
+        </div>
       </div>
 
       {
