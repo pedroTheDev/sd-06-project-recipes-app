@@ -22,6 +22,60 @@ export function setValueUser(key, value) {
   return localStorage.setItem(key, JSON.stringify({ email: value }));
 }
 
+export function treatRecipe(recipe) {
+  let treatedRecipe = {};
+  if ('idMeal' in recipe) {
+    treatedRecipe = {
+      id: recipe.idMeal,
+      type: 'comida',
+      area: recipe.strArea,
+      category: recipe.strCategory,
+      alcoholicOrNot: '',
+      name: recipe.strMeal,
+      image: recipe.strMealThumb,
+    };
+  } else if ('idDrink' in recipe) {
+    treatedRecipe = {
+      id: recipe.idDrink,
+      type: 'bebida',
+      area: '',
+      category: recipe.strCategory,
+      alcoholicOrNot: recipe.strAlcoholic,
+      name: recipe.strDrink,
+      image: recipe.strDrinkThumb,
+    };
+  }
+
+  return treatedRecipe;
+}
+
+export function convertTreatedRecipe(recipe) {
+  let convertedRecipe = {};
+  if (recipe.type === 'comida') {
+    convertedRecipe = {
+      id: recipe.idMeal,
+      type: 'comida',
+      area: recipe.strArea,
+      category: recipe.strCategory,
+      alcoholicOrNot: '',
+      name: recipe.strMeal,
+      image: recipe.strMealThumb,
+    };
+  } else if (recipe.type === 'bebida') {
+    convertedRecipe = {
+      id: recipe.idDrink,
+      type: 'bebida',
+      area: '',
+      category: recipe.strCategory,
+      alcoholicOrNot: recipe.strAlcoholic,
+      name: recipe.strDrink,
+      image: recipe.strDrinkThumb,
+    };
+  }
+
+  return convertedRecipe;
+}
+
 export function addDoneRecipe(object) {
   const two = 2;
   const today = new Date();
@@ -61,28 +115,46 @@ export function getDoneRecipes() {
   return temp;
 }
 
-export function addFavoriteRecipe(object) {
-  const obj = {
-    id: object.id,
-    type: object.type,
-    area: object.strArea,
-    category: object.strCategory,
-    alcoholicOrNot: object.alcoholic,
-    name: object.name,
-    image: object.image,
-  };
-  const temp = JSON.parse(localStorage.getItem('favorite_recipes'));
-  temp.push(obj);
-  localStorage.setItem('favorite_recipes', JSON.stringify(temp));
-}
-
-export function setFavoriteRecipes(key, value) {
-  return localStorage.setItem(key, JSON.stringify({ favoriteRecipes: value }));
+export function createFavoriteRecipesDatabase() {
+  const recipes = [];
+  localStorage.setItem('favoriteRecipes', JSON.stringify(recipes));
 }
 
 export function getFavoriteRecipes() {
-  const temp = JSON.parse(localStorage.getItem('favorite_recipes'));
-  return temp;
+  const recipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+  return recipes;
+}
+
+export function checkFavoriteRecipesDatabase() {
+  const recipes = getFavoriteRecipes();
+  if (!recipes) createFavoriteRecipesDatabase();
+}
+
+export function updateFavoriteRecipes(recipes) {
+  localStorage.setItem('favoriteRecipes', JSON.stringify(recipes));
+}
+
+export function recipeIsFavorite(recipe) {
+  checkFavoriteRecipesDatabase();
+  const recipes = getFavoriteRecipes();
+  console.log('receitas recipeIsFavorite', recipes);
+  recipe = treatRecipe(recipe);
+  const match = recipes.find((item) => item.id === recipe.id);
+  if (match) return true;
+  return false;
+}
+
+export function favoriteRecipe(recipe) {
+  checkFavoriteRecipesDatabase();
+  recipe = treatRecipe(recipe);
+  if (recipe.type === 'drink') recipe.category = recipe.alcoholic;
+  const temp = getFavoriteRecipes();
+  let recipeIndex;
+  if (!temp.length < 1) recipeIndex = temp.findIndex((item) => item.id === recipe.id);
+  const minusOne = -1;
+  if (recipeIndex > minusOne) temp.splice(recipeIndex, 1);
+  else temp.push(recipe);
+  updateFavoriteRecipes(temp);
 }
 
 export function createRecipesProgress() {
