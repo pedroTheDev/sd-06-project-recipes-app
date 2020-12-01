@@ -62,13 +62,13 @@ function RecipeInProgress(props) {
 
   const settingListStateWithAnObject = () => {
     const stateList = ingredientsItem.map((el) => ({ [el]: false }));
-    const joinObject = stateList.reduce((acc, curr) => (acc = { ...acc, ...curr }), {});
+    const joinObject = stateList.reduce((acc, curr) => ({ ...acc, ...curr }), {});
     setListState(joinObject);
   };
 
   const settingCheckedClassWithAnObject = () => {
     const checkList = ingredientsItem.map((el) => ({ [el]: 'no-check' }));
-    const joinObject = checkList.reduce((acc, curr) => (acc = { ...acc, ...curr }), {});
+    const joinObject = checkList.reduce((acc, curr) => ({ ...acc, ...curr }), {});
     setCheckedClass(joinObject);
   };
 
