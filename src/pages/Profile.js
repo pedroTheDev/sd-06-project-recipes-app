@@ -19,7 +19,10 @@ const Profile = () => {
   };
 
   const getUserData = () => {
-    const localStorageUser = JSON.parse(localStorage.getItem('user'));
+    let localStorageUser = { email: 'Sem e-mail cadastrado.' };
+    if (localStorage.getItem('user')) {
+      localStorageUser = JSON.parse(localStorage.getItem('user'));
+    }
     setUserEmail(localStorageUser.email);
   };
 
