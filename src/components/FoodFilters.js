@@ -5,9 +5,12 @@ function FoodFilters() {
   const { filtersData, selectedFilter, setSelectedFilter } = useContext(ReceitasContext);
 
   const filterByCategory = ({ target }) => (
-    (selectedFilter === target.innerHTML)
-      ? setSelectedFilter('All')
-      : setSelectedFilter(target.innerHTML)
+
+    (target.innerHTML === 'All')
+      ? setSelectedFilter('')
+      : (selectedFilter === target.innerHTML)
+        ? setSelectedFilter('')
+        : setSelectedFilter(target.innerHTML)
   );
 
   return (
