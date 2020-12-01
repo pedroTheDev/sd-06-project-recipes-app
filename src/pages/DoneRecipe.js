@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import useCopyToClipboard from '../hook/clipboard-copy';
 import Header from '../components/Header';
+import ShareIcon from '../images/shareIcon.svg';
 
 function DoneRecipe() {
   const timeoutTextCopy = 2000;
@@ -87,7 +88,7 @@ function DoneRecipe() {
             >
               <Link to={ `/${type}s/${id}` }>
                 <img
-                  className="receipe-img"
+                  className="recipeImage"
                   src={ image }
                   alt={ name }
                   data-testid={ `${index}-horizontal-image` }
@@ -128,6 +129,7 @@ function DoneRecipe() {
                 >
                   <img
                     alt="Compatilhar Receita"
+                    src={ ShareIcon }
                     data-testid={ `${index}-horizontal-share-btn` }
                   />
                 </button>
