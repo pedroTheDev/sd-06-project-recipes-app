@@ -9,7 +9,7 @@ function RecipesMade() {
   const history = useHistory();
 
   const renderTags = (tags, index) => (
-    tags.split(',').map((tag) => (
+    tags.map((tag) => (
       <span
         key={ index }
         data-testid={ `${index}-${tag}-horizontal-tag` }
@@ -77,7 +77,7 @@ function RecipesMade() {
         onClick={ () => handleShareIcon(recipe.id, 'comidas') }
         aria-hidden="true"
       />
-      {recipe.tags ? renderTags(recipe.tags, index) : null}
+      {renderTags(recipe.tags, index)}
     </div>
   );
 

@@ -17,6 +17,8 @@ function RecipesInProgress() {
   const localStorageFavs = JSON.parse(localStorage.getItem('favoriteRecipes'));
   const allDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
   const history = useHistory();
+  const zero = 0;
+  const ten = 10;
 
   const fetchRecipesInProgress = async () => {
     const splitUrl = location.split('/');
@@ -55,8 +57,13 @@ function RecipesInProgress() {
   }, []);
 
   const handleClick = () => {
-    const zero = 0;
-    const ten = 10;
+    let tags = [];
+    if (recipeInProgress.strTags) {
+      tags = recipeInProgress.strTags.split(',');
+    }
+    console.log(recipeInProgress.strTags);
+    console.log(typeof tags);
+    console.log(tags);
     const newDoneRecipe = {
       id: recipeInProgress.idMeal ? recipeInProgress.idMeal : recipeInProgress.idDrink,
       type: recipeInProgress.idMeal ? 'comida' : 'bebida',
@@ -68,7 +75,7 @@ function RecipesInProgress() {
       image: recipeInProgress.strMealThumb ? recipeInProgress.strMealThumb
         : recipeInProgress.strDrinkThumb,
       doneDate: `Feita em : ${new Date().toJSON().slice(zero, ten).replace(/-/g, '/')}`,
-      tags: recipeInProgress.strTags ? recipeInProgress.strTags : '',
+      tags,
     };
 
     if (!allDoneRecipes) {
@@ -98,16 +105,16 @@ function RecipesInProgress() {
       localStorage.setItem('checkedIngredients', JSON.stringify(allCheckedIngredients));
     }
     const allCheckBoxs = document.querySelectorAll('#checkbox');
-    let isChecked = false;
+    let count = zero;
     allCheckBoxs.forEach((checkbox) => {
       if (checkbox.checked === true) {
-        isChecked = true;
-      } else {
-        isChecked = false;
+        count += 1;
       }
     });
-    if (isChecked) {
+    if (allCheckBoxs.length === count) {
       setDisabled(false);
+    } else {
+      setDisabled(true);
     }
   };
 
