@@ -40,7 +40,7 @@ function RecipesMade() {
   };
 
   const renderFood = (recipe, index) => (
-    <div>
+    <div key={ index }>
       <img
         data-testid={ `${index}-horizontal-image` }
         src={ recipe.image }
@@ -82,7 +82,7 @@ function RecipesMade() {
   );
 
   const renderDrinks = (recipe, index) => (
-    <div>
+    <div key={ index }>
       <img
         data-testid={ `${index}-horizontal-image` }
         src={ recipe.image }

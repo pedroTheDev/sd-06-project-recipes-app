@@ -7,6 +7,7 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 function RecipesInProgress() {
   const location = useLocation().pathname;
   const [recipeInProgress, setRecipeInProgress] = useState([]);
+  const [isDisabled, setDisabled] = useState(true);
   const [isFetching, setFetching] = useState(true);
   const [favoriteRecipe, setFavoriteRecipe] = useState(false);
   let allCheckedIngredients = [];
@@ -14,7 +15,10 @@ function RecipesInProgress() {
     allCheckedIngredients = JSON.parse(localStorage.getItem('checkedIngredients'));
   }
   const localStorageFavs = JSON.parse(localStorage.getItem('favoriteRecipes'));
+  const allDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
   const history = useHistory();
+  const zero = 0;
+  const ten = 10;
 
   const fetchRecipesInProgress = async () => {
     const splitUrl = location.split('/');
@@ -23,20 +27,24 @@ function RecipesInProgress() {
       const apiRequest = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
       const apiResponse = await apiRequest.json();
       setRecipeInProgress(apiResponse.meals[0]);
-      // if (recipeInProgressKeys[0] === 'meals') {
-      //   setRecipeNumber(0);
-      // } else {
-      //   setRecipeNumber(1);
-      // }
+      if (localStorageFavs) {
+        localStorageFavs.forEach((item) => {
+          if (item.id === apiResponse.meals[0].idMeal) {
+            setFavoriteRecipe(true);
+          }
+        });
+      }
     } else {
       const apiRequest = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
       const apiResponse = await apiRequest.json();
       setRecipeInProgress(apiResponse.drinks[0]);
-      // if (recipeInProgressKeys[0] === 'cocktails') {
-      //   setRecipeNumber(0);
-      // } else {
-      //   setRecipeNumber(1);
-      // }
+      if (localStorageFavs) {
+        localStorageFavs.forEach((item) => {
+          if (item.id === apiResponse.drinks[0].idDrink) {
+            setFavoriteRecipe(true);
+          }
+        });
+      }
     }
   };
 
@@ -49,17 +57,33 @@ function RecipesInProgress() {
   }, []);
 
   const handleClick = () => {
-    // const newDoneRecipe = {
-    //   id: recipeInProgress.idMeal,
-    //   type: 'comida',
-    //   area: recipeInProgress.strArea,
-    //   category: recipeInProgress.strCategory,
-    //   alcoholicOrNot: '',
-    //   name: recipeInProgress.strMeal,
-    //   image: recipeInProgress.strMealThumb,
-    //   doneDate: ,
-    //   tags: ,
-    // };
+    let tags = [];
+    if (recipeInProgress.strTags) {
+      tags = recipeInProgress.strTags.split(',');
+    }
+    console.log(recipeInProgress.strTags);
+    console.log(typeof tags);
+    console.log(tags);
+    const newDoneRecipe = {
+      id: recipeInProgress.idMeal ? recipeInProgress.idMeal : recipeInProgress.idDrink,
+      type: recipeInProgress.idMeal ? 'comida' : 'bebida',
+      area: recipeInProgress.strArea,
+      category: recipeInProgress.strCategory,
+      alcoholicOrNot: recipeInProgress.idMeal ? recipeInProgress.strAlcoholic : '',
+      name: recipeInProgress.strMeal ? recipeInProgress.strMeal
+        : recipeInProgress.strDrink,
+      image: recipeInProgress.strMealThumb ? recipeInProgress.strMealThumb
+        : recipeInProgress.strDrinkThumb,
+      doneDate: `Feita em : ${new Date().toJSON().slice(zero, ten).replace(/-/g, '/')}`,
+      tags,
+    };
+
+    if (!allDoneRecipes) {
+      localStorage.setItem('doneRecipes', JSON.stringify([newDoneRecipe]));
+    } else {
+      localStorage.setItem('doneRecipes',
+        JSON.stringify([...allDoneRecipes, newDoneRecipe]));
+    }
     history.push('/receitas-feitas');
   };
 
@@ -79,6 +103,18 @@ function RecipesInProgress() {
       ingredientMade.style = 'text-decoration: line-through';
       allCheckedIngredients.push(ingredientMade.innerHTML);
       localStorage.setItem('checkedIngredients', JSON.stringify(allCheckedIngredients));
+    }
+    const allCheckBoxs = document.querySelectorAll('#checkbox');
+    let count = zero;
+    allCheckBoxs.forEach((checkbox) => {
+      if (checkbox.checked === true) {
+        count += 1;
+      }
+    });
+    if (allCheckBoxs.length === count) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
     }
   };
 
@@ -208,6 +244,7 @@ function RecipesInProgress() {
         type="button"
         data-testid="finish-recipe-btn"
         onClick={ handleClick }
+        disabled={ isDisabled }
       >
         Finalizar Receita
       </button>
@@ -262,6 +299,7 @@ function RecipesInProgress() {
         type="button"
         data-testid="finish-recipe-btn"
         onClick={ handleClick }
+        disabled={ isDisabled }
       >
         Finalizar Receita
       </button>
