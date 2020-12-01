@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import MealsCard from '../components/MealsCard';
 import Footer from '../components/Footer';
@@ -11,24 +11,30 @@ import logo from '../images/myfood.png';
 import '../style/Loading.css';
 
 const Comidas = (history) => {
-  const { searchBox, meals, setMeals, setFiltersData } = useContext(ReceitasContext);
+  const {
+    searchBox, meals, setMeals, setFiltersData, selectedFilter,
+  } = useContext(ReceitasContext);
+  const [isFetching, setFetching] = useState(true);
 
   const location = useLocation();
   const doze = 12;
 
   useEffect(() => {
+    setFetching(true);
+
     async function fetchFood() {
       const data = await foodCategoryApi();
-      const responseFoodsAPI = await foodAPI();
+      const responseFoodsAPI = await foodAPI('name', selectedFilter);
 
       setFiltersData(data);
       setMeals(responseFoodsAPI);
+      setFetching(false);
     }
 
     fetchFood();
-  }, []);
+  }, [selectedFilter]);
 
-  return !meals.length ? (
+  return isFetching ? (
     <div>
       <img src={ logo } alt="teste" className="loading" />
     </div>
