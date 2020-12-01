@@ -11,7 +11,37 @@ const RecipeInProgress = () => {
   const { pathname } = history.location;
   const id = pathname.split('/')[2];
   const kindof = pathname.split('/')[1];
-  const [checkboxes, setCheckboxes] = useState({});
+
+  const getSelectedIngredients = () => {
+    if (kindof === 'comidas') {
+      if (!localStorage.inProgressRecipes) {
+        localStorage.inProgressRecipes = JSON.stringify({
+          cocktails: {}, meals: { [id]: [] } });
+        return {};
+      }
+      const ingredients = JSON.parse(localStorage.inProgressRecipes).meals[id];
+
+      const objetao = {};
+      ingredients.forEach((el) => {
+        Object.assign(objetao, { [el]: true });
+      });
+      return objetao;
+    }
+
+    if (!localStorage.inProgressRecipes) {
+      localStorage.inProgressRecipes = JSON.stringify({
+        cocktails: {}, meals: { [id]: [] } });
+      return {};
+    }
+
+    const ingredients = JSON.parse(localStorage.inProgressRecipes).cocktails[id];
+    const objetao = {};
+    ingredients.forEach((el) => {
+      Object.assign(objetao, { [el]: true });
+    });
+    return objetao;
+  };
+  const [checkboxes, setCheckboxes] = useState(getSelectedIngredients());
   const [recipeDetailDrink, setRecipeDetailDrink] = useState([]);
   const [recipeDetailFood, setRecipeDetailFood] = useState([]);
   const [foodIngredients, setFoodIngredients] = useState([]);
@@ -132,15 +162,18 @@ const RecipeInProgress = () => {
     handleStorageProgress();
   }, []);
 
-  const handleCheckbox = ({ target }) => {
-    const items = document.getElementsByClassName('checks');
-    const arr = Array.from(items);
-    if (arr.every((item) => item.checked === true)) {
-      setDisable(false);
-    } else {
-      setDisable(true);
+  useEffect(() => {
+    if (!checkboxes !== {}) {
+      const values = Object.values(checkboxes);
+      if (values.every((el) => el === true) === true) {
+        setDisable(false);
+      } else {
+        setDisable(true);
+      }
     }
-    setCheckboxes({ ...checkboxes, [target.id]: true });
+  }, [checkboxes]);
+  const handleCheckbox = ({ target }) => {
+    // setCheckboxes({ ...checkboxes, [target.id]: true });
     if (kindof === 'comidas') {
       if (checkboxes[target.id]) {
         const concatenando = JSON.parse(localStorage.inProgressRecipes);
@@ -196,12 +229,13 @@ const RecipeInProgress = () => {
           key={ index }
           data-testid={ `${index}-ingredient-step` }
         >
-          <label htmlFor={ ingredient }>
+          <label
+            htmlFor={ ingredient }
+          >
             <input
               style={ { textDecoration: 'none solid rgba(0,0,0)' } }
-              className="checks"
               type="checkbox"
-              checked={ checkboxes[ingredient] }
+              checked={ checkboxes[ingredient] || false }
               id={ ingredient }
               onChange={ handleCheckbox }
             />
