@@ -93,7 +93,6 @@ export default function FavoriteRecipes() {
           </button>
         </div>
       ))}
-      <Footer />
     </div>
   );
 }

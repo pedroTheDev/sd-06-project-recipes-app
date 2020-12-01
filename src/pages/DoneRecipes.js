@@ -54,7 +54,6 @@ export default function DoneRecipes() {
           </div>
         ))}
       </div>
-      <Footer />
     </div>
   );
 }

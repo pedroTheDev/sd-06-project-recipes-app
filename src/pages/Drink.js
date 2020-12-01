@@ -67,6 +67,7 @@ function Drink() {
         const { searchInput, searchRadio } = searchItens;
         if (searchRadio === 'Nome') {
           if (searchInput.length > 1) {
+            // eslint-disable-next-line no-alert
             alert('Sua busca deve conter somente 1 (um) caracter');
           } else {
             const urlSearchName = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchInput}`;
@@ -90,6 +91,7 @@ function Drink() {
         }
         if (searchRadio === 'PrimeiraLetra') {
           if (searchInput.length > 1) {
+            // eslint-disable-next-line no-alert
             alert('Sua busca deve conter somente 1 (um) caracter');
           } else {
             const urlSearchName = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${searchInput}`;
