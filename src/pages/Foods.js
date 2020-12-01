@@ -149,7 +149,7 @@ class Foods extends React.Component {
           )}
         </div>
         <div className="cards-container">
-          {Meals ? Meals.map((recipe, index) => (
+          {Meals.length > 1 ? Meals.map((recipe, index) => (
             <div className="card" key={ index } data-testid={ `${index}-recipe-card` }>
               <input
                 type="image"
@@ -166,7 +166,16 @@ class Foods extends React.Component {
               </p>
               <hr className="card-hr" />
             </div>
-          )) : null}
+          )) : (
+            <div className="foods-drinks-loading">
+              <div className="lds-ellipsis">
+                <div />
+                <div />
+                <div />
+                <div />
+              </div>
+            </div>
+          )}
         </div>
         <Footer history={ history } />
       </div>

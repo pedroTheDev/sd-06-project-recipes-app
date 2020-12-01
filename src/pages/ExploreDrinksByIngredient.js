@@ -36,7 +36,7 @@ class ExploreDrinksByIngredient extends React.Component {
     return (
       <div className="cards-container by-ingredient-container">
         <Header history={ history } />
-        {ingredients.length > listLength && (ingredients.map((recipe, index) => (
+        {ingredients.length > listLength ? (ingredients.map((recipe, index) => (
           <div className="card" key={ index } data-testid={ `${index}-ingredient-card` }>
             <input
               type="image"
@@ -51,7 +51,17 @@ class ExploreDrinksByIngredient extends React.Component {
               {recipe.strIngredient1}
             </p>
             <hr className="card-hr" />
-          </div>)))}
+          </div>
+        ))) : (
+          <div className="explore-ingredient-loading">
+            <div className="lds-ellipsis">
+              <div />
+              <div />
+              <div />
+              <div />
+            </div>
+          </div>
+        )}
         <Footer history={ history } />
       </div>
     );

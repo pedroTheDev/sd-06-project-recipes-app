@@ -150,7 +150,7 @@ class Drink extends React.Component {
           )}
         </div>
         <div className="cards-container">
-          {Drinks ? Drinks.map((recipe, index) => (
+          {Drinks.length > 1 ? Drinks.map((recipe, index) => (
             <div className="card" key={ index } data-testid={ `${index}-recipe-card` }>
               <input
                 type="image"
@@ -164,7 +164,16 @@ class Drink extends React.Component {
               <p data-testid={ `${index}-card-name` }>{recipe.strDrink}</p>
               <hr className="card-hr" />
             </div>
-          )) : null}
+          )) : (
+            <div className="foods-drinks-loading">
+              <div className="lds-ellipsis">
+                <div />
+                <div />
+                <div />
+                <div />
+              </div>
+            </div>
+          )}
         </div>
         <Footer history={ history } />
       </div>

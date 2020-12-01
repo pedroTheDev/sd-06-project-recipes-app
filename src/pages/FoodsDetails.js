@@ -220,7 +220,7 @@ class FoodsDetails extends React.Component {
     const zero = 0;
     return (
       <div className="food-drink-detail-container">
-        {Meal.length > zero && Meal[0] && (
+        {Meal.length > zero ? Meal[0] && (
           <div className="detail-card">
             <img
               src={ recipe.strMealThumb }
@@ -330,6 +330,15 @@ class FoodsDetails extends React.Component {
                 >
                   Iniciar Receita
                 </button>)}
+          </div>
+        ) : (
+          <div className="details-loading">
+            <div className="lds-ellipsis">
+              <div />
+              <div />
+              <div />
+              <div />
+            </div>
           </div>
         )}
       </div>);

@@ -14,6 +14,11 @@ a {
   background-color: #000;
 }
 
+.food-drink-detail-container {
+  display: flex;
+  justify-content: center;
+}
+
 .login-container {
   color: #8B4513;
   display: flex;
@@ -838,7 +843,8 @@ a {
   #root {
     width: 100vw;
   }
-  .category-buttons button{
+
+  .food-filters{
     width: 75px;
   }
 
@@ -896,3 +902,79 @@ a {
 .styled {
   text-decoration: line-through;
 }
+/* 
+
+. referência: https://loading.io/css/ */
+  .explore-ingredient-loading {
+    display: flex;
+    align-items: center;
+    height: 80vh;
+  }
+
+  .foods-drinks-loading {
+    display: flex;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .details-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+
+  .lds-ellipsis {
+    position: relative;
+    width: 80px;
+    height: 80px;
+  }
+
+  .lds-ellipsis div {
+    position: absolute;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: black;
+    animation-timing-function: cubic-bezier(0, 1, 1, 0);
+  }
+  .lds-ellipsis div:nth-child(1) {
+    left: 8px;
+    animation: lds-ellipsis1 0.6s infinite;
+  }
+  .lds-ellipsis div:nth-child(2) {
+    left: 8px;
+    animation: lds-ellipsis2 0.6s infinite;
+  }
+  .lds-ellipsis div:nth-child(3) {
+    left: 32px;
+    animation: lds-ellipsis2 0.6s infinite;
+  }
+  .lds-ellipsis div:nth-child(4) {
+    left: 56px;
+    animation: lds-ellipsis3 0.6s infinite;
+  }
+  @keyframes lds-ellipsis1 {
+    0% {
+      transform: scale(0);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  @keyframes lds-ellipsis3 {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(0);
+    }
+  }
+  @keyframes lds-ellipsis2 {
+    0% {
+      transform: translate(0, 0);
+    }
+    100% {
+      transform: translate(24px, 0);
+    }
+  }
