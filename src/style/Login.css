@@ -1,31 +1,58 @@
-.login {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 400px; 
-  margin: 0 auto; 
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 
-.login label {
-  font-size: 20px;
-  margin: 7%;
+.bg {
+  height: 100vh;
+  background-image: url('../images/hamb.png'); 
+  background-size: cover;
+}
+
+.user_card {
+  height:60vh;
+  width: 85vw;
+  margin-top: 20vh;
+  background:#7850B8;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 5px;
+
+}
+.brand_logo_container {
+  position: absolute;
+  height: 170px;
+  width: 170px;
+  top: -75px;
+  border-radius: 50%;
+  padding: 10px;
   text-align: center;
 }
 
-.login input {
-  width: 95%;
-  margin-top: 4px;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #b2b2b2;
+.brand_logo {
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+}
+.form_container {
+  margin-top: 30px;
+}
+.login_btn {
+  width: 100%;
+  background:#6CDC3E !important;
+  color: white !important;
+}
+.login_btn:focus {
+  box-shadow: none !important;
+  outline: 0px !important;
+}
+.login_container {
+  padding: 0 2rem;
 }
 
-.login Button {
-  border-radius: 8px;
-  font-size: 20px;
-}
-
-.logo {
-  align-self: center;
-  width: 25%;
-}

@@ -3,7 +3,6 @@ import { Redirect } from 'react-router-dom';
 import { foodAPI } from '../services/foodAPI';
 import { drinkAPI } from '../services/drinkAPI';
 import ReceitasContext from '../context/ReceitasContext';
-import '../style/Search.css';
 
 function SearchBar() {
   const [searchValue, setSearchValue] = useState('');
@@ -45,41 +44,41 @@ function SearchBar() {
   return (
     url.length ? <Redirect to={ url } /> : (
       <form onSubmit={ (e) => e.preventDefault() }>
-        <div className="container">
+        <div style={ { top: '50px' } } className="bg-secondary p-3">
           <input
             type="text"
             data-testid="search-input"
             placeholder="Buscar Receita"
-            className="search-input"
+            className="form-control"
             value={ searchValue }
             onChange={ ({ target }) => setSearchValue(target.value) }
           />
-          <div>
-            <label htmlFor="ingredient">
+          <div className="form-check form-check-inline">
+            <label htmlFor="ingredient" className="form-check-label">
               <input
                 type="radio"
                 id="ingredient"
                 name="searchInputRadio"
-                className="search-radio"
+                className="form-check-input"
                 value={ radioValue }
                 onChange={ ({ target }) => setRadioValue(target.id) }
                 data-testid="ingredient-search-radio"
               />
               Ingrediente
             </label>
-            <label htmlFor="name">
+            <label htmlFor="name" className="form-check-label">
               <input
                 type="radio"
                 id="name"
                 name="searchInputRadio"
-                className="search-radio"
+                className="form-check-input"
                 value={ radioValue }
                 onChange={ ({ target }) => setRadioValue(target.id) }
                 data-testid="name-search-radio"
               />
               Nome
             </label>
-            <label htmlFor="first-letter">
+            <label htmlFor="first-letter" className="form-check-label">
               <input
                 type="radio"
                 id="first-letter"
@@ -97,6 +96,7 @@ function SearchBar() {
               type="submit"
               onClick={ handleFormSubmit }
               data-testid="exec-search-btn"
+              className="btn btn-block btn-light"
             >
               Buscar
             </button>
