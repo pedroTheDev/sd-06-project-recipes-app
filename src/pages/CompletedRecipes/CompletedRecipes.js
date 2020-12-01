@@ -116,16 +116,14 @@ function CompletedRecipes() {
                   onClick={ ({ target }) => handleShareIcon(target) }
                 />
                 <p className={ `copied-link-${recipe.id}` } />
-                {recipe.tags.map((tagName) => {
-                  return (
-                    <p
-                      data-testid={ `${index}-${tagName}-horizontal-tag` }
-                      key={ tagName }
-                    >
-                      { tagName }
-                    </p>
-                  )}
-                )}
+                {recipe.tags.map((tagName) => (
+                  <p
+                    data-testid={ `${index}-${tagName}-horizontal-tag` }
+                    key={ tagName }
+                  >
+                    { tagName }
+                  </p>
+                ))}
               </div>
             );
           }

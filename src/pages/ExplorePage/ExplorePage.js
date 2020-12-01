@@ -1,7 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import { Link } from 'react-router-dom';
 
 function ExplorePage() {
   return (
@@ -12,6 +12,7 @@ function ExplorePage() {
       />
       <Link to="/explorar/comidas">
         <button
+          type="button"
           data-testid="explore-food"
           className="btn btn-secondary"
         >
@@ -20,6 +21,7 @@ function ExplorePage() {
       </Link>
       <Link to="/explorar/bebidas">
         <button
+          type="button"
           data-testid="explore-drinks"
           className="btn btn-secondary"
         >

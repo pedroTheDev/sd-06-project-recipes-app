@@ -7,7 +7,6 @@ import recipesAppContext from '../../context/recipesAppContext';
 
 function FavoritesRecipes() {
   const { isFavorite, handleFavoriteRecipe } = useContext(recipesAppContext);
-  
   const doneRecipes = [{
     id: '52977',
     type: 'meal',
@@ -126,17 +125,14 @@ function FavoritesRecipes() {
                   alt="Favorite recipe"
                   onClick={ handleFavoriteRecipe }
                 />
-                {recipe.tags.map((tagName) => {
-                  return (
-                    <p
-                      data-testid={ `${index}-${tagName}-horizontal-tag` }
-                      key={ tagName }
-                    >
-                      { tagName }
-                    </p>
-                  )
-                }
-                )}
+                {recipe.tags.map((tagName) => (
+                  <p
+                    data-testid={ `${index}-${tagName}-horizontal-tag` }
+                    key={ tagName }
+                  >
+                    { tagName }
+                  </p>
+                ))}
               </div>
             );
           }
@@ -148,4 +144,3 @@ function FavoritesRecipes() {
 }
 
 export default FavoritesRecipes;
-
