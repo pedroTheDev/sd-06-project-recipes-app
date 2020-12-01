@@ -38,25 +38,16 @@ class FavFoodCard extends React.Component {
   }
 
   async handleShareFood({ id }) {
+    const textdiv = document.querySelector('.text-div');
+    if ((textdiv).childNodes.length < 1) {
+      const paragraph = document.createElement('p');
+      paragraph.innerText = 'Link Copiado';
+      paragraph.style.fontSize = '8px';
+      paragraph.style.fontWeight = '100';
+      textdiv.appendChild(paragraph);
+    }
     const url = `http://localhost:3000/comidas/${id}`;
     await copy(url);
-    const shareBtn = document.querySelector('.share-btn');
-    shareBtn.value = 'Link copiado!';
-    const p = document.querySelector('.p');
-    const span = document.createElement('span');
-    p.appendChild(span);
-    span.innerHTML = 'Link copiado!';
-    // window.alert('Link copiado!');
-    // https://www.30secondsofcode.org/blog/s/copy-text-to-clipboard-with-javascript
-    // const el = document.createElement('textarea');
-    // el.value = url;
-    // el.setAttribute('readonly', '');
-    // el.style.position = 'absolute';
-    // el.style.left = '-9999px';
-    // document.body.appendChild(el);
-    // el.select();
-    // document.execCommand('copy');
-    // document.body.removeChild(el);
   }
 
   setFavoriteFood(Food) {
@@ -159,25 +150,28 @@ class FavFoodCard extends React.Component {
                   >
                     { element.name }
                   </button>
-                  <p className="p" />
                 </div>
-                <div className="food-drink-image">
-                  <input
-                    type="image"
-                    data-testid={ `${index + indexAcc}-horizontal-favorite-btn` }
-                    className="fav-button"
-                    src={ this.changeFavoriteIcon(element) }
-                    onClick={ () => this.setLocalState(element) }
-                    alt="whiteHeartIcon"
-                  />
-                  <input
-                    type="image"
-                    className="share-btn"
-                    data-testid={ `${index + indexAcc}-horizontal-share-btn` }
-                    src={ shareIcon }
-                    alt="share"
-                    onClick={ () => this.handleShareFood(element) }
-                  />
+                <div className="food-drink-image fav-card-image">
+                  <div>
+                    <input
+                      type="image"
+                      data-testid={ `${index + indexAcc}-horizontal-favorite-btn` }
+                      className="fav-button"
+                      src={ this.changeFavoriteIcon(element) }
+                      onClick={ () => this.setLocalState(element) }
+                      alt="whiteHeartIcon"
+                    />
+                    <input
+                      type="image"
+                      className="share-btn"
+                      data-testid={ `${index + indexAcc}-horizontal-share-btn` }
+                      src={ shareIcon }
+                      alt="share"
+                      onClick={ () => this.handleShareFood(element) }
+                      style={ { marginLeft: '10px' } }
+                    />
+                  </div>
+                  <div className="text-div" />
                 </div>
               </div>
             </div>

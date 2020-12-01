@@ -18,6 +18,7 @@ class Foods extends React.Component {
     this.allButtonHandler = this.allButtonHandler.bind(this);
     this.setInitialState = this.setInitialState.bind(this);
     this.setKeyLocalStorage = this.setKeyLocalStorage.bind(this);
+    this.manageColors = this.manageColors.bind(this);
   }
 
   async componentDidMount() {
@@ -37,6 +38,12 @@ class Foods extends React.Component {
 
   async componentDidUpdate() {
     const { stateMeals } = this.props;
+    const { CategoryFilter } = this.state;
+    if (CategoryFilter !== '') {
+      this.manageColors('others');
+    } else {
+      this.manageColors('all');
+    }
     const MAXIMUM_LENGTH = 0;
     if (stateMeals.length > MAXIMUM_LENGTH) {
       this.stateAfterProps(stateMeals);
@@ -69,6 +76,24 @@ class Foods extends React.Component {
       const initialMeals = await foodsOnRender();
       this.setState({ Meals: initialMeals, CategoryFilter: '' });
       target.style.background = '#5a2d0c';
+    }
+  }
+
+  manageColors(buttons) {
+    const filtros = document.getElementsByClassName('category-buttons');
+    const INITIAL_VALUE = 0;
+    const FINAL_VALUE = 5;
+    if (buttons === 'others') {
+      for (let i = INITIAL_VALUE; i < FINAL_VALUE; i += 1) {
+        filtros[INITIAL_VALUE].childNodes[i].firstChild.style.background = '#5a2d0c';
+        filtros[INITIAL_VALUE].childNodes[FINAL_VALUE].style.background = '#5a2d0c';
+      }
+    }
+    if (buttons === 'all') {
+      for (let i = INITIAL_VALUE; i < FINAL_VALUE; i += 1) {
+        filtros[INITIAL_VALUE].childNodes[i].firstChild.style.background = '#5a2d0c';
+        filtros[INITIAL_VALUE].childNodes[FINAL_VALUE].style.background = '#ac5c22';
+      }
     }
   }
 

@@ -64,15 +64,18 @@ class FoodsRecipesInProgress extends React.Component {
     });
   }
 
-  async handleShareFood({ idMeal }) {
+  async handleShareFood({ target }, { idMeal }) {
+    const three = 3;
+    if ((target.parentNode).childNodes.length < three) {
+      const { parentNode } = target;
+      const paragraph = document.createElement('p');
+      paragraph.innerText = 'Link Copiado';
+      paragraph.style.fontSize = '8px';
+      paragraph.style.fontWeight = '100';
+      parentNode.appendChild(paragraph);
+    }
     const url = `http://localhost:3000/comidas/${idMeal}`;
     await copy(url);
-    const shareBtn = document.querySelector('.share-btn');
-    shareBtn.value = 'Link copiado!';
-    const p = document.querySelector('.p');
-    const span = document.createElement('span');
-    p.appendChild(span);
-    span.innerHTML = 'Link copiado!';
   }
 
   handleButton() {
@@ -205,7 +208,7 @@ class FoodsRecipesInProgress extends React.Component {
       this.setState({ checkedItems: originalChecked });
       this.setRecipesLocalStorage(originalChecked);
     }
-    const inputsList = document.querySelectorAll('input');
+    const inputsList = document.querySelectorAll('input[type=checkbox]');
     inputsList.forEach((item) => {
       if (item.checked === true) {
         item.parentNode.className = 'styled';
@@ -232,10 +235,17 @@ class FoodsRecipesInProgress extends React.Component {
   recipeDone(recipe) {
     const { history } = this.props;
     const fullDate = this.getFullDate();
-    let myTags = recipe.strTags;
-    if (myTags === null) {
-      myTags = 'No Tags';
-    }
+    // let myTags = recipe.strTags;
+
+    // const myTags = recipe.strTags.split(',');
+
+    // if (myTags[0] === undefined) {
+    //   myTags[0] = 'Food';
+    // }
+    // if (myTags[1] === undefined) {
+    //   myTags[1] = 'Food';
+    // }
+
     const myObject = [{
       id: recipe.idMeal,
       type: 'comida',
@@ -245,7 +255,7 @@ class FoodsRecipesInProgress extends React.Component {
       name: recipe.strMeal,
       image: recipe.strMealThumb,
       doneDate: fullDate,
-      tags: myTags,
+      tags: recipe.strTags.toString(), // myTags.toString(),
     }];
 
     if (!localStorage.getItem('doneRecipes')) {
@@ -267,8 +277,19 @@ class FoodsRecipesInProgress extends React.Component {
     const verifyLocalStorage = this.getRecipesLocalStorage();
     if (checkedItems.length === length && verifyLocalStorage) {
       const getCheckedItems = this.getRecipesLocalStorage();
+
       return getCheckedItems;
     }
+    const inputsList = document.querySelectorAll('input[type=checkbox]');
+    inputsList.forEach((item) => {
+      if (item.checked === true) {
+        item.parentNode.className = 'styled';
+        item.parentNode.checked = true;
+        item.parentNode.checked = 'check';
+      } else {
+        item.parentNode.className = 'not-styled';
+      }
+    });
     return checkedItems;
   }
 
@@ -290,23 +311,24 @@ class FoodsRecipesInProgress extends React.Component {
                 <p data-testid="recipe-category">{recipe.strCategory}</p>
               </div>
               <div className="recipe-buttons">
-                <input
-                  type="image"
-                  data-testid="share-btn"
-                  className="share-btn"
-                  src={ shareIcon }
-                  alt="shareIcon"
-                  onClick={ () => this.handleShareFood(recipe) }
-                />
-                <p className="p" />
-                <input
-                  type="image"
-                  data-testid="favorite-btn"
-                  className="fav-button"
-                  src={ this.changeFavoriteIcon(recipe) }
-                  onClick={ () => this.setLocalStorage(recipe) }
-                  alt="whiteHeartIcon"
-                />
+                <div>
+                  <input
+                    type="image"
+                    data-testid="share-btn"
+                    className="share-btn"
+                    src={ shareIcon }
+                    alt="shareIcon"
+                    onClick={ (event) => this.handleShareFood(event, recipe) }
+                  />
+                  <input
+                    type="image"
+                    data-testid="favorite-btn"
+                    className="fav-button"
+                    src={ this.changeFavoriteIcon(recipe) }
+                    onClick={ () => this.setLocalStorage(recipe) }
+                    alt="whiteHeartIcon"
+                  />
+                </div>
               </div>
             </div>
             <hr className="card-hr" />

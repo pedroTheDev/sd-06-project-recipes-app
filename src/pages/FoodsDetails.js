@@ -45,25 +45,18 @@ class FoodsDetails extends React.Component {
     this.setState({ Video });
   }
 
-  async handleShareFood({ idMeal }) {
+  async handleShareFood({ target }, { idMeal }) {
+    const twoo = 2;
+    if ((target.parentNode).childNodes.length <= twoo) {
+      const { parentNode } = target;
+      const paragraph = document.createElement('p');
+      paragraph.innerText = 'Link Copiado';
+      paragraph.style.fontSize = '8px';
+      paragraph.style.fontWeight = '100';
+      parentNode.appendChild(paragraph);
+    }
     const url = `http://localhost:3000/comidas/${idMeal}`;
     await copy(url);
-    const shareBtn = document.querySelector('.share-btn');
-    shareBtn.value = 'Link copiado!';
-    const p = document.querySelector('.p');
-    const span = document.createElement('span');
-    p.appendChild(span);
-    span.innerHTML = 'Link copiado!';
-    // window.alert('Link copiado!');
-    // const el = document.createElement('textarea');
-    // el.value = url;
-    // el.setAttribute('readonly', '');
-    // el.style.position = 'absolute';
-    // el.style.left = '-9999px';
-    // document.body.appendChild(el);
-    // el.select();
-    // document.execCommand('copy');
-    // document.body.removeChild(el);
   }
 
   handleIngredients() {
@@ -72,24 +65,24 @@ class FoodsDetails extends React.Component {
     let ingredient;
     let measure;
     const { Meal } = this.state;
-    Meal.map((recipe) => {
-      this.handleYoutubeVideo(recipe.strYoutube);
-      const twenty = 20;
-      for (let index = 1; index <= twenty; index += 1) {
-        ingredient = `strIngredient${index}`;
-        measure = `strMeasure${index}`;
-        ingredientArray.push(recipe[ingredient]);
-        measureArray.push(recipe[measure]);
-      }
-      const filteredIngredients = ingredientArray.filter((item) => item !== undefined)
-        .filter((element) => element !== null).filter((element) => element !== '');
+    const recipe = Meal[0];
 
-      const filteredMeasure = measureArray.filter((item) => item !== undefined)
-        .filter((element) => element !== null).filter((element) => element !== '');
+    this.handleYoutubeVideo(recipe.strYoutube);
+    const twenty = 20;
+    for (let index = 1; index <= twenty; index += 1) {
+      ingredient = `strIngredient${index}`;
+      measure = `strMeasure${index}`;
+      ingredientArray.push(recipe[ingredient]);
+      measureArray.push(recipe[measure]);
+    }
+    const filteredIngredients = ingredientArray.filter((item) => item !== undefined)
+      .filter((element) => element !== null).filter((element) => element !== '');
 
-      this.setIngredients(filteredIngredients, filteredMeasure);
-      return null;
-    });
+    const filteredMeasure = measureArray.filter((item) => item !== undefined)
+      .filter((element) => element !== null).filter((element) => element !== '');
+
+    this.setIngredients(filteredIngredients, filteredMeasure);
+    return null;
   }
 
   setMealState(Meal, RecommendedDrinks) {
@@ -203,10 +196,15 @@ class FoodsDetails extends React.Component {
     localStorage.setItem('ReceitaIniciada', JSON.stringify(recipe.idMeal));
     const getCheckedItems = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (getCheckedItems) {
-      getCheckedItems.meals = { [idCurrent]: [] };
-      localStorage.setItem('inProgressRecipes', JSON.stringify(getCheckedItems));
+      const objValue = getCheckedItems.meals[idCurrent];
+      if (objValue) {
+        getCheckedItems.meals = { [idCurrent]: objValue };
+        localStorage.setItem('inProgressRecipes', JSON.stringify(getCheckedItems));
+      } else {
+        getCheckedItems.meals = { [idCurrent]: [] };
+        localStorage.setItem('inProgressRecipes', JSON.stringify(getCheckedItems));
+      }
     }
-
     history.push(`/comidas/${idCurrent}/in-progress`);
   }
 
@@ -217,10 +215,13 @@ class FoodsDetails extends React.Component {
       Ingredients,
       Measures,
       Video } = this.state;
+    const { history } = this.props;
+    const recipe = Meal[0];
+    const zero = 0;
     return (
       <div className="food-drink-detail-container">
-        {Meal ? Meal.map((recipe, index) => (
-          <div className="detail-card" key={ index }>
+        {Meal.length > zero && Meal[0] && (
+          <div className="detail-card">
             <img
               src={ recipe.strMealThumb }
               data-testid="recipe-photo"
@@ -232,23 +233,24 @@ class FoodsDetails extends React.Component {
                 <p data-testid="recipe-category">{recipe.strCategory}</p>
               </div>
               <div className="recipe-buttons">
-                <input
-                  type="image"
-                  className="share-btn"
-                  data-testid="share-btn"
-                  src={ shareIcon }
-                  onClick={ () => this.handleShareFood(recipe) }
-                  alt="shareIcon"
-                />
-                <p className="p" />
-                <input
-                  type="image"
-                  data-testid="favorite-btn"
-                  className="fav-button"
-                  src={ this.teste(recipe) }
-                  onClick={ () => this.setLocalState(recipe) }
-                  alt="whiteHeartIcon"
-                />
+                <div>
+                  <input
+                    type="image"
+                    className="share-btn"
+                    data-testid="share-btn"
+                    src={ shareIcon }
+                    onClick={ (event) => this.handleShareFood(event, recipe) }
+                    alt="shareIcon"
+                  />
+                  <input
+                    type="image"
+                    data-testid="favorite-btn"
+                    className="fav-button"
+                    src={ this.teste(recipe) }
+                    onClick={ () => this.setLocalState(recipe) }
+                    alt="whiteHeartIcon"
+                  />
+                </div>
               </div>
             </div>
             <hr className="card-hr" />
@@ -271,7 +273,7 @@ class FoodsDetails extends React.Component {
             <div className="detail-instructions" data-testid="instructions">
               {recipe.strInstructions}
             </div>
-            <p data-testid={ `${index}-card-name` }>{recipe.strMeal}</p>
+            <p data-testid="0-card-name">{recipe.strMeal}</p>
             <h2>Recomendadas</h2>
             <div className="video-div">
               <iframe
@@ -292,10 +294,12 @@ class FoodsDetails extends React.Component {
                   style={ { transform: `translateX(${x}%)` } }
                   data-testid={ `${i}-recomendation-card` }
                 >
-                  <img
+                  <input
+                    type="image"
                     src={ recomend.strDrinkThumb }
                     data-testid="recipe-photo"
                     alt="recipe-img"
+                    onClick={ () => history.push(`/bebidas/${recomend.idDrink}`) }
                   />
                   <div className="text-slider-div">
                     <p>{recomend.strAlcoholic}</p>
@@ -327,7 +331,7 @@ class FoodsDetails extends React.Component {
                   Iniciar Receita
                 </button>)}
           </div>
-        )) : null }
+        )}
       </div>);
   }
 }
