@@ -10,6 +10,7 @@ const endpoints = {
   ingredient: 'filter.php?i=',
   name: 'search.php?s=',
   firstLetter: 'search.php?f=',
+  lookupIngredient: 'lookup.php?i=',
 };
 
 export async function fetchDrink(type, key) {

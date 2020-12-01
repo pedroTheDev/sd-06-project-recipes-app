@@ -8,6 +8,7 @@ function RecipesAppProvider({ children }) {
   const [searchBar, setSearchBar] = useState(false);
   const [data, setData] = useState({});
   const [control, setControl] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   const setFetchMeal = async (type, key) => {
     const result = await fetchMeal(type, key);
@@ -45,6 +46,11 @@ function RecipesAppProvider({ children }) {
     return resultReturn;
   };
 
+  const handleFavoriteRecipe = () => {
+    console.log('is favorite', 'teste');
+    setIsFavorite(!isFavorite);
+  };
+
   const contextValue = {
     searchBar,
     setSearchBar,
@@ -53,6 +59,8 @@ function RecipesAppProvider({ children }) {
     setFetchDrink,
     control,
     setControl,
+    isFavorite,
+    handleFavoriteRecipe,
   };
   return (
     <recipesAppContext.Provider value={ contextValue }>
