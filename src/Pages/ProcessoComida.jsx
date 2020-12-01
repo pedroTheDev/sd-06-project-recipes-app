@@ -11,7 +11,7 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 const ReceitaProcessoComida = () => {
   const [recipeProgress, setRecipeProgress] = useState();
   const [attributesNames, setAttributesNames] = useState();
-  const [checkedId, setCheckedId] = useState();
+  const [checkedId, setCheckedId] = useState([]);
 
   const idFood = useParams().id;
 
@@ -24,8 +24,22 @@ const ReceitaProcessoComida = () => {
     });
   };
 
+  const loadCheckedIngredientsLocalStorage = () => {
+    if (localStorage.getItem('checkedIngredients') === null) {
+      const checkedIngredients = {
+        cocktails: {},
+        meals: {},
+      };
+      localStorage.setItem('checkedIngredients', JSON.stringify(checkedIngredients));
+    }
+
+    const checkedIngredients = JSON.parse(localStorage.getItem('checkedIngredients'));
+    setCheckedId(checkedIngredients.meals[idFood] || []);
+  };
+
   useEffect(() => {
     handleIdInProgress();
+    loadCheckedIngredientsLocalStorage();
   }, []);
 
   const handleAttributesNames = () => {
@@ -91,37 +105,19 @@ const ReceitaProcessoComida = () => {
     handleFavorite();
   }, [recipeProgress]);
 
-  const loadCheckedIngredientsLocalStorage = () => {
-    if (localStorage.getItem('checkedIngredients') === null) {
-      const checkedIngredients = {
-        cocktails: {},
-        meals: {},
-      };
-      localStorage.setItem('checkedIngredients', JSON.stringify(checkedIngredients));
-    }
-
-    const checkedIngredients = JSON.parse(localStorage.getItem('checkedIngredients'));
-    setCheckedId(checkedIngredients.meals[idFood]);
-  };
-
-  useEffect(() => {
-    loadCheckedIngredientsLocalStorage();
-  }, []);
-
   const scratCheckbox = (target) => {
-    // console.log(target.checked);
-
     const checkedIngredients = JSON.parse(localStorage.getItem('checkedIngredients'));
 
     if (target.checked === true) {
+      console.log(checkedIngredients.meals[idFood], checkedId);
       const ingredientsToSave = {
         ...checkedIngredients,
         meals: {
           ...checkedIngredients.meals,
-          [idFood]: [
+          [idFood]: checkedIngredients.meals[idFood] ? [
             ...checkedIngredients.meals[idFood],
             target.id,
-          ],
+          ] : [target.id],
         },
       };
       localStorage.setItem('checkedIngredients', JSON.stringify(ingredientsToSave));
@@ -203,7 +199,7 @@ const ReceitaProcessoComida = () => {
                   >
                     <input
                       type="checkbox"
-                      checked={ checkedId.includes(i) }
+                      // checked={ () => checkedId.some((item) => item === i) }
                       id={ i }
                       onClick={ (({ target }) => scratCheckbox(target)) }
                     />
