@@ -11,7 +11,7 @@ const TWELVE = 12;
 function ExploreFoodIngredients({ type }) {
   const [ingredients, setIngredients] = useState([]);
 
-  const APIkey = (type === 'comidas')
+  const ingName = (type === 'comidas')
     ? 'strIngredient'
     : 'strIngredient1';
 
@@ -36,14 +36,13 @@ function ExploreFoodIngredients({ type }) {
             <ExploreCard
               key={ index }
               index={ index }
-              name={ el[APIkey] }
+              name={ el[ingName] }
               type={ type }
             />
           ))
         }
       </section>
       <Footer />
-      { console.log('ING:', ingredients) }
     </>
   );
 }

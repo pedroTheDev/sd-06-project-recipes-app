@@ -4,15 +4,18 @@ import { Redirect, Link } from 'react-router-dom';
 import RecipesAppContext from '../context/RecipesAppContext';
 
 function Card({ title }) {
-  const { recipes, errorFromApi, filteredRecipes, setFilteredRecipes } = useContext(RecipesAppContext);
+  const {
+    recipes, errorFromApi, filteredRecipes, setFilteredRecipes,
+  } = useContext(RecipesAppContext);
 
   useEffect(() => {
     return () => {
-      // parei aqui. Tenho que setar o filtedRecipesa agora
       console.log('desmontando');
       setFilteredRecipes(false);
     };
   }, []);
+
+  console.log('filteredREc', filteredRecipes)
 
   const ZERO = 0;
   const DOZE = 12;
@@ -42,8 +45,9 @@ function Card({ title }) {
   };
 
   if (filteredRecipes) {
+    console.log('ENTROU')
     return (
-      filteredRecipes.length > ZERO && recipes.slice(ZERO, DOZE).map((recipe, index) => (
+      filteredRecipes.length > ZERO && filteredRecipes.slice(ZERO, DOZE).map((recipe, index) => (
         <div
           key={ recipe[`id${recipeType}`] }
           data-testid={ `${index}-recipe-card` }
