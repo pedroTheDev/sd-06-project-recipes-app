@@ -10,8 +10,8 @@ function Cards({ info, recipe, index }) {
   // const { recipesToRenderByIngredient } = useContext(Context);
   const url = 'https://www.themealdb.com/images/ingredients/';
   // const type = recipe === 'ingredientsMeals' ? 'meal' : 'drink';
-  const imageMeal = `${strIngredient}.png`;
-  const imageDrink = `${strIngredient1}.png`;
+  const imageMeal = `${strIngredient}-Small.png`;
+  const imageDrink = `${strIngredient1}-Small.png`;
 
   return (
     <Link
