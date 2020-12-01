@@ -50,7 +50,7 @@ const MainPage = (props) => {
     <div>
       <Header pageName={ pathname } renderSearch />
       <div className="default-page">
-        <CategoryMenu pathname={ pathname } />
+        <CategoryMenu className="sub-header" pathname={ pathname } />
         {
           checkRequestSize(recipeList)
         }

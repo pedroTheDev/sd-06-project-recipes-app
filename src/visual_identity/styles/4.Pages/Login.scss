@@ -4,7 +4,6 @@
   animation: delayedAppear 1.5s ease 3s forwards;
   opacity: 0;
   @include flexBox(column, space-between, center);
-  height: 5vh;
   margin-top: 3vh;
 
   & p {
