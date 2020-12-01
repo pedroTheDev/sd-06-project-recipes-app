@@ -27,29 +27,22 @@ export function treatRecipe(recipe) {
   if ('idMeal' in recipe) {
     treatedRecipe = {
       id: recipe.idMeal,
-      type: 'meal',
-      name: recipe.strMeal,
-      category: recipe.strCategory,
-      image: recipe.strMealThumb,
-      tags: recipe.strTags,
-      doneDate: '',
+      type: 'comida',
       area: recipe.strArea,
-      instructions: recipe.strInstructions,
-      youtube: recipe.strYoutube,
-      source: recipe.strSource,
+      category: recipe.strCategory,
+      alcoholicOrNot: '',
+      name: recipe.strMeal,
+      image: recipe.strMealThumb,
     };
   } else if ('idDrink' in recipe) {
     treatedRecipe = {
       id: recipe.idDrink,
-      type: 'drink',
-      name: recipe.strDrink,
+      type: 'bebida',
+      area: '',
       category: recipe.strCategory,
+      alcoholicOrNot: recipe.strAlcoholic,
+      name: recipe.strDrink,
       image: recipe.strDrinkThumb,
-      tags: recipe.strTags,
-      doneDate: '',
-      alcoholic: recipe.strAlcoholic,
-      glass: recipe.strGlass,
-      instructions: recipe.strInstructions,
     };
   }
 
@@ -58,28 +51,25 @@ export function treatRecipe(recipe) {
 
 export function convertTreatedRecipe(recipe) {
   let convertedRecipe = {};
-  if (recipe.type === 'meal') {
+  if (recipe.type === 'comida') {
     convertedRecipe = {
-      idMeal: recipe.id,
-      strMeal: recipe.name,
-      strCategory: recipe.category,
-      strMealThumb: recipe.image,
-      strTags: recipe.tags,
-      strArea: recipe.area,
-      strInstructions: recipe.instructions,
-      strYoutube: recipe.youtube,
-      strSource: recipe.source,
+      id: recipe.idMeal,
+      type: 'comida',
+      area: recipe.strArea,
+      category: recipe.strCategory,
+      alcoholicOrNot: '',
+      name: recipe.strMeal,
+      image: recipe.strMealThumb,
     };
-  } else if (recipe.type === 'drink') {
+  } else if (recipe.type === 'bebida') {
     convertedRecipe = {
-      idDrink: recipe.id,
-      strDrink: recipe.name,
-      strCategory: recipe.category,
-      strDrinkThumb: recipe.image,
-      strTags: recipe.tags,
-      strInstructions: recipe.instructions,
-      strAlcoholic: recipe.alcoholic,
-      strGlass: recipe.glass,
+      id: recipe.idDrink,
+      type: 'bebida',
+      area: '',
+      category: recipe.strCategory,
+      alcoholicOrNot: recipe.strAlcoholic,
+      name: recipe.strDrink,
+      image: recipe.strDrinkThumb,
     };
   }
 
