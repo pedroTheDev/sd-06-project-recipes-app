@@ -30,7 +30,7 @@ function Login() {
         <input
           className="input"
           data-testid="email-input"
-          type="text"
+          type="email"
           name="email"
           placeholder="Digite seu e-mail"
           required
