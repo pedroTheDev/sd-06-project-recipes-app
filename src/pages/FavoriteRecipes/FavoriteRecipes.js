@@ -6,6 +6,7 @@ import { shareIcon, whiteHeartIcon, blackHeartIcon } from '../../images';
 
 function FavoritesRecipes() {
   const { isFavorite, handleFavoriteRecipe } = useContext(recipesAppContext);
+
   const doneRecipes = [{
     id: '52977',
     type: 'meal',
@@ -56,24 +57,24 @@ function FavoritesRecipes() {
     <div>
       <Header
         className="header"
-        pageTitle="Receitas Feitas"
+        pageTitle="Receitas Favoritas"
       />
       <div>
         <input
           className="btn btn-secondary"
-          onClick={() => setType('')}
+          onClick={ () => setType('') }
           type="button"
           value="All"
         />
         <input
           className="btn btn-secondary"
-          onClick={() => setType('meal')}
+          onClick={ () => setType('meal') }
           type="button"
           value="Comidas"
         />
         <input
           className="btn btn-secondary"
-          onClick={() => setType('drink')}
+          onClick={ () => setType('drink') }
           type="button"
           value="Bebidas"
         />
@@ -89,48 +90,48 @@ function FavoritesRecipes() {
             }
             return (
               <div>
-                <Link to={urlLinkDetail}>
+                <Link to={ urlLinkDetail }>
                   <img
-                    data-testid={`${index}-horizontal-image`}
-                    src={recipe.image}
-                    alt={recipe.name}
+                    data-testid={ `${index}-horizontal-image` }
+                    src={ recipe.image }
+                    alt={ recipe.name }
                   />
                 </Link>
-                <p data-testid={`${index}-horizontal-top-text`}>
-                  {recipe.category}
+                <p data-testid={ `${index}-horizontal-top-text` }>
+                  { recipe.category }
                 </p>
-                <Link to={urlLinkDetail}>
-                  <h2 data-testid={`${index}-horizontal-name`}>
-                    {recipe.name}
+                <Link to={ urlLinkDetail }>
+                  <h2 data-testid={ `${index}-horizontal-name` }>
+                    { recipe.name }
                   </h2>
                 </Link>
-                <p data-testid={`${index}-horizontal-done-date`}>
+                <p data-testid={ `${index}-horizontal-done-date` }>
                   {recipe.doneDate}
                 </p>
                 <input
-                  id={`${recipe.id},${recipe.type}`}
+                  id={ `${recipe.id},${recipe.type}` }
                   type="image"
-                  data-testid={`${index}-horizontal-share-btn`}
+                  data-testid={ `${index}-horizontal-share-btn` }
                   className="share-btn"
-                  src={shareIcon}
+                  src={ shareIcon }
                   alt="Share recipe"
-                  onClick={({ target }) => handleShareIcon(target)}
+                  onClick={ ({ target }) => handleShareIcon(target) }
                 />
-                <p className={`copied-link-${recipe.id}`} />
+                <p className={ `copied-link-${recipe.id}` } />
                 <input
                   type="image"
                   data-testid="favorite-btn"
-                  src={isFavorite ? blackHeartIcon : whiteHeartIcon}
+                  src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
                   alt="Favorite recipe"
-                  onClick={handleFavoriteRecipe}
+                  onClick={ handleFavoriteRecipe }
                 />
                 {recipe.tags.map((tagName) => {
                   return (
                     <p
-                      data-testid={`${index}-${tagName}-horizontal-tag`}
-                      key={tagName}
+                      data-testid={ `${index}-${tagName}-horizontal-tag` }
+                      key={ tagName }
                     >
-                      { tagName}
+                      { tagName }
                     </p>
                   )
                 }
@@ -146,4 +147,3 @@ function FavoritesRecipes() {
 }
 
 export default FavoritesRecipes;
-
