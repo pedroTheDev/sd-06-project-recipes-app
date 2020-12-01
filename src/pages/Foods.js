@@ -132,8 +132,8 @@ class Foods extends React.Component {
                 src={ recipe.strMealThumb }
                 data-testid={ `${index}-card-img` }
                 alt="recipe"
-                style={ { borderRadius: '4px' } }
                 onClick={ () => this.redirectOnImage(recipe) }
+                style={ { borderRadius: '4px' } }
               />
               <hr className="card-hr" />
               <p data-testid={ `${index}-card-name` } className="bla">

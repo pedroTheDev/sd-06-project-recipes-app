@@ -27,6 +27,7 @@ class DrinksDetails extends React.Component {
     this.handleYoutubeVideo = this.handleYoutubeVideo.bind(this);
     this.checkRecipesDone = this.checkRecipesDone.bind(this);
     this.redirectFromState = this.redirectFromState.bind(this);
+    this.setDrinkState = this.setDrinkState.bind(this);
   }
 
   async componentDidMount() {
@@ -35,6 +36,7 @@ class DrinksDetails extends React.Component {
     dispatchID(endpoint);
     const drinkRecipe = await fetchDrinksById(endpoint);
     const recommendedMeals = await fetchRecommendedMeals();
+    console.log(drinkRecipe.length);
     this.setDrinkState(drinkRecipe, recommendedMeals);
     this.handleIngredients();
     this.changeButtonInnerText(endpoint);
@@ -56,17 +58,6 @@ class DrinksDetails extends React.Component {
     const span = document.createElement('span');
     p.appendChild(span);
     span.innerHTML = 'Link copiado!';
-    // const url = `http://localhost:3000/comidas/${idDrink}`;
-    // window.alert('Link copiado!');
-    // const el = document.createElement('textarea');
-    // el.value = url;
-    // el.setAttribute('readonly', '');
-    // el.style.position = 'absolute';
-    // el.style.left = '-9999px';
-    // document.body.appendChild(el);
-    // el.select();
-    // document.execCommand('copy');
-    // document.body.removeChild(el);
   }
 
   handleIngredients() {
@@ -204,8 +195,14 @@ class DrinksDetails extends React.Component {
     const { history } = this.props;
     const getCheckedItems = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (getCheckedItems) {
-      getCheckedItems.cocktails = { [idCurrent]: [] };
-      localStorage.setItem('inProgressRecipes', JSON.stringify(getCheckedItems));
+      const objValue = getCheckedItems.cocktails[idCurrent];
+      if (objValue) {
+        getCheckedItems.cocktails = { [idCurrent]: objValue };
+        localStorage.setItem('inProgressRecipes', JSON.stringify(getCheckedItems));
+      } else {
+        getCheckedItems.cocktails = { [idCurrent]: [] };
+        localStorage.setItem('inProgressRecipes', JSON.stringify(getCheckedItems));
+      }
     }
 
     history.push(`/bebidas/${idCurrent}/in-progress`);
@@ -218,10 +215,12 @@ class DrinksDetails extends React.Component {
       Ingredients,
       Measures,
       Video } = this.state;
+    const recipe = Drink[0];
+    const zero = 0;
     return (
       <div className="food-drink-detail-container">
-        {Drink ? Drink.map((recipe, index) => (
-          <div className="detail-card" key={ index }>
+        {Drink.length > zero && (
+          <div className="detail-card">
             <img
               src={ recipe.strDrinkThumb }
               data-testid="recipe-photo"
@@ -258,7 +257,7 @@ class DrinksDetails extends React.Component {
               <ul className="detail-ingredients">
                 {Ingredients.map((ingredient, i) => (
                   <li
-                    key={ index }
+                    key={ i }
                     data-testid={ `${i}-ingredient-name-and-measure` }
                   >
                     {ingredient}
@@ -272,7 +271,7 @@ class DrinksDetails extends React.Component {
             <div className="detail-instructions" data-testid="instructions">
               {recipe.strInstructions}
             </div>
-            <p data-testid={ `${index}-card-name` }>{recipe.strMeal}</p>
+            <p data-testid="0-card-name">{recipe.strMeal}</p>
             <h2>Recomendadas</h2>
             <div className="video-div">
               <iframe
@@ -286,31 +285,28 @@ class DrinksDetails extends React.Component {
               />
             </div>
             <div className="slider">
-              {RecommendedMeals.map((recomend, i) => {
-                console.log('bla');
-                return (
-                  <div
-                    key={ i }
-                    className="slide"
-                    style={ { transform: `translateX(${x}%)` } }
-                    data-testid={ `${i}-recomendation-card` }
-                  >
-                    <img
-                      src={ recomend.strMealThumb }
-                      data-testid="recipe-photo"
-                      alt="recipe-img"
-                    />
-                    <div className="text-slider-div">
-                      <p>{recomend.strCategory}</p>
-                      <h4
-                        data-testid={ `${i}-recomendation-title` }
-                      >
-                        {recomend.strMeal}
-                      </h4>
-                    </div>
+              {RecommendedMeals.map((recomend, i) => (
+                <div
+                  key={ i }
+                  className="slide"
+                  style={ { transform: `translateX(${x}%)` } }
+                  data-testid={ `${i}-recomendation-card` }
+                >
+                  <img
+                    src={ recomend.strMealThumb }
+                    data-testid="recipe-photo"
+                    alt="recipe-img"
+                  />
+                  <div className="text-slider-div">
+                    <p>{recomend.strCategory}</p>
+                    <h4
+                      data-testid={ `${i}-recomendation-title` }
+                    >
+                      {recomend.strMeal}
+                    </h4>
                   </div>
-                );
-              })}
+                </div>
+              ))}
             </div>
             <div className="slider-controls">
               <button type="button" id="goLeft" onClick={ this.goLeft }>
@@ -331,7 +327,7 @@ class DrinksDetails extends React.Component {
                   Iniciar Receita
                 </button>)}
           </div>
-        )) : null}
+        )}
       </div>
     );
   }

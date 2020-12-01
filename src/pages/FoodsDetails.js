@@ -54,16 +54,6 @@ class FoodsDetails extends React.Component {
     const span = document.createElement('span');
     p.appendChild(span);
     span.innerHTML = 'Link copiado!';
-    // window.alert('Link copiado!');
-    // const el = document.createElement('textarea');
-    // el.value = url;
-    // el.setAttribute('readonly', '');
-    // el.style.position = 'absolute';
-    // el.style.left = '-9999px';
-    // document.body.appendChild(el);
-    // el.select();
-    // document.execCommand('copy');
-    // document.body.removeChild(el);
   }
 
   handleIngredients() {
@@ -203,10 +193,15 @@ class FoodsDetails extends React.Component {
     localStorage.setItem('ReceitaIniciada', JSON.stringify(recipe.idMeal));
     const getCheckedItems = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (getCheckedItems) {
-      getCheckedItems.meals = { [idCurrent]: [] };
-      localStorage.setItem('inProgressRecipes', JSON.stringify(getCheckedItems));
+      const objValue = getCheckedItems.meals[idCurrent];
+      if (objValue) {
+        getCheckedItems.meals = { [idCurrent]: objValue };
+        localStorage.setItem('inProgressRecipes', JSON.stringify(getCheckedItems));
+      } else {
+        getCheckedItems.meals = { [idCurrent]: [] };
+        localStorage.setItem('inProgressRecipes', JSON.stringify(getCheckedItems));
+      }
     }
-
     history.push(`/comidas/${idCurrent}/in-progress`);
   }
 
@@ -218,11 +213,11 @@ class FoodsDetails extends React.Component {
       Measures,
       Video } = this.state;
     const recipe = Meal[0];
-    const index = 0;
+    const zero = 0;
     return (
       <div className="food-drink-detail-container">
-        {recipe ? (
-          <div className="detail-card" key={ index }>
+        {Meal.length > zero && Meal[0] && (
+          <div className="detail-card">
             <img
               src={ recipe.strMealThumb }
               data-testid="recipe-photo"
@@ -273,7 +268,7 @@ class FoodsDetails extends React.Component {
             <div className="detail-instructions" data-testid="instructions">
               {recipe.strInstructions}
             </div>
-            <p data-testid={ `${index}-card-name` }>{recipe.strMeal}</p>
+            <p data-testid="0-card-name">{recipe.strMeal}</p>
             <h2>Recomendadas</h2>
             <div className="video-div">
               <iframe
@@ -329,7 +324,7 @@ class FoodsDetails extends React.Component {
                   Iniciar Receita
                 </button>)}
           </div>
-        ) : null }
+        )}
       </div>);
   }
 }
