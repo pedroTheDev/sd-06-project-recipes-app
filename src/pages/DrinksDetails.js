@@ -40,7 +40,6 @@ class DrinksDetails extends React.Component {
     this.setDrinkState(drinkRecipe, recommendedMeals);
     this.handleIngredients();
     this.changeButtonInnerText(endpoint);
-    this.setRenderState(drinkRecipe[0]);
   }
 
   handleYoutubeVideo(url) {
@@ -82,12 +81,6 @@ class DrinksDetails extends React.Component {
         .filter((element) => element !== undefined).filter((element) => element !== '');
       this.setIngredients(filteredIngredients, filteredMeasure);
       return null;
-    });
-  }
-
-  setRenderState(drink) {
-    this.setState({
-      recipe: drink,
     });
   }
 
@@ -215,6 +208,7 @@ class DrinksDetails extends React.Component {
 
   render() {
     const {
+      Drink,
       RecommendedMeals,
       x,
       Ingredients,
