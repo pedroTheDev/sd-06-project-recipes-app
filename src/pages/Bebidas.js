@@ -11,9 +11,9 @@ import logo from '../images/myfood.png';
 import '../style/Loading.css';
 
 function Bebidas() {
-  const {
-    searchBox, drinks, setDrinks, setFiltersData,
-  } = useContext(ReceitasContext);
+  const { searchBox, drinks, setDrinks, setFiltersData } = useContext(
+    ReceitasContext
+  );
 
   const location = useLocation();
   const doze = 12;
@@ -30,23 +30,26 @@ function Bebidas() {
     fetchDrink();
   }, []);
 
-  return ((!drinks.length)
-    ? <div><img src={ logo } alt="teste" className="loading" /></div>
-    : (
-      <section>
-        <Header title="Bebidas" searchBtn />
-        {searchBox && <SearchBar />}
-        <div className="my-5 py-2">
-          <DrinkFilters />
+  return !drinks.length ? (
+    <div>
+      <img src={ logo } alt="teste" className="loading" />
+    </div>
+  ) : (
+    <section>
+      <Header title="Bebidas" searchBtn />
+      {searchBox && <SearchBar />}
+      <div className="my-4 py-2">
+        <DrinkFilters />
+        <div className="row">
           {drinks
             .filter((x, index) => index < doze)
             .map((drink, i) => (
               <DrinksCard key={ i } drink={ drink } index={ i } />
             ))}
         </div>
-        {location.pathname === '/bebidas' && <Footer />}
-      </section>
-    )
+      </div>
+      {location.pathname === '/bebidas' && <Footer />}
+    </section>
   );
 }
 

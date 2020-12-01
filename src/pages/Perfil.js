@@ -34,7 +34,7 @@ const Perfil = () => {
               <button
                 type="button"
                 className="btn btn-lg btn-block"
-                style={ { background: '#7ed95e' } }
+                style={ { background: '#6CDC3E' } }
                 data-testid="profile-done-btn"
               >
                 Receitas Feitas
