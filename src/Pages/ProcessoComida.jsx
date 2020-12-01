@@ -37,9 +37,17 @@ const ReceitaProcessoComida = () => {
     setCheckedId(checkedIngredients.meals[idFood] || []);
   };
 
+  const loadDoneRecipesFromStorage = () => {
+    if (localStorage.getItem('doneRecipes') === null) {
+      const doneRecipes = [];
+      localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
+    }
+  };
+
   useEffect(() => {
     handleIdInProgress();
     loadCheckedIngredientsLocalStorage();
+    loadDoneRecipesFromStorage();
   }, []);
 
   const handleAttributesNames = () => {
@@ -78,12 +86,10 @@ const ReceitaProcessoComida = () => {
     return ingredients;
   };
 
-  const handleFavorite = () => {
-    if (localStorage.getItem('doneRecipes') === null) {
-      const doneRecipes = [];
-      localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
-    } else if (recipeProgress) {
-      localStorage.setItem('doneRecipes', JSON.stringify([{
+  const setDoneRecipes = () => {
+    if (recipeProgress) {
+      const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+      localStorage.setItem('doneRecipes', JSON.stringify([...doneRecipes, {
         id: recipeProgress.food.meals[0].idMeal,
         type: 'comida',
         area: recipeProgress.food.meals[0].strArea,
@@ -100,10 +106,6 @@ const ReceitaProcessoComida = () => {
       return '';
     }
   };
-
-  useEffect(() => {
-    handleFavorite();
-  }, [recipeProgress]);
 
   const scratCheckbox = (target) => {
     const checkedIngredients = JSON.parse(localStorage.getItem('checkedIngredients'));
@@ -188,7 +190,7 @@ const ReceitaProcessoComida = () => {
             <div className="container-ingredients">
               <span>Ingredients</span>
               <div className="container-checkbox">
-                {getIngredientsOrMeasure('strIngredient').map((ingred, i) => (
+                {console.log(checkedId) || getIngredientsOrMeasure('strIngredient').map((ingred, i) => (
                   <label
                     key={ i }
                     htmlFor={ i }
@@ -197,9 +199,9 @@ const ReceitaProcessoComida = () => {
                   >
                     <input
                       type="checkbox"
-                      // checked={ () => checkedId.some((item) => item === i) }
+                      checked={ checkedId.includes(i.toString()) }
                       id={ i }
-                      onClick={ (({ target }) => scratCheckbox(target)) }
+                      onChange={ (({ target }) => scratCheckbox(target)) }
                     />
                     {`${ingred} - ${getIngredientsOrMeasure('strMeasure')[i]}`}
                   </label>
@@ -219,6 +221,7 @@ const ReceitaProcessoComida = () => {
               <button
                 type="button"
                 data-testid="finish-recipe-btn"
+                onClick={ setDoneRecipes }
               >
                 <Link
                   className="link-button"
