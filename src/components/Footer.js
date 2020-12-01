@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -6,7 +5,6 @@ import { Link } from 'react-router-dom';
 import drinkIcon from '../images/drinkIcon.svg';
 import exploreIcon from '../images/exploreIcon.svg';
 import mealIcon from '../images/mealIcon.svg';
-import '../visual_identity/styles/2.Layout/Footer.css';
 import { resetShouldFetch, clearState } from '../redux/actions/mainPageFetcher';
 
 const Footer = ({ clear, clearAndDontUpdate }) => (
