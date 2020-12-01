@@ -68,19 +68,22 @@ class ExploreFoodsByArea extends React.Component {
     return (
       <div className="explorefoods-container">
         <Header history={ history } />
-        <div className="by-area-content">
-          <select
-            data-testid="explore-by-area-dropdown"
-            onChange={ (event) => this.setSelectedOption(event) }
-          >
-            {options.map((element, index) => (
-              <option key={ index } data-testid={ `${element.strArea}-option` }>
-                {element.strArea}
-              </option>
-            ))}
-            <option data-testid="All-option">All</option>
-          </select>
-        </div>
+        {areaFoods
+          && (
+            <div className="by-area-content">
+              <select
+                data-testid="explore-by-area-dropdown"
+                onChange={ (event) => this.setSelectedOption(event) }
+              >
+                <option data-testid="All-option">All</option>
+                {options.map((element, index) => (
+                  <option key={ index } data-testid={ `${element.strArea}-option` }>
+                    {element.strArea}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
         <div className="cards-container by-area-container">
           {areaFoods ? areaFoods.map((recipe, index) => (
             <div
@@ -99,7 +102,14 @@ class ExploreFoodsByArea extends React.Component {
               />
               <h4 data-testid={ `${index}-card-name` }>{recipe.strMeal}</h4>
             </div>
-          )) : '' }
+          )) : (
+            <div className="lds-ellipsis">
+              <div />
+              <div />
+              <div />
+              <div />
+            </div>
+          )}
         </div>
         <Footer history={ history } />
       </div>
