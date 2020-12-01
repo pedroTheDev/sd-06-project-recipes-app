@@ -9,7 +9,7 @@ function RecipesMade() {
   const history = useHistory();
 
   const renderTags = (tags, index) => (
-    tags.map((tag) => (
+    tags.split(',').map((tag) => (
       <span
         key={ index }
         data-testid={ `${index}-${tag}-horizontal-tag` }

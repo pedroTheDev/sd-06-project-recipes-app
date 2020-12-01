@@ -58,14 +58,16 @@ function RecipesInProgress() {
     const zero = 0;
     const ten = 10;
     const newDoneRecipe = {
-      id: recipeInProgress.idMeal,
-      type: 'comida',
+      id: recipeInProgress.idMeal ? recipeInProgress.idMeal : recipeInProgress.idDrink,
+      type: recipeInProgress.idMeal ? 'comida' : 'bebida',
       area: recipeInProgress.strArea,
       category: recipeInProgress.strCategory,
-      alcoholicOrNot: '',
-      name: recipeInProgress.strMeal,
-      image: recipeInProgress.strMealThumb,
-      doneDate: new Date().toJSON().slice(zero, ten).replace(/-/g, '-'),
+      alcoholicOrNot: recipeInProgress.idMeal ? recipeInProgress.strAlcoholic : '',
+      name: recipeInProgress.strMeal ? recipeInProgress.strMeal
+        : recipeInProgress.strDrink,
+      image: recipeInProgress.strMealThumb ? recipeInProgress.strMealThumb
+        : recipeInProgress.strDrinkThumb,
+      doneDate: `Feita em : ${new Date().toJSON().slice(zero, ten).replace(/-/g, '/')}`,
       tags: recipeInProgress.strTags ? recipeInProgress.strTags : '',
     };
 
