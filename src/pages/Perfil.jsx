@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import '../styles/Profile.css';
+import { loadState } from '../services/localStorage';
 
 function Perfil({ history }) {
-  const user = JSON.parse(localStorage.user);
+  const user = loadState('user', { email: '' });
 
   // Logout and redirect to login page
   const handleLogout = () => {
