@@ -100,7 +100,7 @@ class FavoriteRecipes extends React.Component {
         {type === 'drink' ? <FavDrinkCard history={ history } indexAcc={ 0 } /> : null }
         {type === 'all'
           ? (
-            <div>
+            <div className="food-or-drink-done-card">
               <FavFoodCard history={ history } indexAcc={ 0 } />
               <FavDrinkCard history={ history } indexAcc={ drinkIndex } />
             </div>)
