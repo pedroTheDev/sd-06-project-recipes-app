@@ -1,0 +1,13 @@
+@import '../0.helpers/mixins';
+@import '../0.helpers/variables';
+
+.sub-header {
+  @include flexBox(row, space-around);
+  background-color: rgba(18, 17, 73, 0.6);
+  padding: 3% 0;
+
+  & button {
+    margin: 0;
+    
+  }
+}
