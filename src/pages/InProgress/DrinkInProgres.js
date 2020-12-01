@@ -61,6 +61,7 @@ export default function DrinkInProgress() {
     setIngredientAndMeasure();
     if (document.getElementById('renderizado') !== null) {
       resumeProgress(setIngredientAndMeasure());
+      verifyChecked();
     }
   }, [recipes]);
 
@@ -78,8 +79,26 @@ export default function DrinkInProgress() {
     console.log(id, completedItem.id);
     if (completedItem.classList.contains('selected')) {
       completedItem.classList.remove('selected');
+      verifyChecked();
     } else {
       completedItem.classList.add('selected');
+      verifyChecked();
+    }
+  }
+
+  function verifyChecked() {
+    const listCheckbox = document.querySelectorAll('input[type=checkbox]');
+    const btnFinalizar = document.getElementById('btnFinalizar');
+    let count = 0;
+    for (const item of listCheckbox) {
+      if (item.checked === true) {
+        count += 1;
+      }
+    }
+    if (count === listCheckbox.length) {
+      btnFinalizar.disabled = false;
+    } else {
+      btnFinalizar.disabled = true;
     }
   }
 
@@ -131,9 +150,11 @@ export default function DrinkInProgress() {
       <div className="button-container">
         <Link to="/receitas-feitas">
           <button
+            id="btnFinalizar"
             type="button"
             className="start-recipe"
             data-testid="finish-recipe-btn"
+            disabled="true"
           >
             Finalizar Receita
           </button>

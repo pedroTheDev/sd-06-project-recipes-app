@@ -166,12 +166,10 @@ export function selectedIngredient(recipeID, ingredient) {
     const ingredientIndex = ingredients.findIndex((item) => item === ingredient);
     if (ingredientIndex > minusOne) return true;
   }
-
   return false;
 }
 
 export function addRecipeProgress(recipeID, ingredient) {
-  console.log(recipeID, ingredient);
   checkRecipesProgressDatabase();
   const recipes = getRecipesProgress();
   const recipeIndex = recipes.findIndex((item) => item.id === recipeID);
