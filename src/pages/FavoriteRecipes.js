@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import clipboardCopy from 'clipboard-copy';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import shareIcon from '../images/shareIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 import './FavoriteRecipes.css';
 
 export default function FavoriteRecipes() {
   const favorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
   const alcoholic = favorites.map((e) => e.alcoholicOrNot);
-  const itemUrl = useLocation().pathname;
   const [copied, setCopied] = useState(false);
 
   function handleRemove(index) {
@@ -18,8 +19,8 @@ export default function FavoriteRecipes() {
     window.location.reload();
   }
 
-  function handleShareClick() {
-    clipboardCopy(`http://localhost:3000${itemUrl}`);
+  function handleShareClick(item) {
+    clipboardCopy(`http://localhost:3000/comidas/${item}`);
     const seconds = 5000;
     setCopied(true);
     setTimeout(() => {
@@ -54,7 +55,7 @@ export default function FavoriteRecipes() {
         <div key={ index } className="fav-card">
           <Link to={ `/${e.type}s/${e.id}` }>
             <p data-testid={ `${index}-horizontal-name` }>
-              { `Nome: ${e.name}`}
+              { `${e.name}`}
             </p>
 
             <img
@@ -66,33 +67,28 @@ export default function FavoriteRecipes() {
           </Link>
 
           <p data-testid={ `${index}-horizontal-top-text` }>
-            { `Categoria: ${e.category}` }
-          </p>
-
-          <p>
-            { `Area: ${e.area}`}
-          </p>
-
-          <p>
+            { `${e.area} - ${e.category}` }
             {alcoholic[index]}
           </p>
 
           <button
             type="button"
             data-testid={ `${index}-horizontal-share-btn` }
-            onClick={ handleShareClick }
+            onClick={ () => handleShareClick(e.id) }
+            src={ shareIcon }
           >
+            <img src={ shareIcon } alt="share" />
             Share
           </button>
-          <div>
-            {(copied) && <span>Link copiado!</span>}
-          </div>
+          {(copied) && <span>Link copiado!</span>}
 
           <button
             type="button"
             onClick={ () => handleRemove(index) }
             data-testid={ `${index}-horizontal-favorite-btn` }
+            src={ blackHeartIcon }
           >
+            <img src={ blackHeartIcon } alt="blackHeart" />
             Remove Favorite
           </button>
         </div>
