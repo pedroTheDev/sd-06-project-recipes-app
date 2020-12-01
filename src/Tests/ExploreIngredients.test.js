@@ -1,16 +1,23 @@
 import React from 'react';
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, waitForElement } from '@testing-library/react';
 import renderWithRouter from './renderWithRouter';
 import ExplorarBebidasIngredientes from '../Pages/ExplorarBebidasIngredientes';
 import ExplorarComidasIngredientes from '../Pages/ExplorarComidasIngredientes';
+import * as API from '../services/exploreRequest';
 
 describe('Implemente os elementos da tela de explorar comidas por ingredientes', () => {
   const { getByTestId, history } = renderWithRouter(<ExplorarComidasIngredientes />);
   
   it('Tem os data-testids corretos para a tela de explorar comidas por ingredientes', () => {
-    const index = 7;
+    const index = 0;
+    const mockSuccessResponse = [{teste: 'oi'}];
+    const mockJsonPromise = Promise.resolve(mockSuccessResponse);
+    const mockFetchPromise = Promise.resolve({
+      json: () => mockJsonPromise,
+    });
+    jest.spyOn(API, 'getAPI').mockResolvedValue(() => mockFetchPromise);
 
-    const ingredientCard = getByTestId(`${index}-ingredient-card`);
+    const ingredientCard = getByTestId('0-ingredient-card');
     const ingredientImg = getByTestId(`${index}-card-img`);
     const ingredientName = getByTestId(`${index}-card-name`);
 

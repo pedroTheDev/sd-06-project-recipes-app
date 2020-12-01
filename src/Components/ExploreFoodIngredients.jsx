@@ -1,23 +1,15 @@
 import React, { useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { getAPI } from '../services/exploreRequest';
 import RecipeContext from '../hooks/RecipeContext';
 import recipeRequest from '../services/recipeRequest';
 
-function ExploreFoodIngredients() {
+export default function ExploreFoodIngredients() {
   const {
     foodIngredientsCategory,
     setFoodIngredientsCategory,
     setFoodRecipes,
   } = useContext(RecipeContext);
-
-  const getAPI = async () => {
-    const ZERO = 0;
-    const TWELVE = 12;
-    const response = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?i=list');
-    const json = await response.json();
-    const results = await json.meals;
-    await setFoodIngredientsCategory(results.slice(ZERO, TWELVE));
-  };
 
   const getFilterFood = async (url) => {
     const newState = await recipeRequest(url);
@@ -64,4 +56,4 @@ function ExploreFoodIngredients() {
   );
 }
 
-export default ExploreFoodIngredients;
+// export default ExploreFoodIngredients;
