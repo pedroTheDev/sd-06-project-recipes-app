@@ -82,18 +82,18 @@ class Drink extends React.Component {
 
   manageColors(buttons) {
     const filtros = document.getElementsByClassName('category-buttons');
-    const INITIAL_VALUE = 0;
+    const INITIAL_VALUE = 1;
     const FINAL_VALUE = 6;
     if (buttons === 'others') {
       for (let i = INITIAL_VALUE; i < FINAL_VALUE; i += 1) {
-        filtros[INITIAL_VALUE].childNodes[i].firstChild.style.background = '#5a2d0c';
-        filtros[INITIAL_VALUE].childNodes[FINAL_VALUE].style.background = '#5a2d0c';
+        filtros[0].childNodes[i].firstChild.style.background = '#5a2d0c';
+        filtros[0].childNodes[FINAL_VALUE].style.background = '#5a2d0c';
       }
     }
     if (buttons === 'all') {
       for (let i = INITIAL_VALUE; i < FINAL_VALUE; i += 1) {
-        filtros[INITIAL_VALUE].childNodes[i].firstChild.style.background = '#5a2d0c';
-        filtros[INITIAL_VALUE].childNodes[FINAL_VALUE].style.background = '#ac5c22';
+        filtros[0].childNodes[i].firstChild.style.background = '#5a2d0c';
+        filtros[0].childNodes[FINAL_VALUE].style.background = '#ac5c22';
       }
     }
   }
