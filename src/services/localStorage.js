@@ -22,6 +22,70 @@ export function setValueUser(key, value) {
   return localStorage.setItem(key, JSON.stringify({ email: value }));
 }
 
+function treatRecipe(recipe) {
+  let treatedRecipe = {};
+  if ('idMeal' in recipe) {
+    treatedRecipe = {
+      id: recipe.idMeal,
+      type: 'meal',
+      name: recipe.strMeal,
+      category: recipe.strCategory,
+      image: recipe.strMealThumb,
+      tags: recipe.strTags,
+      doneDate: '',
+      area: recipe.strArea,
+      instructions: recipe.strInstructions,
+      youtube: recipe.strYoutube,
+      source: recipe.strSource,
+    };
+  } else if ('idDrink' in recipe) {
+    treatedRecipe = {
+      id: recipe.idDrink,
+      type: 'drink',
+      name: recipe.strDrink,
+      category: recipe.strCategory,
+      image: recipe.strDrinkThumb,
+      tags: recipe.strTags,
+      doneDate: '',
+      alcoholic: recipe.strAlcoholic,
+      glass: recipe.strGlass,
+      instructions: recipe.strInstructions,
+    };
+  }
+
+  return treatedRecipe;
+}
+
+function convertTreatedRecipe(recipe) {
+  let convertedRecipe = {};
+  if (recipe.type === 'meal') {
+    convertedRecipe = {
+      idMeal: recipe.id,
+      strMeal: recipe.name,
+      strCategory: recipe.category,
+      strMealThumb: recipe.image,
+      strTags: recipe.tags,
+      strArea: recipe.area,
+      strInstructions: recipe.instructions,
+      strYoutube: recipe.youtube,
+      strSource: recipe.source,
+    };
+  } else if (recipe.type === 'drink') {
+    convertedRecipe = {
+      idDrink: recipe.id,
+      strDrink: recipe.name,
+      strCategory: recipe.category,
+      strDrinkThumb: recipe.image,
+      strTags: recipe.tags,
+      strInstructions: recipe.instructions,
+      strAlcoholic: recipe.alcoholic,
+      strGlass: recipe.glass,
+    };
+  }
+
+  return convertedRecipe;
+}
+
 export function addDoneRecipe(object) {
   const obj = {
     id: object.id,
@@ -44,28 +108,44 @@ export function getDoneRecipes() {
   return temp;
 }
 
-/* export function addFavoriteRecipe(object) {
-  const obj = {
-    id: object.id,
-    type: object.type,
-    area: object.strArea,
-    category: object.strCategory,
-    alcoholicOrNot: object.alcoholic,
-    name: object.name,
-    image: object.image,
-  };
-  const temp = JSON.parse(localStorage.getItem('favorite_recipes'));
-  temp.push(obj);
-  localStorage.setItem('favorite_recipes', JSON.stringify(temp));
-}
- */
-export function setFavoriteRecipes(key, ...value) {
-  return localStorage.setItem(key, JSON.stringify({ favoriteRecipes: value }));
+function createFavoriteRecipesDatabase() {
+  const recipes = [];
+  localStorage.setItem('favorite-recipes', JSON.stringify(recipes));
 }
 
-export function getFavoriteRecipes() {
-  const temp = JSON.parse(localStorage.getItem('favorite_recipes'));
-  return temp;
+function getFavoriteRecipes() {
+  const recipes = JSON.parse(localStorage.getItem('favorite-recipes'));
+  return recipes;
+}
+
+function checkFavoriteRecipesDatabase() {
+  const recipes = getFavoriteRecipes();
+  if (!recipes) createFavoriteRecipesDatabase();
+}
+
+function updateFavoriteRecipes(recipes) {
+  localStorage.setItem('favorite-recipes', JSON.stringify(recipes));
+}
+
+export function recipeIsFavorite(recipe) {
+  const recipes = getFavoriteRecipes();
+  recipe = treatRecipe(recipe);
+  const match = recipes.find((item) => item.id === recipe.id);
+  if (match) return true;
+  return false;
+}
+
+export function favoriteRecipe(recipe) {
+  checkFavoriteRecipesDatabase();
+  recipe = treatRecipe(recipe);
+  if (recipe.type === 'drink') recipe.category = recipe.alcoholic;
+  const temp = getFavoriteRecipes();
+  let recipeIndex;
+  if (!temp.length < 1) recipeIndex = temp.findIndex((item) => item.id === recipe.id);
+  const minusOne = -1;
+  if (recipeIndex > minusOne) temp.splice(recipeIndex, 1);
+  else temp.push(recipe);
+  updateFavoriteRecipes(temp);
 }
 
 export function createRecipesProgress() {

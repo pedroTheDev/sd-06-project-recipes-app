@@ -1,23 +1,21 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import propTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
 import { shareIcon, whiteHeartIcon, blackHeartIcon } from '../images';
 import recipesAppContext from '../context/recipesAppContext';
-import { setFavoriteRecipes } from '../services/localStorage';
+import { favoriteRecipe, recipeIsFavorite } from '../services/localStorage';
 
 function SecondaryHeader({ name, img, category }) {
   const location = useLocation();
   const [isFavorite, setIsFavorite] = useState(false);
 
-  // checkFavorite();
-
   const {
-    // handleFavoriteRecipe,
     recipesMeals,
     recipesDrinks,
   } = useContext(recipesAppContext);
-  console.log('contexto', recipesMeals);
   const url = `http://localhost:3000${location.pathname}`;
+
+  const myRecipe = location.pathname.includes('comidas') ? recipesMeals : recipesDrinks;
 
   const handleShareIcon = () => {
     // const url = `http://localhost:3000${location.pathname}`;
@@ -31,37 +29,16 @@ function SecondaryHeader({ name, img, category }) {
   };
 
   const handleFavoriteRecipe = () => {
-    setIsFavorite(!isFavorite);
+    setIsFavorite(recipeIsFavorite(myRecipe));
   };
 
-  const saveToLocalStorage = () => {
-    const myRecipes = location.pathname.includes('comidas') ? recipesMeals : recipesDrinks;
-    // handleFavoriteRecipe();
-    const favoriteMeals = [{
-      id: myRecipes.idMeal,
-      type: location.pathname.includes('comidas') ? 'comida' : 'bebida',
-      area: myRecipes.strArea,
-      category: myRecipes.strCategory,
-      alcoholicOrNot: myRecipes.strAlcoholic,
-      name: myRecipes.strMeal,
-      image: myRecipes.strMealThumb,
-    }];
-    console.log('favorites', favoriteMeals);
+  useEffect(() => {
     handleFavoriteRecipe();
-    if (isFavorite) setFavoriteRecipes('favoriteRecipes', ...favoriteMeals);
-    /* else {
-      const favoriteDrinks = [{
-        id: recipesDrinks.idDrink,
-        type: 'bebida',
-        area: '',
-        category: recipesDrinks.strCategory,
-        alcoholicOrNot: '',
-        name: recipesDrinks.strDrink,
-        image: recipesDrinks.strDrinkThumb,
-      }];
-      console.log('favorites', favoriteDrinks);
-      if (isFavorite) setFavoriteRecipes('favoriteRecipes', favoriteDrinks);
-    } */
+  }, [myRecipe]);
+
+  const saveToLocalStorage = () => {
+    favoriteRecipe(myRecipe);
+    handleFavoriteRecipe(myRecipe);
   };
 
   return (
