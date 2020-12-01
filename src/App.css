@@ -1,6 +1,5 @@
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
-  Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   background-color: #d39d60;
 }
 
@@ -22,10 +21,10 @@ a {
   justify-content: space-evenly;
   width: 30%;
   background-color: #ebe6e1;
-  border: 2px solid rgba(0, 0, 0, 0.125);
   border-radius: 6px;
   height: 600px;
   width: 500px;
+  border: 2px solid rgba(0, 0, 0, 0.125);
   text-shadow: 0 0 3px #000;
   -moz-text-shadow: 0 0 3px #000;
   -webkit-text-shadow: 0 0 3px #000;
@@ -50,7 +49,8 @@ a {
   height: 40px;
   font-size: 20px;
   margin-bottom: 35px;
-  border: 2px solid rgba(10, 10, 10, 0.325);;
+  border: 2px solid rgba(10, 10, 10, 0.325);
+  ;
   border-radius: 5px;
   padding-left: 10px;
 }
@@ -59,7 +59,7 @@ a {
   outline: none;
 }
 
-.login-div input:hover{
+.login-div input:hover {
   border: 3px solid rgb(170, 165, 165);
   box-shadow: 0 0 3px #ddd;
 }
@@ -113,7 +113,7 @@ a {
   -webkit-text-shadow: 0 0 3px #000;
 }
 
-.global-header h1{
+.global-header h1 {
   font-weight: 100;
   font-size: 55px;
 }
@@ -131,17 +131,18 @@ a {
   margin: 0 auto;
 }
 
-.toogle-search-input input{
+.toogle-search-input input {
   width: 600px;
   height: 40px;
   font-size: 25px;
   margin-top: 35px;
-  border: 2px solid rgba(10, 10, 10, 0.325);;
+  border: 2px solid rgba(10, 10, 10, 0.325);
+  ;
   border-radius: 5px;
   padding-left: 10px;
 }
 
-.toogle-search-input input:focus{
+.toogle-search-input input:focus {
   border: 3px solid rgba(0, 0, 0, 0.425);
   outline: none;
 }
@@ -182,7 +183,7 @@ a {
   text-shadow: 0 0 3px #000;
   -moz-text-shadow: 0 0 3px #000;
   -webkit-text-shadow: 0 0 3px #000;
-  background-color: #d39d60;
+  background-color: #ac5c22;
 }
 
 .global-footer input {
@@ -252,7 +253,17 @@ a {
 }
 
 .profile-container {
-  margin: 300px auto;
+  margin: 70px auto;
+}
+
+.profile-container span {
+  color: white;
+  font-size: 25px;
+  font-weight: 300;
+  text-shadow: 0 0 5px #000;
+  -moz-text-shadow: 0 0 5px #000;
+  -webkit-text-shadow: 0 0 5px #000;
+  margin-bottom: 20px;
 }
 
 .details-title-div {
@@ -286,12 +297,27 @@ a {
 }
 
 .explore-buttons {
-  margin: 300px auto;
+  margin: 70px auto;
 }
 
-.exploredrinks-container {
-  margin: 50% auto;
-  background-color: khaki;
+.explore-buttons-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 300px;
+}
+
+.explore-button {
+  background: #5a2d0c;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 20px;
+  color: white;
+  border: 2px solid rgba(0, 0, 0, 0.125);
+  border-radius: 4px;
+  box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.525);
+  padding: 10px;
 }
 
 .video-div {
@@ -322,13 +348,13 @@ a {
   margin-bottom: 10px;
 }
 
-.start-recipe:hover{
+.start-recipe:hover {
   outline: none;
   transition: 0.5;
   background-color: rgba(92, 206, 47, 1);
 }
 
-.start-recipe:focus{
+.start-recipe:focus {
   outline: none;
   transition: 0.5;
   background-color: rgba(92, 206, 47, 1);
@@ -443,10 +469,9 @@ a {
   justify-content: space-between;
 }
 
-.food-drink-footer p{
+.food-drink-footer p {
   margin: 0 5px 0 10px;
 }
-
 
 .tags-div {
   display: flex;
@@ -455,6 +480,45 @@ a {
 
 .tags-div p {
   margin: 5px;
+}
+
+.by-area-content {
+  display: flex;
+  margin-top: 100px;
+}
+
+.by-area-content select {
+  height: 30px;
+  margin-left: 25px;
+}
+
+.by-ingredient-container {
+  margin: 90px auto;
+}
+
+.by-area-container {
+  margin: 30px 0 80px 0;
+}
+
+.not-found-container {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 40%;
+  height: 90vh;
+}
+
+.not-found-container p {
+  color: #5a2d0c;
+  font-weight: 100;
+  font-size: 45px;
+  font-family: trade-gothic,sans-serif;
+}
+
+.not-found-button {
+  margin: 15px;
 }
 
 @media (max-width:600px) {
@@ -467,6 +531,7 @@ a {
     height: 170px;
     border: 2px solid rgba(0, 0, 0, 0.5);
     border-top: none;
+    font-size: 15px;
   }
 
   .food-drink-container {
@@ -501,10 +566,9 @@ a {
   }
 
   .global-header h1 {
-    font-size:50px;
+    font-size: 20px;
     text-shadow: 0 0 3px #000;
   }
-
   .global-header input {
     width: 100%;
   }
@@ -515,19 +579,16 @@ a {
     width: 110px;
     height: 80px;
   }
-
   .search-input-div {
     width: 110px;
     height: 80px;
   }
-
   .global-footer input {
     width: 50px;
   }
-
-  .toogle-search-input input{
-    width: 330px;
-    height: 25px;
+  .toogle-search-input input {
+    width: 300px;
+    height: 22px;
     margin-top: 20px;
   }
 
@@ -539,31 +600,25 @@ a {
     width: 100%;
     margin-top: 25px;
   }
-
   .radio-input-second-div {
     display: flex;
     justify-content: center;
   }
-  
   .radio-input-second-div label {
     display: flex;
     align-items: flex-end;
   }
-
   .radio-input-second-div input {
     margin: 0;
     margin-left: 15px;
   }
-
   .radio-input-div input {
     width: 30px;
   }
-
   .search-button-div {
     width: 100%;
   }
-
-  .search-button-div button{
+  .search-button-div button {
     margin-top: 15px;
     margin-left: 20px;
     background: #5a2d0c;
@@ -577,79 +632,62 @@ a {
     width: 100px;
     height: 30px;
   }
-
-  .search-button-div button:focus{
+  .search-button-div button:focus {
     outline: none;
   }
-  
   .login-container {
     width: 300px;
     height: 500px;
     margin: 25% auto;
   }
-
   .login-container input {
     width: 220px;
   }
-
   .global-footer {
     height: 55px;
     border-top: 2px solid rgba(0, 0, 0, 0.725);
     background: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxAYMat1kXeU_Ts2nEK_QYxLkQOFEUylkbGA&usqp=CAU);
   }
-
   .global-header {
     height: 55px;
     border-bottom: 2px solid rgba(0, 0, 0, 0.725);
     background: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxAYMat1kXeU_Ts2nEK_QYxLkQOFEUylkbGA&usqp=CAU);
   }
-  
   .detail-card {
     width: 85%;
   }
-
   .details-title-div {
     width: 95%;
   }
-
   .details-title-div h1 {
     font-size: 25px;
   }
-
   .details-title-div p {
     margin: 0;
     padding: 0;
   }
-
   .recipe-buttons {
     width: 70px;
     margin-top: 10px;
   }
-
   .ingredients {
     width: 90%;
   }
-
   .detail-ingredients {
     width: 100%;
   }
-
   .detail-instructions {
     width: 90%;
   }
-  
   .category-buttons {
     width: 100%;
   }
-
-  .buttons-done button{
+  .buttons-done button {
     width: 100px;
   }
-
   .category-buttons {
     flex-wrap: wrap;
   }
-
   .food-filters {
     text-align: left;
     width: 75px;
@@ -658,7 +696,6 @@ a {
     margin: 7px 15px 15px 10px;
     padding-left: 7px;
   }
-
   .drink-filters {
     text-align: left;
     width: 120px;
@@ -667,15 +704,12 @@ a {
     margin: 7px 15px 15px 10px;
     padding-left: 7px;
   }
-
   .food-or-drink-done-card {
     flex-direction: column;
   }
-
   .done-recipes-container {
     margin: 90px auto;
   }
-
   .food-drink-card {
     flex-direction: row;
     width: 370px;
@@ -685,13 +719,11 @@ a {
     box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.525);
     margin: 20px;
   }
-
   .done-recipe-image {
     width: 160px;
     height: 100%;
     border-radius: 3px;
   }
-  
   .left-side-div {
     display: flex;
     flex-wrap: wrap;
@@ -700,7 +732,6 @@ a {
     height: 100%;
     width: 56%;
   }
-
   .food-drink-top-div {
     display: flex;
     align-items: center;
@@ -709,7 +740,6 @@ a {
     height: 50%;
     margin: 0;
   }
-
   .food-drink-titles {
     display: flex;
     flex-direction: column;
@@ -718,35 +748,40 @@ a {
     max-width: 180px;
     font-weight: 100;
   }
-
   .food-drink-footer {
     justify-content: space-evenly;
     flex-direction: column;
     height: 40%;
   }
-
   .food-drink-image {
     width: 50px;
     height: 50px;
   }
-  
   .done-recipe-share-btn {
     width: 30px;
     height: 30px;
   }
-
   .tags-div p {
     background-color: #8d4613;
     padding: 5px;
     color: white;
     border-radius: 18px;
   }
+
+  .not-found-container {
+    width: 95%;
+    height: 95vh;
+  }
+
+  .not-found-container p {
+    font-size: 25px;
+  }
 }
 
 .not-styled {
   text-decoration: none;
-} 
+}
 
 .styled {
   text-decoration: line-through;
-} 
+}

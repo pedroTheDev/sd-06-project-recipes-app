@@ -37,6 +37,8 @@ class DrinksDetails extends React.Component {
     const recommendedMeals = await fetchRecommendedMeals();
     this.setDrinkState(drinkRecipe, recommendedMeals);
     this.handleIngredients();
+    this.changeButtonInnerText(endpoint);
+    this.setRenderState(drinkRecipe[0]);
   }
 
   handleYoutubeVideo(url) {
@@ -55,17 +57,6 @@ class DrinksDetails extends React.Component {
     const span = document.createElement('span');
     p.appendChild(span);
     span.innerHTML = 'Link copiado!';
-    // const url = `http://localhost:3000/comidas/${idDrink}`;
-    // window.alert('Link copiado!');
-    // const el = document.createElement('textarea');
-    // el.value = url;
-    // el.setAttribute('readonly', '');
-    // el.style.position = 'absolute';
-    // el.style.left = '-9999px';
-    // document.body.appendChild(el);
-    // el.select();
-    // document.execCommand('copy');
-    // document.body.removeChild(el);
   }
 
   handleIngredients() {
@@ -91,6 +82,12 @@ class DrinksDetails extends React.Component {
 
       this.setIngredients(filteredIngredients, filteredMeasure);
       return null;
+    });
+  }
+
+  setRenderState(drink) {
+    this.setState({
+      recipe: drink,
     });
   }
 
@@ -148,6 +145,16 @@ class DrinksDetails extends React.Component {
     this.setState({ Update: !Update });
   }
 
+  changeButtonInnerText(endpoint) {
+    const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (localStorage.inProgressRecipes) {
+      if (inProgressRecipes.cocktails[endpoint]) {
+        const bla = document.querySelector('.start-recipe');
+        bla.innerHTML = 'Continuar Receita';
+      }
+    }
+  }
+
   teste(recipe) {
     if (localStorage.favoriteRecipes) {
       const favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
@@ -188,23 +195,32 @@ class DrinksDetails extends React.Component {
     }
   }
 
-  redirectFromState() {
+  redirectFromState(recipe) {
     const { idCurrent } = this.props;
     const { history } = this.props;
+    localStorage.setItem('ReceitaIniciada', JSON.stringify(recipe.idDrink));
+    const getCheckedItems = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (getCheckedItems) {
+      getCheckedItems.cocktails = { [idCurrent]: [] };
+      localStorage.setItem('inProgressRecipes', JSON.stringify(getCheckedItems));
+    }
+
     history.push(`/bebidas/${idCurrent}/in-progress`);
   }
 
   render() {
-    const { Drink,
+    const {
       RecommendedMeals,
       x,
       Ingredients,
       Measures,
-      Video } = this.state;
+      Video,
+      recipe,
+    } = this.state;
     return (
       <div className="food-drink-detail-container">
-        {Drink ? Drink.map((recipe, index) => (
-          <div className="detail-card" key={ index }>
+        {recipe && recipe && (
+          <div className="detail-card">
             <img
               src={ recipe.strDrinkThumb }
               data-testid="recipe-photo"
@@ -241,7 +257,7 @@ class DrinksDetails extends React.Component {
               <ul className="detail-ingredients">
                 {Ingredients.map((ingredient, i) => (
                   <li
-                    key={ index }
+                    key={ i }
                     data-testid={ `${i}-ingredient-name-and-measure` }
                   >
                     {ingredient}
@@ -255,7 +271,7 @@ class DrinksDetails extends React.Component {
             <div className="detail-instructions" data-testid="instructions">
               {recipe.strInstructions}
             </div>
-            <p data-testid={ `${index}-card-name` }>{recipe.strMeal}</p>
+            <p data-testid="0-card-name">{recipe.strMeal}</p>
             <h2>Recomendadas</h2>
             <div className="video-div">
               <iframe
@@ -314,7 +330,7 @@ class DrinksDetails extends React.Component {
                   Iniciar Receita
                 </button>)}
           </div>
-        )) : null}
+        )}
       </div>
     );
   }

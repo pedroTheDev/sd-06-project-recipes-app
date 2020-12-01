@@ -1,10 +1,11 @@
-import { DRINKS, MEALS, CURRENT_ID, FAVORITE } from '../actions';
+import { DRINKS, MEALS, CURRENT_ID, FAVORITE, CONTROL } from '../actions';
 
 const INITIAL_STATE = {
   meals: [],
   drinks: [],
   currentID: '',
   favorite: '',
+  control: '',
 };
 
 export default function (state = INITIAL_STATE, action) {
@@ -24,6 +25,10 @@ export default function (state = INITIAL_STATE, action) {
   case FAVORITE:
     return {
       ...state, favorite: { [action.id]: action.fav },
+    };
+  case CONTROL:
+    return {
+      ...state, control: action.control,
     };
   default:
     return state;

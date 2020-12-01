@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Footer, Header } from '../components';
 import { drinksCategoriesOnRender,
-  drinksOnRender, filterDrinksByCategory } from '../services';
-import { bebida } from '../actions';
+  drinksOnRender, filterDrinksByCategory, fetchDrinks } from '../services';
+import { bebida, controlState } from '../actions';
 
 class Drink extends React.Component {
   constructor() {
@@ -17,12 +17,22 @@ class Drink extends React.Component {
     this.setCategory = this.setCategory.bind(this);
     this.allButtonHandler = this.allButtonHandler.bind(this);
     this.setInitialState = this.setInitialState.bind(this);
+    this.setKeyLocalStorage = this.setKeyLocalStorage.bind(this);
   }
 
   async componentDidMount() {
-    const drinksRender = await drinksOnRender();
+    const { control } = this.props;
+    let drinksRender;
+    const initList = 0;
+    const maxList = 12;
+    if (control !== '') {
+      const drinksExplorer = await fetchDrinks(control, 'ingrediente');
+      drinksRender = drinksExplorer.slice(initList, maxList);
+    } else { drinksRender = await drinksOnRender(); }
+
     const Categories = await drinksCategoriesOnRender();
     this.setInitialState(drinksRender, Categories);
+    this.setKeyLocalStorage();
   }
 
   async componentDidUpdate() {
@@ -30,6 +40,23 @@ class Drink extends React.Component {
     const MAXIMUM_LENGTH = 0;
     if (stateDrinks.length > MAXIMUM_LENGTH) {
       this.stateAfterProps(stateDrinks);
+    }
+  }
+
+  componentWillUnmount() {
+    const { dispatchControlState } = this.props;
+    dispatchControlState('');
+  }
+
+  setKeyLocalStorage() {
+    const verifyLocalStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const recipesInProgress = {
+      cocktails: {
+      },
+      meals: { },
+    };
+    if (!verifyLocalStorage) {
+      localStorage.setItem('inProgressRecipes', JSON.stringify(recipesInProgress));
     }
   }
 
@@ -122,14 +149,19 @@ Drink.propTypes = {
   history: PropTypes.shape().isRequired,
   dispatchDrinks: PropTypes.func.isRequired,
   stateDrinks: PropTypes.arrayOf(PropTypes.object).isRequired,
+  dispatchControlState: PropTypes.func.isRequired,
+  control: PropTypes.string.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchDrinks: (drinks) => dispatch(bebida(drinks)),
+  dispatchControlState: (control) => dispatch(controlState(control)),
 });
 
 const mapStateToProps = (state) => ({
   stateDrinks: state.menu.drinks,
+  control: state.menu.control,
+  idCurrent: state.menu.idCurrent,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Drink);
