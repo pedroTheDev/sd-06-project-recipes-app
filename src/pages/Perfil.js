@@ -4,7 +4,7 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 
 function Perfil() {
-  const { email } = JSON.parse(localStorage.user);
+  const { email } = JSON.parse(localStorage.getItem('user'));
 
   const handleClearLocalStorage = () => {
     localStorage.clear();

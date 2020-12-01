@@ -67,6 +67,12 @@ export async function getRecipeDrinksByRandom() {
   return result.drinks;
 }
 
+// Lista de Ingredientes de Bebidas
+export async function getIngredientsDrinks() {
+  const response = await fetch(`${URL_BASE}list.php?i=list`);
+  const result = await response.json();
+  return result.drinks;
+}
 // Lista todas as bebidas alcoólicas
 export async function getDrinksAlcoholic() {
   const response = await fetch(`${URL_BASE}filter.php?a=Alcoholic`);
@@ -81,5 +87,6 @@ export default {
   getRecipeDrinkByIdApi,
   getFilteredDrinksApi,
   getRecipeDrinksByRandom,
+  getIngredientsDrinks,
   getDrinksAlcoholic,
 };

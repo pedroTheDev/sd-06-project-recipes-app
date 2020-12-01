@@ -22,6 +22,7 @@ function MyProvider({ children }) {
   const [drinksAlcoholic, setDrinksAlcoholic] = useState({});
   const [recipeMeal, setRecipeMeal] = useState();
   const [recipeDrink, setRecipeDrink] = useState();
+  const [ingredientsExplorer, setIngredientsExplorer] = useState([]);
 
   // async function verifyRecommendedRecipes() {
   //   const inditialIndex = 0;
@@ -79,6 +80,7 @@ function MyProvider({ children }) {
     drinkIngredients,
     glasses,
     disable,
+    ingredientsExplorer,
     setDisable,
     user,
     setUser,
@@ -97,6 +99,9 @@ function MyProvider({ children }) {
     setRecipeMeal,
     recipeDrink,
     setRecipeDrink,
+    setIngredients,
+    setDrinkIngredients,
+    setIngredientsExplorer,
   };
 
   return (
