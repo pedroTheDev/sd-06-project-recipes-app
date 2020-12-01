@@ -22,7 +22,6 @@ const Cards = () => {
               key={ meal.strMeal }
             >
               <p data-testid={ `${index}-card-name` }>{meal.strMeal}</p>
-
               <button
                 type="button"
                 onClick={ () => clickRedirectRecipe(meal.idMeal) }
@@ -78,7 +77,6 @@ const Cards = () => {
               <div>
                 <div data-testid={ `${index}-recipe-card` } key={ res.idDrink }>
                   <p data-testid={ `${index}-card-name` }>{res.strDrink}</p>
-
                   <button
                     type="button"
                     onClick={ () => clickRedirectRecipe(res.idDrink) }
