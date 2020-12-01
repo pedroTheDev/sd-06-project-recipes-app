@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
-// import { shareIcon } from '../images/shareIcon.svg';
+import shareIcon from '../images/shareIcon.svg';
 import useCopyToClipboard from '../services/clipboard-copy';
 
 function ReceitasFeitas() {
@@ -16,8 +16,6 @@ function ReceitasFeitas() {
     }
     setDoneRecipes(JSON.parse(localStorage.doneRecipes));
   }, []);
-
-  console.log(doneRecipes);
 
   const filterRecipes = ({ innerText }) => {
     if (innerText === 'Food') {
@@ -78,7 +76,7 @@ function ReceitasFeitas() {
             area,
             category,
             doneDate,
-            // tags,
+            tags,
           },
           index,
         ) => (
@@ -126,19 +124,20 @@ function ReceitasFeitas() {
               onClick={ () => handleCopy(`/${type}s/${id}`) }
             >
               <img
+                src={ shareIcon }
                 alt="Compatilhar Receita"
                 data-testid={ `${index}-horizontal-share-btn` }
               />
             </button>
             {isCopied ? <p>Link copiado!</p> : true}
-            {/* tags.map((tag) => (
+            {tags.map((tag) => (
               <p
                 key={ tag }
                 data-testid={ `${index}-${tag}-horizontal-tag` }
               >
                 {tag}
               </p>
-            )) */}
+            ))}
           </span>
         ))}
     </>
