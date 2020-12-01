@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { fetchFoodByIngredient,
   fetchDrinkByIngredient } from '../redux/actions/searchRecipes';
 
@@ -93,3 +94,13 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(IngredientCard);
+
+IngredientCard.propTypes = {
+  name: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
+  pathname: PropTypes.string.isRequired,
+  dispatchFetchDrinkByIngredient: PropTypes.func.isRequired,
+  dispatchFetchFoodByIngredient: PropTypes.func.isRequired,
+  isRecipesLoading: PropTypes.bool.isRequired,
+  thumb: PropTypes.string.isRequired,
+};

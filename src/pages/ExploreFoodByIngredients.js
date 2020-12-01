@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Footer from '../components/Footer';
@@ -13,7 +13,6 @@ function ExploreFoodByIngredients(props) {
     dispatchFetchIngredients,
     foodIngredients, ingredientConfig } = props;
   const { header } = pageConfig;
-  const [componentLoading, setComponentLoading] = useState(true);
 
   useEffect(() => {
     dispatchFetchIngredients();
