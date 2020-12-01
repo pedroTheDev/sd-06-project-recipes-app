@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { fetchMeal } from '../../services/mealAPI';
 import SecondaryHeader from '../../components/SecondaryHeader';
-import { addRecipeProgress } from '../../services/localStorage';
+import { addRecipeProgress, selectedIngredient } from '../../services/localStorage';
 import '../Detail/detail.css';
 
 export default function MealInProgress() {
@@ -40,8 +40,24 @@ export default function MealInProgress() {
     return ingredients;
   };
 
+  const resumeProgress = (ingredients) => {
+    ingredients.forEach((ingredient) => {
+      const checkIngredient = document.getElementById(ingredient.name);
+      if (selectedIngredient(id, ingredient.name)) {
+        checkIngredient.classList.add('selected');
+        checkIngredient.children[0].checked = true;
+      } else {
+        checkIngredient.classList.remove('selected');
+        checkIngredient.children[0].checked = false;
+      }
+    });
+  };
+
   useEffect(() => {
     setIngredientAndMeasure();
+    if (document.getElementById('renderizado') !== null) {
+      resumeProgress(setIngredientAndMeasure());
+    }
   }, [recipes]);
 
   if (Object.keys(recipes).length === zero) {
@@ -64,7 +80,7 @@ export default function MealInProgress() {
   }
 
   return (
-    <div>
+    <div id="renderizado">
       <div>
         <SecondaryHeader
           name={ recipes.strMeal }
@@ -78,15 +94,16 @@ export default function MealInProgress() {
           {setIngredientAndMeasure().map((ingredient, index) => {
             if (index < ingredientsNumber) {
               return (
-                <div>
+                <div key={ ingredient.name }>
                   <li>
                     <label
                       data-testid={ `${index}-ingredient-step` }
-                      forHtml={ ingredient.name }
+                      htmlFor={ ingredient.name }
                       name={ ingredient.name }
                       id={ ingredient.name }
                     >
                       <input
+                        checked="false"
                         name={ ingredient.name }
                         type="checkbox"
                         key={ index }
