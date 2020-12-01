@@ -10,7 +10,22 @@ function MainExploreDrink() {
         pageTitle="Explorar Bebidas"
       />
       <div className="explore-area">
-        Explorar por Ingrediente/Origem/Me surpreenda
+        <nav className="navigation">
+          <button
+            type="button"
+            data-testid="explore-by-ingredient"
+            className="btn btn-secondary"
+          >
+            Por Ingredientes
+          </button>
+          <button
+            type="button"
+            data-testid="explore-surprise"
+            className="btn btn-secondary"
+          >
+            Me Surpreenda!
+          </button>
+        </nav>
       </div>
       <div className="footer">
         <Footer />
