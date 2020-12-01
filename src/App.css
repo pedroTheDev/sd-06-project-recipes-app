@@ -70,7 +70,7 @@ main {
 padding-bottom: 40px;
 }
 
-header, footer, .start-recipe-btn{
+header, footer, .start-recipe-btn {
   background-color: darkgray;
   width: 360px;
 }

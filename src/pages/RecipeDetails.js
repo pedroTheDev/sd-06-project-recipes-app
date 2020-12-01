@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { Container } from 'react-bootstrap';
 import RevenueContext from '../context/RevenueContext';
 import ShareIcon from '../images/shareIcon.svg';
 import WhiteHeartIcon from '../images/whiteHeartIcon.svg';
@@ -148,7 +149,7 @@ export default function RecipeDetails() {
         videoCode = (foods[0].strYoutube) ? foods[0].strYoutube.split('=') : undefined;
       }
       return (
-        <>
+        <Container>
           <img
             width="360px"
             data-testid="recipe-photo"
@@ -159,7 +160,7 @@ export default function RecipeDetails() {
           <div className="d-flex justify-content-around">
             <a href onClick={ () => shareRecipeLink() }>
               <img src={ ShareIcon } alt="Share Button" data-testid="share-btn" />
-              {alert && <alert>Link copiado!</alert>}
+              {alert && <span>Link copiado!</span>}
             </a>
             <a href onClick={ () => whiteToBlackHeart() }>
               <img src={ heartIcon } alt="Favorite Button" data-testid="favorite-btn" />
@@ -207,7 +208,7 @@ export default function RecipeDetails() {
           >
             INICIAR RECEITA
           </button>
-        </>
+        </Container>
       );
     }
   };

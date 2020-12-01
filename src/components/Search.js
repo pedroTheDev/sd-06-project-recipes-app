@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { Container, Row } from 'react-bootstrap';
 import RevenueContext from '../context/RevenueContext';
 
 export default function SearchBar(props) {
@@ -8,6 +9,8 @@ export default function SearchBar(props) {
   const [searchInputValue, setsearchInputValue] = useState();
   const [searchRadioValue, setsearchRadioValue] = useState();
   const [URLToFetch, setURLToFetch] = useState();
+  // const [alert, setAlert] = useState();
+  // const [time] = useState(5000);
 
   useEffect(() => {
     if (!URLToFetch && searchParam === 'Meal') fetchApi('https://www.themealdb.com/api/json/v1/1/search.php?s=');
@@ -30,10 +33,19 @@ export default function SearchBar(props) {
   const handleRadioValue = ({ target: { value } }) => {
     setsearchRadioValue(value);
   };
+
+  // const showAlert = (content) => {
+  //   setAlert(content);
+  //   setTimeout(() => {
+  //     setAlert(undefined);
+  //   }, time);
+  // };
+
   const searchURL = () => {
     if (searchInputValue
       && searchRadioValue === 'first-letter'
       && searchInputValue.length !== 1) {
+      // showAlert('Sua busca deve conter somente 1 (um) caracter');
       alert('Sua busca deve conter somente 1 (um) caracter');
     } else {
       if (title === 'Comidas') {
@@ -64,65 +76,74 @@ export default function SearchBar(props) {
   };
 
   return (
-    <form data-testid="test-search-bar">
-      <label htmlFor="search-input">
-        <input
-          data-testid="search-input"
-          type="text"
-          id="search-input"
-          name="searh-input"
-          placeholder="Buscar Receita"
-          onChange={ (e) => handleChangeInputValue(e) }
-        />
-      </label>
-      <div>
-        <label htmlFor="ingredient">
-          <input
-            data-testid="ingredient-search-radio"
-            type="radio"
-            id="ingredient"
-            value="ingredient"
-            name="radio-selection"
-            onChange={ (e) => handleRadioValue(e) }
-          />
-          Ingrediente
-        </label>
-        <label htmlFor="name">
-          <input
-            data-testid="name-search-radio"
-            type="radio"
-            id="name"
-            value="name"
-            name="radio-selection"
-            onChange={ (e) => handleRadioValue(e) }
-          />
-          Nome
-        </label>
-        <label htmlFor="first-letter">
-          <input
-            data-testid="first-letter-search-radio"
-            type="radio"
-            id="first-letter"
-            value="first-letter"
-            name="radio-selection"
-            onChange={ (e) => handleRadioValue(e) }
-          />
-          Primeira Letra
-        </label>
+    <Container className="align-items-center">
+      <form data-testid="test-search-bar">
+        <Row>
+          <label htmlFor="search-input">
+            <input
+              data-testid="search-input"
+              type="text"
+              id="search-input"
+              name="searh-input"
+              placeholder="Buscar Receita"
+              onChange={ (e) => handleChangeInputValue(e) }
+            />
+          </label>
+        </Row>
+        <Row>
+          <label htmlFor="ingredient">
+            <input
+              data-testid="ingredient-search-radio"
+              type="radio"
+              id="ingredient"
+              value="ingredient"
+              name="radio-selection"
+              onChange={ (e) => handleRadioValue(e) }
+            />
+            Ingrediente
+          </label>
+          <label htmlFor="name">
+            <input
+              data-testid="name-search-radio"
+              type="radio"
+              id="name"
+              value="name"
+              name="radio-selection"
+              onChange={ (e) => handleRadioValue(e) }
+            />
+            Nome
+          </label>
+          <label htmlFor="first-letter">
+            <input
+              data-testid="first-letter-search-radio"
+              type="radio"
+              id="first-letter"
+              value="first-letter"
+              name="radio-selection"
+              onChange={ (e) => handleRadioValue(e) }
+            />
+            Primeira Letra
+          </label>
+        </Row>
+      </form>
+
+      <Row>
         <button
           data-testid="exec-search-btn"
+          className="exec-search-btn"
           type="button"
           onClick={ () => (
             (searchInputValue && searchRadioValue)
               ? searchURL()
+              // : showAlert('Preencha campo de busca e selecione ao menos uma opção')
               : alert('Preencha campo de busca e selecione ao menos uma opção')
           ) }
         >
           Buscar
-
         </button>
-      </div>
-    </form>
+      </Row>
+      {/* {alert && <Row>{alert}</Row>} */}
+    </Container>
   );
 }
 
