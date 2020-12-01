@@ -99,7 +99,7 @@ function DetailAndProgressBody({ recipe, recommendations, buttonsProps, page = n
       <hr />
       <div className="category-container">
         <div className="category-container_image">
-          <img src={ categoryIcon } alt={`${categoryIcon} category`} />
+          <img src={ categoryIcon } alt={ `${categoryIcon} category` } />
         </div>
         <h3 data-testid="recipe-category">
           { isAlcoholic === 'Alcoholic'
@@ -109,7 +109,7 @@ function DetailAndProgressBody({ recipe, recommendations, buttonsProps, page = n
 
       </div>
       { renderIngredientsConditionally(page) }
-      <hr/>
+      <hr />
       <div className="instructions-container">
         <h4>Instructions</h4>
         <p data-testid="instructions">{ instructions }</p>
