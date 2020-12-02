@@ -15,10 +15,11 @@
   align-items: flex-start;
   background-color: #F18701;
   justify-content: space-between;
-  position: absolute;
+  position: fixed;
   height: 58px;
   width: 360px;
   left: 0px;
   top: 0px;
   padding: 10px;
+  z-index: 1;
 }

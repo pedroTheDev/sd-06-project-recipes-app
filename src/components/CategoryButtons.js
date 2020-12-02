@@ -54,10 +54,18 @@ function CategoryButtons(props) {
   // }, [arrayFiltered]);
 
   return (
-    <div>
+    <div className="container-category">
+      <button
+        className="btn btn-light btn-sm btn-border"
+        type="button"
+        data-testid="All-category-filter"
+        onClick={ () => resetFilter() }
+      >
+        All
+      </button>
       {categories.map((category, index) => (
         <button
-          className="btn btn-light"
+          className="btn btn-light btn-sm btn-border"
           key={ index }
           type="button"
           data-testid={ `${category.strCategory}-category-filter` }
@@ -66,14 +74,6 @@ function CategoryButtons(props) {
           {category.strCategory}
         </button>
       )).filter((_, index) => index < MAX_NUMBER_OF_CATEGORIES)}
-      <button
-        className="btn btn-light"
-        type="button"
-        data-testid="All-category-filter"
-        onClick={ () => resetFilter() }
-      >
-        All
-      </button>
       <br />
       <br />
     </div>

@@ -7,24 +7,26 @@ import '../App.css';
 function Explore() {
   const history = useHistory();
   return (
-    <div className="explore-btn">
+    <div>
       <Header title="Explorar" />
-      <button
-        data-testid="explore-food"
-        type="button"
-        onClick={ () => history.push('/explorar/comidas') }
-        className="btn btn-light btn-lg btn-block"
-      >
-        Explorar Comidas
-      </button>
-      <button
-        data-testid="explore-drinks"
-        type="button"
-        onClick={ () => history.push('/explorar/bebidas') }
-        className="btn btn-light btn-lg btn-block"
-      >
-        Explorar Bebidas
-      </button>
+      <div className="explore-btn">
+        <button
+          data-testid="explore-food"
+          type="button"
+          onClick={ () => history.push('/explorar/comidas') }
+          className="btn btn-light btn-lg btn-block btn-exp"
+        >
+          Explorar Comidas
+        </button>
+        <button
+          data-testid="explore-drinks"
+          type="button"
+          onClick={ () => history.push('/explorar/bebidas') }
+          className="btn btn-light btn-lg btn-block btn-exp"
+        >
+          Explorar Bebidas
+        </button>
+      </div>
       <Footer />
     </div>
   );

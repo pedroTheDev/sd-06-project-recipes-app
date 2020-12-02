@@ -43,53 +43,59 @@ function ExploreByIngredients() {
   return (
     <div>
       <Header title="Explorar Ingredientes" />
-      { location.includes('comidas') ? (
-        data.map((meals, index) => (
-          <div
-            type="button"
-            key={ index }
-            data-testid={ `${index}-ingredient-card` }
-            onClick={ () => handleClick(meals.strIngredient) }
-            onKeyPress={ handleClick }
-            role="button"
-            tabIndex="0"
-          >
-            <img
-              data-testid={ `${index}-card-img` }
-              alt="food"
-              src={ `https://www.themealdb.com/images/ingredients/${meals.strIngredient}-Small.png` }
-            />
-            <h3
-              data-testid={ `${index}-card-name` }
+      <div className="container-card">
+        { location.includes('comidas') ? (
+          data.map((meals, index) => (
+            <div
+              type="button"
+              key={ index }
+              data-testid={ `${index}-ingredient-card` }
+              onClick={ () => handleClick(meals.strIngredient) }
+              onKeyPress={ handleClick }
+              role="button"
+              tabIndex="0"
+              className="unit-card"
             >
-              { meals.strIngredient }
-            </h3>
-          </div>
-        )).filter((_, index) => index < MAX_NUMBER_OF_CARDS)
-      ) : (
-        data.map((drinks, index) => (
-          <div
-            type="button"
-            key={ index }
-            data-testid={ `${index}-ingredient-card` }
-            onClick={ () => handleClick(drinks.strIngredient1) }
-            onKeyPress={ handleClick }
-            role="button"
-            tabIndex="0"
-          >
-            <img
-              data-testid={ `${index}-card-img` }
-              alt="drink"
-              src={ `https://www.thecocktaildb.com/images/ingredients/${drinks.strIngredient1}-Small.png` }
-            />
-            <h3
-              data-testid={ `${index}-card-name` }
+              <img
+                data-testid={ `${index}-card-img` }
+                alt="food"
+                width="100%"
+                src={ `https://www.themealdb.com/images/ingredients/${meals.strIngredient}-Small.png` }
+              />
+              <h4
+                data-testid={ `${index}-card-name` }
+              >
+                { meals.strIngredient }
+              </h4>
+            </div>
+          )).filter((_, index) => index < MAX_NUMBER_OF_CARDS)
+        ) : (
+          data.map((drinks, index) => (
+            <div
+              type="button"
+              key={ index }
+              data-testid={ `${index}-ingredient-card` }
+              onClick={ () => handleClick(drinks.strIngredient1) }
+              onKeyPress={ handleClick }
+              role="button"
+              tabIndex="0"
+              className="unit-card"
             >
-              { drinks.strIngredient1 }
-            </h3>
-          </div>
-        )).filter((_, index) => index < MAX_NUMBER_OF_CARDS)
-      ) }
+              <img
+                data-testid={ `${index}-card-img` }
+                alt="drink"
+                width="100%"
+                src={ `https://www.thecocktaildb.com/images/ingredients/${drinks.strIngredient1}-Small.png` }
+              />
+              <h4
+                data-testid={ `${index}-card-name` }
+              >
+                { drinks.strIngredient1 }
+              </h4>
+            </div>
+          )).filter((_, index) => index < MAX_NUMBER_OF_CARDS)
+        ) }
+      </div>
       <Footer />
     </div>
   );

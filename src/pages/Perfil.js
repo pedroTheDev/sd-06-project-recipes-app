@@ -20,7 +20,7 @@ function Perfil() {
         <button
           type="button"
           data-testid="profile-done-btn"
-          className="btn btn-light btn-lg btn-block"
+          className="btn btn-light btn-lg btn-block btn-exp"
           onClick={ () => history.push('/receitas-feitas') }
         >
           Receitas Feitas
@@ -29,22 +29,24 @@ function Perfil() {
         <button
           type="button"
           data-testid="profile-favorite-btn"
-          className="btn btn-light btn-lg btn-block"
+          className="btn btn-light btn-lg btn-block btn-exp"
           onClick={ () => history.push('/receitas-favoritas') }
         >
           Receitas Favoritas
         </button>
       </div>
-      <Link exact to="/" className="explore-btn">
-        <button
-          type="button"
-          data-testid="profile-logout-btn"
-          className="btn btn-secondary"
-          onClick={ () => localStorage.clear() }
-        >
-          Sair
-        </button>
-      </Link>
+      <div>
+        <Link exact to="/" className="exit-btn">
+          <button
+            type="button"
+            data-testid="profile-logout-btn"
+            className="btn btn-secondary exit-btn"
+            onClick={ () => localStorage.clear() }
+          >
+            Sair
+          </button>
+        </Link>
+      </div>
       <Footer />
     </div>
   );

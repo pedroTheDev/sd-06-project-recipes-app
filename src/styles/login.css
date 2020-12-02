@@ -70,14 +70,16 @@ top: 12px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
-
-.img-container {
+  border: 2px solid rgba(0, 0, 0, 0.125);
+  border-radius: 10px;
+  width: 80%;
+  margin: auto;
   margin-top: 90px;
+  padding: 30px 15px;
 }
 
-.login-form {
+/* .login-form {
   border: 2px solid rgba(0, 0, 0, 0.125);
   border-radius: 10px;
   padding: 15px;
-}
+} */

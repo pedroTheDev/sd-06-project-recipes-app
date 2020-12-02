@@ -136,10 +136,10 @@ function RecipesMade() {
   return (
     <div>
       <Header title="Receitas Feitas" />
-      <div className="done-btn">
+      <div className="container-category">
         <button
           type="button"
-          className="btn btn-light btn-lg"
+          className="btn btn-light btn-sm btn-border"
           data-testid="filter-by-all-btn"
           value="all"
           onClick={ handleClick }
@@ -148,7 +148,7 @@ function RecipesMade() {
         </button>
         <button
           type="button"
-          className="btn btn-light btn-lg"
+          className="btn btn-light btn-sm btn-border"
           data-testid="filter-by-food-btn"
           value="comida"
           onClick={ handleClick }
@@ -157,7 +157,7 @@ function RecipesMade() {
         </button>
         <button
           type="button"
-          className="btn btn-light btn-lg"
+          className="btn btn-light btn-sm btn-border"
           data-testid="filter-by-drink-btn"
           value="bebida"
           onClick={ handleClick }
@@ -167,7 +167,7 @@ function RecipesMade() {
       </div>
       {doneRecipes ? (doneRecipes.map((recipe, index) => (
         recipe.type === 'comida' ? renderFood(recipe, index) : renderDrinks(recipe, index)
-      ))) : <h2>Você não tem receitas prontas!</h2>}
+      ))) : <h5 className="favorite-message">Você não tem receitas prontas!</h5>}
     </div>
   );
 }

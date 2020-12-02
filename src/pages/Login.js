@@ -35,7 +35,7 @@ function Login() {
   return (
     <div className="main-container">
       <div>
-        <img className="img-container" src={ panela } alt="panela" width="220px" />
+        <img src={ panela } alt="panela" width="220px" />
       </div>
       <br />
       <form className="login-form">

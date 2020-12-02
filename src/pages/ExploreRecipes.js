@@ -32,7 +32,7 @@ function ExploreRecipes() {
             data-testid="explore-by-ingredient"
             type="button"
             onClick={ () => history.push('/explorar/comidas/ingredientes') }
-            className="btn btn-light btn-lg btn-block"
+            className="btn btn-light btn-lg btn-block btn-exp"
           >
             Por Ingredientes
           </button>
@@ -40,7 +40,7 @@ function ExploreRecipes() {
             data-testid="explore-by-area"
             type="button"
             onClick={ () => history.push('/explorar/comidas/area') }
-            className="btn btn-light btn-lg btn-block"
+            className="btn btn-light btn-lg btn-block btn-exp"
           >
             Por Local de Origem
           </button>
@@ -48,19 +48,20 @@ function ExploreRecipes() {
             data-testid="explore-surprise"
             type="button"
             onClick={ () => randomRecipe() }
-            className="btn btn-light btn-lg btn-block"
+            className="btn btn-light btn-lg btn-block btn-exp"
           >
             Me Surpreenda!
           </button>
           <Footer />
         </div>
       ) : (
-        <div>
+        <div className="explore-btn">
           <Header title="Explorar Bebidas" />
           <button
             data-testid="explore-by-ingredient"
             type="button"
             onClick={ () => history.push('/explorar/bebidas/ingredientes') }
+            className="btn btn-light btn-lg btn-block btn-exp"
           >
             Por Ingredientes
           </button>
@@ -68,6 +69,7 @@ function ExploreRecipes() {
             data-testid="explore-surprise"
             type="button"
             onClick={ () => randomRecipe() }
+            className="btn btn-light btn-lg btn-block btn-exp"
           >
             Me Surpreenda!
           </button>
