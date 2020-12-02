@@ -1,19 +1,32 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import './ReceitasFeitas.css';
 
 import shareIcon from '../images/shareIcon.svg';
 
 const ReceitasFeitas = () => {
+  const [recipesComplete, setRecipesComplete] = useState();
+
   const handleRecipeLocalStorage = () => {
     if (localStorage.getItem('doneRecipes') === null) {
       const doneRecipes = [];
       localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
     } else {
       const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
-      console.log(doneRecipes);
+      setRecipesComplete(doneRecipes);
+    }
+  };
 
-      return doneRecipes;
+  const filterRecipes = (value) => {
+    const recipes = JSON.parse(localStorage.getItem('doneRecipes'));
+    if (value === 'food') {
+      const comidaFilter = (recipes.filter((res) => res.type === 'comida'));
+      setRecipesComplete(comidaFilter);
+    } else if (value === 'drinks') {
+      const bebidaFilter = (recipes.filter((res) => res.type === 'bebida'));
+      setRecipesComplete(bebidaFilter);
+    } else {
+      setRecipesComplete(recipes);
     }
   };
 
@@ -28,26 +41,32 @@ const ReceitasFeitas = () => {
         <div className="container-button-recipe-made">
           <button
             type="button"
+            name="All"
             data-testid="filter-by-all-btn"
+            onClick={ (e) => filterRecipes(e.target.name) }
           >
             All
           </button>
           <button
             type="button"
+            name="food"
             data-testid="filter-by-food-btn"
+            onClick={ (e) => filterRecipes(e.target.name) }
           >
             Food
           </button>
           <button
             type="button"
+            name="drinks"
             data-testid="filter-by-drink-btn"
+            onClick={ (e) => filterRecipes(e.target.name) }
           >
             Drinks
           </button>
         </div>
         <div className="container-cards">
-          { handleRecipeLocalStorage() && (
-            handleRecipeLocalStorage().map((infoFoof, i) => (
+          { recipesComplete && (
+            recipesComplete.map((infoFoof, i) => (
               <div
                 key={ i }
                 className="main-card"

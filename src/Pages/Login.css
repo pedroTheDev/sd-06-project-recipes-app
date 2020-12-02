@@ -4,8 +4,9 @@ body {
 
 .main-login {
   background-image: url(imagem4.jpg);
-  background-size: 360px auto;
-  height: 700px;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
   display: flex;
   flex-direction: column;
   align-items: center;
