@@ -7,11 +7,18 @@ import mockedFetch from '../../cypress/mocks/fetch';
 import * as API from '../services/exploreRequest';
 
 describe('Implemente os elementos da tela de explorar comidas por ingredientes', () => {
-  const { getByTestId, history } = renderWithRouter(<ExplorarComidasIngredientes />);
+  const { getByTestId, history, getAllByTestId } = renderWithRouter(<ExplorarComidasIngredientes />);
   
-  it('Tem os data-testids corretos para a tela de explorar comidas por ingredientes', () => {
+  it.only('Tem os data-testids corretos para a tela de explorar comidas por ingredientes', async () => {
+    // const index = 1;
+    history.push('/explorar/comidas/ingredientes');
     jest.spyOn(global, 'fetch').mockImplementation(mockedFetch);
-    await waitForElement(() => expect(getByTestId('0-ingredient-card')).toBeInTheDocument());
+    await waitForElement(() => {
+      console.log(getAllByTestId('1-ingredient-card'));
+      expect(getAllByTestId('1-ingredient-card').length).toBe(2);
+      // expect(getByTestId('1-card-img')).toBeInTheDocument();
+      // expect(getByTestId('1-card-name')).toBeInTheDocument();
+    });
 
     // const ingredientCard = getByTestId('0-ingredient-card');
     // const ingredientImg = getByTestId(`${index}-card-img`);
