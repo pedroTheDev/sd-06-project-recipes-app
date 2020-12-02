@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { fetchDrink } from '../../services/cocktailAPI';
 import SecondaryHeader from '../../components/SecondaryHeader';
 import RecommendationCard from '../../components/RecommendationCard';
 import { fetchMeal } from '../../services/mealAPI';
 import './detail.css';
 
+import recipesAppContext from '../../context/recipesAppContext';
+
 function DrinkDetail() {
-  const [recipes, setRecipes] = useState({});
+  const { recipesDrinks, fetchDrinkIngredients } = useContext(recipesAppContext);
   const [recommendations, setRecommendations] = useState([]);
   const [newRecipe, setNewRecipe] = useState(true);
   const { id } = useParams();
@@ -16,19 +17,13 @@ function DrinkDetail() {
   const maxRecommendations = 6;
   let ingredientsNumber = zero;
 
-  const fetchIngredients = async () => {
-    const recipesByIdApi = await fetchDrink('lookupIngredient', id);
-    setRecipes(recipesByIdApi.drinks[0]);
-  };
-
   const fetchRecommendations = async () => {
     const recipesRecommendation = await fetchMeal('name', '');
-    // console.log('recommendation linha 23', recipesRecommendation);
     setRecommendations(recipesRecommendation.meals);
   };
 
   useEffect(() => {
-    fetchIngredients();
+    fetchDrinkIngredients(id);
     fetchRecommendations();
   }, []);
 
@@ -39,10 +34,10 @@ function DrinkDetail() {
     for (i = 1; i <= fifteen; i += 1) {
       const keyName = `strIngredient${i}`;
       const measureKeyName = `strMeasure${i}`;
-      if (recipes[keyName] !== '' && recipes[keyName] !== null) {
+      if (recipesDrinks[keyName] !== '' && recipesDrinks[keyName] !== null) {
         const obj = {
-          name: recipes[keyName],
-          measure: recipes[measureKeyName],
+          name: recipesDrinks[keyName],
+          measure: recipesDrinks[measureKeyName],
         };
         ingredients.push(obj);
       }
@@ -54,9 +49,9 @@ function DrinkDetail() {
 
   useEffect(() => {
     setIngredientAndMeasure();
-  }, [recipes]);
+  }, [recipesDrinks]);
 
-  if (Object.keys(recipes).length === zero) {
+  if (Object.keys(recipesDrinks).length === zero) {
     return (
       <div className="loading">
         <h2 className="loading-text">Carregando...</h2>
@@ -67,9 +62,9 @@ function DrinkDetail() {
   return (
     <div>
       <SecondaryHeader
-        name={ recipes.strDrink }
-        img={ recipes.strDrinkThumb }
-        category={ recipes.strAlcoholic }
+        name={ recipesDrinks.strDrink }
+        img={ recipesDrinks.strDrinkThumb }
+        category={ recipesDrinks.strAlcoholic }
       />
       <div className="ingredients-container">
         <h3>Ingredientes</h3>
@@ -89,7 +84,7 @@ function DrinkDetail() {
       </div>
       <div className="instructions-container">
         <h3>Instruções</h3>
-        <div data-testid="instructions">{recipes.strInstructions}</div>
+        <div data-testid="instructions">{recipesDrinks.strInstructions}</div>
       </div>
       <div className="recommendation-container">
         <div className="scroller">
@@ -107,7 +102,7 @@ function DrinkDetail() {
         </div>
       </div>
       <div className="button-container">
-        <Link to={ `/bebidas/${recipes.idDrink}/in-progress` }>
+        <Link to={ `/bebidas/${recipesDrinks.idDrink}/in-progress` }>
           <button
             type="button"
             data-testid="start-recipe-btn"

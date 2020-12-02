@@ -8,7 +8,9 @@ function RecipesAppProvider({ children }) {
   const [searchBar, setSearchBar] = useState(false);
   const [data, setData] = useState({});
   const [control, setControl] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [recipesMeals, setRecipesMeals] = useState({});
+  const [recipesDrinks, setRecipesDrinks] = useState({});
+  /* const [isFavorite, setIsFavorite] = useState(false); */
 
   const setFetchMeal = async (type, key) => {
     const result = await fetchMeal(type, key);
@@ -46,9 +48,18 @@ function RecipesAppProvider({ children }) {
     return resultReturn;
   };
 
-  const handleFavoriteRecipe = () => {
-    console.log('is favorite', 'teste');
+  /* const handleFavoriteRecipe = () => {
     setIsFavorite(!isFavorite);
+  }; */
+
+  const fetchMealIngredients = async (id) => {
+    const recipesByIdApi = await fetchMeal('lookupIngredient', id);
+    setRecipesMeals(recipesByIdApi.meals[0]);
+  };
+
+  const fetchDrinkIngredients = async (id) => {
+    const recipesByIdApi = await fetchDrink('lookupIngredient', id);
+    setRecipesDrinks(recipesByIdApi.drinks[0]);
   };
 
   const contextValue = {
@@ -59,8 +70,12 @@ function RecipesAppProvider({ children }) {
     setFetchDrink,
     control,
     setControl,
-    isFavorite,
-    handleFavoriteRecipe,
+    // isFavorite,
+    // handleFavoriteRecipe,
+    recipesMeals,
+    recipesDrinks,
+    fetchMealIngredients,
+    fetchDrinkIngredients,
   };
   return (
     <recipesAppContext.Provider value={ contextValue }>
