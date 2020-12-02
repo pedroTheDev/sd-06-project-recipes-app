@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
-import IngredientCard from '../../components/IngredientCard';
+import MealsIngredientCard from '../../components/MealsIngredientCard';
 import { fetchMeal } from '../../services/mealAPI';
 
 function MealsIngredients() {
@@ -28,7 +28,7 @@ function MealsIngredients() {
         {
           mealsIngredients.slice(zero, maxCards)
             .map((ingredient, index) => (
-              <IngredientCard
+              <MealsIngredientCard
                 key={ index }
                 ingredient={ ingredient }
                 index={ index }
