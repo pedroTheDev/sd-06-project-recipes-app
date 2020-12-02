@@ -14,6 +14,7 @@ function RecipesAppProvider({ children }) {
   const [heart, setHeart] = useState('');
   const [copied, setCopied] = useState('');
   const [ingredients, setIngredients] = useState([]);
+  const [ingredientExplore, setIngredientExplore] = useState('');
 
   const isFavorite = (id) => {
     const local = JSON.parse(localStorage.getItem('favoriteRecipes'));
@@ -185,6 +186,8 @@ function RecipesAppProvider({ children }) {
     favorite,
     isFavorite,
     share,
+    ingredientExplore,
+    setIngredientExplore,
     copied,
     heart,
     setHeart,
