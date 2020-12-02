@@ -15,7 +15,6 @@ const ExplorarComidasIng = () => {
 
   useEffect(() => {
     listIngredients().then((response) => setIngredientList(response));
-    setMeals([{ teste: 'teste' }]);
   }, []);
   console.log(ingredientList);
   const zero = 0;

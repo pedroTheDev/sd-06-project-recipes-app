@@ -24,9 +24,8 @@ const Comidas = (history) => {
       setFiltersData(data);
       setMeals(responseFoodsAPI);
     }
-    if (!meals.length) {
-      fetchFood();
-    }
+
+    fetchFood();
   }, []);
 
   return !meals.length ? (
