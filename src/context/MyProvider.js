@@ -26,24 +26,6 @@ function MyProvider({ children }) {
   const [recipeInProgress, setRecipeInProgress] = useState();
   const [ingredientsExplorer, setIngredientsExplorer] = useState([]);
 
-  // async function verifyRecommendedRecipes() {
-  //   const inditialIndex = 0;
-  //   const quantityRecipes = 6;
-  //   if (recommendedMeals[0] === undefined) {
-  //     const resultRecommendedMeals = await getRecipesMealsApi();
-  //     const myRecommendedMeals = resultRecommendedMeals
-  //       .slice(inditialIndex, quantityRecipes);
-  //     console.log('array vazio', myRecommendedMeals);
-  //     setRecommendedMeals(myRecommendedMeals);
-  //   }
-  //   if (recommendedDrinks[0] === undefined) {
-  //     const resultRecommendedDrinks = await getRecipeDrinksApi();
-  //     const myRecommendedDrinks = resultRecommendedDrinks
-  //       .slice(inditialIndex, quantityRecipes);
-  //     setRecommendedDrinks(myRecommendedDrinks);
-  //   }
-  // }
-
   useEffect(() => {
     async function fetchALL() {
       const myCategories = await getAllRecipeTypesApi('c');

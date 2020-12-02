@@ -1,31 +1,32 @@
-import React, { useEffect /*useState*/ } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../Css/inProgress.css';
 
-function CheckboxInProgress(ingredients) {
-  //const [checked, setChecked] = useState([]);
+function CheckboxInProgress({ ingredients }) {
+  const [myIngredients, setIngredients] = useState([]);
 
-  /*const handleChange = (index) => {
-    const value = !recipeInProgress.ingredients[index].checkbox;
-    recipeInProgress.ingredients[index].checkbox = value;
-    setRecipeInProgress(recipeInProgress);
-  };*/
+  const handleChange = (index) => {
+    const value = !myIngredients[index].checkbox;
+    const markedCheckbox = myIngredients;
+    markedCheckbox[index].checkbox = value;
+    setIngredients(markedCheckbox);
+  };
+
   useEffect(() => {
-    const recipeCheckbox = ingredients.map((item) => item.checkbox);
-    console.log(recipeCheckbox);
+    // const recipeCheckbox = myIngredients.map((item) => item.checkbox);
+    setIngredients(ingredients);
   }, []);
 
   return (
     <div>
-      <h1>lalala</h1>
-      {/*<form className="form-checkbox">
-        {recipeInProgress.ingredients.map((item, index) => (
+      <form className="form-checkbox">
+        {myIngredients.map((item, index) => (
           <label
             htmlFor="checkbox"
             key={ index }
           >
             <input
               onChange={ () => handleChange(index) }
-              checked={ item.checkbox }
+              checked={ item.checked }
               type="checkbox"
               name="checkbox"
               id="checkbox"
@@ -34,7 +35,7 @@ function CheckboxInProgress(ingredients) {
             { ` ${item.ingredient} (${item.measure})` }
           </label>
         ))}
-      </form>*/}
+      </form>
     </div>
   );
 }
