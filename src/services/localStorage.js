@@ -30,6 +30,7 @@ export function treatRecipe(recipe) {
       type: 'comida',
       area: recipe.strArea,
       category: recipe.strCategory,
+      alcoholicOrNot: '',
       name: recipe.strMeal,
       image: recipe.strMealThumb,
       instructions: recipe.strInstructions,
@@ -40,7 +41,7 @@ export function treatRecipe(recipe) {
   } else if ('idDrink' in recipe) {
     treatedRecipe = {
       id: recipe.idDrink,
-      type: 'comida',
+      type: 'bebida',
       category: recipe.strCategory,
       alcoholicOrNot: recipe.strAlcoholic,
       name: recipe.strDrink,
@@ -62,6 +63,7 @@ export function convertTreatedRecipe(recipe) {
       idMeal: recipe.id,
       strArea: recipe.area,
       strCategory: recipe.category,
+      strAlcoholic: recipe.alcoholicOrNot,
       strMeal: recipe.name,
       strMealThumb: recipe.image,
       strInstructions: recipe.instructions,
@@ -136,8 +138,27 @@ export function recipeIsFavorite(recipe) {
 
 export function favoriteRecipe(recipe) {
   checkFavoriteRecipesDatabase();
-  if (!('type' in recipe)) recipe = treatRecipe(recipe);
-  if (recipe.type === 'drink') recipe.category = recipe.alcoholic;
+  if ('idMeal' in recipe) {
+    recipe = {
+      id: recipe.idMeal,
+      type: 'comida',
+      area: recipe.strArea,
+      category: recipe.strCategory,
+      alcoholicOrNot: '',
+      name: recipe.strMeal,
+      image: recipe.strMealThumb,
+    };
+  } else if ('idDrink' in recipe) {
+    recipe = {
+      id: recipe.idDrink,
+      type: 'bebida',
+      area: '',
+      category: recipe.strCategory,
+      alcoholicOrNot: recipe.strAlcoholic,
+      name: recipe.strDrink,
+      image: recipe.strDrinkThumb,
+    };
+  }
   const temp = getFavoriteRecipes();
   let recipeIndex;
   if (!temp.length < 1) recipeIndex = temp.findIndex((item) => item.id === recipe.id);
@@ -147,44 +168,55 @@ export function favoriteRecipe(recipe) {
   updateFavoriteRecipes(temp);
 }
 
-export function createRecipesProgress() {
-  let obj = {
-    cocktails: {},
-    meals: {},
-  };
-  obj = JSON.parse(localStorage.getItem(''));
-  localStorage.setItem('in_progress_recipes', JSON.stringify(obj));
+function createRecipesProgressDatabase() {
+  const recipes = [];
+  localStorage.setItem('inProgressRecipes', JSON.stringify(recipes));
 }
 
-export function getInProgressRecipes() {
-  const temp = JSON.parse(localStorage.getItem('in_progress_recipes'));
-  return temp;
+function getRecipesProgress() {
+  const recipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+  return recipes;
 }
 
-export function addCocktailIngredient(cocktailID, ingredientID) {
-  let obj = JSON.parse(localStorage.getItem('in_progress_recipes'));
-  if (!obj.cocktails[cocktailID]) {
-    const temp = { [cocktailID]: [ingredientID] };
-    obj = {
-      cocktails: { ...obj.cocktails, ...temp },
-      meals: { ...obj.meals },
-    };
-  } else {
-    obj.cocktails[cocktailID].push(ingredientID);
+function updateRecipesProgress(recipes) {
+  localStorage.setItem('inProgressRecipes', JSON.stringify(recipes));
+}
+
+export function checkRecipesProgressDatabase() {
+  if (!getRecipesProgress()) createRecipesProgressDatabase();
+}
+
+export function selectedIngredient(recipeID, ingredient) {
+  checkRecipesProgressDatabase();
+  const recipes = getRecipesProgress();
+  const minusOne = -1;
+  const recipeIndex = recipes.findIndex((item) => item.id === recipeID);
+  if (recipeIndex > minusOne) {
+    const { ingredients } = recipes[recipeIndex];
+    const ingredientIndex = ingredients.findIndex((item) => item === ingredient);
+    if (ingredientIndex > minusOne) return true;
   }
-  localStorage.setItem('in_progress_recipes', JSON.stringify(obj));
+  return false;
 }
 
-export function addMealIngredient(mealID, ingredientID) {
-  let obj = JSON.parse(localStorage.getItem('in_progress_recipes'));
-  if (!obj.meals[mealID]) {
-    const temp = { [mealID]: [ingredientID] };
-    obj = {
-      cocktails: { ...obj.cocktails },
-      meals: { ...obj.meals, ...temp },
-    };
+export function addRecipeProgress(recipeID, ingredient) {
+  checkRecipesProgressDatabase();
+  const recipes = getRecipesProgress();
+  const recipeIndex = recipes.findIndex((item) => item.id === recipeID);
+  const minusOne = -1;
+  if (recipeIndex > minusOne) {
+    const { ingredients } = recipes[recipeIndex];
+    const ingredientIndex = ingredients.findIndex((item) => item === ingredient);
+    if (ingredientIndex > minusOne) {
+      recipes[recipeIndex].ingredients.splice(ingredientIndex, 1);
+    } else recipes[recipeIndex].ingredients.push(ingredient);
   } else {
-    obj.meals[mealID].push(ingredientID);
+    const recipeObj = {
+      id: recipeID,
+      ingredients: [ingredient],
+    };
+    recipes.push(recipeObj);
   }
-  localStorage.setItem('in_progress_recipes', JSON.stringify(obj));
+
+  updateRecipesProgress(recipes);
 }
