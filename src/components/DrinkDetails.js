@@ -5,28 +5,68 @@ import Carousel from 'react-bootstrap/Carousel';
 import { getRecipeDrinkByIdApi } from '../services/drinksAPI';
 import { getRecipesMealsApi } from '../services/mealsAPI';
 import shareIcon from '../images/shareIcon.svg';
-import favoriteIcon from '../images/whiteHeartIcon.svg';
+import whiteIcon from '../images/whiteHeartIcon.svg';
+import blackIcon from '../images/blackHeartIcon.svg';
 import MealsContext from '../context/MealsContext';
 import '../Css/MealDetail.css';
 
 function DrinkDetails() {
+  const [loading, setLoading] = useState(true);
   const [btnDoneRecipe, setBtnDoneRecipe] = useState();
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [urlWasCopyToClipboard, seturlWasCopyToClipboard] = useState(false);
   const { recipeDrink, setRecipeDrink, recommendedMeals,
     setRecommendedMeals } = useContext(MealsContext);
   const { id } = useParams(); // retorna o paramentro que está na rota
-  const indiceZero = 0;
-  const indiceUm = 1;
-  const indiceDois = 2;
-  const indiceTres = 3;
-  const indiceQuatro = 4;
-  const indiceCinco = 5;
+  const valorZero = 0;
+  const valorUm = 1;
+  const valorDois = 2;
+  const valorTres = 3;
+  const valorQuatro = 4;
+  const valorCinco = 5;
+
+  function verifyFavoriteRecipe() {
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (favoriteRecipes !== null) {
+      const indexRecipe = favoriteRecipes.findIndex((item) => item.id === id);
+      if (indexRecipe >= valorZero) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function FavoriteRecipeClick() {
+    console.log(isFavorite);
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (favoriteRecipes !== null) {
+      if (!isFavorite) {
+        const newFavoriteRecipe = {
+          id: recipeDrink.idDrink,
+          type: 'bebida',
+          area: '',
+          category: recipeDrink.strCategory,
+          alcoholicOrNot: recipeDrink.strAlcoholic,
+          name: recipeDrink.strDrink,
+          image: recipeDrink.strDrinkThumb,
+        };
+        const arrayFavoriteRecipe = [...favoriteRecipes, newFavoriteRecipe];
+        localStorage.setItem('favoriteRecipes', JSON.stringify(arrayFavoriteRecipe));
+        setIsFavorite(true);
+      } else {
+        const arrayFavoriteRecipe = favoriteRecipes.filter((item) => item.id !== id);
+        localStorage.setItem('favoriteRecipes', JSON.stringify(arrayFavoriteRecipe));
+        setIsFavorite(false);
+      }
+    }
+  }
 
   useEffect(() => {
     async function fetchDatas() {
       // Verifica os detalhes da receita por id para
       const myRecipe = await getRecipeDrinkByIdApi(id);
 
-      // Verifica bebidas recomendadas
+      // Verifica receitas recomendadas
       const inditialIndex = 0;
       const quantityRecipes = 6;
       const resultRecommendedMeals = await getRecipesMealsApi();
@@ -34,22 +74,29 @@ function DrinkDetails() {
         .slice(inditialIndex, quantityRecipes);
 
       // Verifica se receita já foi iniciada ou concluída
-      // const valorZero = 0;
-      // const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
-      // const indexDoneRecipe = doneRecipes.findIndex((item) => item.id === id);
-      // let textBtnDoneRecipe = 'Iniciar Receita';
-      // if (indexDoneRecipe >= valorZero) {
-      //   if (doneRecipes[indexDoneRecipe].doneDate === '') {
-      //     textBtnDoneRecipe = 'Continuar Receita';
-      //   } else {
-      //     textBtnDoneRecipe = 'Receita Finalizada';
-      //   }
-      // }
-      // setBtnDoneRecipe(textBtnDoneRecipe);
-      setBtnDoneRecipe('Inicia Receita');
+      const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+      let textBtnDoneRecipe = 'Iniciar Receita';
+      if (doneRecipes !== null) {
+        const indexDoneRecipe = doneRecipes.findIndex((item) => item.id === id);
+        if (indexDoneRecipe >= valorZero) {
+          if (doneRecipes[indexDoneRecipe].doneDate === '') {
+            textBtnDoneRecipe = 'Continuar Receita';
+          } else {
+            textBtnDoneRecipe = 'Receita Finalizada';
+          }
+        }
+      }
+
+      // Verifica se é uma receita favorita
+      const myFavorite = verifyFavoriteRecipe();
+
+      setIsFavorite(myFavorite);
+      setBtnDoneRecipe(textBtnDoneRecipe);
       setRecommendedMeals(myRecommendedMeals);
       setRecipeDrink(myRecipe[0]);
+      setLoading(false);
     }
+    setLoading(true);
     fetchDatas();
   }, []);
 
@@ -78,10 +125,15 @@ function DrinkDetails() {
       name: recipeDrink.strDrink,
       image: recipeDrink.strDrinkThumb,
       doneDate: '',
-      tags: recipeDrink.strTags,
+      tags: [],
     };
     const arrayDoneRecipe = [...doneRecipes, newDoneRecipe];
     localStorage.setItem('doneRecipes', JSON.stringify(arrayDoneRecipe));
+  }
+
+  function copyToClipboard() {
+    navigator.clipboard.writeText(window.location.href);
+    seturlWasCopyToClipboard(true);
   }
 
   function imgDetail() {
@@ -102,9 +154,27 @@ function DrinkDetails() {
       <div>
         <h2 data-testid="recipe-title">{ recipeDrink.strDrink }</h2>
         <div>
-          <img src={ shareIcon } alt="Profile" data-testid="share-btn" />
-          <img src={ favoriteIcon } alt="Profile" data-testid="favorite-btn" />
+          <button
+            type="button"
+            data-testid="share-btn"
+            className="app-button-transparent"
+            onClick={ copyToClipboard }
+          >
+            <img src={ shareIcon } alt="Profile" />
+          </button>
+          <button
+            type="button"
+            className="app-button-transparent"
+            onClick={ FavoriteRecipeClick }
+          >
+            <img
+              src={ isFavorite ? blackIcon : whiteIcon }
+              alt="Favorite"
+              data-testid="favorite-btn"
+            />
+          </button>
         </div>
+        { urlWasCopyToClipboard ? <h6>Link copiado!</h6> : null }
       </div>
     );
   }
@@ -169,20 +239,20 @@ function DrinkDetails() {
         <Carousel>
           <Carousel.Item>
             <div className="carousel-container">
-              { showItemCarousel(indiceZero) }
-              { showItemCarousel(indiceUm) }
+              { showItemCarousel(valorZero) }
+              { showItemCarousel(valorUm) }
             </div>
           </Carousel.Item>
           <Carousel.Item>
             <div className="carousel-container">
-              { showItemCarousel(indiceDois) }
-              { showItemCarousel(indiceTres) }
+              { showItemCarousel(valorDois) }
+              { showItemCarousel(valorTres) }
             </div>
           </Carousel.Item>
           <Carousel.Item>
             <div className="carousel-container">
-              { showItemCarousel(indiceQuatro) }
-              { showItemCarousel(indiceCinco) }
+              { showItemCarousel(valorQuatro) }
+              { showItemCarousel(valorCinco) }
             </div>
           </Carousel.Item>
         </Carousel>
@@ -212,7 +282,7 @@ function DrinkDetails() {
   }
 
   return (
-    (!recipeDrink)
+    (!recipeDrink || loading)
       ? <h5>Loading...</h5>
       : (
         <div>
