@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import clipboardCopy from 'clipboard-copy';
 import Header from '../components/Header';
-import Footer from '../components/Footer';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import './FavoriteRecipes.css';
@@ -93,7 +92,6 @@ export default function FavoriteRecipes() {
           </button>
         </div>
       ))}
-      <Footer />
     </div>
   );
 }

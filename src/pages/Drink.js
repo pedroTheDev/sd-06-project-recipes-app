@@ -15,7 +15,7 @@ function Drink() {
   const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
   const urlCategories = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
   const urlDrinksCategories = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${currentCategories}`;
-  const urlDrinksCategories2 = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${currentCategories}`;
+  const urlDrinksCategories2 = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${currentCategories}`;
 
   console.log(urlDrinksCategories2);
   useEffect(() => {
