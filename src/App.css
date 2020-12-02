@@ -1,62 +1,411 @@
-#meals {
+@font-face{
+  font-family: 'Noto Sans', sans-serif;
+  src: url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap')
+}
+
+html {
+  font-family: 'Noto Sans', sans-serif;
   height: 100vh;
-  width: 100%;
-  background: #0fa36b;
+  margin: 0px;
+  padding: 0px;
+}
+
+head {
+  height: 0px;
+  margin: 0px;
+  padding: 0px;
+}
+
+#root {
+  height: 100%;
+}
+
+body {
+  align-content: center;
+  color: rgb(51, 51, 51);
+  height: 100vh;
+  margin-top: 0px;
+  padding-top: 0px;
+}
+
+.login-div-container-containerzao {
+  height: 100%;
+}
+
+.login-div-container {
+  background-color: rgba(255, 255, 255, 0.836);
+  background-image: url("./style/loginBackground.png");
+  background-size: 100%;
+  height: 100%;
+  margin-top: 0px;
+  padding-bottom: 0px;
+}
+
+.login-div {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-wrap: wrap;
   justify-content: center;
-  font-family: sans-serif;
-  color: #464646;
+  padding-top: 18%;
 }
 
-#rocksGlass {
-  max-height: 80vh;
-  animation: shake 1s infinite ease;
+.logo {
+  margin-top: 10%px;
+  width: 85%;
 }
 
-#iceLeft {
-  /* transform-origin set in px for firefox compatibility */
-  opacity: 0.6;
-  transform-origin: 36px 66px;
-  animation: clink .8s infinite ease;
+.login-input {
+  border: none;
+  /* border-radius: 10px; */
+  box-shadow: 3px 5px 5px rgba(107, 107, 107, 0.568);
+  height: 25px;
+  margin-top: 5%;
+  width: 70%;
 }
 
-#iceRight {
-  /* transform-origin set in px for firefox compatibility */
-  opacity: 0.6;
-  transform-origin: 60px 78px;
-  animation: clink .8s .2s infinite ease;
+.login-input:hover {
+  box-shadow: 3px 5px 5px rgb(107, 107, 107);
 }
 
-#meals > span {
-  color: aliceblue;
-  font-weight: 900;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 3em;
-  animation: shake 1.5s infinite ease;
+.login-input:focus {
+  outline: none;
 }
 
-@keyframes shake {
-  0% {
-    transform: rotate(5deg);
-  }
-  50% {
-    transform: rotate(-5deg);
-  }
-  100% {
-    transform: rotate(5deg);
-  }
+.login-button-div {
+  display: flex;
+  justify-content: center;
+  margin-top: 5%;
+  text-decoration: none;
+  width: 100%;
 }
 
-@keyframes clink {
-  0% {
-    transform: rotate(-10deg);
-  }
-  50% {
-    transform: rotate(20deg);
-  }
-  100% {
-    transform: rotate(-10deg);
-  }
+a {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+  text-decoration: none;
+  width: 100%;
 }
+
+.login-button {
+  background-color: rgba(255, 255, 255, 0.836);
+  border: none;
+  box-shadow: 3px 5px 5px rgba(107, 107, 107, 0.568);
+  height: 25px;
+  width: 70%;
+}
+
+.login-button:hover {
+  box-shadow: 3px 5px 5px rgb(107, 107, 107);
+}
+
+/* header */
+
+.Header {
+  align-items: center;
+  background-color: black;
+  color: white;
+  display: inline-flex;
+  flex-wrap: wrap;
+  height: 70px;
+  justify-content: space-between;
+  margin-top: 0px;
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+}
+
+.header-link {
+  align-items: center;
+  margin-left: 0px;
+  margin-right: 0px;
+  width: 40px;
+  z-index: 2;
+}
+
+.header-profile-button {
+  background-image: url("./images/profileIcon.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 30px 30px;
+  border: none;
+  filter: invert(100%);
+  height: 40px;
+  width: 40px;
+  z-index: 2;
+}
+
+.header-search-button {
+  background-image: url("./images/searchIcon.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 30px 30px;
+  border: none;
+  filter: invert(100%);
+  height: 40px;
+  width: 40px;
+  z-index: 2;
+}
+
+.header-text {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: large;
+}
+
+h2 {
+  margin-bottom: 0px;
+  margin-top: 0px;
+}
+
+.header-filter-div {
+  /* background-color: teal; */
+  color: black;
+  font-size: 15px;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 40px;
+  position: relative;
+  width: 100%;
+}
+
+.header-search-input {
+  background-color: rgba(255, 255, 255, 0.836);
+  border: none;
+  box-shadow: 3px 5px 5px rgba(107, 107, 107, 0.568);
+  height: 25px;
+  margin-left: 5px;
+  margin-top: 115px;
+  position: absolute;
+  width: 94.5%;
+}
+
+.header-filter-input-label {
+  margin-top: 220px;
+}
+
+.header-filter-input {
+  margin-top: 0px;
+}
+
+.header-filter-button {
+  background-color: rgba(255, 255, 255, 0.836);
+  border: none;
+  box-shadow: 3px 5px 5px rgba(107, 107, 107, 0.568);
+  height: 25px;
+  margin-left: 10px;
+  margin-top: 0px;
+  width: 70px;
+}
+
+/* footer */
+
+.footer {
+  align-items: center;
+  background-color: black;
+  color: white;
+  display: inline-flex;
+  height: 70px;
+  justify-content: space-between;
+  margin-top: 0px;
+  position: fixed;
+  width: 100%;
+}
+
+.footer-link {
+  align-items: center;
+  margin-left: 0px;
+  margin-right: 0px;
+  width: 40px;
+}
+
+.footer-drinks-button {
+  background-image: url("./images/drinkIcon.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 30px 30px;
+  border: none;
+  filter: invert(100%);
+  height: 40px;
+  width: 40px;
+}
+
+.footer-explore-button {
+  background-image: url("./images/exploreIcon.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 30px 30px;
+  border: none;
+  filter: invert(100%);
+  height: 40px;
+  width: 40px;
+}
+
+.footer-meals-button {
+  background-image: url("./images/mealIcon.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 30px 30px;
+  border: none;
+  filter: invert(100%);
+  height: 40px;
+  width: 40px;
+}
+
+/* pagina de comidas */
+
+.foodCard-div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding-bottom: 23%;
+  padding-top: 27%;
+  width: 100%;
+}
+
+.foodCard-div a {
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+  width: 43%;
+}
+
+.foodCard-link{
+  margin-bottom: 0px;
+  margin-right: 0px;
+  padding-bottom: 0px;
+  width: 45%;
+}
+
+.foodCard {
+  background-color: rgb(255, 255, 255);
+  border: 1.5px solid rgb(255, 255, 255);
+  border-radius: 1px;
+  box-shadow: 3px 5px 5px rgba(107, 107, 107, 0.568);
+  margin-bottom: 0px;
+  margin-top: 15px;
+  overflow: hidden;
+  padding: 0px;
+  width: 100%;
+}
+
+.foodCard:hover {
+  box-shadow: 3px 5px 5px rgb(107, 107, 107);
+  border: none;
+  outline:none;
+}
+
+.foodCard-img {
+  border-radius: 1px;
+  height: 100%;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+  width: 100%;
+}
+
+.foodCard-title {
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.76);
+  color: rgb(0, 0, 0);
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 18px;
+  height: 25px;
+  padding-left: 2px;
+  padding-top: 2px;
+  position: absolute;
+  text-decoration: none;
+  width: 42%;
+}
+
+/* pagina de bebidas */
+
+.drinkCard-div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding-bottom: 23%;
+  padding-top: 27%;
+  width: 100%;
+}
+
+.drinkCard-div a {
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+  width: 43%;
+}
+
+.drinkCard-link{
+  margin-bottom: 0px;
+  margin-right: 0px;
+  padding-bottom: 0px;
+  width: 45%;
+}
+
+.drinkCard {
+  background-color: rgb(255, 255, 255);
+  border: 1.5px solid rgb(255, 255, 255);
+  border-radius: 1px;
+  box-shadow: 3px 5px 5px rgba(107, 107, 107, 0.568);
+  margin-bottom: 0px;
+  margin-top: 15px;
+  overflow: hidden;
+  padding: 0px;
+  width: 100%;
+}
+
+.drinkCard:hover {
+  box-shadow: 3px 5px 5px rgb(107, 107, 107);
+  border: none;
+  outline:none;
+}
+
+.drinkCard-img {
+  border-radius: 1px;
+  height: 100%;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+  width: 100%;
+}
+
+.drinkCard-title {
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.76);
+  color: rgb(0, 0, 0);
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 18px;
+  height: 25px;
+  padding-left: 2px;
+  padding-top: 2px;
+  position: absolute;
+  text-decoration: none;
+  width: 42%;
+}
+
+.category-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 19%;
+  position: fixed;
+  text-decoration: none;
+  width: 100%;
+  z-index: 1;
+}
+
+.category-button {
+  background-color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 1px;
+  box-shadow: 3px 5px 5px rgba(107, 107, 107, 0.568);
+  color: white;
+  font-size: 11px;
+  height: 25px;
+  margin: 2px;
+  overflow: hidden;
+  width: 60%;
+}
+
+.category-button:hover {
+  box-shadow: 3px 5px 5px rgb(107, 107, 107);
+  border: none;
+  outline:none;
+}
+

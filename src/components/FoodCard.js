@@ -7,6 +7,7 @@ function Card(props) {
   const { strMeal, strMealThumb } = element;
   return (
     <Link
+      className="foodCard-link"
       to={ {
         pathname: `/comidas/${element.idMeal}`,
         state: {
@@ -14,12 +15,13 @@ function Card(props) {
         },
       } }
     >
-      <div data-testid={ `${idx}-recipe-card` }>
-        <h2 data-testid={ `${idx}-card-name` }>{ strMeal }</h2>
+      <div data-testid={ `${idx}-recipe-card` } className="foodCard">
+        <h2 data-testid={ `${idx}-card-name` } className="foodCard-title">{ strMeal }</h2>
         <img
           src={ strMealThumb }
           alt={ `${strMeal} photograph` }
           data-testid={ `${idx}-card-img` }
+          className="foodCard-img"
         />
       </div>
     </Link>

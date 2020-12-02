@@ -11,6 +11,7 @@ function SearchInput() {
       data-testid="search-input"
       onChange={ (e) => setValueInput(e.target.value) }
       value={ valueInput }
+      className="header-search-input"
     />
   );
 }

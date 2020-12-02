@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import blackLogo from '../style/blackLogo.png';
+// import foodBackground from '../style/food.jpg';
+
 function LoginPage() {
   const [email, setEmail] = useState(false);
   const [password, setPassword] = useState(false);
@@ -30,33 +33,41 @@ function LoginPage() {
   }
 
   return (
-    <main>
-      <input
-        type="email"
-        data-testid="email-input"
-        required
-        placeholder="Digite seu email"
-        onChange={ ({ target }) => handleEmail(target.value) }
-      />
-      <input
-        type="password"
-        data-testid="password-input"
-        required
-        minLength="6"
-        placeholder="Digite sua senha"
-        onChange={ ({ target }) => handlePassword(target.value) }
-      />
-      <Link to="/comidas">
-        <button
-          type="button"
-          data-testid="login-submit-btn"
-          disabled={ !email + !password }
-          onClick={ handleClick }
-        >
-          Entrar
-        </button>
-      </Link>
-    </main>
+    <div className="login-div-container">
+      <main className="login-div">
+        <img src={ blackLogo } alt="food, drink and fun" className="logo" />
+        <input
+          type="email"
+          data-testid="email-input"
+          required
+          placeholder="Digite seu email"
+          onChange={ ({ target }) => handleEmail(target.value) }
+          className="login-input"
+        />
+        <input
+          type="password"
+          data-testid="password-input"
+          required
+          minLength="6"
+          placeholder="Digite sua senha"
+          onChange={ ({ target }) => handlePassword(target.value) }
+          className="login-input"
+        />
+        <div className="login-button-div">
+          <Link to="/comidas">
+            <button
+              type="button"
+              data-testid="login-submit-btn"
+              disabled={ !email + !password }
+              onClick={ handleClick }
+              className="login-button"
+            >
+              Entrar
+            </button>
+          </Link>
+        </div>
+      </main>
+    </div>
   );
 }
 

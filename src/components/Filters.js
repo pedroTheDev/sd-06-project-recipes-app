@@ -132,9 +132,9 @@ function Filters() {
   }, [resultsFoodsAndDrinks]);
 
   return (
-    <div>
+    <div className="header-filter-div">
 
-      <label htmlFor="ingredients">
+      <label htmlFor="ingredients" className="header-filter-input-label">
         <input
           data-testid="ingredient-search-radio"
           type="radio"
@@ -142,11 +142,12 @@ function Filters() {
           id="ingredients"
           value="ingredients"
           onClick={ (e) => handleRadio(e) }
+          className="header-filter-input"
         />
         Ingredientes
       </label>
 
-      <label htmlFor="name">
+      <label htmlFor="name" className="header-filter-input-label">
         <input
           data-testid="name-search-radio"
           type="radio"
@@ -154,11 +155,12 @@ function Filters() {
           id="name"
           value="name"
           onClick={ (e) => handleRadio(e) }
+          className="header-filter-input"
         />
         Nome
       </label>
 
-      <label htmlFor="firstLetter">
+      <label htmlFor="firstLetter" className="header-filter-input-label">
         <input
           data-testid="first-letter-search-radio"
           type="radio"
@@ -166,6 +168,7 @@ function Filters() {
           id="firstLetter"
           value="firstLetter"
           onClick={ (e) => handleRadio(e) }
+          className="header-filter-input"
         />
         Primeira letra
       </label>
@@ -174,6 +177,7 @@ function Filters() {
         type="button"
         data-testid="exec-search-btn"
         onClick={ () => handleClick() }
+        className="header-filter-button"
       >
         Buscar
       </button>

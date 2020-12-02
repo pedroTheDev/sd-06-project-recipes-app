@@ -50,12 +50,13 @@ function FoodRecipesPage() {
       <Header pageName="Comidas" />
       <div />
 
-      <div>
+      <div className="category-buttons">
         <button
           data-testid="All-category-filter"
           type="button"
           value="all"
           onClick={ () => handleClickAll() }
+          className="category-button"
         >
           All
         </button>
@@ -66,13 +67,14 @@ function FoodRecipesPage() {
             type="button"
             data-testid={ `${element.strCategory}-category-filter` }
             key={ element }
+            className="category-button"
           >
             {element.strCategory}
           </button>
         ))}
 
       </div>
-      <div>
+      <div className="foodCard-div">
         { !hiddenInput ? apiResult.meals && apiResult.meals
           .slice(zero, doze).map((element, idx) => (
             <FoodCard element={ element } idx={ idx } key={ element.idMeal } />)) : null }

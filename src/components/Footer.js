@@ -14,29 +14,32 @@ function Footer() {
       data-testid="footer"
       className="footer"
     >
-      <footer>
-        <Link to="/bebidas">
+      <footer className="footer">
+        <Link to="/bebidas" className="footer-link">
           <button
             aria-label="drinks-btn"
             type="button"
             src={ drinkIcon }
             data-testid="drinks-bottom-btn"
+            className="footer-drinks-button"
           />
         </Link>
-        <Link to="/explorar">
+        <Link to="/explorar" className="footer-link">
           <button
             aria-label="explore-btn"
             type="button"
             src={ exploreIcon }
             data-testid="explore-bottom-btn"
+            className="footer-explore-button"
           />
         </Link>
-        <Link to="/comidas">
+        <Link to="/comidas" className="footer-link">
           <button
             aria-label="meal-btn"
             type="button"
             src={ mealIcon }
             data-testid="food-bottom-btn"
+            className="footer-meals-button"
           />
         </Link>
       </footer>
