@@ -125,11 +125,12 @@ function FavoriteRecipes() {
   return (
     <div>
       <Header title="Receitas Favoritas" />
-      <div>
+      <div className="done-btn">
         <button
           type="button"
           data-testid="filter-by-all-btn"
           onClick={ () => handleClickFavorite() }
+          className="btn btn-light btn-lg"
         >
           All
         </button>
@@ -137,6 +138,7 @@ function FavoriteRecipes() {
           type="button"
           data-testid="filter-by-food-btn"
           onClick={ () => handleClickFavorite('comida') }
+          className="btn btn-light btn-lg"
         >
           Food
         </button>
@@ -144,6 +146,7 @@ function FavoriteRecipes() {
           type="button"
           data-testid="filter-by-drink-btn"
           onClick={ () => handleClickFavorite('bebida') }
+          className="btn btn-light btn-lg"
         >
           Drinks
         </button>

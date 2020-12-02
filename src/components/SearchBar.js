@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ContextRecipes from '../context/ContextRecipes';
+import '../App.css';
 
 function SearchBar(props) {
   const { fetchApi } = props;

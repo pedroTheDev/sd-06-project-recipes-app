@@ -26,12 +26,13 @@ function ExploreRecipes() {
   return (
     <div>
       { location.includes('comidas') ? (
-        <div>
+        <div className="explore-btn">
           <Header title="Explorar Comidas" />
           <button
             data-testid="explore-by-ingredient"
             type="button"
             onClick={ () => history.push('/explorar/comidas/ingredientes') }
+            className="btn btn-light btn-lg btn-block"
           >
             Por Ingredientes
           </button>
@@ -39,6 +40,7 @@ function ExploreRecipes() {
             data-testid="explore-by-area"
             type="button"
             onClick={ () => history.push('/explorar/comidas/area') }
+            className="btn btn-light btn-lg btn-block"
           >
             Por Local de Origem
           </button>
@@ -46,6 +48,7 @@ function ExploreRecipes() {
             data-testid="explore-surprise"
             type="button"
             onClick={ () => randomRecipe() }
+            className="btn btn-light btn-lg btn-block"
           >
             Me Surpreenda!
           </button>

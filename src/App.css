@@ -4,6 +4,26 @@ body{
   font-family: 'Montserrat', sans-serif;
 }
 
+.container-card {
+  margin: 20px;
+}
+
+.explore-btn {
+  margin: 15px;
+}
+
+.done-btn {
+  display: flex;
+  justify-content: center;
+}
+
+.perfil-header {
+  margin: 30px;
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+}
+
 /* .ingredient-done {
   text-decoration: line-through;
 } 

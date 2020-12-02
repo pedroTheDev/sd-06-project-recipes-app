@@ -32,34 +32,38 @@ function Card() {
   };
 
   return (
-    recipes.map((recipe, index) => (
-      <div
-        onClick={ goToDetails }
-        id={ recipe[id] }
-        onKeyPress={ goToDetails }
-        role="button"
-        tabIndex="0"
-        data-testid={ `${index}-recipe-card` }
-        key={ index }
-        className="card"
-      >
-        <h5
-          className="card-title"
-          data-testid={ `${index}-card-name` }
+    <div className="container-card">
+      { recipes.map((recipe, index) => (
+        <div
+          onClick={ goToDetails }
           id={ recipe[id] }
+          onKeyPress={ goToDetails }
+          role="button"
+          tabIndex="0"
+          data-testid={ `${index}-recipe-card` }
+          key={ index }
+          className="card"
         >
-          {recipe[name]}
-        </h5>
-        <img
-          data-testid={ `${index}-card-img` }
-          src={ recipe[thumb] }
-          alt={ typeRecipe }
-          id={ recipe[id] }
-          aria-hidden="true"
-          className="card-img"
-        />
-      </div>
-    )).filter((_, index) => index < MAX_NUMBER_OF_CARDS)
+          <h5
+            className="card-title"
+            data-testid={ `${index}-card-name` }
+            id={ recipe[id] }
+          >
+            {recipe[name]}
+          </h5>
+          <img
+            data-testid={ `${index}-card-img` }
+            src={ recipe[thumb] }
+            alt={ typeRecipe }
+            id={ recipe[id] }
+            aria-hidden="true"
+            className="card-img"
+          />
+        </div>
+      )).filter((_, index) => index < MAX_NUMBER_OF_CARDS) }
+      <br />
+      <br />
+    </div>
   );
 }
 
