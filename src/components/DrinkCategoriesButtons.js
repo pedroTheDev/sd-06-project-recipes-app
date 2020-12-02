@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { fetchAPI } from '../helpers/APIRequests';
 import { addRecipes, changeFilter } from '../redux/actions/searchRecipes';
@@ -8,6 +8,7 @@ function DrinkCategoriesButtons({ categories, dispatchRecipes, dispatchFilterCha
   const [selectedCategory, setSelectedCategory] = useState('');
   const [categoriesFilters,
     setCategoriesFilter] = useState([false, false, false, false, false, true]);
+  const componentMounted = useRef(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -26,16 +27,18 @@ function DrinkCategoriesButtons({ categories, dispatchRecipes, dispatchFilterCha
 
       setIsFetching(false);
     }
-    fetchData();
+    if (isFetching) fetchData();
   }, [isFetching]);
 
   useEffect(() => {
-    if (selectedCategory !== '') {
+    if (selectedCategory !== '' && componentMounted.current) {
       dispatchFilterChange('Bebidas', true);
-    } else {
+      setIsFetching(true);
+    } else if (componentMounted.current) {
       dispatchFilterChange('Bebidas', false);
+      setIsFetching(true);
     }
-    setIsFetching(true);
+    componentMounted.current = true;
   }, [selectedCategory]);
 
   const updateCategoriesFilter = (e, index) => {

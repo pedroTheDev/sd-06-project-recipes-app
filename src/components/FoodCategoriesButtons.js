@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { fetchAPI } from '../helpers/APIRequests';
 import { addRecipes, changeFilter } from '../redux/actions/searchRecipes';
@@ -9,6 +9,7 @@ function FoodCategoriesButtons({ categories,
   const [selectedCategory, setSelectedCategory] = useState('');
   const [categoriesFilters,
     setCategoriesFilter] = useState([false, false, false, false, false, true]);
+  const componentMounted = useRef(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -24,19 +25,21 @@ function FoodCategoriesButtons({ categories,
       const apiResponse = await fetchAPI(fetchRecipesByCategoryEndPoint);
       console.log(categoriesFilters, selectedCategory);
       dispatchRecipes(apiResponse);
-
+      console.log(isFetching, 'isFetching');
       setIsFetching(false);
     }
     if (isFetching) fetchData();
   }, [isFetching]);
 
   useEffect(() => {
-    if (selectedCategory !== '') {
+    if (selectedCategory !== '' && componentMounted.current) {
       dispatchFilterChange('Comidas', true);
-    } else {
+      setIsFetching(true);
+    } else if (componentMounted.current) {
       dispatchFilterChange('Comidas', false);
+      setIsFetching(true);
     }
-    setIsFetching(true);
+    componentMounted.current = true;
   }, [selectedCategory]);
 
   const updateCategoriesFilter = (e, index) => {

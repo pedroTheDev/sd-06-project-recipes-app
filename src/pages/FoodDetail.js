@@ -5,8 +5,6 @@ import { connect } from 'react-redux';
 import { addRecipeDetail } from '../redux/actions/searchRecipes';
 import { filterMatchInKeys, modifyResponse } from '../helpers/assets';
 import shareIcon from '../images/shareIcon.svg';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import blackHeartIcon from '../images/blackHeartIcon.svg';
 // whiteHeartIcon blackHeartIcon
 
 import '../css/details.css';
@@ -62,6 +60,7 @@ function FoodDetail(props) {
       setObjResponse(modifyResponse(response, nameType, recipeType, changeCategory));
       getIngredientsAndMesures(response.meals[0]);
     }
+    console.log(setButtonImg, objectRecipe);
   };
 
   const filterRecomendation = (response) => {
@@ -112,6 +111,7 @@ function FoodDetail(props) {
   };
 
   const handleClick = () => {
+
     const ingredientsAndMesures = {
       ingredients: ingredientsItem,
       mesures: mesuresItem,
@@ -166,8 +166,6 @@ function FoodDetail(props) {
       </video>
     );
   };
-  console.log(objectRecipe);
-  console.log(buttonImg);
   return (
     <div>
       <img

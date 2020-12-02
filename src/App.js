@@ -10,6 +10,7 @@ import Explore from './pages/Explore';
 import ExploreFood from './pages/ExploreFood';
 import ExploreDrink from './pages/ExploreDrink';
 import ExploreFoodByIngredients from './pages/ExploreFoodByIngredients';
+import ExploreDrinkByIngredients from './pages/ExploreDrinkByIngredients';
 import ExploreFoodByArea from './pages/ExploreFoodByArea';
 import Perfil from './pages/Perfil';
 import DoneRecipes from './pages/DoneRecipes';
@@ -36,7 +37,7 @@ function App() {
         <Route
           exact
           path="/explorar/bebidas/ingredientes"
-          component={ ExploreFoodByIngredients }
+          component={ ExploreDrinkByIngredients }
         />
 
         <Route

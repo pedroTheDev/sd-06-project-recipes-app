@@ -4,31 +4,30 @@ import { connect } from 'react-redux';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import IngredientCard from '../components/IngredientCard';
-import { addFoodIngredients } from '../redux/actions/searchRecipes';
+import { addDrinkIngredients } from '../redux/actions/searchRecipes';
 
-function ExploreFoodByIngredients(props) {
+function ExploreDrinkByIngredients(props) {
   const { history: { location: { pathname } },
     pageConfig,
     isLoading,
-    dispatchFetchIngredients,
-    foodIngredients, ingredientConfig } = props;
+    dispatchFetchIngredients, drinkIngredients, ingredientConfig } = props;
   const { header } = pageConfig;
 
   useEffect(() => {
     dispatchFetchIngredients();
   }, []);
 
-  const renderIngredients = (arrayFoodIngredients, boolIsLoading, config) => {
+  const renderIngredients = (arrayDrinkIngredients, boolIsLoading, config) => {
     if (!boolIsLoading) {
       return (
-        arrayFoodIngredients
+        arrayDrinkIngredients
           .map((ingredient, index) => (
             <IngredientCard
-              thumb={ `https://www.themealdb.com/images/ingredients/${ingredient[config.name]}-Small.png` }
               name={ ingredient[config.name] }
               key={ `${index} ingredient` }
               pathname={ pathname }
               index={ index }
+              thumb={ `https://www.thecocktaildb.com/images/ingredients/${ingredient[config.name]}-Small.png` }
             />))
       );
     }
@@ -37,7 +36,7 @@ function ExploreFoodByIngredients(props) {
   return (
     <div>
       <Header pathname={ pathname } componentConfig={ header } />
-      {renderIngredients(foodIngredients, isLoading, ingredientConfig)}
+      {renderIngredients(drinkIngredients, isLoading, ingredientConfig)}
 
       <Footer />
     </div>
@@ -46,18 +45,18 @@ function ExploreFoodByIngredients(props) {
 
 const mapStateToProps = (state) => ({
   pageConfig: state.sitemap.explorarComidasIngredientes,
-  ingredientConfig: state.sitemap.comidas.ingredients,
+  ingredientConfig: state.sitemap.bebidas.ingredients,
   isLoading: state.searchRecipes.isIngredientsLoading,
-  foodIngredients: state.searchRecipes.foodIngredients,
+  drinkIngredients: state.searchRecipes.drinkIngredients,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchFetchIngredients: () => dispatch(addFoodIngredients()),
+  dispatchFetchIngredients: () => dispatch(addDrinkIngredients()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ExploreFoodByIngredients);
+export default connect(mapStateToProps, mapDispatchToProps)(ExploreDrinkByIngredients);
 
-ExploreFoodByIngredients.propTypes = {
+ExploreDrinkByIngredients.propTypes = {
   pageConfig: PropTypes.shape({
     header: PropTypes.shape({
       title: PropTypes.string.isRequired,
@@ -70,10 +69,10 @@ ExploreFoodByIngredients.propTypes = {
       pathname: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
-  isLoading: PropTypes.bool.isRequired,
-  dispatchFetchIngredients: PropTypes.func.isRequired,
-  foodIngredients: PropTypes.arrayOf(PropTypes.any).isRequired,
   ingredientConfig: PropTypes.shape({
     name: PropTypes.string.isRequired,
   }).isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  dispatchFetchIngredients: PropTypes.func.isRequired,
+  drinkIngredients: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
