@@ -27,6 +27,7 @@ const Perfil = () => {
   return ((isFetching)
     ? <div>carregando...</div>
     : (
+
       <section>
         <Header title="Perfil" />
         <div className="col mt-5 h-100">
