@@ -94,7 +94,11 @@ function ProcessoBebida({ match: { params: { id } } }) {
       ))}
       <h4 data-testid="instructions">{detailsDrink.strInstructions}</h4>
       <Link to="/receitas-feitas">
-        <button type="button" data-testid="finish-recipe-btn" disabled={ arrayIngredients.length !== countCheck }>
+        <button
+          type="button"
+          data-testid="finish-recipe-btn"
+          disabled={ arrayIngredients.length !== countCheck }
+        >
           Finalizar receita
         </button>
       </Link>
