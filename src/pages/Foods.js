@@ -162,7 +162,7 @@ class Foods extends React.Component {
           )}
         </div>
         <div className="cards-container">
-          {Meals.length > 1 ? Meals.map((recipe, index) => (
+          {Meals.length >= 1 ? Meals.map((recipe, index) => (
             <div className="card" key={ index } data-testid={ `${index}-recipe-card` }>
               <input
                 type="image"
