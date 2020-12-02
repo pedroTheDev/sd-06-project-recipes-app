@@ -70,7 +70,7 @@ main {
 padding-bottom: 40px;
 }
 
-header, footer, .start-recipe-btn{
+header, footer, .start-recipe-btn {
   background-color: darkgray;
   width: 360px;
 }
@@ -192,10 +192,15 @@ footer, .start-recipe-btn {
 
 .filter-radios label input { 
   margin-right: 5px;
- }
+}
 
- .ingredients-explore {
-   display: flex;
-   justify-content: space-around;
-   flex-wrap: wrap;
- }
+.ingredients-explore {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+input[type=checkbox]:checked + label {
+  text-decoration: line-through;
+  color: red;
+}

@@ -1,18 +1,58 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { Container } from 'react-bootstrap';
 import RevenueContext from '../context/RevenueContext';
 import ShareIcon from '../images/shareIcon.svg';
 import WhiteHeartIcon from '../images/whiteHeartIcon.svg';
 import BlackHeartIcon from '../images/blackHeartIcon.svg';
 import RecommendedRecipes from '../components/RecommendedRecipes';
 
+/*
+a chave doneRecipes deve conter a seguinte estrutura:
+[{
+    id: id-da-receita,
+    type: comida-ou-bebida,
+    area: area-da-receita-ou-texto-vazio,
+    category: categoria-da-receita-ou-texto-vazio,
+    alcoholicOrNot: alcoholic-ou-non-alcoholic-ou-texto-vazio,
+    name: nome-da-receita,
+    image: imagem-da-receita,
+    doneDate: quando-a-receita-foi-concluida,
+    tags: array-de-tags-da-receita-ou-array-vazio
+}]
+a chave favoriteRecipes deve conter a seguinte estrutura:
+[{
+    id: id-da-receita,
+    type: comida-ou-bebida,
+    area: area-da-receita-ou-texto-vazio,
+    category: categoria-da-receita-ou-texto-vazio,
+    alcoholicOrNot: alcoholic-ou-non-alcoholic-ou-texto-vazio,
+    name: nome-da-receita,
+    image: imagem-da-receita
+}]
+a chave inProgressRecipes deve conter a seguinte estrutura:
+{
+    cocktails: {
+        id-da-bebida: [lista-de-ingredientes-utilizados],
+        ...
+    },
+    meals: {
+        id-da-comida: [lista-de-ingredientes-utilizados],
+        ...
+    }
+}
+*/
+
 export default function RecipeDetails() {
-  const { foods, setSearchParam,
+  const { foods, setSearchParam, inProgress, setInProgress,
     searchParam, fetchApi, isLoading } = useContext(RevenueContext);
   const location = useLocation();
   const idRecipe = location.pathname.split('/');
   const [heartIcon, setheartIcon] = useState(WhiteHeartIcon);
   const [alert, setAlert] = useState();
+  // const [isChecked, setIsChecked] = useState([]);
+
+  if (idRecipe[3] === 'in-progress' && inProgress === false)(setInProgress(!inProgress));
   if (idRecipe[1] === 'comidas') setSearchParam('Meal');
   if (idRecipe[1] === 'bebidas') setSearchParam('Drink');
   const linkRecipeAPI = (searchParam === 'Meal')
@@ -25,8 +65,24 @@ export default function RecipeDetails() {
         .getItem('favoriteRecipes')),
   );
 
+  // const [localStorageInProgress, setLocalStorageInProgress] = useState(
+  //   JSON
+  //     .parse(localStorage
+  //       .getItem('inProgressRecipes')),
+  // );
+
+  const [localStorageDoneRecipes, setLocalStorageDoneRecipes] = useState(
+    JSON
+      .parse(localStorage
+        .getItem('doneRecipes')),
+  );
+
   if (!localStorageFavorites) {
     setLocalStorageFavorites([]);
+  }
+
+  if (!localStorageDoneRecipes) {
+    setLocalStorageDoneRecipes([]);
   }
 
   let actualRecipe = [];
@@ -41,6 +97,8 @@ export default function RecipeDetails() {
           alcoholicOrNot: '',
           name: foods[0].strMeal,
           image: foods[0].strMealThumb,
+          doneDate: 'fullDatte',
+          tags: foods[0].strTag ? foods[0].strTag : '',
         },
       ]);
     }
@@ -54,6 +112,8 @@ export default function RecipeDetails() {
           alcoholicOrNot: foods[0].strAlcoholic,
           name: foods[0].strDrink,
           image: foods[0].strDrinkThumb,
+          doneDate: 'fullDatte',
+          tags: foods[0].strTag ? foods[0].strTag : '',
         },
       ]);
     }
@@ -72,17 +132,13 @@ export default function RecipeDetails() {
     return actualRecipe;
   }
 
-  useEffect(() => {
-    fetchApi(linkRecipeAPI);
-  }, [searchParam]);
-
   function shareRecipeLink() {
-    const time = 5000;
+    // const time = 15000;
     navigator.clipboard.writeText(`http://localhost:3000${location.pathname}`);
     setAlert(true);
-    setTimeout(() => {
-      setAlert(false);
-    }, time);
+    // setTimeout(() => {
+    //   setAlert(false);
+    // }, time);
     // alert('Link copiado!');
   }
 
@@ -139,6 +195,36 @@ export default function RecipeDetails() {
     return ingredientsMeasureArray;
   }
 
+  // function handleCheckbox({ target }, pairArray) {
+  //   if (!localStorageInProgress) {
+  //     localStorage
+  //       .setItem('inProgressRecipes', JSON
+  //         .stringify({
+  //           cocktails: { [foods[0].id]: [] },
+  //           meals: { id: [] },
+  //         }));
+  //   }
+  // }
+
+  //   localStorage
+  //     .setItem('inProgressRecipes', JSON
+  //       .stringify(setLocalStorageInProgress));
+  // }
+
+  // } else if (idRecipe[1] === 'comidas') {
+  // if (idRecipe[1] === 'bebidas') {
+  //   keyInProgressMealsOrDrinks = 'inProgressRecipes.meals';
+  // } else {
+  //   keyInProgressMealsOrDrinks = 'inProgressRecipes.cocktails';
+  // }
+  // localStorage
+  //   .setItem(keyInProgressMealsOrDrinks, JSON
+  //     .stringify(setLocalStorageInProgress));
+
+  useEffect(() => {
+    fetchApi(linkRecipeAPI);
+  }, [searchParam]);
+
   const render = () => {
     const ZERO = 0;
     if (foods.length > ZERO) {
@@ -148,7 +234,7 @@ export default function RecipeDetails() {
         videoCode = (foods[0].strYoutube) ? foods[0].strYoutube.split('=') : undefined;
       }
       return (
-        <>
+        <Container>
           <img
             width="360px"
             data-testid="recipe-photo"
@@ -159,7 +245,7 @@ export default function RecipeDetails() {
           <div className="d-flex justify-content-around">
             <a href onClick={ () => shareRecipeLink() }>
               <img src={ ShareIcon } alt="Share Button" data-testid="share-btn" />
-              {alert && <alert>Link copiado!</alert>}
+              {alert && <span>Link copiado!</span>}
             </a>
             <a href onClick={ () => whiteToBlackHeart() }>
               <img src={ heartIcon } alt="Favorite Button" data-testid="favorite-btn" />
@@ -170,10 +256,38 @@ export default function RecipeDetails() {
           </h6>
           <ul data-testid="0-recipe-card">
             { listContent().map((pairArray, index) => (
-              <li key={ index } data-testid={ `${index}-ingredient-name-and-measure` }>
-                {pairArray[0] }
-                { pairArray[1] ? ` - ${pairArray[1]}` : undefined }
-              </li>
+              (inProgress === false)
+                ? (
+                  <li
+                    key={ index }
+                    data-testid={ `${index}-ingredient-name-and-measure` }
+                  >
+                    {pairArray[0] }
+                    { pairArray[1] ? ` - ${pairArray[1]}` : undefined }
+                  </li>
+                )
+                : (
+                  <div
+                    key={ index }
+                    data-testid={ `${index}-ingredient-step` }
+                  >
+                    <input
+                      className="lineThrough"
+                      type="checkbox"
+                      name={ index }
+                      id={ index }
+                      // onChange={ (e) => handleCheckbox(e, pairArray) }
+                    />
+                    {' '}
+                    <label
+                      className="lineThrough"
+                      htmlFor={ index }
+                    >
+                      {pairArray[0] }
+                      { pairArray[1] ? ` - ${pairArray[1]}` : undefined }
+                    </label>
+                  </div>
+                )
             )) }
           </ul>
           <h4>INSTRUCTIONS: </h4>
@@ -195,19 +309,40 @@ export default function RecipeDetails() {
           ) }
           <h4>RECOMENDED: </h4>
           <RecommendedRecipes />
-          <button
-            style={ {
-              postion: 'fixed',
-              bottom: '0px',
-            } }
-            data-testid="start-recipe-btn"
-            className="start-recipe-btn"
-            type="button"
-            onClick={ console.log('Iniciar receita') }
-          >
-            INICIAR RECEITA
-          </button>
-        </>
+          {inProgress === false
+            ? (
+              <Link to={ `/${idRecipe[1]}/${idRecipe[2]}/in-progress` }>
+                <button
+                  style={ {
+                    postion: 'fixed',
+                    bottom: '0px',
+                  } }
+                  data-testid="start-recipe-btn"
+                  className="start-recipe-btn"
+                  type="button"
+                  onClick={ () => setInProgress(!inProgress) }
+                >
+                  INICIAR RECEITA
+                </button>
+              </Link>
+            )
+            : (
+              <Link to={ `/${idRecipe[1]}/${idRecipe[2]}` }>
+                <button
+                  style={ {
+                    postion: 'fixed',
+                    bottom: '0px',
+                  } }
+                  data-testid="finish-recipe-btn"
+                  className="start-recipe-btn"
+                  type="button"
+                  onClick={ () => setInProgress(!inProgress) }
+                >
+                  FINALIZAR RECEITA
+                </button>
+              </Link>
+            )}
+        </Container>
       );
     }
   };
