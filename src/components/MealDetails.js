@@ -113,7 +113,9 @@ function MealDetails() {
       if (recipeMeal[`strIngredient${i}`] !== '') {
         ingredients = [...ingredients,
           { ingredient: recipeMeal[`strIngredient${i}`],
-            measure: recipeMeal[`strMeasure${i}`] }];
+            measure: recipeMeal[`strMeasure${i}`],
+            checkbox: false,
+          }];
       }
     }
     return ingredients;

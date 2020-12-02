@@ -16,7 +16,6 @@ import MealsPerArea from './pages/MealsPerArea';
 import DrinksPerIngredients from './pages/DrinksPerIngredients';
 import InProgress from './pages/InProgress';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import inProgress from './pages/InProgress';
 
 function App() {
   return (

@@ -7,6 +7,8 @@ import shareIcon from '../images/shareIcon.svg';
 import { getRecipeMealByIdApi } from '../services/mealsAPI';
 import { getRecipeDrinkByIdApi } from '../services/drinksAPI';
 import blackIcon from '../images/blackHeartIcon.svg';
+import '../Css/inProgress.css';
+//import CheckboxInProgress from '../components/CheckboxInProgress';
 
 function InProgress() {
   const [recipeInProgress, setRecipeInProgress] = useState();
@@ -115,14 +117,13 @@ function InProgress() {
       ? <h5>Loading...</h5>
       : (
         <div>
-          {console.log(loading)}
+          {console.log(recipeInProgress.ingredient)}
           <Header data-testid="recipe-title" />
           <img
             data-testid="recipe-photo"
             src={ recipeInProgress.image }
             alt="nome da receita"
           />
-          {console.log(recipeInProgress.image)}
           <div>
             <h2 data-testid="recipe-title">{ recipeInProgress.name }</h2>
             <div>
@@ -152,16 +153,8 @@ function InProgress() {
             {recipeInProgress.category}
           </p>
           <h3>Ingredients</h3>
-          <ul>
-            {recipeInProgress.ingredients.map((item, index) => (
-              <li
-                key={ index }
-                data-testid={ `${index}-ingredient-step` }
-              >
-                { `- ${item.ingredient} (${item.measure})` }
-              </li>
-            ))}
-          </ul>
+          {/*<CheckboxInProgress recipeInProgress={ recipeInProgress } />*/}
+          <h3>Instrucoes</h3>
           <p
             data-testid="instructions"
           >
