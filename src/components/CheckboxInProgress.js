@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../Css/inProgress.css';
+import PropTypes from 'prop-types';
 
 function CheckboxInProgress({ ingredients }) {
   const [myIngredients, setIngredients] = useState([]);
@@ -39,5 +40,9 @@ function CheckboxInProgress({ ingredients }) {
     </div>
   );
 }
+
+CheckboxInProgress.propTypes = {
+  ingredients: PropTypes.string.isRequired,
+};
 
 export default CheckboxInProgress;
