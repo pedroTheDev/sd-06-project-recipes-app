@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import RecipesAppContext from '../context/RecipesAppContext';
+import '../Style/Card.css';
 
 function Card({ title }) {
   const { recipes, errorFromApi, clickedCategory } = useContext(RecipesAppContext);
@@ -28,17 +29,12 @@ function Card({ title }) {
     return <span>Ops...</span>;
   }
 
-  const divStyle = {
-    width: '10rem',
-  };
-
   return (
     recipes.length > ZERO && recipes.slice(ZERO, DOZE).map((recipe, index) => (
       <div
         key={ recipe[`id${recipeType}`] }
         data-testid={ `${index}-recipe-card` }
         className="card"
-        style={ divStyle }
       >
         <Link
           to={ `/${setRoute}/${recipe[`id${recipeType}`]}` }
@@ -51,12 +47,12 @@ function Card({ title }) {
             className="card-img-top"
           />
         </Link>
-        <p
+        <h5
           data-testid={ `${index}-card-name` }
           className="card-text"
         >
           { recipe[`str${recipeType}`] }
-        </p>
+        </h5>
       </div>
     ))
   );

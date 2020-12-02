@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import LoginForm from '../components/LoginForm';
+import '../Style/Login.css';
 
 class Login extends Component {
   constructor(props) {
@@ -49,7 +50,7 @@ class Login extends Component {
     const { isValid } = this.state;
 
     return (
-      <section>
+      <section className="container">
         <h1>Login</h1>
         <LoginForm
           handleChanges={ this.handleChanges }
@@ -57,6 +58,7 @@ class Login extends Component {
         <button
           type="button"
           data-testid="login-submit-btn"
+          className="btn btn-primary"
           onClick={ this.handleSubmit }
           disabled={ !isValid }
         >

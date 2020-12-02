@@ -5,6 +5,7 @@ import searchIcon from '../../images/searchIcon.svg';
 function SearchButton({ setSearch, isSearching }) {
   return (
     <button
+      className="btn btn-link"
       type="button"
       onClick={ () => setSearch(!isSearching) }
     >

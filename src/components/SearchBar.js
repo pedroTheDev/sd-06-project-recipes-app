@@ -1,16 +1,18 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import RecipesAppContext from '../context/RecipesAppContext';
+import '../Style/SearchBar.css';
 
 function SearchBar({ verification, onClick }) {
   const { setSearchTerm } = useContext(RecipesAppContext);
 
   return (
-    <div>
+    <div className="search-bar-container">
       <input
         type="text"
         data-testid="search-input"
         placeholder="Buscar Receita"
+        className="form-control"
         onChange={ (e) => setSearchTerm(e.target.value) }
       />
       <div
@@ -25,6 +27,7 @@ function SearchBar({ verification, onClick }) {
           />
           Ingredientes
         </label>
+        <br />
         <label htmlFor="first-letter-search-radio">
           <input
             type="radio"
@@ -34,6 +37,7 @@ function SearchBar({ verification, onClick }) {
           />
           Primeira letra
         </label>
+        <br />
         <label htmlFor="name-search-radio">
           <input
             type="radio"
@@ -46,6 +50,7 @@ function SearchBar({ verification, onClick }) {
       </div>
       <button
         data-testid="exec-search-btn"
+        className="btn btn-secondary btn-lg btn-block"
         type="button"
         onClick={ onClick }
       >

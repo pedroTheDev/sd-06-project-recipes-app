@@ -9,6 +9,7 @@ import {
   initialRecipes,
 } from '../services';
 import RecipesContext from '../context/RecipesAppContext';
+import '../Style/CategoryList.css';
 
 function CategoryList({ title }) {
   const ZERO = 0;
@@ -66,9 +67,10 @@ function CategoryList({ title }) {
   }, [category]);
 
   return (
-    <>
+    <div className="btn-filters">
       {categoryList.slice(ZERO, CINCO).map((cat) => (
         <button
+          className="btn btn-outline-dark"
           type="button"
           key={ cat.strCategory }
           data-testid={ `${cat.strCategory}-category-filter` }
@@ -78,14 +80,14 @@ function CategoryList({ title }) {
           { cat.strCategory }
         </button>))}
       <button
+        className="btn btn-outline-dark"
         type="button"
         data-testid="All-category-filter"
         onClick={ () => setCategory('all') }
       >
         ALL
       </button>
-
-    </>
+    </div>
   );
 }
 
