@@ -42,7 +42,7 @@ class FavDrinkCard extends React.Component {
     const textDiv = target.parentNode.childNodes[2];
     if ((textDiv).childNodes.length <= zero) {
       const paragraph = document.createElement('p');
-      paragraph.innerText = 'Link Copiado';
+      paragraph.innerText = 'Link copiado!';
       paragraph.style.fontSize = '8px';
       paragraph.style.fontWeight = '100';
       textDiv.appendChild(paragraph);

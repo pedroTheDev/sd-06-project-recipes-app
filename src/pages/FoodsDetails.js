@@ -50,7 +50,7 @@ class FoodsDetails extends React.Component {
     if ((target.parentNode).childNodes.length <= twoo) {
       const { parentNode } = target;
       const paragraph = document.createElement('p');
-      paragraph.innerText = 'Link Copiado';
+      paragraph.innerText = 'Link copiado!';
       paragraph.style.fontSize = '8px';
       paragraph.style.fontWeight = '100';
       parentNode.appendChild(paragraph);

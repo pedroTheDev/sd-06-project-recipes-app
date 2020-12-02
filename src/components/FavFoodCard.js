@@ -41,7 +41,7 @@ class FavFoodCard extends React.Component {
     const textdiv = document.querySelector('.text-div');
     if ((textdiv).childNodes.length < 1) {
       const paragraph = document.createElement('p');
-      paragraph.innerText = 'Link Copiado';
+      paragraph.innerText = 'Link copiado!';
       paragraph.style.fontSize = '8px';
       paragraph.style.fontWeight = '100';
       textdiv.appendChild(paragraph);
