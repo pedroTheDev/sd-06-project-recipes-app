@@ -5,6 +5,7 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 import FavoriteFilters from '../components/FavoriteFilters';
 import shareIcon from '../images/shareIcon.svg';
 import RecipesAppContext from '../context/RecipesAppContext';
+import Header from '../components/header';
 
 function FavoriteRecipes() {
   const {
@@ -36,6 +37,9 @@ function FavoriteRecipes() {
 
   useEffect(() => {
     setRenderFavoriteRecipes(favoriteRecipes);
+    if (!localStorage.favoriteRecipes) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+    }
   }, []);
 
   useEffect(() => {
@@ -48,6 +52,7 @@ function FavoriteRecipes() {
 
   return (
     <div>
+      <Header title="Receitas Favoritas" />
       <div>
         <FavoriteFilters />
       </div>
