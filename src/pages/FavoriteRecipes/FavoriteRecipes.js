@@ -6,6 +6,8 @@ import { shareIcon, whiteHeartIcon, blackHeartIcon } from '../../images';
 import recipesAppContext from '../../context/recipesAppContext';
 import { getFavoriteRecipes } from '../../services/localStorage';
 import { favoriteRecipe, recipeIsFavorite } from '../../services/localStorage';
+import { fetchMeal } from '../../services/mealAPI';
+import { fetchDrink } from '../../services/cocktailAPI';
 
 function FavoritesRecipes() {
   const location = useLocation();
@@ -35,9 +37,18 @@ function FavoritesRecipes() {
     handleFavoriteRecipe();
   }, [myRecipe]);
 
-  const saveToLocalStorage = () => {
-    favoriteRecipe(myRecipe);
-    handleFavoriteRecipe(myRecipe);
+  const saveToLocalStorage = async ({ target }) => {
+    const keys = target.id.split(',');
+    let recipe;
+    if (keys[1] === 'meal') {
+      const { meals } = await fetchMeal('lookupIngredient', keys[0]);
+      recipe = meals[0];
+    } else if (keys[1] === 'drinks') {
+      const { meals } = await fetchDrink('lookupIngredient', keys[0]);
+      recipe = meals[0];
+    }
+    favoriteRecipe(recipe);
+    handleFavoriteRecipe(recipe);
   };
 
   const handleShareIcon = (target) => {
@@ -136,8 +147,9 @@ function FavoritesRecipes() {
                   <p className={ `copied-link-${recipe.id}` } />
                   <input
                     type="image"
+                    id={ `${recipe.id},${recipe.type}` }
                     data-testid={ `${index - newIndex}-horizontal-favorite-btn` }
-                    src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+                    src={ recipeIsFavorite(recipe) ? blackHeartIcon : whiteHeartIcon }
                     alt="Favorite recipe"
                     onClick={ saveToLocalStorage }
                   />
