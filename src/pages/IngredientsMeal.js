@@ -1,11 +1,10 @@
 import React, { useContext, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import IngredientCard from '../components/ingredientCard';
 import Context from '../context/Context';
 
-function IngredientsMeal({ history }) {
+function IngredientsMeal() {
   const FALSE = false;
   const { ingredients, ingredientToRender } = useContext(Context);
 
@@ -23,7 +22,6 @@ function IngredientsMeal({ history }) {
               info={ ingredient }
               recipe="ingredientsMeals"
               index={ index }
-              history={ history }
             />
           ))
         }
@@ -32,7 +30,5 @@ function IngredientsMeal({ history }) {
     </div>
   );
 }
-
-IngredientsMeal.propTypes = { history: PropTypes.func.isRequired };
 
 export default IngredientsMeal;

@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import '../App.css';
 import PropTypes from 'prop-types';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Context from '../context/Context';
 
-function Cards({ info, recipe, index, history }) {
+function Cards({ info, recipe, index }) {
   const { strIngredient } = info;
   const { strIngredient1 } = info;
   const { setIngredientExplore } = useContext(Context);
@@ -15,37 +15,38 @@ function Cards({ info, recipe, index, history }) {
   const imageDrink = `${strIngredient1}-Small.png`;
 
   return (
-    // <Link
-    //   to={
-    //     recipe === 'ingredientsMeals'
-    //       ? '/comidas'
-    //       : '/bebidas'
-    //   }
-    // >
-    <div
-      className="recipe-card"
-      data-testid={ `${index}-ingredient-card` }
-      onClick={ () => {
-        recipe === 'ingredientsMeals' ? setIngredientExplore(strIngredient) : setIngredientExplore(strIngredient1);
-        history.push(recipe === 'ingredientsMeals' ? '/comidas' : '/bebidas');
-      } }
+    <Link
+      to={
+        recipe === 'ingredientsMeals'
+          ? '/comidas'
+          : '/bebidas'
+      }
+      onClick={ () => (
+        recipe === 'ingredientsMeals'
+          ? setIngredientExplore(strIngredient)
+          : setIngredientExplore(strIngredient1)
+      ) }
     >
-      <img
-        src={ `${recipe === 'ingredientsMeals'
-          ? `${urlMeals}${imageMeal}`
-          : `${urlDrinks}${imageDrink}`}` }
-        className="thumbnail"
-        alt={ recipe === 'ingredientsMeals' ? strIngredient : strIngredient1 }
-        data-testid={ `${index}-card-img` }
-      />
-      <p
-        className="recipe-card-name"
-        data-testid={ `${index}-card-name` }
+      <div
+        className="recipe-card"
+        data-testid={ `${index}-ingredient-card` }
       >
-        { recipe === 'ingredientsMeals' ? strIngredient : strIngredient1 }
-      </p>
-    </div>
-    // </Link>
+        <img
+          src={ `${recipe === 'ingredientsMeals'
+            ? `${urlMeals}${imageMeal}`
+            : `${urlDrinks}${imageDrink}`}` }
+          className="thumbnail"
+          alt={ recipe === 'ingredientsMeals' ? strIngredient : strIngredient1 }
+          data-testid={ `${index}-card-img` }
+        />
+        <p
+          className="recipe-card-name"
+          data-testid={ `${index}-card-name` }
+        >
+          { recipe === 'ingredientsMeals' ? strIngredient : strIngredient1 }
+        </p>
+      </div>
+    </Link>
   );
 }
 
