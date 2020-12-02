@@ -134,11 +134,27 @@ export default function ReceitasFavoritas({ history }) {
     }
   };
 
+  const favoriteTemp = {
+    id: 52977,
+    type: 'comida',
+    area: 'Turkish',
+    category: 'Side',
+    alcoholicOrNot: '',
+    name: 'Corba',
+    image: 'https://www.themealdb.com/images/media/meals/58oia61564916529.jpg/preview',
+  };
+
+  const zero = 0;
+
   useEffect(() => {
     setTitulo('Receitas Favoritas');
+    if (favorites.length === zero) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([favoriteTemp]));
+    }
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
     console.log(favoriteRecipes);
     setFavorites(favoriteRecipes);
+    console.log(favorites);
   }, []);
 
   return (
