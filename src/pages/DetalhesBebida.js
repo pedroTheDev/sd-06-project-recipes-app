@@ -9,6 +9,7 @@ import { fetchDrinkAPI } from '../services/drinkAPI';
 import { foodAPI } from '../services/foodAPI';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import share from '../images/shareIcon.svg';
 import '../style/Detalhes.css';
 import load from '../images/load.png';
 import '../style/Loading.css';
@@ -195,68 +196,94 @@ function DetalhesBebida(props) {
     <section>
       <Header title="Detalhes Bebidas" />
       {fetchById.map((drink, index) => (
-        <div key={ index }>
-          <div className="row justify-content-center p-0">
-            <div className="col-6 p-0">
-              <img
-                data-testid="recipe-photo"
-                src={ drink.strDrinkThumb }
-                width="100%"
-                alt=""
-              />
-            </div>
-          </div>
-          <h2 data-testid="recipe-title">{drink.strDrink}</h2>
-          <div>
-            <button data-testid="share-btn" type="button" onClick={ copyToCB }>
-              Compartilhar
-            </button>
-            {copied ? 'Link copiado!' : null}
-          </div>
-          <button type="button" onClick={ () => setFavorite(drink.idDrink) }>
+        <div className="detail-container" key={ index }>
+          <div className="detail-card">
             <img
-              data-testid="favorite-btn"
-              id="favorite-img"
-              src={ !isFavorite ? whiteHeartIcon : blackHeartIcon }
-              alt=""
+              data-testid="recipe-photo"
+              src={ drink.strDrinkThumb }
+              width="40%"
+              className="rounded"
+              alt="drinks"
             />
-          </button>
-          <p data-testid="recipe-category">{drink.strAlcoholic}</p>
-          {getIngredients(drink, /strIngredient/).map((item, indx) => {
-            const measure = getIngredients(drink, /strMeasure/);
-            return (
-              <p key={ indx } data-testid={ `${indx}-ingredient-name-and-measure` }>
-                {`- ${item} - ${measure[indx]}`}
-              </p>
-            );
-          })}
-          <p data-testid="instructions">{drink.strInstructions}</p>
-          <h4>Receitas Recomendadas</h4>
-          <div className="carousel">
-            {meals.length && meals
-              .filter((_, indx) => indx < seis)
-              .map((food, i) => (
-                <div key={ i } data-testid={ `${i}-recomendation-card` }>
-                  <div data-testid={ `${i}-recomendation-title` }>
-                    <MealsCard food={ food } index={ i } />
-                  </div>
-                </div>
-              ))}
-          </div>
-          {!doneRecipes.includes(drink.idDrink) && (
-            <Link to={ `/bebidas/${drink.idDrink}/in-progress` }>
+            <h3 data-testid="recipe-title">{drink.strDrink}</h3>
+            <div className="detail-btn my-2">
               <button
-                className="start-recipe-btn btn btn-block btn-success fixed-bottom"
-                data-testid="start-recipe-btn"
+                data-testid="share-btn"
                 type="button"
-                onClick={ () => startRecipe(drink.idDrink) }
+                onClick={ copyToCB }
+                className="btn"
               >
-                {!startedRecipes
-                  ? 'Iniciar Receita'
-                  : verifyState(drink.idDrink)}
+                <img src={ share } alt="share" />
               </button>
-            </Link>
-          )}
+              {copied ? 'Link copiado!' : null}
+              <button
+                type="button"
+                className="btn"
+                onClick={ () => setFavorite(drink.idDrink) }
+              >
+                <img
+                  data-testid="favorite-btn"
+                  id="favorite-img"
+                  src={ !isFavorite ? whiteHeartIcon : blackHeartIcon }
+                  alt=""
+                />
+              </button>
+            </div>
+            <div className="container justify-content-center">
+              <div className="text-center">
+                <h5 data-testid="recipe-category">{ drink.strAlcoholic }</h5>
+                <hr className="card-hr" />
+                <h5>Ingredientes</h5>
+                <div className="flex-wrap d-flex">
+                  {getIngredients(drink, /strIngredient/).map((item, indx) => {
+                    const measure = getIngredients(drink, /strMeasure/);
+                    return (
+                      <p
+                        className="col-6"
+                        key={ indx }
+                        data-testid={ `${indx}-ingredient-name-and-measure` }
+                      >
+                        {`- ${item} - ${measure[indx]}`}
+                      </p>
+                    );
+                  }) }
+                </div>
+                <h5 className="mt-3">Instructions</h5>
+                <p
+                  className="text-center text-justify"
+                  data-testid="instructions"
+                >
+                  { drink.strInstructions }
+                </p>
+                <h5 className="mt-4">Receitas Recomendadas</h5>
+                <div className="carousel">
+                  {meals.length && meals
+                    .filter((_, indx) => indx < seis)
+                    .map((food, i) => (
+                      <div key={ i } data-testid={ `${i}-recomendation-card` }>
+                        <div data-testid={ `${i}-recomendation-title` }>
+                          <MealsCard food={ food } index={ i } />
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              </div>
+            </div>
+            {!doneRecipes.includes(drink.idDrink) && (
+              <Link to={ `/bebidas/${drink.idDrink}/in-progress` }>
+                <button
+                  className="start-recipe-btn btn btn-block btn-success fixed-bottom"
+                  data-testid="start-recipe-btn"
+                  type="button"
+                  onClick={ () => startRecipe(drink.idDrink) }
+                >
+                  {!startedRecipes
+                    ? 'Iniciar Receita'
+                    : verifyState(drink.idDrink)}
+                </button>
+              </Link>
+            ) }
+          </div>
         </div>
       ))}
     </section>
