@@ -8,10 +8,10 @@ import { getRecipeMealByIdApi } from '../services/mealsAPI';
 import { getRecipeDrinkByIdApi } from '../services/drinksAPI';
 import blackIcon from '../images/blackHeartIcon.svg';
 import '../Css/inProgress.css';
-//import CheckboxInProgress from '../components/CheckboxInProgress';
+import CheckboxInProgress from '../components/CheckboxInProgress';
 
 function InProgress() {
-  const [recipeInProgress, setRecipeInProgress] = useState();
+  const [recipeInProgress, setRecipeInProgress] = useState({});
   const [loading, setLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const [urlWasCopyToClipboard, seturlWasCopyToClipboard] = useState(false);
@@ -88,7 +88,6 @@ function InProgress() {
             instructions: recipeMeal[0].strInstructions,
           };
           setRecipeInProgress(newRecipe);
-          setLoading(false);
         } else {
           const recipeDrink = await getRecipeDrinkByIdApi(id);
           const newRecipe = {
@@ -102,9 +101,9 @@ function InProgress() {
             instructions: recipeDrink[0].strInstructions,
           };
           setRecipeInProgress(newRecipe);
-          setLoading(false);
         }
       }
+      setLoading(false);
     }
     const myFavorite = verifyFavoriteRecipe();
     setIsFavorite(myFavorite);
@@ -117,7 +116,6 @@ function InProgress() {
       ? <h5>Loading...</h5>
       : (
         <div>
-          {console.log(recipeInProgress.ingredient)}
           <Header data-testid="recipe-title" />
           <img
             data-testid="recipe-photo"
@@ -153,7 +151,8 @@ function InProgress() {
             {recipeInProgress.category}
           </p>
           <h3>Ingredients</h3>
-          {/*<CheckboxInProgress recipeInProgress={ recipeInProgress } />*/}
+          {console.log(recipeInProgress.ingredients)}
+          <CheckboxInProgress ingredients={ recipeInProgress.ingredients } />
           <h3>Instrucoes</h3>
           <p
             data-testid="instructions"
