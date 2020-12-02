@@ -4,16 +4,14 @@ import { Link } from 'react-router-dom';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { detailsDrinkById, showSugestedFoods } from '../services/aPI';
 import './DetalhesBebidas.css';
+import { FavoriteDrinkButton } from '../components/FavoriteBtn';
 
 import shareIcon from '../images/shareIcon.svg';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 const DetalhesBebidas = () => {
   const [stateLocal, setStatelocal] = useState();
   const [stateSugestions, setSugestions] = useState();
   const [drinksInProgress, setDrinksInProgress] = useState({ cocktails: {} });
-  const [isFavorite, setIsFavorite] = useState(false);
   const [windowLink, setWindowLink] = useState(window.location.href);
   const [linkCopied, setLinkCopied] = useState(false);
 
@@ -52,25 +50,10 @@ const DetalhesBebidas = () => {
     setDrinksInProgress({ cocktails: progressRecipes.cocktails });
   };
 
-  const loadFavoriteRecipesFromLocalStorage = () => {
-    if (localStorage.getItem('favoriteRecipes') === null) {
-      const favoriteRecipes = [];
-      localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
-    }
-
-    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    const isRecipeFavorite = favoriteRecipes[0] ? favoriteRecipes
-      .find((recipe) => recipe.id === currentDrinkID) : undefined;
-
-    if (isRecipeFavorite) setIsFavorite(true);
-    else setIsFavorite(false);
-  };
-
   useEffect(() => {
     handleIdDetails();
     getSugestedFoods();
     loadRecipesInProgressFromLocalStorage();
-    loadFavoriteRecipesFromLocalStorage();
   }, []);
 
   const getIngredientsOrMeasure = (param) => {
@@ -97,34 +80,6 @@ const DetalhesBebidas = () => {
       },
     };
     localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
-  };
-
-  const handleFavorite = () => {
-    const currentDrink = stateLocal.drink.drinks[0];
-    const recipeData = {
-      id: currentDrink.idDrink,
-      type: 'bebida',
-      area: '',
-      category: currentDrink.strCategory,
-      alcoholicOrNot: currentDrink.strAlcoholic,
-      name: currentDrink.strDrink,
-      image: currentDrink.strDrinkThumb,
-    };
-
-    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    const zero = 0;
-    const isAlreadyAFavorite = favoriteRecipes.length > zero
-      ? favoriteRecipes.find((recipe) => recipe.id === currentDrink.idDrink) : undefined;
-
-    if (isAlreadyAFavorite) {
-      setIsFavorite(false);
-      localStorage.setItem('favoriteRecipes', JSON.stringify([...favoriteRecipes
-        .filter((recipe) => recipe.id !== currentDrink.idDrink)]));
-    } else {
-      setIsFavorite(true);
-      localStorage.setItem('favoriteRecipes', JSON.stringify([
-        ...favoriteRecipes, recipeData]));
-    }
   };
 
   const number = 5;
@@ -162,16 +117,7 @@ const DetalhesBebidas = () => {
                   />
                 </button>
               </CopyToClipboard>
-              <button
-                type="button"
-                onClick={ handleFavorite }
-              >
-                <img
-                  data-testid="favorite-btn"
-                  src={ !isFavorite ? whiteHeartIcon : blackHeartIcon }
-                  alt={ !isFavorite ? 'whiteHeartIcon' : 'blackHeartIcon' }
-                />
-              </button>
+              <FavoriteDrinkButton />
               {linkCopied ? <span>Link copiado!</span> : null}
             </div>
           </div>
