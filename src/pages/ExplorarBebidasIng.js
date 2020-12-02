@@ -7,16 +7,18 @@ import { listIngredients, drinkAPI } from '../services/drinkAPI';
 
 const ExplorarBebidasIng = () => {
   const {
-    setMeals,
+    setDrinks,
     drinksIngredientList,
     setDrinksIngredientList,
     setStopApi,
   } = useContext(ReceitasContext);
 
   useEffect(() => {
+    setDrinks([{ key: 'teste' }]);
+
     listIngredients().then((response) => setDrinksIngredientList(response));
   }, []);
-  console.log(drinksIngredientList);
+
   const zero = 0;
   const twelve = 12;
 
@@ -33,7 +35,7 @@ const ExplorarBebidasIng = () => {
               className="col-6 mb-3"
               onClick={ () => {
                 drinkAPI('ingredient', ingred.strIngredient1)
-                  .then((response) => setMeals(response));
+                  .then((response) => setDrinks(response));
                 setStopApi(true);
               } }
             >
