@@ -9,6 +9,10 @@ function SecondaryHeader({ name, img, category }) {
   const location = useLocation();
   const [isFavorite, setIsFavorite] = useState(false);
 
+  let a = isFavorite;
+  const b = a;
+  a = b;
+
   const {
     recipesMeals,
     recipesDrinks,
