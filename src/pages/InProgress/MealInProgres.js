@@ -2,7 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { fetchMeal } from '../../services/mealAPI';
 import SecondaryHeader from '../../components/SecondaryHeader';
-import { addRecipeProgress, selectedIngredient } from '../../services/localStorage';
+import {
+  addRecipeProgress,
+  selectedIngredient,
+  addDoneRecipe,
+} from '../../services/localStorage';
 import '../Detail/detail.css';
 
 export default function MealInProgress() {
@@ -53,10 +57,17 @@ export default function MealInProgress() {
     });
   };
 
+  function verifyChecked() {
+    const btnFinalizar = document.getElementById('btnFinalizar');
+    const checkboxList = Array.from(document.querySelectorAll('input[type=checkbox]'));
+    btnFinalizar.disabled = !checkboxList.every((item) => item.checked === true);
+  }
+
   useEffect(() => {
     setIngredientAndMeasure();
     if (document.getElementById('renderizado') !== null) {
       resumeProgress(setIngredientAndMeasure());
+      verifyChecked();
     }
   }, [recipes]);
 
@@ -71,11 +82,12 @@ export default function MealInProgress() {
   function selectItem(event) {
     const completedItem = event.target.parentNode;
     addRecipeProgress(id, completedItem.id);
-    console.log(id, completedItem.id);
     if (completedItem.classList.contains('selected')) {
       completedItem.classList.remove('selected');
+      verifyChecked();
     } else {
       completedItem.classList.add('selected');
+      verifyChecked();
     }
   }
 
@@ -127,9 +139,12 @@ export default function MealInProgress() {
       <div className="button-container">
         <Link to="/receitas-feitas">
           <button
+            id="btnFinalizar"
             type="button"
             className="start-recipe"
             data-testid="finish-recipe-btn"
+            disabled="true"
+            onClick={ addDoneRecipe }
           >
             Finalizar Receita
           </button>
