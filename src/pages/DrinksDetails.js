@@ -49,15 +49,18 @@ class DrinksDetails extends React.Component {
     }
   }
 
-  async handleShareDrink({ idDrink }) {
+  async handleShareDrink({ target }, { idDrink }) {
+    const two = 2;
+    if ((target.parentNode).childNodes.length <= two) {
+      const { parentNode } = target;
+      const paragraph = document.createElement('p');
+      paragraph.innerText = 'Link Copiado';
+      paragraph.style.fontSize = '8px';
+      paragraph.style.fontWeight = '100';
+      parentNode.appendChild(paragraph);
+    }
     const url = `http://localhost:3000/bebidas/${idDrink}`;
     await copy(url);
-    const shareBtn = document.querySelector('.share-btn');
-    shareBtn.value = 'Link copiado!';
-    const p = document.querySelector('.p');
-    const span = document.createElement('span');
-    p.appendChild(span);
-    span.innerHTML = 'Link copiado!';
   }
 
   handleIngredients() {
@@ -233,23 +236,24 @@ class DrinksDetails extends React.Component {
                 <p data-testid="recipe-category">{recipe.strAlcoholic}</p>
               </div>
               <div className="recipe-buttons">
-                <input
-                  type="image"
-                  className="share-btn"
-                  data-testid="share-btn"
-                  src={ shareIcon }
-                  onClick={ () => this.handleShareDrink(recipe) }
-                  alt="shareIcon"
-                />
-                <p className="p" />
-                <input
-                  type="image"
-                  data-testid="favorite-btn"
-                  className="fav-button"
-                  src={ this.teste(recipe) }
-                  onClick={ () => this.setLocalState(recipe) }
-                  alt="whiteHeartIcon"
-                />
+                <div>
+                  <input
+                    type="image"
+                    className="share-btn"
+                    data-testid="share-btn"
+                    src={ shareIcon }
+                    onClick={ (event) => this.handleShareDrink(event, recipe) }
+                    alt="shareIcon"
+                  />
+                  <input
+                    type="image"
+                    data-testid="favorite-btn"
+                    className="fav-button"
+                    src={ this.teste(recipe) }
+                    onClick={ () => this.setLocalState(recipe) }
+                    alt="whiteHeartIcon"
+                  />
+                </div>
               </div>
             </div>
             <hr className="card-hr" />

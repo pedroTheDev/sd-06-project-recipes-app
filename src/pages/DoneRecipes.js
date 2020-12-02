@@ -17,12 +17,14 @@ class DoneRecipes extends React.Component {
   }
 
   componentDidMount() {
-    const fourHundred = 450;
-    if (window.screen.availWidth < fourHundred) {
+    const treeHundredSixthy = 360;
+    if (window.screen.availWidth < treeHundredSixthy) {
+      const profile = document.querySelector('.profile-icon-div');
+      profile.style.width = '80px';
       const h1 = document.querySelector('.global-h1');
       h1.style.fontSize = '22px';
       const bla = document.querySelector('.search-input-div');
-      bla.style.width = '100px';
+      bla.style.width = '70px';
     }
     const recipes = JSON.parse(localStorage.getItem('doneRecipes'));
     if (recipes) {
