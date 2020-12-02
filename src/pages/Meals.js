@@ -10,7 +10,9 @@ function Meals({ history }) {
   const { recipes, recipesToRender, categoriesToRender } = useContext(Context);
 
   useEffect(() => {
-    recipesToRender('meal');
+    /*  if(ingredient) {
+      recipesToRenderByIngredient('meal', ingredient);
+    } else  */recipesToRender('meal');
     categoriesToRender('meal');
   }, []);
 

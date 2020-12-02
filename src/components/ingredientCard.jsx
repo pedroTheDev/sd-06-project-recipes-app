@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 // import Context from '../context/Context';
 
-function Cards({ info, recipe, index }) {
+function Cards({ info, recipe, index, history }) {
   const { strIngredient } = info;
   const { strIngredient1 } = info;
   // const { recipesToRenderByIngredient } = useContext(Context);
@@ -15,33 +15,37 @@ function Cards({ info, recipe, index }) {
   const imageDrink = `${strIngredient1}-Small.png`;
 
   return (
-    <Link
-      to={
-        recipe === 'ingredientsMeals'
-          ? '/comidas'
-          : '/bebidas'
-      }
+    // <Link
+    //   to={
+    //     recipe === 'ingredientsMeals'
+    //       ? '/comidas'
+    //       : '/bebidas'
+    //   }
+    // >
+    <div
+      className="recipe-card"
+      data-testid={ `${index}-ingredient-card` }
+      onClick={ () => {
+        recipe === 'ingredientsMeals' ? console.log(strIngredient) : console.log(strIngredient1);
+        history.push(recipe === 'ingredientsMeals' ? '/comidas' : '/bebidas');
+      } }
     >
-      <div
-        className="recipe-card"
-        data-testid={ `${index}-ingredient-card` }
+      <img
+        src={ `${recipe === 'ingredientsMeals'
+          ? `${urlMeals}${imageMeal}`
+          : `${urlDrinks}${imageDrink}`}` }
+        className="thumbnail"
+        alt={ recipe === 'ingredientsMeals' ? strIngredient : strIngredient1 }
+        data-testid={ `${index}-card-img` }
+      />
+      <p
+        className="recipe-card-name"
+        data-testid={ `${index}-card-name` }
       >
-        <img
-          src={ `${recipe === 'ingredientsMeals'
-            ? `${urlMeals}${imageMeal}`
-            : `${urlDrinks}${imageDrink}`}` }
-          className="thumbnail"
-          alt={ recipe === 'ingredientsMeals' ? strIngredient : strIngredient1 }
-          data-testid={ `${index}-card-img` }
-        />
-        <p
-          className="recipe-card-name"
-          data-testid={ `${index}-card-name` }
-        >
-          { recipe === 'ingredientsMeals' ? strIngredient : strIngredient1 }
-        </p>
-      </div>
-    </Link>
+        { recipe === 'ingredientsMeals' ? strIngredient : strIngredient1 }
+      </p>
+    </div>
+    // </Link>
   );
 }
 
