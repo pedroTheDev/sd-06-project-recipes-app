@@ -23,8 +23,9 @@
   font-size: 30px;
   line-height: 40px;
   align-self: center;
-
+  max-width: 250px;
   color: #FFFFFF;
+  text-align: center;
 }
 
 .button-search {

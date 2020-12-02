@@ -16,10 +16,11 @@
 }
 
 .recipes-container {
+  background-color: rgba(41, 41, 41, 1);
   display: flex;
   flex-wrap: wrap;
+  font-family: 'Cinzel Decorative', cursive;
   justify-content: space-around;
-  background-color: rgba(41, 41, 41, 1);
   width: 360px;
 }
 
@@ -37,11 +38,12 @@
 }
 
 .details-link {
+  align-items: center;
+  color: black;
   display: flex;
   flex-flow: column wrap;
-  align-items: center;
-  text-decoration: none;
-  color: black;
-  font-size: 12px;
   font-family: 'Cinzel Decorative', cursive;
+  font-size: 12px;
+  text-align: center;
+  text-decoration: none;
 }
