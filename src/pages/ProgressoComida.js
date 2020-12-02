@@ -121,7 +121,8 @@ function ProgressoComida() {
   console.log(receitasSalvas);
 
   function copiaLink() {
-    navigator.clipboard.writeText(window.location.href).then(() => {
+    const copiado = window.location.href.replace('/in-progress', '');
+    navigator.clipboard.writeText(copiado).then(() => {
       const link = document.createElement('span');
       link.innerHTML = 'Link copiado!';
       document.getElementById('link-compartilhar').appendChild(link);

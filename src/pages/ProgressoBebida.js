@@ -21,30 +21,88 @@ function DetalhesBebida() {
   // const history = useHistory();
 
   const inProgress = JSON.parse((localStorage.getItem('inProgressRecipes')));
-  let bebidaLocalStorage = inProgress.cocktails[idDaReceita];
+  let bebidaLocalStorage;
+  // let bebidaLocalStorage = inProgress.cocktails[idDaReceita];
+
   function checkHandle(e, index) {
     if (e.target.checked === true) {
       document.getElementById(`${index - 1}-ingredient-check`)
         .style.textDecoration = 'line-through';
-      bebidaLocalStorage = bebidaLocalStorage.concat(document
-        .getElementById(`${index - 1}-ingredient-check`).innerText);
+      if (localStorage.getItem('inProgressRecipes')) {
+        if (localStorage.getItem('inProgressRecipes').cocktails) {
+          bebidaLocalStorage = inProgress.cocktails[idDaReceita];
+          bebidaLocalStorage = bebidaLocalStorage.concat(document
+            .getElementById(`${index - 1}-ingredient-check`).innerText);
+          const newStorage = {
+            ...inProgress,
+            cocktails: {
+              ...inProgress.cocktails,
+              [idDaReceita]: bebidaLocalStorage,
+            },
+          };
+          localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
+        } else {
+          bebidaLocalStorage = [...bebidaLocalStorage,
+            document.getElementById(`${index - 1}-ingredient-check`)
+              .innerText];
+          const newStorage = {
+            ...inProgress,
+            cocktails: {
+              [idDaReceita]: bebidaLocalStorage,
+            },
+          };
+          localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
+        }
+      } else {
+        bebidaLocalStorage = [document.getElementById(`${index - 1}-ingredient-check`)
+          .innerText];
+        const newStorage = {
+          cocktails: {
+            [idDaReceita]: bebidaLocalStorage,
+          },
+        };
+        localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
+      }
     }
     if (e.target.checked === false) {
       document.getElementById(`${index - 1}-ingredient-check`)
         .style.textDecoration = 'none';
       bebidaLocalStorage = bebidaLocalStorage
-        .filter((bebidaLocal) => bebidaLocal !== document
+        .filter((comidaLocal) => comidaLocal !== document
           .getElementById(`${index - 1}-ingredient-check`).innerText);
+      const newStorage = {
+        ...inProgress,
+        cocktails: {
+          [idDaReceita]: bebidaLocalStorage,
+        },
+      };
+      localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
     }
-    const newStorage = {
-      ...inProgress,
-      cocktails: {
-        ...inProgress.cocktails,
-        [idDaReceita]: bebidaLocalStorage,
-      },
-    };
-    localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
   }
+
+  // function checkHandle(e, index) {
+  //   if (e.target.checked === true) {
+  //     document.getElementById(`${index - 1}-ingredient-check`)
+  //       .style.textDecoration = 'line-through';
+  //     bebidaLocalStorage = bebidaLocalStorage.concat(document
+  //       .getElementById(`${index - 1}-ingredient-check`).innerText);
+  //   }
+  //   if (e.target.checked === false) {
+  //     document.getElementById(`${index - 1}-ingredient-check`)
+  //       .style.textDecoration = 'none';
+  //     bebidaLocalStorage = bebidaLocalStorage
+  //       .filter((bebidaLocal) => bebidaLocal !== document
+  //         .getElementById(`${index - 1}-ingredient-check`).innerText);
+  //   }
+  //   const newStorage = {
+  //     ...inProgress,
+  //     cocktails: {
+  //       ...inProgress.cocktails,
+  //       [idDaReceita]: bebidaLocalStorage,
+  //     },
+  //   };
+  //   localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
+  // }
   useEffect(() => {
     fetchBebidasDetalhes();
   }, []);
@@ -79,7 +137,9 @@ function DetalhesBebida() {
     return array;
   }
   function copiaLink() {
-    navigator.clipboard.writeText(window.location.href).then(() => {
+    const copiado = window.location.href.replace('/in-progress', '');
+    console.log(copiado)
+    navigator.clipboard.writeText(copiado).then(() => {
       const link = document.createElement('span');
       link.innerHTML = 'Link copiado!';
       document.getElementById('link-compartilhar').appendChild(link);
