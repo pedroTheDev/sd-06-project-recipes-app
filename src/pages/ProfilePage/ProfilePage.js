@@ -4,7 +4,8 @@ import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 
 export default function ProfilePage() {
-  const emailL = JSON.parse((localStorage.getItem('user'))).email;
+  const emailLS = localStorage.getItem('user')
+    && JSON.parse((localStorage.getItem('user'))).email;
 
   const handlePathAndClearLS = () => {
     localStorage.clear();
@@ -19,7 +20,7 @@ export default function ProfilePage() {
       />
       <h1>Tela de Perfil </h1>
       <div>
-        <h3 data-testid="profile-email">{ emailL }</h3>
+        <h3 data-testid="profile-email">{ emailLS }</h3>
         <Link to="/receitas-feitas">
           <button
             type="button"
