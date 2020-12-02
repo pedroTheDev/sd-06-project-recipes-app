@@ -202,7 +202,6 @@ class DrinksDetails extends React.Component {
         localStorage.setItem('inProgressRecipes', JSON.stringify(getCheckedItems));
       }
     }
-
     history.push(`/bebidas/${idCurrent}/in-progress`);
   }
 
