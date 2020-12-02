@@ -122,7 +122,7 @@ const ReceitaProcessoComida = () => {
         },
       };
       localStorage.setItem('checkedIngredients', JSON.stringify(ingredientsToSave));
-      // setCheckedId(ingredientsToSave.meals[idFood]);
+      setCheckedId(ingredientsToSave.meals[idFood]);
     } else {
       const ingredientsToSave = {
         ...checkedIngredients,
@@ -134,7 +134,7 @@ const ReceitaProcessoComida = () => {
         },
       };
       localStorage.setItem('checkedIngredients', JSON.stringify(ingredientsToSave));
-      // setCheckedId(ingredientsToSave.meals[idFood]);
+      setCheckedId(ingredientsToSave.meals[idFood]);
     }
     return target.id;
   };
