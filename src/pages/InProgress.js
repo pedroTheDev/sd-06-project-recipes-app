@@ -29,6 +29,7 @@ function InProgress() {
     ? `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${itemId}`
     : `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${itemId}`);
   const two = 2;
+  console.log(itemId)
 
   function favoriteStatus(id) {
     let favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
@@ -110,7 +111,8 @@ function InProgress() {
   }
 
   function handleShareClick() {
-    clipboardCopy(`http://localhost:3000${itemUrl}`);
+    if (isFood) clipboardCopy(`http://localhost:3000/comidas/${itemId}`);
+    if (!isFood) clipboardCopy(`http://localhost:3000/bebidas/${itemId}`);
     const seconds = 5000;
     setCopied(true);
     setTimeout(() => {
