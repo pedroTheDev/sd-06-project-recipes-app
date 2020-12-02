@@ -15,7 +15,7 @@ const ExplorarComidasIng = () => {
 
   useEffect(() => {
     setMeals([{ key: 'teste' }]);
-  
+
     listIngredients().then((response) => setIngredientList(response));
   }, []);
 
