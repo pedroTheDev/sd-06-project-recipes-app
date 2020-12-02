@@ -7,7 +7,7 @@ import ReceitasContext from '../context/ReceitasContext';
 import DrinksCard from '../components/DrinksCard';
 import DrinkFilters from '../components/DrinkFilters';
 import { drinkAPI, drinkCategoryApi } from '../services/drinkAPI';
-import logo from '../images/myfood.png';
+import load from '../images/load.png';
 import '../style/Loading.css';
 
 function Bebidas() {
@@ -29,8 +29,8 @@ function Bebidas() {
   }, []);
 
   return !drinks.length ? (
-    <div>
-      <img src={ logo } alt="teste" className="loading" />
+    <div className="align-self-center d-flex justify-content-center">
+      <img src={ load } alt="loading" className="loading" />
     </div>
   ) : (
     <section>
@@ -38,7 +38,7 @@ function Bebidas() {
       {searchBox && <SearchBar />}
       <div className="my-4 py-2">
         <DrinkFilters />
-        <div className="row">
+        <div className="row my-4 mx-3">
           {drinks
             .filter((x, index) => index < doze)
             .map((drink, i) => (

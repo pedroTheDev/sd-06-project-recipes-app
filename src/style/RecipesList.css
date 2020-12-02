@@ -23,3 +23,9 @@
   display: flex;
   flex-flow: row wrap;
 } */
+@import url('https://fonts.googleapis.com/css2?family=Finger+Paint&display=swap');
+
+.fonte {
+  font-family: 'Finger Paint', cursive;
+  color: black;
+}

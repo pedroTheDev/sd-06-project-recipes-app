@@ -3,11 +3,12 @@ html, body {
   margin: 0;
   padding: 0;
   width: 100%;
+  overflow-x: hidden;
 }
 
 .bg {
   height: 100vh;
-  background-image: url('../images/hamb.png'); 
+  background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4)), url('../images/hamb.png'); 
   background-size: cover;
 }
 
@@ -15,16 +16,23 @@ html, body {
   height:60vh;
   width: 85vw;
   margin-top: 20vh;
-  background:#7850B8;
+  background:rgb(120, 80, 184, 0.9);;
   position: relative;
   display: flex;
   justify-content: center;
   flex-direction: column;
-  padding: 10px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 5px;
 
 }
+
+@media (min-width: 700px) {
+  .user_card {
+    background-color: rgb(120, 80, 184, 0.9);
+    width: 50vw;
+    height: 70vh;
+  }
+}
+
 .brand_logo_container {
   position: absolute;
   height: 170px;
@@ -48,11 +56,8 @@ html, body {
   background:#6CDC3E !important;
   color: white !important;
 }
-.login_btn:focus {
-  box-shadow: none !important;
-  outline: 0px !important;
-}
+
 .login_container {
-  padding: 0 2rem;
+  padding: 1rem;
 }
 

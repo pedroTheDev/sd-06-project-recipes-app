@@ -1,8 +1,10 @@
 .loading {
   animation:spin 4s linear infinite;
-  width: 150px;
-  margin-top: 40vh;
-  margin-left: 12vh;
+  margin-top: 30%;
 }
 
 @keyframes spin { 100% { transform:rotate(360deg); } }
+
+html, body {
+  background-color:lightgoldenrodyellow;
+}
