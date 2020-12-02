@@ -407,7 +407,7 @@ describe('51 - Desenvolva a lógica de favoritar e compartilhar, a lógica da te
   });
 });
 
-describe('52 - Implemente a solução de maneira que o botão de finalizar receita só pode estar habilitado quando todos os ingredientes estiverem _"checkados"_ (marcados)', () => {
+describe.only('52 - Implemente a solução de maneira que o botão de finalizar receita só pode estar habilitado quando todos os ingredientes estiverem _"checkados"_ (marcados)', () => {
   it('verifica se botão para finalizar está desabilitado em receitas de comidas', () => {
     cy.visit('http://localhost:3000/comidas/52771/in-progress', {
       onBeforeLoad(win) {
@@ -463,7 +463,7 @@ describe('52 - Implemente a solução de maneira que o botão de finalizar recei
   });
 });
 
-describe.only('53 - Redirecione a pessoa usuária após clicar no botão "Finalizar receita", para a página de receitas feitas, cuja rota deve ser `/receitas-feitas`', () => {
+describe('53 - Redirecione a pessoa usuária após clicar no botão "Finalizar receita", para a página de receitas feitas, cuja rota deve ser `/receitas-feitas`', () => {
   it('redireciona após concluir uma receita de comida', () => {
     cy.visit('http://localhost:3000/comidas/52771/in-progress', {
       onBeforeLoad(win) {

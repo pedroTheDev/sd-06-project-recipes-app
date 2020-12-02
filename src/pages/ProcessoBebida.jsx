@@ -10,6 +10,7 @@ function ProcessoBebida({ match: { params: { id } } }) {
   const quinze = 15;
   const [detailsDrink, setdetailsDrink] = useState([]);
   const [arrayIngredients, setArrayIngredients] = useState([]);
+  const [countCheck, setCountCheck] = useState(zero);
   useEffect(() => {
     requestApiDrinkDetails(id)
       .then((response) => {
@@ -36,6 +37,9 @@ function ProcessoBebida({ match: { params: { id } } }) {
     if (checkBox.checked) {
       const labelBox = document.getElementsByName(`${event.target.id}`);
       labelBox[0].className = 'riscado';
+      setCountCheck(countCheck + 1);
+    } else {
+      setCountCheck(countCheck - 1);
     }
   };
 
@@ -90,7 +94,7 @@ function ProcessoBebida({ match: { params: { id } } }) {
       ))}
       <h4 data-testid="instructions">{detailsDrink.strInstructions}</h4>
       <Link to="/receitas-feitas">
-        <button type="button" data-testid="finish-recipe-btn">
+        <button type="button" data-testid="finish-recipe-btn" disabled={ arrayIngredients.length !== countCheck }>
           Finalizar receita
         </button>
       </Link>

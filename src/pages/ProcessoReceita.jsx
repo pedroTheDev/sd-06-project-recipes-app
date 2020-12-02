@@ -11,6 +11,7 @@ function ProcessoReceita({ match: { params: { id } } }) {
   const vinte = 20;
   const [detailsFood, setDetailsFood] = useState([]);
   const [arrayIngredients, setArrayIngredients] = useState([]);
+  const [countCheck, setCountCheck] = useState(zero);
   useEffect(() => {
     requestApiFoodDetails(id)
       .then((response) => {
@@ -37,6 +38,9 @@ function ProcessoReceita({ match: { params: { id } } }) {
     if (checkBox.checked) {
       const labelBox = document.getElementsByName(`${event.target.id}`);
       labelBox[0].className = 'riscado';
+      setCountCheck(countCheck + 1);
+    } else {
+      setCountCheck(countCheck - 1);
     }
   };
 
@@ -87,7 +91,7 @@ function ProcessoReceita({ match: { params: { id } } }) {
       ))}
       <h4 data-testid="instructions">{detailsFood.strInstructions}</h4>
       <Link to="/receitas-feitas">
-        <button type="button" data-testid="finish-recipe-btn">
+        <button type="button" data-testid="finish-recipe-btn" disabled={ arrayIngredients.length !== countCheck }>
           Finalizar receita
         </button>
       </Link>
