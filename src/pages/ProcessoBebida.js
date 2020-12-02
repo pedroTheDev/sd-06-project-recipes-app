@@ -1,19 +1,17 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import useCopyToClipboard from '../hooks/useCopyToClipboard';
-import RecipesContext from '../context/RecipesContext';
 import { shareIcon, whiteHeartIcon, blackHeartIcon } from '../images';
 import '../style/Processo.css';
 
 function ProcessoBebida() {
   const timeoutTextCopy = 3000;
-  const { drinkIngredients } = useContext(RecipesContext);
   const [isCopied, handleCopy] = useCopyToClipboard(timeoutTextCopy);
   const [dataDrinks, setDataDrinks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const [isDisable, setIsDisable] = useState(true);
-  const [checked, setChecked] = useState({});
+  const [checked, setChecked] = useState([]);
   const history = useHistory();
   const idDrink = history.location.pathname.split('/')[2];
 
@@ -87,8 +85,8 @@ function ProcessoBebida() {
 
   const handleClick = () => {
     setIsFavorite(!isFavorite);
+    let favoriteRecipes = [];
     if (!isFavorite) {
-      let favoriteRecipes = [];
       if (localStorage.favoriteRecipes) {
         favoriteRecipes = JSON.parse(localStorage.favoriteRecipes);
       }
@@ -102,8 +100,30 @@ function ProcessoBebida() {
         image: dataDrinks.strDrinkThumb,
       }]);
     } else {
-      localStorage.removeItem('favoriteRecipes');
+      favoriteRecipes = JSON.parse(localStorage.favoriteRecipes)
+        .filter(({ id }) => id !== dataDrinks.idDrink);
+      localStorage.favoriteRecipes = JSON.stringify(favoriteRecipes);
     }
+  };
+
+  const saveDoneRecipes = () => {
+    const date = new Date();
+    const doneDate = date;
+    let doneRecipes = [];
+    if (localStorage.doneRecipes) {
+      doneRecipes = JSON.parse(localStorage.doneRecipes);
+    }
+    localStorage.doneRecipes = JSON.stringify([...doneRecipes, {
+      id: dataDrinks.idDrink,
+      type: 'bebida',
+      area: '',
+      category: dataDrinks.strCategory,
+      alcoholicOrNot: dataDrinks.strAlcoholic,
+      name: dataDrinks.strDrink,
+      image: dataDrinks.strDrinkThumb,
+      doneDate,
+      tags: [],
+    }]);
   };
 
   return (isLoading) ? <p>Loading</p> : (
@@ -151,20 +171,29 @@ function ProcessoBebida() {
         <h2 data-testid="recipe-category">
           Categoria
         </h2>
-        { drinkIngredients.map((ingredient, index) => (
-          <span
-            key={ index }
-            data-testid={ `${index}-ingredient-step` }
-          >
-            { ingredient }
-            <input
-              type="checkbox"
-              name={ ingredient }
-              checked={ checked.includes(index) }
-              onChange={ ({ target }) => { handleChange(target, index); } }
-            />
-          </span>
-        )) }
+        { Object.keys(dataDrinks)
+          .filter((keys) => keys.includes('Ingredient'))
+          .map((ingredient, index) => {
+            if (dataDrinks[ingredient] !== '' && dataDrinks[ingredient] !== null) {
+              return (
+                <div
+                  className="label"
+                  key={ index }
+                  data-testid={ `${index}-ingredient-step` }
+                >
+                  <input
+                    className="checkbox"
+                    type="checkbox"
+                    name={ dataDrinks[ingredient] }
+                    checked={ checked.includes(index) }
+                    onChange={ ({ target }) => { handleChange(target, index); } }
+                  />
+                  { dataDrinks[ingredient] }
+                </div>
+              );
+            }
+            return '';
+          }) }
         <h2 data-testid="instructions">
           Instruções
         </h2>
@@ -175,6 +204,7 @@ function ProcessoBebida() {
           type="button"
           data-testid="finish-recipe-btn"
           disabled={ isDisable }
+          onClick={ saveDoneRecipes }
         >
           Finalizar Receita
         </button>

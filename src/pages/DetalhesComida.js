@@ -2,8 +2,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import useCopyToClipboard from '../hooks/useCopyToClipboard';
-import { shareIcon, whiteHeartIcon, blackHeartIcon,
-  setaDireita, setaEsquerda } from '../images';
+import {
+  shareIcon, whiteHeartIcon, blackHeartIcon,
+  setaDireita, setaEsquerda,
+} from '../images';
 import '../style/Detalhes.css';
 
 function DetalhesComida() {
@@ -65,8 +67,8 @@ function DetalhesComida() {
 
   const handleClick = () => {
     setIsFavorite(!isFavorite);
+    let favoriteRecipes = [];
     if (!isFavorite) {
-      let favoriteRecipes = [];
       if (localStorage.favoriteRecipes) {
         favoriteRecipes = JSON.parse(localStorage.favoriteRecipes);
       }
@@ -80,7 +82,9 @@ function DetalhesComida() {
         image: dataMeal.strMealThumb,
       }]);
     } else {
-      localStorage.removeItem('favoriteRecipes');
+      favoriteRecipes = JSON.parse(localStorage.favoriteRecipes)
+        .filter(({ id }) => id !== dataMeal.idMeal);
+      localStorage.favoriteRecipes = JSON.stringify(favoriteRecipes);
     }
   };
 
@@ -173,12 +177,14 @@ function DetalhesComida() {
                       }
                       data-testid={ `${index}-recomendation-card` }
                     >
-                      <img src={ drink.strDrinkThumb } alt={ drink.strDrink } />
-                      <h2
-                        data-testid={ `${index}-recomendation-title` }
-                      >
-                        { drink.strDrink }
-                      </h2>
+                      <Link to={ `/bebidas/${drink.idDrink}` }>
+                        <img src={ drink.strDrinkThumb } alt={ drink.strDrink } />
+                        <h2
+                          data-testid={ `${index}-recomendation-title` }
+                        >
+                          { drink.strDrink }
+                        </h2>
+                      </Link>
                     </div>
                   )) }
                 </div>
