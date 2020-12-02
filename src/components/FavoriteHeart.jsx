@@ -117,7 +117,7 @@ FavoriteHeart.propTypes = {
     strMeal: PropTypes.string.isRequired,
     strMealThumb: PropTypes.string.isRequired,
   }).isRequired,
-
+  testIdReceitasFavoritas: PropTypes.string.isRequired,
 };
 
 export default FavoriteHeart;
