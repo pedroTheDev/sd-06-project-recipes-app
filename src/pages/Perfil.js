@@ -19,30 +19,33 @@ function Perfil() {
   }, []);
 
   return (
-    <main className="default-page">
+    <main className="default-page option-page-container">
       <Header pageName="Perfil" renderSearch={ false } />
-      <h2 data-testid="profile-email">{user}</h2>
-      <button
-        data-testid="profile-done-btn"
-        type="button"
-        onClick={ () => history.push('/receitas-feitas') }
-      >
-        Receitas Feitas
-      </button>
-      <button
-        data-testid="profile-favorite-btn"
-        type="button"
-        onClick={ () => history.push('/receitas-favoritas') }
-      >
-        Receitas Favoritas
-      </button>
-      <button
-        data-testid="profile-logout-btn"
-        type="button"
-        onClick={ () => handleQuit() }
-      >
-        Sair
-      </button>
+      <div className="option-page">
+        <h2 data-testid="profile-email">{user}</h2>
+        <button
+          data-testid="profile-done-btn"
+          type="button"
+          onClick={ () => history.push('/receitas-feitas') }
+        >
+          Receitas Feitas
+        </button>
+        <button
+          data-testid="profile-favorite-btn"
+          type="button"
+          onClick={ () => history.push('/receitas-favoritas') }
+        >
+          Receitas Favoritas
+        </button>
+        <button
+          data-testid="profile-logout-btn"
+          type="button"
+          onClick={ () => handleQuit() }
+        >
+          Sair
+        </button>
+
+      </div>
       <Footer />
     </main>
   );

@@ -97,7 +97,7 @@ function IngredientsCheck({ recipe, path, id }) {
   };
 
   return (
-    <ul>
+    <ul className="inProgress-list">
       {ingredients.map((ingredient, index) => (
         <li
           key={ ingredient }
