@@ -228,7 +228,7 @@ function DetalhesComida(props) {
             src={ meal.strYoutube.replace('watch?v=', 'embed/') }
             title="frame"
           />
-          <h2>Receitas Recomendadas</h2>
+          <h4>Receitas Recomendadas</h4>
           <div className="carousel">
             {drinks
               .filter((_, indx) => indx < seis)
@@ -243,7 +243,7 @@ function DetalhesComida(props) {
           {!doneRecipes.includes(meal.idMeal) && (
             <Link to={ `/comidas/${meal.idMeal}/in-progress` }>
               <button
-                className="start-recipe-btn"
+                className="start-recipe-btn btn btn-block btn-success fixed-bottom"
                 data-testid="start-recipe-btn"
                 type="button"
                 onClick={ () => startRecipe(meal.idMeal) }

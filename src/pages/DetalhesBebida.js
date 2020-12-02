@@ -196,12 +196,16 @@ function DetalhesBebida(props) {
       <Header title="Detalhes Bebidas" />
       {fetchById.map((drink, index) => (
         <div key={ index }>
-          <img
-            data-testid="recipe-photo"
-            src={ drink.strDrinkThumb }
-            width="200"
-            alt=""
-          />
+          <div className="row justify-content-center p-0">
+            <div className="col-6 p-0">
+              <img
+                data-testid="recipe-photo"
+                src={ drink.strDrinkThumb }
+                width="100%"
+                alt=""
+              />
+            </div>
+          </div>
           <h2 data-testid="recipe-title">{drink.strDrink}</h2>
           <div>
             <button data-testid="share-btn" type="button" onClick={ copyToCB }>
@@ -227,7 +231,7 @@ function DetalhesBebida(props) {
             );
           })}
           <p data-testid="instructions">{drink.strInstructions}</p>
-          <h2>Receitas Recomendadas</h2>
+          <h4>Receitas Recomendadas</h4>
           <div className="carousel">
             {meals.length && meals
               .filter((_, indx) => indx < seis)
@@ -242,7 +246,7 @@ function DetalhesBebida(props) {
           {!doneRecipes.includes(drink.idDrink) && (
             <Link to={ `/bebidas/${drink.idDrink}/in-progress` }>
               <button
-                className="start-recipe-btn"
+                className="start-recipe-btn btn btn-block btn-success fixed-bottom"
                 data-testid="start-recipe-btn"
                 type="button"
                 onClick={ () => startRecipe(drink.idDrink) }

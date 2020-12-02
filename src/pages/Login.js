@@ -57,19 +57,27 @@ const Login = () => {
             <div className="d-flex justify-content-center form_container">
               <form>
                 <div className="input-group mb-3">
+                  <div className="input-group-prepend">
+                    <span className="input-group-text">@</span>
+                  </div>
                   <input
                     id="email-input"
                     placeholder="email"
                     type="text"
+                    className="form-control"
                     name="email"
                     data-testid="email-input"
                     onChange={ handleChange }
                   />
                 </div>
                 <div className="input-group mb-2">
+                  <div className="input-group-prepend">
+                    <span className="input-group-text">#</span>
+                  </div>
                   <input
                     id="password-input"
                     placeholder="password"
+                    className="form-control"
                     name="password"
                     type="password"
                     data-testid="password-input"
