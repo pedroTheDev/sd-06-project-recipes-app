@@ -1,9 +1,20 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
+import { requestRandomDrink } from '../services/requestsAPI';
+
 function ExploreDrinksPage() {
+  const history = useHistory();
+  // const [randomRecipe, setRandomRecipe] = useState([]);
+  async function handleClick() {
+    const resultRandom = await requestRandomDrink();
+    // setRandomRecipe(resultRandomFood);
+    console.log(resultRandom);
+    history.push(`/bebidas/${resultRandom.drinks[0].idDrink}`);
+  }
+
   return (
     <div>
       <Header />
@@ -18,7 +29,11 @@ function ExploreDrinksPage() {
           </button>
         </Link>
 
-        <button type="button" data-testid="explore-surprise">
+        <button
+          type="button"
+          data-testid="explore-surprise"
+          onClick={ handleClick }
+        >
           Me Surpreenda!
         </button>
 

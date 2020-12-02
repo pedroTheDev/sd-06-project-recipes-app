@@ -99,3 +99,15 @@ export async function requestDetailsDrinks(info) {
   const result = await resolve.json();
   return result;
 }
+
+export async function requestRandomFood() {
+  const resolve = await fetch('https://www.themealdb.com/api/json/v1/1/random.php');
+  const result = await resolve.json();
+  return result.meals[0];
+}
+
+export async function requestRandomDrink() {
+  const resolve = await fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php');
+  const result = await resolve.json();
+  return result;
+}
