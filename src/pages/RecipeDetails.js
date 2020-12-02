@@ -65,11 +65,11 @@ export default function RecipeDetails() {
         .getItem('favoriteRecipes')),
   );
 
-  const [localStorageInProgress, setLocalStorageInProgress] = useState(
-    JSON
-      .parse(localStorage
-        .getItem('inProgressRecipes')),
-  );
+  // const [localStorageInProgress, setLocalStorageInProgress] = useState(
+  //   JSON
+  //     .parse(localStorage
+  //       .getItem('inProgressRecipes')),
+  // );
 
   const [localStorageDoneRecipes, setLocalStorageDoneRecipes] = useState(
     JSON
@@ -195,16 +195,16 @@ export default function RecipeDetails() {
     return ingredientsMeasureArray;
   }
 
-  function handleCheckbox({ target }, pairArray) {
-    if (!localStorageInProgress) {
-      localStorage
-        .setItem('inProgressRecipes', JSON
-          .stringify({
-            cocktails: { [foods[0].id]: [] },
-            meals: { id: [] },
-          }));
-    }
-  }
+  // function handleCheckbox({ target }, pairArray) {
+  //   if (!localStorageInProgress) {
+  //     localStorage
+  //       .setItem('inProgressRecipes', JSON
+  //         .stringify({
+  //           cocktails: { [foods[0].id]: [] },
+  //           meals: { id: [] },
+  //         }));
+  //   }
+  // }
 
   //   localStorage
   //     .setItem('inProgressRecipes', JSON
@@ -276,7 +276,7 @@ export default function RecipeDetails() {
                       type="checkbox"
                       name={ index }
                       id={ index }
-                      onChange={ (e) => handleCheckbox(e, pairArray) }
+                      // onChange={ (e) => handleCheckbox(e, pairArray) }
                     />
                     {' '}
                     <label
