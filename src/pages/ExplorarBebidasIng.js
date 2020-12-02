@@ -23,29 +23,30 @@ const ExplorarBebidasIng = () => {
   return (
     <div>
       <Header title="Explorar Ingredientes" />
-      <div className="row mb-5 mt-5 pt-3">
+      <div className="row my-4">
         { drinksIngredientList
           && drinksIngredientList.slice(zero, twelve).map((ingred, index) => (
             <Link
               to="/bebidas"
               data-testid={ `${index}-ingredient-card` }
               key={ ingred.strIngredient1 }
-              className="col-6 mb-3"
+              className="col-6 col-sm-4 col-md-3 mb-3"
               onClick={ () => {
                 drinkAPI('ingredient', ingred.strIngredient1)
                   .then((response) => setMeals(response));
                 setStopApi(true);
               } }
             >
-              <div className="card shadow-sm bg-white rounded">
+              <div className="card shadow">
                 <img
                   data-testid={ `${index}-card-img` }
                   src={ `https://www.thecocktaildb.com/images/ingredients/${ingred.strIngredient1}-Small.png` }
                   alt={ ingred.strIngredient1 }
+                  className="card-img-top w-50 mx-auto rounded-circle"
                 />
                 <div className="card-body">
                   <h5
-                    className="card-title mb-0"
+                    className="card-title text-center fonte "
                     data-testid={ `${index}-card-name` }
                   >
                     {ingred.strIngredient1}

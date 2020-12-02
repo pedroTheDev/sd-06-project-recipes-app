@@ -34,7 +34,7 @@ const Perfil = () => {
               <button
                 type="button"
                 className="btn btn-lg btn-block"
-                style={ { background: '#6CDC3E' } }
+                style={ { background: '#7ed957' } }
                 data-testid="profile-done-btn"
               >
                 Receitas Feitas
@@ -45,7 +45,7 @@ const Perfil = () => {
                 className="btn btn-lg btn-block"
                 type="button"
                 data-testid="profile-favorite-btn"
-                style={ { background: '#6CDC3E' } }
+                style={ { background: '#7ed957' } }
               >
                 Receitas Favoritas
               </button>
@@ -56,7 +56,7 @@ const Perfil = () => {
                 onClick={ handleClick }
                 data-testid="profile-logout-btn"
                 className="btn btn-lg btn-block my-4"
-                style={ { background: '#6CDC3E' } }
+                style={ { background: '#7ed957' } }
               >
                 Sair
               </button>

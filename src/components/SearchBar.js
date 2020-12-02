@@ -44,7 +44,7 @@ function SearchBar() {
   return (
     url.length ? <Redirect to={ url } /> : (
       <form onSubmit={ (e) => e.preventDefault() }>
-        <div style={ { top: '50px' } } className="bg-secondary p-3">
+        <div style={ { top: '50px', background: '#7850B8' } } className="p-3">
           <input
             type="text"
             data-testid="search-input"
@@ -53,7 +53,7 @@ function SearchBar() {
             value={ searchValue }
             onChange={ ({ target }) => setSearchValue(target.value) }
           />
-          <div className="form-check form-check-inline">
+          <div className="form-check form-check-inline my-2">
             <label htmlFor="ingredient" className="form-check-label">
               <input
                 type="radio"
@@ -66,7 +66,7 @@ function SearchBar() {
               />
               Ingrediente
             </label>
-            <label htmlFor="name" className="form-check-label">
+            <label htmlFor="name" className="form-check-label mx-2">
               <input
                 type="radio"
                 id="name"
@@ -78,7 +78,7 @@ function SearchBar() {
               />
               Nome
             </label>
-            <label htmlFor="first-letter" className="form-check-label">
+            <label htmlFor="first-letter" className="form-check-label mx-1">
               <input
                 type="radio"
                 id="first-letter"
@@ -96,7 +96,7 @@ function SearchBar() {
               type="submit"
               onClick={ handleFormSubmit }
               data-testid="exec-search-btn"
-              className="btn btn-block btn-light"
+              className="btn btn-light"
             >
               Buscar
             </button>

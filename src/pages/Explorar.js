@@ -12,7 +12,7 @@ const Explorar = () => (
           to="/explorar/comidas"
           data-testid="explore-food"
           className="btn btn-block btn-lg my-2"
-          style={ { background: '#6CDC3E' } }
+          style={ { background: '#7ed957' } }
         >
           <span>Explorar Comidas</span>
         </Link>
@@ -20,7 +20,7 @@ const Explorar = () => (
           to="/explorar/bebidas"
           data-testid="explore-drinks"
           className="btn btn-block btn-lg my-2"
-          style={ { background: '#6CDC3E' } }
+          style={ { background: '#7ed957' } }
         >
           <span>Explorar Bebidas</span>
         </Link>
