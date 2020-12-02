@@ -46,7 +46,13 @@ export default function FoodInProgress() {
   // função para favoritar
   const favoritar = (e) => {
     const click = e.target;
-    click.src = 'http://localhost:3000/static/media/blackHeartIcon.b8913346.svg';
+    const white = 'http://localhost:3000/static/media/whiteHeartIcon.ea3b6ba8.svg';
+    const black = 'http://localhost:3000/static/media/blackHeartIcon.b8913346.svg';
+    if (click.src === white) {
+      click.src = black;
+    } else {
+      click.src = white;
+    }
   };
 
   return (
@@ -266,6 +272,7 @@ export default function FoodInProgress() {
         />
       </a>
       <input
+        type="image"
         src={ desFavorite }
         alt="foto=favorito"
         data-testid="favorite-btn"

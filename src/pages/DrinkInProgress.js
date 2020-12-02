@@ -54,7 +54,6 @@ export default function DrinkInProgress() {
   // função favoritar
   const favoritar = (e) => {
     const click = e.target;
-    console.log(click.src);
     const white = 'http://localhost:3000/static/media/whiteHeartIcon.ea3b6ba8.svg';
     const black = 'http://localhost:3000/static/media/blackHeartIcon.b8913346.svg';
     if (click.src === white) {
