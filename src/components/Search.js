@@ -77,7 +77,7 @@ export default function SearchBar(props) {
 
   return (
     <Container className="align-items-center">
-      <form data-testid="test-search-bar">
+      <form data-testid="test-search-bar" className="search-bar">
         <Row>
           <label htmlFor="search-input">
             <input
@@ -90,7 +90,7 @@ export default function SearchBar(props) {
             />
           </label>
         </Row>
-        <Row>
+        <Row className="filter-radios">
           <label htmlFor="ingredient">
             <input
               data-testid="ingredient-search-radio"

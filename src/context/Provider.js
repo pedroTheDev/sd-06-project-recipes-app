@@ -12,6 +12,7 @@ const Provider = ({ children }) => {
   const [categories, setCategories] = useState();
   const [isLoading, setisLoading] = useState(false);
   const [searchParam, setSearchParam] = useState();
+  const [inProgress, setInProgress] = useState(false);
 
   const fetchApi = async (URL) => {
     setisLoading(true);
@@ -81,6 +82,8 @@ const Provider = ({ children }) => {
     categories,
     fetchCategories,
     fetchByCategory,
+    inProgress,
+    setInProgress,
   };
 
   return (

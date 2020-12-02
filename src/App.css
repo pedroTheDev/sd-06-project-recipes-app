@@ -179,3 +179,7 @@ footer, .start-recipe-btn {
 .filter-radios label input { 
   margin-right: 5px;
  }
+
+input[type=checkbox]:checked + label {
+  text-decoration: line-through;
+}
