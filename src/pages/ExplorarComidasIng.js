@@ -14,9 +14,11 @@ const ExplorarComidasIng = () => {
   } = useContext(ReceitasContext);
 
   useEffect(() => {
+    setMeals([{ key: 'teste' }]);
+
     listIngredients().then((response) => setIngredientList(response));
   }, []);
-  console.log(ingredientList);
+
   const zero = 0;
   const twelve = 12;
 

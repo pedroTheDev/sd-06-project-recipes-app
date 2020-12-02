@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import { foodAPI, getAreas, getByArea } from '../services/foodAPI';
 import MealsCard from '../components/MealsCard';
 import ReceitasContext from '../context/ReceitasContext';
+import Footer from '../components/Footer';
 
 const ExplorarComidasArea = () => {
   const [areas, setAreas] = useState([]);
@@ -63,7 +64,6 @@ const ExplorarComidasArea = () => {
 
         </select>
       </label>
-
       <main>
         {meals.length && (meals
           .filter((x, index) => index < doze)
@@ -71,7 +71,7 @@ const ExplorarComidasArea = () => {
             <MealsCard key={ i } food={ food } index={ i } />
           )))}
       </main>
-
+      <Footer />
     </div>
   );
 };

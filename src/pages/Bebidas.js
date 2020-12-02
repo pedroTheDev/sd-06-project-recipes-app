@@ -25,7 +25,7 @@ function Bebidas() {
       setDrinks(responseDrinksAPI);
     }
 
-    fetchDrink();
+    if (!drinks.length) fetchDrink();
   }, []);
 
   return !drinks.length ? (

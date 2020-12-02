@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import logo from '../images/myfood.png';
 import '../style/Login.css';
 
 const Login = () => {
+  const history = useHistory();
   const [disabled, setDisabled] = useState(true);
   const [user, setUser] = useState({
     email: '',
@@ -11,14 +12,16 @@ const Login = () => {
   });
 
   const inputValues = () => {
-    const { email, password } = user;
+    const email = document.getElementById('email-input').value;
+    const password = document.getElementById('password-input').value;
     const regexp = /^[a-zA-Z0-9.!#$%&_-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    let disabledBtn = true;
     const six = 6;
 
-    if (regexp.test(email) && password.length >= six) disabledBtn = false;
-
-    setDisabled(disabledBtn);
+    if (regexp.test(email) && password.length > six) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
   };
 
   const handleChange = ({ target }) => {
@@ -42,6 +45,7 @@ const Login = () => {
 
   const handleClick = () => {
     setUserOnLocalStorage();
+    history.push('/comidas');
   };
 
   return (
@@ -85,7 +89,7 @@ const Login = () => {
                   />
                 </div>
                 <div className="d-flex justify-content-center mt-3 login_container">
-                  <Link to="/comidas">
+                  <div>
                     <button
                       disabled={ disabled }
                       type="button"
@@ -95,7 +99,7 @@ const Login = () => {
                     >
                       Login
                     </button>
-                  </Link>
+                  </div>
                 </div>
               </form>
             </div>
