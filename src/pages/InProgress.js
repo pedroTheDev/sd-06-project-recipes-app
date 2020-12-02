@@ -110,7 +110,8 @@ function InProgress() {
   }
 
   function handleShareClick() {
-    clipboardCopy(`http://localhost:3000${itemUrl}`);
+    if (isFood) clipboardCopy(`http://localhost:3000/comidas/${itemId}`);
+    if (!isFood) clipboardCopy(`http://localhost:3000/bebidas/${itemId}`);
     const seconds = 5000;
     setCopied(true);
     setTimeout(() => {

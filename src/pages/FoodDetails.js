@@ -107,18 +107,20 @@ function FoodDetails() {
       {(isFetching) ? <div>Loading recipe...</div>
         : (
           <section className="body-recipe">
-            <h1 data-testid="recipe-title">
-              { strMeal }
-            </h1>
-            <h3 data-testid="recipe-category">
-              { strCategory }
-            </h3>
-            <img
-              data-testid="recipe-photo"
-              className="recipe-img"
-              src={ strMealThumb }
-              alt={ `${strMeal}` }
-            />
+            <header className="recipe-header">
+              <img
+                data-testid="recipe-photo"
+                className="recipe-img"
+                src={ strMealThumb }
+                alt={ `${strMeal}` }
+              />
+              <h1 data-testid="recipe-title">
+                { strMeal }
+              </h1>
+              <h3 data-testid="recipe-category">
+                { strCategory }
+              </h3>
+            </header>
             <button
               type="button"
               data-testid="share-btn"
