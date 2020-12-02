@@ -7,10 +7,20 @@ import Context from '../context/Context';
 
 function Meals({ history }) {
   const TRUE = true;
-  const { recipes, recipesToRender, categoriesToRender } = useContext(Context);
+  const {
+    ingredientExplore,
+    recipes,
+    recipesToRender,
+    setIngredientExplore,
+    categoriesToRender,
+    recipesToRenderByIngredient,
+  } = useContext(Context);
 
   useEffect(() => {
-    recipesToRender('meal');
+    if (ingredientExplore) {
+      recipesToRenderByIngredient('meal', ingredientExplore);
+      setIngredientExplore('');
+    } else recipesToRender('meal');
     categoriesToRender('meal');
   }, []);
 
