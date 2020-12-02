@@ -11,7 +11,6 @@ const FavoriteDrinkButton = () => {
 
   const handleIdDetails = async () => {
     const drink = await detailsDrinkById(currentDrinkID);
-    console.log(drink);
 
     setStatelocal({ ...stateLocal, drink });
   };

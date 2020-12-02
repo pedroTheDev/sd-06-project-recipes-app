@@ -7,6 +7,7 @@ import './ProcessoComida.css';
 
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import { FavoriteDrinkButton } from '../components/FavoriteBtn';
 
 const ProcessoBebidas = () => {
   const [recipeProgress, setRecipeProgress] = useState();
@@ -169,15 +170,7 @@ const ProcessoBebidas = () => {
                     alt="shareIcon"
                   />
                 </button>
-                <button
-                  type="button"
-                >
-                  <img
-                    data-testid="favorite-btn"
-                    src={ whiteHeartIcon }
-                    alt="whiteHeartIcon"
-                  />
-                </button>
+                <FavoriteDrinkButton />
               </div>
             </div>
             <div
