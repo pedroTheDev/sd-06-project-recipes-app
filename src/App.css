@@ -786,7 +786,8 @@ a {
     height: 40%;
   }
   .food-drink-image {
-    width: 50px;
+    flex-direction: column;
+    width: 30%;
     height: 50px;
   }
   .done-recipe-share-btn {
@@ -828,6 +829,7 @@ a {
   }
 
   .food-drink-image {
+    flex-direction: column;
     display: flex;
     width: 100%;
     justify-content: space-evenly;
@@ -863,6 +865,7 @@ a {
   .food-drink-card {
     width: 90%;
     margin: 20px 0;
+    max-height: 50%;
   }
 
   .tags-div p{
@@ -883,8 +886,11 @@ a {
   }
 
   .food-drink-image {
+    flex-direction: column;
+    align-items: center;
     display: flex;
-    width: 100%;
+    width: 50%;
+    height: 90px;
     justify-content: space-evenly;
   }
 

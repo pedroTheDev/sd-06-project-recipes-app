@@ -16,6 +16,7 @@ class ExploreDrinksByIngredient extends React.Component {
   }
 
   async componentDidMount() {
+    this.changeH1Width();
     this.setIngredientsState();
   }
 
@@ -27,6 +28,18 @@ class ExploreDrinksByIngredient extends React.Component {
     const { history, dispatchControlState } = this.props;
     dispatchControlState(recipe);
     history.push('/bebidas');
+  }
+
+  changeH1Width() {
+    const h1 = document.querySelector('.global-h1');
+    const profileDiv = document.querySelector('.profile-icon-div');
+    const eightHundred = 800;
+    if (window.screen.availHeight < eightHundred) {
+      h1.style.fontSize = '25px';
+      profileDiv.style.width = '60px';
+      const searchInputDiv = document.querySelector('.search-input-div');
+      searchInputDiv.style.width = '50px';
+    }
   }
 
   render() {

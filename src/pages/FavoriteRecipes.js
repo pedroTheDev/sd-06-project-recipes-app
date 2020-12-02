@@ -17,17 +17,11 @@ class FavoriteRecipes extends React.Component {
   }
 
   componentDidMount() {
+    this.changeH1Width();
     const recipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
     if (recipes) {
       const foods = recipes.filter((element) => element.type === 'comida').length;
       this.setFilterIndex(foods);
-    }
-    const eightHundred = 800;
-    if (window.screen.availHeight < eightHundred) {
-      const h1 = document.querySelector('.global-h1');
-      h1.style.fontSize = '20px';
-      const bla = document.querySelector('.search-input-div');
-      bla.style.width = '70px';
     }
   }
 
@@ -57,6 +51,18 @@ class FavoriteRecipes extends React.Component {
     this.setState({
       type: target.id,
     });
+  }
+
+  changeH1Width() {
+    const h1 = document.querySelector('.global-h1');
+    const profileDiv = document.querySelector('.profile-icon-div');
+    const eightHundred = 800;
+    if (window.screen.availHeight < eightHundred) {
+      h1.style.fontSize = '26px';
+      profileDiv.style.width = '80px';
+      const searchInputDiv = document.querySelector('.search-input-div');
+      searchInputDiv.style.width = '60px';
+    }
   }
 
   render() {

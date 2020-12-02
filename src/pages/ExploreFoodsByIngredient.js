@@ -17,6 +17,7 @@ class ExploreFoodsByIngredient extends React.Component {
 
   async componentDidMount() {
     this.setIngredientsState();
+    this.changeH1Width();
   }
 
   async setIngredientsState() {
@@ -27,6 +28,18 @@ class ExploreFoodsByIngredient extends React.Component {
     const { history, dispatchControlState } = this.props;
     dispatchControlState(recipe);
     history.push('/comidas');
+  }
+
+  changeH1Width() {
+    const h1 = document.querySelector('.global-h1');
+    const profileDiv = document.querySelector('.profile-icon-div');
+    const eightHundred = 800;
+    if (window.screen.availHeight < eightHundred) {
+      h1.style.fontSize = '25px';
+      profileDiv.style.width = '60px';
+      const searchInputDiv = document.querySelector('.search-input-div');
+      searchInputDiv.style.width = '70px';
+    }
   }
 
   render() {

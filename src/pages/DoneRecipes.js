@@ -17,15 +17,7 @@ class DoneRecipes extends React.Component {
   }
 
   componentDidMount() {
-    const treeHundredSixthy = 360;
-    if (window.screen.availWidth < treeHundredSixthy) {
-      const profile = document.querySelector('.profile-icon-div');
-      profile.style.width = '80px';
-      const h1 = document.querySelector('.global-h1');
-      h1.style.fontSize = '22px';
-      const bla = document.querySelector('.search-input-div');
-      bla.style.width = '70px';
-    }
+    this.changeH1Width();
     const recipes = JSON.parse(localStorage.getItem('doneRecipes'));
     if (recipes) {
       const foods = recipes.filter((element) => element.type === 'comida').length;
@@ -59,6 +51,18 @@ class DoneRecipes extends React.Component {
     this.setState({
       type: target.id,
     });
+  }
+
+  changeH1Width() {
+    const h1 = document.querySelector('.global-h1');
+    const profileDiv = document.querySelector('.profile-icon-div');
+    const eightHundred = 800;
+    if (window.screen.availHeight < eightHundred) {
+      h1.style.fontSize = '30px';
+      profileDiv.style.width = '80px';
+      const searchInputDiv = document.querySelector('.search-input-div');
+      searchInputDiv.style.width = '70px';
+    }
   }
 
   render() {

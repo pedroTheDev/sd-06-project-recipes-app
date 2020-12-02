@@ -22,6 +22,7 @@ class Foods extends React.Component {
   }
 
   async componentDidMount() {
+    this.changeH1Width();
     const { control } = this.props;
     let mealsRender;
     const initList = 0;
@@ -76,6 +77,18 @@ class Foods extends React.Component {
       const initialMeals = await foodsOnRender();
       this.setState({ Meals: initialMeals, CategoryFilter: '' });
       target.style.background = '#5a2d0c';
+    }
+  }
+
+  changeH1Width() {
+    const h1 = document.querySelector('.global-h1');
+    const profileDiv = document.querySelector('.profile-icon-div');
+    const eightHundred = 800;
+    if (window.screen.availHeight < eightHundred) {
+      h1.style.fontSize = '40px';
+      profileDiv.style.width = '105px';
+      const searchInputDiv = document.querySelector('.search-input-div');
+      searchInputDiv.style.width = '105px';
     }
   }
 

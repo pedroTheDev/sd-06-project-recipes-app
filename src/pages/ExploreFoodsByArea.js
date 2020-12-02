@@ -14,7 +14,7 @@ class ExploreFoodsByArea extends React.Component {
   }
 
   async componentDidMount() {
-    this.resizeH1SearchDiv();
+    this.changeH1Width();
     const areas = await fetchAreas();
     this.setOptionsState(areas);
   }
@@ -47,13 +47,15 @@ class ExploreFoodsByArea extends React.Component {
     this.setState({ selectedOption: target.value });
   }
 
-  resizeH1SearchDiv() {
+  changeH1Width() {
+    const h1 = document.querySelector('.global-h1');
+    const profileDiv = document.querySelector('.profile-icon-div');
     const eightHundred = 800;
     if (window.screen.availHeight < eightHundred) {
-      const h1 = document.querySelector('.global-h1');
-      h1.style.fontSize = '25px';
-      const bla = document.querySelector('.search-input-div');
-      bla.style.width = '90px';
+      h1.style.fontSize = '33px';
+      profileDiv.style.width = '70px';
+      const searchInputDiv = document.querySelector('.search-input-div');
+      searchInputDiv.style.width = '70px';
     }
   }
 

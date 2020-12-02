@@ -4,6 +4,22 @@ import { connect } from 'react-redux';
 import { Footer, Header } from '../components';
 
 class Explore extends React.Component {
+  componentDidMount() {
+    this.changeH1Width();
+  }
+
+  changeH1Width() {
+    const h1 = document.querySelector('.global-h1');
+    const profileDiv = document.querySelector('.profile-icon-div');
+    const eightHundred = 800;
+    if (window.screen.availHeight < eightHundred) {
+      h1.style.fontSize = '36px';
+      profileDiv.style.width = '90px';
+      const searchInputDiv = document.querySelector('.search-input-div');
+      searchInputDiv.style.width = '70px';
+    }
+  }
+
   render() {
     const { history } = this.props;
     return (

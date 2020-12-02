@@ -22,6 +22,7 @@ class Drink extends React.Component {
   }
 
   async componentDidMount() {
+    this.changeH1Width();
     const { control } = this.props;
     let drinksRender;
     const initList = 0;
@@ -95,6 +96,18 @@ class Drink extends React.Component {
         filtros[0].childNodes[i].firstChild.style.background = '#5a2d0c';
         filtros[0].childNodes[FINAL_VALUE].style.background = '#ac5c22';
       }
+    }
+  }
+
+  changeH1Width() {
+    const h1 = document.querySelector('.global-h1');
+    const profileDiv = document.querySelector('.profile-icon-div');
+    const eightHundred = 800;
+    if (window.screen.availHeight < eightHundred) {
+      h1.style.fontSize = '40px';
+      profileDiv.style.width = '105px';
+      const searchInputDiv = document.querySelector('.search-input-div');
+      searchInputDiv.style.width = '105px';
     }
   }
 
