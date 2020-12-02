@@ -6,6 +6,9 @@ function ProfilePage() {
   return (
     <div>
       <Header pageName="Perfil" />
+      {/* <div className="profile-page-div" >
+        <p>{}</p>
+      </div> */}
       <Footer />
     </div>
   );

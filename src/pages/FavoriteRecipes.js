@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+// import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
 function FavoriteRecipes() {
   const localSt = JSON.parse(localStorage.getItem('favoriteRecipes'));
@@ -11,7 +11,18 @@ function FavoriteRecipes() {
   const [allState, setAllState] = useState(true);
   const [mealsState, setMealsState] = useState(false);
   const [drinkState, setDrinkState] = useState(false);
-  const [favoriteRecipe, setFavoriteRecipe] = useState(false);
+  const [favoriteRecipe, setFavoriteRecipe] = useState([]);
+
+  function handleClick(e) {
+    const itemId = e;
+    const localStorageFavRecipes = localStorage.getItem('favoriteRecipes');
+    if (localStorageFavRecipes !== null) {
+      const favRecipesArr = JSON.parse(localStorageFavRecipes);
+      const newFavRecipesArr = favRecipesArr.filter((element) => element.id !== itemId);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(newFavRecipesArr));
+      setFavoriteRecipe(newFavRecipesArr);
+    }
+  }
 
   function copyToClipBoard(type, id, url) {
     const splitedUrl = url.split('receitas-favoritas').join('');
@@ -47,7 +58,7 @@ function FavoriteRecipes() {
     <div>
       <Header />
       <h2>Receitas favoritas</h2>
-      <div>
+      <div className="favorite-recipes-button">
         <button
           type="button"
           data-testid="filter-by-all-btn"
@@ -76,8 +87,8 @@ function FavoriteRecipes() {
           Drinks
         </button>
       </div>
-      <div>
-        { allState
+      <div className="favorite-recipes-div">
+        { allState && favoriteRecipe
           ? localSt && localSt.map((item, index) => (
             <div key={ index }>
               <Link to={ `/${item.type}s/${item.id}` }>
@@ -121,15 +132,16 @@ function FavoriteRecipes() {
               <button
                 type="button"
                 data-testid={ `${index}-horizontal-favorite-btn` }
-                src={ whiteHeartIcon }
+                src={ blackHeartIcon }
+                onClick={ () => handleClick(item.id) }
               >
-                <img alt="bla" src={ whiteHeartIcon } />
+                <img alt="bla" src={ blackHeartIcon } />
               </button>
             </div>
           ))
           : null }
         {
-          mealsState
+          mealsState && favoriteRecipe
             ? localSt
             && localSt.filter((el) => el.type === 'comida').map((item, index) => (
               <div key={ index }>
@@ -175,15 +187,16 @@ function FavoriteRecipes() {
                 <button
                   type="button"
                   data-testid={ `${index}-horizontal-favorite-btn` }
-                  src={ whiteHeartIcon }
+                  src={ blackHeartIcon }
+                  onClick={ () => handleClick(item.id) }
                 >
-                  <img alt="bla" src={ whiteHeartIcon } />
+                  <img alt="bla" src={ blackHeartIcon } />
                 </button>
               </div>
             ))
             : null
         }
-        { drinkState
+        { drinkState && favoriteRecipe
           ? localSt && localSt.filter((el) => el.type === 'bebida').map((item, index) => (
             <div key={ index }>
               <Link to={ `/${item.type}s/${item.id}` }>
@@ -228,9 +241,10 @@ function FavoriteRecipes() {
               <button
                 type="button"
                 data-testid={ `${index}-horizontal-favorite-btn` }
-                src={ whiteHeartIcon }
+                src={ blackHeartIcon }
+                onClick={ () => handleClick(item.id) }
               >
-                <img alt="bla" src={ whiteHeartIcon } />
+                <img alt="bla" src={ blackHeartIcon } />
               </button>
             </div>
           ))
