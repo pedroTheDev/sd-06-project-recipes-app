@@ -52,6 +52,7 @@ export default function RecipeDetails() {
   const [alert, setAlert] = useState();
   // const [isChecked, setIsChecked] = useState([]);
 
+  if (idRecipe[3] === 'in-progress' && inProgress === false)(setInProgress(!inProgress));
   if (idRecipe[1] === 'comidas') setSearchParam('Meal');
   if (idRecipe[1] === 'bebidas') setSearchParam('Drink');
   const linkRecipeAPI = (searchParam === 'Meal')
@@ -64,11 +65,11 @@ export default function RecipeDetails() {
         .getItem('favoriteRecipes')),
   );
 
-  // const [localStorageInProgress, setLocalStorageInProgress] = useState(
-  //   JSON
-  //     .parse(localStorage
-  //       .getItem('inProgressRecipes')),
-  // );
+  const [localStorageInProgress, setLocalStorageInProgress] = useState(
+    JSON
+      .parse(localStorage
+        .getItem('inProgressRecipes')),
+  );
 
   const [localStorageDoneRecipes, setLocalStorageDoneRecipes] = useState(
     JSON
@@ -194,21 +195,22 @@ export default function RecipeDetails() {
     return ingredientsMeasureArray;
   }
 
-  // function handleCheckbox() {
-  //   if (!localStorageInProgress) {
-  //     const keyComidas = 'cu';
-  //     const newLocalStorageInProgress = {
-  //       inProgressRecipes: {
-  //         cocktails: { bunda: [] },
-  //         meals: { keyComidas: [] },
-  //       } };
-  //     setLocalStorageInProgress(newLocalStorageInProgress);
-  //     console.log(newLocalStorageInProgress);
-  //     console.log(localStorageInProgress);
-  //   }
-  // localStorage
-  //   .setItem('inProgressRecipes', JSON
-  //     .stringify(newLocalStorageInProgress));
+  function handleCheckbox({ target }, pairArray) {
+    if (!localStorageInProgress) {
+      localStorage
+        .setItem('inProgressRecipes', JSON
+          .stringify({
+            cocktails: { [foods[0].id]: [] },
+            meals: { id: [] },
+          }));
+    }
+  }
+
+  //   localStorage
+  //     .setItem('inProgressRecipes', JSON
+  //       .stringify(setLocalStorageInProgress));
+  // }
+
   // } else if (idRecipe[1] === 'comidas') {
   // if (idRecipe[1] === 'bebidas') {
   //   keyInProgressMealsOrDrinks = 'inProgressRecipes.meals';
@@ -218,8 +220,6 @@ export default function RecipeDetails() {
   // localStorage
   //   .setItem(keyInProgressMealsOrDrinks, JSON
   //     .stringify(setLocalStorageInProgress));
-  // }
-  // }
 
   useEffect(() => {
     fetchApi(linkRecipeAPI);
@@ -268,6 +268,7 @@ export default function RecipeDetails() {
                 )
                 : (
                   <div
+                    key={ index }
                     data-testid={ `${index}-ingredient-step` }
                   >
                     <input
@@ -275,14 +276,12 @@ export default function RecipeDetails() {
                       type="checkbox"
                       name={ index }
                       id={ index }
-                      key={ index }
-                      // onChange={ () => handleCheckbox() }
+                      onChange={ (e) => handleCheckbox(e, pairArray) }
                     />
                     {' '}
                     <label
                       className="lineThrough"
                       htmlFor={ index }
-                      key={ index }
                     >
                       {pairArray[0] }
                       { pairArray[1] ? ` - ${pairArray[1]}` : undefined }

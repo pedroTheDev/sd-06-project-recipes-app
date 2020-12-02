@@ -89,7 +89,7 @@ margin-bottom: 20px;
 align-content: center;
 }
 
-#footer, .start-recipe-btn {
+footer, .start-recipe-btn {
   position: fixed;
   bottom: 0px;
 }
@@ -182,4 +182,5 @@ align-content: center;
 
 input[type=checkbox]:checked + label {
   text-decoration: line-through;
+  color: red;
 }

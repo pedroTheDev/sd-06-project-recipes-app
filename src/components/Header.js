@@ -46,7 +46,7 @@ export default function Header(props) {
             <h1 className="center" data-testid="page-title">{title}</h1>
           </div>
           <div className="">
-            <spna>{!searchButton && searchButtonHidden()}</spna>
+            <span>{!searchButton && searchButtonHidden()}</span>
           </div>
         </div>
         {search && <SearchBar title={ title } />}
