@@ -831,7 +831,7 @@ a {
   .food-drink-image {
     flex-direction: column;
     display: flex;
-    width: 100%;
+    width: 30%;
     justify-content: space-evenly;
   }
   .fav-card-image {

@@ -151,7 +151,7 @@ class FavFoodCard extends React.Component {
                     { element.name }
                   </button>
                 </div>
-                <div className="food-drink-image fav-card-image">
+                <div className="fav-card-image">
                   <div>
                     <input
                       type="image"
