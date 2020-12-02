@@ -57,6 +57,22 @@ export default function DrinkInProgress() {
     });
   };
 
+  function verifyChecked() {
+    const listCheckbox = document.querySelectorAll('input[type=checkbox]');
+    const btnFinalizar = document.getElementById('btnFinalizar');
+    let count = 0;
+    for (const item of listCheckbox) {
+      if (item.checked === true) {
+        count += 1;
+      }
+    }
+    if (count === listCheckbox.length) {
+      btnFinalizar.disabled = false;
+    } else {
+      btnFinalizar.disabled = true;
+    }
+  }
+
   useEffect(() => {
     setIngredientAndMeasure();
     if (document.getElementById('renderizado') !== null) {
@@ -83,22 +99,6 @@ export default function DrinkInProgress() {
     } else {
       completedItem.classList.add('selected');
       verifyChecked();
-    }
-  }
-
-  function verifyChecked() {
-    const listCheckbox = document.querySelectorAll('input[type=checkbox]');
-    const btnFinalizar = document.getElementById('btnFinalizar');
-    let count = 0;
-    for (const item of listCheckbox) {
-      if (item.checked === true) {
-        count += 1;
-      }
-    }
-    if (count === listCheckbox.length) {
-      btnFinalizar.disabled = false;
-    } else {
-      btnFinalizar.disabled = true;
     }
   }
 
