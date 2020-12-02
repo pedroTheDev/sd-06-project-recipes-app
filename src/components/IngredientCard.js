@@ -1,8 +1,9 @@
 import React from 'react';
 import propTypes from 'prop-types';
-import DrinkDetail from '../pages/Detail/DrinkDetail';
 
-function IngredientCard({ index, image, name }) {
+function IngredientCard({ ingredient, index }) {
+  const imageUrl = `https://www.themealdb.com/images/ingredients/${ingredient.strIngredient}-Small.png`;
+  console.log(imageUrl);
   return (
     <div
       className="card-container"
@@ -10,18 +11,23 @@ function IngredientCard({ index, image, name }) {
     >
       <img
         data-testid={ `${index}-card-img` }
-        src={ image }
-        alt={ name }
+        src={ imageUrl }
+        alt="Ingrediente"
       />
-      <h3 data-testid={ `${index}-card-name` }>{ name }</h3>
+      <h3
+        data-testid={ `${index}-card-name` }
+      >
+        {ingredient.strIngredient}
+      </h3>
     </div>
   );
 }
 
-DrinkDetail.propTypes = {
+IngredientCard.propTypes = {
+  ingredient: propTypes.shape({
+    strIngredient: propTypes.string.isRequired,
+  }).isRequired,
   index: propTypes.number.isRequired,
-  image: propTypes.string.isRequired,
-  name: propTypes.string.isRequired,
 };
 
 export default IngredientCard;
