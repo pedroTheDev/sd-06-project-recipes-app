@@ -1,26 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
-import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+import shareIcon from '../images/shareIcon.svg';
 
 function ReceitasFavoritas() {
-  const [favoriteRecipes, setFavoriteRecipe] = useState('');
-
-  // { id,
-  //   type,
-  //   image,
-  //   alcoholicOrNot,
-  //   name,
-  //   area,
-  //   category,
-  //   doneDate,
-  //   tags,
-  // }
+  const [favoriteRecipes, setFavoriteRecipe] = useState([]);
+  console.log(favoriteRecipes);
 
   useEffect(() => {
-    const myFavoritesRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    setFavoriteRecipe(myFavoritesRecipes);
+    if (!localStorage.favoriteRecipes) {
+      return <h1>Você ainda não tem nenhuma receita Favorita. :(</h1>;
+    }
+    setFavoriteRecipe(JSON.parse(localStorage.favoriteRecipes));
   }, []);
 
   return (
@@ -44,44 +36,56 @@ function ReceitasFavoritas() {
       >
         Drinks
       </button>
-
       <div>
-        {favoriteRecipes && favoriteRecipes
-          .map((item, index) => (
+        { favoriteRecipes
+          .map((
+            {
+              id,
+              type,
+              image,
+              alcoholicOrNot,
+              name,
+              area,
+              category,
+              doneDate,
+              tags,
+            },
+            index,
+          ) => (
             <span
               key={ index }
             >
-              <Link to={ `/${item.type}s/${item.id}` }>
+              <Link to={ `/${type}s/${id}` }>
                 <img
-                  src={ item.image }
-                  alt={ item.name }
+                  src={ image }
+                  alt={ name }
                   data-testid={ `${index}-horizontal-image` }
                 />
               </Link>
               {
-                (item.type === 'comida')
+                (type === 'comida')
                   ? (
                     <p
                       data-testid={ `${index}-horizontal-top-text` }
                     >
-                      { `${item.area} - ${item.category}` }
+                      { `${area} - ${category}` }
                     </p>)
                   : (
                     <p data-testid={ `${index}-horizontal-top-text` }>
-                      { item.alcoholicOrNot }
+                      { alcoholicOrNot }
                     </p>)
               }
-              <Link to={ `/${item.type}s/${item.id}` }>
+              <Link to={ `/${type}s/${id}` }>
                 <p
                   data-testid={ `${index}-horizontal-name` }
                 >
-                  { item.name }
+                  { name }
                 </p>
               </Link>
               <p
                 data-testid={ `${index}-horizontal-done-date` }
               >
-                { item.doneDate }
+                { doneDate }
               </p>
               <button
                 data-testid="share-btn"
@@ -103,18 +107,17 @@ function ReceitasFavoritas() {
                   alt="Botão de Favorito"
                 />
               </button>
-              {item.tags ? item.tags.map((tag) => (
+              {tags ? tags.map((tag) => (
                 <p
                   key={ tag }
                   data-testid={ `${index}-${tag}-horizontal-tag` }
                 >
-                  {tag}
+                  {tag }
                 </p>
               )) : '' }
             </span>
           )) }
       </div>
-
     </div>
   );
 }

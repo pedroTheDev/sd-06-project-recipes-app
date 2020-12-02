@@ -20,27 +20,11 @@ function MyProvider({ children }) {
   const [recommendedDrinks, setRecommendedDrinks] = useState();
   const [cardsRecipe, setCardsRecipe] = useState([]);
   const [drinksAlcoholic, setDrinksAlcoholic] = useState({});
+  const [doneRecipes, setDoneRecipes] = useState({});
   const [recipeMeal, setRecipeMeal] = useState();
   const [recipeDrink, setRecipeDrink] = useState();
+  const [recipeInProgress, setRecipeInProgress] = useState();
   const [ingredientsExplorer, setIngredientsExplorer] = useState([]);
-
-  // async function verifyRecommendedRecipes() {
-  //   const inditialIndex = 0;
-  //   const quantityRecipes = 6;
-  //   if (recommendedMeals[0] === undefined) {
-  //     const resultRecommendedMeals = await getRecipesMealsApi();
-  //     const myRecommendedMeals = resultRecommendedMeals
-  //       .slice(inditialIndex, quantityRecipes);
-  //     console.log('array vazio', myRecommendedMeals);
-  //     setRecommendedMeals(myRecommendedMeals);
-  //   }
-  //   if (recommendedDrinks[0] === undefined) {
-  //     const resultRecommendedDrinks = await getRecipeDrinksApi();
-  //     const myRecommendedDrinks = resultRecommendedDrinks
-  //       .slice(inditialIndex, quantityRecipes);
-  //     setRecommendedDrinks(myRecommendedDrinks);
-  //   }
-  // }
 
   useEffect(() => {
     async function fetchALL() {
@@ -50,6 +34,7 @@ function MyProvider({ children }) {
       setCategories(myCategories);
       setAreas(myAreas);
       setIngredients(myIngredients);
+      setDoneRecipes(doneRecipes);
 
       const myDrinkCategories = await getAllDrinkTypesApi('c');
       const myAlcoholic = await getAllDrinkTypesApi('a');
@@ -105,10 +90,14 @@ function MyProvider({ children }) {
     cardsRecipe,
     setCardsRecipe,
     drinksAlcoholic,
+    doneRecipes,
+    setDoneRecipes,
     recipeMeal,
     setRecipeMeal,
     recipeDrink,
     setRecipeDrink,
+    recipeInProgress,
+    setRecipeInProgress,
     setIngredients,
     setDrinkIngredients,
     setIngredientsExplorer,

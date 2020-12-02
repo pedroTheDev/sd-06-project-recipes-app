@@ -14,8 +14,8 @@ import ReceitasFeitas from './pages/ReceitasFeitas';
 import MealsPerIngredients from './pages/MealsPerIngredients';
 import MealsPerArea from './pages/MealsPerArea';
 import DrinksPerIngredients from './pages/DrinksPerIngredients';
+import InProgress from './pages/InProgress';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './Css/App.css';
 
 function App() {
   return (
@@ -30,6 +30,8 @@ function App() {
           <Route exact path="/perfil" component={ Perfil } />
           <Route exact path="/comidas/:id" component={ MenuDetails } />
           <Route exact path="/bebidas/:id" component={ MenuDetails } />
+          <Route exact path="/comidas/:id/in-progress" component={ InProgress } />
+          <Route exact path="/bebidas/:id/in-progress" component={ InProgress } />
           <Route exact path="/receitas-feitas" component={ ReceitasFeitas } />
           <Route exact path="/receitas-favoritas" component={ ReceitasFavoritas } />
           <Route exact path="/" component={ Login } />
