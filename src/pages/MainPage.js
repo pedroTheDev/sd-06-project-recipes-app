@@ -6,10 +6,9 @@ import RevenueContext from '../context/RevenueContext';
 import Foods from './Foods';
 import Profile from './Profile';
 import Explore from './Explore';
-import ExploreFoods from './ExploreFoods';
+import ExploreFood from './ExploreFood';
 import DoneRecipes from './DoneRecipes';
 import FavoriteRecipes from './FavoriteRecipes';
-import ExploreDrinks from './ExploreDrinks';
 
 export default function MainPage(props) {
   const { title } = props;
@@ -44,11 +43,11 @@ export default function MainPage(props) {
     footerContent = <Footer />;
     break;
   case 'Explorar Comidas':
-    mainContent = <ExploreFoods />;
+    mainContent = <ExploreFood />;
     footerContent = <Footer />;
     break;
   case 'Explorar Bebidas':
-    mainContent = <ExploreDrinks />;
+    mainContent = <ExploreFood />;
     footerContent = <Footer />;
     break;
   case 'Explorar Ingredientes':
