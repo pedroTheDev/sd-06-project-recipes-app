@@ -186,26 +186,26 @@ const ProcessoBebidas = () => {
             >
               {attributesNames.categoryDrink}
             </div>
-            <div className="container-ingredients">
+            <div className="span-ingredients">
               <span>Ingredients</span>
-              <div className="container-checkbox">
-                {getIngredientsOrMeasure('strIngredient').map((ingred, i) => (
-                  <label
-                    key={ i }
-                    htmlFor={ i }
-                    className="input-checkbox"
-                    data-testid={ `${i}-ingredient-step` }
-                  >
-                    <input
-                      type="checkbox"
-                      checked={ checkedId.includes(i.toString()) }
-                      id={ i }
-                      onChange={ (({ target }) => scratCheckbox(target)) }
-                    />
-                    {`${ingred} - ${getIngredientsOrMeasure('strMeasure')[i]}`}
-                  </label>
-                ))}
-              </div>
+            </div>
+            <div className="container-checkbox">
+              {getIngredientsOrMeasure('strIngredient').map((ingred, i) => (
+                <label
+                  key={ i }
+                  htmlFor={ i }
+                  className="input-checkbox"
+                  data-testid={ `${i}-ingredient-step` }
+                >
+                  <input
+                    type="checkbox"
+                    checked={ checkedId.includes(i.toString()) }
+                    id={ i }
+                    onChange={ (({ target }) => scratCheckbox(target)) }
+                  />
+                  {`${ingred} - ${getIngredientsOrMeasure('strMeasure')[i]}`}
+                </label>
+              ))}
             </div>
             <div
               className="container-instructions"

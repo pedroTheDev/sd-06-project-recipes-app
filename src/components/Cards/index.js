@@ -22,49 +22,59 @@ const Cards = () => {
           if (apiValueSearch.foods.meals === null) { console.log('null'); }
           return (
             <div
-              data-testid={ `${index}-recipe-card` }
+              className="main-buttons-search"
               key={ meal.strMeal }
             >
-              <p data-testid={ `${index}-card-name` }>{meal.strMeal}</p>
-              <button
-                type="button"
-                onClick={ () => clickRedirectRecipe(meal.idMeal) }
+              <div
+                className="container-buttons"
+                data-testid={ `${index}-recipe-card` }
               >
-                <img
-                  data-testid={ `${index}-card-img` }
-                  width="200"
-                  src={ meal.strMealThumb }
-                  alt={ meal.strMeal }
-                />
-              </button>
+                <p data-testid={ `${index}-card-name` }>{meal.strMeal}</p>
+                <button
+                  type="button"
+                  onClick={ () => clickRedirectRecipe(meal.idMeal) }
+                >
+                  <img
+                    data-testid={ `${index}-card-img` }
+                    width="200"
+                    src={ meal.strMealThumb }
+                    alt={ meal.strMeal }
+                  />
+                </button>
+              </div>
             </div>
           );
         })
       );
     }
     return (
-      apiValueSearch.foods.meals && apiValueSearch.foods.meals.map((meal, index) => {
-        if (index <= number) {
-          if (apiValueSearch.foods.meals === null) { console.log('null'); }
-          return (
-            <div data-testid={ `${index}-recipe-card` } key={ meal.strMeal }>
-              <p data-testid={ `${index}-card-name` }>{meal.strMeal}</p>
-              <button
-                type="button"
-                onClick={ () => clickRedirectRecipe(meal.idMeal) }
+      <div className="main-cards">
+        {apiValueSearch.foods.meals && apiValueSearch.foods.meals.map((meal, index) => {
+          if (index <= number) {
+            if (apiValueSearch.foods.meals === null) { console.log('null'); }
+            return (
+              <div
+                className="card"
+                data-testid={ `${index}-recipe-card` }
+                key={ meal.strMeal }
               >
-                <img
-                  data-testid={ `${index}-card-img` }
-                  width="200"
-                  src={ meal.strMealThumb }
-                  alt={ meal.strMeal }
-                />
-              </button>
-            </div>
-          );
-        }
-        return '';
-      })
+                <p data-testid={ `${index}-card-name` }>{meal.strMeal}</p>
+                <button
+                  type="button"
+                  onClick={ () => clickRedirectRecipe(meal.idMeal) }
+                >
+                  <img
+                    data-testid={ `${index}-card-img` }
+                    src={ meal.strMealThumb }
+                    alt={ meal.strMeal }
+                  />
+                </button>
+              </div>
+            );
+          }
+          return '';
+        })}
+      </div>
     );
   };
 
@@ -75,29 +85,33 @@ const Cards = () => {
       window.location.href = `http://localhost:3000/bebidas/${drinkID}`;
     } else {
       return (
-        apiValueSearch.drinks.drinks && apiValueSearch.drinks.drinks.map((res, index) => {
-          if (index <= number) {
-            return (
-              <div>
-                <div data-testid={ `${index}-recipe-card` } key={ res.idDrink }>
-                  <p data-testid={ `${index}-card-name` }>{res.strDrink}</p>
-                  <button
-                    type="button"
-                    onClick={ () => clickRedirectRecipe(res.idDrink) }
+        <div className="main-cards">
+          {apiValueSearch.drinks.drinks && apiValueSearch.drinks.drinks
+            .map((res, index) => {
+              if (index <= number) {
+                return (
+                  <div
+                    className="card"
+                    data-testid={ `${index}-recipe-card` }
+                    key={ res.idDrink }
                   >
-                    <img
-                      data-testid={ `${index}-card-img` }
-                      width="200"
-                      src={ res.strDrinkThumb }
-                      alt={ res.strDrink }
-                    />
-                  </button>
-                </div>
-              </div>
-            );
-          }
-          return '';
-        })
+                    <p data-testid={ `${index}-card-name` }>{res.strDrink}</p>
+                    <button
+                      type="button"
+                      onClick={ () => clickRedirectRecipe(res.idDrink) }
+                    >
+                      <img
+                        data-testid={ `${index}-card-img` }
+                        src={ res.strDrinkThumb }
+                        alt={ res.strDrink }
+                      />
+                    </button>
+                  </div>
+                );
+              }
+              return '';
+            })}
+        </div>
       );
     }
   };
@@ -109,7 +123,6 @@ const Cards = () => {
         <p data-testid={ `${index}-card-name` }>{res.strCategory}</p>
         <img
           data-testid={ `${index}-card-img` }
-          width="200"
           src={ res.strCategoryThumb }
           alt={ res.strCategory }
         />
