@@ -110,13 +110,13 @@ export const fetchDrinkById = async (id) => {
 };
 
 export const fetchMealIngredients = async () => {
-  const response = await fetch(`${baseAPIMeal}/list.php?i=list`);
+  const response = await fetch(`${baseAPIMeal}list.php?i=list`);
   const json = await response.json();
   return json;
 };
 
 export const fetchDrinkIngredients = async () => {
-  const response = await fetch(`${baseAPIDrinks}/list.php?i=list`);
+  const response = await fetch(`${baseAPIDrinks}list.php?i=list`);
   const json = await response.json();
   return json;
 };
