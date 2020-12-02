@@ -17,7 +17,6 @@ function RecipesAppProvider({ children }) {
   const [filteredRecipes, setFilteredRecipes] = useState(false);
   const [renderFavoriteRecipes, setRenderFavoriteRecipes] = useState([]);
 
-
   const value = {
     ingredient,
     setIngredient,

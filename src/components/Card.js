@@ -5,17 +5,10 @@ import RecipesAppContext from '../context/RecipesAppContext';
 
 function Card({ title }) {
   const {
-    recipes, errorFromApi, filteredRecipes, setFilteredRecipes,
+    recipes, errorFromApi, filteredRecipes, setFilteredRecipes, clickedCategory,
   } = useContext(RecipesAppContext);
 
-  useEffect(() => {
-    return () => {
-      console.log('desmontando');
-      setFilteredRecipes(false);
-    };
-  }, []);
-
-  const { recipes, errorFromApi, clickedCategory } = useContext(RecipesAppContext);
+  useEffect(() => (() => setFilteredRecipes(false)), []);
 
   const ZERO = 0;
   const DOZE = 12;
@@ -45,9 +38,9 @@ function Card({ title }) {
   };
 
   if (filteredRecipes) {
-    console.log('ENTROU')
     return (
-      filteredRecipes.length > ZERO && filteredRecipes.slice(ZERO, DOZE).map((recipe, index) => (
+      filteredRecipes.length > ZERO
+      && filteredRecipes.slice(ZERO, DOZE).map((recipe, index) => (
         <div
           key={ recipe[`id${recipeType}`] }
           data-testid={ `${index}-recipe-card` }

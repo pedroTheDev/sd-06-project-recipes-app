@@ -23,17 +23,16 @@ function ExploreCard({ name, index, type }) {
   };
 
   return (
-    <div
-      data-testid={ `${index}-ingredient-card` }
-      onClick={ () => handleClick() }
-    >
-      <img
-        src={ imgURL }
-        alt={ name }
-        data-testid={ `${index}-card-img` }
-      />
-      <h6 data-testid={ `${index}-card-name` }>{ name }</h6>
-    </div>
+    <button type="button" onClick={ () => handleClick() }>
+      <div data-testid={ `${index}-ingredient-card` }>
+        <img
+          src={ imgURL }
+          alt={ name }
+          data-testid={ `${index}-card-img` }
+        />
+        <h6 data-testid={ `${index}-card-name` }>{ name }</h6>
+      </div>
+    </button>
   );
 }
 
