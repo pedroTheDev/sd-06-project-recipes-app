@@ -110,56 +110,63 @@ function ProcessoBebida() {
         alt="Foto da receita"
         className="food-image"
       />
-      <h1
-        data-testid="recipe-title"
-      >
-        { dataDrinks.strDrink }
-      </h1>
-      <span>
-        <button
-          type="button"
-          data-testid="share-btn"
-          onClick={ () => handleCopy(`/bebidas/${idDrink}`) }
+      <div className="div-header">
+        <h1
+          data-testid="recipe-title"
         >
-          <img
-            src={ shareIcon }
-            alt="Botão de Compartilhar"
-          />
-        </button>
-        { isCopied ? <p>Link copiado!</p> : true }
-      </span>
-      <button
-        type="button"
-        onClick={ handleClick }
-      >
-        <img
-          data-testid="favorite-btn"
-          src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
-          alt="Botão de Favorito"
-        />
-      </button>
-      <p data-testid="recipe-category">
-        Categoria
-      </p>
-      {drinkIngredients.map((ingredient, index) => (
-        <span
-          key={ index }
-          data-testid={ `${index}-ingredient-step` }
-        >
-          {ingredient }
-          <input
-            type="checkbox"
-            name={ ingredient }
-            checked={ checked.includes(index) }
-            onChange={ ({ target }) => { handleChange(target, index); } }
-          />
-        </span>
-      )) }
-      <p data-testid="instructions">
-        Instruções
-      </p>
+          { dataDrinks.strDrink }
+        </h1>
+        <div className="div-icon">
+          <span>
+            <button
+              type="button"
+              data-testid="share-btn"
+              onClick={ () => handleCopy(`/bebidas/${idDrink}`) }
+            >
+              <img
+                src={ shareIcon }
+                alt="Botão de Compartilhar"
+              />
+            </button>
+            { isCopied ? <p>Link copiado!</p> : true }
+          </span>
+          <button
+            type="button"
+            onClick={ handleClick }
+          >
+            <img
+              data-testid="favorite-btn"
+              src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+              alt="Botão de Favorito"
+            />
+          </button>
+        </div>
+      </div>
+      <div className="div-recipes">
+        <h2 data-testid="recipe-category">
+          Categoria
+        </h2>
+        { drinkIngredients.map((ingredient, index) => (
+          <span
+            key={ index }
+            data-testid={ `${index}-ingredient-step` }
+          >
+            { ingredient }
+            <input
+              type="checkbox"
+              name={ ingredient }
+              checked={ checked.includes(index) }
+              onChange={ ({ target }) => { handleChange(target, index); } }
+            />
+          </span>
+        )) }
+        <h2 data-testid="instructions">
+          Instruções
+        </h2>
+      </div>
       <Link to="/receitas-feitas">
         <button
+          className="finish-recipe"
           type="button"
           data-testid="finish-recipe-btn"
           disabled={ isDisable }
