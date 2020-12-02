@@ -30,6 +30,7 @@ export function treatRecipe(recipe) {
       type: 'comida',
       area: recipe.strArea,
       category: recipe.strCategory,
+      alcoholicOrNot: '',
       name: recipe.strMeal,
       image: recipe.strMealThumb,
       instructions: recipe.strInstructions,
@@ -40,7 +41,7 @@ export function treatRecipe(recipe) {
   } else if ('idDrink' in recipe) {
     treatedRecipe = {
       id: recipe.idDrink,
-      type: 'comida',
+      type: 'bebida',
       category: recipe.strCategory,
       alcoholicOrNot: recipe.strAlcoholic,
       name: recipe.strDrink,
@@ -62,6 +63,7 @@ export function convertTreatedRecipe(recipe) {
       idMeal: recipe.id,
       strArea: recipe.area,
       strCategory: recipe.category,
+      strAlcoholic: recipe.alcoholicOrNot,
       strMeal: recipe.name,
       strMealThumb: recipe.image,
       strInstructions: recipe.instructions,
@@ -136,8 +138,27 @@ export function recipeIsFavorite(recipe) {
 
 export function favoriteRecipe(recipe) {
   checkFavoriteRecipesDatabase();
-  if (!('type' in recipe)) recipe = treatRecipe(recipe);
-  if (recipe.type === 'drink') recipe.category = recipe.alcoholic;
+  if ('idMeal' in recipe) {
+    recipe = {
+      id: recipe.idMeal,
+      type: 'comida',
+      area: recipe.strArea,
+      category: recipe.strCategory,
+      alcoholicOrNot: '',
+      name: recipe.strMeal,
+      image: recipe.strMealThumb,
+    };
+  } else if ('idDrink' in recipe) {
+    recipe = {
+      id: recipe.idDrink,
+      type: 'bebida',
+      area: '',
+      category: recipe.strCategory,
+      alcoholicOrNot: recipe.strAlcoholic,
+      name: recipe.strDrink,
+      image: recipe.strDrinkThumb,
+    };
+  }
   const temp = getFavoriteRecipes();
   let recipeIndex;
   if (!temp.length < 1) recipeIndex = temp.findIndex((item) => item.id === recipe.id);
