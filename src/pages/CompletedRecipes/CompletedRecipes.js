@@ -60,18 +60,21 @@ function CompletedRecipes() {
       <div>
         <input
           className="btn btn-secondary"
+          data-testid="filter-by-all-btn"
           onClick={ () => setType('') }
           type="button"
           value="All"
         />
         <input
           className="btn btn-secondary"
+          data-testid="filter-by-food-btn"
           onClick={ () => setType('meal') }
           type="button"
           value="Comidas"
         />
         <input
           className="btn btn-secondary"
+          data-testid="filter-by-drink-btn"
           onClick={ () => setType('drink') }
           type="button"
           value="Bebidas"
@@ -90,7 +93,7 @@ function CompletedRecipes() {
               <div>
                 <Link to={ urlLinkDetail }>
                   <img
-                    data-testid={`${index}-horizontal-image`}
+                    data-testid={ `${index}-horizontal-image` }
                     src={ recipe.image }
                     alt={ recipe.name }
                   />
@@ -116,16 +119,14 @@ function CompletedRecipes() {
                   onClick={ ({ target }) => handleShareIcon(target) }
                 />
                 <p className={ `copied-link-${recipe.id}` } />
-                {recipe.tags.map((tagName) => {
-                  return (
-                    <p
-                      data-testid={ `${index}-${tagName}-horizontal-tag` }
-                      key={ tagName }
-                    >
-                      { tagName }
-                    </p>
-                  )}
-                )}
+                {recipe.tags.map((tagName) => (
+                  <p
+                    data-testid={ `${index}-${tagName}-horizontal-tag` }
+                    key={ tagName }
+                  >
+                    { tagName }
+                  </p>
+                ))}
               </div>
             );
           }
