@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import '../App.css';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-// import Context from '../context/Context';
+// import { Link } from 'react-router-dom';
+import Context from '../context/Context';
 
 function Cards({ info, recipe, index, history }) {
   const { strIngredient } = info;
   const { strIngredient1 } = info;
-  // const { recipesToRenderByIngredient } = useContext(Context);
+  const { setIngredientExplore } = useContext(Context);
   const urlMeals = 'https://www.themealdb.com/images/ingredients/';
   const urlDrinks = 'https://www.thecocktaildb.com/images/ingredients/';
   // const type = recipe === 'ingredientsMeals' ? 'meal' : 'drink';
@@ -26,7 +26,7 @@ function Cards({ info, recipe, index, history }) {
       className="recipe-card"
       data-testid={ `${index}-ingredient-card` }
       onClick={ () => {
-        recipe === 'ingredientsMeals' ? console.log(strIngredient) : console.log(strIngredient1);
+        recipe === 'ingredientsMeals' ? setIngredientExplore(strIngredient) : setIngredientExplore(strIngredient1);
         history.push(recipe === 'ingredientsMeals' ? '/comidas' : '/bebidas');
       } }
     >
