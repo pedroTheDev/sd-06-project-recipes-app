@@ -8,7 +8,13 @@ function SearchBar() {
   const [searchType, setSearchType] = useState('name');
   const [redirectTo, setRedirectTo] = useState(false);
   const [redirectRoute, setRedirectRoute] = useState('');
-  const { pageTitle, setSearch, setRecipes, setLoading } = useContext(Context);
+  const {
+    pageTitle,
+    setSearch,
+    setRecipes,
+    setLoading,
+    setSearchBar,
+  } = useContext(Context);
 
   const handleSearchText = ({ target }) => {
     setSearchText(target.value);
@@ -28,6 +34,7 @@ function SearchBar() {
       searchType,
     });
     setLoading(true);
+    setSearchBar(false);
     if (pageTitle === 'Comidas') {
       getMealsAPI(searchText, searchType).then((data) => {
         setRecipes(data);

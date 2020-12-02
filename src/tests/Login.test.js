@@ -40,7 +40,7 @@ describe('2. Verifica entradas de email', () => {
     expect(btnLogin).toBeEnabled();
   });
 
-  it('2. Verifica se a rota mudou', () => {
+  it('2. Verifica se a rota mudou', async () => {
     const { history } = renderWithRouter(<App />);
     const email = screen.getByTestId('email-input');
     const senha = screen.getByTestId('password-input');
@@ -49,8 +49,8 @@ describe('2. Verifica entradas de email', () => {
     userEvent.type(senha, '1234567');
     userEvent.click(button);
     const { pathname } = history.location;
-    setTimeout(() => {
-      expect(pathname).toBe('/comidas');
-    }, 1000);
+
+      await expect(pathname).toBe('/comidas');
+
   });
 });

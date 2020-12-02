@@ -10,6 +10,7 @@ function Provider({ children }) {
     searchText: '',
     searchType: '',
   });
+  const [searchBar, setSearchBar] = useState(false);
   const [pageTitle, setPageTitle] = useState('');
   const [loading, setLoading] = useState(false);
   const [recipes, setRecipes] = useState([]);
@@ -36,6 +37,8 @@ function Provider({ children }) {
     setPassword,
     search,
     setSearch,
+    searchBar,
+    setSearchBar,
     recipes,
     setRecipes,
     loading,

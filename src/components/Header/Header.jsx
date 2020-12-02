@@ -9,8 +9,7 @@ import './Header.css';
 
 const Header = (props) => {
   const { pathname } = props;
-  const { pageTitle, setPageTitle } = useContext(Context);
-  const [searchBar, setSearchBar] = useState(false);
+  const { pageTitle, setPageTitle, searchBar, setSearchBar } = useContext(Context);
   const [searchButton, setSearchButton] = useState(false);
 
   useEffect(() => {
@@ -59,8 +58,8 @@ const Header = (props) => {
               onClick={ () => setSearchBar(!searchBar) }
             >
               <img
-                data-testid="search-top-btn"
                 src={ searchIcon }
+                data-testid="search-top-btn"
                 alt="search"
               />
             </button>
