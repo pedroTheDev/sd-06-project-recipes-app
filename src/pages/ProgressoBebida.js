@@ -80,29 +80,6 @@ function DetalhesBebida() {
     }
   }
 
-  // function checkHandle(e, index) {
-  //   if (e.target.checked === true) {
-  //     document.getElementById(`${index - 1}-ingredient-check`)
-  //       .style.textDecoration = 'line-through';
-  //     bebidaLocalStorage = bebidaLocalStorage.concat(document
-  //       .getElementById(`${index - 1}-ingredient-check`).innerText);
-  //   }
-  //   if (e.target.checked === false) {
-  //     document.getElementById(`${index - 1}-ingredient-check`)
-  //       .style.textDecoration = 'none';
-  //     bebidaLocalStorage = bebidaLocalStorage
-  //       .filter((bebidaLocal) => bebidaLocal !== document
-  //         .getElementById(`${index - 1}-ingredient-check`).innerText);
-  //   }
-  //   const newStorage = {
-  //     ...inProgress,
-  //     cocktails: {
-  //       ...inProgress.cocktails,
-  //       [idDaReceita]: bebidaLocalStorage,
-  //     },
-  //   };
-  //   localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
-  // }
   useEffect(() => {
     fetchBebidasDetalhes();
   }, []);
@@ -138,7 +115,6 @@ function DetalhesBebida() {
   }
   function copiaLink() {
     const copiado = window.location.href.replace('/in-progress', '');
-    console.log(copiado)
     navigator.clipboard.writeText(copiado).then(() => {
       const link = document.createElement('span');
       link.innerHTML = 'Link copiado!';
