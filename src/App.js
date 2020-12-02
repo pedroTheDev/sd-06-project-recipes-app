@@ -13,6 +13,9 @@ import FoodDetailsProgress from './pages/FoodDetailsProgress';
 import DrinksDetailsProgress from './pages/DrinksDetailsProgress';
 import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
+import ExploreFoodPage from './pages/ExploreFoodPage';
+import ExploreDrinksPage from './pages/ExploreDrinksPage';
+import ExploreByIngredients from './pages/ExploreByIngredients';
 
 function App() {
   return (
@@ -21,6 +24,16 @@ function App() {
         <BrowserRouter>
           <Switch>
             <Route exact path="/" component={ LoginPage } />
+            <Route
+              path="/explorar/comidas/ingredientes"
+              component={ ExploreByIngredients }
+            />
+            <Route
+              path="/explorar/bebidas/ingredientes"
+              component={ ExploreByIngredients }
+            />
+            <Route path="/explorar/bebidas" component={ ExploreDrinksPage } />
+            <Route path="/explorar/comidas" component={ ExploreFoodPage } />
             <Route path="/explorar" component={ ExplorePage } />
             <Route path="/comidas/:id/in-progress" component={ FoodDetailsProgress } />
             <Route path="/comidas/:id" component={ FoodDetails } />

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-function ExplorePage() {
+function ExploreByIngredients() {
   return (
     <div>
       <Header />
@@ -26,4 +26,4 @@ function ExplorePage() {
   );
 }
 
-export default ExplorePage;
+export default ExploreByIngredients;
