@@ -1,27 +1,20 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import fetchApiDrink from '../services/FetchApiDrink';
 import ShareIcon from '../images/shareIcon.svg';
-import Favorite from '../images/blackHeartIcon.svg';
 import desFavorite from '../images/whiteHeartIcon.svg';
 
 import '../App.css';
 
 export default function DrinkInProgress() {
   const { state, setState } = useContext(RecipesContext);
-  const history = useHistory();
   const params = useParams();
   //  const [check, setCheck] = useState([]);
   const objStorage = [];
-  const check = [];
   // carregar API
   useEffect(() => {
     fetchApiDrink('6', setState, String(params.id));
-    const saveLocal = JSON.parse(
-      localStorage
-        .getItem('recipesInProgress'),
-    );
   }, []);
 
   // função marcar os ingredientes e salvar no localStorage.

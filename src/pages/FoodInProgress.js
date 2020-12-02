@@ -1,16 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import fetchApiFood from '../services/FetchApiFood';
 import ShareIcon from '../images/shareIcon.svg';
-import Favorite from '../images/blackHeartIcon.svg';
 import desFavorite from '../images/whiteHeartIcon.svg';
 
 import '../App.css';
 
 export default function FoodInProgress() {
   const { state, setState } = useContext(RecipesContext);
-  const history = useHistory();
   const params = useParams();
   const objStorage = [];
   // carregar API
