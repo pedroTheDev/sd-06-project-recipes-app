@@ -235,7 +235,7 @@ class DrinksRecipesInProgress extends React.Component {
   recipeDone(recipe) {
     const { history } = this.props;
     const fullDate = this.getFullDate();
-    console.log(recipe);
+
     let myTags = recipe.strTags;
     if (myTags === null) {
       myTags = 'No Tags';

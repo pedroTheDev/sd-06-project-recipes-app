@@ -91,14 +91,17 @@ class FoodCard extends React.Component {
                 {typeof element.tags === 'string'
                   ? (
                     <div className="tags-div">
-                      <p
-                        key="tag0"
-                        data-testid={
-                          `${i}-${element.tags.split(',')[0]}-horizontal-tag`
-                        }
-                      >
-                        { `${element.tags.split(',')[0]}`}
-                      </p>
+                      { element.tags.split(',')[0] !== undefined
+                        ? (
+                          <p
+                            key="tag0"
+                            data-testid={
+                              `${i}-${element.tags.split(',')[0]}-horizontal-tag`
+                            }
+                          >
+                            { `${element.tags.split(',')[0]}`}
+                          </p>
+                        ) : null }
                       { element.tags.split(',')[1] !== undefined
                         ? (
                           <p
@@ -111,8 +114,8 @@ class FoodCard extends React.Component {
                           </p>
                         )
                         : null}
-                    </div>
-                  )
+
+                    </div>)
                   : (
                     <div className="tags-div">
                       <p

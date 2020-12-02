@@ -235,16 +235,10 @@ class FoodsRecipesInProgress extends React.Component {
   recipeDone(recipe) {
     const { history } = this.props;
     const fullDate = this.getFullDate();
-    // let myTags = recipe.strTags;
-
-    // const myTags = recipe.strTags.split(',');
-
-    // if (myTags[0] === undefined) {
-    //   myTags[0] = 'Food';
-    // }
-    // if (myTags[1] === undefined) {
-    //   myTags[1] = 'Food';
-    // }
+    let myTags = recipe.strTags;
+    if (myTags === null) {
+      myTags = 'No Tags';
+    }
 
     const myObject = [{
       id: recipe.idMeal,
@@ -255,7 +249,7 @@ class FoodsRecipesInProgress extends React.Component {
       name: recipe.strMeal,
       image: recipe.strMealThumb,
       doneDate: fullDate,
-      tags: recipe.strTags.toString(), // myTags.toString(),
+      tags: myTags,
     }];
 
     if (!localStorage.getItem('doneRecipes')) {
