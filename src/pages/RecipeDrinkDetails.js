@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import copy from 'clipboard-copy';
 import StartButton from '../components/StartButton';
 import RecipesContext from '../context/RecipesAppContext';
+import FavoriteButton from '../components/FavoriteButton';
 import '../Style/scroll.css';
 
 function RecipeDrinkDetails(props) {
@@ -90,7 +91,11 @@ function RecipeDrinkDetails(props) {
           </button>
           {share && <span>Link copiado!</span>}
         </div>
-        <button type="button" data-testid="favorite-btn">Favoritar</button>
+        <FavoriteButton
+          id={ id }
+          title={ title }
+          data-testid="favorite-btn"
+        />
         <p data-testid="recipe-category">{recipes[0].strCategory}</p>
         <ul>
           {arrIngredient.map((ingredient, index) => (
