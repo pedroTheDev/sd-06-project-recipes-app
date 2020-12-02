@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { Container } from 'react-bootstrap';
 import ProfileIcon from '../images/profileIcon.svg';
 import SearchIcon from '../images/searchIcon.svg';
 import RevenueContext from '../context/RevenueContext';
@@ -20,7 +21,8 @@ export default function Header(props) {
     // >
     //   <img src={ SearchIcon } alt="Profile" data-testid="search-top-btn" />
     // </a>
-    <button
+    <a
+      href
       data-testid="test-search-top-btn"
       type="button"
       onClick={ () => {
@@ -29,24 +31,29 @@ export default function Header(props) {
       className="button-standard"
     >
       <img src={ SearchIcon } alt="Profile" data-testid="search-top-btn" />
-    </button>
+    </a>
   );
   return (
-    <div>
-      <header data-testid="test-header">
-        <div className="container">
-          <div className="row justify-content-around header-component">
+    <header data-testid="test-header">
+      <Container>
+        <div className="row justify-content-around header-component">
+          <div className="">
             <Link to="/perfil" data-testid="test-profile-top-btn">
               <img src={ ProfileIcon } alt="Profile" data-testid="profile-top-btn" />
             </Link>
-            <h1 data-testid="page-title">{title}</h1>
-            {!searchButton && searchButtonHidden()}
+          </div>
+          <div className="">
+            <h1 className="center" data-testid="page-title">{title}</h1>
+          </div>
+          <div className="">
+            <span>{!searchButton && searchButtonHidden()}</span>
           </div>
         </div>
         {search && <SearchBar title={ title } />}
         {!search && <CategoryButton />}
-      </header>
-    </div>
+      </Container>
+    </header>
+
   );
 }
 
