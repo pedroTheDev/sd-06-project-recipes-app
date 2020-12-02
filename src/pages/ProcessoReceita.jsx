@@ -39,6 +39,20 @@ function ProcessoReceita({ match: { params: { id } } }) {
     }
   };
 
+  // refatorar em componente no futuro
+  const copyBoard = () => {
+    const url = `http://localhost:3000/comidas/${id}`;
+    const input = document.body.appendChild(document.createElement('input'));
+    input.value = url;
+    input.select();
+    document.execCommand('copy');
+    input.parentNode.removeChild(input);
+    const divBtns = document.getElementById('btns');
+    const newSpan = document.createElement('span');
+    newSpan.innerHTML = 'Link copiado!';
+    divBtns.appendChild(newSpan);
+  };
+
   useEffect(() => {
     ingredientsFunc();
   }, [detailsFood]);
@@ -53,10 +67,12 @@ function ProcessoReceita({ match: { params: { id } } }) {
       <img data-testid="recipe-photo" src={ detailsFood.strMealThumb } alt="food-thumb" />
       <h2 data-testid="recipe-title">{detailsFood.strMeal}</h2>
       <h3 data-testid="recipe-category">{detailsFood.strCategory}</h3>
-      <button type="button" data-testid="share-btn">
-        <img src={ buttonShare } alt="button-share" />
-      </button>
-      <FavoriteHeart id={ id } detailsFood={ detailsFood } />
+      <div id="btns">
+        <button type="button" data-testid="share-btn" onClick={ copyBoard }>
+          <img src={ buttonShare } alt="button-share" />
+        </button>
+        <FavoriteHeart id={ id } detailsFood={ detailsFood } />
+      </div>
       {arrayIngredients.map((element, index) => (
         <label
           htmlFor="scales"

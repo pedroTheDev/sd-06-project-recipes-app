@@ -56,6 +56,7 @@ function DetalhesReceita({ match: { params: { id } } }) {
     }
   };
 
+  // refatorar em componente no futuro
   const copyBoard = () => {
     const url = `http://localhost:3000/comidas/${id}`;
     const input = document.body.appendChild(document.createElement('input'));

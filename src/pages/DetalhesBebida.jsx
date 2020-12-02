@@ -52,6 +52,7 @@ function DetalhesBebida({ match: { params: { id } } }) {
     recommendDrinkFunction();
   }, [detailsDrink]);
 
+  // refatorar em componente no futuro
   const copyBoard = () => {
     const url = `http://localhost:3000/bebidas/${id}`;
     const input = document.body.appendChild(document.createElement('input'));
