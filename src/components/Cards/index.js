@@ -13,6 +13,9 @@ const Cards = () => {
   const showFoodResearch = () => {
     const number = 11;
     if (apiValueSearch.foods.meals && apiValueSearch.foods.meals.length === 1) {
+      const foodID = apiValueSearch.foods.meals[0].idMeal;
+      window.location.href = `http://localhost:3000/comidas/${foodID}`;
+    } else {
       return (
         apiValueSearch.foods.meals && apiValueSearch.foods.meals.map((meal, index) => {
           if (apiValueSearch.foods.meals === null) { console.log('null'); }

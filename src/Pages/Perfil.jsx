@@ -41,7 +41,7 @@ const Perfil = () => {
           className="text-email"
           data-testid="profile-email"
         >
-          {handleEmailLocalStorage().email}
+          {handleEmailLocalStorage() && handleEmailLocalStorage().email}
         </div>
         <div className="container-button-perfil">
           <Link to="/receitas-feitas">
