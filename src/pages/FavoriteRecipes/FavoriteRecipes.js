@@ -1,62 +1,38 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import copy from 'clipboard-copy';
 import Header from '../../components/Header';
 import { shareIcon, whiteHeartIcon, blackHeartIcon } from '../../images';
-import recipesAppContext from '../../context/recipesAppContext';
-import { getFavoriteRecipes } from '../../services/localStorage';
-import { favoriteRecipe, recipeIsFavorite } from '../../services/localStorage';
-import { fetchMeal } from '../../services/mealAPI';
-import { fetchDrink } from '../../services/cocktailAPI';
+import {
+  getFavoriteRecipes,
+  favoriteRecipe,
+  recipeIsFavorite,
+} from '../../services/localStorage';
 
 function FavoritesRecipes() {
-  const location = useLocation();
   const [type, setType] = useState('');
-  const [isFavorite, setIsFavorite] = useState(true);
   const pixels = 200;
-  const favoriteRecipes = getFavoriteRecipes();
-  // console.log('sort', favoriteRecipes.sort((a, b) => a.type > b.type ? -1 : 1));
+  const [favoriteRecipes, setFavoriteRecipes] = useState(getFavoriteRecipes());
+  console.log('sort', favoriteRecipes.sort());
 
-  const onlyDrinks = favoriteRecipes.filter((element) => element.type === 'drink');
-  const onlyFoods = favoriteRecipes.filter((element) => element.type === 'meal');
+  const onlyDrinks = favoriteRecipes.filter((element) => element.type === 'bebida');
+  const onlyFoods = favoriteRecipes.filter((element) => element.type === 'comida');
   const foods = onlyFoods.length;
   const favorites = onlyFoods.concat(onlyDrinks);
 
-  const {
-    recipesMeals,
-    recipesDrinks,
-  } = useContext(recipesAppContext);
-
-  const myRecipe = location.pathname.includes('comidas') ? recipesMeals : recipesDrinks;
-
-  const handleFavoriteRecipe = () => {
-    setIsFavorite(false);
-  };
-
-  useEffect(() => {
-    handleFavoriteRecipe();
-  }, [myRecipe]);
-
   const saveToLocalStorage = async ({ target }) => {
-    const keys = target.id.split(',');
-    let recipe;
-    if (keys[1] === 'meal') {
-      const { meals } = await fetchMeal('lookupIngredient', keys[0]);
-      recipe = meals[0];
-    } else if (keys[1] === 'drinks') {
-      const { meals } = await fetchDrink('lookupIngredient', keys[0]);
-      recipe = meals[0];
-    }
+    const recipeID = target.id;
+    const recipe = favoriteRecipes.find((item) => item.id === recipeID);
     favoriteRecipe(recipe);
-    handleFavoriteRecipe(recipe);
+    setFavoriteRecipes(getFavoriteRecipes());
   };
 
   const handleShareIcon = (target) => {
     const keys = target.id.split(',');
     let urlLinkDetail = '';
-    if (keys[1] === 'meal') {
+    if (keys[1] === 'comida') {
       urlLinkDetail = `http://localhost:3000/comidas/${keys[0]}`;
-    } else if (keys[1] === 'drink') {
+    } else if (keys[1] === 'bebida') {
       urlLinkDetail = `http://localhost:3000/bebidas/${keys[0]}`;
     }
     copy(urlLinkDetail);
@@ -68,6 +44,8 @@ function FavoritesRecipes() {
     paragraph.appendChild(span);
     span.innerHTML = 'Link copiado!';
   };
+
+  const zero = 0;
 
   return (
     <div>
@@ -86,14 +64,14 @@ function FavoritesRecipes() {
         <input
           data-testid="filter-by-food-btn"
           className="btn btn-secondary"
-          onClick={ () => setType('meal') }
+          onClick={ () => setType('comida') }
           type="button"
           value="Comidas"
         />
         <input
           data-testid="filter-by-drink-btn"
           className="btn btn-secondary"
-          onClick={ () => setType('drink') }
+          onClick={ () => setType('bebida') }
           type="button"
           value="Drinks"
         />
@@ -103,13 +81,13 @@ function FavoritesRecipes() {
           favorites.map((recipe, index) => {
             if (recipe.type === type || type === '') {
               let urlLinkDetail = '';
-              let newIndex = 0;
-              if (recipe.type === 'meal') {
+              let newIndex = zero;
+              if (recipe.type === 'comida') {
                 urlLinkDetail = `/comidas/${recipe.id}`;
-              } else if (recipe.type === 'drink') {
+              } else if (recipe.type === 'bebida') {
                 urlLinkDetail = `/bebidas/${recipe.id}`;
               }
-              if (type === 'drink') {
+              if (type === 'bebida') {
                 newIndex = foods;
               }
               return (
@@ -124,7 +102,7 @@ function FavoritesRecipes() {
                   </Link>
                   <p data-testid={ `${index - newIndex}-horizontal-top-text` }>
                     {
-                      recipe.type === 'meal'
+                      recipe.type === 'comida'
                         ? `${recipe.area} - ${recipe.category}`
                         : recipe.alcoholicOrNot
                     }
@@ -147,7 +125,7 @@ function FavoritesRecipes() {
                   <p className={ `copied-link-${recipe.id}` } />
                   <input
                     type="image"
-                    id={ `${recipe.id},${recipe.type}` }
+                    id={ `${recipe.id}` }
                     data-testid={ `${index - newIndex}-horizontal-favorite-btn` }
                     src={ recipeIsFavorite(recipe) ? blackHeartIcon : whiteHeartIcon }
                     alt="Favorite recipe"

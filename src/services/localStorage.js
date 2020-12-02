@@ -27,7 +27,7 @@ export function treatRecipe(recipe) {
   if ('idMeal' in recipe) {
     treatedRecipe = {
       id: recipe.idMeal,
-      type: 'meal',
+      type: 'comida',
       area: recipe.strArea,
       category: recipe.strCategory,
       name: recipe.strMeal,
@@ -40,9 +40,9 @@ export function treatRecipe(recipe) {
   } else if ('idDrink' in recipe) {
     treatedRecipe = {
       id: recipe.idDrink,
-      type: 'drink',
+      type: 'comida',
       category: recipe.strCategory,
-      alcoholic: recipe.strAlcoholic,
+      alcoholicOrNot: recipe.strAlcoholic,
       name: recipe.strDrink,
       image: recipe.strDrinkThumb,
       tags: recipe.strTags,
@@ -57,7 +57,7 @@ export function treatRecipe(recipe) {
 
 export function convertTreatedRecipe(recipe) {
   let convertedRecipe = {};
-  if (recipe.type === 'meal') {
+  if (recipe.type === 'comida') {
     convertedRecipe = {
       idMeal: recipe.id,
       strArea: recipe.area,
@@ -69,11 +69,11 @@ export function convertTreatedRecipe(recipe) {
       strYoutube: recipe.strYoutube,
       strSource: recipe.source,
     };
-  } else if (recipe.type === 'drink') {
+  } else if (recipe.type === 'bebida') {
     convertedRecipe = {
       idDrink: recipe.id,
       strCategory: recipe.category,
-      strAlcoholic: recipe.alcoholic,
+      strAlcoholic: recipe.alcoholicOrNot,
       strDrink: recipe.name,
       strDrinkThumb: recipe.image,
       strTags: recipe.tags,
