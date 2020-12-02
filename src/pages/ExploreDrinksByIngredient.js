@@ -16,6 +16,7 @@ class ExploreDrinksByIngredient extends React.Component {
   }
 
   async componentDidMount() {
+    this.changeH1Width();
     this.setIngredientsState();
   }
 
@@ -29,6 +30,18 @@ class ExploreDrinksByIngredient extends React.Component {
     history.push('/bebidas');
   }
 
+  changeH1Width() {
+    const h1 = document.querySelector('.global-h1');
+    const profileDiv = document.querySelector('.profile-icon-div');
+    const eightHundred = 800;
+    if (window.screen.availHeight < eightHundred) {
+      h1.style.fontSize = '25px';
+      profileDiv.style.width = '60px';
+      const searchInputDiv = document.querySelector('.search-input-div');
+      searchInputDiv.style.width = '50px';
+    }
+  }
+
   render() {
     const { ingredients } = this.state;
     const { history } = this.props;
@@ -36,7 +49,7 @@ class ExploreDrinksByIngredient extends React.Component {
     return (
       <div className="cards-container by-ingredient-container">
         <Header history={ history } />
-        {ingredients.length > listLength && (ingredients.map((recipe, index) => (
+        {ingredients.length > listLength ? (ingredients.map((recipe, index) => (
           <div className="card" key={ index } data-testid={ `${index}-ingredient-card` }>
             <input
               type="image"
@@ -51,7 +64,17 @@ class ExploreDrinksByIngredient extends React.Component {
               {recipe.strIngredient1}
             </p>
             <hr className="card-hr" />
-          </div>)))}
+          </div>
+        ))) : (
+          <div className="explore-ingredient-loading">
+            <div className="lds-ellipsis">
+              <div />
+              <div />
+              <div />
+              <div />
+            </div>
+          </div>
+        )}
         <Footer history={ history } />
       </div>
     );

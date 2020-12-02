@@ -17,17 +17,11 @@ class FavoriteRecipes extends React.Component {
   }
 
   componentDidMount() {
+    this.changeH1Width();
     const recipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
     if (recipes) {
       const foods = recipes.filter((element) => element.type === 'comida').length;
       this.setFilterIndex(foods);
-    }
-    const eightHundred = 800;
-    if (window.screen.availHeight < eightHundred) {
-      const h1 = document.querySelector('.global-h1');
-      h1.style.fontSize = '20px';
-      const bla = document.querySelector('.search-input-div');
-      bla.style.width = '70px';
     }
   }
 
@@ -37,10 +31,38 @@ class FavoriteRecipes extends React.Component {
     });
   }
 
-  setFilterState({ target: { id } }) {
+  setFilterState({ target }) {
+    const all = document.getElementById('all');
+    const food = document.getElementById('food');
+    const drink = document.getElementById('drink');
+    if (target.id === 'food') {
+      target.className = 'food-filters-checked';
+      drink.className = 'food-filters';
+      all.className = 'food-filters';
+    } else if (target.id === 'drink') {
+      target.className = 'food-filters-checked';
+      food.className = 'food-filters';
+      all.className = 'food-filters';
+    } else {
+      target.className = 'food-filters-checked';
+      drink.className = 'food-filters';
+      food.className = 'food-filters';
+    }
     this.setState({
-      type: id,
+      type: target.id,
     });
+  }
+
+  changeH1Width() {
+    const h1 = document.querySelector('.global-h1');
+    const profileDiv = document.querySelector('.profile-icon-div');
+    const eightHundred = 800;
+    if (window.screen.availHeight < eightHundred) {
+      h1.style.fontSize = '26px';
+      profileDiv.style.width = '80px';
+      const searchInputDiv = document.querySelector('.search-input-div');
+      searchInputDiv.style.width = '60px';
+    }
   }
 
   render() {
@@ -54,7 +76,7 @@ class FavoriteRecipes extends React.Component {
             id="all"
             data-testid="filter-by-all-btn"
             type="button"
-            className="food-filters"
+            className="food-filters-checked"
             onClick={ this.setFilterState }
           >
             All
@@ -84,7 +106,7 @@ class FavoriteRecipes extends React.Component {
         {type === 'drink' ? <FavDrinkCard history={ history } indexAcc={ 0 } /> : null }
         {type === 'all'
           ? (
-            <div>
+            <div className="food-or-drink-done-card">
               <FavFoodCard history={ history } indexAcc={ 0 } />
               <FavDrinkCard history={ history } indexAcc={ drinkIndex } />
             </div>)

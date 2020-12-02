@@ -17,13 +17,7 @@ class DoneRecipes extends React.Component {
   }
 
   componentDidMount() {
-    const fourHundred = 450;
-    if (window.screen.availWidth < fourHundred) {
-      const h1 = document.querySelector('.global-h1');
-      h1.style.fontSize = '22px';
-      const bla = document.querySelector('.search-input-div');
-      bla.style.width = '100px';
-    }
+    this.changeH1Width();
     const recipes = JSON.parse(localStorage.getItem('doneRecipes'));
     if (recipes) {
       const foods = recipes.filter((element) => element.type === 'comida').length;
@@ -37,10 +31,38 @@ class DoneRecipes extends React.Component {
     });
   }
 
-  setFilterState({ target: { id } }) {
+  setFilterState({ target }) {
+    const all = document.getElementById('all');
+    const food = document.getElementById('food');
+    const drink = document.getElementById('drink');
+    if (target.id === 'food') {
+      target.className = 'food-filters-checked';
+      drink.className = 'food-filters';
+      all.className = 'food-filters';
+    } else if (target.id === 'drink') {
+      target.className = 'food-filters-checked';
+      food.className = 'food-filters';
+      all.className = 'food-filters';
+    } else {
+      target.className = 'food-filters-checked';
+      drink.className = 'food-filters';
+      food.className = 'food-filters';
+    }
     this.setState({
-      type: id,
+      type: target.id,
     });
+  }
+
+  changeH1Width() {
+    const h1 = document.querySelector('.global-h1');
+    const profileDiv = document.querySelector('.profile-icon-div');
+    const eightHundred = 800;
+    if (window.screen.availHeight < eightHundred) {
+      h1.style.fontSize = '30px';
+      profileDiv.style.width = '80px';
+      const searchInputDiv = document.querySelector('.search-input-div');
+      searchInputDiv.style.width = '70px';
+    }
   }
 
   render() {
@@ -54,7 +76,7 @@ class DoneRecipes extends React.Component {
             id="all"
             data-testid="filter-by-all-btn"
             type="button"
-            className="food-filters"
+            className="food-filters-checked"
             onClick={ this.setFilterState }
           >
             All

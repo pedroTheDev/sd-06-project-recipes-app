@@ -10,6 +10,22 @@ class ExploreDrinks extends React.Component {
     this.randomRequestRecipe = this.randomRequestRecipe.bind(this);
   }
 
+  componentDidMount() {
+    this.changeH1Width();
+  }
+
+  changeH1Width() {
+    const h1 = document.querySelector('.global-h1');
+    const profileDiv = document.querySelector('.profile-icon-div');
+    const eightHundred = 800;
+    if (window.screen.availHeight < eightHundred) {
+      h1.style.fontSize = '25px';
+      profileDiv.style.width = '90px';
+      const searchInputDiv = document.querySelector('.search-input-div');
+      searchInputDiv.style.width = '70px';
+    }
+  }
+
   async randomRequestRecipe() {
     const { history } = this.props;
     const random = await randomRecipeDrinks();

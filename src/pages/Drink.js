@@ -18,9 +18,11 @@ class Drink extends React.Component {
     this.allButtonHandler = this.allButtonHandler.bind(this);
     this.setInitialState = this.setInitialState.bind(this);
     this.setKeyLocalStorage = this.setKeyLocalStorage.bind(this);
+    this.manageColors = this.manageColors.bind(this);
   }
 
   async componentDidMount() {
+    this.changeH1Width();
     const { control } = this.props;
     let drinksRender;
     const initList = 0;
@@ -37,6 +39,12 @@ class Drink extends React.Component {
 
   async componentDidUpdate() {
     const { stateDrinks } = this.props;
+    const { CategoryFilter } = this.state;
+    if (CategoryFilter !== '') {
+      this.manageColors('others');
+    } else {
+      this.manageColors('all');
+    }
     const MAXIMUM_LENGTH = 0;
     if (stateDrinks.length > MAXIMUM_LENGTH) {
       this.stateAfterProps(stateDrinks);
@@ -60,14 +68,46 @@ class Drink extends React.Component {
     }
   }
 
-  async setCategory({ strCategory }) {
+  async setCategory({ target }, { strCategory }) {
     const { CategoryFilter } = this.state;
     if (CategoryFilter !== strCategory) {
-      const drinksCategory = await filterDrinksByCategory(strCategory);
-      this.setState({ Drinks: drinksCategory, CategoryFilter: strCategory });
+      const filteredFoods = await filterDrinksByCategory(strCategory);
+      this.setState({ Drinks: filteredFoods, CategoryFilter: strCategory });
+      target.style.background = '#ac5c22';
     } else {
-      const initialDrinks = await drinksOnRender();
-      this.setState({ Drinks: initialDrinks, CategoryFilter: '' });
+      const initialMeals = await drinksOnRender();
+      this.setState({ Drinks: initialMeals, CategoryFilter: '' });
+      target.style.background = '#5a2d0c';
+    }
+  }
+
+  manageColors(buttons) {
+    const filtros = document.getElementsByClassName('category-buttons');
+    const INITIAL_VALUE = 1;
+    const FINAL_VALUE = 6;
+    if (buttons === 'others') {
+      for (let i = INITIAL_VALUE; i < FINAL_VALUE; i += 1) {
+        filtros[0].childNodes[i].firstChild.style.background = '#5a2d0c';
+        filtros[0].childNodes[FINAL_VALUE].style.background = '#5a2d0c';
+      }
+    }
+    if (buttons === 'all') {
+      for (let i = INITIAL_VALUE; i < FINAL_VALUE; i += 1) {
+        filtros[0].childNodes[i].firstChild.style.background = '#5a2d0c';
+        filtros[0].childNodes[FINAL_VALUE].style.background = '#ac5c22';
+      }
+    }
+  }
+
+  changeH1Width() {
+    const h1 = document.querySelector('.global-h1');
+    const profileDiv = document.querySelector('.profile-icon-div');
+    const eightHundred = 800;
+    if (window.screen.availHeight < eightHundred) {
+      h1.style.fontSize = '40px';
+      profileDiv.style.width = '105px';
+      const searchInputDiv = document.querySelector('.search-input-div');
+      searchInputDiv.style.width = '105px';
     }
   }
 
@@ -104,7 +144,7 @@ class Drink extends React.Component {
               <button
                 type="button"
                 className="drink-filters"
-                onClick={ () => this.setCategory(element) }
+                onClick={ (event) => this.setCategory(event, element) }
               >
                 {element.strCategory}
               </button>
@@ -123,7 +163,7 @@ class Drink extends React.Component {
           )}
         </div>
         <div className="cards-container">
-          {Drinks ? Drinks.map((recipe, index) => (
+          {Drinks.length > 1 ? Drinks.map((recipe, index) => (
             <div className="card" key={ index } data-testid={ `${index}-recipe-card` }>
               <input
                 type="image"
@@ -137,7 +177,16 @@ class Drink extends React.Component {
               <p data-testid={ `${index}-card-name` }>{recipe.strDrink}</p>
               <hr className="card-hr" />
             </div>
-          )) : null}
+          )) : (
+            <div className="foods-drinks-loading">
+              <div className="lds-ellipsis">
+                <div />
+                <div />
+                <div />
+                <div />
+              </div>
+            </div>
+          )}
         </div>
         <Footer history={ history } />
       </div>
