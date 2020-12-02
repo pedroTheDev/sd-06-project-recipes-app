@@ -132,26 +132,9 @@ function MealDetails() {
     return idYoutube;
   }
 
-  // function updateDoneRecipes() {
-  //   const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
-  //   const newDoneRecipe = {
-  //     id: recipeMeal.idMeal,
-  //     type: 'comida',
-  //     area: recipeMeal.strArea,
-  //     category: recipeMeal.strCategory,
-  //     alcoholicOrNot: '',
-  //     name: recipeMeal.strMeal,
-  //     image: recipeMeal.strMealThumb,
-  //     doneDate: '',
-  //     tags: [],
-  //   };
-  //   const arrayDoneRecipe = [...doneRecipes, newDoneRecipe];
-  //   localStorage.setItem('doneRecipes', JSON.stringify(arrayDoneRecipe));
-  // }
-
   function updateRecipeInProgress() {
     const recipesInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    recipesInProgress.meals[recipeMeal.idMeal] = [];
+    recipesInProgress.meals[id] = getIngredients();
     localStorage.setItem('inProgressRecipes', JSON.stringify(recipesInProgress));
   }
 

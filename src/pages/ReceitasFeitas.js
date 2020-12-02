@@ -109,7 +109,7 @@ function ReceitasFeitas() {
                     </p>)
                   : (
                     <p data-testid={ `${index}-horizontal-top-text` }>
-                      { alcoholicOrNot}
+                      { alcoholicOrNot }
                     </p>)
               }
               <p
