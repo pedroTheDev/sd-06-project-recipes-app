@@ -10,7 +10,8 @@ import './style/details.css';
 const getFromLS = (id, pathname) => {
   const LS = JSON.parse(localStorage.getItem('inProgressRecipes'));
   const path = pathname.includes('comidas') ? 'meals' : 'cocktails';
-  if (!LS) return {};
+  console.log(path, id);
+  if (!LS || !LS[path][id]) return {};
   return LS[path][id].reduce((acc, currV) => ({ ...acc, [currV]: true }), {});
 };
 

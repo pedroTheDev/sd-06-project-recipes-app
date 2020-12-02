@@ -3,7 +3,11 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import './style/recipesCard.css';
+import {
+  MealsAndDrinksContainer,
+  MainContainer,
+  ButtonContainer,
+} from './style/mealsAdnDrinks';
 
 class RecipesCardMeals extends Component {
   constructor() {
@@ -107,14 +111,14 @@ class RecipesCardMeals extends Component {
     const { mealsCategories } = this.props;
     const { mealsState } = this.state;
     return (
-      <div>
-        <div>
+      <MealsAndDrinksContainer>
+        <ButtonContainer>
           { mealsCategories && this.renderFilterButtons(mealsCategories) }
-        </div>
-        <div>
+        </ButtonContainer>
+        <MainContainer>
           { mealsState && this.renderMeals(mealsState) }
-        </div>
-      </div>
+        </MainContainer>
+      </MealsAndDrinksContainer>
     );
   }
 }

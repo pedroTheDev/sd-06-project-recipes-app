@@ -7,22 +7,28 @@ export default createGlobalStyle`
     outline: 0;
     box-sizing: border-box;
   }
+
   :root {
     --input-color: #36a4fe;
     --background-color: #fef9f6;
     --blue-color: #365efe;
+    --light-blue: #afc8f3;
   }
+
   body {
-    background: #fef9f6 ;
-    -webkit-font-smoothing: antialiased
+    background: #fef9f6;
+    -webkit-font-smoothing: antialiased;
   }
+
   body, input, button {
     font-family: 'Roboto Slab', serif;
     font-size: 16px;
   }
-  h1,h2,h3,h4,h5,h6,strong {
+
+  h1, h2, h3, h4, h5, h6, strong {
     font-weight: 500;
   }
+
   button {
     cursor: pointer;
   }

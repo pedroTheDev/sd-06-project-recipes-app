@@ -16,15 +16,10 @@ export const LoginContainer = styled.div`
 `;
 
 export const LoginInput = styled.input`
-  background-position: -200px 0;
-  background-repeat: no-repeat;
   background-size: 200px 100%;
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0) 96%,
-    var(--input-color) 4%
-  );
-  border-bottom: solid 1px var(--input-color);
+  background: linear-gradient(to bottom,
+  rgba(255, 255, 255, 0) 96%,
+  var(--input-color) 4%) no-repeat -200px 0;
   border: none;
   /* color: darken(#1abc9c, 20%); */
   color: darken(var(--input-color), 20%);
