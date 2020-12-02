@@ -1,9 +1,9 @@
 import React from 'react';
 import propTypes from 'prop-types';
 
-function IngredientCard({ ingredient, index }) {
-  const imageUrl = `https://www.themealdb.com/images/ingredients/${ingredient.strIngredient}-Small.png`;
-
+function DrinksIngredientCard({ ingredient, index }) {
+  const imageUrl = `https://www.thecocktaildb.com/images/ingredients/${ingredient.strIngredient1}-Small.png`;
+  console.log(imageUrl);
   return (
     <div
       className="card-container"
@@ -17,17 +17,17 @@ function IngredientCard({ ingredient, index }) {
       <h3
         data-testid={ `${index}-card-name` }
       >
-        {ingredient.strIngredient}
+        {ingredient.strIngredient1}
       </h3>
     </div>
   );
 }
 
-IngredientCard.propTypes = {
+DrinksIngredientCard.propTypes = {
   ingredient: propTypes.shape({
-    strIngredient: propTypes.string.isRequired,
+    strIngredient1: propTypes.string.isRequired,
   }).isRequired,
   index: propTypes.number.isRequired,
 };
 
-export default IngredientCard;
+export default DrinksIngredientCard;
