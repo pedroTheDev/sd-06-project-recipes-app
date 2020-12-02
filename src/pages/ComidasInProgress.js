@@ -14,15 +14,20 @@ import '../style/Loading.css';
 function ComidasInProgress(props) {
   const { fetchById, doneRecipes, setFetchById } = useContext(ReceitasContext);
 
-  const [copied, setCopied] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(true);
-  const [isFetching, setFetching] = useState(true);
-
   const {
     match: {
       params: { id },
     },
   } = props;
+
+  const [copied, setCopied] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(true);
+  const [isFetching, setFetching] = useState(true);
+  const recipesLocalStorage = JSON.parse(localStorage.getItem('recipes'));
+  // const [isDisabled, setIsDisabled] = useState(true);
+  const [checkedIngredients, setCheckedIngredients] = useState(
+    !recipesLocalStorage ? [] : recipesLocalStorage[id],
+  );
 
   useEffect(() => {
     async function getFavorites() {
@@ -33,6 +38,11 @@ function ComidasInProgress(props) {
       const favoriteRecipes = JSON.parse(
         localStorage.getItem('favoriteRecipes'),
       );
+
+      const localStorageRecipes = JSON.parse(localStorage.getItem('recipes'));
+      if (localStorageRecipes) {
+        setCheckedIngredients(localStorageRecipes[id]);
+      }
 
       if (!favoriteRecipes || !favoriteRecipes.length) {
         setIsFavorite(false);
@@ -47,6 +57,10 @@ function ComidasInProgress(props) {
 
     getFavorites();
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem('recipes', JSON.stringify({ [id]: checkedIngredients }));
+  }, [checkedIngredients]);
 
   const getIngredients = (obj, filter) => {
     const keys = [];
@@ -145,7 +159,17 @@ function ComidasInProgress(props) {
     }
   };
 
-  const handleClick = (index) => {
+  // const handleButtomDisable = () => {
+  //   const lastIngredient = document.getElementById('ingredient-step').lastChild;
+  //   console.log('Last ingredient', lastIngredient.id);
+  //   if (checkedIngredients.length === lastIngredient.id - 1) {
+  //     console.log('Dentro do if', checkedIngredients.length);
+  //     return false;
+  //   }
+  //   return true;
+  // };
+
+  const handleClick = (index, item) => {
     const label = document.querySelectorAll('label')[index];
     if (label.classList.contains('ingredient-not-done')) {
       label.classList.remove('ingredient-not-done');
@@ -154,6 +178,25 @@ function ComidasInProgress(props) {
       label.classList.remove('ingredient-done');
       label.classList.add('ingredient-not-done');
     }
+
+    if (checkedIngredients.includes(item)) {
+      const zero = 0;
+      let position;
+      checkedIngredients.forEach((name, i) => {
+        if (name === item) {
+          position = i;
+        } else {
+          return position;
+        }
+      });
+      setCheckedIngredients([
+        ...checkedIngredients.slice(zero, position),
+        ...checkedIngredients.slice(position + 1, checkedIngredients.length),
+      ]);
+    } else {
+      setCheckedIngredients(checkedIngredients.concat(item));
+    }
+    // handleButtomDisable();
   };
 
   return isFetching ? (
@@ -182,19 +225,29 @@ function ComidasInProgress(props) {
             />
           </button>
           <p data-testid="recipe-category">{meal.strCategory}</p>
-          <ul>
+          <ul id="ingredient-step">
             {getIngredients(meal, /strIngredient/).map((item, indx) => {
               const measure = getIngredients(meal, /strMeasure/);
               return (
-                <li key={ indx } data-testid={ `${indx}-ingredient-step` }>
+                <li
+                  key={ indx }
+                  id={ indx }
+                  data-testid={ `${indx}-ingredient-step` }
+                >
                   <label
-                    htmlFor={ `${indx}-drink` }
-                    className="ingredient-not-done"
+                    htmlFor={ `${indx}-meal` }
+                    id={ item }
+                    className={
+                      checkedIngredients.includes(item)
+                        ? 'ingredient-done'
+                        : 'ingredient-not-done'
+                    }
                   >
                     <input
-                      id={ `${indx}-drink` }
                       type="checkbox"
-                      onClick={ () => handleClick(indx) }
+                      id={ `${indx}-meal` }
+                      checked={ checkedIngredients.includes(item) }
+                      onClick={ () => handleClick(indx, item) }
                     />
                     {`${item} - ${measure[indx]}`}
                   </label>
@@ -204,12 +257,12 @@ function ComidasInProgress(props) {
           </ul>
           <p data-testid="instructions">{meal.strInstructions}</p>
           {!doneRecipes.includes(meal.idMeal) && (
-            <Link to={ `/comidas/${meal.idMeal}/in-progress` }>
+            <Link to="/receitas-feitas">
               <button
-                className="start-recipe-btn"
-                data-testid="finish-recipe-btn"
                 type="button"
-                // onClick={}
+                className="start-recipe-btn"
+                // disabled={ handleButtomDisable() }
+                data-testid="finish-recipe-btn"
               >
                 Finalizar Receita!
               </button>
