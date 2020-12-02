@@ -3,14 +3,14 @@
 }
 
 .scroller {
-   overflow-x: scroll;
-   display: flex;
+  overflow-x: scroll;
+  display: flex;
 }
 .item {
   margin-right: -30%;
-   min-width: 100%;
-   min-height: 200px; /* To start with */
-   background-color: #EDF2F7; /* For demo */
+  min-width: 100%;
+  min-height: 200px; /* To start with */
+  background-color: #EDF2F7; /* For demo */
 }
 
 .btnStart {

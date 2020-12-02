@@ -54,7 +54,7 @@ export default function SearchBar({ id, ingredient }) {
           Buscar
         </button>
       </div>
-      <div>
+      <div className="searchbar-radio">
         <label htmlFor="ingredient-search-radio">
           <input
             type="radio"

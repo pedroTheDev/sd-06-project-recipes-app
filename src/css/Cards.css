@@ -1,7 +1,7 @@
 .cards-wrapper {
+  align-items: center;
   display: flex;
   flex-flow: wrap;
-  align-items: center;
   padding: 0;
 }
 
@@ -43,10 +43,10 @@
 }
 
 .categories-box {
-  padding: 55px 0 0 0;
-  flex-flow: wrap;
   display: flex;
+  flex-flow: wrap;
   justify-content: center;
+  padding: 55px 0 0 0;
 }
 
 .categories-box button {
@@ -55,11 +55,15 @@
   border-radius: 5px;
   border: 0;
   color: white;            
+  margin: 4px 6px;
+  padding: 8px;
   text-align: center;
   text-transform: uppercase;
   transition: 0.5s;
-  margin: 4px 6px;
-  padding: 8px;
 }
 
-
+.categories-box button:hover {
+  background-position: right center; /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
+}
