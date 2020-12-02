@@ -13,7 +13,8 @@ import DrinkCategoriesButtons from '../components/DrinkCategoriesButtons';
 function CockTail(props) {
   const { history: { location: { pathname } },
     pageConfig, fetchmap, dispatchRecipes, data,
-    isFetchin, dispatchFetching, dispatchCategories, drinkRecipes } = props;
+    isFetchin,
+    dispatchFetching, dispatchCategories, drinkRecipes, categoriesFilterActive } = props;
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -58,11 +59,10 @@ function CockTail(props) {
       <DrinkCategoriesButtons />
       <RecipesList
         title={ title }
-        fetchmap={ fetchmap }
-        dispatchRecipes={ dispatchRecipes }
         recipeConfig={ recipe }
         pathname={ pathname }
         isLoading={ isLoading }
+        filter={ categoriesFilterActive }
       />
       <Footer />
     </>
@@ -76,6 +76,8 @@ const mapStateToProps = (state) => ({
   fetchmap: state.fetchmap,
   data: state.searchRecipes.data,
   isFetchin: state.searchRecipes.isFetchin,
+  categoriesFilterActive: state.searchRecipes.categoriesFilterActive,
+
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -117,5 +119,9 @@ CockTail.propTypes = {
     location: PropTypes.shape({
       pathname: PropTypes.string.isRequired,
     }).isRequired,
+  }).isRequired,
+  categoriesFilterActive: PropTypes.shape({
+    Comidas: PropTypes.bool.isRequired,
+    Bebidas: PropTypes.bool.isRequired,
   }).isRequired,
 };

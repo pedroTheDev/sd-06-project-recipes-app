@@ -12,6 +12,7 @@ import ExploreDrink from './pages/ExploreDrink';
 import ExploreFoodByIngredients from './pages/ExploreFoodByIngredients';
 import ExploreDrinkByIngredients from './pages/ExploreDrinkByIngredients';
 import ExploreFoodByArea from './pages/ExploreFoodByArea';
+import NotFound from './pages/NotFound';
 import Perfil from './pages/Perfil';
 import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
@@ -43,6 +44,11 @@ function App() {
         <Route
           path="/explorar/comidas/area"
           component={ ExploreFoodByArea }
+        />
+
+        <Route
+          path="/explorar/bebidas/area"
+          component={ NotFound }
         />
 
         <Route exact path="/comidas/:id" component={ Recipe } />

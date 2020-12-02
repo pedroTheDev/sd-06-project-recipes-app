@@ -1,25 +1,33 @@
 import { ADD_RECIPES,
   ADD_RECIPE_DETAIL,
+  ADD_AREAS,
   CHANGE_FETCH,
+  CHANGE_ACTIVE_AREA,
   GET_FOOD_CATEGORIES,
   GET_DRINK_CATEGORIES,
   GET_FOOD_INGREDIENTS,
   GET_DRINK_INGREDIENTS,
+  REQUEST_AREAS,
   REQUEST_INGREDIENTS,
   REQUEST_CATEGORIES,
   REQUEST_RECIPES,
   SEND_DATA, CHANGE_FILTER } from '../actions/searchRecipes';
 
 const initialState = {
+  activeArea: '',
+  areas: [],
   recipes: {
     meals: [],
     drinks: [],
+  },
+  areaFilterActive: {
+    'Explorar Origem': false,
   },
   categoriesFilterActive: {
     Comidas: false,
     Bebidas: false,
   },
-
+  isAreasFetching: true,
   isFetchin: false,
   isRecipesFetching: true,
   isRecipesOnClickFetching: false,
@@ -50,6 +58,19 @@ export default function searchRecipesReducer(state = initialState, action) {
   case ADD_RECIPE_DETAIL:
     return {
       ...state, foodInProgress: [...state.foodInProgress, action.recipeDetail],
+    };
+
+  case ADD_AREAS:
+    return {
+      ...state,
+      areas: action.areas,
+      isAreasFetching: false,
+    };
+
+  case CHANGE_ACTIVE_AREA:
+    return {
+      ...state,
+      activeArea: action.area,
     };
 
   case CHANGE_FETCH:
@@ -87,6 +108,11 @@ export default function searchRecipesReducer(state = initialState, action) {
       ...state,
       drinkIngredients: action.ingredients,
       isIngredientsLoading: false,
+    };
+
+  case REQUEST_AREAS:
+    return {
+      ...state, isAreasFetching: true,
     };
 
   case REQUEST_CATEGORIES:

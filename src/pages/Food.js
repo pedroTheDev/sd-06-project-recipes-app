@@ -21,6 +21,7 @@ function Food(props) {
     dispatchFetching,
     dispatchCategories,
     foodRecipes,
+    categoriesFilterActive,
 
   } = props;
   const componentIsMounted = useRef(true);
@@ -62,11 +63,10 @@ function Food(props) {
       <FoodCategoriesButtons />
       <RecipesList
         title={ title }
-        fetchmap={ fetchmap }
-        dispatchRecipes={ dispatchRecipes }
         recipeConfig={ recipe }
         pathname={ pathname }
         isLoading={ isFetchin }
+        filter={ categoriesFilterActive }
       />
       <Footer />
     </>
@@ -81,6 +81,8 @@ const mapStateToProps = (state) => ({
   isFetchin: state.searchRecipes.isFetchin,
   iscategoriesFetching: state.searchRecipes.iscategoriesFetching,
   categories: state.searchRecipes.foodCategories,
+  categoriesFilterActive: state.searchRecipes.categoriesFilterActive,
+
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -125,5 +127,9 @@ Food.propTypes = {
     location: PropTypes.shape({
       pathname: PropTypes.string.isRequired,
     }).isRequired,
+  }).isRequired,
+  categoriesFilterActive: PropTypes.shape({
+    Comidas: PropTypes.bool.isRequired,
+    Bebidas: PropTypes.bool.isRequired,
   }).isRequired,
 };

@@ -6,9 +6,10 @@ import findMatchInKeys from '../helpers/assets';
 
 function RecipesList(props) {
   const { pathname,
-    recipes, title, recipeConfig, isLoading, categoriesFilterActive } = props;
+    recipes, title, recipeConfig, isLoading, filter } = props;
   const { type } = recipeConfig;
-  console.log('btnActive', categoriesFilterActive[title]);
+  console.log('filterActive', filter[title],
+    title, recipeConfig, isLoading, 'recipe', recipes[type]);
 
   const renderRecipesResults = () => {
     const maxRecipesNumber = 12;
@@ -30,9 +31,12 @@ function RecipesList(props) {
   const renderRedirectToSingleResult = () => {
     const results = recipes[type];
     const recipe = results[0];
-    if (recipes[type].length === 1 && !categoriesFilterActive[title]) {
+    if (recipes[type].length === 1 && !filter[title]) {
       const id = findMatchInKeys('id', recipe);
-      return <Redirect to={ `${title.toLowerCase()}/${recipe[id]}` } />;
+      if (title === 'Comidas' || title === 'Bebidas') {
+        return <Redirect to={ `${title.toLowerCase()}/${recipe[id]}` } />;
+      }
+      return <Redirect to={ `comidas/${recipe[id]}` } replace />;
     }
     if (recipes[type].length === 1) {
       return (
@@ -66,7 +70,6 @@ function RecipesList(props) {
 
 const mapStateToProps = (state) => ({
   recipes: state.searchRecipes.recipes,
-  categoriesFilterActive: state.searchRecipes.categoriesFilterActive,
 });
 
 export default connect(mapStateToProps, null)(RecipesList);
