@@ -23,6 +23,7 @@ class Details extends Component {
       isFavorite: false,
       isDone: false,
       inProgress: false,
+      LSProgress: [],
     };
     this.requestDetails = this.requestDetails.bind(this);
     this.renderCardDetails = this.renderCardDetails.bind(this);
@@ -82,20 +83,22 @@ class Details extends Component {
   }
 
   checkInProgress() {
-    const { details } = this.state;
+    const { details, isDrink, isMeal } = this.state;
     const LSP = JSON.parse(localStorage.getItem('inProgressRecipes'));
     // const arrayZerado = [Object.keys(LSP.cocktails), Object.keys(LSP.meals) ]
+
     if (LSP !== null) {
-      // console.log(Object.keys(LSP.cocktails));
-      // const result = Object.keys(LSP.cocktails || LSP.meals);
-      const arrayZerado = [ Object.keys(LSP.cocktails).toString(), Object.keys(LSP.meals).toString()]
-      // Object.keys(LSP).find((keys) => keys["meals"] === details[0].idMeal || keys["cocktails"] === details[0].idDrink)
-      console.log(arrayZerado);
-      if (arrayZerado.includes( details[0].idMeal || details[0].idDrink)) {
+      if (isMeal && LSP.meals[details[0].idMeal]) {
         return this.setState({
-            inProgress: true,
+          inProgress: true,
         });
       }
+      if (isDrink && LSP.cocktails[details[0].idDrink] ) {
+        return this.setState({
+          inProgress: true,
+        });
+      }
+
       return this.setState({
         inProgress: false,
       });
