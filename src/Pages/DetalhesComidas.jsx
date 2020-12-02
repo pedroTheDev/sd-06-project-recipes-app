@@ -99,7 +99,7 @@ const DetalhesComida = () => {
 
   const handleFavorite = () => {
     const currentFood = stateLocal.food.meals[0];
-    const recipeData = [{
+    const recipeData = {
       id: currentFood.idMeal,
       type: 'comida',
       area: currentFood.strArea,
@@ -107,7 +107,7 @@ const DetalhesComida = () => {
       alcoholicOrNot: '',
       name: currentFood.strMeal,
       image: currentFood.strMealThumb,
-    }];
+    };
 
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
     const zero = 0;

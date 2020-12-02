@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import './styles.css';
 import ContextAPI from '../../Context/ContextAPI';
 
 const CategoriesComidas = () => {
@@ -27,6 +28,7 @@ const CategoriesComidas = () => {
     <p>loading</p>
   ) : (
     <div className="main-categories">
+      <span>Selecione uma categoria</span>
       <div className="categories">
         {categories.meals.map((element, index) => {
           const number = 4;
@@ -43,7 +45,6 @@ const CategoriesComidas = () => {
                   { element.strCategory }
                 </button>
               </div>
-
             );
           }
           return '';
