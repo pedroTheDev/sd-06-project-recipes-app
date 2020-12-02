@@ -118,7 +118,7 @@ function DetalhesBebida() {
             <input
               type="checkbox"
               id={ `${numero - 1}-ingredient-step` }
-              className="titulo"
+              className="titulo checkBox"
               onChange={ (e) => checkHandle(e, numero) }
               checked={ (bebida[`strMeasure${numero}`] !== null)
                 ? (ingredientesNoLocalStorage.includes(
@@ -228,6 +228,12 @@ function DetalhesBebida() {
       </button>);
   }
 
+  function checkDisable() {
+    const checkBoxesHtml = document.getElementsByClassName('checkBox');
+    console.log(checkBoxesHtml)
+    return true;
+  }
+
   return (
     (!estadoApiBebidas)
       ? (<p>Loading...</p>)
@@ -254,7 +260,7 @@ function DetalhesBebida() {
           </div>
           <h3 className="titulo">Instruções</h3>
           <p data-testid="instructions" className="intrucoes">{bebida.strInstructions}</p>
-          <button type="button" data-testid="finish-recipe-btn">Finalizar receita</button>
+          <button type="button" data-testid="finish-recipe-btn" disabled={ checkDisable() }>Finalizar receita</button>
         </div>
       )));
 }
