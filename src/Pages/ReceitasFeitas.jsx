@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
+import ShareButton from '../components/ShareBtn';
 import './ReceitasFeitas.css';
 
 import shareIcon from '../images/shareIcon.svg';
@@ -83,13 +84,7 @@ const ReceitasFeitas = () => {
                     >
                       { infoFoof.category }
                     </span>
-                    <button type="button">
-                      <img
-                        data-testid={ `${i}-horizontal-share-btn` }
-                        src={ shareIcon }
-                        alt="shareIcon"
-                      />
-                    </button>
+                    <ShareButton />
                   </div>
                   <div className="middle-informations">
                     <span

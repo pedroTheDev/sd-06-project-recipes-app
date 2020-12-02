@@ -11,6 +11,9 @@ function ShareButton() {
     if (url.includes('in-progress')) {
       url = url.split('/in-progress');
     }
+    if (url.includes('feitas')){
+      console.log('Corno!')
+    }
 
     setWindowLink(url[0]);
     setLinkCopied(true);
