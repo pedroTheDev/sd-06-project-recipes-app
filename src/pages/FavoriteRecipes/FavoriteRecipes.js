@@ -1,17 +1,39 @@
-import React, { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import copy from 'clipboard-copy';
 import Header from '../../components/Header';
 import { shareIcon, whiteHeartIcon, blackHeartIcon } from '../../images';
 import recipesAppContext from '../../context/recipesAppContext';
 import { getFavoriteRecipes } from '../../services/localStorage';
+import { favoriteRecipe, recipeIsFavorite } from '../../services/localStorage';
 
 function FavoritesRecipes() {
-  const { isFavorite, handleFavoriteRecipe } = useContext(recipesAppContext);
+  const location = useLocation();
   const [type, setType] = useState('');
+  const [isFavorite, setIsFavorite] = useState(true);
   const pixels = 200;
   const favoriteRecipes = getFavoriteRecipes();
   console.log(favoriteRecipes);
+
+  const {
+    recipesMeals,
+    recipesDrinks,
+  } = useContext(recipesAppContext);
+
+  const myRecipe = location.pathname.includes('comidas') ? recipesMeals : recipesDrinks;
+
+  const handleFavoriteRecipe = () => {
+    setIsFavorite(false);
+  };
+
+  useEffect(() => {
+    handleFavoriteRecipe();
+  }, [myRecipe]);
+
+  const saveToLocalStorage = () => {
+    favoriteRecipe(myRecipe);
+    handleFavoriteRecipe(myRecipe);
+  };
 
   const handleShareIcon = (target) => {
     const keys = target.id.split(',');
@@ -88,6 +110,7 @@ function FavoritesRecipes() {
                         : recipe.alcoholicOrNot
                     }
                   </p>
+                  <h1>{ index }</h1>
                   <Link to={ urlLinkDetail }>
                     <h3 data-testid={ `${index}-horizontal-name` }>
                       {/* onClick={ ({ target }) => handlePath(target) } */}
@@ -107,9 +130,9 @@ function FavoritesRecipes() {
                   <input
                     type="image"
                     data-testid={ `${index}-horizontal-favorite-btn` }
-                    src={ blackHeartIcon }
+                    src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
                     alt="Favorite recipe"
-                    onClick={ handleFavoriteRecipe }
+                    onClick={ saveToLocalStorage }
                   />
                 </div>
               );
