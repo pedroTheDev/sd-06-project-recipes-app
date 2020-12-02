@@ -3,6 +3,9 @@ import RecipesContext from '../context/RecipesContext';
 import fetchApiFood from '../services/FetchApiFood';
 import fetchApiDrink from '../services/FetchApiDrink';
 
+// CSS
+import '../styles/searchBar.css';
+
 export default function SearchBar() {
   const { setRadioValue,
     setSearchBar,

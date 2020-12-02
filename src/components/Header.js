@@ -4,6 +4,9 @@ import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
 
+// CSS
+import '../styles/header.css';
+
 function HeaderFood() {
   const [showBar, setShowBar] = useState(false);
   const path = window.location.pathname;
@@ -42,9 +45,14 @@ function HeaderFood() {
   };
 
   return (
-    <div>
+    <div className="header-container">
       <Link to="/perfil">
-        <img data-testid="profile-top-btn" src={ profileIcon } alt="profile" />
+        <img
+          data-testid="profile-top-btn"
+          className="profile-top-img"
+          src={ profileIcon }
+          alt="profile"
+        />
       </Link>
       <h1 data-testid="page-title">{title}</h1>
       { searchIconShow ? <input

@@ -67,7 +67,6 @@ export default function Login(props) {
               data-testid="email-input"
               placeholder=""
               onChange={ handleInput }
-              value="Your email here"
             />
           </div>
 
@@ -79,7 +78,6 @@ export default function Login(props) {
               name="password"
               data-testid="password-input"
               onChange={ handleInput }
-              value="Password"
             />
           </div>
 

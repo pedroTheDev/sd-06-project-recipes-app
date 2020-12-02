@@ -3,6 +3,8 @@ import FetchApiFood from '../services/FetchApiFood';
 
 import RecipesContext from '../context/RecipesContext';
 
+import '../styles/mainFoodCard.css';
+
 function MainFoodCard() {
   const {
     fetchFood,
@@ -41,7 +43,7 @@ function MainFoodCard() {
   if (filterFood.length > inicio) {
     return (
       <main>
-        <section>
+        <section className="filter-buttons">
           <button
             type="button"
             data-testid="All-category-filter"
