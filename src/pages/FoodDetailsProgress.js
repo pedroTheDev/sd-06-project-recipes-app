@@ -112,7 +112,7 @@ function FoodDetailsProgress() {
           'favoriteRecipes',
           JSON.stringify([
             ...JSON.parse(localStorage.getItem('favoriteRecipes')),
-            favoriteObj,
+            ...favoriteObj,
           ]),
         );
       }
