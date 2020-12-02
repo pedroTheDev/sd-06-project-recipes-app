@@ -13,7 +13,9 @@ function Card(props) {
       <div data-testid={ `${idx}-recipe-card` } className="drinkCard">
         <h2
           data-testid={ `${idx}-card-name` }
-          className="drinkCard-title">{ strDrink }
+          className="drinkCard-title"
+        >
+          { strDrink }
         </h2>
         <img
           src={ strDrinkThumb }
