@@ -18,6 +18,8 @@ export default function Header(props) {
 
   const searchButton = (
     (title === 'Comidas' || title === 'Bebidas' || title === 'Explorar Origem'
+    || title === 'Receitas Favoritas'
+    || title === 'Receitas Feitas'
       ? (
         <button
           type="button"
