@@ -11,6 +11,7 @@ function Meals({ history }) {
     ingredientExplore,
     recipes,
     recipesToRender,
+    setIngredientExplore,
     categoriesToRender,
     recipesToRenderByIngredient,
   } = useContext(Context);
@@ -18,6 +19,7 @@ function Meals({ history }) {
   useEffect(() => {
     if (ingredientExplore) {
       recipesToRenderByIngredient('meal', ingredientExplore);
+      setIngredientExplore('');
     } else recipesToRender('meal');
     categoriesToRender('meal');
   }, []);
