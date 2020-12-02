@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { requestDetailsFood } from '../services/requestsAPI';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
@@ -11,11 +12,49 @@ function FoodDetailsProgress() {
   const [ingredients, setIngredients] = useState('');
   const [favoriteFood, setFavoriteFood] = useState(false);
   const [spanHidden, setSpanHidden] = useState(true);
+  const [checkedIngredients] = useState([]);
+  const [stateButton, setStateButton] = useState(true);
 
   // const { location } = props;
   // const { state } = location;
   // const { foodDetailsData: foodDetails, ingredientsData: ingredients } = state;
   // console.log(foodDetails, ingredients, 'foodDetailssssss');
+
+  function verifyLocalStorage() {
+    if (localStorage.getItem('inProgressRecipes') === null) {
+      const recipesInProgress = {
+        cocktails: {},
+        meals: {},
+      };
+      localStorage.setItem('inProgressRecipes', JSON.stringify(recipesInProgress));
+    }
+  }
+
+  function enableButton() {
+    setStateButton(true);
+    const markedCheckboxes = document.querySelectorAll('input:checked');
+    const checkboxes = document.getElementsByClassName('check');
+    console.log('check1', markedCheckboxes.length);
+    console.log('check2', checkboxes.length);
+    if (checkboxes.length === markedCheckboxes.length) {
+      setStateButton(false);
+    }
+  }
+
+  function handleProgress(e) {
+    console.log(e.target.value);
+    checkedIngredients.push((e.target.value));
+    const localStorageRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    console.log(localStorageRecipes.meals);
+    localStorageRecipes.meals[foodDetails.idMeal] = checkedIngredients;
+    localStorage.setItem('inProgressRecipes', JSON.stringify(localStorageRecipes));
+    localStorage.setItem(e.target.value, e.target.checked);
+    enableButton();
+  }
+
+  useEffect(() => {
+    verifyLocalStorage();
+  }, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -91,28 +130,40 @@ function FoodDetailsProgress() {
   }
 
   function copyToClipBoard(text) {
-    const textSplice = text.split('/');
-    textSplice.length = 4;
-    console.log(textSplice);
-    navigator.clipboard.writeText(textSplice);
+    const textSplice = text.split('/in-progress');
+    const finalText = textSplice.join('');
+    navigator.clipboard.writeText(finalText);
     setSpanHidden(false);
   }
 
-  // function handleProgress(e) {
-  // console.log(e.target);
-  // // localStorage.setItem('inProgressRecipes', JSON.stringify({ cocktails: {},
-  // //   meals: {},
-  // // }));
+  function handleClickEnd() {
+    const time = new Date();
+    const object = [
+      {
+        id: foodDetails.idMeal,
+        type: 'comida',
+        category: foodDetails.strCategory,
+        alcoholicOrNot: '',
+        area: foodDetails.strArea,
+        name: foodDetails.strMeal,
+        image: foodDetails.strMealThumb,
+        doneDate: time,
+        tags: foodDetails.strTags.split(','),
+      },
+    ];
 
-  // // const localStorageRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
-  // // console.log(localStorageRecipes);
-  // // if (localStorageRecipes.meals[foodDetails.idMeal] !== e.target.value) {
-  // //   console.log('entrou');
-  // //   localStorage.setItem('inProgressRecipes', JSON.stringify({ cocktails: {},
-  // //     meals: { [foodDetails.idMeal]: [e.target.value] },
-  // //   }));
-  // // }
-  // }
+    if (localStorage.getItem('doneRecipes') === null) {
+      localStorage.setItem('doneRecipes', JSON.stringify(object));
+    } else {
+      localStorage.setItem(
+        'doneRecipes',
+        JSON.stringify([
+          ...JSON.parse(localStorage.getItem('doneRecipes')),
+          ...object,
+        ]),
+      );
+    }
+  }
 
   return (
     <div>
@@ -157,12 +208,14 @@ function FoodDetailsProgress() {
           .map((item, index) => (
             <div key={ index } data-testid={ `${index}-ingredient-step` }>
               <input
+                className="check"
                 type="checkbox"
                 id={ item.ingredient }
                 key={ item.ingredient }
                 name={ item.ingredient }
                 value={ item.ingredient }
-                // onChange={ (e) => handleProgress(e) }
+                checked={ JSON.parse(localStorage.getItem(item.ingredient)) }
+                onChange={ (e) => handleProgress(e) }
               />
               <label htmlFor={ item.ingredient }>
                 {
@@ -184,8 +237,16 @@ function FoodDetailsProgress() {
         />
         <track src="" kind="captions" />
       </video>
-
-      <button type="button" data-testid="finish-recipe-btn">Finalizar receita</button>
+      <Link to="/receitas-feitas">
+        <button
+          type="button"
+          data-testid="finish-recipe-btn"
+          disabled={ stateButton }
+          onClick={ handleClickEnd }
+        >
+          Finalizar receita
+        </button>
+      </Link>
     </div>
   );
 }

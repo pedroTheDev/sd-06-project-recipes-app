@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { requestDetailsDrinks } from '../services/requestsAPI';
 import RecipesContext from '../context/RecipesContext';
 import shareIcon from '../images/shareIcon.svg';
@@ -8,12 +9,46 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 function DrinksDetailsProgress() {
   const url = document.URL;
   const actualId = url.split('/')[4];
-  const { resultsFoodsAndDrinks } = useContext(RecipesContext);
-  console.log(resultsFoodsAndDrinks);
-  const [drinkDetails, setDrinkDetails] = useState([]);
+  const { drinkDetails, setDrinkDetails } = useContext(RecipesContext);
   const [ingredients, setIngredients] = useState('');
   const [spanHidden, setSpanHidden] = useState(true);
   const [favoriteDrink, setFavoriteDrink] = useState(false);
+  const [checkedIngredients] = useState([]);
+  const [stateButton, setStateButton] = useState(true);
+
+  function verifyLocalStorage() {
+    if (localStorage.getItem('inProgressRecipes') === null) {
+      const recipesInProgress = {
+        cocktails: {},
+        meals: {},
+      };
+      localStorage.setItem('inProgressRecipes', JSON.stringify(recipesInProgress));
+    }
+  }
+
+  function enableButton() {
+    setStateButton(true);
+    const markedCheckboxes = document.querySelectorAll('input:checked');
+    const checkboxes = document.getElementsByClassName('check');
+    console.log('check1', markedCheckboxes.length);
+    console.log('check2', checkboxes.length);
+    if (checkboxes.length === markedCheckboxes.length) {
+      setStateButton(false);
+    }
+  }
+
+  function handleProgress(e) {
+    checkedIngredients.push((e.target.value));
+    const localStorageRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    localStorageRecipes.cocktails[drinkDetails.idDrink] = checkedIngredients;
+    localStorage.setItem('inProgressRecipes', JSON.stringify(localStorageRecipes));
+    localStorage.setItem(e.target.value, e.target.checked);
+    enableButton();
+  }
+
+  useEffect(() => {
+    verifyLocalStorage();
+  }, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -51,7 +86,9 @@ function DrinksDetailsProgress() {
   }, []);
 
   function copyToClipBoard(text) {
-    navigator.clipboard.writeText(text);
+    const textSplice = text.split('/in-progress');
+    const finalText = textSplice.join('');
+    navigator.clipboard.writeText(finalText);
     setSpanHidden(false);
   }
 
@@ -91,12 +128,33 @@ function DrinksDetailsProgress() {
     }
   }
 
-  function handleCheckboxChange(e) {
-    localStorage.setItem('inProgressRecipes', {
-      cocktails: {},
-      meals: {},
-    });
-    console.log(e.target.value);
+  function handleClickEnd() {
+    const time = new Date();
+    const object = [
+      {
+        id: drinkDetails.idDrink,
+        type: 'bebida',
+        area: '',
+        category: drinkDetails.strCategory,
+        alcoholicOrNot: drinkDetails.strAlcoholic,
+        name: drinkDetails.strDrink,
+        image: drinkDetails.strDrinkThumb,
+        doneDate: time,
+        tags: drinkDetails.strTags,
+      },
+    ];
+
+    if (localStorage.getItem('doneRecipes') === null) {
+      localStorage.setItem('doneRecipes', JSON.stringify(object));
+    } else {
+      localStorage.setItem(
+        'doneRecipes',
+        JSON.stringify([
+          ...JSON.parse(localStorage.getItem('doneRecipes')),
+          ...object,
+        ]),
+      );
+    }
   }
 
   return (
@@ -154,10 +212,13 @@ function DrinksDetailsProgress() {
               <label htmlFor={ item.ingredient }>
                 <input
                   type="checkbox"
+                  className="check"
                   id={ item.ingredient }
-                  key={ index }
-                  onChange={ (e) => handleCheckboxChange(e) }
+                  key={ item.ingredient }
+                  name={ item.ingredient }
                   value={ item.ingredient }
+                  checked={ JSON.parse(localStorage.getItem(item.ingredient)) }
+                  onChange={ (e) => handleProgress(e) }
                 />
                 {
                   `${index + 1} - ${item.ingredient}: ${item.measure}`
@@ -174,7 +235,20 @@ function DrinksDetailsProgress() {
       </p>
 
       <span hidden={ spanHidden }>Link copiado!</span>
-      <button type="button" data-testid="finish-recipe-btn">Finalizar receita</button>
+      <Link
+        to={
+          { pathname: '/receitas-feitas', state: { drinkDoneCard: drinkDetails } }
+        }
+      >
+        <button
+          type="button"
+          data-testid="finish-recipe-btn"
+          disabled={ stateButton }
+          onClick={ handleClickEnd }
+        >
+          Finalizar receita
+        </button>
+      </Link>
     </div>
   );
 }
