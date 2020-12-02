@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import RecipesAppContext from './RecipesAppContext';
+import { loadState } from '../services/localStorage';
 
 function Provider({ children }) {
   const [email, setEmail] = useState('');
@@ -13,6 +14,11 @@ function Provider({ children }) {
   const [categoriesButtonFood, setCategoriesButtonFood] = useState([]);
   const [categoriesButtonDrink, setCategoriesButtonDrink] = useState([]);
 
+  const [
+    localStorageFavoriteRecipes,
+    setLocalStorageFavoriteRecipes,
+  ] = useState(loadState('favoriteRecipes', []));
+
   const contextValue = {
     email,
     setEmail,
@@ -20,6 +26,10 @@ function Provider({ children }) {
     setPassword,
     searchHeader,
     setSearchHeader,
+    localStorageChange: {
+      localStorageFavoriteRecipes,
+      setLocalStorageFavoriteRecipes,
+    },
     categories: {
       categoriesButtonFood,
       setCategoriesButtonFood,

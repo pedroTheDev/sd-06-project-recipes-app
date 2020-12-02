@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import RecipesAppContext from '../context/RecipesAppContext';
 import { requestApiDrinkFilterName } from '../services/requestDrink';
+import '../styles/imgBig.css';
 
 function CardsDrink() {
   const {
@@ -36,6 +37,7 @@ function CardsDrink() {
           >
             <div data-testid={ `${index}-recipe-card` }>
               <img
+                className="imgBig"
                 src={ strDrinkThumb }
                 alt={ strDrink }
                 data-testid={ `${index}-card-img` }

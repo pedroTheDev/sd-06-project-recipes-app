@@ -4,6 +4,7 @@ import RecipesAppContext from '../context/RecipesAppContext';
 import {
   requestApiFoodFilterName,
 } from '../services/requestFood';
+import '../styles/imgBig.css';
 
 function CardsFood() {
   const {
@@ -38,6 +39,7 @@ function CardsFood() {
           >
             <div data-testid={ `${index}-recipe-card` }>
               <img
+                className="imgBig"
                 src={ strMealThumb }
                 alt={ strMeal }
                 data-testid={ `${index}-card-img` }

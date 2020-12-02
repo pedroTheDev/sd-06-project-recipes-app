@@ -40,7 +40,12 @@ function Login() {
   return (
     <form>
       <h2>Login</h2>
-      <input type="email" data-testid="email-input" onChange={ isEmail } />
+      <input
+        type="email"
+        placeholder="e-mail"
+        data-testid="email-input"
+        onChange={ isEmail }
+      />
       <input type="password" data-testid="password-input" onChange={ isPassword } />
       <Link to="/comidas">
         <button
