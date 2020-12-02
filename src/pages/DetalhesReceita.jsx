@@ -10,6 +10,7 @@ import {
 import '../styles/Detalhes.css';
 import buttonShare from '../styles/images/shareIcon.svg';
 import FavoriteHeart from '../components/FavoriteHeart';
+import '../styles/imgBig.css';
 
 function DetalhesReceita({ match: { params: { id } } }) {
   const zero = 0;
@@ -99,7 +100,6 @@ function DetalhesReceita({ match: { params: { id } } }) {
         </h5>
       ))}
       <iframe
-        title="videos"
         data-testid="video"
         title="video"
         width="1042"

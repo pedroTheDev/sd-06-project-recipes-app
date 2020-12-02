@@ -1,10 +1,22 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import whiteHeartIcon from '../styles/images/whiteHeartIcon.svg';
 import blackHeartIcon from '../styles/images/blackHeartIcon.svg';
 import { saveState, loadState } from '../services/localStorage';
+import RecipesAppContext from '../context/RecipesAppContext';
 
-function FavoriteHeart({ id, detailsDrink, detailsFood }) {
+function FavoriteHeart({ id, detailsDrink, detailsFood, testIdReceitasFavoritas }) {
+  const {
+    localStorageChange: {
+      setLocalStorageFavoriteRecipes,
+    },
+  } = useContext(RecipesAppContext);
+
+  let testIdImgHeart = 'favorite-btn';
+  if (testIdReceitasFavoritas) {
+    testIdImgHeart = testIdReceitasFavoritas;
+  }
+
   const favoriteRecipe = 'favoriteRecipes';
   const responseFavoriteStorage = loadState(favoriteRecipe, [])
     .some((element) => element.id === id);
@@ -23,8 +35,6 @@ function FavoriteHeart({ id, detailsDrink, detailsFood }) {
 
     const response = loadFavoriteRecipe.filter((element) => element.id !== id);
 
-    let payload = {};
-
     if (loadFavoriteRecipe.length > response.length) {
       saveState(favoriteRecipe, response);
     } else if (detailsDrink) {
@@ -36,7 +46,7 @@ function FavoriteHeart({ id, detailsDrink, detailsFood }) {
         strAlcoholic,
       } = detailsDrink;
 
-      payload = {
+      const payload = {
         id: idDrink,
         type: 'bebida',
         area: '',
@@ -55,7 +65,7 @@ function FavoriteHeart({ id, detailsDrink, detailsFood }) {
         strMealThumb,
       } = detailsFood;
 
-      payload = {
+      const payload = {
         id: idMeal,
         type: 'comida',
         area: strArea,
@@ -66,6 +76,7 @@ function FavoriteHeart({ id, detailsDrink, detailsFood }) {
       };
       saveState(favoriteRecipe, [...loadFavoriteRecipe, payload]);
     }
+    setLocalStorageFavoriteRecipes(loadState('favoriteRecipes', []));
     favoriteMark();
   };
 
@@ -73,7 +84,7 @@ function FavoriteHeart({ id, detailsDrink, detailsFood }) {
     favoriteButton ? (
       <button type="button" onClick={ saveFavoriteRecipe }>
         <img
-          data-testid="favorite-btn"
+          data-testid={ testIdImgHeart }
           src={ blackHeartIcon }
           alt="img-button-fav"
         />
@@ -81,7 +92,7 @@ function FavoriteHeart({ id, detailsDrink, detailsFood }) {
     ) : (
       <button type="button" onClick={ saveFavoriteRecipe }>
         <img
-          data-testid="favorite-btn"
+          data-testid={ testIdImgHeart }
           src={ whiteHeartIcon }
           alt="img-button-fav"
         />
