@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { fetchDrink } from '../../services/cocktailAPI';
 import SecondaryHeader from '../../components/SecondaryHeader';
@@ -8,10 +8,12 @@ import {
   addDoneRecipe,
 } from '../../services/localStorage';
 import '../Detail/detail.css';
+import recipesAppContext from '../../context/recipesAppContext';
 
 export default function DrinkInProgress() {
   const { id } = useParams();
   const [recipes, setRecipes] = useState({});
+  const { fetchDrinkIngredients } = useContext(recipesAppContext);
   const zero = 0;
   let ingredientsNumber = zero;
 
@@ -21,6 +23,7 @@ export default function DrinkInProgress() {
   };
 
   useEffect(() => {
+    fetchDrinkIngredients(id);
     fetchIngredients();
   }, []);
 
