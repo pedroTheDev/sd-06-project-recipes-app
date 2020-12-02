@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { exploreByIngredients, imageOfIngredients } from '../services/aPI';
+import { exploreByIngredients } from '../services/aPI';
 import './ComidasPorIngrediente.css';
 
 import Header from '../components/Header';
@@ -8,7 +8,6 @@ import Footer from '../components/Footer';
 
 const ComidasPorIngrediente = () => {
   const [stateIngredients, setStateIngredients] = useState();
-  const [stateUrlImage, setUrlImage] = useState({ url: [] });
 
   const searchForIngredients = async () => {
     const ingredients = await exploreByIngredients();
@@ -16,51 +15,14 @@ const ComidasPorIngrediente = () => {
     setStateIngredients(ingredients);
   };
 
-  const searchImageOfIngredients = async (nameIngredient) => {
-    const urlImages = [];
-
-    urlImages.push(await imageOfIngredients(nameIngredient)
-      .then((res) => res.url));
-
-    // console.log(urlImages);
-
-    setUrlImage({
-      url: [
-        ...stateUrlImage.url,
-        urlImages,
-      ],
-    });
-
-    return urlImages;
-  };
-
-  const numberOfIngredients = 11;
-
-  const searchImage = () => {
-    if (stateIngredients) {
-      stateIngredients.meals
-        .filter(((ingred, i) => i <= numberOfIngredients))
-        .map((res) => res.strIngredient)
-        .map((ingredNome) => {
-          // console.log(ingredNome);
-          searchImageOfIngredients(ingredNome);
-        });
-    }
-    return '';
-    // console.log('false');
-  };
-
-  useEffect(() => {
-    searchImage();
-  }, [stateIngredients]);
-
   useEffect(() => {
     searchForIngredients();
   }, []);
 
+  const numberOfIngredients = 11;
+
   return (
     <div>
-      {stateUrlImage && console.log(stateUrlImage.url)}
       <Header />
       <div className="main-ingredients">
         {!stateIngredients ? <div>Loading...</div>
@@ -72,15 +34,19 @@ const ComidasPorIngrediente = () => {
                 className="container-ingredients"
                 data-testid={ `${i}-ingredient-card` }
               >
+                <div className="container-img">
+                  <img
+                    src={ `https://www.themealdb.com/images/ingredients/${ingred.strIngredient}-Small.png` }
+                    data-testid={ `${i}-card-img` }
+                    alt="kkk"
+                    width="100px"
+                  />
+                </div>
                 <span
                   data-testid={ `${i}-card-name` }
                 >
                   {ingred.strIngredient}
                 </span>
-                <img
-                  src=""
-                  alt="kkk"
-                />
               </div>
             )
           ))}

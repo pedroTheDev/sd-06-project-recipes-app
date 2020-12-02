@@ -116,10 +116,11 @@ export async function exploreByIngredients() {
   return json;
 }
 
-export async function imageOfIngredients(ingredientName) {
-  const URL = `https://www.themealdb.com/images/ingredients/${ingredientName}.png`;
+export async function exploreDrinksByIngredients() {
+  const URL = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list';
 
-  const response = await fetch(URL);
+  const response = await fetch(`${URL}`);
+  const json = response.json();
 
-  return response;
+  return json;
 }
