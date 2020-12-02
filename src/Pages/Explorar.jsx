@@ -9,6 +9,7 @@ import Footer from '../components/Footer';
 const Explorar = () => (
   <div>
     <Header />
+
     <div className="main-explore">
       <Link to="/explorar/comidas">
         <button
