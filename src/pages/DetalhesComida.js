@@ -159,10 +159,20 @@ function DetalhesComida() {
               <p data-testid="instructions">{ dataMeal.strInstructions }</p>
               <br />
               <h2>Vídeo</h2>
-              <video data-testid="video" width="300" height="250" controls>
-                <source src={ dataMeal.strYoutube } type="video/mp4" />
-                <track src="" kind="captions" />
-              </video>
+              <div data-testid="video">
+                <iframe
+                  title="Recipe Video"
+                  width="320"
+                  height="250"
+                  src={ dataMeal.strYoutube && dataMeal.strYoutube
+                    .replace('watch?v=', 'embed/') }
+                  frameBorder="0"
+                  allow="accelerometer;
+                autoplay; clipboard-write; encrypted-media; gyroscope;
+                picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
 
               <h2>Recomendadas</h2>
               <div className="cards">
