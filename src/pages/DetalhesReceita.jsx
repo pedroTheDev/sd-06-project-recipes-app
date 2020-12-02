@@ -10,6 +10,7 @@ import {
 import '../styles/Detalhes.css';
 import buttonShare from '../styles/images/shareIcon.svg';
 import FavoriteHeart from '../components/FavoriteHeart';
+import { loadState, saveState } from '../services/localStorage';
 import '../styles/imgBig.css';
 
 function DetalhesReceita({ match: { params: { id } } }) {
@@ -20,11 +21,35 @@ function DetalhesReceita({ match: { params: { id } } }) {
   const [arrayIngredients, setArrayIngredients] = useState([]);
   const [embed, setEmbed] = useState('');
   const [recommendFood, setRecommendFood] = useState([]);
+  const [startRecipe, setStartRecipe] = useState('Iniciar Receita');
+
+  const startRecipeFunc = (compare) => {
+    if (localStorage.getItem('inProgressRecipes')) {
+      const loadStorage = loadState('inProgressRecipes', '');
+      if (loadStorage.meals) {
+        if (loadStorage.meals[compare] !== undefined) {
+          setStartRecipe('Continuar Receita');
+        }
+      }
+    }
+  };
+
+  const clickStartRecipeFunc = () => {
+    const loadStorage = loadState('inProgressRecipes', '');
+    if (startRecipe === 'Iniciar Receita') {
+      saveState('inProgressRecipes', {
+        ...loadStorage,
+        meals:
+          { ...loadStorage.meals, [detailsFood.idMeal]: [...arrayIngredients] },
+      });
+    }
+  };
 
   useEffect(() => {
     requestApiFoodDetails(id)
       .then((response) => {
         setDetailsFood(response[0]);
+        startRecipeFunc(response[0].idMeal);
       });
   }, []);
 
@@ -57,6 +82,7 @@ function DetalhesReceita({ match: { params: { id } } }) {
     }
   };
 
+  // refatorar em componente no futuro
   const copyBoard = () => {
     const url = `http://localhost:3000/comidas/${id}`;
     const input = document.body.appendChild(document.createElement('input'));
@@ -129,8 +155,9 @@ function DetalhesReceita({ match: { params: { id } } }) {
           type="button"
           data-testid="start-recipe-btn"
           className="btn-footer"
+          onClick={ clickStartRecipeFunc }
         >
-          Iniciar receita
+          { startRecipe }
         </button>
       </Link>
     </div>

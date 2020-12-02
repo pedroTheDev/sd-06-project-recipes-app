@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { requestApiFoodDetails } from '../services/requestFood';
 import buttonShare from '../styles/images/shareIcon.svg';
@@ -10,6 +11,7 @@ function ProcessoReceita({ match: { params: { id } } }) {
   const vinte = 20;
   const [detailsFood, setDetailsFood] = useState([]);
   const [arrayIngredients, setArrayIngredients] = useState([]);
+  const [countCheck, setCountCheck] = useState(zero);
   useEffect(() => {
     requestApiFoodDetails(id)
       .then((response) => {
@@ -36,7 +38,24 @@ function ProcessoReceita({ match: { params: { id } } }) {
     if (checkBox.checked) {
       const labelBox = document.getElementsByName(`${event.target.id}`);
       labelBox[0].className = 'riscado';
+      setCountCheck(countCheck + 1);
+    } else {
+      setCountCheck(countCheck - 1);
     }
+  };
+
+  // refatorar em componente no futuro
+  const copyBoard = () => {
+    const url = `http://localhost:3000/comidas/${id}`;
+    const input = document.body.appendChild(document.createElement('input'));
+    input.value = url;
+    input.select();
+    document.execCommand('copy');
+    input.parentNode.removeChild(input);
+    const divBtns = document.getElementById('btns');
+    const newSpan = document.createElement('span');
+    newSpan.innerHTML = 'Link copiado!';
+    divBtns.appendChild(newSpan);
   };
 
   useEffect(() => {
@@ -53,10 +72,12 @@ function ProcessoReceita({ match: { params: { id } } }) {
       <img data-testid="recipe-photo" src={ detailsFood.strMealThumb } alt="food-thumb" />
       <h2 data-testid="recipe-title">{detailsFood.strMeal}</h2>
       <h3 data-testid="recipe-category">{detailsFood.strCategory}</h3>
-      <button type="button" data-testid="share-btn">
-        <img src={ buttonShare } alt="button-share" />
-      </button>
-      <FavoriteHeart id={ id } detailsFood={ detailsFood } />
+      <div id="btns">
+        <button type="button" data-testid="share-btn" onClick={ copyBoard }>
+          <img src={ buttonShare } alt="button-share" />
+        </button>
+        <FavoriteHeart id={ id } detailsFood={ detailsFood } />
+      </div>
       {arrayIngredients.map((element, index) => (
         <label
           htmlFor="scales"
@@ -69,7 +90,15 @@ function ProcessoReceita({ match: { params: { id } } }) {
         </label>
       ))}
       <h4 data-testid="instructions">{detailsFood.strInstructions}</h4>
-      <button type="button" data-testid="finish-recipe-btn">Finalizar receita</button>
+      <Link to="/receitas-feitas">
+        <button
+          type="button"
+          data-testid="finish-recipe-btn"
+          disabled={ arrayIngredients.length !== countCheck }
+        >
+          Finalizar receita
+        </button>
+      </Link>
     </div>
   );
 }

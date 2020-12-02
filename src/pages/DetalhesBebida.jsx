@@ -10,6 +10,7 @@ import {
 import '../styles/Detalhes.css';
 import buttonShare from '../styles/images/shareIcon.svg';
 import FavoriteHeart from '../components/FavoriteHeart';
+import { loadState, saveState } from '../services/localStorage';
 import '../styles/imgBig.css';
 
 function DetalhesBebida({ match: { params: { id } } }) {
@@ -19,11 +20,35 @@ function DetalhesBebida({ match: { params: { id } } }) {
   const [detailsDrink, setDetailsDrink] = useState({});
   const [arrayIngredients, setArrayIngredients] = useState([]);
   const [recommendDrink, setRecommendDrink] = useState([]);
+  const [startRecipe, setStartRecipe] = useState('Iniciar Receita');
+
+  const startRecipeFunc = (compare) => {
+    if (localStorage.getItem('inProgressRecipes')) {
+      const loadStorage = loadState('inProgressRecipes', '');
+      if (loadStorage.cocktails) {
+        if (loadStorage.cocktails[compare] !== undefined) {
+          setStartRecipe('Continuar Receita');
+        }
+      }
+    }
+  };
+
+  const clickStartRecipeFunc = () => {
+    const loadStorage = loadState('inProgressRecipes', '');
+    if (startRecipe === 'Iniciar Receita') {
+      saveState('inProgressRecipes', {
+        ...loadStorage,
+        cocktails:
+          { ...loadStorage.cocktails, [detailsDrink.idDrink]: [...arrayIngredients] },
+      });
+    }
+  };
 
   useEffect(() => {
     requestApiDrinkDetails(id)
       .then((response) => {
         setDetailsDrink(response[0]);
+        startRecipeFunc(response[0].idDrink);
       });
   }, []);
 
@@ -53,6 +78,7 @@ function DetalhesBebida({ match: { params: { id } } }) {
     recommendDrinkFunction();
   }, [detailsDrink]);
 
+  // refatorar em componente no futuro
   const copyBoard = () => {
     const url = `http://localhost:3000/bebidas/${id}`;
     const input = document.body.appendChild(document.createElement('input'));
@@ -115,8 +141,9 @@ function DetalhesBebida({ match: { params: { id } } }) {
           type="button"
           data-testid="start-recipe-btn"
           className="btn-footer"
+          onClick={ clickStartRecipeFunc }
         >
-          Iniciar receita
+          { startRecipe }
         </button>
       </Link>
     </div>
