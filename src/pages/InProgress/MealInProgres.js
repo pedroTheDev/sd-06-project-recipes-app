@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { fetchMeal } from '../../services/mealAPI';
 import SecondaryHeader from '../../components/SecondaryHeader';
@@ -8,12 +8,14 @@ import {
   addDoneRecipe,
 } from '../../services/localStorage';
 import '../Detail/detail.css';
+import recipesAppContext from '../../context/recipesAppContext';
 
 export default function MealInProgress() {
   const { id } = useParams();
   const [recipes, setRecipes] = useState({});
   const zero = 0;
   let ingredientsNumber = zero;
+  const { fetchMealIngredients } = useContext(recipesAppContext);
 
   const fetchIngredients = async () => {
     const recipesByIdApi = await fetchMeal('lookupIngredient', id);
@@ -21,6 +23,7 @@ export default function MealInProgress() {
   };
 
   useEffect(() => {
+    fetchMealIngredients(id);
     fetchIngredients();
   }, []);
 
