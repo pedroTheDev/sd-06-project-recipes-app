@@ -49,15 +49,18 @@ class DrinksDetails extends React.Component {
     }
   }
 
-  async handleShareDrink({ idDrink }) {
+  async handleShareDrink({ target }, { idDrink }) {
+    const two = 2;
+    if ((target.parentNode).childNodes.length <= two) {
+      const { parentNode } = target;
+      const paragraph = document.createElement('p');
+      paragraph.innerText = 'Link copiado!';
+      paragraph.style.fontSize = '8px';
+      paragraph.style.fontWeight = '100';
+      parentNode.appendChild(paragraph);
+    }
     const url = `http://localhost:3000/bebidas/${idDrink}`;
     await copy(url);
-    const shareBtn = document.querySelector('.share-btn');
-    shareBtn.value = 'Link copiado!';
-    const p = document.querySelector('.p');
-    const span = document.createElement('span');
-    p.appendChild(span);
-    span.innerHTML = 'Link copiado!';
   }
 
   handleIngredients() {
@@ -188,9 +191,10 @@ class DrinksDetails extends React.Component {
     }
   }
 
-  redirectFromState() {
+  redirectFromState(recipe) {
     const { idCurrent } = this.props;
     const { history } = this.props;
+    localStorage.setItem('ReceitaIniciada', JSON.stringify(recipe.idDrink));
     const getCheckedItems = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (getCheckedItems) {
       const objValue = getCheckedItems.cocktails[idCurrent];
@@ -213,11 +217,12 @@ class DrinksDetails extends React.Component {
       Ingredients,
       Measures,
       Video } = this.state;
+    const { history } = this.props;
     const recipe = Drink[0];
     const zero = 0;
     return (
       <div className="food-drink-detail-container">
-        {Drink.length > zero && (
+        {Drink.length > zero ? Drink && (
           <div className="detail-card">
             <img
               src={ recipe.strDrinkThumb }
@@ -230,23 +235,24 @@ class DrinksDetails extends React.Component {
                 <p data-testid="recipe-category">{recipe.strAlcoholic}</p>
               </div>
               <div className="recipe-buttons">
-                <input
-                  type="image"
-                  className="share-btn"
-                  data-testid="share-btn"
-                  src={ shareIcon }
-                  onClick={ () => this.handleShareDrink(recipe) }
-                  alt="shareIcon"
-                />
-                <p className="p" />
-                <input
-                  type="image"
-                  data-testid="favorite-btn"
-                  className="fav-button"
-                  src={ this.teste(recipe) }
-                  onClick={ () => this.setLocalState(recipe) }
-                  alt="whiteHeartIcon"
-                />
+                <div>
+                  <input
+                    type="image"
+                    className="share-btn"
+                    data-testid="share-btn"
+                    src={ shareIcon }
+                    onClick={ (event) => this.handleShareDrink(event, recipe) }
+                    alt="shareIcon"
+                  />
+                  <input
+                    type="image"
+                    data-testid="favorite-btn"
+                    className="fav-button"
+                    src={ this.teste(recipe) }
+                    onClick={ () => this.setLocalState(recipe) }
+                    alt="whiteHeartIcon"
+                  />
+                </div>
               </div>
             </div>
             <hr className="card-hr" />
@@ -290,10 +296,12 @@ class DrinksDetails extends React.Component {
                   style={ { transform: `translateX(${x}%)` } }
                   data-testid={ `${i}-recomendation-card` }
                 >
-                  <img
+                  <input
+                    type="image"
                     src={ recomend.strMealThumb }
                     data-testid="recipe-photo"
                     alt="recipe-img"
+                    onClick={ () => history.push(`/comidas/${recomend.idMeal}`) }
                   />
                   <div className="text-slider-div">
                     <p>{recomend.strCategory}</p>
@@ -324,6 +332,15 @@ class DrinksDetails extends React.Component {
                 >
                   Iniciar Receita
                 </button>)}
+          </div>
+        ) : (
+          <div className="details-loading">
+            <div className="lds-ellipsis">
+              <div />
+              <div />
+              <div />
+              <div />
+            </div>
           </div>
         )}
       </div>

@@ -64,15 +64,18 @@ class FoodsRecipesInProgress extends React.Component {
     });
   }
 
-  async handleShareFood({ idMeal }) {
+  async handleShareFood({ target }, { idMeal }) {
+    const three = 3;
+    if ((target.parentNode).childNodes.length < three) {
+      const { parentNode } = target;
+      const paragraph = document.createElement('p');
+      paragraph.innerText = 'Link copiado!';
+      paragraph.style.fontSize = '8px';
+      paragraph.style.fontWeight = '100';
+      parentNode.appendChild(paragraph);
+    }
     const url = `http://localhost:3000/comidas/${idMeal}`;
     await copy(url);
-    const shareBtn = document.querySelector('.share-btn');
-    shareBtn.value = 'Link copiado!';
-    const p = document.querySelector('.p');
-    const span = document.createElement('span');
-    p.appendChild(span);
-    span.innerHTML = 'Link copiado!';
   }
 
   handleButton() {
@@ -205,7 +208,7 @@ class FoodsRecipesInProgress extends React.Component {
       this.setState({ checkedItems: originalChecked });
       this.setRecipesLocalStorage(originalChecked);
     }
-    const inputsList = document.querySelectorAll('input');
+    const inputsList = document.querySelectorAll('input[type=checkbox]');
     inputsList.forEach((item) => {
       if (item.checked === true) {
         item.parentNode.className = 'styled';
@@ -236,6 +239,7 @@ class FoodsRecipesInProgress extends React.Component {
     if (myTags === null) {
       myTags = 'No Tags';
     }
+
     const myObject = [{
       id: recipe.idMeal,
       type: 'comida',
@@ -267,8 +271,19 @@ class FoodsRecipesInProgress extends React.Component {
     const verifyLocalStorage = this.getRecipesLocalStorage();
     if (checkedItems.length === length && verifyLocalStorage) {
       const getCheckedItems = this.getRecipesLocalStorage();
+
       return getCheckedItems;
     }
+    const inputsList = document.querySelectorAll('input[type=checkbox]');
+    inputsList.forEach((item) => {
+      if (item.checked === true) {
+        item.parentNode.className = 'styled';
+        item.parentNode.checked = true;
+        item.parentNode.checked = 'check';
+      } else {
+        item.parentNode.className = 'not-styled';
+      }
+    });
     return checkedItems;
   }
 
@@ -290,23 +305,24 @@ class FoodsRecipesInProgress extends React.Component {
                 <p data-testid="recipe-category">{recipe.strCategory}</p>
               </div>
               <div className="recipe-buttons">
-                <input
-                  type="image"
-                  data-testid="share-btn"
-                  className="share-btn"
-                  src={ shareIcon }
-                  alt="shareIcon"
-                  onClick={ () => this.handleShareFood(recipe) }
-                />
-                <p className="p" />
-                <input
-                  type="image"
-                  data-testid="favorite-btn"
-                  className="fav-button"
-                  src={ this.changeFavoriteIcon(recipe) }
-                  onClick={ () => this.setLocalStorage(recipe) }
-                  alt="whiteHeartIcon"
-                />
+                <div>
+                  <input
+                    type="image"
+                    data-testid="share-btn"
+                    className="share-btn"
+                    src={ shareIcon }
+                    alt="shareIcon"
+                    onClick={ (event) => this.handleShareFood(event, recipe) }
+                  />
+                  <input
+                    type="image"
+                    data-testid="favorite-btn"
+                    className="fav-button"
+                    src={ this.changeFavoriteIcon(recipe) }
+                    onClick={ () => this.setLocalStorage(recipe) }
+                    alt="whiteHeartIcon"
+                  />
+                </div>
               </div>
             </div>
             <hr className="card-hr" />
@@ -343,17 +359,15 @@ class FoodsRecipesInProgress extends React.Component {
             <h2 data-testid="instructions">Instructions</h2>
             <div className="detail-instructions">{recipe.strInstructions}</div>
             <p data-testid={ `${index}-card-name` }>{recipe.strMeal}</p>
-            <div>
-              <button
-                data-testid="finish-recipe-btn"
-                type="button"
-                onClick={ () => this.recipeDone(recipe) }
-                className="start-recipe"
-                disabled={ !disabledButton }
-              >
-                Finalizar Receita
-              </button>
-            </div>
+            <button
+              data-testid="finish-recipe-btn"
+              type="button"
+              onClick={ () => this.recipeDone(recipe) }
+              className="start-recipe"
+              disabled={ !disabledButton }
+            >
+              Finalizar Receita
+            </button>
           </div>
         )) : null }
       </div>);

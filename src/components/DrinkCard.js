@@ -22,25 +22,18 @@ class DrinkCard extends React.Component {
     }
   }
 
-  async handleShareDrink({ id }) {
-    const url = `http://localhost:3000/bebidas/${id}`;
+  async handleShareDrink({ id }, { target }) {
+    const two = 2;
+    if ((target.parentNode).childNodes.length < two) {
+      const { parentNode } = target;
+      const paragraph = document.createElement('p');
+      paragraph.innerText = 'Link copiado!';
+      paragraph.style.fontSize = '8px';
+      paragraph.style.fontWeight = '100';
+      parentNode.appendChild(paragraph);
+    }
+    const url = `http://localhost:3000/comidas/${id}`;
     await copy(url);
-    // shareBtn.innerText = 'Link copiado!';
-    const p = document.querySelector('.p');
-    const span = document.createElement('span');
-    p.appendChild(span);
-    span.innerHTML = 'Link copiado!';
-    // window.alert('Link copiado!');
-    //  https://www.30secondsofcode.org/blog/s/copy-text-to-clipboard-with-javascript
-    // const el = document.createElement('textarea');
-    // el.value = url;
-    // el.setAttribute('readonly', '');
-    // el.style.position = 'absolute';
-    // el.style.left = '-9999px';
-    // document.body.appendChild(el);
-    // el.select();
-    // document.execCommand('copy');
-    // document.body.removeChild(el);
   }
 
   setDrinkState(Drink) {
@@ -53,7 +46,7 @@ class DrinkCard extends React.Component {
     const { Drink } = this.state;
     const { history, indexAcc } = this.props;
     return (
-      <div>
+      <div className="food-or-drink-done-card">
         {Drink.map((element, index) => (
           <div key={ index + indexAcc } className="food-drink-card">
             <input
@@ -85,9 +78,8 @@ class DrinkCard extends React.Component {
                     src={ shareIcon }
                     alt="share"
                     className="done-recipe-share-btn"
-                    onClick={ () => this.handleShareDrink(element) }
+                    onClick={ (event) => this.handleShareDrink(element, event) }
                   />
-                  <p className="p" />
                 </div>
               </div>
               <aside className="food-drink-footer">

@@ -18,9 +18,11 @@ class Foods extends React.Component {
     this.allButtonHandler = this.allButtonHandler.bind(this);
     this.setInitialState = this.setInitialState.bind(this);
     this.setKeyLocalStorage = this.setKeyLocalStorage.bind(this);
+    this.manageColors = this.manageColors.bind(this);
   }
 
   async componentDidMount() {
+    this.changeH1Width();
     const { control } = this.props;
     let mealsRender;
     const initList = 0;
@@ -37,6 +39,12 @@ class Foods extends React.Component {
 
   async componentDidUpdate() {
     const { stateMeals } = this.props;
+    const { CategoryFilter } = this.state;
+    if (CategoryFilter !== '') {
+      this.manageColors('others');
+    } else {
+      this.manageColors('all');
+    }
     const MAXIMUM_LENGTH = 0;
     if (stateMeals.length > MAXIMUM_LENGTH) {
       this.stateAfterProps(stateMeals);
@@ -69,6 +77,36 @@ class Foods extends React.Component {
       const initialMeals = await foodsOnRender();
       this.setState({ Meals: initialMeals, CategoryFilter: '' });
       target.style.background = '#5a2d0c';
+    }
+  }
+
+  changeH1Width() {
+    const h1 = document.querySelector('.global-h1');
+    const profileDiv = document.querySelector('.profile-icon-div');
+    const eightHundred = 800;
+    if (window.screen.availHeight < eightHundred) {
+      h1.style.fontSize = '40px';
+      profileDiv.style.width = '105px';
+      const searchInputDiv = document.querySelector('.search-input-div');
+      searchInputDiv.style.width = '105px';
+    }
+  }
+
+  manageColors(buttons) {
+    const filtros = document.getElementsByClassName('category-buttons');
+    const INITIAL_VALUE = 0;
+    const FINAL_VALUE = 5;
+    if (buttons === 'others') {
+      for (let i = INITIAL_VALUE; i < FINAL_VALUE; i += 1) {
+        filtros[INITIAL_VALUE].childNodes[i].firstChild.style.background = '#5a2d0c';
+        filtros[INITIAL_VALUE].childNodes[FINAL_VALUE].style.background = '#5a2d0c';
+      }
+    }
+    if (buttons === 'all') {
+      for (let i = INITIAL_VALUE; i < FINAL_VALUE; i += 1) {
+        filtros[INITIAL_VALUE].childNodes[i].firstChild.style.background = '#5a2d0c';
+        filtros[INITIAL_VALUE].childNodes[FINAL_VALUE].style.background = '#ac5c22';
+      }
     }
   }
 
@@ -124,7 +162,7 @@ class Foods extends React.Component {
           )}
         </div>
         <div className="cards-container">
-          {Meals ? Meals.map((recipe, index) => (
+          {Meals.length > 1 ? Meals.map((recipe, index) => (
             <div className="card" key={ index } data-testid={ `${index}-recipe-card` }>
               <input
                 type="image"
@@ -141,7 +179,16 @@ class Foods extends React.Component {
               </p>
               <hr className="card-hr" />
             </div>
-          )) : null}
+          )) : (
+            <div className="foods-drinks-loading">
+              <div className="lds-ellipsis">
+                <div />
+                <div />
+                <div />
+                <div />
+              </div>
+            </div>
+          )}
         </div>
         <Footer history={ history } />
       </div>
