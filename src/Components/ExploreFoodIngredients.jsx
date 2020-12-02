@@ -1,8 +1,9 @@
 import React, { useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { getAPI } from '../services/exploreRequest';
+// import { getAPI } from '../services/exploreRequest';
 import RecipeContext from '../hooks/RecipeContext';
 import recipeRequest from '../services/recipeRequest';
+import getAPI from '../services/exploreRequest';
 
 export default function ExploreFoodIngredients() {
   const {
@@ -17,8 +18,17 @@ export default function ExploreFoodIngredients() {
     await setFoodRecipes(newState.meals);
   };
 
+  const teste = async () => {
+    try {
+      const results = await getAPI();
+      setFoodIngredientsCategory(results.slice(0, 12));
+    } catch (e) {
+      console.log(e)
+    }
+  };
+
   useEffect(() => {
-    getAPI();
+    teste();
   }, []);
 
   const renderCards = () => (
