@@ -11,6 +11,20 @@ function ExploreByArea() {
         pageTitle="Explorar Origem"
         BtnSearchBar={ BtnSearchBar }
       />
+      <div className="drop-down-container">
+        <select
+          data-testid="explore-by-area-dropdown"
+          className="area-select"
+          name="area"
+          value="Area"
+        >
+          <option
+            data-testid="area-option"
+          >
+            Area
+          </option>
+        </select>
+      </div>
       <div className="footer">
         <Footer />
       </div>
