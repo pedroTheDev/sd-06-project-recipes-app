@@ -21,7 +21,7 @@ const Login = () => {
       setDisabled(false);
     } else {
       setDisabled(true);
-    };
+    }
   };
 
   const handleChange = ({ target }) => {
