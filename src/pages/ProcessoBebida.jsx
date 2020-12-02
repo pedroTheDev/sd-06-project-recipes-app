@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { requestApiDrinkDetails } from '../services/requestDrink';
 import buttonShare from '../styles/images/shareIcon.svg';
@@ -88,7 +89,11 @@ function ProcessoBebida({ match: { params: { id } } }) {
         </label>
       ))}
       <h4 data-testid="instructions">{detailsDrink.strInstructions}</h4>
-      <button type="button" data-testid="finish-recipe-btn">Finalizar receita</button>
+      <Link to="/receitas-feitas">
+        <button type="button" data-testid="finish-recipe-btn">
+          Finalizar receita
+        </button>
+      </Link>
     </div>
   );
 }
