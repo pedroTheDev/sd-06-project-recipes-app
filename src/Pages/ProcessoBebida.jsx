@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
+
 import { detailsDrinkById } from '../services/aPI';
+import { FavoriteDrinkButton } from '../components/FavoriteBtn';
+import ShareButton from '../components/ShareBtn';
 
 import './ProcessoComida.css';
-
-import shareIcon from '../images/shareIcon.svg';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import { FavoriteDrinkButton } from '../components/FavoriteBtn';
 
 const ProcessoBebidas = () => {
   const [recipeProgress, setRecipeProgress] = useState();
@@ -160,16 +159,7 @@ const ProcessoBebidas = () => {
                 {attributesNames.nameDrink}
               </div>
               <div className="container-icons">
-                <button
-                  type="button"
-                >
-                  <img
-                    className="button-share"
-                    data-testid="share-btn"
-                    src={ shareIcon }
-                    alt="shareIcon"
-                  />
-                </button>
+                <ShareButton />
                 <FavoriteDrinkButton />
               </div>
             </div>

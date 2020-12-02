@@ -1,26 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { detailsDrinkById, showSugestedFoods } from '../services/aPI';
 import './DetalhesBebidas.css';
 import { FavoriteDrinkButton } from '../components/FavoriteBtn';
-
-import shareIcon from '../images/shareIcon.svg';
+import ShareButton from '../components/ShareBtn';
 
 const DetalhesBebidas = () => {
   const [stateLocal, setStatelocal] = useState();
   const [stateSugestions, setSugestions] = useState();
   const [drinksInProgress, setDrinksInProgress] = useState({ cocktails: {} });
-  const [windowLink, setWindowLink] = useState(window.location.href);
-  const [linkCopied, setLinkCopied] = useState(false);
-
-  const handleShareClick = () => {
-    const url = window.location.href;
-
-    setWindowLink(url);
-    setLinkCopied(true);
-  };
 
   const currentDrinkID = useParams().id;
 
@@ -105,20 +94,8 @@ const DetalhesBebidas = () => {
               { stateLocal.drink.drinks[0].strDrink }
             </span>
             <div className="container-icons">
-              <CopyToClipboard text={ windowLink } onCopy={ () => setLinkCopied(true) }>
-                <button
-                  type="button"
-                  data-testid="share-btn"
-                  onClick={ handleShareClick }
-                >
-                  <img
-                    src={ shareIcon }
-                    alt="shareIcon"
-                  />
-                </button>
-              </CopyToClipboard>
+              <ShareButton />
               <FavoriteDrinkButton />
-              {linkCopied ? <span>Link copiado!</span> : null}
             </div>
           </div>
           <div
