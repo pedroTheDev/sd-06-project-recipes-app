@@ -77,7 +77,7 @@ function ReceitasFavoritas() {
       </button>
 
       {
-        filtraFavoritos().map((receita, index) => (
+        filtraFavoritos() && filtraFavoritos().map((receita, index) => (
           receita.type === 'comida' ? (
             <div>
               <button
