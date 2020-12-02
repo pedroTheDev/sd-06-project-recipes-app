@@ -59,7 +59,7 @@ function ReceitasFavoritas() {
     Drink,
   ];
 
-  const saveFavoriteRecipe = (id) => {
+  const disfavorRecipe = (id) => {
     const loadFavoriteRecipe = loadState(favoriteRecipes, []);
 
     const response = loadFavoriteRecipe.filter((element) => element.id !== id);
@@ -95,7 +95,6 @@ function ReceitasFavoritas() {
           image,
         }, index) => (
           <div
-            data-testid={ `${index}-${name}-horizontal-tag` }
             key={ index }
           >
             <Link to={ `/${type}s/${id}` }>
@@ -138,7 +137,7 @@ function ReceitasFavoritas() {
                   alt="img-button-share"
                 />
               </button>
-              <button type="button" onClick={ () => saveFavoriteRecipe(id) }>
+              <button type="button" onClick={ () => disfavorRecipe(id) }>
                 <img
                   data-testid={ `${index}-horizontal-favorite-btn` }
                   src={ blackHeartIcon }

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { requestApiDrinkDetails } from '../services/requestDrink';
 import buttonShare from '../styles/images/shareIcon.svg';
 import FavoriteHeart from '../components/FavoriteHeart';
+import { loadState, saveState } from '../services/localStorage';
 
-function ProcessoBebida({ match: { params: { id } } }) {
+function ProcessoBebida({ match: { params: { id } }, history }) {
   const zero = 0;
   const quinze = 15;
   const [detailsDrink, setdetailsDrink] = useState([]);
@@ -61,6 +61,34 @@ function ProcessoBebida({ match: { params: { id } } }) {
     divBtns.appendChild(newSpan);
   };
 
+  const onClickDone = () => {
+    const today = new Date();
+    const date = `${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`;
+
+    const {
+      strCategory,
+      strAlcoholic,
+      strDrink,
+      strDrinkThumb,
+      strTags,
+    } = detailsDrink;
+    saveState('doneRecipes', [
+      ...loadState('doneRecipes', []),
+      {
+        id,
+        type: 'bebida',
+        area: '',
+        category: strCategory,
+        alcoholicOrNot: strAlcoholic,
+        name: strDrink,
+        image: strDrinkThumb,
+        doneDate: date,
+        tags: strTags.split(','),
+      },
+    ]);
+    history.push('/receitas-feitas');
+  };
+
   if (detailsDrink.length === zero) {
     return (
       <div>Loading...</div>);
@@ -93,15 +121,14 @@ function ProcessoBebida({ match: { params: { id } } }) {
         </label>
       ))}
       <h4 data-testid="instructions">{detailsDrink.strInstructions}</h4>
-      <Link to="/receitas-feitas">
-        <button
-          type="button"
-          data-testid="finish-recipe-btn"
-          disabled={ arrayIngredients.length !== countCheck }
-        >
-          Finalizar receita
-        </button>
-      </Link>
+      <button
+        type="button"
+        data-testid="finish-recipe-btn"
+        disabled={ arrayIngredients.length !== countCheck }
+        onClick={ () => onClickDone() }
+      >
+        Finalizar receita
+      </button>
     </div>
   );
 }
@@ -112,6 +139,7 @@ ProcessoBebida.propTypes = {
       id: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
+  history: PropTypes.shape.isRequired,
 };
 
 export default ProcessoBebida;
