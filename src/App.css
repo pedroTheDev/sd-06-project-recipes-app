@@ -418,3 +418,12 @@ h2 {
   outline:none;
 }
 
+/* favorite recipes */
+
+.favorite-recipes-div {
+  margin-top: 150px;
+}
+
+.favorite-recipes-button {
+  margin-top: 150px;
+}
