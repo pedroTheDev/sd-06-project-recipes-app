@@ -10,7 +10,6 @@ import {
   modifyResponseToFavoriteBtn,
 } from '../helpers/assets';
 import shareIcon from '../images/shareIcon.svg';
-
 import '../css/details.css';
 
 function FoodDetail(props) {
@@ -71,6 +70,7 @@ function FoodDetail(props) {
       ));
       getIngredientsAndMesures(response.meals[0]);
     }
+    console.log(setButtonImg, objectRecipe);
   };
 
   const filterRecomendation = (response) => {
@@ -117,6 +117,7 @@ function FoodDetail(props) {
   };
 
   const handleClick = () => {
+
     const ingredientsAndMesures = {
       ingredients: ingredientsItem,
       mesures: mesuresItem,
@@ -163,7 +164,6 @@ function FoodDetail(props) {
       </video>
     );
   };
-  console.log(objectRecipe);
   return (
     <div>
       <img
