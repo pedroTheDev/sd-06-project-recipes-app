@@ -11,10 +11,7 @@ function ReceitasFavoritas() {
   const [favoriteRecipes, setFavoriteRecipe] = useState([]);
 
   useEffect(() => {
-    if (!localStorage.favoriteRecipes) {
-      return <h1>Você ainda não tem nenhuma receita Favorita. :(</h1>;
-    }
-    setFavoriteRecipe(JSON.parse(localStorage.favoriteRecipes));
+    if (localStorage.favoriteRecipes) setFavoriteRecipe(JSON.parse(localStorage.favoriteRecipes));
   }, []);
 
   const handleClick = (index) => {

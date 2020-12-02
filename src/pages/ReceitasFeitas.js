@@ -11,10 +11,8 @@ function ReceitasFeitas() {
   const [doneRecipes, setDoneRecipes] = useState([]);
 
   useEffect(() => {
-    if (!localStorage.doneRecipes) {
-      return <h1>Você ainda não tem nenhuma receita pronta. </h1>;
-    }
-    setDoneRecipes(JSON.parse(localStorage.doneRecipes));
+    if (localStorage.doneRecipes) setDoneRecipes(JSON.parse(localStorage.doneRecipes));
+
   }, []);
 
   const filterRecipes = ({ innerText }) => {

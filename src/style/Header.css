@@ -1,9 +1,9 @@
-nav {
+.header {
   align-items: center;
   background-color: #960051;
   top: 0px;
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: row nowrap;
   justify-content: space-around;
   height: 70px;
   position: fixed;
@@ -11,14 +11,15 @@ nav {
   z-index: 100;
 }
 
-nav h1 {
+.header h1 {
   color: #ffffff;
   font-family: 'Montserrat', sans-serif;
-  font-size: 25px;
+  font-size: 1.7rem;
   font-weight: 700;
+  text-align: center;
 }
 
-nav button {
+.header button {
   background-color: #960051;
   border: none;
   border-radius: 50%;
@@ -26,7 +27,11 @@ nav button {
   width: 50px;
 }
 
-nav button:hover {
+.header button:hover {
   background-color: #92928f;
   cursor: pointer;
+}
+
+.header-logo {
+  width: 15%;
 }

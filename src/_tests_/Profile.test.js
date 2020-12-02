@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, waitForElement } from '@testing-library/react';
 import renderWithRouter from '../renderWithRouter';
 import App from '../App';
 
@@ -28,7 +28,7 @@ describe('Testar header da tela de Perfil', () => {
   });
 });
 
-describe('Testar conteúdo da tela de Perfil ', () => {
+describe('Testar conteúdo da tela de Perfil ', () => { 
   it('Verificar se o email aparece na página', () => {
     const { getByTestId, history } = renderWithRouter(<App />);
     history.push('/');
@@ -57,20 +57,20 @@ describe('Testar conteúdo da tela de Perfil ', () => {
 
   it(`Verificar se ao clicar no botão "Receitas Feitas" redireciona 
     para url específica`, () => {
-    // const { getByTestId, history } = renderWithRouter(<App />);
-    // history.push('/perfil');
+    const { getByTestId, history } = renderWithRouter(<App />);
+    history.push('/perfil');
 
-    // fireEvent.click(getByTestId('profile-favorite-btn'));
-    // expect(history.location.pathname).toBe('/receitas-feitas');
+    fireEvent.click(getByTestId('profile-done-btn'));
+    expect(history.location.pathname).toBe('/receitas-feitas');
   });
 
   it(`Verificar se ao clicar  no botão "Receitas Favoritas" 
     redireciona para url específico`, () => {
-    // const { getByTestId, history } = renderWithRouter(<App />);
-    // history.push('/perfil');
+    const { getByTestId, history } = renderWithRouter(<App />);
+    history.push('/perfil');
 
-    // fireEvent.click(getByTestId('profile-favorite-btn'));
-    // expect(history.location.pathname).toBe('/receitas-favoritas');
+    fireEvent.click(getByTestId('profile-favorite-btn'));
+    expect(history.location.pathname).toBe('/receitas-favoritas');
   });
 
   it('Verificar se ao clicar nos botões "Sair" redireciona para url específica', () => {
