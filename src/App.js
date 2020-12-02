@@ -12,6 +12,7 @@ import ExplorePage from './pages/ExplorePage';
 import FoodDetailsProgress from './pages/FoodDetailsProgress';
 import DrinksDetailsProgress from './pages/DrinksDetailsProgress';
 import DoneRecipes from './pages/DoneRecipes';
+import FavoriteRecipes from './pages/FavoriteRecipes';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             <Route path="/bebidas/:id" component={ DrinksDetails } />
             <Route path="/bebidas" component={ DrinksRecipesPage } />
             <Route path="/receitas-feitas" component={ DoneRecipes } />
+            <Route path="/receitas-favoritas" component={ FavoriteRecipes } />
           </Switch>
         </BrowserRouter>
         {/* <div id="meals">
