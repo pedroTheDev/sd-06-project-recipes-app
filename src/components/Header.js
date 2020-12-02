@@ -22,9 +22,9 @@ const Header = ({ title, searchBtn = false }) => {
           alt="Profile button"
         />
       </Link>
-      <h2 data-testid="page-title">
+      <h3 data-testid="page-title">
         {title}
-      </h2>
+      </h3>
       {searchBtn ? (
         <button
           type="button"

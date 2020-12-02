@@ -39,8 +39,8 @@ function DrinkFilters() {
           key={ filter }
           type="button"
           data-testid={ `${filter}-category-filter` }
-          className="btn btn-secondary btn-sm m-1 w-25"
-          style={ { background: '#6CDC3E' } }
+          className="btn btn-sm m-1 w-25"
+          style={ { background: '#7ed957', color: 'black' } }
           onClick={ (event) => filterByCategory(event.target.innerHTML) }
         >
           {filter}

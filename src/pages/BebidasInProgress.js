@@ -9,6 +9,8 @@ import { foodAPI } from '../services/foodAPI';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import '../style/RecipesInProgress.css';
+import load from '../images/load.png';
+import '../style/Loading.css';
 
 function BebidasInProgress(props) {
   const { setMeals, fetchById, setFetchById, doneRecipes } = useContext(ReceitasContext);
@@ -17,7 +19,11 @@ function BebidasInProgress(props) {
   const [isFavorite, setIsFavorite] = useState(true);
   const [isFetching, setFetching] = useState(true);
 
-  const { match: { params: { id } } } = props;
+  const {
+    match: {
+      params: { id },
+    },
+  } = props;
 
   useEffect(() => {
     async function fetchFood() {
@@ -27,7 +33,9 @@ function BebidasInProgress(props) {
       setMeals(foodResponse);
       setFetchById(responseAPI);
 
-      const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      const favoriteRecipes = JSON.parse(
+        localStorage.getItem('favoriteRecipes'),
+      );
 
       if (!favoriteRecipes || !favoriteRecipes.length) {
         setIsFavorite(false);
@@ -64,34 +72,44 @@ function BebidasInProgress(props) {
   const localVerify = () => {
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
     const {
-      idDrink, strCategory, strAlcoholic, strDrink, strDrinkThumb,
+      idDrink,
+      strCategory,
+      strAlcoholic,
+      strDrink,
+      strDrinkThumb,
     } = fetchById[0];
 
     if (!favoriteRecipes) {
-      localStorage.setItem('favoriteRecipes', JSON.stringify([
-        {
-          id: idDrink,
-          type: 'bebida',
-          area: '',
-          category: strCategory,
-          alcoholicOrNot: strAlcoholic,
-          name: strDrink,
-          image: strDrinkThumb,
-        },
-      ]));
+      localStorage.setItem(
+        'favoriteRecipes',
+        JSON.stringify([
+          {
+            id: idDrink,
+            type: 'bebida',
+            area: '',
+            category: strCategory,
+            alcoholicOrNot: strAlcoholic,
+            name: strDrink,
+            image: strDrinkThumb,
+          },
+        ]),
+      );
     } else {
-      localStorage.setItem('favoriteRecipes', JSON.stringify([
-        ...favoriteRecipes,
-        {
-          id: idDrink,
-          type: 'bebida',
-          area: '',
-          category: strCategory,
-          alcoholicOrNot: strAlcoholic,
-          name: strDrink,
-          image: strDrinkThumb,
-        },
-      ]));
+      localStorage.setItem(
+        'favoriteRecipes',
+        JSON.stringify([
+          ...favoriteRecipes,
+          {
+            id: idDrink,
+            type: 'bebida',
+            area: '',
+            category: strCategory,
+            alcoholicOrNot: strAlcoholic,
+            name: strDrink,
+            image: strDrinkThumb,
+          },
+        ]),
+      );
     }
 
     setIsFavorite(true);
@@ -109,10 +127,13 @@ function BebidasInProgress(props) {
     });
 
     const zero = 0;
-    localStorage.setItem('favoriteRecipes', JSON.stringify([
-      ...favoriteRecipes.slice(zero, index),
-      ...favoriteRecipes.slice(index + 1, favoriteRecipes.length),
-    ]));
+    localStorage.setItem(
+      'favoriteRecipes',
+      JSON.stringify([
+        ...favoriteRecipes.slice(zero, index),
+        ...favoriteRecipes.slice(index + 1, favoriteRecipes.length),
+      ]),
+    );
 
     setIsFavorite(false);
   };
@@ -138,81 +159,69 @@ function BebidasInProgress(props) {
     }
   };
 
-  return ((isFetching)
-    ? <div>carregando...</div>
-    : (
-      <section>
-        <Header title="Detalhes Bebidas" />
-        {
-          fetchById.map((drink, index) => (
-            <div key={ index }>
-              <img data-testid="recipe-photo" src={ drink.strDrinkThumb } alt="" />
-              <h2 data-testid="recipe-title">{drink.strDrink}</h2>
-              <div>
-                <button
-                  data-testid="share-btn"
-                  type="button"
-                  onClick={ copyToCB }
-                >
-                  Compartilhar
-                </button>
-                {copied ? 'Link copiado!' : null}
-              </div>
-              <button
-                type="button"
-                onClick={ () => setFavorite(drink.idDrink) }
-              >
-                <img
-                  data-testid="favorite-btn"
-                  id="favorite-img"
-                  src={ !isFavorite
-                    ? whiteHeartIcon
-                    : blackHeartIcon }
-                  alt=""
-                />
-              </button>
-              <p data-testid="recipe-category">{drink.strAlcoholic}</p>
-              <ul>
-                {getIngredients(drink, /strIngredient/).map((item, indx) => {
-                  const measure = getIngredients(drink, /strMeasure/);
-                  return (
-                    <li
-                      key={ indx }
-                      data-testid={ `${indx}-ingredient-step` }
-                    >
-                      <label
-                        htmlFor={ `${indx}-drink` }
-                        className="ingredient-not-done"
-                      >
-                        <input
-                          id={ `${indx}-drink` }
-                          type="checkbox"
-                          onClick={ () => handleClick(indx) }
-                        />
-                        {`${item} - ${measure[indx]}`}
-                      </label>
-                    </li>
-                  );
-                })}
-              </ul>
-              <p data-testid="instructions">{drink.strInstructions}</p>
-              {!doneRecipes.includes(drink.idDrink) && (
-                <Link to={ `/bebidas/${drink.idDrink}/in-progress` }>
-                  <button
-                    className="start-recipe-btn"
-                    data-testid="finish-recipe-btn"
-                    type="button"
-                    // onClick={}
+  return isFetching ? (
+    <div className="align-self-center d-flex justify-content-center">
+      <img src={ load } alt="loading" className="loading" />
+    </div>
+  ) : (
+    <section>
+      <Header title="Detalhes Bebidas" />
+      {fetchById.map((drink, index) => (
+        <div key={ index }>
+          <img data-testid="recipe-photo" src={ drink.strDrinkThumb } alt="" />
+          <h2 data-testid="recipe-title">{drink.strDrink}</h2>
+          <div>
+            <button data-testid="share-btn" type="button" onClick={ copyToCB }>
+              Compartilhar
+            </button>
+            {copied ? 'Link copiado!' : null}
+          </div>
+          <button type="button" onClick={ () => setFavorite(drink.idDrink) }>
+            <img
+              data-testid="favorite-btn"
+              id="favorite-img"
+              src={ !isFavorite ? whiteHeartIcon : blackHeartIcon }
+              alt=""
+            />
+          </button>
+          <p data-testid="recipe-category">{drink.strAlcoholic}</p>
+          <ul>
+            {getIngredients(drink, /strIngredient/).map((item, indx) => {
+              const measure = getIngredients(drink, /strMeasure/);
+              return (
+                <li key={ indx } data-testid={ `${indx}-ingredient-step` }>
+                  <label
+                    htmlFor={ `${indx}-drink` }
+                    className="ingredient-not-done"
                   >
-                    Finalizar Receita!
-                  </button>
-                </Link>
-              )}
-            </div>
-          ))
-        }
-      </section>
-    ));
+                    <input
+                      id={ `${indx}-drink` }
+                      type="checkbox"
+                      onClick={ () => handleClick(indx) }
+                    />
+                    {`${item} - ${measure[indx]}`}
+                  </label>
+                </li>
+              );
+            })}
+          </ul>
+          <p data-testid="instructions">{drink.strInstructions}</p>
+          {!doneRecipes.includes(drink.idDrink) && (
+            <Link to={ `/bebidas/${drink.idDrink}/in-progress` }>
+              <button
+                className="start-recipe-btn"
+                data-testid="finish-recipe-btn"
+                type="button"
+                // onClick={}
+              >
+                Finalizar Receita!
+              </button>
+            </Link>
+          )}
+        </div>
+      ))}
+    </section>
+  );
 }
 
 BebidasInProgress.propTypes = {

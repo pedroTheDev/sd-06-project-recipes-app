@@ -10,18 +10,29 @@ import { foodAPI } from '../services/foodAPI';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import '../style/Detalhes.css';
+import load from '../images/load.png';
+import '../style/Loading.css';
 
 function DetalhesBebida(props) {
   const {
-    meals, setMeals, fetchById, setFetchById,
-    beganRecipes, setBeganRecipes, doneRecipes,
+    meals,
+    setMeals,
+    fetchById,
+    setFetchById,
+    beganRecipes,
+    setBeganRecipes,
+    doneRecipes,
   } = useContext(ReceitasContext);
 
   const [copied, setCopied] = useState(false);
   const [isFavorite, setIsFavorite] = useState(true);
   const [isFetching, setFetching] = useState(true);
 
-  const { match: { params: { id } } } = props;
+  const {
+    match: {
+      params: { id },
+    },
+  } = props;
 
   const startedRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
   const seis = 6;
@@ -34,7 +45,9 @@ function DetalhesBebida(props) {
       setMeals(foodResponse);
       setFetchById(responseAPI);
 
-      const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      const favoriteRecipes = JSON.parse(
+        localStorage.getItem('favoriteRecipes'),
+      );
       console.log(favoriteRecipes);
 
       if (!favoriteRecipes || !favoriteRecipes.length) {
@@ -63,12 +76,15 @@ function DetalhesBebida(props) {
   };
 
   const startRecipe = (recipeName) => {
-    localStorage.setItem('inProgressRecipes', JSON.stringify({
-      ...startedRecipes,
-      cocktails: {
-        [recipeName]: fetchById,
-      },
-    }));
+    localStorage.setItem(
+      'inProgressRecipes',
+      JSON.stringify({
+        ...startedRecipes,
+        cocktails: {
+          [recipeName]: fetchById,
+        },
+      }),
+    );
 
     if (!beganRecipes.includes(recipeName)) {
       setBeganRecipes([...beganRecipes, recipeName]);
@@ -95,34 +111,44 @@ function DetalhesBebida(props) {
   const localVerify = () => {
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
     const {
-      idDrink, strCategory, strAlcoholic, strDrink, strDrinkThumb,
+      idDrink,
+      strCategory,
+      strAlcoholic,
+      strDrink,
+      strDrinkThumb,
     } = fetchById[0];
 
     if (!favoriteRecipes) {
-      localStorage.setItem('favoriteRecipes', JSON.stringify([
-        {
-          id: idDrink,
-          type: 'bebida',
-          area: '',
-          category: strCategory,
-          alcoholicOrNot: strAlcoholic,
-          name: strDrink,
-          image: strDrinkThumb,
-        },
-      ]));
+      localStorage.setItem(
+        'favoriteRecipes',
+        JSON.stringify([
+          {
+            id: idDrink,
+            type: 'bebida',
+            area: '',
+            category: strCategory,
+            alcoholicOrNot: strAlcoholic,
+            name: strDrink,
+            image: strDrinkThumb,
+          },
+        ]),
+      );
     } else {
-      localStorage.setItem('favoriteRecipes', JSON.stringify([
-        ...favoriteRecipes,
-        {
-          id: idDrink,
-          type: 'bebida',
-          area: '',
-          category: strCategory,
-          alcoholicOrNot: strAlcoholic,
-          name: strDrink,
-          image: strDrinkThumb,
-        },
-      ]));
+      localStorage.setItem(
+        'favoriteRecipes',
+        JSON.stringify([
+          ...favoriteRecipes,
+          {
+            id: idDrink,
+            type: 'bebida',
+            area: '',
+            category: strCategory,
+            alcoholicOrNot: strAlcoholic,
+            name: strDrink,
+            image: strDrinkThumb,
+          },
+        ]),
+      );
     }
 
     setIsFavorite(true);
@@ -140,10 +166,13 @@ function DetalhesBebida(props) {
     });
 
     const zero = 0;
-    localStorage.setItem('favoriteRecipes', JSON.stringify([
-      ...favoriteRecipes.slice(zero, index),
-      ...favoriteRecipes.slice(index + 1, favoriteRecipes.length),
-    ]));
+    localStorage.setItem(
+      'favoriteRecipes',
+      JSON.stringify([
+        ...favoriteRecipes.slice(zero, index),
+        ...favoriteRecipes.slice(index + 1, favoriteRecipes.length),
+      ]),
+    );
 
     setIsFavorite(false);
   };
@@ -158,83 +187,76 @@ function DetalhesBebida(props) {
     }
   };
 
-  return ((isFetching)
-    ? <div>carregando...</div>
-    : (
-      <section>
-        <Header title="Detalhes Bebidas" />
-        {
-          fetchById.map((drink, index) => (
-            <div key={ index }>
-              <img data-testid="recipe-photo" src={ drink.strDrinkThumb } alt="" />
-              <h2 data-testid="recipe-title">{drink.strDrink}</h2>
-              <div>
-                <button
-                  data-testid="share-btn"
-                  type="button"
-                  onClick={ copyToCB }
-                >
-                  Compartilhar
-                </button>
-                {copied ? 'Link copiado!' : null}
-              </div>
+  return isFetching ? (
+    <div className="align-self-center d-flex justify-content-center">
+      <img src={ load } alt="loading" className="loading" />
+    </div>
+  ) : (
+    <section>
+      <Header title="Detalhes Bebidas" />
+      {fetchById.map((drink, index) => (
+        <div key={ index }>
+          <img
+            data-testid="recipe-photo"
+            src={ drink.strDrinkThumb }
+            width="200"
+            alt=""
+          />
+          <h2 data-testid="recipe-title">{drink.strDrink}</h2>
+          <div>
+            <button data-testid="share-btn" type="button" onClick={ copyToCB }>
+              Compartilhar
+            </button>
+            {copied ? 'Link copiado!' : null}
+          </div>
+          <button type="button" onClick={ () => setFavorite(drink.idDrink) }>
+            <img
+              data-testid="favorite-btn"
+              id="favorite-img"
+              src={ !isFavorite ? whiteHeartIcon : blackHeartIcon }
+              alt=""
+            />
+          </button>
+          <p data-testid="recipe-category">{drink.strAlcoholic}</p>
+          {getIngredients(drink, /strIngredient/).map((item, indx) => {
+            const measure = getIngredients(drink, /strMeasure/);
+            return (
+              <p key={ indx } data-testid={ `${indx}-ingredient-name-and-measure` }>
+                {`- ${item} - ${measure[indx]}`}
+              </p>
+            );
+          })}
+          <p data-testid="instructions">{drink.strInstructions}</p>
+          <h2>Receitas Recomendadas</h2>
+          <div className="carousel">
+            {meals.length && meals
+              .filter((_, indx) => indx < seis)
+              .map((food, i) => (
+                <div key={ i } data-testid={ `${i}-recomendation-card` }>
+                  <div data-testid={ `${i}-recomendation-title` }>
+                    <MealsCard food={ food } index={ i } />
+                  </div>
+                </div>
+              ))}
+          </div>
+          {!doneRecipes.includes(drink.idDrink) && (
+            <Link to={ `/bebidas/${drink.idDrink}/in-progress` }>
               <button
+                className="start-recipe-btn"
+                data-testid="start-recipe-btn"
                 type="button"
-                onClick={ () => setFavorite(drink.idDrink) }
+                onClick={ () => startRecipe(drink.idDrink) }
               >
-                <img
-                  data-testid="favorite-btn"
-                  id="favorite-img"
-                  src={ !isFavorite
-                    ? whiteHeartIcon
-                    : blackHeartIcon }
-                  alt=""
-                />
+                {!startedRecipes
+                  ? 'Iniciar Receita'
+                  : verifyState(drink.idDrink)}
               </button>
-              <p data-testid="recipe-category">{drink.strAlcoholic}</p>
-              {getIngredients(drink, /strIngredient/).map((item, indx) => {
-                const measure = getIngredients(drink, /strMeasure/);
-                return (
-                  <p
-                    key={ indx }
-                    data-testid={ `${indx}-ingredient-name-and-measure` }
-                  >
-                    {`- ${item} - ${measure[indx]}`}
-                  </p>
-                );
-              })}
-              <p data-testid="instructions">{drink.strInstructions}</p>
-              <h2>Receitas Recomendadas</h2>
-              <div className="carousel">
-                {meals.length && (meals
-                  .filter((_, indx) => indx < seis)
-                  .map((food, i) => (
-                    <div key={ i } data-testid={ `${i}-recomendation-card` }>
-                      <div data-testid={ `${i}-recomendation-title` }>
-                        <MealsCard food={ food } index={ i } />
-                      </div>
-                    </div>
-                  )))}
-              </div>
-              {!doneRecipes.includes(drink.idDrink) && (
-                <Link to={ `/bebidas/${drink.idDrink}/in-progress` }>
-                  <button
-                    className="start-recipe-btn"
-                    data-testid="start-recipe-btn"
-                    type="button"
-                    onClick={ () => startRecipe(drink.idDrink) }
-                  >
-                    {!startedRecipes
-                      ? 'Iniciar Receita'
-                      : verifyState(drink.idDrink)}
-                  </button>
-                </Link>
-              )}
-            </div>
-          ))
-        }
-      </section>
-    ));
+            </Link>
+          )}
+        </div>
+      ))}
+    </section>
+  );
 }
 
 DetalhesBebida.propTypes = {

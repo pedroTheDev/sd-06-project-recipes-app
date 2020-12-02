@@ -7,7 +7,7 @@ import SearchBar from '../components/SearchBar';
 import ReceitasContext from '../context/ReceitasContext';
 import FoodFilters from '../components/FoodFilters';
 import { foodAPI, foodCategoryApi } from '../services/foodAPI';
-import logo from '../images/myfood.png';
+import load from '../images/load.png';
 import '../style/Loading.css';
 
 const Comidas = (history) => {
@@ -29,8 +29,8 @@ const Comidas = (history) => {
   }, []);
 
   return !meals.length ? (
-    <div className="container align-self-center d-flex justify-content-center">
-      <img src={ logo } alt="teste" className="loading col" />
+    <div className="align-self-center d-flex justify-content-center">
+      <img src={ load } alt="loading" className="loading" />
     </div>
   ) : (
     <section>
@@ -38,7 +38,7 @@ const Comidas = (history) => {
       {searchBox && <SearchBar history={ history } />}
       <div className="my-4 py-2">
         <FoodFilters />
-        <div className="row my-5 mx-3">
+        <div className="row my-4 mx-3">
           {meals.length && meals
             .filter((x, index) => index < doze)
             .map((food, i) => <MealsCard key={ i } food={ food } index={ i } />)}

@@ -24,7 +24,7 @@ const ExplorarComidas = () => {
               data-testid="explore-by-ingredient"
               type="button"
               className="btn btn-block btn-lg my-2"
-              style={ { background: '#6CDC3E' } }
+              style={ { background: '#7ed957' } }
             >
               Por Ingredientes
             </button>
@@ -34,7 +34,7 @@ const ExplorarComidas = () => {
               data-testid="explore-by-area"
               type="button"
               className="btn btn-block btn-lg my-2"
-              style={ { background: '#6CDC3E' } }
+              style={ { background: '#7ed957' } }
             >
               Por Local de Origem
             </button>
@@ -47,14 +47,13 @@ const ExplorarComidas = () => {
               data-testid="explore-surprise"
               type="button"
               className="btn btn-block btn-lg my-2"
-              style={ { background: '#6CDC3E' } }
+              style={ { background: '#7ed957' } }
             >
               Me Surpreenda!
             </button>
           </Link>
         </div>
       </div>
-      {/* <img src={} alt='comida' /> */}
       <Footer />
     </div>
   );
