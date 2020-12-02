@@ -1,9 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import '../App.css';
 import Context from '../context/Context';
 import Cards from '../components/Cards';
+import Checkbox from '../components/Checkbox';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
@@ -24,7 +25,6 @@ function RecipeDetails(props) {
     recommended,
   } = useContext(Context);
   const { match: { path, params, url } } = props;
-  const [check, setCheck] = useState('');
 
   const ZERO = 0;
   const SIX = 6;
@@ -56,22 +56,6 @@ function RecipeDetails(props) {
   const favorited = (recipe) => {
     favorite(recipe, path, params.id);
     return heart === 'white' ? setHeart('black') : setHeart('white');
-  };
-
-  const isChecked = (id, target) => {
-    const local = !localStorage.getItem('checkeds') ? ''
-      : JSON.parse(localStorage.getItem('checkeds'));
-    console.log(target.id);
-    setCheck([
-      target[id],
-    ]);
-    const ingredient = [{
-      ...local,
-      [id]: {
-        ...check,
-      },
-    }];
-    localStorage.setItem('checkeds', JSON.stringify(ingredient));
   };
 
   return (
@@ -114,19 +98,13 @@ function RecipeDetails(props) {
               const measure = getIngredients(recipe, /strMeasure/);
               if (path.includes('in-progress')) {
                 return (
-                  <div data-testid="ingredient-step">
-                    <input
-                      type="checkbox"
-                      key={ index }
-                      onChange={ ({ target }) => isChecked((path.includes('comidas')
-                        ? recipe.idMeal : recipe.idDrink), target) }
-                      id={ `step-${index}` }
-                      data-testid={ `${index}-ingredient-name-and-measure` }
-                    />
-                    <label htmlFor={ `step-${index}` }>
-                      {`- ${item} - ${measure[index]} `}
-                    </label>
-                  </div>
+                  <Checkbox
+                    recipe={ recipe }
+                    index={ index }
+                    measure={ measure }
+                    item={ item }
+                    url={ url }
+                  />
                 );
               }
               return (
@@ -167,7 +145,7 @@ function RecipeDetails(props) {
             </div>
             {path.includes('in-progress')
               ? (
-                <Link to="receitas-feitas">
+                <Link to="/receitas-feitas">
                   <button
                     type="button"
                     className="StartRecipe"

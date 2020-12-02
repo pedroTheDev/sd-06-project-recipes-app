@@ -1154,6 +1154,7 @@ O progresso das receitas devem ser salvos em `localStorage` na chave` inProgress
     * O botão de filtro `All` deve ter o atributo `data-testid="filter-by-all-btn"`;
     * O botão de filtro `Food` deve ter o atributo `data-testid="filter-by-food-btn"`;
     * O botão de `Drinks` deve ter o atributo `data-testid="filter-by-drink-btn"`;
+    \/
     * O imagem do card de receita deve ter o atributo `data-testid="${index}-horizontal-image"`;
     * O texto da categoria da receita deve ter o atributo `data-testid="${index}-horizontal-top-text"`;
     * O texto do nome da receita deve ter o atributo `data-testid="${index}-horizontal-name"`;
