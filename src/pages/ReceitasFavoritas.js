@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import whiteIcon from '../images/whiteHeartIcon.svg';
 import blackIcon from '../images/blackHeartIcon.svg';
 import Header from '../components/Header';
@@ -38,11 +38,11 @@ function ReceitasFavoritas() {
   console.log('testRecipemelas', recipeMeal);
   function FavoriteRecipeClick() {
     // eslint-disable-next-line no-shadow
-    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    if (favoriteRecipes !== null) {
+    const favoriteRecipesC = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (favoriteRecipesC !== null) {
       if (isFavorite) {
         console.log('ok', recipeMeal);
-        const arrayFavoriteRecipe = favoriteRecipes.filter((item) => item.id !== id);
+        const arrayFavoriteRecipe = favoriteRecipesC.filter((item) => item.id !== id);
         localStorage.setItem('favoriteRecipes', JSON.stringify(arrayFavoriteRecipe));
         setIsFavorite(false);
       } else {
@@ -90,18 +90,24 @@ function ReceitasFavoritas() {
       </button>
       {favoriteRecipes.map((recipe, index) => (
         <div key={ index }>
-          <p data-testid={ `${index}-horizontal-name` }>
-            { recipe.name }
-          </p>
-          <img
-            src={ recipe.image }
-            alt={ recipe.name }
-            data-testid={ `${index}-horizontal-image` }
-          />
+          <Link
+            to={ recipe.type === 'bebida' ? `/bebidas/${recipe.id}`
+              : `/comidas/${recipe.id}` }
+          >
+            <p data-testid={ `${index}-horizontal-name` }>
+              { recipe.name }
+            </p>
+            <img
+              src={ recipe.image }
+              alt={ recipe.name }
+              data-testid={ `${index}-horizontal-image` }
+            />
+          </Link>
           <p data-testid={ `${index}-horizontal-top-text` }>
             { recipe.type === 'comida' ? `${recipe.area} - ${recipe.category}`
               : `${recipe.alcoholicOrNot} - ${recipe.category}` }
           </p>
+          {console.log(recipe)}
           <button
             data-testid={ `${index}-horizontal-share-btn` }
             type="button"
