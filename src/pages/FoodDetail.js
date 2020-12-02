@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import FavoriteButton from '../components/FavoriteButton';
 import { addRecipeDetail } from '../redux/actions/searchRecipes';
-import { filterMatchInKeys, modifyResponse } from '../helpers/assets';
+import {
+  filterMatchInKeys,
+  modifyResponse,
+  modifyResponseToFavoriteBtn,
+} from '../helpers/assets';
 import shareIcon from '../images/shareIcon.svg';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import blackHeartIcon from '../images/blackHeartIcon.svg';
-// whiteHeartIcon blackHeartIcon
 
 import '../css/details.css';
 
@@ -21,9 +23,8 @@ function FoodDetail(props) {
   const [mesuresItem, setMesuresItem] = useState([]);
   const [recomendation, setRecomendation] = useState([]);
   const [shareMessege, setShareMessege] = useState('');
-  const [buttonState, setButtonState] = useState(false);
-  const [buttonImg, setButtonImg] = useState();
   const [objectRecipe, setObjectRecipe] = useState({});
+  const [favoriteResponseModified, setFavoriteResponseModified] = useState();
 
   const getIngredientsAndMesures = (object) => {
     const ingredients = filterMatchInKeys(/strIngredient/i, object);
@@ -43,23 +44,31 @@ function FoodDetail(props) {
     if (path === '/bebidas/:id') {
       const recipeType = 'drinks';
       const nameType = 'Drink';
+      const name = 'bebida';
       const changeCategory = 'strAlcoholic';
       const response = await Bebidas.idDrink(id);
       setObjectRecipe(response);
       setObjResponse(modifyResponse(response, nameType, recipeType, changeCategory));
-      const respostaDoObjeto = modifyResponse(
-        response, nameType, recipeType, changeCategory,
-      );
-      localStorage.setItem('objeto', JSON.stringify(respostaDoObjeto));
+      // const respostaDoObjeto = modifyResponse(
+      //   response, nameType, recipeType, changeCategory,
+      // );
+      setFavoriteResponseModified(modifyResponseToFavoriteBtn(
+        response, nameType, recipeType, changeCategory, name,
+      ));
+      // localStorage.setItem('objeto', JSON.stringify(respostaDoObjeto));
       getIngredientsAndMesures(response.drinks[0]);
     } else {
       const recipeType = 'meals';
       const nameType = 'Meal';
+      const name = 'comida';
       const changeCategory = 'strCategory';
       const response = await Comidas.idFood(id);
       console.log('detalhe do objeto', response);
       // setFavoriteRecipe(response);
       setObjResponse(modifyResponse(response, nameType, recipeType, changeCategory));
+      setFavoriteResponseModified(modifyResponseToFavoriteBtn(
+        response, nameType, recipeType, name,
+      ));
       getIngredientsAndMesures(response.meals[0]);
     }
   };
@@ -107,10 +116,6 @@ function FoodDetail(props) {
     setShareMessege('Link copiado!');
   };
 
-  const favoriteButtonState = () => {
-    setButtonState(!buttonState);
-  };
-
   const handleClick = () => {
     const ingredientsAndMesures = {
       ingredients: ingredientsItem,
@@ -139,14 +144,6 @@ function FoodDetail(props) {
   };
 
   useEffect(() => {
-    // const { }
-    if (buttonState) {
-      return setButtonImg(blackHeartIcon);
-    }
-    setButtonImg(whiteHeartIcon);
-  }, [buttonState]);
-
-  useEffect(() => {
     fetchRecipe();
     fetchRecomendation();
     // setFavoriteRecipe(objResponse)
@@ -167,7 +164,6 @@ function FoodDetail(props) {
     );
   };
   console.log(objectRecipe);
-  console.log(buttonImg);
   return (
     <div>
       <img
@@ -186,14 +182,7 @@ function FoodDetail(props) {
         <img src={ shareIcon } alt="share" />
       </button>
       <p>{shareMessege}</p>
-      <button
-        data-testid="favorite-btn"
-        type="button"
-        onClick={ () => favoriteButtonState() }
-        src={ buttonImg }
-      >
-        <img src={ buttonImg } alt="favorite" />
-      </button>
+      <FavoriteButton recipe={ favoriteResponseModified } id={ id } />
       <h4 data-testid="recipe-category">{objResponse.category}</h4>
       <ul>
         {ingredientsItem.map((item, index) => (
@@ -221,6 +210,7 @@ function FoodDetail(props) {
             ...objResponse,
             ingredients: ingredientsItem,
             mesures: mesuresItem,
+            urlDetail: url,
           },
         } }
       >

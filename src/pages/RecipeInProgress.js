@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-
-import { filterMatchInKeys, modifyResponse } from '../helpers/assets';
-
-import shareIcon from '../images/shareIcon.svg';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-// import blackHeartIcon from '../images/blackHeartIcon.svg';
+import FavoriteButton from '../components/FavoriteButton';
+import ShareButton from '../components/ShareButton';
+import {
+  filterMatchInKeys,
+  modifyResponse,
+  modifyResponseToFavoriteBtn,
+} from '../helpers/assets';
 import '../css/recipeProgress.css';
 
 function RecipeInProgress(props) {
-  const { fetchId: { Comidas, Bebidas }, match: { path, params: { id } } } = props;
+  const { fetchId: { Comidas, Bebidas },
+    match: { path, params: { id } },
+    location } = props;
   const [recipeDetail, setRecipeDetail] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [ingredientsItem, setIngredientsItem] = useState([]);
@@ -22,6 +25,7 @@ function RecipeInProgress(props) {
   const [filterFlag, setFilterFlag] = useState(false);
   const [type, setType] = useState();
   const [withLocalStorage, setWithLocalStorage] = useState({});
+  const [favoriteResponseModified, setFavoriteResponseModified] = useState();
 
   const getIngredientsAndMesures = (object) => {
     const ingredients = filterMatchInKeys(/strIngredient/i, object);
@@ -40,7 +44,11 @@ function RecipeInProgress(props) {
       const nameType = 'Drink';
       const changeCategory = 'strAlcoholic';
       const response = await Bebidas.idDrink(id);
+      console.log(response);
       setRecipeDetail(modifyResponse(response, nameType, recipeType, changeCategory));
+      setFavoriteResponseModified(modifyResponseToFavoriteBtn(
+        response, nameType, recipeType,
+      ));
       setType('cocktails');
       getIngredientsAndMesures(response.drinks[0]);
     } else {
@@ -48,7 +56,11 @@ function RecipeInProgress(props) {
       const nameType = 'Meal';
       const changeCategory = 'strCategory';
       const response = await Comidas.idFood(id);
+      console.log(response);
       setRecipeDetail(modifyResponse(response, nameType, recipeType, changeCategory));
+      setFavoriteResponseModified(modifyResponseToFavoriteBtn(
+        response, nameType, recipeType,
+      ));
       setType(recipeType);
       getIngredientsAndMesures(response.meals[0]);
     }
@@ -190,76 +202,26 @@ function RecipeInProgress(props) {
       )));
   };
 
-  // filterItem.map((eachIngredient, index) => (
-  //   <li key={ index } data-testid={`${index}-ingredient-step`}>
-  //     <label className={checkedClass[eachIngredient]} htmlFor={index}>
-  //       <input
-  //         name={eachIngredient}
-  //         id={index}
-  //         type="checkbox"
-  //         value={eachIngredient}
-  //         checked={listState[eachIngredient]}
-  //         onChange={ (event) =>  handleOnClick(event) }
-  //       />
-  //       {ingredientMesureJoined[index]}
-  //     </label>
-  //   </li>
-  // ))
-
-  // const renderWithLocalStorage = () => {
-
-  //   // const ingredientsUnsaved = ingredientsItem
-  //   // .filter((unsaved, index) => unsaved !== parseSavedIngredients[type][id][index]);
-
-  //   return (
-  //     parseSavedIngredients[type][id].map((eachIngredient, index) => (
-  //       <li key={ index } data-testid={`${index}-ingredient-step`}>
-  //         <label className={checkedClass[eachIngredient]} htmlFor={index}>
-  //           <input
-  //             name={eachIngredient}
-  //             id={index}
-  //             type="checkbox"
-  //             value={eachIngredient}
-  //             checked={parseSavedIngredients[type].checkedList[index]}
-  //             onChange={ (event) =>  handleOnClick(event) }
-  //           />
-  //           {ingredientMesureJoined[index]}
-  //         </label>
-  //       </li>
-  //     ))
-  //   );
-  // }
-
   const renderRecipeInProgress = () => {
     // const ingredientsUnsaved = ingredientsItem
     // .filter((unsaved, index) => unsaved !== parseSavedIngredients[type][id][index]);
 
     const { img, title, category, instruction } = recipeDetail;
-    console.log('ingredientes=', ingredientsItem);
-    console.log('medidas=', mesuresItem);
-    console.log('objeto desconstruido', recipeDetail);
-    console.log(listState);
-    console.log(checkedClass);
+    // console.log('ingredientes=', ingredientsItem);
+    // console.log('medidas=', mesuresItem);
+    // console.log('objeto desconstruido', recipeDetail);
+    // console.log(listState);
+    // console.log(checkedClass);
     // console.log(parseSavedIngredients[type][id]);
     // console.log(ingredientsUnsaved);
-    console.log(ingredientMesureJoined);
-    console.log(withLocalStorage);
+    // console.log(ingredientMesureJoined);
+    // console.log(withLocalStorage);
     return (
       <div>
         <img data-testid="recipe-photo" src={ img } alt={ title } width="150" />
         <h1 data-testid="recipe-title">{title}</h1>
-        <button
-          data-testid="share-btn"
-          type="button"
-        >
-          <img src={ shareIcon } alt="share" />
-        </button>
-        <button
-          data-testid="favorite-btn"
-          type="button"
-        >
-          <img src={ whiteHeartIcon } alt="favorite" />
-        </button>
+        <ShareButton location={ location } />
+        <FavoriteButton recipe={ favoriteResponseModified } id={ id } />
         <h3 data-testid="recipe-category">{category}</h3>
         <h2>Ingredients</h2>
         <ul>

@@ -15,3 +15,13 @@ export const modifyResponse = (response, nameType, recipeType, changeCategory) =
   category: response[recipeType][0][changeCategory],
   instruction: response[recipeType][0].strInstructions,
 });
+
+export const modifyResponseToFavoriteBtn = (response, nameType, recipeType, name) => ({
+  id: response[recipeType][0][`id${nameType}`],
+  type: name,
+  area: response[recipeType][0].strArea || '',
+  category: response[recipeType][0].strCategory || 'Cocktail',
+  alcoholicOrNot: response[recipeType][0].strAlcoholic || '',
+  name: response[recipeType][0][`str${nameType}`],
+  image: response[recipeType][0][`str${nameType}Thumb`],
+});
