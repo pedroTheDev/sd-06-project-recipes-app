@@ -14,11 +14,13 @@ function FoodCards() {
     <div>
       { splitedURL[3] === 'bebidas'
         ? (
-          resultsFoodsAndDrinks.drinks.slice(zero, doze).map((element, idx) => (
+          resultsFoodsAndDrinks
+          && resultsFoodsAndDrinks.drinks.slice(zero, doze).map((element, idx) => (
             <DrinkCard element={ element } idx={ idx } key={ element.idDrink } />))
         )
         : (
-          resultsFoodsAndDrinks.meals.slice(zero, doze).map((element, idx) => (
+          resultsFoodsAndDrinks
+          && resultsFoodsAndDrinks.meals.slice(zero, doze).map((element, idx) => (
             <FoodCard element={ element } idx={ idx } key={ element.idMeal } />)))}
     </div>
   );

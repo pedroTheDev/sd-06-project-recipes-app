@@ -1,32 +1,55 @@
-import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
+// import React, { useContext } from 'react';
+// import PropTypes from 'prop-types';
+// import shareIcon from '../images/shareIcon.svg';
 
-function DoneCards(props) {
-  const { id, type, area, category, alcoholicOrNot, name, image, doneDate, tags } = props.recipe;
+// function DoneCards(props) {
+//   const {
+//     type,
+//     area,
+//     category,
+//     alcoholicOrNot,
+//     name,
+//     image,
+//     doneDate,
+//     tags,
+//     index,
+//   } = props.recipe;
 
-  return (
-      <div data-testid={ `${id}-recipe-card` }>
-        <h2 data-testid={ `${id}-horizontal-name` }>{ name }</h2>
-        <p data-testid={ `${id}-horizontal-top-text`}>{ category }</p>
-        <p data-testid={ `${id}-horizontal-done-date` }>{ doneDate }</p>
-        <img
-          src={ image }
-          alt={ `${name} photograph` }
-          data-testid={ `${id}-horizontal-image` }
-        />
-        <div>
-          {tags && tags.map(tag => <p data-testid={`${id}-${tag}-horizontal-tag`}>{ tag }</p>)}
-        </div>
-        <button data-testid={`${id}-horizontal-share-btn`} type="button">Share</button>
-      </div>
-  );
-}
+//   console.log(props);
+//   return (
+//     <div key={ index }>
+//       <img
+//         src={ image }
+//         alt="element img"
+//         data-testid={ `${index}-horizontal-image` }
+//       />
+//       <p data-testid={ `${index}-horizontal-top-text` }>{ `${area} - ${category}` }</p>
+//       <h2 data-testid={ `${index}-horizontal-name` }>{ name }</h2>
+//       <p data-testid={ `${index}-horizontal-done-date` }>{ doneDate }</p>
+//       {
+//         tags
+//       && tags.map(
+//         (tag, idx) => (
+//           <p data-testid={ `${index}-${tag}-horizontal-tag` } key={ idx }>{ tag }</p>
+//         ),
+//       )
+//       }
+//       <button
+//         data-testid={ `${index}-horizontal-share-btn` }
+//         type="button"
+//         src={ shareIcon }
+//       >
+//         <img src={ shareIcon } alt="Share Icon" />
+//       </button>
+//     </div>
+//   );
+// }
 
-DoneCards.propTypes = {
-  element: PropTypes.objectOf.isRequired,
-  idx: PropTypes.number.isRequired,
-  strDrink: PropTypes.string.isRequired,
-  strDrinkThumb: PropTypes.string.isRequired,
-};
+// DoneCards.propTypes = {
+//   element: PropTypes.objectOf.isRequired,
+//   idx: PropTypes.number.isRequired,
+//   strDrink: PropTypes.string.isRequired,
+//   strDrinkThumb: PropTypes.string.isRequired,
+// };
 
-export default DoneCards;
+// export default DoneCards;

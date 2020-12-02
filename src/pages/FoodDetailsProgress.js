@@ -142,7 +142,6 @@ function FoodDetailsProgress() {
       {
         id: foodDetails.idMeal,
         type: 'comida',
-        area: '',
         category: foodDetails.strCategory,
         alcoholicOrNot: '',
         area: foodDetails.strArea,

@@ -130,8 +130,6 @@ function DrinksDetailsProgress() {
 
   function handleClickEnd() {
     const time = new Date();
-    console.log('respota api', drinkDetails)
-
     const object = [
       {
         id: drinkDetails.idDrink,
@@ -237,7 +235,11 @@ function DrinksDetailsProgress() {
       </p>
 
       <span hidden={ spanHidden }>Link copiado!</span>
-      <Link to={ { pathname: "/receitas-feitas", state: { drinkDoneCard: drinkDetails } } }>
+      <Link
+        to={
+          { pathname: '/receitas-feitas', state: { drinkDoneCard: drinkDetails } }
+        }
+      >
         <button
           type="button"
           data-testid="finish-recipe-btn"
