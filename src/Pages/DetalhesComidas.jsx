@@ -1,28 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { detailsFoodById, showSugestedDrinks } from '../services/aPI';
 import './DetalhesComida.css';
 
-import shareIcon from '../images/shareIcon.svg';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import blackHeartIcon from '../images/blackHeartIcon.svg';
+import { FavoriteFoodButton } from '../components/FavoriteBtn';
+import ShareButton from '../components/ShareBtn';
 
 const DetalhesComida = () => {
   const [stateLocal, setStatelocal] = useState();
   const [stateSugestions, setSugestions] = useState();
   const [foodsInProgress, setFoodsInProgress] = useState({ meals: {} });
-  const [isFavorite, setIsFavorite] = useState(false);
-  const [windowLink, setWindowLink] = useState(window.location.href);
-  const [linkCopied, setLinkCopied] = useState(false);
-
-  const handleShareClick = () => {
-    const url = window.location.href;
-
-    setWindowLink(url);
-    setLinkCopied(true);
-  };
 
   const currentFoodID = useParams().id;
 
@@ -50,25 +38,10 @@ const DetalhesComida = () => {
     setFoodsInProgress({ meals: progressRecipes.meals });
   };
 
-  const loadFavoriteRecipesFromLocalStorage = () => {
-    if (localStorage.getItem('favoriteRecipes') === null) {
-      const favoriteRecipes = [];
-      localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
-    }
-
-    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    const isRecipeFavorite = favoriteRecipes[0] ? favoriteRecipes
-      .find((recipe) => recipe.id === currentFoodID) : undefined;
-
-    if (isRecipeFavorite) setIsFavorite(true);
-    else setIsFavorite(false);
-  };
-
   useEffect(() => {
     handleIdDetails();
     getSugestedDrinks();
     loadRecipesInProgressFromLocalStorage();
-    loadFavoriteRecipesFromLocalStorage();
   }, []);
 
   const getIngredientsOrMeasure = (param) => {
@@ -97,34 +70,6 @@ const DetalhesComida = () => {
     localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
   };
 
-  const handleFavorite = () => {
-    const currentFood = stateLocal.food.meals[0];
-    const recipeData = {
-      id: currentFood.idMeal,
-      type: 'comida',
-      area: currentFood.strArea,
-      category: currentFood.strCategory,
-      alcoholicOrNot: '',
-      name: currentFood.strMeal,
-      image: currentFood.strMealThumb,
-    };
-
-    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    const zero = 0;
-    const isAlreadyAFavorite = favoriteRecipes.length > zero
-      ? favoriteRecipes.find((recipe) => recipe.id === currentFood.idMeal) : undefined;
-
-    if (isAlreadyAFavorite) {
-      setIsFavorite(false);
-      localStorage.setItem('favoriteRecipes', JSON.stringify([...favoriteRecipes
-        .filter((recipe) => recipe.id !== currentFood.idMeal)]));
-    } else {
-      setIsFavorite(true);
-      localStorage.setItem('favoriteRecipes', JSON.stringify([
-        ...favoriteRecipes, recipeData]));
-    }
-  };
-
   const number = 5;
 
   return (
@@ -148,29 +93,8 @@ const DetalhesComida = () => {
               { stateLocal.food.meals[0].strMeal }
             </span>
             <div className="container-icons">
-              <CopyToClipboard text={ windowLink } onCopy={ () => setLinkCopied(true) }>
-                <button
-                  type="button"
-                  data-testid="share-btn"
-                  onClick={ handleShareClick }
-                >
-                  <img
-                    src={ shareIcon }
-                    alt="shareIcon"
-                  />
-                </button>
-              </CopyToClipboard>
-              <button
-                type="button"
-                onClick={ handleFavorite }
-              >
-                <img
-                  data-testid="favorite-btn"
-                  src={ !isFavorite ? whiteHeartIcon : blackHeartIcon }
-                  alt={ !isFavorite ? 'whiteHeartIcon' : 'blackHeartIcon' }
-                />
-              </button>
-              {linkCopied ? <span>Link copiado!</span> : null}
+              <ShareButton />
+              <FavoriteFoodButton />
             </div>
           </div>
           <div
