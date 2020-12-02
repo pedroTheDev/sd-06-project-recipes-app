@@ -48,12 +48,13 @@ function DrinksRecipesPage() {
   return (
     <div>
       <Header pageName="Bebidas" />
-      <div>
+      <div className="category-buttons">
         <button
           data-testid="All-category-filter"
           type="button"
           value="all"
           onClick={ () => handleClickAll() }
+          className="category-button"
         >
           All
         </button>
@@ -65,12 +66,13 @@ function DrinksRecipesPage() {
               type="button"
               data-testid={ `${element.strCategory}-category-filter` }
               key={ element }
+              className="category-button"
             >
               {element.strCategory}
             </button>
           ))}
       </div>
-      <div>
+      <div className="drinkCard-div">
         { !hiddenInput ? apiResult.drinks && apiResult.drinks
           .slice(zero, doze).map((element, idx) => (
             <DrinkCard element={ element } idx={ idx } key={ element.idDrink } />

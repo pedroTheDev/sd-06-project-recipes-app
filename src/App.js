@@ -16,7 +16,7 @@ import DoneRecipes from './pages/DoneRecipes';
 function App() {
   return (
     <RecipesAppProvider>
-      <main>
+      <main className="login-div-container-containerzao">
         <BrowserRouter>
           <Switch>
             <Route exact path="/" component={ LoginPage } />

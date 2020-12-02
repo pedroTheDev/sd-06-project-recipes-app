@@ -15,18 +15,17 @@ function Header(props) {
   return (
 
     <div>
-      <header>
-        <Link to="/perfil">
+      <header className="Header">
+        <Link to="/perfil" className="header-link">
           <button
             aria-label="profile-btn"
             type="button"
             src={ profileIcon }
             data-testid="profile-top-btn"
-          >
-            <img alt="bla" src={ profileIcon } />
-          </button>
+            className="header-profile-button"
+          />
         </Link>
-        <div>
+        <div className="header-text">
           <h2 data-testid="page-title">
             {pageName}
           </h2>
@@ -37,9 +36,8 @@ function Header(props) {
           src={ searchIcon }
           data-testid="search-top-btn"
           onClick={ () => setHiddenInput(!hiddenInput) }
-        >
-          <img alt="bla" src={ searchIcon } />
-        </button>
+          className="header-search-button"
+        />
         { hiddenInput ? <SearchInput /> : null }
         { hiddenInput ? <Filters /> : null }
       </header>
