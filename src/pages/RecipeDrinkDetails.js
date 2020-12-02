@@ -38,10 +38,10 @@ function RecipeDrinkDetails(props) {
     fetchRecomendationsMeals();
   }, []);
 
-  if (recipes.length !== ZERO) {
+  if ((recipes && recipes.length) !== ZERO) {
     const renderIngredients = () => {
       for (let i = 1; i <= TWENTY; i += 1) {
-        if (recipes[0][`strIngredient${i}`]) {
+        if (recipes && recipes[0][`strIngredient${i}`]) {
           arrIngredient = arrIngredient.concat(recipes[0][`strIngredient${i}`]);
         } else {
           break;
@@ -51,7 +51,7 @@ function RecipeDrinkDetails(props) {
 
     const renderMeasure = () => {
       for (let i = 1; i <= TWENTY; i += 1) {
-        if (recipes[0][`strMeasure${i}`]) {
+        if (recipes && recipes[0][`strMeasure${i}`]) {
           arrMeasure = arrMeasure.concat(recipes[0][`strMeasure${i}`]);
         } else {
           break;
@@ -68,7 +68,7 @@ function RecipeDrinkDetails(props) {
     renderMeasure();
     renderIngredients();
 
-    return (
+    return recipes && recipes[0] && (
       <div>
         <img
           data-testid="recipe-photo"

@@ -17,6 +17,7 @@ function CategoryList({ title }) {
     categoryList,
     setCategoryList,
     setRecipes,
+    setClickedCategory,
   } = useContext(RecipesContext);
 
   const [category, setCategory] = useState('all');
@@ -51,6 +52,7 @@ function CategoryList({ title }) {
   };
 
   const onClick = (selectedCategory) => {
+    setClickedCategory(true);
     if (selectedCategory === category) setCategory('all');
     else setCategory(selectedCategory);
   };
