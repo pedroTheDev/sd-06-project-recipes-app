@@ -9,7 +9,7 @@ import shareIcon from '../images/shareIcon.svg';
 
 function FoodDetails() {
   const url = document.URL;
-  const splitedURL = url.split('/');
+  const actualId = url.split('/')[4];
   const [foodDetails, setFoodDetails] = useState([]);
   const [ingredients, setIngredients] = useState('');
   const [apiResult, setApiResult] = useState([]);
@@ -20,18 +20,23 @@ function FoodDetails() {
 
   useEffect(() => {
     async function fetchData() {
-      const resultsDetails = await requestDetailsFood(splitedURL[4]);
+      const resultsDetails = await requestDetailsFood(actualId);
       const meal = resultsDetails.meals[0];
       setFoodDetails(meal);
       const keysMeal = Object.keys(meal);
+
       const filterMeal = keysMeal
         .filter((key) => key.toLowerCase().includes('ingredient'));
+
       const filterMeasure = keysMeal
         .filter((key) => key.toLowerCase().includes('measure'));
+
       const allIngredients = filterMeal
         .map((item, index) => ({
           ingredient: meal[item], measure: meal[filterMeasure[index]],
         }));
+
+      console.log(allIngredients);
       setIngredients(allIngredients);
     }
     fetchData();
@@ -45,6 +50,21 @@ function FoodDetails() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const meuLocal = localStorage.getItem('favoriteRecipes');
+    console.log('local2', meuLocal);
+    if (meuLocal !== null) {
+      const meuLocalArray = JSON.parse(meuLocal);
+      console.log(meuLocalArray);
+      // const idAtual = actualId[4];
+      const findId = meuLocalArray.find((element) => element.id === actualId);
+      console.log(findId);
+      if (findId !== undefined) {
+        setFavoriteFood(true);
+      }
+    }
+  }, []);
+
   function handleClick() {
     localStorage.setItem('hiddenButtonFood', true);
   }
@@ -56,7 +76,6 @@ function FoodDetails() {
 
   function handleFavoriteFood() {
     if (favoriteFood === false) {
-      console.log('entrou');
       setFavoriteFood(true);
       const favoriteObj = [
         {
@@ -83,7 +102,13 @@ function FoodDetails() {
     }
     if (favoriteFood === true) {
       setFavoriteFood(false);
-      console.log('entrou2', favoriteFood);
+      const arrayDoStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      console.log(arrayDoStorage);
+
+      const novoArray = arrayDoStorage.filter((element) => element.id !== actualId);
+      console.log(novoArray);
+
+      localStorage.setItem('favoriteRecipes', JSON.stringify(novoArray));
     }
   }
 
@@ -116,16 +141,21 @@ function FoodDetails() {
         type="button"
         data-testid="favorite-btn"
         onClick={ handleFavoriteFood }
-        src={ favoriteFood ? whiteHeartIcon : blackHeartIcon }
-      />
+        src={ favoriteFood ? blackHeartIcon : whiteHeartIcon }
+      >
+        <img alt="bla" src={ favoriteFood ? blackHeartIcon : whiteHeartIcon } />
+      </button>
 
       <h4 data-testid="recipe-category">
-        {foodDetails.meals && foodDetails.meals[0].strCategory}
+        {foodDetails.strCategory}
       </h4>
 
       <div id="ingredients-div">
         {ingredients && ingredients.map((item, index) => (
-          <p data-testid={ `${index}-ingredient-name-and-measure` } key={ index }>
+          <p
+            data-testid={ `${index}-ingredient-name-and-measure` }
+            key={ index }
+          >
             {`${index + 1} ${item.ingredient} - ${item.measure}`}
           </p>
         ))}
@@ -143,13 +173,11 @@ function FoodDetails() {
         <track src="" kind="captions" />
       </video>
 
-      <div>
+      <div className="carousel">
         { apiResult.drinks && apiResult.drinks.slice(zero, six).map((element, idx) => (
-          <DrinkRecomendCard
-            element={ element }
-            idx={ idx }
-            key={ element.idDrink }
-          />
+          <div className="carousel-item" key={ idx }>
+            <DrinkRecomendCard element={ element } idx={ idx } key={ element.idMeal } />
+          </div>
         )) }
       </div>
 
@@ -164,20 +192,6 @@ function FoodDetails() {
           onClick={ handleClick }
         >
           Iniciar Receita
-        </button>
-      </Link>
-
-      <Link
-        to={ `/comidas/${foodDetails.meals && foodDetails.meals[0].idMeal}/in-progress` }
-      >
-        <button
-          type="button"
-          className="start-btn"
-          data-testid="start-recipe-btn"
-          hidden={ !localStorage.getItem('hiddenButtonFood') }
-          onClick={ handleClick }
-        >
-          Continuar Receita
         </button>
       </Link>
       <br />

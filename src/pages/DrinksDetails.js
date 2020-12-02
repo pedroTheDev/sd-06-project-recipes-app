@@ -1,18 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { requestDetailsDrinks, requestFoods } from '../services/requestsAPI';
 import FoodRecomendCard from '../components/FoodRecomendCard';
+import RecipesContext from '../context/RecipesContext';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+import '../style/FoodAndDrinkDetails.css';
 
 function DrinkDetails() {
   const url = document.URL;
-  const splitedURL = url.split('/');
-  const [drinkDetails, setDrinkDetails] = useState([]);
+  const actualId = url.split('/')[4];
+  const { drinkDetails, setDrinkDetails } = useContext(RecipesContext);
   const [ingredients, setIngredients] = useState('');
   const [apiResult, setApiResult] = useState([]);
-  const [buttonText, setButtonText] = useState('Iniciar Receita');
+  const [buttonText] = useState('Iniciar Receita');
   const [spanHidden, setSpanHidden] = useState(true);
   const [favoriteDrink, setFavoriteDrink] = useState(false);
   const zero = 0;
@@ -20,7 +22,7 @@ function DrinkDetails() {
 
   useEffect(() => {
     async function fetchData() {
-      const resultsDetails = await requestDetailsDrinks(splitedURL[4]);
+      const resultsDetails = await requestDetailsDrinks(actualId);
       const drink = resultsDetails.drinks[0];
       setDrinkDetails(drink);
       const keysDrink = Object.keys(drink);
@@ -45,14 +47,23 @@ function DrinkDetails() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const meuLocal = localStorage.getItem('favoriteRecipes');
+    console.log('local2', meuLocal);
+    if (meuLocal !== null) {
+      const meuLocalArray = JSON.parse(meuLocal);
+      console.log(meuLocalArray);
+      // const idAtual = actualId[4];
+      const findId = meuLocalArray.find((element) => element.id === actualId);
+      console.log(findId);
+      if (findId !== undefined) {
+        setFavoriteDrink(true);
+      }
+    }
+  }, []);
+
   function handleClick() {
-    localStorage.setItem('iniciou?', true);
-    console.log(buttonText);
-    if (localStorage.getItem('hiddenButtonDrink') === true) {
-      console.log('entrou');
-      setButtonText('Continuar Receita');
-      // localStorage.setItem('hiddenButtonDrink', false);
-    } setButtonText('Iniciar Receita');
+    localStorage.setItem('hiddenButtonFood', true);
   }
 
   // function ttt() {
@@ -67,8 +78,8 @@ function DrinkDetails() {
   }
 
   function handleFavoriteDrink() {
-    setFavoriteDrink(!favoriteDrink);
     if (favoriteDrink === false) {
+      setFavoriteDrink(true);
       const favoriteObj = [
         {
           id: drinkDetails.idDrink,
@@ -92,35 +103,14 @@ function DrinkDetails() {
         );
       }
     }
-
-    // const favoriteObj = [
-    //   {
-    //     id: drinkDetails.idDrink,
-    //     type: 'bebida',
-    //     area: '',
-    //     category: drinkDetails.strCategory,
-    //     alcoholicOrNot: drinkDetails.strAlcoholic,
-    //     name: drinkDetails.strDrink,
-    //     image: drinkDetails.strDrinkThumb,
-    //   },
-    // ];
-    // if (localStorage.getItem('favoriteRecipes') === null) {
-    //   localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteObj));
-    //   } else {
-    //     localStorage.setItem(
-    //       'favoriteRecipes',
-    //       JSON.stringify([
-    //         ...JSON.parse(localStorage.getItem('favoriteRecipes')),
-    //         favoriteObj,
-    //       ]),
-    //     );
-    // }
-    // if (favoriteDrink === true) {
-    //   setFavoriteDrink(false);
-    //   const arrayDoStorage = localStorage.getItem('favoriteRecipes');
-    //   const novoArray = arrayDoStorage.filter((element) => element.idDrink !== idDrink)
-    //   localStorage.setItem('favoriteRecipes', novoArray)
-    // }
+    if (favoriteDrink === true) {
+      setFavoriteDrink(false);
+      const arrayDoStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      console.log(arrayDoStorage);
+      const novoArray = arrayDoStorage.filter((element) => element.id !== actualId);
+      console.log(novoArray);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(novoArray));
+    }
   }
 
   return (
@@ -129,13 +119,13 @@ function DrinkDetails() {
       <img
         data-testid="recipe-photo"
         width="100px"
-        src={ drinkDetails.drinks && drinkDetails.drinks[0].strDrinkThumb }
-        alt="Meal"
+        src={ drinkDetails.strDrinkThumb }
+        alt="Drink"
       />
 
       <h3 data-testid="recipe-title">
         {
-          drinkDetails.drinks && drinkDetails.drinks[0].strDrink
+          drinkDetails.strDrink
         }
       </h3>
 
@@ -153,22 +143,13 @@ function DrinkDetails() {
         aria-label="favorite-button"
         type="button"
         data-testid="favorite-btn"
-        className={ whiteHeartIcon }
         onClick={ handleFavoriteDrink }
-        src={ whiteHeartIcon }
+        src={ favoriteDrink ? blackHeartIcon : whiteHeartIcon }
       >
         <img alt="bla" src={ favoriteDrink ? blackHeartIcon : whiteHeartIcon } />
       </button>
       <h4 data-testid="recipe-category">
-        {
-          drinkDetails.drinks && drinkDetails.drinks[0].strCategory
-        }
-      </h4>
-
-      <h4>
-        {
-          drinkDetails.drinks && drinkDetails.drinks[0].strAlcoholic
-        }
+        {drinkDetails.strAlcoholic}
       </h4>
 
       <div id="ingredients-div">
@@ -179,7 +160,9 @@ function DrinkDetails() {
               key={ index }
             >
               {
-                `${index + 1} ${item.ingredient} - ${item.measure}`
+                item.ingredient && item.measure
+                  ? `${index + 1} ${item.ingredient} - ${item.measure}`
+                  : null
               }
             </p>
           ))}
@@ -188,17 +171,19 @@ function DrinkDetails() {
       <p
         data-testid="instructions"
       >
-        {drinkDetails.drinks && drinkDetails.drinks[0].strInstructions}
+        {drinkDetails.strInstructions}
       </p>
 
-      <div>
+      <div className="carousel">
         { apiResult.meals && apiResult.meals.slice(zero, six).map((element, idx) => (
-          <FoodRecomendCard element={ element } idx={ idx } key={ element.idMeal } />)) }
+          <div className="carousel-item" key={ idx }>
+            <FoodRecomendCard element={ element } idx={ idx } key={ element.idMeal } />
+          </div>
+        ))}
       </div>
 
       <Link
-        to={ `/bebidas/${drinkDetails
-          .drinks && drinkDetails.drinks[0].idDrink}/in-progress` }
+        to={ `/bebidas/${drinkDetails.idDrink}/in-progress` }
       >
         <button
           type="button"
