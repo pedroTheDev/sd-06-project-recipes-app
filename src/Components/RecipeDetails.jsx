@@ -72,7 +72,7 @@ const RecipeDetails = () => {
     if (kindof === 'comidas') {
       if (!localStorage.inProgressRecipes) {
         localStorage.inProgressRecipes = JSON.stringify({
-          cocktails: {}, meals: { [ids]: '' } });
+          cocktails: {}, meals: { [ids]: ['null'] } });
       } else if (JSON.parse(localStorage.inProgressRecipes).meals[ids]) {
         // const reset = JSON.parse(localStorage.inProgressRecipes = )
         localStorage.inProgressRecipes = JSON.stringify(
@@ -83,13 +83,14 @@ const RecipeDetails = () => {
       } else {
         localStorage.inProgressRecipes = JSON.stringify(
           { ...JSON.parse(localStorage.inProgressRecipes),
-            meals: { ...JSON.parse(localStorage.inProgressRecipes).meals, [ids]: '' },
+            meals: { ...JSON.parse(localStorage.inProgressRecipes).meals,
+              [ids]: ['null'] },
           },
         );
       }
     } else if (!localStorage.inProgressRecipes) {
       localStorage.inProgressRecipes = JSON.stringify({
-        cocktails: { [ids]: '' }, meals: {} });
+        cocktails: { [ids]: ['null'] }, meals: {} });
     } else if (JSON.parse(localStorage.inProgressRecipes).cocktails[ids]) {
       // const reset = JSON.parse(localStorage.inProgressRecipes = )
       localStorage.inProgressRecipes = JSON.stringify(
@@ -102,7 +103,7 @@ const RecipeDetails = () => {
         { ...JSON.parse(localStorage.inProgressRecipes),
           cocktails: { ...JSON.parse(localStorage.inProgressRecipes)
             .cocktails,
-          [ids]: '' },
+          [ids]: ['null'] },
         },
       );
     }
@@ -215,7 +216,7 @@ const RecipeDetails = () => {
                 ))
             }
           </div>
-          {(JSON.parse(localStorage.inProgressRecipes).meals[ids] !== '') ? (
+          {(JSON.parse(localStorage.inProgressRecipes).meals[ids] !== ['null']) ? (
             <button
               type="button"
               style={ { position: 'fixed', bottom: 0 } }
