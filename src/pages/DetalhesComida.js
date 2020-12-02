@@ -2,8 +2,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import useCopyToClipboard from '../hooks/useCopyToClipboard';
-import { shareIcon, whiteHeartIcon, blackHeartIcon,
-  setaDireita, setaEsquerda } from '../images';
+import {
+  shareIcon, whiteHeartIcon, blackHeartIcon,
+  setaDireita, setaEsquerda,
+} from '../images';
 import '../style/Detalhes.css';
 
 function DetalhesComida() {
@@ -65,8 +67,12 @@ function DetalhesComida() {
 
   const handleClick = () => {
     setIsFavorite(!isFavorite);
+    let favoriteRecipes = [];
     if (!isFavorite) {
-      localStorage.favoriteRecipes = JSON.stringify([{
+      if (localStorage.favoriteRecipes) {
+        favoriteRecipes = JSON.parse(localStorage.favoriteRecipes);
+      }
+      localStorage.favoriteRecipes = JSON.stringify([...favoriteRecipes, {
         id: dataMeal.idMeal,
         type: 'comida',
         area: dataMeal.strArea,
@@ -76,7 +82,9 @@ function DetalhesComida() {
         image: dataMeal.strMealThumb,
       }]);
     } else {
-      localStorage.removeItem('favoriteRecipes');
+      favoriteRecipes = JSON.parse(localStorage.favoriteRecipes)
+        .filter(({ id }) => id !== dataMeal.idMeal);
+      localStorage.favoriteRecipes = JSON.stringify(favoriteRecipes);
     }
   };
 
@@ -151,10 +159,20 @@ function DetalhesComida() {
               <p data-testid="instructions">{ dataMeal.strInstructions }</p>
               <br />
               <h2>Vídeo</h2>
-              <video data-testid="video" width="300" height="250" controls>
-                <source src={ dataMeal.strYoutube } type="video/mp4" />
-                <track src="" kind="captions" />
-              </video>
+              <div data-testid="video">
+                <iframe
+                  title="Recipe Video"
+                  width="320"
+                  height="250"
+                  src={ dataMeal.strYoutube && dataMeal.strYoutube
+                    .replace('watch?v=', 'embed/') }
+                  frameBorder="0"
+                  allow="accelerometer;
+                autoplay; clipboard-write; encrypted-media; gyroscope;
+                picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
 
               <h2>Recomendadas</h2>
               <div className="cards">
@@ -169,12 +187,14 @@ function DetalhesComida() {
                       }
                       data-testid={ `${index}-recomendation-card` }
                     >
-                      <img src={ drink.strDrinkThumb } alt={ drink.strDrink } />
-                      <h2
-                        data-testid={ `${index}-recomendation-title` }
-                      >
-                        { drink.strDrink }
-                      </h2>
+                      <Link to={ `/bebidas/${drink.idDrink}` }>
+                        <img src={ drink.strDrinkThumb } alt={ drink.strDrink } />
+                        <h2
+                          data-testid={ `${index}-recomendation-title` }
+                        >
+                          { drink.strDrink }
+                        </h2>
+                      </Link>
                     </div>
                   )) }
                 </div>

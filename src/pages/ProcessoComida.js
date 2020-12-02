@@ -86,8 +86,8 @@ function ProcessoComida() {
 
   const handleClick = () => {
     setIsFavorite(!isFavorite);
+    let favoriteRecipes = [];
     if (!isFavorite) {
-      let favoriteRecipes = [];
       if (localStorage.favoriteRecipes) {
         favoriteRecipes = JSON.parse(localStorage.favoriteRecipes);
       }
@@ -101,7 +101,9 @@ function ProcessoComida() {
         image: dataMeal.strMealThumb,
       }]);
     } else {
-      localStorage.removeItem('favoriteRecipes');
+      favoriteRecipes = JSON.parse(localStorage.favoriteRecipes)
+        .filter(({ id }) => id !== dataMeal.idMeal);
+      localStorage.favoriteRecipes = JSON.stringify(favoriteRecipes);
     }
   };
 

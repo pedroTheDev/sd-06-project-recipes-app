@@ -33,7 +33,7 @@ function Login() {
       <form>
         <input
           data-testid="email-input"
-          type="text"
+          type="email"
           name="email"
           placeholder="Digite seu e-mail"
           required
@@ -62,7 +62,7 @@ function Login() {
             disabled={ isDisabled }
             onClick={ saveEmail }
           >
-            entrar
+            Entrar
           </button>
         </Link>
       </form>
