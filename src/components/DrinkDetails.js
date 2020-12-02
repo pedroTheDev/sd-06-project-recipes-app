@@ -74,16 +74,20 @@ function DrinkDetails() {
         .slice(inditialIndex, quantityRecipes);
 
       // Verifica se receita já foi iniciada ou concluída
-      const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
       let textBtnDoneRecipe = 'Iniciar Receita';
+      const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
       if (doneRecipes !== null) {
         const indexDoneRecipe = doneRecipes.findIndex((item) => item.id === id);
-        if (indexDoneRecipe >= valorZero) {
-          if (doneRecipes[indexDoneRecipe].doneDate === '') {
-            textBtnDoneRecipe = 'Continuar Receita';
-          } else {
-            textBtnDoneRecipe = 'Receita Finalizada';
-          }
+        if (indexDoneRecipe >= valorZero
+          && doneRecipes[indexDoneRecipe].doneDate !== '') {
+          textBtnDoneRecipe = 'Receita Finalizada';
+        }
+      }
+      const recipesInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      if (recipesInProgress !== null) {
+        const idsRecipesInProgress = Object.keys(recipesInProgress.cocktails);
+        if (idsRecipesInProgress.includes(id)) {
+          textBtnDoneRecipe = 'Continuar Receita';
         }
       }
 
@@ -114,21 +118,27 @@ function DrinkDetails() {
     return ingredients;
   }
 
-  function updateDoneRecipes() {
-    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
-    const newDoneRecipe = {
-      id: recipeDrink.idDrink,
-      type: 'bebida',
-      area: '',
-      category: recipeDrink.strCategory,
-      alcoholicOrNot: recipeDrink.strAlcoholic,
-      name: recipeDrink.strDrink,
-      image: recipeDrink.strDrinkThumb,
-      doneDate: '',
-      tags: [],
-    };
-    const arrayDoneRecipe = [...doneRecipes, newDoneRecipe];
-    localStorage.setItem('doneRecipes', JSON.stringify(arrayDoneRecipe));
+  // function updateDoneRecipes() {
+  //   const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+  //   const newDoneRecipe = {
+  //     id: recipeDrink.idDrink,
+  //     type: 'bebida',
+  //     area: '',
+  //     category: recipeDrink.strCategory,
+  //     alcoholicOrNot: recipeDrink.strAlcoholic,
+  //     name: recipeDrink.strDrink,
+  //     image: recipeDrink.strDrinkThumb,
+  //     doneDate: '',
+  //     tags: [],
+  //   };
+  //   const arrayDoneRecipe = [...doneRecipes, newDoneRecipe];
+  //   localStorage.setItem('doneRecipes', JSON.stringify(arrayDoneRecipe));
+  // }
+
+  function updateRecipeInProgress() {
+    const recipesInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    recipesInProgress.cocktails[recipeDrink.idDrink] = [];
+    localStorage.setItem('inProgressRecipes', JSON.stringify(recipesInProgress));
   }
 
   function copyToClipboard() {
@@ -272,7 +282,7 @@ function DrinkDetails() {
               variant="success"
               size="lg"
               block
-              onClick={ updateDoneRecipes }
+              onClick={ updateRecipeInProgress }
             >
               { btnDoneRecipe }
             </Button>

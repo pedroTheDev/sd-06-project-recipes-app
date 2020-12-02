@@ -74,8 +74,8 @@ function MyProvider({ children }) {
       }
       // Cria Local storage de Receitas em progresso
       if (localStorage.getItem('inProgressRecipes') === null) {
-        const newArrayInProgress = [];
-        localStorage.setItem('inProgressRecipes', JSON.stringify(newArrayInProgress));
+        const newObjectInProgress = { cocktails: {}, meals: {} };
+        localStorage.setItem('inProgressRecipes', JSON.stringify(newObjectInProgress));
       }
     }
     fetchALL();

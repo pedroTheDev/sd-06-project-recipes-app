@@ -13,7 +13,7 @@ import '../Css/MealDetail.css';
 
 function MealDetails() {
   const [loading, setLoading] = useState(true);
-  const [btnDoneRecipe, setBtnDoneRecipe] = useState();
+  const [btnDoneRecipe, setBtnDoneRecipe] = useState('Iniciar Receita');
   const [isFavorite, setIsFavorite] = useState(false);
   const [urlWasCopyToClipboard, seturlWasCopyToClipboard] = useState(false);
   const { recipeMeal, setRecipeMeal, recommendedDrinks,
@@ -75,16 +75,20 @@ function MealDetails() {
         .slice(inditialIndex, quantityRecipes);
 
       // Verifica se receita já foi iniciada ou concluída
-      const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
       let textBtnDoneRecipe = 'Iniciar Receita';
+      const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
       if (doneRecipes !== null) {
         const indexDoneRecipe = doneRecipes.findIndex((item) => item.id === id);
-        if (indexDoneRecipe >= valorZero) {
-          if (doneRecipes[indexDoneRecipe].doneDate === '') {
-            textBtnDoneRecipe = 'Continuar Receita';
-          } else {
-            textBtnDoneRecipe = 'Receita Finalizada';
-          }
+        if (indexDoneRecipe >= valorZero
+          && doneRecipes[indexDoneRecipe].doneDate !== '') {
+          textBtnDoneRecipe = 'Receita Finalizada';
+        }
+      }
+      const recipesInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      if (recipesInProgress !== null) {
+        const idsRecipesInProgress = Object.keys(recipesInProgress.meals);
+        if (idsRecipesInProgress.includes(id)) {
+          textBtnDoneRecipe = 'Continuar Receita';
         }
       }
 
@@ -128,21 +132,27 @@ function MealDetails() {
     return idYoutube;
   }
 
-  function updateDoneRecipes() {
-    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
-    const newDoneRecipe = {
-      id: recipeMeal.idMeal,
-      type: 'comida',
-      area: recipeMeal.strArea,
-      category: recipeMeal.strCategory,
-      alcoholicOrNot: '',
-      name: recipeMeal.strMeal,
-      image: recipeMeal.strMealThumb,
-      doneDate: '',
-      tags: [],
-    };
-    const arrayDoneRecipe = [...doneRecipes, newDoneRecipe];
-    localStorage.setItem('doneRecipes', JSON.stringify(arrayDoneRecipe));
+  // function updateDoneRecipes() {
+  //   const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+  //   const newDoneRecipe = {
+  //     id: recipeMeal.idMeal,
+  //     type: 'comida',
+  //     area: recipeMeal.strArea,
+  //     category: recipeMeal.strCategory,
+  //     alcoholicOrNot: '',
+  //     name: recipeMeal.strMeal,
+  //     image: recipeMeal.strMealThumb,
+  //     doneDate: '',
+  //     tags: [],
+  //   };
+  //   const arrayDoneRecipe = [...doneRecipes, newDoneRecipe];
+  //   localStorage.setItem('doneRecipes', JSON.stringify(arrayDoneRecipe));
+  // }
+
+  function updateRecipeInProgress() {
+    const recipesInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    recipesInProgress.meals[recipeMeal.idMeal] = [];
+    localStorage.setItem('inProgressRecipes', JSON.stringify(recipesInProgress));
   }
 
   function copyToClipboard() {
@@ -299,7 +309,7 @@ function MealDetails() {
               variant="success"
               size="lg"
               block
-              onClick={ updateDoneRecipes }
+              onClick={ updateRecipeInProgress }
             >
               { btnDoneRecipe }
             </Button>
