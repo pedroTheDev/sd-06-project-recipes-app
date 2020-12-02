@@ -38,8 +38,10 @@
 }
 
 .card-div {
+  align-items: center;
   display: flex;
   flex-flow: row wrap;
+  justify-content: center;
   margin: auto;
   margin-bottom: 100px;
   margin-top: 30px;
@@ -47,24 +49,39 @@
 }
 
 .card-div div {
-  margin: 0 auto;
-  width: 70%;
+  align-items: center;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  margin: 2% auto;
+  width: 60%;
 }
 
 .card-div img {
   border-radius: 25%;
+  border-bottom-left-radius: 0%;
+  cursor: pointer;
   width: 100%;
 }
 
 .card-div h1 {
-  background-color: #ffffff;
-  bottom: 60px;
-  color: #960051;
+  background-color: #272c35;
+  color: #ffffff;
+  cursor: pointer;
   font-family: 'Montserrat', sans-serif;
   font-size: 20px;
   font-weight: 700;
-  left: 10px;
-  position: relative;
+  margin: 0;
+  padding: 2% 0;
+  text-align: center;
+  width: 100%;
+}
+
+.card-div a {
   text-decoration: none !important;
-  width: 80%;
+  cursor: alias;
+}
+
+.card-div a:hover {
+  text-decoration: none !important;
 }

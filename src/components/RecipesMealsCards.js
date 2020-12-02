@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
-import CategoriesButtons from './CategoriesButtons';
+import CategoriesButtonsMeals from './CategoriesButtonsMeals';
 import '../style/RecipeCards.css';
 
 function RecipesMealsCards({ categories }) {
@@ -18,7 +18,7 @@ function RecipesMealsCards({ categories }) {
       {
         categories === 'none'
           ? ''
-          : <CategoriesButtons categories={ categories } />
+          : <CategoriesButtonsMeals categories={ categories } />
       }
       <div className="card-div">
         {
@@ -28,11 +28,7 @@ function RecipesMealsCards({ categories }) {
                 key={ idMeal }
                 to={ `/comidas/${idMeal}` }
               >
-                <div
-                  type="button"
-                  data-testid={ `${index}-recipe-card` }
-                  className="card-recipe"
-                >
+                <div data-testid={ `${index}-recipe-card` }>
                   <img
                     data-testid={ `${index}-card-img` }
                     src={ strMealThumb }
