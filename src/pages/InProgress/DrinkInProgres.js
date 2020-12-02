@@ -35,7 +35,6 @@ export default function DrinkInProgress() {
           && recipes[keyName] !== undefined
           && recipes[keyName] !== null
       ) {
-        console.log(recipes[keyName]);
         const obj = {
           name: recipes[keyName],
           measure: recipes[measureKeyName],
@@ -56,9 +55,7 @@ export default function DrinkInProgress() {
         checkIngredient.children[0].checked = true;
       } else {
         checkIngredient.classList.remove('selected');
-        console.log(checkIngredient);
         checkIngredient.children[0].checked = false;
-        console.log(checkIngredient);
       }
     });
   };
@@ -88,7 +85,6 @@ export default function DrinkInProgress() {
   function selectItem(event) {
     const completedItem = event.target.parentNode;
     addRecipeProgress(id, completedItem.id);
-    console.log(id, completedItem.id);
     if (completedItem.classList.contains('selected')) {
       completedItem.classList.remove('selected');
       verifyChecked();
