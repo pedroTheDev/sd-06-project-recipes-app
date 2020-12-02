@@ -121,7 +121,7 @@ function CompletedRecipes() {
                     data-testid={ `${index}-${tagName}-horizontal-tag` }
                     key={ tagName }
                   >
-                    { tagName}
+                    { tagName }
                   </p>
                 ))}
               </div>

@@ -91,6 +91,40 @@ export function getDoneRecipes() {
   return recipes;
 }
 
+export function addDoneRecipe(object) {
+  const two = 2;
+  const today = new Date();
+  const day = String(today.getDate()).padStart(two, '0');
+  const month = String(today.getMonth() + 1).padStart(two, '0');
+  const year = today.getFullYear();
+  const date = `${day}/${month}/${year}`;
+  let obj = {};
+  if ('idDrink' in object) {
+    obj = {
+      id: object.idDrink,
+      type: 'drink',
+      category: object.strAlcoholic,
+      name: object.strDrink,
+      image: object.strDrinkThumb,
+      doneDate: date,
+      tags: object.tags,
+    };
+  } else if ('idMeal' in object) {
+    obj = {
+      id: object.idMeal,
+      type: 'meal',
+      category: object.strCategory,
+      name: object.strMeal,
+      image: object.strMealThumb,
+      doneDate: date,
+      tags: object.tags,
+    };
+  }
+  const temp = JSON.parse(localStorage.getItem('done_recipes'));
+  temp.push(obj);
+  localStorage.setItem('done_recipes', JSON.stringify(temp));
+}
+
 export function addDoneRecipe(recipe) {
   const two = 2;
   const today = new Date();
