@@ -11,6 +11,7 @@ import '../styles/Detalhes.css';
 import buttonShare from '../styles/images/shareIcon.svg';
 import FavoriteHeart from '../components/FavoriteHeart';
 import { loadState, saveState } from '../services/localStorage';
+import '../styles/imgBig.css';
 
 function DetalhesReceita({ match: { params: { id } } }) {
   const zero = 0;
@@ -125,8 +126,8 @@ function DetalhesReceita({ match: { params: { id } } }) {
         </h5>
       ))}
       <iframe
-        title="videos"
         data-testid="video"
+        title="video"
         width="1042"
         height="586"
         src={ `https://www.youtube.com/embed/${embed}` }

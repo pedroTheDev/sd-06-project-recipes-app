@@ -11,6 +11,7 @@ import '../styles/Detalhes.css';
 import buttonShare from '../styles/images/shareIcon.svg';
 import FavoriteHeart from '../components/FavoriteHeart';
 import { loadState, saveState } from '../services/localStorage';
+import '../styles/imgBig.css';
 
 function DetalhesBebida({ match: { params: { id } } }) {
   const zero = 0;
@@ -97,7 +98,12 @@ function DetalhesBebida({ match: { params: { id } } }) {
 
   return (
     <div>
-      <img data-testid="recipe-photo" src={ detailsDrink.strDrinkThumb } alt="dk aspo" />
+      <img
+        className="imgBig"
+        data-testid="recipe-photo"
+        src={ detailsDrink.strDrinkThumb }
+        alt="dk aspo"
+      />
       <h2 data-testid="recipe-title">{detailsDrink.strDrink}</h2>
       <div data-testid="recipe-category">
         <h3>{detailsDrink.strAlcoholic}</h3>
