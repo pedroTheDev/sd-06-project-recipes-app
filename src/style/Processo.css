@@ -18,29 +18,20 @@ body {
 }
 
 .div-header {
-  align-items: flex-start;
-  display: flex;
-  flex-flow: row wrap;
-  height: 100px;
-  justify-content: space-between;
+  background-color: #272c35;
+  color: #ffffff;
+  margin: 0;
+  margin-top: -1%;
+  max-height: 300px;
+  min-height: 150px;
+  padding: 1% 0%;
   width: 360px;
 }
 
-.div-header h1 {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 30px;
-  font-weight: 900;
-  margin: 0;
-  margin-left: 15%;
-}
-
 .div-icon {
-  align-items: flex-start;
-  display: flex;
-  flex-flow: row wrap;
-  margin-right: 2%;
-  justify-content: flex-end;
-  width: 150px;
+  height: 35px;
+  position: relative;
+  left: 200px;
 }
 
 .div-icon button {
@@ -49,6 +40,23 @@ body {
 
 .div-icon img {
   width: 25px;
+}
+
+.div-icon p {
+  right: 100px;
+  bottom: 50px;
+  position: relative;
+}
+
+.h1 {
+  align-items: center;
+  display: flex;
+  flex-flow: column wrap;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 28px;
+  font-weight: 900;
+  justify-content: center;
+  width: 360px;
 }
 
 .div-recipes {

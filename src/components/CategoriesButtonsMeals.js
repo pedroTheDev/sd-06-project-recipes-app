@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesContext';
 import '../style/CategoriesButtons.css';
 
-function RecipesMealsCards({ categories }) {
+function CategoriesButtonsMeals({ categories }) {
   const { data, setData } = useContext(RecipesContext);
   const [selectedCategorie, setSelectedCategorie] = useState('');
   const h1 = document.querySelector('h1').innerText;
@@ -66,8 +66,8 @@ function RecipesMealsCards({ categories }) {
   );
 }
 
-RecipesMealsCards.propTypes = {
+CategoriesButtonsMeals.propTypes = {
   categories: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-export default RecipesMealsCards;
+export default CategoriesButtonsMeals;

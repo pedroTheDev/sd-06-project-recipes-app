@@ -93,10 +93,6 @@ function DetalhesBebida() {
               alt={ dataDrinks.strDrink }
             />
             <div className="div-header">
-              <div className="div-title">
-                <h1 data-testid="recipe-title">{ dataDrinks.strDrink }</h1>
-                <p data-testid="recipe-category">{ dataDrinks.strAlcoholic }</p>
-              </div>
               <div className="div-icon">
                 <span>
                   <button
@@ -123,6 +119,10 @@ function DetalhesBebida() {
                     className="icons"
                   />
                 </button>
+              </div>
+              <div className="div-title">
+                <h1 data-testid="recipe-title">{ dataDrinks.strDrink }</h1>
+                <p data-testid="recipe-category">{ dataDrinks.strAlcoholic }</p>
               </div>
             </div>
             <div className="div-recipes">

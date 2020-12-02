@@ -1,113 +1,122 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
 import renderWithRouter from '../renderWithRouter';
-import { Profile } from '../pages';
+import App from '../App';
 
-describe('Testar header da tela de perfil', () => {
-  it(`Verificar se possui 1 botão com data-testid="profile-top-btn" 
-    e se ao clicar redireciona para "/perfil"`, () => {
-    const { getByTestId, history } = renderWithRouter(<Profile />);
+describe('Testar header da tela de Perfil', () => {
+  it('Verificar se possui o botão "Perfil" com data-testid específicos', () => {
+    const { getByTestId, history } = renderWithRouter(<App />);
     history.push('/perfil');
 
-    const profileButton = getByTestId('profile-top-btn');
-    fireEvent.click(profileButton);
-    expect(profileButton).toBeInTheDocument();
+    expect(getByTestId('profile-top-btn')).toBeInTheDocument();
+  });
+
+  it('Verificar se ao clicar no botão "Perfil" redireciona para url específico', () => {
+    const { getByTestId, history } = renderWithRouter(<App />);
+    history.push('/perfil');
+
+    fireEvent.click(getByTestId('profile-top-btn'));
     expect(history.location.pathname).toBe('/perfil');
   });
 
-  it('Verificar se existe o título "Perfil" no header', () => {
-    const { getByText, history } = renderWithRouter(<Profile />);
+  it('Verificar se existe um título na página e se o título é "Perfil"', () => {
+    const { getByText, history } = renderWithRouter(<App />);
     history.push('/perfil');
 
     const profileTitle = getByText(/Perfil/i);
     expect(profileTitle).toBeInTheDocument();
   });
-
-  it('Verificar se não possui o botão com data-testid="search-top-btn"', () => {
-    const { getByTestId, history } = renderWithRouter(<Profile />);
-    history.push('/perfil');
-
-    const profileSearchButton = getByTestId('search-top-btn');
-    expect(profileSearchButton).not.toBeInTheDocument();
-  });
 });
 
-describe('Testar conteúdo da tela de perfil ', () => {
-  // it('Verificar email, LocalStorage', () => {
+describe('Testar conteúdo da tela de Perfil ', () => {
+  it('Verificar se o email aparece na página', () => {
+    const { getByTestId, history } = renderWithRouter(<App />);
+    history.push('/');
+    const inputEmail = getByTestId('email-input');
+    const inputPassword = getByTestId('password-input');
+    const submitBtn = getByTestId('login-submit-btn');
+    fireEvent.change(inputEmail, { target: { value: 'email@email.com' } });
+    fireEvent.change(inputPassword, { target: { value: '1234567' } });
+    fireEvent.click(submitBtn);
 
-  // });
-
-  it(`Verificar se possui o botão com data-testid="profile-done-btn" 
-    e se ao clicar redireciona para "/receitas-feitas"`, () => {
-    const { getByTestId, history } = renderWithRouter(<Profile />);
     history.push('/perfil');
-
-    const profileDoneButton = getByTestId('profile-done-btn');
-    fireEvent.click(profileDoneButton);
-
-    expect(profileDoneButton).toBeInTheDocument();
-    expect(history.location.pathname).toBe('/receitas-feitas');
+    const email = getByTestId('profile-email');
+    expect(email).toBeInTheDocument();
+    expect(email).toHaveTextContent('email@email.com');
   });
 
-  it(`Verificar se possui o botão com data-testid="profile-favorite-btn" 
-    e se ao clicar redireciona para "/receitas-favoritas"`, () => {
-    const { getByTestId, history } = renderWithRouter(<Profile />);
+  it(`Verificar se possui os botões "Receitas Feitas", "Receitas 
+    Favoritas" e "Sair" com data-testid específicos`, () => {
+    const { getByTestId, history } = renderWithRouter(<App />);
     history.push('/perfil');
 
-    const profileFavoriteButton = getByTestId('profile-favorite-btn');
-    fireEvent.click(profileFavoriteButton);
-
-    expect(profileFavoriteButton).toBeInTheDocument();
-    expect(history.location.pathname).toBe('/receitas-favoritas');
+    expect(getByTestId('profile-done-btn')).toBeInTheDocument();
+    expect(getByTestId('profile-favorite-btn')).toBeInTheDocument();
+    expect(getByTestId('profile-logout-btn')).toBeInTheDocument();
   });
 
-  it(`Verificar se possui o botão com data-testid="profile-logout-btn" 
-    e se ao clicar redireciona para "/"`, () => {
-    const { getByTestId, history } = renderWithRouter(<Profile />);
+  it(`Verificar se ao clicar no botão "Receitas Feitas" redireciona 
+    para url específica`, () => {
+    // const { getByTestId, history } = renderWithRouter(<App />);
+    // history.push('/perfil');
+
+    // fireEvent.click(getByTestId('profile-favorite-btn'));
+    // expect(history.location.pathname).toBe('/receitas-feitas');
+  });
+
+  it(`Verificar se ao clicar  no botão "Receitas Favoritas" 
+    redireciona para url específico`, () => {
+    // const { getByTestId, history } = renderWithRouter(<App />);
+    // history.push('/perfil');
+
+    // fireEvent.click(getByTestId('profile-favorite-btn'));
+    // expect(history.location.pathname).toBe('/receitas-favoritas');
+  });
+
+  it('Verificar se ao clicar nos botões "Sair" redireciona para url específica', () => {
+    const { getByTestId, history } = renderWithRouter(<App />);
     history.push('/perfil');
 
-    const profileLogoutButton = getByTestId('profile-logout-btn');
-    fireEvent.click(profileLogoutButton);
-
-    expect(profileLogoutButton).toBeInTheDocument();
+    fireEvent.click(getByTestId('profile-logout-btn'));
     expect(history.location.pathname).toBe('/');
   });
 });
 
-describe('Testar footer da tela de perfil', () => {
-  it(`Verificar se possui o botão com data-testid="drinks-bottom-btn" 
-    e se ao clicar redireciona para "/bebidas"`, () => {
-    const { getByTestId, history } = renderWithRouter(<Profile />);
-    history.push('/comidas');
+describe('Testar footer na tela de Perfil', () => {
+  it(`Verificar se possui os botões dos ícones "Bebidas", "Explorar" 
+    e "Comidas" com data-testid específicos`, () => {
+    const { getByTestId, history } = renderWithRouter(<App />);
+    history.push('/perfil');
 
-    const drinksButton = getByTestId('drinks-bottom-btn');
-    fireEvent.click(drinksButton);
+    expect(getByTestId('drinks-bottom-btn')).toBeInTheDocument();
+    expect(getByTestId('explore-bottom-btn')).toBeInTheDocument();
+    expect(getByTestId('food-bottom-btn')).toBeInTheDocument();
+  });
 
-    expect(drinksButton).toBeInTheDocument();
+  it(`Verificar se ao clicar o botão do ícone "Bebidas" redireciona 
+    para url específica`, () => {
+    const { getByTestId, history } = renderWithRouter(<App />);
+    history.push('/perfil');
+
+    fireEvent.click(getByTestId('drinks-bottom-btn'));
     expect(history.location.pathname).toBe('/bebidas');
   });
 
-  it(`Verificar se possui o botão com data-testid="explore-bottom-btn" 
-    e se ao clicar redireciona para "/explorar"`, () => {
-    const { getByTestId, history } = renderWithRouter(<Profile />);
-    history.push('/comidas');
+  it(`Verificar se ao clicar o botão do ícone "Explorar" redireciona
+    para url específica`, () => {
+    const { getByTestId, history } = renderWithRouter(<App />);
+    history.push('/perfil');
 
-    const exploreButton = getByTestId('explore-bottom-btn');
-    fireEvent.click(exploreButton);
-
-    expect(exploreButton).toBeInTheDocument();
+    fireEvent.click(getByTestId('explore-bottom-btn'));
     expect(history.location.pathname).toBe('/explorar');
   });
 
-  it(`Verificar se possui o botão com data-testid="food-bottom-btn" 
-    e se ao clicar redireciona para "/comidas"`, () => {
-    const { getByTestId, history } = renderWithRouter(<Profile />);
-    history.push('/bebidas');
+  it(`Verificar se ao clicar o botão do ícone "Comidas" redireciona 
+    para url específica`, () => {
+    const { getByTestId, history } = renderWithRouter(<App />);
+    history.push('/perfil');
 
-    const mealsButton = getByTestId('food-bottom-btn');
-    fireEvent.click(mealsButton);
-
-    expect(mealsButton).toBeInTheDocument();
+    fireEvent.click(getByTestId('food-bottom-btn'));
     expect(history.location.pathname).toBe('/comidas');
   });
 });
