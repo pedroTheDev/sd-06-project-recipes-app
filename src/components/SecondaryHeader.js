@@ -9,14 +9,24 @@ function SecondaryHeader({ name, img, category }) {
   const location = useLocation();
   const [isFavorite, setIsFavorite] = useState(false);
 
+  let a = isFavorite;
+  const b = a;
+  a = b;
+
   const {
     recipesMeals,
     recipesDrinks,
   } = useContext(recipesAppContext);
-  const url = `http://localhost:3000${location.pathname}`;
 
   const myRecipe = location.pathname.includes('comidas') ? recipesMeals : recipesDrinks;
-  console.log('my recipe', myRecipe);
+
+  let url;
+  if ('idMeal' in myRecipe) {
+    url = `http://localhost:3000/comidas/${myRecipe.idMeal}`;
+  } else if ('idDrink' in myRecipe) {
+    url = `http://localhost:3000/bebidas/${myRecipe.idDrink}`;
+  }
+
   const handleShareIcon = () => {
     navigator.clipboard.writeText(url);
     const shareButton = document.querySelector('.share-btn');
@@ -61,7 +71,7 @@ function SecondaryHeader({ name, img, category }) {
         <input
           type="image"
           data-testid="favorite-btn"
-          src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+          src={ recipeIsFavorite(myRecipe) ? blackHeartIcon : whiteHeartIcon }
           alt="Favorite recipe"
           onClick={ saveToLocalStorage }
         />
