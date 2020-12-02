@@ -114,14 +114,15 @@ function updateFavoriteRecipes(recipes) {
   localStorage.setItem('favoriteRecipes', JSON.stringify(recipes));
 }
 
-export function getFavoriteRecipes() {
+function checkFavoriteRecipesDatabase() {
   const recipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-  return recipes;
+  if (!recipes) createFavoriteRecipesDatabase();
 }
 
-function checkFavoriteRecipesDatabase() {
-  const recipes = getFavoriteRecipes();
-  if (!recipes) createFavoriteRecipesDatabase();
+export function getFavoriteRecipes() {
+  checkFavoriteRecipesDatabase();
+  const recipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+  return recipes;
 }
 
 export function recipeIsFavorite(recipe) {
