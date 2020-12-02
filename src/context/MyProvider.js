@@ -67,6 +67,16 @@ function MyProvider({ children }) {
         const newArrayDoneRecipes = [];
         localStorage.setItem('doneRecipes', JSON.stringify(newArrayDoneRecipes));
       }
+      // Cria Local storage de Receitas Favoritas
+      if (localStorage.getItem('favoriteRecipes') === null) {
+        const newArrayFavorite = [];
+        localStorage.setItem('favoriteRecipes', JSON.stringify(newArrayFavorite));
+      }
+      // Cria Local storage de Receitas em progresso
+      if (localStorage.getItem('inProgressRecipes') === null) {
+        const newObjectInProgress = { cocktails: {}, meals: {} };
+        localStorage.setItem('inProgressRecipes', JSON.stringify(newObjectInProgress));
+      }
     }
     fetchALL();
   }, []);
