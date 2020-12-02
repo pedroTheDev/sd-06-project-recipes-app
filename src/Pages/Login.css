@@ -3,8 +3,8 @@ body {
 }
 
 .main-login {
-  background-image: url(imagem3.jpg);
-  width: 100%;
+  background-image: url(imagem4.jpg);
+  background-size: 360px auto;
   height: 700px;
   display: flex;
   flex-direction: column;
@@ -15,7 +15,7 @@ body {
 }
 
 .login {
-  margin-top: 120px;
+  margin-top: 200px;
   width: 400px;
   height: 400px;
   animation: appear 1.5s ease-in;
@@ -37,9 +37,10 @@ body {
 }
 
 .login span {
-  margin-top: 40px;
-  margin-bottom: 20px;
+  font-weight: bold;
+  margin-top: 60px;
   font-size: 50px;
+  text-shadow: 0 3px 4px;
 } 
 
 .login input {
@@ -53,13 +54,9 @@ body {
 .login button {
   background-color: rgba(255, 255, 61, 0.952);
   margin: 20px;
-  width: 260px;
-  height: 40px;
+  width: 250px;
+  height: 38px;
   border-radius: 10px;
   font-size: 20px;
-  box-shadow: 0 0 5px;
-}
-
-.login span {
-  color: white;
+  box-shadow: 0 2px 5px;
 }

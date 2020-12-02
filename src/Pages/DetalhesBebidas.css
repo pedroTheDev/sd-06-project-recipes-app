@@ -1,43 +1,80 @@
-.img-initial {
+.span-ingredients {
+  margin-top: 20px;
+}
+
+.span-ingredients span {
+  font-size: 24px; 
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+.box-ingredients {
+  background-color: rgb(168, 168, 168);
+  margin: 5px 10px; 
+  padding: 10px;
+}
+
+.box-ingredients ul {
+  margin-left: 20px;
+}
+
+.box-ingredients li {
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.container-span {
   width: 100%;
+  margin-top: 20px;
 }
 
-.title-e-icons {
-  display: flex;
-  justify-content: space-between;
-}
-
-.category {
+.container-span span {
+  font-size: 24px; 
   margin-left: 10px;
+  margin-top: 10px;
 }
 
-.title-e-icons span {
+.box-instructions {
+  background-color: rgb(168, 168, 168);
+  margin-top: 5px;
   margin-left: 10px;
-}
-
-.title-e-icons img {
   margin-right: 10px;
+  padding: 10px;
+  text-align: justify;
+  line-height: 22px;
 }
 
-.video {
-  width: 100%;
+.recomendation-span {
+  font-size: 24px; 
+  margin-left: 10px;
+  margin-top: 20px;
 }
 
-.video img {
-  width: 100%;
-}
-
-.main-recomendations {
+.container-recomendations {
   display: flex;
+  margin-bottom: 65px;
+  margin-top: 5px;
 
   width: 100%;
   height: auto;
   overflow: scroll;
 }
 
-.main-scroll img {
-  width: 175px;
+.container-recomendations button {
+  background: none;
+  border: none;
+}
 
+.container-recomendations p {
+  text-align: center;
+  font-size: 18px;
+  margin-bottom: 3px;
+}
+
+.container-recomendations img {
+  width: 175px;
+  border-radius: 10px;
+  margin-left: 10px;
 }
 
 .button-initial-recipe {

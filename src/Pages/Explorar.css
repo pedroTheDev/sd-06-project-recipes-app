@@ -1,6 +1,10 @@
+.main-explore {
+  padding-top: 75px;
+}
+
 .main-explore button {
   width: 90%;
-  margin-top: 20px;
+  margin-top: 25px;
   margin-left: 15px;
   font-size: 28px;
   padding: 15px 0;

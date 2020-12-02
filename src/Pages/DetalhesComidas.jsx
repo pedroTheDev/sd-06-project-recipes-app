@@ -179,32 +179,38 @@ const DetalhesComida = () => {
           >
             {stateLocal.food.meals[0].strCategory}
           </div>
-          <div className="container-ingredients">
+          <div
+            className="span-ingredients"
+          >
             <span>Ingredients</span>
-            <div className="amount-ingredients">
-              <ul>
-                {getIngredientsOrMeasure('strIngredient').map((ingred, i) => (
-                  <li
-                    data-testid={ `${i}-ingredient-name-and-measure` }
-                    key={ i }
-                  >
-                    {`${ingred} - ${getIngredientsOrMeasure('strMeasure')[i]}`}
-                  </li>
-                ))}
-              </ul>
-            </div>
           </div>
-          <div className="container-instructions">
+          <div className="box-ingredients">
+            <ul>
+              {getIngredientsOrMeasure('strIngredient').map((ingred, i) => (
+                <li
+                  data-testid={ `${i}-ingredient-name-and-measure` }
+                  key={ i }
+                >
+                  {`${ingred} - ${getIngredientsOrMeasure('strMeasure')[i]}`}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="container-span">
             <span>Instructions</span>
-            <div
+          </div>
+          <div className="box-instructions">
+            <span
               className="text-instructions-details"
               data-testid="instructions"
             >
               {stateLocal.food.meals[0].strInstructions}
-            </div>
+            </span>
+          </div>
+          <div className="container-span-video">
+            <span>Video</span>
           </div>
           <div className="container-video">
-            <span>Video</span>
             <a
               data-testid="video"
               href={ stateLocal.food.meals[0].strYoutube }

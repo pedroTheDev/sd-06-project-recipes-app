@@ -3,7 +3,7 @@ import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { detailsDrinkById, showSugestedFoods } from '../services/aPI';
-import './DetalhesComida.css';
+import './DetalhesBebidas.css';
 
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
@@ -182,35 +182,40 @@ const DetalhesBebidas = () => {
             {stateLocal.drink.drinks[0].strCategory}
             {stateLocal.drink.drinks[0].strAlcoholic}
           </div>
-          <div className="container-ingredients">
-            <span>Ingredients</span>
-            <div className="amount-ingredients">
-              <ul>
-                {getIngredientsOrMeasure('strIngredient').map((ingred, i) => (
-                  <li
-                    data-testid={ `${i}-ingredient-name-and-measure` }
-                    key={ i }
-                  >
-                    {`${ingred} - ${getIngredientsOrMeasure('strMeasure')[i]}`}
-                  </li>
-                ))}
-              </ul>
-            </div>
+          <div
+            className="span-ingredients"
+          >
+            <span>
+              Ingredients
+            </span>
           </div>
-          <div className="container-instructions">
+          <div className="box-ingredients">
+            <ul>
+              {getIngredientsOrMeasure('strIngredient').map((ingred, i) => (
+                <li
+                  data-testid={ `${i}-ingredient-name-and-measure` }
+                  key={ i }
+                >
+                  {`${ingred} - ${getIngredientsOrMeasure('strMeasure')[i]}`}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="container-span">
             <span>Instructions</span>
-            <div
-              className="text-instructions-details"
+          </div>
+          <div className="box-instructions">
+            <span
               data-testid="instructions"
             >
               {stateLocal.drink.drinks[0].strInstructions}
-            </div>
+            </span>
           </div>
-          <span
-            className="recomendation-span"
-          >
-            Recomendadas
-          </span>
+          <div className="recomendation-span">
+            <span>
+              Recomendadas
+            </span>
+          </div>
           <div className="container-recomendations">
             { stateSugestions && stateSugestions.meals.map((meal, index) => {
               if (index <= number) {
@@ -231,7 +236,6 @@ const DetalhesBebidas = () => {
                       <Link to={ `/bebidas/${meal.idMeal}` }>
                         <img
                           className="img-recomendations"
-                          width="200"
                           src={ meal.strMealThumb }
                           alt={ meal.strMeal }
                           data-testid={ `${index}-card-img` }

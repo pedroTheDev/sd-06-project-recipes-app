@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
 import ContextAPI from '../../Context/ContextAPI';
 
+import './styles.css';
+
 const CategoriesBebidas = () => {
   const { apiValueSearch,
     setApiValueSearch,
@@ -30,33 +32,30 @@ const CategoriesBebidas = () => {
     <p>loading</p>
   ) : (
     <div className="main-categories">
-      <span>Selecione uma categoria</span>
-      <div>
-        {categories.drinks && categories.drinks.map((element, index) => {
-          const number = 4;
-          if (index <= number) {
-            return (
-              <button
-                data-testid={ `${element.strCategory}-category-filter` }
-                onClick={ (e) => filterApiValueSearch(e.target.name) }
-                name={ element.strCategory }
-                type="button"
-              >
-                { element.strCategory }
-              </button>
-            );
-          }
-          return '';
-        })}
-        <button
-          data-testid="All-category-filter"
-          type="button"
-          id="All"
-          onClick={ (e) => showAllFoods(e.target.id) }
-        >
-          All
-        </button>
-      </div>
+      {categories.drinks && categories.drinks.map((element, index) => {
+        const number = 4;
+        if (index <= number) {
+          return (
+            <button
+              data-testid={ `${element.strCategory}-category-filter` }
+              onClick={ (e) => filterApiValueSearch(e.target.name) }
+              name={ element.strCategory }
+              type="button"
+            >
+              { element.strCategory }
+            </button>
+          );
+        }
+        return '';
+      })}
+      <button
+        data-testid="All-category-filter"
+        type="button"
+        id="All"
+        onClick={ (e) => showAllFoods(e.target.id) }
+      >
+        All
+      </button>
     </div>
   );
 };
