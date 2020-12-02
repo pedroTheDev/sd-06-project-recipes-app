@@ -15,6 +15,7 @@ function DrinkDetails() {
   const [isFetching, setIsFetching] = useState(true);
   const [isFavorite, setIsFavorite] = useState(whiteHeartIcon);
   const [copied, setCopied] = useState(false);
+  const [isDone, setIsDone] = useState(false);
   const sliceNumber = 9;
   const itemId = useLocation().pathname.slice(sliceNumber);
   const itemUrl = useLocation().pathname;
@@ -31,6 +32,17 @@ function DrinkDetails() {
     }
   }
 
+  function checkIfDone(id) {
+    let doneRecipesArray = JSON.parse(localStorage.getItem('doneRecipes'));
+    if (doneRecipesArray === null) doneRecipesArray = [];
+    const done = doneRecipesArray.find((item) => (item.id === id));
+    if (done) {
+      setIsDone(true);
+    } else {
+      setIsDone(false);
+    }
+  }
+
   useEffect(() => {
     (async () => {
       const recipeObj = await fetchRecipe(url);
@@ -38,6 +50,7 @@ function DrinkDetails() {
       setIsFetching(false);
     })();
     favoriteStatus(itemId);
+    checkIfDone(itemId);
   }, []);
 
   // lógica dessa função adaptada de https://stackoverflow.com/questions/49580528/
@@ -139,15 +152,17 @@ function DrinkDetails() {
               {strInstructions}
             </p>
             <Recommended />
-            <Link to={ `${itemUrl}/in-progress` }>
-              <button
-                type="button"
-                className="start-recipe-btn"
-                data-testid="start-recipe-btn"
-              >
-                Iniciar Receita
-              </button>
-            </Link>
+            {(!isDone) && (
+              <Link to={ `${itemUrl}/in-progress` }>
+                <button
+                  type="button"
+                  className="start-recipe-btn"
+                  data-testid="start-recipe-btn"
+                >
+                  Iniciar Receita
+                </button>
+              </Link>
+            )}
           </section>
         )}
     </main>

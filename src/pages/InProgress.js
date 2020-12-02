@@ -110,7 +110,7 @@ function InProgress() {
   }
 
   function handleShareClick() {
-    clipboardCopy(`http://localhost:3000/${itemUrl}`);
+    clipboardCopy(`http://localhost:3000${itemUrl}`);
     const seconds = 5000;
     setCopied(true);
     setTimeout(() => {
@@ -215,18 +215,6 @@ function InProgress() {
     }
   }, [allChecked]);
 
-  // useEffect(() => {
-  //   let storedIngredients = JSON.parse(localStorage.getItem('inProgressRecipes'));
-  //   if (storeIngredients === null) {
-  //     localStorage.setItem('inProgressRecipes', JSON.stringify({
-  //       meals: { },
-  //       cocktails: { },
-  //     }))
-  //   } else {
-  //     setStoreIngredients(storedIngredients);
-  //   }
-  // }, []);
-
   return (
     <main>
       {(isFetching) ? <div>Loading recipe...</div>
@@ -270,7 +258,6 @@ function InProgress() {
               {strInstructions}
             </p>
             <Recommended />
-            {/* {finishRecipeBtn()} */}
             <Link to="/receitas-feitas">
               <button
                 type="button"
