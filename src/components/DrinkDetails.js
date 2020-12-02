@@ -112,32 +112,17 @@ function DrinkDetails() {
       if (recipeDrink[`strIngredient${i}`] !== null) {
         ingredients = [...ingredients,
           { ingredient: recipeDrink[`strIngredient${i}`],
-            measure: recipeDrink[`strMeasure${i}`] }];
+            measure: recipeDrink[`strMeasure${i}`],
+            checkbox: false,
+          }];
       }
     }
     return ingredients;
   }
 
-  // function updateDoneRecipes() {
-  //   const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
-  //   const newDoneRecipe = {
-  //     id: recipeDrink.idDrink,
-  //     type: 'bebida',
-  //     area: '',
-  //     category: recipeDrink.strCategory,
-  //     alcoholicOrNot: recipeDrink.strAlcoholic,
-  //     name: recipeDrink.strDrink,
-  //     image: recipeDrink.strDrinkThumb,
-  //     doneDate: '',
-  //     tags: [],
-  //   };
-  //   const arrayDoneRecipe = [...doneRecipes, newDoneRecipe];
-  //   localStorage.setItem('doneRecipes', JSON.stringify(arrayDoneRecipe));
-  // }
-
   function updateRecipeInProgress() {
     const recipesInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    recipesInProgress.cocktails[recipeDrink.idDrink] = [];
+    recipesInProgress.cocktails[id] = getIngredients();
     localStorage.setItem('inProgressRecipes', JSON.stringify(recipesInProgress));
   }
 
