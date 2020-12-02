@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import React, { useEffect, useState, useContext } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import Footer from '../components/Footer';
@@ -85,16 +86,17 @@ function Food() {
           }
         }
         if (searchRadio === 'PrimeiraLetra') {
-          // if (searchInput.length > 1) {
-          //   alert('Sua busca deve conter somente 1 (um) caracter');
-          // } else {
-          const urlSearchName = `https://www.themealdb.com/api/json/v1/1/search.php?f=${searchInput}`;
-          const APISearchRequest = await fetch(urlSearchName);
-          const APISearchResponse = await APISearchRequest.json();
-          if (APISearchResponse !== null && searchItens) {
-            setCurrentMeals(APISearchResponse.meals);
-            setCurrentCategories('ok');
-            console.log(searchItens.searchRadio);
+          if (searchInput.length > 1) {
+            alert('Sua busca deve conter somente 1 (um) caracter');
+          } else {
+            const urlSearchName = `https://www.themealdb.com/api/json/v1/1/search.php?f=${searchInput}`;
+            const APISearchRequest = await fetch(urlSearchName);
+            const APISearchResponse = await APISearchRequest.json();
+            if (APISearchResponse !== null && searchItens) {
+              setCurrentMeals(APISearchResponse.meals);
+              setCurrentCategories('ok');
+              console.log(searchItens.searchRadio);
+            }
           }
         }
       }
