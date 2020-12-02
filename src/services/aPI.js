@@ -106,3 +106,21 @@ export async function detailsDrinkById(idDrink) {
 
   return json;
 }
+
+export async function exploreByIngredients() {
+  const URL = 'https://www.themealdb.com/api/json/v1/1/list.php?i=list';
+
+  const response = await fetch(`${URL}`);
+  const json = response.json();
+
+  return json;
+}
+
+export async function exploreDrinksByIngredients() {
+  const URL = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list';
+
+  const response = await fetch(`${URL}`);
+  const json = response.json();
+
+  return json;
+}
