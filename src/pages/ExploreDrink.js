@@ -1,9 +1,25 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import RecipesContext from '../context/RecipesContext';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import FetchApiDrink from '../services/FetchApiDrink';
 
 function ExploreDrink() {
+  const {
+    drinkDetail,
+    setDrinkDetail,
+  } = useContext(RecipesContext);
+
+  useEffect(() => {
+    FetchApiDrink('8', setDrinkDetail);
+  }, []);
+
+  function randomRecipe() {
+    const id = drinkDetail.map((drink) => drink.idDrink);
+    window.location.pathname = `/bebidas/${id}`;
+  }
+
   return (
     <div>
       <Header />
@@ -15,14 +31,15 @@ function ExploreDrink() {
           Por Ingredientes
         </button>
       </Link>
-      <Link to="/explorar/comidas">
-        <button
-          type="button"
-          data-testid="explore-surprise"
-        >
-          Me Surpreenda!
-        </button>
-      </Link>
+
+      <button
+        type="button"
+        data-testid="explore-surprise"
+        onClick={ () => randomRecipe() }
+      >
+        Me Surpreenda!
+      </button>
+
       <Footer />
     </div>
   );

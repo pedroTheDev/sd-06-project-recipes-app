@@ -37,10 +37,13 @@ export default function RecipesProvider({ children }) {
     ReceitaEmAndamento: false,
     ReceitaConcluida: false,
   });
-  //
+
+  const [isFavorite, setFavorite] = useState(false);
   const [listIngredients, setListIngredients] = useState([]);
   const [effectOnLoad, setEffectOnLoad] = useState(true);
   const [areaDropdown, setAreaDropdown] = useState([]);
+  const [getFavoritesRecipe, fetchFavoritesRecipe] = useState([]);
+  const [foodFovites, setFoodFavorites] = useState([]);
 
   useEffect(() => {
     if (fetchFood && fetchFood.length === 1) {
@@ -101,9 +104,14 @@ export default function RecipesProvider({ children }) {
     setEffectOnLoad,
     areaDropdown,
     setAreaDropdown,
+    isFavorite,
+    setFavorite,
+    getFavoritesRecipe,
+    fetchFavoritesRecipe,
+    foodFovites,
+    setFoodFavorites,
     state,
     setState,
-
   };
 
   return (
