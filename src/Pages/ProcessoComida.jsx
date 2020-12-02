@@ -5,7 +5,6 @@ import { detailsFoodById } from '../services/aPI';
 
 import './ProcessoComida.css';
 
-import shareIcon from '../images/shareIcon.svg';
 import { FavoriteFoodButton } from '../components/FavoriteBtn';
 import ShareButton from '../components/ShareBtn';
 

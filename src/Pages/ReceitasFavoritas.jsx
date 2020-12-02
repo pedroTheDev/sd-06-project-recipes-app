@@ -4,7 +4,6 @@ import './ReceitasFeitas.css';
 import './ReceitasFavoritas.css';
 
 import shareIcon from '../images/shareIcon.svg';
-import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 const ReceitasFavoritas = () => {
   const [recipesFavorites, setRecipesFavorites] = useState();
