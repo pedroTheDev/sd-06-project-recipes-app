@@ -124,3 +124,12 @@ export async function exploreDrinksByIngredients() {
 
   return json;
 }
+
+export async function ApiExploreByPlaceOfOrigin() {
+  const URL = 'https://www.themealdb.com/api/json/v1/1/list.php?a=list';
+
+  const response = await fetch(`${URL}`);
+  const json = response.json();
+
+  return json;
+}

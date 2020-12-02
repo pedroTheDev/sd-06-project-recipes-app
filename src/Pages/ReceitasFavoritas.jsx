@@ -38,7 +38,6 @@ const ReceitasFavoritas = () => {
 
   return (
     <div>
-
       <Header />
       <div className="main-recaipe-made">
         <div className="container-button-recipe-made">

@@ -3,6 +3,8 @@ import { Route, Switch } from 'react-router-dom';
 import './App.css';
 import Provider from './Context/Provider';
 
+import BebidasLocalOrigem from './Pages/BebidasLocalOrigem';
+
 import {
   Login,
   Perfil,
@@ -48,6 +50,7 @@ function App() {
           component={ BebidasPorIngrediente }
         />
         <Route exact path="/explorar/comidas/area" component={ ComidasLocalOrigem } />
+        <Route exact path="/explorar/bebidas/area" component={ BebidasLocalOrigem } />
         <Route path="/receitas-feitas" component={ ReceitasFeitas } />
         <Route path="/receitas-favoritas" component={ ReceitasFavoritas } />
       </Switch>
