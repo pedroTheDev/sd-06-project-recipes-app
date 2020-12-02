@@ -11,6 +11,12 @@ function DetalhesBebida() {
   const { idDaReceita } = useParams();
   const [estadoApiBebidas, setEstadoApiBebidas] = useState([]);
   const [receitasSalvas, setReceitasSalvas] = useState([]);
+  const ingredientes = localStorage
+    .getItem('inProgressRecipes') ? JSON
+      .parse((localStorage.getItem('inProgressRecipes'))).cocktails[idDaReceita] : [];
+
+  const [
+    ingredientesNoLocalStorage, setIngredientesNoLocalStorage] = useState(ingredientes);
   console.log(receitasSalvas);
 
   const fetchBebidasDetalhes = async () => {
@@ -40,18 +46,22 @@ function DetalhesBebida() {
               [idDaReceita]: bebidaLocalStorage,
             },
           };
+          setIngredientesNoLocalStorage(bebidaLocalStorage);
           localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
         } else {
+          const progress = JSON.parse((localStorage.getItem('inProgressRecipes')));
+          bebidaLocalStorage = progress.cocktails[idDaReceita];
           bebidaLocalStorage = [...bebidaLocalStorage,
             document.getElementById(`${index - 1}-ingredient-check`)
               .innerText];
           const newStorage = {
-            ...inProgress,
+            ...progress,
             cocktails: {
               [idDaReceita]: bebidaLocalStorage,
             },
           };
           localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
+          setIngredientesNoLocalStorage(bebidaLocalStorage);
         }
       } else {
         bebidaLocalStorage = [document.getElementById(`${index - 1}-ingredient-check`)
@@ -61,22 +71,31 @@ function DetalhesBebida() {
             [idDaReceita]: bebidaLocalStorage,
           },
         };
+        setIngredientesNoLocalStorage(bebidaLocalStorage);
         localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
       }
     }
     if (e.target.checked === false) {
       document.getElementById(`${index - 1}-ingredient-check`)
         .style.textDecoration = 'none';
-      bebidaLocalStorage = bebidaLocalStorage
-        .filter((comidaLocal) => comidaLocal !== document
-          .getElementById(`${index - 1}-ingredient-check`).innerText);
-      const newStorage = {
-        ...inProgress,
-        cocktails: {
-          [idDaReceita]: bebidaLocalStorage,
-        },
-      };
-      localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
+      const progress = JSON.parse((localStorage.getItem('inProgressRecipes')));
+      if (progress) {
+        console.log('inprogress');
+        if (progress.cocktails) {
+          console.log('cocktails');
+          bebidaLocalStorage = progress.cocktails[idDaReceita]
+            .filter((comidaLocal) => comidaLocal !== document
+              .getElementById(`${index - 1}-ingredient-check`).innerText);
+          const newStorage = {
+            ...progress,
+            cocktails: {
+              [idDaReceita]: bebidaLocalStorage,
+            },
+          };
+          setIngredientesNoLocalStorage(bebidaLocalStorage);
+          localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
+        }
+      }
     }
   }
 
@@ -101,6 +120,13 @@ function DetalhesBebida() {
               id={ `${numero - 1}-ingredient-step` }
               className="titulo"
               onChange={ (e) => checkHandle(e, numero) }
+              checked={ (bebida[`strMeasure${numero}`] !== null)
+                ? (ingredientesNoLocalStorage.includes(
+                  `${bebida[`strIngredient${numero}`]} ${bebida[`strMeasure${numero}`]}`,
+                ))
+                : (ingredientesNoLocalStorage.includes(
+                  `${bebida[`strIngredient${numero}`]} `,
+                )) }
             />
             {`${bebida[`strIngredient${numero}`]} `}
             {(bebida[`strMeasure${numero}`] !== null)

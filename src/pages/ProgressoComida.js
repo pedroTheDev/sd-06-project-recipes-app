@@ -11,6 +11,14 @@ function ProgressoComida() {
   const { idDaReceita } = useParams();
   const [estadoApiComidas, setEstadoApiComidas] = useState([]);
   const [receitasSalvas, setReceitasSalvas] = useState([]);
+  const ingredientes = localStorage
+    .getItem('inProgressRecipes') ? JSON
+      .parse((localStorage.getItem('inProgressRecipes'))).meals[idDaReceita] : [];
+
+  const [
+    ingredientesNoLocalStorage, setIngredientesNoLocalStorage] = useState(ingredientes);
+
+  console.log(receitasSalvas);
   console.log('teste', estadoApiComidas);
 
   const fetchComidasDetalhes = async () => {
@@ -42,18 +50,23 @@ function ProgressoComida() {
               [idDaReceita]: comidaLocalStorage,
             },
           };
+          setIngredientesNoLocalStorage(comidaLocalStorage);
           localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
         } else {
+          const progress = JSON.parse((localStorage.getItem('inProgressRecipes')));
+          comidaLocalStorage = progress.meals[idDaReceita];
           comidaLocalStorage = [...comidaLocalStorage,
             document.getElementById(`${index - 1}-ingredient-check`)
               .innerText];
           const newStorage = {
-            ...inProgress,
+            ...progress,
             meals: {
               [idDaReceita]: comidaLocalStorage,
             },
           };
+          setIngredientesNoLocalStorage(comidaLocalStorage);
           localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
+          setIngredientesNoLocalStorage(comidaLocalStorage);
         }
       } else {
         comidaLocalStorage = [document.getElementById(`${index - 1}-ingredient-check`)
@@ -63,22 +76,27 @@ function ProgressoComida() {
             [idDaReceita]: comidaLocalStorage,
           },
         };
+        setIngredientesNoLocalStorage(comidaLocalStorage);
         localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
       }
     }
     if (e.target.checked === false) {
       document.getElementById(`${index - 1}-ingredient-check`)
         .style.textDecoration = 'none';
-      comidaLocalStorage = comidaLocalStorage
-        .filter((comidaLocal) => comidaLocal !== document
-          .getElementById(`${index - 1}-ingredient-check`).innerText);
-      const newStorage = {
-        ...inProgress,
-        meals: {
-          [idDaReceita]: comidaLocalStorage,
-        },
-      };
-      localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
+      const progress = JSON.parse((localStorage.getItem('inProgressRecipes')));
+      if (progress) {
+        comidaLocalStorage = progress.meals[idDaReceita]
+          .filter((comidaLocal) => comidaLocal !== document
+            .getElementById(`${index - 1}-ingredient-check`).innerText);
+        const newStorage = {
+          ...progress,
+          meals: {
+            [idDaReceita]: comidaLocalStorage,
+          },
+        };
+        setIngredientesNoLocalStorage(comidaLocalStorage);
+        localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
+      }
     }
     // const newStorage = {
     //   ...inProgress,
@@ -106,6 +124,13 @@ function ProgressoComida() {
               id={ `${numero - 1}-ingredient-step` }
               className="titulo"
               onChange={ (e) => checkHandle(e, numero) }
+              checked={ (bebida[`strMeasure${numero}`] !== null)
+                ? (ingredientesNoLocalStorage.includes(
+                  `${bebida[`strIngredient${numero}`]} ${bebida[`strMeasure${numero}`]}`,
+                ))
+                : (ingredientesNoLocalStorage.includes(
+                  `${bebida[`strIngredient${numero}`]} `,
+                )) }
             />
             {`${bebida[`strIngredient${numero}`]} `}
             {(bebida[`strMeasure${numero}`] !== '')
