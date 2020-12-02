@@ -13,7 +13,12 @@ function FavoritesRecipes() {
   const [isFavorite, setIsFavorite] = useState(true);
   const pixels = 200;
   const favoriteRecipes = getFavoriteRecipes();
-  console.log(favoriteRecipes);
+  console.log('sort', favoriteRecipes.sort());
+
+  const onlyDrinks = favoriteRecipes.filter((element) => element.type === 'bebida');
+  const onlyFoods = favoriteRecipes.filter((element) => element.type === 'comida');
+  const foods = onlyFoods.length;
+  const favorites = onlyFoods.concat(onlyDrinks);
 
   const {
     recipesMeals,
@@ -84,43 +89,45 @@ function FavoritesRecipes() {
       </div>
       <div>
         {
-          favoriteRecipes.map((recipe, index) => {
+          favorites.map((recipe, index) => {
             if (recipe.type === type || type === '') {
               let urlLinkDetail = '';
+              let newIndex = 0;
               if (recipe.type === 'comida') {
                 urlLinkDetail = `/comidas/${recipe.id}`;
               } else if (recipe.type === 'bebida') {
                 urlLinkDetail = `/bebidas/${recipe.id}`;
               }
+              if (type === 'bebida') {
+                newIndex = foods;
+              }
               return (
                 <div key={ index }>
                   <Link to={ urlLinkDetail }>
                     <img
-                      data-testid={ `${index}-horizontal-image` }
+                      data-testid={ `${index - newIndex}-horizontal-image` }
                       src={ recipe.image }
                       alt={ recipe.name }
                       width={ `${pixels}px` }
-                    // onClick={ ({ target }) => handlePath(target) }
                     />
                   </Link>
-                  <p data-testid={ `${index}-horizontal-top-text` }>
+                  <p data-testid={ `${index - newIndex}-horizontal-top-text` }>
                     {
                       recipe.type === 'comida'
                         ? `${recipe.area} - ${recipe.category}`
                         : recipe.alcoholicOrNot
                     }
                   </p>
-                  <h1>{ index }</h1>
+                  <h1>{ index - newIndex }</h1>
                   <Link to={ urlLinkDetail }>
-                    <h3 data-testid={ `${index}-horizontal-name` }>
-                      {/* onClick={ ({ target }) => handlePath(target) } */}
+                    <h3 data-testid={ `${index - newIndex}-horizontal-name` }>
                       { recipe.name }
                     </h3>
                   </Link>
                   <input
                     id={ `${recipe.id},${recipe.type}` }
                     type="image"
-                    data-testid={ `${index}-horizontal-share-btn` }
+                    data-testid={ `${index - newIndex}-horizontal-share-btn` }
                     className="share-btn"
                     src={ shareIcon }
                     alt="Share recipe"
@@ -129,7 +136,7 @@ function FavoritesRecipes() {
                   <p className={ `copied-link-${recipe.id}` } />
                   <input
                     type="image"
-                    data-testid={ `${index}-horizontal-favorite-btn` }
+                    data-testid={ `${index - newIndex}-horizontal-favorite-btn` }
                     src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
                     alt="Favorite recipe"
                     onClick={ saveToLocalStorage }
