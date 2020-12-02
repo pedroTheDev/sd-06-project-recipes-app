@@ -88,7 +88,11 @@ function ProcessoBebida() {
   const handleClick = () => {
     setIsFavorite(!isFavorite);
     if (!isFavorite) {
-      localStorage.favoriteRecipes = JSON.stringify([{
+      let favoriteRecipes = [];
+      if (localStorage.favoriteRecipes) {
+        favoriteRecipes = JSON.parse(localStorage.favoriteRecipes);
+      }
+      localStorage.favoriteRecipes = JSON.stringify([...favoriteRecipes, {
         id: dataDrinks.idDrink,
         type: 'bebida',
         area: '',

@@ -5,7 +5,7 @@ import App from '../App';
 describe('As seguintes rodas existem:', () => {
   it('Possui uma página de Login', () => {
     const { getByText, history } = renderWithRouter(<App />);
-    const login = getByText(/Login/i);
+    const login = getByText(/Entrar/i);
     history.push('/');
     expect(login).toBeInTheDocument();
   });

@@ -62,7 +62,7 @@ function Login() {
             disabled={ isDisabled }
             onClick={ saveEmail }
           >
-            entrar
+            Entrar
           </button>
         </Link>
       </form>
