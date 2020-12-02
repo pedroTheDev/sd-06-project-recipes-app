@@ -51,6 +51,7 @@ function setMockedLocalStorage() {
     },
   ];
   const mockedRecipesInprogress = {
+
     cocktails: {
       17222: [],
     },
@@ -58,9 +59,66 @@ function setMockedLocalStorage() {
       52771: [],
     },
   };
+  const doneRecipes = [{
+    id: '52977',
+    type: 'comida',
+    area: 'Tukish',
+    category: 'Side',
+    alcoholicOrNot: '',
+    name: 'Corba',
+    image: 'https://www.themealdb.com/images/media/meals/58oia61564916529.jpg',
+    doneDate: '02/12;2020',
+    tags: 'Soup',
+  },
+  {
+    id: '52977',
+    type: 'comida',
+    area: 'Tukish',
+    category: 'Side',
+    alcoholicOrNot: '',
+    name: 'Corba',
+    image: 'https://www.themealdb.com/images/media/meals/58oia61564916529.jpg',
+    doneDate: '02/12;2020',
+    tags: 'Soup',
+  },
+  {
+    id: '52977',
+    type: 'comida',
+    area: 'Tukish',
+    category: 'Side',
+    alcoholicOrNot: '',
+    name: 'Corba',
+    image: 'https://www.themealdb.com/images/media/meals/58oia61564916529.jpg',
+    doneDate: '02/12;2020',
+    tags: 'Soup',
+  },
+  {
+    id: '52977',
+    type: 'comida',
+    area: 'Tukish',
+    category: 'Side',
+    alcoholicOrNot: '',
+    name: 'Corba',
+    image: 'https://www.themealdb.com/images/media/meals/58oia61564916529.jpg',
+    doneDate: '02/12;2020',
+    tags: 'Soup',
+  },
+  {
+    id: '52977',
+    type: 'comida',
+    area: 'Tukish',
+    category: 'Side',
+    alcoholicOrNot: '',
+    name: 'Corba',
+    image: 'https://www.themealdb.com/images/media/meals/58oia61564916529.jpg',
+    doneDate: '02/12;2020',
+    tags: 'Soup',
+  },
+];
   localStorage.setItem('doneRecipes', JSON.stringify(mockedDoneRecipes));
   localStorage.setItem('inProgressRecipes', JSON.stringify(mockedRecipesInprogress));
   localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+  localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
 }
 
 export default setMockedLocalStorage;

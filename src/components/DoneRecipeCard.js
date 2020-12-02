@@ -35,24 +35,30 @@ const DoneRecipeCard = (props) => {
   );
 
   return (
-    <div>
-      <Link to={ type === 'comida' ? `/comidas/${id}` : `/bebidas/${id}` }>
+    <div className="done-recipe-card-container">
+      <Link
+        to={ type === 'comida' ? `/comidas/${id}` : `/bebidas/${id}` }
+        className="done-recipe-card"
+      >
         <img
           className="smallIMG"
           data-testid={ `${index}-horizontal-image` }
           src={ image }
           alt="Imagem da receita"
         />
-        <p data-testid={ `${index}-horizontal-name` }>
-          Nome:
-          { name }
-        </p>
+        <div className="done-recipe-card-tag">
+          <p data-testid={ `${index}-horizontal-name` }>
+            { name }
+          </p>
+        </div>
       </Link>
-      <p data-testid={ `${index}-horizontal-done-date` }>
-        Feito em:
-        { doneDate }
-      </p>
-      { type === 'comida' ? foodExclusives() : drinkExclusive() }
+      <div className="done-card-details">
+        <p data-testid={ `${index}-horizontal-done-date` }>
+          Feito em:
+          { doneDate }
+        </p>
+        { type === 'comida' ? foodExclusives() : drinkExclusive() }
+      </div>
       <ShareButton
         datatestid={ `${index}-horizontal-share-btn` }
         linkToCopy={ type === 'comida' ? `/comidas/${id}` : `/bebidas/${id}` }

@@ -5,10 +5,11 @@ button {
   color: white;
   border-radius: 15px;
   cursor: pointer;
+  margin-top: 7%;
 
   &:disabled {
     opacity: 0.5;
-    transition: 1.5s;
+    // transition: 1.5s;
   }
 
   &:active {
