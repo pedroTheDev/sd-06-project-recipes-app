@@ -10,11 +10,13 @@ function RecipesAppProvider({ children }) {
   const [recipes, setRecipes] = useState([]);
   const [errorFromApi, setErrorFromApi] = useState(false);
   const [categoryList, setCategoryList] = useState([]);
+  const [clickedCategory, setClickedCategory] = useState(false);
   const [isFetching, setIsFetching] = useState(true);
   const [startRecipe, setStartRecipe] = useState(false);
   const [finalizedRecipe, setFinalizedRecipe] = useState(false);
-  // trocar para arr em vez de bool
   const [filteredRecipes, setFilteredRecipes] = useState(false);
+  const [renderFavoriteRecipes, setRenderFavoriteRecipes] = useState([]);
+
 
   const value = {
     ingredient,
@@ -31,6 +33,8 @@ function RecipesAppProvider({ children }) {
     setErrorFromApi,
     categoryList,
     setCategoryList,
+    clickedCategory,
+    setClickedCategory,
     isFetching,
     setIsFetching,
     startRecipe,
@@ -39,6 +43,8 @@ function RecipesAppProvider({ children }) {
     setFinalizedRecipe,
     filteredRecipes,
     setFilteredRecipes,
+    renderFavoriteRecipes,
+    setRenderFavoriteRecipes,
   };
 
   return (

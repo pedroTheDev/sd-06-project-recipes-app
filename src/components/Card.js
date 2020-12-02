@@ -15,7 +15,7 @@ function Card({ title }) {
     };
   }, []);
 
-  console.log('filteredREc', filteredRecipes)
+  const { recipes, errorFromApi, clickedCategory } = useContext(RecipesAppContext);
 
   const ZERO = 0;
   const DOZE = 12;
@@ -30,7 +30,7 @@ function Card({ title }) {
     setRoute = 'bebidas';
   }
 
-  if (recipes.length === 1) {
+  if ((recipes.length === 1) && !clickedCategory) {
     const id = recipes[0][`id${recipeType}`];
     return <Redirect to={ `/${setRoute}/${id}` } />;
   }
