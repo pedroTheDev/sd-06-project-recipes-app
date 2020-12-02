@@ -136,9 +136,6 @@ function RecipesMade() {
   return (
     <div>
       <Header title="Receitas Feitas" />
-      {doneRecipes ? (doneRecipes.map((recipe, index) => (
-        recipe.type === 'comida' ? renderFood(recipe, index) : renderDrinks(recipe, index)
-      ))) : <h2>Você não tem receitas prontas!</h2>}
       <div className="done-btn">
         <button
           type="button"
@@ -168,7 +165,9 @@ function RecipesMade() {
           Drinks
         </button>
       </div>
-
+      {doneRecipes ? (doneRecipes.map((recipe, index) => (
+        recipe.type === 'comida' ? renderFood(recipe, index) : renderDrinks(recipe, index)
+      ))) : <h2>Você não tem receitas prontas!</h2>}
     </div>
   );
 }
