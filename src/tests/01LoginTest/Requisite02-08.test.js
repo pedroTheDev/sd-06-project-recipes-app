@@ -39,8 +39,8 @@ describe('3 - Desenvolva a tela de maneira que a pessoa deve conseguir escrever'
   });
 });
 
-describe('4 - Desenvolva a tela de maneira que a pessoa deve conseguir escrever sua senha'
-+ 'no input de senha', () => {
+describe('4 - Desenvolva a tela de maneira que a pessoa '
+  + 'deve conseguir escrever sua senha no input de senha', () => {
   it('Possível escrever a senha no input senha', () => {
     const { getByTestId } = renderWithRouter(<App />);
     const passwordInput = getByTestId('password-input');
@@ -107,8 +107,8 @@ describe('5 - Desenvolva a tela de maneira que o formulário só seja válido ap
       expect(mealsToken).toBe('1');
       expect(cocktailsToken).toBe('1');
     });
-    describe('7 - Salve o e-mail da pessoa usuária no localStorage na chave user após'
-    + ' na chavea submissão', () => {
+    describe('7 - Salve o e-mail da pessoa usuária no '
+      + 'localStorage na chave user após na chavea submissão', () => {
       it('Após a submissão, o e-mail de pessoa usuária deve ser salvo em localStorage'
       + 'user no formato { email: email-da-pessoa }.', () => {
         const { getByTestId } = renderWithRouter(<App />);
