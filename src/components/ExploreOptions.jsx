@@ -5,32 +5,33 @@ import randomCall from '../services/theRandomCallApi';
 
 class ExploreOptions extends Component {
   constructor() {
-    super()
+    super();
     this.handleClick = this.handleClick.bind(this);
   }
 
   async handleClick() {
+    const eigth = 8;
     const { location: { pathname }, history } = this.props;
     const path = pathname;
     const randomFood = ('https://www.themealdb.com/api/json/v1/1/random.php');
     const randomDrink = ('https://www.thecocktaildb.com/api/json/v1/1/random.php');
-    
-    if(path === '/explorar/comidas') {
+
+    if (path === '/explorar/comidas') {
       const randomAPI = await randomCall(randomFood);
       const foodID = randomAPI.meals[0].idMeal;
-      history.push(`${path.slice(-8)}/${foodID}`);
+      history.push(`${path.slice(-eigth)}/${foodID}`);
     }
-    if(path === '/explorar/bebidas') {
+    if (path === '/explorar/bebidas') {
       const randomAPI = await randomCall(randomDrink);
       const drinkID = randomAPI.drinks[0].idDrink;
-      history.push(`${path.slice(-8)}/${drinkID}`);
+      history.push(`${path.slice(-eigth)}/${drinkID}`);
     }
   }
 
   render() {
     const { location: { pathname } } = this.props;
     const path = pathname;
-   
+
     return (
       <div>
         <Link data-testid="explore-by-ingredient" to={ `${pathname}/ingredientes` }>
@@ -41,7 +42,11 @@ class ExploreOptions extends Component {
             Por Local de Origem
           </Link>
         )}
-        <button onClick={() => this.handleClick()} data-testid="explore-surprise">
+        <button
+          type="button"
+          onClick={ () => this.handleClick() }
+          data-testid="explore-surprise"
+        >
           Me Surpreenda!
         </button>
       </div>
@@ -53,6 +58,7 @@ ExploreOptions.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
+  history: PropTypes.objectOf().isRequired,
 };
 
 export default ExploreOptions;
