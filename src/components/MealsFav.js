@@ -2,11 +2,11 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import whiteIcon from '../images/whiteHeartIcon.svg';
 import blackIcon from '../images/blackHeartIcon.svg';
-import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 import MealsContext from '../context/MealsContext';
 /* import useCopyToClipboard from '../services/clipboard-copy'; */
-function ReceitasFavoritas() {
+
+function MealsFav() {
   // const favoriteRecipes = JSON.parse(localStorage.favoriteRecipes);
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
   const [isFavorite, setIsFavorite] = useState(true);
@@ -35,17 +35,11 @@ function ReceitasFavoritas() {
       setFavoriteRecipes(JSON.parse(localStorage.favoriteRecipes));
     }
   };
-  console.log('testRecipemelas', recipeMeal);
+
   function FavoriteRecipeClick() {
-    // eslint-disable-next-line no-shadow
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
     if (favoriteRecipes !== null) {
-      if (isFavorite) {
-        console.log('ok', recipeMeal);
-        const arrayFavoriteRecipe = favoriteRecipes.filter((item) => item.id !== id);
-        localStorage.setItem('favoriteRecipes', JSON.stringify(arrayFavoriteRecipe));
-        setIsFavorite(false);
-      } else {
+      if (!isFavorite) {
         const newFavoriteRecipe = {
           id: recipeMeal.idMeal,
           type: 'comida',
@@ -58,13 +52,17 @@ function ReceitasFavoritas() {
         const arrayFavoriteRecipe = [...favoriteRecipes, newFavoriteRecipe];
         localStorage.setItem('favoriteRecipes', JSON.stringify(arrayFavoriteRecipe));
         setIsFavorite(true);
+      } else {
+        const arrayFavoriteRecipe = favoriteRecipes.filter((item) => item.id !== id);
+        localStorage.setItem('favoriteRecipes', JSON.stringify(arrayFavoriteRecipe));
+        setIsFavorite(false);
       }
+      console.log(favoriteRecipes);
     }
   }
 
   return (
     <>
-      <Header />
       <button
         className="button-all"
         type="button"
@@ -99,13 +97,13 @@ function ReceitasFavoritas() {
             data-testid={ `${index}-horizontal-image` }
           />
           <p data-testid={ `${index}-horizontal-top-text` }>
-            { recipe.type === 'comida' ? `${recipe.area} - ${recipe.category}`
-              : `${recipe.alcoholicOrNot} - ${recipe.category}` }
+            { `${recipe.area} - ${recipe.category}` }
           </p>
           <button
             data-testid={ `${index}-horizontal-share-btn` }
             type="button"
             src={ shareIcon }
+            //onClick={ copyToClipboard }
           >
             <img
               src={ shareIcon }
@@ -132,4 +130,4 @@ function ReceitasFavoritas() {
   );
 }
 
-export default ReceitasFavoritas;
+export default MealsFav;

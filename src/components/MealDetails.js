@@ -38,10 +38,10 @@ function MealDetails() {
   }
 
   function FavoriteRecipeClick() {
-    console.log(isFavorite);
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
     if (favoriteRecipes !== null) {
       if (!isFavorite) {
+        console.log('if', !isFavorite);
         const newFavoriteRecipe = {
           id: recipeMeal.idMeal,
           type: 'comida',
@@ -59,6 +59,7 @@ function MealDetails() {
         localStorage.setItem('favoriteRecipes', JSON.stringify(arrayFavoriteRecipe));
         setIsFavorite(false);
       }
+      console.log(isFavorite);
     }
   }
 
