@@ -9,10 +9,10 @@ function ExplorePage() {
       <Header />
       <div>
         <Link to="/explorar/comidas">
-          <button type="button">Vamos explorar comidas</button>
+          <button data-testid="explore-food" type="button">Explorar Comidas</button>
         </Link>
         <Link to="/explorar/bebidas">
-          <button type="button">Vamos explorar bebidas</button>
+          <button data-testid="explore-drinks" type="button">Explorar Bebidas</button>
         </Link>
       </div>
       <Footer />
