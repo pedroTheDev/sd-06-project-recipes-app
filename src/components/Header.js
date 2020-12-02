@@ -39,7 +39,7 @@ function Header(props) {
             data-testid="profile-top-btn"
           />
         </Link>
-        <h2 data-testid="page-title">{title}</h2>
+        <h2 className="main-title" data-testid="page-title">{title}</h2>
         { showSearchIcon
           ? (
             <div>

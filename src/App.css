@@ -24,6 +24,12 @@ body{
   text-align: center;
 }
 
+.main-title {
+  text-align: center;
+  font-size: 25px;
+  font-weight: 600;
+}
+
 /* .ingredient-done {
   text-decoration: line-through;
 } 
