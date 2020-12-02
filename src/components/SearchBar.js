@@ -43,46 +43,60 @@ function SearchBar(props) {
   };
 
   return (
-    <div>
-      <input type="text" data-testid="search-input" id="search-input" />
-      <label htmlFor="ingredient">
-        Ingrediente
+    <form>
+      <div>
+        <input type="text" data-testid="search-input" id="search-input" />
+      </div>
+      <div className="form-check">
         <input
+          className="form-check-input"
           type="radio"
           value="ingredient"
           name="search"
           data-testid="ingredient-search-radio"
           id="ingredient"
         />
-      </label>
-      <label htmlFor="name">
-        Nome
+        <label htmlFor="ingredient" className="form-check-label">
+          Ingrediente
+        </label>
+      </div>
+      <div className="form-check">
         <input
+          className="form-check-input"
           type="radio"
           value="name"
           name="search"
           data-testid="name-search-radio"
           id="name"
         />
-      </label>
-      <label htmlFor="first-letter">
-        Primeira letra
+        <label htmlFor="name" className="form-check-label">
+          Nome
+        </label>
+      </div>
+      <div className="form-check">
         <input
+          className="form-check-input"
           type="radio"
           value="first-letter"
           name="search"
           data-testid="first-letter-search-radio"
           id="first-letter"
         />
-      </label>
+        <label htmlFor="first-letter" className="form-check-label">
+          Primeira letra
+        </label>
+      </div>
       <button
+        className="btn btn-secundary"
         type="button"
         data-testid="exec-search-btn"
         onClick={ handleClick }
       >
         Buscar
       </button>
-    </div>
+      <br />
+      <br />
+    </form>
   );
 }
 

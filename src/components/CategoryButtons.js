@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ContextRecipes from '../context/ContextRecipes';
+import '../App.css';
 
 function CategoryButtons(props) {
   const [categories, setCategories] = useState([]);
@@ -56,6 +57,7 @@ function CategoryButtons(props) {
     <div>
       {categories.map((category, index) => (
         <button
+          className="btn btn-light"
           key={ index }
           type="button"
           data-testid={ `${category.strCategory}-category-filter` }
@@ -65,12 +67,15 @@ function CategoryButtons(props) {
         </button>
       )).filter((_, index) => index < MAX_NUMBER_OF_CATEGORIES)}
       <button
+        className="btn btn-light"
         type="button"
         data-testid="All-category-filter"
         onClick={ () => resetFilter() }
       >
         All
       </button>
+      <br />
+      <br />
     </div>
   );
 }

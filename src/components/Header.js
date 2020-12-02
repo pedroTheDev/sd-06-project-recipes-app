@@ -5,7 +5,8 @@ import ContextRecipes from '../context/ContextRecipes';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
-import '../styles/login.css';
+import '../styles/header.css';
+import '../App.css';
 
 function Header(props) {
   const { title, fetchApi, showSearchIcon = false } = props;
@@ -29,29 +30,33 @@ function Header(props) {
   }, []);
 
   return (
-    <div className="container">
-      <Link to="/perfil">
-        <img
-          src={ profileIcon }
-          alt="Profile"
-          data-testid="profile-top-btn"
-          className="icon-perfil"
-        />
-      </Link>
-      <h2 data-testid="page-title">{title}</h2>
-      { showSearchIcon
-        ? (
-          <div>
-            <img
-              src={ searchIcon }
-              alt="Search"
-              data-testid="search-top-btn"
-              className="icon-search"
-              onClick={ toggleSearchBar }
-              aria-hidden="true"
-            />
-          </div>
-        ) : <div /> }
+    <div>
+      <div className="header-container">
+        <Link to="/perfil">
+          <img
+            src={ profileIcon }
+            alt="Profile"
+            data-testid="profile-top-btn"
+          />
+        </Link>
+        <h2 data-testid="page-title">{title}</h2>
+        { showSearchIcon
+          ? (
+            <div>
+              <img
+                src={ searchIcon }
+                alt="Search"
+                data-testid="search-top-btn"
+                className="icon-search"
+                onClick={ toggleSearchBar }
+                aria-hidden="true"
+              />
+            </div>
+          ) : <div /> }
+      </div>
+      <br />
+      <br />
+      <br />
       <div>
         {showSearchBar ? <SearchBar fetchApi={ fetchApi } /> : null}
       </div>

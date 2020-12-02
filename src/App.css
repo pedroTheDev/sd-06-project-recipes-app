@@ -1,4 +1,13 @@
-.footer {
-  position: fixed;
-  bottom: 0px;
+body{
+  background-size: cover;
+  color: rgb(59, 49, 49);
+  font-family: 'Montserrat', sans-serif;
 }
+
+/* .ingredient-done {
+  text-decoration: line-through;
+} 
+
+.ingredient-not-done {
+  text-decoration: none;
+} */

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import ContextRecipes from '../context/ContextRecipes';
+import '../App.css';
 
 function Card() {
   const { recipes, typeRecipe, setIdRecipe } = useContext(ContextRecipes);
@@ -40,15 +41,22 @@ function Card() {
         tabIndex="0"
         data-testid={ `${index}-recipe-card` }
         key={ index }
+        className="card"
       >
-        <p data-testid={ `${index}-card-name` } id={ recipe[id] }>{recipe[name]}</p>
+        <h5
+          className="card-title"
+          data-testid={ `${index}-card-name` }
+          id={ recipe[id] }
+        >
+          {recipe[name]}
+        </h5>
         <img
           data-testid={ `${index}-card-img` }
           src={ recipe[thumb] }
           alt={ typeRecipe }
           id={ recipe[id] }
           aria-hidden="true"
-          width="100px"
+          className="card-img"
         />
       </div>
     )).filter((_, index) => index < MAX_NUMBER_OF_CARDS)
