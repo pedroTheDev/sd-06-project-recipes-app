@@ -1,24 +1,13 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import whiteHeartIcon from '../styles/images/whiteHeartIcon.svg';
 import blackHeartIcon from '../styles/images/blackHeartIcon.svg';
 import { saveState, loadState } from '../services/localStorage';
-import RecipesAppContext from '../context/RecipesAppContext';
+// import RecipesAppContext from '../context/RecipesAppContext';
 
-function FavoriteHeart({ id, detailsDrink, detailsFood, testIdReceitasFavoritas }) {
-  const {
-    localStorageChange: {
-      setLocalStorageFavoriteRecipes,
-    },
-  } = useContext(RecipesAppContext);
-
-  let testIdImgHeart = 'favorite-btn';
-  if (testIdReceitasFavoritas) {
-    testIdImgHeart = testIdReceitasFavoritas;
-  }
-
-  const favoriteRecipe = 'favoriteRecipes';
-  const responseFavoriteStorage = loadState(favoriteRecipe, [])
+function FavoriteHeart({ id, detailsDrink, detailsFood }) {
+  const favoriteRecipes = 'favoriteRecipes';
+  const responseFavoriteStorage = loadState(favoriteRecipes, [])
     .some((element) => element.id === id);
   const [favoriteButton, setFavoriteButton] = useState(responseFavoriteStorage);
 
@@ -31,12 +20,12 @@ function FavoriteHeart({ id, detailsDrink, detailsFood, testIdReceitasFavoritas 
   };
 
   const saveFavoriteRecipe = () => {
-    const loadFavoriteRecipe = loadState(favoriteRecipe, []);
+    const loadFavoriteRecipe = loadState(favoriteRecipes, []);
 
     const response = loadFavoriteRecipe.filter((element) => element.id !== id);
 
     if (loadFavoriteRecipe.length > response.length) {
-      saveState(favoriteRecipe, response);
+      saveState(favoriteRecipes, response);
     } else if (detailsDrink) {
       const {
         idDrink,
@@ -55,7 +44,7 @@ function FavoriteHeart({ id, detailsDrink, detailsFood, testIdReceitasFavoritas 
         name: strDrink,
         image: strDrinkThumb,
       };
-      saveState(favoriteRecipe, [...loadFavoriteRecipe, payload]);
+      saveState(favoriteRecipes, [...loadFavoriteRecipe, payload]);
     } else if (detailsFood) {
       const {
         idMeal,
@@ -74,9 +63,8 @@ function FavoriteHeart({ id, detailsDrink, detailsFood, testIdReceitasFavoritas 
         name: strMeal,
         image: strMealThumb,
       };
-      saveState(favoriteRecipe, [...loadFavoriteRecipe, payload]);
+      saveState(favoriteRecipes, [...loadFavoriteRecipe, payload]);
     }
-    setLocalStorageFavoriteRecipes(loadState('favoriteRecipes', []));
     favoriteMark();
   };
 
@@ -84,7 +72,7 @@ function FavoriteHeart({ id, detailsDrink, detailsFood, testIdReceitasFavoritas 
     favoriteButton ? (
       <button type="button" onClick={ saveFavoriteRecipe }>
         <img
-          data-testid={ testIdImgHeart }
+          data-testid="favorite-btn"
           src={ blackHeartIcon }
           alt="img-button-fav"
         />
@@ -92,7 +80,7 @@ function FavoriteHeart({ id, detailsDrink, detailsFood, testIdReceitasFavoritas 
     ) : (
       <button type="button" onClick={ saveFavoriteRecipe }>
         <img
-          data-testid={ testIdImgHeart }
+          data-testid="favorite-btn"
           src={ whiteHeartIcon }
           alt="img-button-fav"
         />
@@ -117,7 +105,6 @@ FavoriteHeart.propTypes = {
     strMeal: PropTypes.string.isRequired,
     strMealThumb: PropTypes.string.isRequired,
   }).isRequired,
-  testIdReceitasFavoritas: PropTypes.string.isRequired,
 };
 
 export default FavoriteHeart;

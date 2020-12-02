@@ -1,18 +1,18 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
-import FavoriteHeart from '../components/FavoriteHeart';
 import buttonShare from '../styles/images/shareIcon.svg';
-import RecipesAppContext from '../context/RecipesAppContext';
 import '../styles/ReceitasFavoritas.css';
 import '../styles/imgBig.css';
+import blackHeartIcon from '../styles/images/blackHeartIcon.svg';
+import { loadState, saveState } from '../services/localStorage';
 
 function ReceitasFavoritas() {
-  const {
-    localStorageChange: {
-      localStorageFavoriteRecipes,
-    },
-  } = useContext(RecipesAppContext);
+  const favoriteRecipes = 'favoriteRecipes';
+  const [
+    localStorageFavoriteRecipes,
+    setLocalStorageFavoriteRecipes,
+  ] = useState(loadState(favoriteRecipes, []));
 
   const copyBoard = (id, type) => {
     let url = '';
@@ -58,6 +58,15 @@ function ReceitasFavoritas() {
     Food,
     Drink,
   ];
+
+  const saveFavoriteRecipe = (id) => {
+    const loadFavoriteRecipe = loadState(favoriteRecipes, []);
+
+    const response = loadFavoriteRecipe.filter((element) => element.id !== id);
+
+    saveState(favoriteRecipes, response);
+    setLocalStorageFavoriteRecipes(loadState(favoriteRecipes, []));
+  };
 
   return (
     <div>
@@ -129,10 +138,13 @@ function ReceitasFavoritas() {
                   alt="img-button-share"
                 />
               </button>
-              <FavoriteHeart
-                id={ id }
-                testIdReceitasFavoritas={ `${index}-horizontal-favorite-btn` }
-              />
+              <button type="button" onClick={ () => saveFavoriteRecipe(id) }>
+                <img
+                  data-testid={ `${index}-horizontal-favorite-btn` }
+                  src={ blackHeartIcon }
+                  alt="img-button-fav"
+                />
+              </button>
             </div>
           </div>
         ))}
