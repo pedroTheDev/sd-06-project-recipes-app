@@ -70,24 +70,22 @@ function FavoriteRecipes() {
     </div>);
 
   const renderFavorites = () => (
-    <div className="container-recipe-card">
+    <div className="container-card">
       {
         favorites.map((recipe, index) => (
           <div key={ index } className="recipe-card">
-            <div className="card-main-img">
-              <img
-                aria-hidden="true"
-                width="100%"
-                src={ recipe.image }
-                alt="recipe"
-                data-testid={ `${index}-horizontal-image` }
-                onClick={
-                  () => (recipe.type === 'comida'
-                    ? history.push(`/comidas/${recipe.id}`)
-                    : history.push(`/bebidas/${recipe.id}`))
-                }
-              />
-            </div>
+            <img
+              aria-hidden="true"
+              width="45%"
+              src={ recipe.image }
+              alt="recipe"
+              data-testid={ `${index}-horizontal-image` }
+              onClick={
+                () => (recipe.type === 'comida'
+                  ? history.push(`/comidas/${recipe.id}`)
+                  : history.push(`/bebidas/${recipe.id}`))
+              }
+            />
             <div className="recipe-card-text">
               { recipe.type === 'comida' ? (
                 <h6
@@ -113,7 +111,7 @@ function FavoriteRecipes() {
               >
                 { recipe.name }
               </h5>
-              <div className="img-card">
+              <div>
                 <img
                   src={ shareIcon }
                   alt="share"
@@ -135,7 +133,7 @@ function FavoriteRecipes() {
         ))
       }
     </div>
-    );
+  );
 
   return (
     <div>
