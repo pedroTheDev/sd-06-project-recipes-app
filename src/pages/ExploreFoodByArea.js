@@ -83,5 +83,6 @@ ExploreFoodByArea.propTypes = {
   areaFilterActive: PropTypes.shape({
     'Explorar Origem': PropTypes.bool.isRequired,
   }).isRequired,
+  foodRecipes: PropTypes.arrayOf(PropTypes.any).isRequired,
 
 };

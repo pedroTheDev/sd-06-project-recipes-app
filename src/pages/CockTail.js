@@ -35,8 +35,6 @@ function CockTail(props) {
   const allDrinkRecipesEndPoint = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
   useEffect(() => {
     async function fetchData() {
-      const zero = 0;
-
       if (!drinkRecipes || !drinkRecipes.length) {
         setIsLoading(true);
         const initialRecipes = await fetchAPI(allDrinkRecipesEndPoint);

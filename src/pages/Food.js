@@ -32,7 +32,6 @@ function Food(props) {
 
   useEffect(() => {
     dispatchCategories();
-    const zero = 0;
 
     if (!foodRecipes || !foodRecipes.length) {
       dispatchInitialRecipes();
