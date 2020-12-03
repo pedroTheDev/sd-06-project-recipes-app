@@ -33,12 +33,11 @@ function CockTail(props) {
   );
 
   const allDrinkRecipesEndPoint = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
-
   useEffect(() => {
     async function fetchData() {
       const zero = 0;
-      console.log(drinkRecipes.length);
-      if (drinkRecipes.length === zero) {
+
+      if (!drinkRecipes || !drinkRecipes.length) {
         setIsLoading(true);
         const initialRecipes = await fetchAPI(allDrinkRecipesEndPoint);
         dispatchRecipes(initialRecipes);
@@ -51,7 +50,10 @@ function CockTail(props) {
   }, []);
 
   return (
+
     <>
+
+      {console.log(drinkRecipes) }
       <Header
         pathname={ pathname }
         componentConfig={ header }
@@ -63,6 +65,7 @@ function CockTail(props) {
         pathname={ pathname }
         isLoading={ isLoading }
         filter={ categoriesFilterActive }
+        recipes={ drinkRecipes }
       />
       <Footer />
     </>
@@ -89,10 +92,7 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(mapStateToProps, mapDispatchToProps)(CockTail);
 
 CockTail.propTypes = {
-  recipes: PropTypes.shape({
-    type: PropTypes.string,
-    results: PropTypes.arrayOf(PropTypes.any),
-  }).isRequired,
+
   data: PropTypes.shape({
     inputText: PropTypes.string.isRequired,
     radioSearchSelection: PropTypes.string.isRequired,

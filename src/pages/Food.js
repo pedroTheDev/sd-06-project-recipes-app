@@ -33,9 +33,8 @@ function Food(props) {
   useEffect(() => {
     dispatchCategories();
     const zero = 0;
-    console.log(foodRecipes, 'initial');
-    if (foodRecipes.length === zero) {
-      console.log('foodrecipes length', foodRecipes.length);
+
+    if (!foodRecipes || !foodRecipes.length) {
       dispatchInitialRecipes();
     }
   }, []);
@@ -56,6 +55,7 @@ function Food(props) {
   if (iscategoriesFetching) return <>Loading </>;
   return (
     <>
+      {console.log(foodRecipes)}
       <Header
         pathname={ pathname }
         componentConfig={ header }
@@ -67,6 +67,7 @@ function Food(props) {
         pathname={ pathname }
         isLoading={ isFetchin }
         filter={ categoriesFilterActive }
+        recipes={ foodRecipes }
       />
       <Footer />
     </>

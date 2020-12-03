@@ -11,7 +11,7 @@ function ExploreFoodByArea(props) {
   const { history: { location: { pathname } }, pageConfig,
     dispatchFetchArea,
     dispatchInitialRecipes,
-    areas, isAreasFetching, isFetchin, areaFilterActive } = props;
+    areas, isAreasFetching, isFetchin, areaFilterActive, foodRecipes } = props;
 
   const { header, recipe } = pageConfig;
   const { title } = header;
@@ -34,6 +34,7 @@ function ExploreFoodByArea(props) {
         pathname={ pathname }
         isLoading={ isFetchin }
         filter={ areaFilterActive }
+        recipes={ foodRecipes }
       />
       <Footer />
     </>
@@ -41,6 +42,7 @@ function ExploreFoodByArea(props) {
 }
 
 const mapStateToProps = (state) => ({
+  foodRecipes: state.searchRecipes.recipes.meals,
   pageConfig: state.sitemap.explorarComidasLocalOrigem,
   isAreasFetching: state.searchRecipes.isAreasFetching,
   areas: state.searchRecipes.areas,

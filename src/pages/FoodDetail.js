@@ -48,8 +48,10 @@ function FoodDetail(props) {
       const response = await Bebidas.idDrink(id);
       console.log('detalhe do objeto', response);
       setObjectRecipe(response);
-      setObjResponse(modifyResponse(response, nameType, recipeType, changeCategory));
-      getIngredientsAndMesures(response.drinks[0]);
+      if (response && response[recipeType]) {
+        setObjResponse(modifyResponse(response, nameType, recipeType, changeCategory));
+        getIngredientsAndMesures(response.drinks[0]);
+      }
     } else {
       const recipeType = 'meals';
       const nameType = 'Meal';
