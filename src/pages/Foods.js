@@ -23,18 +23,20 @@ class Foods extends React.Component {
 
   async componentDidMount() {
     this.changeH1Width();
-    const { control } = this.props;
+    const { control, dispatchControlState } = this.props;
     let mealsRender;
     const initList = 0;
     const maxList = 12;
+    let controlFirstIf = false;
     if (control !== '') {
+      controlFirstIf = true;
       const mealsExplorer = await fetchMeal(control, 'ingrediente');
-      mealsRender = mealsExplorer.slice(initList, maxList);
+      mealsRender = await mealsExplorer.slice(initList, maxList);
     } else { mealsRender = await foodsOnRender(); }
-
     const Categories = await foodsCategoriesOnRender();
     this.setInitialState(mealsRender, Categories);
     this.setKeyLocalStorage();
+    if (controlFirstIf) { dispatchControlState(''); }
   }
 
   async componentDidUpdate() {
@@ -49,11 +51,6 @@ class Foods extends React.Component {
     if (stateMeals.length > MAXIMUM_LENGTH) {
       this.stateAfterProps(stateMeals);
     }
-  }
-
-  componentWillUnmount() {
-    const { dispatchControlState } = this.props;
-    dispatchControlState('');
   }
 
   setKeyLocalStorage() {
