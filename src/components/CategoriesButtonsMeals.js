@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesContext';
+import { loading } from '../images';
 import '../style/CategoriesButtons.css';
 
 function CategoriesButtonsMeals({ categories }) {
@@ -37,7 +38,7 @@ function CategoriesButtonsMeals({ categories }) {
   };
 
   if (!categories) {
-    return <h2>Loading...</h2>;
+    return <img className="loading" src={ loading } alt="loading" />;
   }
 
   return (

@@ -4,7 +4,7 @@ import RecipesContext from '../context/RecipesContext';
 import useCopyToClipboard from '../hooks/useCopyToClipboard';
 import {
   shareIcon, whiteHeartIcon, blackHeartIcon,
-  setaDireita, setaEsquerda,
+  setaDireita, setaEsquerda, loading,
 } from '../images';
 import '../style/Detalhes.css';
 
@@ -91,8 +91,7 @@ function DetalhesBebida() {
 
   return (
     <div>
-      {(LoadingDrink)
-        ? <p>Loading...</p>
+      {(LoadingDrink) ? <img className="loading" src={ loading } alt="loading" />
         : (
           <div className="container-details">
             <img
@@ -101,7 +100,7 @@ function DetalhesBebida() {
               alt={ dataDrinks.strDrink }
             />
             <div className="div-header">
-              <div className="div-details-icons">
+              <div className="div-icon">
                 <button
                   type="button"
                   onClick={ handleClick }
@@ -126,12 +125,12 @@ function DetalhesBebida() {
                 </button>
                 { isCopied ? <p>Link copiado!</p> : true }
               </div>
-              <div className="div-details-title">
+              <div className="div-title">
                 <h1 data-testid="recipe-title">{ dataDrinks.strDrink }</h1>
                 <p data-testid="recipe-category">{ dataDrinks.strAlcoholic }</p>
               </div>
             </div>
-            <div className="div-details-recipes">
+            <div className="div-recipes">
               <h2>Ingredientes:</h2>
               <ul>
                 {
@@ -194,15 +193,27 @@ function DetalhesBebida() {
                 </button>
               </div>
             </div>
-            <Link to={ `/bebidas/${idDrink}/in-progress` }>
-              <button
-                className="start-recipe"
-                data-testid="start-recipe-btn"
-                type="button"
-              >
-                { continuar ? 'Continuar Receita' : 'Iniciar Receita' }
-              </button>
-            </Link>
+            <div className="buttons-details">
+              <div>
+                <Link to={ `/bebidas/${idDrink}/in-progress` }>
+                  <button
+                    className="start-recipe"
+                    data-testid="start-recipe-btn"
+                    type="button"
+                  >
+                    { continuar ? 'Continuar Receita' : 'Iniciar Receita' }
+                  </button>
+                </Link>
+                <Link to="/bebidas">
+                  <button
+                    className="back"
+                    type="button"
+                  >
+                    Voltar
+                  </button>
+                </Link>
+              </div>
+            </div>
           </div>
         ) }
     </div>

@@ -1,36 +1,35 @@
-
 .container-progress {
   background-color: #f5f5f5;
-  border: 1px solid #cecccc;
-  margin: auto;
-  min-height: 640px;
-
+  width: 100%;
 }
 
 .container-progress img{
-  margin: 0;
-  width: 360px;
+  width: 100%;
 }
 
 .div-header {
   background-color: #272c35;
   color: #ffffff;
-  margin: 0;
-  margin-top: -1%;
-  max-height: 300px;
-  min-height: 150px;
-  padding: 1% 0%;
-  width: 360px;
+  margin-top: -5px;
+  width: 100% !important;
 }
 
 .div-icon {
-  height: 35px;
-  position: relative;
-  left: 200px;
+  align-items: flex-start ;
+  align-content: flex-start !important;
+  display: flex !important;
+  flex-flow: row wrap !important;
+  justify-content: flex-start !important;
+  padding: 5px 0px;
+  width: 100% !important;
 }
 
 .div-icon button {
-  margin-left: 5%;
+  height: 50px;
+  margin: 5px;
+  padding: 5px;
+  width: 50px;
+  z-index: 100;
 }
 
 .div-icon img {
@@ -38,64 +37,114 @@
 }
 
 .div-icon p {
-  right: 100px;
-  bottom: 50px;
+  color: #ffffff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12pt;
+  font-weight: 700;
+  left: 70px;
   position: relative;
 }
 
-.h1 {
+.div-title {
   align-items: center;
-  display: flex;
-  flex-flow: column wrap;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 28px;
-  font-weight: 900;
-  justify-content: center;
-  width: 360px;
-}
-
-.div-recipes {
-  align-items: flex-start;
+  align-content: center;
   display: flex;
   flex-flow: column wrap;
   justify-content: flex-start;
+  width: 100%;
+}
+
+.div-title h1 {
+  color: #ffffff !important; 
+  font-family: 'Montserrat', sans-serif;
+  font-size: 30pt !important;
+  font-weight: 900;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.div-recipes {
+  align-items: center !important;
+  align-content: center !important;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center !important;
   margin: auto;
-  margin-bottom: 70px;
-  width: 320px;
+  margin-bottom: 100px !important;
+  width: 100% !important;
 }
 
 .div-recipes h2{
+  color: #272c35 !important; 
   font-family: 'Montserrat', sans-serif;
-  font-size: 20px;
-  font-weight: 900;
+  font-size: 18pt !important;
+  width: 90% !important;
 }
 
-.div-recipes div {
+.div-recipes p, 
+.div-recipes ul {
+  color: #272c35 !important; 
   font-family: 'Montserrat', sans-serif;
-  font-size: 18px;
+  font-size: 16pt !important;
+  width: 95% !important;
 }
 
-.div-recipes input[type="checkbox"] {
-  height: 18px;
-  width: 18px;
-}
-
-.finish-recipe {
+.buttons-progress {
   background-color: #960051;
+  bottom: 0px;
+  height: 100px;
+  position: fixed;
+  width: 100%;
+}
+
+.buttons-progress div{
+  align-items: center !important;
+  align-content: center !important;
+  display: flex;
+  flex-flow: column wrap !important;
+  justify-content: center !important;
+}
+
+.buttons-progress button{
   border: none;
   border-radius: 5px;
   bottom: 0px;
-  color: #ffffff;
   font-family: 'Montserrat', sans-serif;
   font-size: 25px;
   font-weight: 700;
   height: 40px;
   margin-top: 5px;
-  position: fixed;
   width: 360px;
 }
 
+.finish-recipe {
+  background-color: #272c35;
+  color: #ffffff;
+}
+
 .finish-recipe:hover {
-  background-color: #bd0165;
+  background-color: #3e444e;
   cursor: pointer;
+}
+
+.back {
+  background-color: #f5f5f5;
+}
+
+.back:hover {
+  background-color: #e0e0e0;
+  cursor: pointer;
+}
+
+.loading {
+  align-items: center !important;
+  align-content: center !important;
+  color: #ffffff;
+  display: flex;
+  flex-flow: row wrap !important;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 40pt !important;
+  font-weight: 900;
+  justify-content: center !important;
+  margin-top: 20%;
 }

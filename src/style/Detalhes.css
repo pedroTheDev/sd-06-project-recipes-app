@@ -1,16 +1,17 @@
 .container-details {
   background-color: #f5f5f5;
+  width: 100%;
 }
 
 .container-details img{
   width: 100%;
 }
 
-.div-details-header {
+.div-header {
   background-color: #272c35;
   color: #ffffff;
   margin-top: -5px;
-  width: 100%;
+  width: 100% !important;
 }
 
 .div-icon {
@@ -29,6 +30,7 @@
   margin: 5px;
   padding: 5px;
   width: 50px;
+  z-index: 100;
 }
 
 .div-icon img {
@@ -44,7 +46,7 @@
   position: relative;
 }
 
-.div-details-title {
+.div-title {
   align-items: center;
   align-content: center;
   display: flex;
@@ -53,7 +55,7 @@
   width: 100%;
 }
 
-.div-details-title h1 {
+.div-title h1 {
   color: #ffffff !important; 
   font-family: 'Montserrat', sans-serif;
   font-size: 30pt !important;
@@ -62,27 +64,28 @@
   text-align: center;
 }
 
-.div-details-title p {
+.div-title p {
   color: #ffffff !important; 
   font-family: 'Montserrat', sans-serif;
   font-size: 18pt !important;
 }
 
 .div-recipes {
-  align-items: flex-start;
-  align-content: center;
+  align-items: center !important;
+  align-content: center !important;
   display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
+  flex-flow: column wrap;
+  justify-content: center !important;
   margin: auto;
-  width: 98%;
+  margin-bottom: 100px !important;
+  width: 100% !important;
 }
 
 .div-recipes h2{
   color: #272c35 !important; 
   font-family: 'Montserrat', sans-serif;
   font-size: 18pt !important;
-  width: 99% !important;
+  width: 90% !important;
 }
 
 .div-recipes p, 
@@ -90,67 +93,70 @@
   color: #272c35 !important; 
   font-family: 'Montserrat', sans-serif;
   font-size: 16pt !important;
-  width: 99% !important;
+  width: 95% !important;
 }
 
-.start-recipe {
-  background-color: #960051;
-  border: none;
-  border-radius: 5px;
-  bottom: 0px;
-  color: #ffffff;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 25px;
-  font-weight: 700;
-  height: 40px;
-  margin-top: 5px;
-  position: fixed;
-  width: 360px;
-}
-
-.start-recipe:hover {
-  background-color: #bd0165;
-  cursor: pointer;
+.div-recipes iframe {
+  height: 250px;
+  width: 320px;
 }
 
 .cards {
-  margin: auto;
-  width: 360px;
-}
-
-.scroller {
-  /* overflow-x: scroll; */
-  display: flex;
-}
-
-.card {
-  background-color: #f5f5f5;
-  color: #ffffff;
   align-items: center;
+  align-content: center;
+  background-color: #272c35;
   display: flex;
   flex-flow: column wrap;
   justify-content: center;
-  margin: 2% 0 2% -5%;
-  width: 50%;
+  padding: 20px;
+  width: 100%;
+}
+
+.scroller {
+  align-items: center;
+  align-content: center;
+  background-color: #272c35;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.card {
+  align-items: center;
+  align-content: center;
+  background-color: #272c35;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  width: 45%;
 }
 
 .card img{
   border-radius: 25%;
   border-bottom-left-radius: 0%;
-  width: 70%;
+  width: 100%;
 }
 
 .card h2 {
-  background-color: #272c35;
-  color: #ffffff;
+  background-color: #f5f5f5;
+  color: #272c35;
   cursor: pointer;
   font-family: 'Montserrat', sans-serif;
-  font-size: 20px;
+  font-size: 14pt !important;
   font-weight: 700;
-  margin: 0;
+  margin-top: -5px;
   padding: 2% 0;
   text-align: center;
-  width: 70%;
+  width: 100% !important;
+}
+
+.card a {
+  text-decoration: none !important;
+}
+
+.card a:hover {
+  text-decoration: none !important;
 }
 
 .invisible {
@@ -181,3 +187,270 @@
 .div-buttons-scroller img{
   width: 40px;
 }
+
+.buttons-details {
+  background-color: #960051;
+  bottom: 0px;
+  height: 100px;
+  position: fixed;
+  width: 100%;
+}
+
+.buttons-details div{
+  align-items: center;
+  align-content: center;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+}
+
+.buttons-details button{
+  border: none;
+  border-radius: 5px;
+  bottom: 0px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 25px;
+  font-weight: 700;
+  height: 40px;
+  margin-top: 5px;
+  width: 360px;
+}
+
+.start-recipe {
+  background-color: #272c35;
+  color: #ffffff;
+}
+
+.start-recipe:hover {
+  background-color: #3e444e;
+  cursor: pointer;
+}
+
+.back {
+  background-color: #f5f5f5;
+}
+
+.back:hover {
+  background-color: #e0e0e0;
+  cursor: pointer;
+}
+
+.loading {
+  animation: rotate .4s linear infinite;
+  margin: auto;
+  width: 10%
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg)
+  }
+
+  25% {
+    transform: rotate(90deg)
+  }
+
+  50% {
+    transform: rotate(180deg)
+  }
+
+  75% {
+    transform: rotate(270deg)
+  }
+
+  100% {
+    transform: rotate(360deg)
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .login {
+    flex-flow: row nowrap;
+    margin-top: 20%;
+  }
+
+  .login img {
+    width: 300px;
+  }
+} 
+
+/* @media only screen and (min-width: 1024px) {
+  .container-details  {
+    align-items: flex-start !important;
+    align-content: flex-start !important;
+    display: flex !important;
+    flex-flow: row-reverse wrap !important;
+    justify-content: flex-start !important;
+  }
+  
+  .container-details img{
+    width: 50%;
+  }
+
+  .div-header {
+    width: 50%;
+  }
+    
+  .div-recipes {
+    align-items: flex-start !important;
+    align-content: flex-start !important;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: flex-start !important;
+    width: 40% !important;
+  }
+
+  .div-recipes h2{
+    color: #272c35 !important; 
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18pt !important;
+    width: 50% !important;
+  }
+  
+  .div-recipes p, 
+  .div-recipes ul {
+    color: #272c35 !important; 
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16pt !important;
+    width: 40% !important;
+  }
+
+  .div-recipes iframe {
+    height: 250px;
+    width: 320px;
+  }
+  
+  .cards {
+    align-items: center;
+    align-content: center;
+    background-color: #272c35;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    padding: 20px;
+    width: 100%;
+  }
+  
+  .scroller {
+    align-items: center;
+    align-content: center;
+    background-color: #272c35;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    width: 100%;
+  }
+  
+  .card {
+    align-items: center;
+    align-content: center;
+    background-color: #272c35;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    width: 45%;
+  }
+  
+  .card img{
+    border-radius: 25%;
+    border-bottom-left-radius: 0%;
+    width: 100%;
+  }
+  
+  .card h2 {
+    background-color: #f5f5f5;
+    color: #272c35;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14pt !important;
+    font-weight: 700;
+    margin-top: -5px;
+    padding: 2% 0;
+    text-align: center;
+    width: 100% !important;
+  }
+  
+  .card a {
+    text-decoration: none !important;
+  }
+  
+  .card a:hover {
+    text-decoration: none !important;
+  }
+  
+  .invisible {
+    display: none;
+  }
+  
+  .div-buttons-scroller {
+    align-items: center;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    width: 300px;
+  }
+  
+  .div-buttons-scroller button{
+    background-color: #272c35;
+    border: none;
+    border-radius: 50%;
+    padding: 3px 6px;
+    margin: 2%;
+  }
+  
+  .div-buttons-scroller button:hover{
+    background-color: #3d424d;
+    cursor: pointer;
+  }
+  
+  .div-buttons-scroller img{
+    width: 40px;
+  }
+  
+  .buttons-details {
+    background-color: #960051;
+    bottom: 0px;
+    height: 100px;
+    position: fixed;
+    width: 100%;
+  }
+  
+  .buttons-details div{
+    align-items: center;
+    align-content: center;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+  }
+  
+  .buttons-details button{
+    border: none;
+    border-radius: 5px;
+    bottom: 0px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 25px;
+    font-weight: 700;
+    height: 40px;
+    margin-top: 5px;
+    width: 360px;
+  }
+  
+  .start-recipe {
+    background-color: #272c35;
+    color: #ffffff;
+  }
+  
+  .start-recipe:hover {
+    background-color: #3e444e;
+    cursor: pointer;
+  }
+  
+  .back {
+    background-color: #f5f5f5;
+  }
+  
+  .back:hover {
+    background-color: #e0e0e0;
+    cursor: pointer;
+  } 
+} */

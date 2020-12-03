@@ -4,7 +4,7 @@ import RecipesContext from '../context/RecipesContext';
 import useCopyToClipboard from '../hooks/useCopyToClipboard';
 import {
   shareIcon, whiteHeartIcon, blackHeartIcon,
-  setaDireita, setaEsquerda,
+  setaDireita, setaEsquerda, loading,
 } from '../images';
 import '../style/Detalhes.css';
 
@@ -90,8 +90,7 @@ function DetalhesComida() {
 
   return (
     <div>
-      {(loadingMeal)
-        ? <p>Loading</p>
+      {(loadingMeal) ? <img className="loading" src={ loading } alt="loading" />
         : (
           <div className="container-details">
             <img
@@ -99,7 +98,7 @@ function DetalhesComida() {
               src={ dataMeal.strMealThumb }
               alt={ dataMeal.strMeal }
             />
-            <div className="div-details-header">
+            <div className="div-header">
               <div className="div-icon">
                 <button
                   type="button"
@@ -109,6 +108,7 @@ function DetalhesComida() {
                     data-testid="favorite-btn"
                     src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
                     alt="Botão de Favorito"
+                    className="icons"
                   />
                 </button>
                 <span>
@@ -120,12 +120,13 @@ function DetalhesComida() {
                     <img
                       src={ shareIcon }
                       alt="Botão de Compartilhar"
+                      className="icons"
                     />
                   </button>
                   { isCopied ? <p>Link copiado!</p> : true }
                 </span>
               </div>
-              <div className="div-details-title">
+              <div className="div-title">
                 <h1 data-testid="recipe-title">{ dataMeal.strMeal }</h1>
                 <p data-testid="recipe-category">{ dataMeal.strCategory }</p>
               </div>
@@ -208,15 +209,27 @@ function DetalhesComida() {
                 </button>
               </div>
             </div>
-            <Link to={ `/comidas/${idMeal}/in-progress` }>
-              <button
-                className="start-recipe"
-                data-testid="start-recipe-btn"
-                type="button"
-              >
-                { continuar ? 'Continuar Receita' : 'Iniciar Receita' }
-              </button>
-            </Link>
+            <div className="buttons-progress">
+              <div>
+                <Link to={ `/comidas/${idMeal}/in-progress` }>
+                  <button
+                    className="start-recipe"
+                    data-testid="start-recipe-btn"
+                    type="button"
+                  >
+                    { continuar ? 'Continuar Receita' : 'Iniciar Receita' }
+                  </button>
+                </Link>
+                <Link to="/comidas">
+                  <button
+                    className="back"
+                    type="button"
+                  >
+                    Voltar
+                  </button>
+                </Link>
+              </div>
+            </div>
           </div>
         ) }
     </div>

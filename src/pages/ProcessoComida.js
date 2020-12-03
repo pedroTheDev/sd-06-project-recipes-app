@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import useCopyToClipboard from '../hooks/useCopyToClipboard';
-import { shareIcon, whiteHeartIcon, blackHeartIcon } from '../images';
+import { shareIcon, whiteHeartIcon, blackHeartIcon, loading } from '../images';
 import '../style/Processo.css';
 
 function ProcessoComida() {
@@ -127,16 +127,26 @@ function ProcessoComida() {
     }]);
   };
 
-  return (isLoading) ? <p>Loading</p> : (
+  return (isLoading) ? <img className="loading" src={ loading } alt="loading" /> : (
     <div className="container-progress">
       <img
         data-testid="recipe-photo"
         src={ dataMeal.strMealThumb }
         alt="Foto da receita"
-        className="food-image"
       />
       <div className="div-header">
         <div className="div-icon">
+          <button
+            type="button"
+            onClick={ handleClick }
+          >
+            <img
+              data-testid="favorite-btn"
+              src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+              alt="Botão de Favorito"
+              className="icons"
+            />
+          </button>
           <span>
             <button
               type="button"
@@ -146,20 +156,13 @@ function ProcessoComida() {
               <img
                 src={ shareIcon }
                 alt="Botão de Compartilhar"
+                className="icons"
               />
             </button>
             { isCopied ? <p>Link copiado!</p> : true }
           </span>
-          <button
-            type="button"
-            onClick={ handleClick }
-          >
-            <img
-              data-testid="favorite-btn"
-              src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
-              alt="Botão de Favorito"
-            />
-          </button>
+        </div>
+        <div className="div-title">
           <h1 className="h1" data-testid="recipe-title">
             { dataMeal.strMeal }
           </h1>
@@ -196,17 +199,27 @@ function ProcessoComida() {
           Instruções
         </h2>
       </div>
-      <Link to="/receitas-feitas">
-        <button
-          className="finish-recipe"
-          type="button"
-          data-testid="finish-recipe-btn"
-          disabled={ isDisable }
-          onClick={ saveDoneRecipes }
-        >
-          Finalizar Receita
-        </button>
-      </Link>
+      <div className="buttons-progress">
+        <Link to="/receitas-feitas">
+          <button
+            className="finish-recipe"
+            type="button"
+            data-testid="finish-recipe-btn"
+            disabled={ isDisable }
+            onClick={ saveDoneRecipes }
+          >
+            Finalizar Receita
+          </button>
+        </Link>
+        <Link to="/comidas">
+          <button
+            className="back"
+            type="button"
+          >
+            Ver Outras Receitas
+          </button>
+        </Link>
+      </div>
     </div>
   );
 }

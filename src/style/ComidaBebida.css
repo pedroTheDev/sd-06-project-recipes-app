@@ -1,3 +1,16 @@
 body {
   background-color: #272c35;
 }
+
+.loading {
+  align-items: center !important;
+  align-content: center !important;
+  color: #ffffff;
+  display: flex;
+  flex-flow: row wrap !important;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 40pt !important;
+  font-weight: 900;
+  justify-content: center !important;
+  margin-top: 20%;
+}
