@@ -15,7 +15,6 @@ function Perfil() {
   useEffect(() => {
     const retrievedUsername = JSON.parse(localStorage.getItem('user'));
     setUser(retrievedUsername.email);
-    console.log(user);
   }, []);
 
   return (
