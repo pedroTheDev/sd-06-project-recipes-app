@@ -1,21 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import RecipesList from '../components/RecipesList';
 import Footer from '../components/Footer';
-import { addRecipes,
+import { addDrinkRecipes, addRecipes,
   changeIsFetchin, addDrinkCategories } from '../redux/actions/searchRecipes';
 import useFetch from '../helpers/effects/useFetch';
-import { fetchAPI } from '../helpers/APIRequests';
 import DrinkCategoriesButtons from '../components/DrinkCategoriesButtons';
 
 function CockTail(props) {
   const { history: { location: { pathname } },
-    pageConfig, fetchmap, dispatchRecipes, data,
-    isFetchin, dispatchFetching, dispatchCategories, drinkRecipes } = props;
+    pageConfig,
+    fetchmap,
+    dispatchRecipes,
+    dispatchInitialRecipes,
+    data,
+    isFetchin,
+    dispatchFetching,
+    dispatchCategories,
+    drinkRecipes,
+    categoriesFilterActive } = props;
 
-  const [isLoading, setIsLoading] = useState(true);
+  const componentIsMounted = useRef(true);
 
   const { header, recipe } = pageConfig;
   const { title } = header;
@@ -29,28 +36,22 @@ function CockTail(props) {
     dispatchFetching,
     fetchmap,
     recipe,
+    componentIsMounted,
   );
 
-  const allDrinkRecipesEndPoint = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
-
   useEffect(() => {
-    async function fetchData() {
-      const zero = 0;
-      console.log(drinkRecipes.length);
-      if (drinkRecipes.length === zero) {
-        setIsLoading(true);
-        const initialRecipes = await fetchAPI(allDrinkRecipesEndPoint);
-        dispatchRecipes(initialRecipes);
-      }
-      setIsLoading(false);
+    dispatchCategories();
 
-      dispatchCategories();
+    if (!drinkRecipes || !drinkRecipes.length) {
+      dispatchInitialRecipes();
     }
-    fetchData();
   }, []);
 
   return (
+
     <>
+
+      {console.log(drinkRecipes) }
       <Header
         pathname={ pathname }
         componentConfig={ header }
@@ -58,11 +59,11 @@ function CockTail(props) {
       <DrinkCategoriesButtons />
       <RecipesList
         title={ title }
-        fetchmap={ fetchmap }
-        dispatchRecipes={ dispatchRecipes }
         recipeConfig={ recipe }
         pathname={ pathname }
-        isLoading={ isLoading }
+        isLoading={ isFetchin }
+        filter={ categoriesFilterActive }
+        recipes={ drinkRecipes }
       />
       <Footer />
     </>
@@ -70,27 +71,29 @@ function CockTail(props) {
 }
 
 const mapStateToProps = (state) => ({
-
+  isRecipesFetching: state.searchRecipes.isRecipesFetching,
   drinkRecipes: state.searchRecipes.recipes.drinks,
   pageConfig: state.sitemap.bebidas,
   fetchmap: state.fetchmap,
   data: state.searchRecipes.data,
   isFetchin: state.searchRecipes.isFetchin,
+  categoriesFilterActive: state.searchRecipes.categoriesFilterActive,
+
 });
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchRecipes: (recipes) => dispatch(addRecipes(recipes)),
   dispatchFetching: (isFetchin) => dispatch(changeIsFetchin(isFetchin)),
   dispatchCategories: (categories) => dispatch(addDrinkCategories(categories)),
+  dispatchInitialRecipes: () => (
+    dispatch(addDrinkRecipes())
+  ),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CockTail);
 
 CockTail.propTypes = {
-  recipes: PropTypes.shape({
-    type: PropTypes.string,
-    results: PropTypes.arrayOf(PropTypes.any),
-  }).isRequired,
+
   data: PropTypes.shape({
     inputText: PropTypes.string.isRequired,
     radioSearchSelection: PropTypes.string.isRequired,
@@ -101,7 +104,9 @@ CockTail.propTypes = {
   isFetchin: PropTypes.bool.isRequired,
   dispatchCategories: PropTypes.func.isRequired,
   dispatchFetching: PropTypes.func.isRequired,
+  dispatchInitialRecipes: PropTypes.func.isRequired,
   dispatchRecipes: PropTypes.func.isRequired,
+  drinkRecipes: PropTypes.arrayOf(PropTypes.any).isRequired,
   pageConfig: PropTypes.shape({
     header: PropTypes.shape({
       title: PropTypes.string.isRequired,
@@ -117,5 +122,8 @@ CockTail.propTypes = {
       pathname: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
-  drinkRecipes: PropTypes.arrayOf(PropTypes.any).isRequired,
+  categoriesFilterActive: PropTypes.shape({
+    Comidas: PropTypes.bool.isRequired,
+    Bebidas: PropTypes.bool.isRequired,
+  }).isRequired,
 };

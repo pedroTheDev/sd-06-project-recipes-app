@@ -1,11 +1,15 @@
 import { fetchAPI, getIngredientsFoodEndPoint,
   getIngredientsDrinkEndPoint } from '../../helpers/APIRequests';
 
+export const ADD_AREAS = 'ADD_AREAS';
 export const ADD_RECIPE_DETAIL = 'ADD_RECIPE_DETAIL';
 export const ADD_RECIPES = 'ADD_RECIPES';
 export const CHANGE_FETCH = 'CHANGE_FETCH';
+export const CHANGE_FILTER = 'CHANGE_FILTER';
+export const CHANGE_ACTIVE_AREA = 'CHANGE_ACTIVE_AREA';
 export const SEND_DATA = 'SEND_DATA';
 export const ADD_CATEGORIES = 'ADD_CATEGORIES';
+export const REQUEST_AREAS = 'REQUEST_AREAS';
 export const REQUEST_CATEGORIES = 'REQUEST_CATEGORIES';
 export const REQUEST_INGREDIENTS = 'REQUEST_INGREDIENTS';
 export const REQUEST_RECIPES = 'REQUEST_RECIPES';
@@ -13,7 +17,6 @@ export const GET_FOOD_INGREDIENTS = 'GET_FOOD_INGREDIENTS';
 export const GET_FOOD_CATEGORIES = 'GET_CATEGORIES';
 export const GET_DRINK_CATEGORIES = 'GET_DRINK_CATEGORIES';
 export const GET_DRINK_INGREDIENTS = 'GET_DRINK_INGREDIENTS';
-export const CHANGE_FILTER = 'CHANGE_FILTER';
 
 const allFoodRecipesEndPoint = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
 const initialFoodCategoriesEndPoint = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
@@ -36,6 +39,11 @@ export const addRecipes = (recipes) => ({
   recipes,
 });
 
+export const addAreas = (areas) => ({
+  type: ADD_AREAS,
+  areas,
+});
+
 export const changeIsFetchin = (isFetchin) => ({
   type: CHANGE_FETCH,
   fetch: isFetchin,
@@ -47,9 +55,18 @@ export const changeFilter = (pageTitle, active) => ({
   active,
 });
 
+export const changeArea = (area) => ({
+  type: CHANGE_ACTIVE_AREA,
+  area,
+});
+
 export const sendData = (data) => ({
   type: SEND_DATA,
   data,
+});
+
+const requestAreas = () => ({
+  type: REQUEST_AREAS,
 });
 
 const requestCategories = () => ({
@@ -136,4 +153,27 @@ export const fetchDrinkByIngredient = (ingredientName) => async (dispatch) => {
   const response = await fetchAPI(getIngredientsDrinkEndPoint(ingredientName));
   console.log('fetching', response);
   return dispatch(addRecipes({ drinks: response.drinks }));
+};
+
+export const fetchAreas = () => async (dispatch) => {
+  dispatch(requestAreas());
+  const areaEndPoint = 'https://www.themealdb.com/api/json/v1/1/list.php?a=list';
+  const response = await fetchAPI(areaEndPoint);
+  console.log(response);
+  return dispatch(addAreas(response.meals));
+};
+
+export const changeFoodByArea = (area) => async (dispatch) => {
+  dispatch(requestRecipes());
+  console.log('--', area, '--', 'area');
+  let foodByAreaEndpoint;
+  if (area !== '') {
+    foodByAreaEndpoint = `https://www.themealdb.com/api/json/v1/1/filter.php?a=${area}`;
+  } else {
+    foodByAreaEndpoint = allFoodRecipesEndPoint;
+  }
+
+  const response = await fetchAPI(foodByAreaEndpoint);
+  console.log(response);
+  return dispatch(addRecipes({ meals: response.meals }));
 };

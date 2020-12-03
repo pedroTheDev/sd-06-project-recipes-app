@@ -81,6 +81,9 @@ const initialState = {
       searchButton: true,
       title: 'Explorar Origem',
     },
+    recipe: {
+      type: 'meals',
+    },
   },
   perfil: {
     header: {

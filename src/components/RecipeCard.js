@@ -9,6 +9,7 @@ export default function RecipeCard({ recipe, recipeIndex, pathname, id }) {
   const getMatcherByUrl = () => {
     const nameByurl = {
       '/comidas': 'strMeal',
+      '/explorar/comidas/area': 'strMeal',
       '/bebidas': 'strDrink',
     };
     return nameByurl[pathname];
@@ -45,8 +46,19 @@ export default function RecipeCard({ recipe, recipeIndex, pathname, id }) {
 
   const render = () => {
     if (thumbKey) {
-      return (
-        <Link to={ `${pathname}/${id}` }>
+      if (pathname === '/comidas' || pathname === '/bebidas') {
+        return (
+          <Link to={ `${pathname}/${id}` } replace>
+            <div
+              className="main__page__recipe-card"
+              data-testid={ `${recipeIndex}-recipe-card` }
+            >
+              {renderRecipeDetails()}
+            </div>
+          </Link>
+        );
+      } return (
+        <Link to={ `/comidas/${id}` } replace>
           <div
             className="main__page__recipe-card"
             data-testid={ `${recipeIndex}-recipe-card` }
@@ -54,6 +66,7 @@ export default function RecipeCard({ recipe, recipeIndex, pathname, id }) {
             {renderRecipeDetails()}
           </div>
         </Link>
+
       );
     }
     return null;

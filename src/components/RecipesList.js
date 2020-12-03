@@ -1,21 +1,20 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
 import RecipeCard from './RecipeCard';
 import findMatchInKeys from '../helpers/assets';
 
-function RecipesList(props) {
+export default function RecipesList(props) {
   const { pathname,
-    recipes, title, recipeConfig, isLoading, categoriesFilterActive } = props;
-  const { type } = recipeConfig;
-  console.log('btnActive', categoriesFilterActive[title]);
+    recipes, title, recipeConfig, isLoading, filter } = props;
+  console.log('filterActive', filter[title],
+    title, recipeConfig, isLoading, 'recipe', recipes);
 
   const renderRecipesResults = () => {
     const maxRecipesNumber = 12;
     console.log(recipes);
-    if (recipes[type].length > 1) {
+    if (recipes && recipes.length > 1) {
       return (
-        recipes[type].filter((_recipe, index) => index < maxRecipesNumber)
+        recipes.filter((_recipe, index) => index < maxRecipesNumber)
           .map((recipe, index) => (<RecipeCard
             pathname={ pathname }
             recipe={ recipe }
@@ -28,13 +27,16 @@ function RecipesList(props) {
   };
 
   const renderRedirectToSingleResult = () => {
-    const results = recipes[type];
+    const results = recipes;
     const recipe = results[0];
-    if (recipes[type].length === 1 && !categoriesFilterActive[title]) {
+    if (recipes.length === 1 && !filter[title]) {
       const id = findMatchInKeys('id', recipe);
-      return <Redirect to={ `${title.toLowerCase()}/${recipe[id]}` } />;
+      if (title === 'Comidas' || title === 'Bebidas') {
+        return <Redirect to={ `${title.toLowerCase()}/${recipe[id]}` } />;
+      }
+      return <Redirect to={ `comidas/${recipe[id]}` } replace />;
     }
-    if (recipes[type].length === 1) {
+    if (recipes.length === 1) {
       return (
         <RecipeCard
           pathname={ pathname }
@@ -55,7 +57,7 @@ function RecipesList(props) {
 
   const render = () => {
     const zero = 0;
-    if (!isLoading && recipes && recipes[type] && recipes[type].length > zero) {
+    if (!isLoading && recipes && recipes.length > zero) {
       return renderSearchResults();
     }
     return <p>is loading</p>;
@@ -63,10 +65,3 @@ function RecipesList(props) {
 
   return render();
 }
-
-const mapStateToProps = (state) => ({
-  recipes: state.searchRecipes.recipes,
-  categoriesFilterActive: state.searchRecipes.categoriesFilterActive,
-});
-
-export default connect(mapStateToProps, null)(RecipesList);
