@@ -12,7 +12,7 @@ const CategoryMenu = ({ pathname, categories, isLoading, onClick, currentCategor
   );
   if (isLoading) return <div>Carregando</div>;
   return (
-    <div>
+    <div className="sub-header">
       {
         categories.map((category) => (
           <button
