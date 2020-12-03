@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import {
   Login, MainPage, Explorar, Perfil, ReceitasFavoritas,
   ReceitasFeitas, RecipeDetails, ReceitaProgresso,
-  ComidasIngredientes, Explorer,
+  ComidasIngredientes, Explorer, ExplorarOrigem,
 } from './pages';
 import store from './redux/store';
 import './visual_identity/styles/main.scss';
