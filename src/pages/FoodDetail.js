@@ -49,13 +49,10 @@ function FoodDetail(props) {
       const response = await Bebidas.idDrink(id);
       setObjectRecipe(response);
       setObjResponse(modifyResponse(response, nameType, recipeType, changeCategory));
-      // const respostaDoObjeto = modifyResponse(
-      //   response, nameType, recipeType, changeCategory,
-      // );
       setFavoriteResponseModified(modifyResponseToFavoriteBtn(
         response, nameType, recipeType, changeCategory, name,
       ));
-      // localStorage.setItem('objeto', JSON.stringify(respostaDoObjeto));
+      console.log(response);
       getIngredientsAndMesures(response.drinks[0]);
     } else {
       const recipeType = 'meals';
@@ -164,6 +161,7 @@ function FoodDetail(props) {
     );
   };
   console.log(objectRecipe);
+  console.log(favoriteResponseModified);
   return (
     <div>
       <img

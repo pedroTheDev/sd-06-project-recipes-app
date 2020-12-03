@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import shareIcon from '../images/shareIcon.svg';
 
-function ShareButton({ match: { url } }) {
+function ShareButton() {
   const [messegeShareLink, setMessegeShareLink] = useState('');
-
-  const shareLinkButton = async (RecipeUrl) => {
-    navigator.clipboard.writeText(`http://localhost:3000${RecipeUrl}`);
+  // { match: { url } }
+  const shareLinkButton = async () => {
+    // navigator.clipboard.writeText(`http://localhost:3000${RecipeUrl}`);
     setMessegeShareLink('Link copiado!');
   };
 
@@ -15,7 +15,7 @@ function ShareButton({ match: { url } }) {
       <button
         data-testid="share-btn"
         type="button"
-        onClick={ () => shareLinkButton(url) }
+        onClick={ () => shareLinkButton() }
       >
         <img src={ shareIcon } alt="share" />
       </button>

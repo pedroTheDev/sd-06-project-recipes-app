@@ -42,24 +42,26 @@ function RecipeInProgress(props) {
     if (path === '/bebidas/:id/in-progress') {
       const recipeType = 'drinks';
       const nameType = 'Drink';
+      const name = 'bebida';
       const changeCategory = 'strAlcoholic';
       const response = await Bebidas.idDrink(id);
       console.log(response);
       setRecipeDetail(modifyResponse(response, nameType, recipeType, changeCategory));
       setFavoriteResponseModified(modifyResponseToFavoriteBtn(
-        response, nameType, recipeType,
+        response, nameType, recipeType, name,
       ));
       setType('cocktails');
       getIngredientsAndMesures(response.drinks[0]);
     } else {
       const recipeType = 'meals';
       const nameType = 'Meal';
+      const name = 'comida';
       const changeCategory = 'strCategory';
       const response = await Comidas.idFood(id);
       console.log(response);
       setRecipeDetail(modifyResponse(response, nameType, recipeType, changeCategory));
       setFavoriteResponseModified(modifyResponseToFavoriteBtn(
-        response, nameType, recipeType,
+        response, nameType, recipeType, name,
       ));
       setType(recipeType);
       getIngredientsAndMesures(response.meals[0]);
@@ -216,6 +218,7 @@ function RecipeInProgress(props) {
     // console.log(ingredientsUnsaved);
     // console.log(ingredientMesureJoined);
     // console.log(withLocalStorage);
+    console.log(favoriteResponseModified);
     return (
       <div>
         <img data-testid="recipe-photo" src={ img } alt={ title } width="150" />
