@@ -5,32 +5,26 @@ import Footer from '../../components/Footer';
 import { listByArea } from '../../services/mealAPI';
 
 function ExploreByArea() {
-  const [area, setArea] = useState({});
+  const [areas, setAreas] = useState({});
 
   const fetchByArea = async () => {
-    const areas = await listByArea();
-    console.log(areas);
-    setArea(areas);
+    const resultAreas = await listByArea();
+    setAreas(resultAreas);
   };
 
   useEffect(() => {
     fetchByArea();
   }, []);
 
-  const renderArea = () => (
+  const renderSelect = () => {
     <select
       data-testid="explore-by-area-dropdown"
       className="area-select"
       name="area"
-      value="Area"
     >
-      <option
-        data-testid="area-option"
-      >
-        Area
-      </option>
-    </select>
-  );
+      const option = areas.map(area => { <option data-testid={ `${area}-option` } value={ area.strArea }> {area.strArea} </option> })
+    </select>;
+  };
 
   return (
     <div>
@@ -40,7 +34,7 @@ function ExploreByArea() {
         BtnSearchBar={ BtnSearchBar }
       />
       <div className="drop-down-container">
-        {renderArea()}
+        {renderSelect()}
       </div>
       <div className="footer">
         <Footer />

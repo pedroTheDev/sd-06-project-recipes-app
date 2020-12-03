@@ -13,7 +13,6 @@ const endpoints = {
   lookupIngredient: 'lookup.php?i=',
   random: 'random.php',
   listIngredient: 'list.php?i=list',
-  listArea: 'list.php?a=list',
 };
 
 export async function fetchMeal(type, key) {
@@ -46,10 +45,8 @@ export async function filterByCategory(key) {
 }
 
 export async function listByArea() {
-  const url = `${MEAL_API}${endpoints[listArea]}`;
-  console.log(url);
+  const url = `${MEAL_API}list.php?a=list`;
   const result = await fetch(url);
   const data = await result.json();
-  console.log(data);
   return data;
 }
