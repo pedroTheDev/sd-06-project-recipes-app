@@ -62,9 +62,9 @@ export default function ExploreIngredient() {
                 alt={ ingredientName }
                 data-testid={ `${index}-card-img` }
               />
-              <h4 data-testid={ `${index}-card-name` }>
+              <h5 data-testid={ `${index}-card-name` }>
                 {ingredientName}
-              </h4>
+              </h5>
             </Link>
           </div>
         );

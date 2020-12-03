@@ -4,6 +4,7 @@ import './App.css';
 import Login from './pages/Login';
 import MainPage from './pages/MainPage';
 import RecipeDetails from './pages/RecipeDetails';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
@@ -61,6 +62,7 @@ function App() {
           path="/receitas-favoritas"
           component={ () => <MainPage title="Receitas Favoritas" /> }
         />
+        <Route component={ NotFound } />
       </Switch>
     </div>
   );
