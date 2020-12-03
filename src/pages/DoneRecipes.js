@@ -7,11 +7,12 @@ const DoneRecipes = () => {
 
   return (
     <div>
-      <div className="sub-header done-buttons">
+      <div className="sub-header">
         <button
           type="button"
           data-testid="filter-by-all-btn"
           onClick={ () => setDoneRecipes(recipes) }
+          className="done-buttons"
         >
           All
         </button>
@@ -20,6 +21,7 @@ const DoneRecipes = () => {
           data-testid="filter-by-food-btn"
           onClick={ () => setDoneRecipes(doneRecipes
             .filter((recipe) => recipe.type === 'comida')) }
+          className="done-buttons"
         >
           Food
         </button>
@@ -28,6 +30,7 @@ const DoneRecipes = () => {
           data-testid="filter-by-drink-btn"
           onClick={ () => setDoneRecipes(doneRecipes
             .filter((recipe) => recipe.type === 'bebida')) }
+          className="done-buttons"
         >
           Drinks
         </button>

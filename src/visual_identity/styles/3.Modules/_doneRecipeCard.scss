@@ -9,11 +9,10 @@
   & .done-recipe-card-container {
     @include flexBox(column);
     margin-top: 5%;
+
     & .done-recipe-card {
       @include flexBox(column, center, center);
-      // border: 1px solid $darkBlue3;
       margin: 6% 2%;
-      // width: calc(80px + 20vw);
   
       & img {
         border-radius: 15px;
@@ -39,29 +38,24 @@
           margin: 0;
           text-align: center;
   
-          /*@media screen and  (min-width: 1000px){
-            margin-top: 80%;
-          }*/
         }
       }
       
   
-  }
-  & .done-card-details {
-    @include flexBox(column);
-    text-align: center;
-    background-color: $darkBlue3;
-    color: white;
-    padding: 5%;
-    border-radius: 15px;
+    }
 
-  }
-
-
+    & .done-card-details {
+      @include flexBox(column);
+      box-shadow: 3px 3px 5px $darkBlue2 ;
+      text-align: center;
+      background-color: $darkBlue3;
+      color: white;
+      padding: 5%;
+      border-radius: 15px;
+    }
   }
 
   @media screen and  (min-width: 400px){
     justify-content: space-around;
   }
-
 }
