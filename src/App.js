@@ -16,6 +16,7 @@ import FavoriteRecipes from './pages/FavoriteRecipes';
 import ExploreFoodPage from './pages/ExploreFoodPage';
 import ExploreDrinksPage from './pages/ExploreDrinksPage';
 import ExploreByIngredients from './pages/ExploreByIngredients';
+import ExploreByArea from './'
 
 function App() {
   return (

@@ -111,3 +111,9 @@ export async function requestRandomDrink() {
   const result = await resolve.json();
   return result;
 }
+
+export async function requestMealByArea() {
+  const resolve = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?a=list');
+  const result = await resolve.json();
+  return result;
+}
