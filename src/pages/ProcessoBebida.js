@@ -42,9 +42,6 @@ function ProcessoBebida() {
         setChecked([]);
       }
     } else setChecked([]);
-  }, []);
-
-  useEffect(() => {
     async function fetchAPI() {
       const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idDrink}`);
       const responseJson = await response.json();
@@ -81,7 +78,7 @@ function ProcessoBebida() {
     } else {
       setIsDisable(true);
     }
-  }, [checked]);
+  }, [checked, dataDrinks, idDrink]);
 
   const handleClick = () => {
     setIsFavorite(!isFavorite);
@@ -169,7 +166,7 @@ function ProcessoBebida() {
       </div>
       <div className="div-recipes">
         <h2 data-testid="recipe-category">
-          Categoria
+          Ingredientes
         </h2>
         { Object.keys(dataDrinks)
           .filter((keys) => keys.includes('Ingredient'))
@@ -197,6 +194,7 @@ function ProcessoBebida() {
         <h2 data-testid="instructions">
           Instruções
         </h2>
+        <p data-testid="instructions">{ dataDrinks.strInstructions }</p>
       </div>
       <Link to="/receitas-feitas">
         <button

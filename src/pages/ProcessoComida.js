@@ -16,16 +16,6 @@ function ProcessoComida() {
   const idMeal = history.location.pathname.split('/')[2];
 
   useEffect(() => {
-    async function fetchAPI() {
-      const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`);
-      const responseJson = await response.json();
-      setDataMeal(responseJson.meals[0]);
-      setIsLoading(false);
-    }
-    fetchAPI();
-  }, [idMeal]);
-
-  useEffect(() => {
     if (localStorage.favoriteRecipes) {
       const favoriteRecipes = JSON.parse(localStorage.favoriteRecipes);
       favoriteRecipes.forEach((favorite) => {
@@ -43,7 +33,14 @@ function ProcessoComida() {
         }
       }
     } else setChecked([]);
-  }, []);
+    async function fetchAPI() {
+      const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`);
+      const responseJson = await response.json();
+      setDataMeal(responseJson.meals[0]);
+      setIsLoading(false);
+    }
+    fetchAPI();
+  }, [idMeal]);
 
   const handleChange = (target, index) => {
     if (target.checked) {
@@ -82,7 +79,7 @@ function ProcessoComida() {
     } else {
       setIsDisable(true);
     }
-  }, [checked]);
+  }, [checked, dataMeal, idMeal]);
 
   const handleClick = () => {
     setIsFavorite(!isFavorite);
@@ -167,7 +164,7 @@ function ProcessoComida() {
       </div>
       <div className="div-recipes">
         <h2 data-testid="recipe-category">
-          Categoria
+          Ingredientes
         </h2>
         { Object.keys(dataMeal)
           .filter((keys) => keys.includes('Ingredient'))
@@ -195,6 +192,7 @@ function ProcessoComida() {
         <h2 data-testid="instructions">
           Instruções
         </h2>
+        <p data-testid="instructions">{ dataMeal.strInstructions }</p>
       </div>
       <Link to="/receitas-feitas">
         <button

@@ -37,17 +37,7 @@ function DetalhesBebida() {
     if (!isLoading) {
       setMeals(data[0].meals.filter((_, index) => index < SEIS));
     }
-  }, [isLoading]);
-
-  useEffect(() => {
-    async function fetchAPI() {
-      const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idDrink}`);
-      const responseJson = await response.json();
-      setDataDrinks(responseJson.drinks[0]);
-      setLoadingDrink(false);
-    }
-    fetchAPI();
-  }, [idDrink]);
+  }, [isLoading, data]);
 
   useEffect(() => {
     if (localStorage.favoriteRecipes) {
@@ -58,7 +48,14 @@ function DetalhesBebida() {
         }
       });
     }
-  }, []);
+    async function fetchAPI() {
+      const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idDrink}`);
+      const responseJson = await response.json();
+      setDataDrinks(responseJson.drinks[0]);
+      setLoadingDrink(false);
+    }
+    fetchAPI();
+  }, [idDrink]);
 
   const changeNext = (valor) => {
     if ((next + valor) > QUATRO) return setNext(ZERO);
