@@ -142,8 +142,10 @@ function FoodDetail(props) {
       const getRecomendation = await fetch(URL);
       const response = await getRecomendation.json();
       console.log(response);
-      const filterResult = filterRecomendation(response);
-      setRecomendation(randomName(filterResult));
+      if (response) {
+        const filterResult = filterRecomendation(response);
+        setRecomendation(randomName(filterResult));
+      }
     }
   };
 

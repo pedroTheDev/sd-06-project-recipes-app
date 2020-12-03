@@ -48,7 +48,7 @@ export default function RecipeCard({ recipe, recipeIndex, pathname, id }) {
     if (thumbKey) {
       if (pathname === '/comidas' || pathname === '/bebidas') {
         return (
-          <Link to={ `${pathname}/${id}` }>
+          <Link to={ `${pathname}/${id}` } replace>
             <div
               className="main__page__recipe-card"
               data-testid={ `${recipeIndex}-recipe-card` }
@@ -58,7 +58,7 @@ export default function RecipeCard({ recipe, recipeIndex, pathname, id }) {
           </Link>
         );
       } return (
-        <Link to={ `comidas/${id}` }>
+        <Link to={ `/comidas/${id}` } replace>
           <div
             className="main__page__recipe-card"
             data-testid={ `${recipeIndex}-recipe-card` }

@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import RecipesList from '../components/RecipesList';
 import Footer from '../components/Footer';
-import { addRecipes,
+import { addDrinkRecipes,
   changeIsFetchin, addDrinkCategories } from '../redux/actions/searchRecipes';
 import useFetch from '../helpers/effects/useFetch';
-import { fetchAPI } from '../helpers/APIRequests';
 import DrinkCategoriesButtons from '../components/DrinkCategoriesButtons';
 
 function CockTail(props) {
   const { history: { location: { pathname } },
     pageConfig, fetchmap, dispatchRecipes, data,
     isFetchin,
-    dispatchFetching, dispatchCategories, drinkRecipes, categoriesFilterActive } = props;
-
-  const [isLoading, setIsLoading] = useState(true);
+    dispatchFetching,
+    dispatchCategories,
+    drinkRecipes,
+    categoriesFilterActive } = props;
 
   const { header, recipe } = pageConfig;
   const { title } = header;
@@ -32,19 +32,12 @@ function CockTail(props) {
     recipe,
   );
 
-  const allDrinkRecipesEndPoint = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
   useEffect(() => {
-    async function fetchData() {
-      if (!drinkRecipes || !drinkRecipes.length) {
-        setIsLoading(true);
-        const initialRecipes = await fetchAPI(allDrinkRecipesEndPoint);
-        dispatchRecipes(initialRecipes);
-      }
-      setIsLoading(false);
+    dispatchCategories();
 
-      dispatchCategories();
+    if (!drinkRecipes || !drinkRecipes.length) {
+      dispatchRecipes();
     }
-    fetchData();
   }, []);
 
   return (
@@ -61,7 +54,7 @@ function CockTail(props) {
         title={ title }
         recipeConfig={ recipe }
         pathname={ pathname }
-        isLoading={ isLoading }
+        isLoading={ isFetchin }
         filter={ categoriesFilterActive }
         recipes={ drinkRecipes }
       />
@@ -71,7 +64,7 @@ function CockTail(props) {
 }
 
 const mapStateToProps = (state) => ({
-
+  isRecipesFetching: state.searchRecipes.isRecipesFetching,
   drinkRecipes: state.searchRecipes.recipes.drinks,
   pageConfig: state.sitemap.bebidas,
   fetchmap: state.fetchmap,
@@ -82,7 +75,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchRecipes: (recipes) => dispatch(addRecipes(recipes)),
+  dispatchRecipes: () => dispatch(addDrinkRecipes()),
   dispatchFetching: (isFetchin) => dispatch(changeIsFetchin(isFetchin)),
   dispatchCategories: (categories) => dispatch(addDrinkCategories(categories)),
 });
