@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
   ApiExploreByPlaceOfOrigin,
   showSugestedFoods,
@@ -54,6 +55,8 @@ const ComidasLocalOrigem = () => {
 
       originFoods.meals.splice(number);
 
+      console.log(originFoods);
+
       setSugestionsFoods({
         foods: originFoods,
       });
@@ -102,11 +105,13 @@ const ComidasLocalOrigem = () => {
               <button
                 type="button"
               >
-                <img
-                  data-testid={ `${index}-card-img` }
-                  src={ meal.strMealThumb }
-                  alt={ meal.strMeal }
-                />
+                <Link to={ `/comidas/${meal.idMeal}` }>
+                  <img
+                    data-testid={ `${index}-card-img` }
+                    src={ meal.strMealThumb }
+                    alt={ meal.strMeal }
+                  />
+                </Link>
               </button>
             </div>
           ))) }
