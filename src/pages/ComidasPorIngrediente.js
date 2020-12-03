@@ -45,26 +45,28 @@ function ComidasPorIngrediente() {
   return (
     <div className="ingredient">
       <Header title="Explorar Ingredientes" />
-      <div className="ingredient-card">
-        { ingredientsMeal.map((ingredients, index) => (
-          <button
-            key={ ingredients.strIngredient }
-            type="button"
-            data-testid={ `${index}-ingredient-card` }
-            onClick={ () => clickOn(ingredients.strIngredient) }
-          >
-            <img
-              data-testid={ `${index}-card-img` }
-              src={ `https://www.themealdb.com/images/ingredients/${ingredients.strIngredient}-Small.png` }
-              alt={ ingredients.strIngredient }
-            />
-            <p
-              data-testid={ `${index}-card-name` }
+      <div className="ingredient-cards">
+        <div className="ingredient-card">
+          { ingredientsMeal.map((ingredients, index) => (
+            <button
+              key={ ingredients.strIngredient }
+              type="button"
+              data-testid={ `${index}-ingredient-card` }
+              onClick={ () => clickOn(ingredients.strIngredient) }
             >
-              { ingredients.strIngredient }
-            </p>
-          </button>
-        )) }
+              <img
+                data-testid={ `${index}-card-img` }
+                src={ `https://www.themealdb.com/images/ingredients/${ingredients.strIngredient}.png` }
+                alt={ ingredients.strIngredient }
+              />
+              <p
+                data-testid={ `${index}-card-name` }
+              >
+                { ingredients.strIngredient }
+              </p>
+            </button>
+          )) }
+        </div>
       </div>
       <Footer />
     </div>

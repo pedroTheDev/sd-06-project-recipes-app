@@ -1,17 +1,21 @@
 .div-bttn-category {
   align-items: center;
+  align-content: center;
+  background-color: #272c35;
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-  margin: auto;
-  margin-top: 10%;
+  margin-top: -5px;
+  position: fixed;
+  width: 100%;
+  z-index: 80;
 }
 
 .div-bttn-category button {
   border: none;
   border-radius: 5px;
   font-family: 'Montserrat', sans-serif;
-  font-size: 13px;
+  font-size: 12pt;
   font-weight: 700;
   margin: 5px;
   padding: 10px;
@@ -26,7 +30,7 @@
 }
 
 .bttn-category-drink:hover {
-  background-color: #e4cd03;
+  background-color: #f6eb11;
 }
 
 .bttn-category-meals {

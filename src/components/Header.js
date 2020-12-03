@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { profileIcon, searchIcon } from '../images';
+import { profileIcon, searchIcon, logoImg } from '../images';
 import SearchBar from './SearchBar';
 import '../style/Header.css';
 
@@ -10,7 +10,7 @@ function Header({ title }) {
 
   return (
     <header>
-      <nav>
+      <nav className="header">
         <Link to="/perfil">
           <button type="button">
             <img
@@ -36,6 +36,19 @@ function Header({ title }) {
                 alt="Icone de busca"
               />
             </button>
+          )
+        }
+        {
+          (title === 'Perfil' || title === 'Receitas Feitas'
+            || title === 'Receitas Favoritas' || title === 'Explorar'
+            || title === 'Explorar Comidas' || title === 'Explorar Bebidas'
+            || title === 'Explorar Ingredientes'
+          ) && (
+            <img
+              className="header-logo"
+              src={ logoImg }
+              alt="Icone de busca"
+            />
           )
         }
       </nav>

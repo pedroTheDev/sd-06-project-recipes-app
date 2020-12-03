@@ -1,59 +1,47 @@
-body {
-  height: 640px;
-  position: relative;
-  width: 360px;
-}
-
-.profile {
-  background-color: #f5f5f5;
-  border: 1px solid #cecccc;
-  margin: auto;
-  min-height: 640px;
-  width: 360px;
-}
-
 .div-profile {
   align-items: center;
+  align-content: center;
   display: flex;
   flex-flow: column wrap;
   justify-content: center;
   margin: auto;
-  margin-top: 40%;
+  margin-top: 50%;
 }
 
 .email {
+  color: #ffffff;
   font-family: 'Montserrat', sans-serif;
-  font-size: 17px;
+  font-size: 18pt;
   font-weight: 700;
 }
 
-.bttn-recipe {
+.div-profile button {
   border: none;
   border-radius: 5px;
-  color: #ffffff;
   font-family: 'Montserrat', sans-serif;
-  font-size: 25px;
   font-weight: 700;
+  font-size: 16pt;
   height: 40px;
-  margin-top: 5px;
-  width: 305px;
+  margin: auto;
+  margin-top: 30px;
+  width: 285px;
 }
 
 .bttn-make {
-  background-color: #009670;
+  background-color: #801dad;
 }
 
 .bttn-make:hover {
-  background-color: #00af83;
+  background-color: #9825ce;
   cursor: pointer;
 }
 
 .bttn-favorite {
-  background-color: #960000;
+  background-color: #d60bc5;
 }
 
 .bttn-favorite:hover {
-  background-color: #b30101;
+  background-color: #f516e2;
   cursor: pointer;
 }
 
@@ -67,10 +55,16 @@ body {
 }
 
 .bttn-logout {
-  background-color: #960051;
+  background-color: #f5f5f5;
 }
 
 .bttn-logout:hover {
-  background-color: #bd0165;
+  background-color: #e0e0e0;
   cursor: pointer;
+}
+
+@media only screen and ( min-width : 1024px ) {
+  .div-profile {
+    margin-top: 20%;
+  }
 }

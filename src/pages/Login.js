@@ -26,11 +26,11 @@ function Login() {
 
   return (
     <div className="login">
+      <img
+        src={ logo }
+        alt="logo"
+      />
       <form>
-        <img
-          src={ logo }
-          alt="logo"
-        />
         <input
           data-testid="email-input"
           type="email"

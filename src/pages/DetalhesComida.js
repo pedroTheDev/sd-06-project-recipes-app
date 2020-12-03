@@ -99,8 +99,18 @@ function DetalhesComida() {
               src={ dataMeal.strMealThumb }
               alt={ dataMeal.strMeal }
             />
-            <div className="div-header">
+            <div className="div-details-header">
               <div className="div-icon">
+                <button
+                  type="button"
+                  onClick={ handleClick }
+                >
+                  <img
+                    data-testid="favorite-btn"
+                    src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+                    alt="Botão de Favorito"
+                  />
+                </button>
                 <span>
                   <button
                     data-testid="share-btn"
@@ -114,18 +124,8 @@ function DetalhesComida() {
                   </button>
                   { isCopied ? <p>Link copiado!</p> : true }
                 </span>
-                <button
-                  type="button"
-                  onClick={ handleClick }
-                >
-                  <img
-                    data-testid="favorite-btn"
-                    src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
-                    alt="Botão de Favorito"
-                  />
-                </button>
               </div>
-              <div className="div-title">
+              <div className="div-details-title">
                 <h1 data-testid="recipe-title">{ dataMeal.strMeal }</h1>
                 <p data-testid="recipe-category">{ dataMeal.strCategory }</p>
               </div>

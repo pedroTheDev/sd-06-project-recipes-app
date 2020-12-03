@@ -44,26 +44,28 @@ function BebidasPorIngrediente() {
   return (
     <div className="ingredient">
       <Header title="Explorar Ingredientes" />
-      <div className="ingredient-card">
-        {ingredientsDrink.map((ingredients, index) => (
-          <button
-            key={ ingredients.strIngredient1 }
-            type="button"
-            data-testid={ `${index}-ingredient-card` }
-            onClick={ () => clickOn(ingredients.strIngredient1) }
-          >
-            <img
-              data-testid={ `${index}-card-img` }
-              src={ `https://www.thecocktaildb.com/images/ingredients/${ingredients.strIngredient1}-Small.png` }
-              alt={ ingredients.strIngredient1 }
-            />
-            <p
-              data-testid={ `${index}-card-name` }
+      <div className="ingredient-cards">
+        <div className="ingredient-card">
+          {ingredientsDrink.map((ingredients, index) => (
+            <button
+              key={ ingredients.strIngredient1 }
+              type="button"
+              data-testid={ `${index}-ingredient-card` }
+              onClick={ () => clickOn(ingredients.strIngredient1) }
             >
-              { ingredients.strIngredient1 }
-            </p>
-          </button>
-        )) }
+              <img
+                data-testid={ `${index}-card-img` }
+                src={ `https://www.thecocktaildb.com/images/ingredients/${ingredients.strIngredient1}-Small.png` }
+                alt={ ingredients.strIngredient1 }
+              />
+              <p
+                data-testid={ `${index}-card-name` }
+              >
+                { ingredients.strIngredient1 }
+              </p>
+            </button>
+          )) }
+        </div>
       </div>
       <Footer />
     </div>

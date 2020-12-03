@@ -34,9 +34,9 @@ function ReceitasFeitas() {
   };
 
   return (
-    <div className="recipes-maked">
+    <div className="recipes">
       <Header title="Receitas Feitas" />
-      <div className="button-recipes-maked">
+      <div className="button-recipes">
         <button
           className="button-all"
           type="button"
@@ -62,35 +62,57 @@ function ReceitasFeitas() {
           Drinks
         </button>
       </div>
-      <div className="recipes-recipes-maked">
-        { doneRecipes.length > ZERO
-          ? doneRecipes
-            .map((
-              { id,
-                type,
-                image,
-                alcoholicOrNot,
-                name,
-                area,
-                category,
-                doneDate,
-                tags,
-              },
-              index,
-            ) => (
-              <span
-                key={ index }
-              >
-                <Link to={ `/${type}s/${id}` }>
-                  <img
-                    className="receipe-img"
-                    src={ image }
-                    alt={ name }
-                    data-testid={ `${index}-horizontal-image` }
-                  />
-                </Link>
-                <div className="title-recipes-maked">
-                  <div>
+      <div className="recipes-cards">
+        <div className="recipes-card">
+          { doneRecipes.length > ZERO
+            ? doneRecipes
+              .map((
+                { id,
+                  type,
+                  image,
+                  alcoholicOrNot,
+                  name,
+                  area,
+                  category,
+                  doneDate,
+                  tags,
+                },
+                index,
+              ) => (
+                <span
+                  key={ index }
+                >
+                  <Link to={ `/${type}s/${id}` }>
+                    <img
+                      className="receipe-img"
+                      src={ image }
+                      alt={ name }
+                      data-testid={ `${index}-horizontal-image` }
+                    />
+                  </Link>
+                  <div className="receipe-icon">
+                    <button
+                      data-testid="share-btn"
+                      type="button"
+                      onClick={ () => handleCopy(`/${type}s/${id}`) }
+                    >
+                      <img
+                        src={ shareIcon }
+                        alt="Compatilhar Receita"
+                        data-testid={ `${index}-horizontal-share-btn` }
+                      />
+                    </button>
+                    { isCopied ? <p>Link copiado!</p> : true }
+                    { tags.map((tag) => (
+                      <p
+                        key={ tag }
+                        data-testid={ `${index}-${tag}-horizontal-tag` }
+                      >
+                        { tag }
+                      </p>
+                    ))}
+                  </div>
+                  <div className="title-recipes-card">
                     <Link to={ `/${type}s/${id}` }>
                       <h1
                         data-testid={ `${index}-horizontal-name` }
@@ -117,30 +139,10 @@ function ReceitasFeitas() {
                       { doneDate }
                     </p>
                   </div>
-                  <button
-                    data-testid="share-btn"
-                    type="button"
-                    onClick={ () => handleCopy(`/${type}s/${id}`) }
-                  >
-                    <img
-                      src={ shareIcon }
-                      alt="Compatilhar Receita"
-                      data-testid={ `${index}-horizontal-share-btn` }
-                    />
-                  </button>
-                  { isCopied ? <p>Link copiado!</p> : true }
-                  { tags.map((tag) => (
-                    <p
-                      key={ tag }
-                      data-testid={ `${index}-${tag}-horizontal-tag` }
-                    >
-                      { tag }
-                    </p>
-                  )) }
-                </div>
-              </span>
-            ))
-          : <h1>Você não tem nenhuma receita pronta. </h1>}
+                </span>
+              ))
+            : <h1>Você não tem nenhuma receita pronta. </h1>}
+        </div>
       </div>
     </div>
   );

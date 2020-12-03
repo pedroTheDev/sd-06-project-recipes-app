@@ -14,33 +14,35 @@ function RecipesMealsCards({ categories }) {
   }
 
   return (
-    <div className="div-bttn-category">
+    <div className="div-bttn-category-cards">
       {
         categories === 'none'
           ? ''
           : <CategoriesButtonsMeals categories={ categories } />
       }
-      <div className="card-div">
-        {
-          data[0].meals.filter((_, index) => index < DOZE)
-            .map(({ idMeal, strMeal, strMealThumb }, index) => (
-              <Link
-                key={ idMeal }
-                to={ `/comidas/${idMeal}` }
-              >
-                <div data-testid={ `${index}-recipe-card` }>
-                  <img
-                    data-testid={ `${index}-card-img` }
-                    src={ strMealThumb }
-                    alt={ strMeal }
-                  />
-                  <h1 data-testid={ `${index}-card-name` }>
-                    { strMeal }
-                  </h1>
-                </div>
-              </Link>
-            ))
-        }
+      <div className="cards-div">
+        <div className="card-div">
+          {
+            data[0].meals.filter((_, index) => index < DOZE)
+              .map(({ idMeal, strMeal, strMealThumb }, index) => (
+                <Link
+                  key={ idMeal }
+                  to={ `/comidas/${idMeal}` }
+                >
+                  <div data-testid={ `${index}-recipe-card` }>
+                    <img
+                      data-testid={ `${index}-card-img` }
+                      src={ strMealThumb }
+                      alt={ strMeal }
+                    />
+                    <h1 data-testid={ `${index}-card-name` }>
+                      { strMeal }
+                    </h1>
+                  </div>
+                </Link>
+              ))
+          }
+        </div>
       </div>
     </div>
   );
