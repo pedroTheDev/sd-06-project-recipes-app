@@ -9,7 +9,7 @@ import {
 } from '../actions/mainPageFetcher';
 
 const INITIAL_STATE = {
-  loading: false,
+  loading: true,
   error: '',
   recipeList: [],
   currentCategory: 'All',

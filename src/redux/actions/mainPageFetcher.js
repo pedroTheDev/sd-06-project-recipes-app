@@ -1,6 +1,5 @@
 import { fetchMainPage, fetchNewSelectedCategory } from '../../services/fetchMainPage';
 import apiDataProcessor from '../../services/apiDataProcessor';
-import { formatInput } from '../../services/searchAPI';
 
 export const LOADING = 'LOADING';
 export const SUCCESS = 'SUCCESS';
@@ -46,7 +45,6 @@ export function clearState() {
 }
 
 export function success(data) {
-  console.log(data);
   const processing = data.meals || data.drinks;
   let list = [];
   if (processing) {
@@ -79,11 +77,10 @@ export function fetcherThunk(foodOrDrink) {
 }
 
 export function redirectToIngredientThunk(rawIngredient, pathname) {
-  const formattedIngredient = formatInput(rawIngredient);
   const baseFoodUrl = 'https://www.themealdb.com/api/json/v1/1/filter.php?i=';
   const baseDrinkUrl = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=';
-  const foodURL = `${baseFoodUrl}${formattedIngredient}`;
-  const drinkURL = `${baseDrinkUrl}${formattedIngredient}`;
+  const foodURL = `${baseFoodUrl}${rawIngredient}`;
+  const drinkURL = `${baseDrinkUrl}${rawIngredient}`;
   if (pathname === '/comidas') {
     return (dispatch) => {
       dispatch(loading());

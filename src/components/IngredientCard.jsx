@@ -12,11 +12,11 @@ const IngredientCard = (props) => {
     dispatchRequestedIngredient, clear } = props;
   return (
     <Link
-      to={ foodOrDrink }
       onClick={ () => {
         clear();
         dispatchRequestedIngredient(ingredientName, foodOrDrink);
       } }
+      to={ foodOrDrink }
     >
       <div data-testid={ `${index}-ingredient-card` }>
         <img

@@ -11,7 +11,6 @@ import RecipeCard from '../components/RecipeCard';
 const MainPage = (props) => {
   const { recipeList, location: { pathname },
     isLoading, currentCategory, shouldFetch } = props;
-
   const checkRequestSize = (recipesToRender) => {
     const noLength = 0;
     if (recipesToRender === null) {
