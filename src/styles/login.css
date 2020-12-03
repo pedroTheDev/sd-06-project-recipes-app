@@ -1,4 +1,4 @@
-/* RESET CSS  */
+/* RESET CSS 
 
 * {
   margin: 0px;
@@ -10,7 +10,6 @@ input:focus {
   outline: none;
 }
 
-/* Background */
 body {
   background-color: rgb(212,42,42);
 }
@@ -75,20 +74,20 @@ main {
   background-color: rgb(212,42,42);
   color: rgb(255,255,255);
   border: none;
-  font-size: 1.6em;
+  font-size: 1.8em;
   cursor: pointer;
 }
 
 .login-btn-container button:hover {
-  color: rgb(131, 24, 24);
+  
 }
 
 .login-btn-container button:active {
-  outline: none;
+  
 }
 
 .login-btn-container {
-  text-align: center;
+  
 }
 
 .bottom-img {
@@ -99,4 +98,4 @@ main {
 
 ::-webkit-scrollbar {
   width: 0;
-}
+} */

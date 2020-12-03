@@ -11,13 +11,18 @@ import { faEnvelope, faKey, faSignInAlt } from '@fortawesome/free-solid-svg-icon
 // Context
 import RecipesContext from '../context/RecipesContext';
 
-// CSS
-import '../styles/login.css';
+// Styled components
+import {
+  Wrapper,
+  Logo,
+  LoginContent,
+  InputContainer,
+  InputLogin,
+  Icon,
+  LoginButton } from '../styles/loginStyle';
 
-// Logo
-import Logo from '../images/logo.png';
-
-// Bottom img
+// IMG
+import LogoIMG from '../images/logo.png';
 import LoginBottomImg from '../images/login-bottom-img.png';
 
 export default function Login(props) {
@@ -50,55 +55,54 @@ export default function Login(props) {
   };
 
   return (
-    <main>
-      <section>
-        <div className="img-container">
-          <img src={ Logo } alt="Logo" />
-        </div>
+    <Wrapper>
+      <Logo>
+        <img src={ LogoIMG } alt="Logo" />
+      </Logo>
 
-        <div className="login-container">
-
-          <div className="input-container">
+      <LoginContent>
+        <InputContainer>
+          <Icon>
             <FontAwesomeIcon className="icon" icon={ faEnvelope } size="2x" />
-            <input
-              className="input-login"
-              type="email"
-              name="email"
-              data-testid="email-input"
-              placeholder=""
-              onChange={ handleInput }
-            />
-          </div>
+          </Icon>
+          <InputLogin
+            className="input-login"
+            type="email"
+            name="email"
+            data-testid="email-input"
+            placeholder=""
+            onChange={ handleInput }
+          />
+        </InputContainer>
 
-          <div className="input-container">
+        <InputContainer>
+          <Icon>
             <FontAwesomeIcon className="icon" icon={ faKey } size="2x" />
-            <input
-              className="input-login"
-              type="password"
-              name="password"
-              data-testid="password-input"
-              onChange={ handleInput }
-            />
-          </div>
+          </Icon>
+          <InputLogin
+            className="input-login"
+            type="password"
+            name="password"
+            data-testid="password-input"
+            onChange={ handleInput }
+          />
+        </InputContainer>
 
-          <div
-            className="login-btn-container"
-          >
+        <LoginButton
+          type="button"
+          data-testid="login-submit-btn"
+          disabled={ isValid }
+          onClick={ handleClick }
+        >
+          <span>
             <FontAwesomeIcon className="signIn-icon" icon={ faSignInAlt } size="2x" />
-            <button
-              type="button"
-              data-testid="login-submit-btn"
-              disabled={ isValid }
-              onClick={ handleClick }
-            >
-              LOGIN
-            </button>
-          </div>
+          </span>
+          LOGIN
+        </LoginButton>
 
-          <img className="bottom-img" src={ LoginBottomImg } alt="login-bottom-img" />
-        </div>
-      </section>
-    </main>
+        <img className="bottom-img" src={ LoginBottomImg } alt="login-bottom-img" />
+      </LoginContent>
+    </Wrapper>
   );
 }
 
