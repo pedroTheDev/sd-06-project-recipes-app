@@ -3,10 +3,13 @@ body {
 }
 
 .main-login {
-  background-image: url(imagem4.jpg);
+  width: 360px;
+  height: 640px;
   background-size: 100%;
+  background-image: url(imagem4.jpg);
+  background-color: red;
   background-repeat: no-repeat;
-  background-position: center;
+
   display: flex;
   flex-direction: column;
   align-items: center;

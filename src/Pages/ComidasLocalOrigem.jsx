@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { ApiExploreByPlaceOfOrigin, showSugestedFoods } from '../services/aPI';
+import {
+  ApiExploreByPlaceOfOrigin,
+  showSugestedFoods,
+  searchByOrigin,
+} from '../services/aPI';
 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -9,7 +13,7 @@ import './ComidasLocalOrigem.css';
 const ComidasLocalOrigem = () => {
   const [stateNamesOrigins, setNamesOrigins] = useState();
   const [stateSugestionsFoods, setSugestionsFoods] = useState();
-  const [stateAllFoods, setAllFoods] = useState();
+  // const [stateAllFoods, setAllFoods] = useState();
 
   const handleSearchExploreOrigin = async () => {
     const originsLocal = await ApiExploreByPlaceOfOrigin();
@@ -18,10 +22,15 @@ const ComidasLocalOrigem = () => {
   };
 
   const handleSugestedFoods = async () => {
+    const number = 12;
+
     const foods = await showSugestedFoods();
 
+    foods.meals.splice(number);
+
+    // console.log(foods);
+
     setSugestionsFoods({
-      ...stateSugestionsFoods,
       foods,
     });
   };
@@ -31,55 +40,25 @@ const ComidasLocalOrigem = () => {
     handleSugestedFoods();
   }, []);
 
-  const searchAllRecipesFoods = () => {
-    console.log('fvgdfgfd');
-    if (!stateAllFoods) {
-      return (
-        <div>Loading...</div>
-      );
-    }
-    return (
-      <div className="main-cards">
-        {stateSugestionsFoods.foods.meals.map((meal, index) => (
-          <div
-            className="card"
-            data-testid={ `${index}-recipe-card` }
-            key={ meal.strMeal }
-          >
-            <p data-testid={ `${index}-card-name` }>{meal.strMeal}</p>
-            <button
-              type="button"
-            >
-              <img
-                data-testid={ `${index}-card-img` }
-                src={ meal.strMealThumb }
-                alt={ meal.strMeal }
-              />
-            </button>
-          </div>
-        )) }
-      </div>
-    );
-  };
-
-  const searchAll = async (target) => {
-    if (target.value === 'All') {
+  const searchAll = async ({ value }) => {
+    if (value === 'All') {
       const allFoods = await showSugestedFoods();
 
-      // console.log(allFoods);
-
-      setAllFoods({
-        ...stateAllFoods,
-        allFoods,
+      setSugestionsFoods({
+        foods: allFoods,
       });
-
-      searchAllRecipesFoods();
     } else {
-      return 'false';
+      const number = 12;
+
+      const originFoods = await searchByOrigin(value);
+
+      originFoods.meals.splice(number);
+
+      setSugestionsFoods({
+        foods: originFoods,
+      });
     }
   };
-
-  const number = 11;
 
   return (
     <div>
@@ -114,24 +93,22 @@ const ComidasLocalOrigem = () => {
       <div className="main-cards">
         {!stateSugestionsFoods ? <div>Loading...</div> : (
           stateSugestionsFoods.foods.meals.map((meal, index) => (
-            index <= number && (
-              <div
-                className="card"
-                data-testid={ `${index}-recipe-card` }
-                key={ meal.strMeal }
+            <div
+              className="card"
+              data-testid={ `${index}-recipe-card` }
+              key={ meal.strMeal }
+            >
+              <p data-testid={ `${index}-card-name` }>{meal.strMeal}</p>
+              <button
+                type="button"
               >
-                <p data-testid={ `${index}-card-name` }>{meal.strMeal}</p>
-                <button
-                  type="button"
-                >
-                  <img
-                    data-testid={ `${index}-card-img` }
-                    src={ meal.strMealThumb }
-                    alt={ meal.strMeal }
-                  />
-                </button>
-              </div>
-            )
+                <img
+                  data-testid={ `${index}-card-img` }
+                  src={ meal.strMealThumb }
+                  alt={ meal.strMeal }
+                />
+              </button>
+            </div>
           ))) }
       </div>
       <Footer />
