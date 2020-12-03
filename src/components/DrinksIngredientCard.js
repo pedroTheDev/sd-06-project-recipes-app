@@ -1,27 +1,40 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import propTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import recipesAppContext from '../context/recipesAppContext';
+import '../pages/ExploreIngredients/explore-ingredients.css';
 
 function DrinksIngredientCard({ ingredient, index }) {
   const imageUrl = `https://www.thecocktaildb.com/images/ingredients/${ingredient.strIngredient1}-Small.png`;
-  console.log(imageUrl);
+  const { setFetchDrink } = useContext(recipesAppContext);
+  const history = useHistory();
+
+  const handleIngredients = async () => {
+    const ingredientName = ingredient.strIngredient1.split(' ').join('_');
+    await setFetchDrink('ingredient', ingredientName);
+    history.push('/bebidas');
+  };
+
   return (
     <div
-      className="card-container"
+      className="card"
       data-testid={ `${index}-ingredient-card` }
     >
-      <Link to="/bebidas">
-        <img
-          data-testid={ `${index}-card-img` }
-          src={ imageUrl }
-          alt="Ingrediente"
-        />
-      </Link>
-      <h3
-        data-testid={ `${index}-card-name` }
-      >
-        {ingredient.strIngredient1}
-      </h3>
+      <input
+        data-testid={ `${index}-card-img` }
+        className="card-img-top"
+        src={ imageUrl }
+        type="image"
+        alt={ `Filtrar por ingrediente: ${ingredient.strIngredient1}` }
+        onClick={ handleIngredients }
+      />
+      <div className="card-body">
+        <h5
+          data-testid={ `${index}-card-name` }
+        >
+          {ingredient.strIngredient1}
+        </h5>
+      </div>
     </div>
   );
 }

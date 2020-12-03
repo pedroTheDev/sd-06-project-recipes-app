@@ -25,18 +25,16 @@ function DrinksIngredients() {
         className="header"
         pageTitle="Explorar Ingredientes"
       />
-      <div className="ingredients-area">
-        {
-          drinksIngredients.slice(zero, maxCards)
-            .map((ingredient, index) => (
-              <DrinksIngredientCard
-                key={ index }
-                ingredient={ ingredient }
-                index={ index }
-              />
-            ))
-        }
-      </div>
+      {
+        drinksIngredients.slice(zero, maxCards)
+          .map((ingredient, index) => (
+            <DrinksIngredientCard
+              key={ index }
+              ingredient={ ingredient }
+              index={ index }
+            />
+          ))
+      }
       <div className="footer">
         <Footer />
       </div>

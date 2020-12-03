@@ -17,6 +17,7 @@ function MealsIngredients() {
   useEffect(() => {
     fetchMealsIngredients();
   }, []);
+  console.log('ingredientes api', mealsIngredients);
 
   return (
     <div>
@@ -24,18 +25,17 @@ function MealsIngredients() {
         className="header"
         pageTitle="Explorar Ingredientes"
       />
-      <div className="ingredients-area">
-        {
-          mealsIngredients.slice(zero, maxCards)
-            .map((ingredient, index) => (
-              <MealsIngredientCard
-                key={ index }
-                ingredient={ ingredient }
-                index={ index }
-              />
-            ))
-        }
-      </div>
+      {
+        mealsIngredients.slice(zero, maxCards)
+          .map((ingredient, index) => (
+            <MealsIngredientCard
+              id={ ingredient.idIngredient }
+              key={ index }
+              ingredient={ ingredient }
+              index={ index }
+            />
+          ))
+      }
       <div className="footer">
         <Footer />
       </div>
