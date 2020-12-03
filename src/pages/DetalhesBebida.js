@@ -101,21 +101,7 @@ function DetalhesBebida() {
               alt={ dataDrinks.strDrink }
             />
             <div className="div-header">
-              <div className="div-icon">
-                <span>
-                  <button
-                    data-testid="share-btn"
-                    type="button"
-                    onClick={ () => handleCopy(pathname) }
-                  >
-                    <img
-                      src={ shareIcon }
-                      alt="Botão de Compartilhar"
-                      className="icons"
-                    />
-                  </button>
-                  { isCopied ? <p>Link copiado!</p> : true }
-                </span>
+              <div className="div-details-icons">
                 <button
                   type="button"
                   onClick={ handleClick }
@@ -127,13 +113,25 @@ function DetalhesBebida() {
                     className="icons"
                   />
                 </button>
+                <button
+                  data-testid="share-btn"
+                  type="button"
+                  onClick={ () => handleCopy(pathname) }
+                >
+                  <img
+                    src={ shareIcon }
+                    alt="Botão de Compartilhar"
+                    className="icons"
+                  />
+                </button>
+                { isCopied ? <p>Link copiado!</p> : true }
               </div>
-              <div className="div-title">
+              <div className="div-details-title">
                 <h1 data-testid="recipe-title">{ dataDrinks.strDrink }</h1>
                 <p data-testid="recipe-category">{ dataDrinks.strAlcoholic }</p>
               </div>
             </div>
-            <div className="div-recipes">
+            <div className="div-details-recipes">
               <h2>Ingredientes:</h2>
               <ul>
                 {

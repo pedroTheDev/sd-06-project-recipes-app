@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesContext';
 import RecipesDrinksCards from './RecipesDrinksCards';
 import RecipesMealsCards from './RecipesMealsCards';
-import '../style/RecipeCards.css';
 
 function RecipesCards({ title }) {
   const { isLoading } = useContext(RecipesContext);

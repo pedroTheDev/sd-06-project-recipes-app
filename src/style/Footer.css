@@ -1,13 +1,14 @@
 footer {
   align-items: center;
+  align-content: center;
   background-color: #960051;
   bottom: 0px;
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: row nowrap;
   justify-content: space-around;
   height: 70px;
   position: fixed;
-  width: 360px;
+  width: 100%;
   z-index: 100;
 }
 

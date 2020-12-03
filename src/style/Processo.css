@@ -1,15 +1,10 @@
-body {
-  height: 640px;
-  position: relative;
-  width: 360px;
-}
 
 .container-progress {
   background-color: #f5f5f5;
   border: 1px solid #cecccc;
   margin: auto;
   min-height: 640px;
-  width: 360px;
+
 }
 
 .container-progress img{

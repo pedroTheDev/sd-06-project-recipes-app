@@ -37,11 +37,13 @@ function Header({ title }) {
               />
             </button>
           )
-        
         }
         {
-          (title !== 'Explorar' || title !== `Explorar Origem` || title !== 'Bebidas')
-          && (
+          (title === 'Perfil' || title === 'Receitas Feitas'
+            || title === 'Receitas Favoritas' || title === 'Explorar'
+            || title === 'Explorar Comidas' || title === 'Explorar Bebidas'
+            || title === 'Explorar Ingredientes'
+          ) && (
             <img
               className="header-logo"
               src={ logoImg }
