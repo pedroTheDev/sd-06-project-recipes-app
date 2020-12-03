@@ -10,7 +10,7 @@ import '../Css/inProgress.css';
 // import CheckboxInProgress from '../components/CheckboxInProgress';
 
 function InProgress() {
-  const [recipeInProgress, setRecipeInProgress] = useState({});
+  const [recipeInProgress, setRecipeInProgress] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const [urlWasCopyToClipboard, seturlWasCopyToClipboard] = useState(false);
@@ -54,6 +54,7 @@ function InProgress() {
           setRecipeInProgress(newRecipe);
         } else {
           const recipeDrink = await getRecipeDrinkByIdApi(id);
+          setLoading(false);
           const newRecipe = {
             id: recipeDrink[0].idDrink,
             area: '',
@@ -67,14 +68,19 @@ function InProgress() {
           setRecipeInProgress(newRecipe);
         }
       }
-      setLoading(false);
     }
     setLoading(true);
     const myFavorite = verifyFavoriteRecipe();
     setIsFavorite(myFavorite);
-
     fetchData();
+    setLoading(false);
   }, []);
+
+  // useEffect(() => {
+  //   if (recipeInProgress) {
+  //     setLoading(false);
+  //   }
+  // }, [recipeInProgress]);
 
   // const handleChange = (index) => {
   //   const value = !ingredientsCheckbox[index].checkbox;
@@ -119,10 +125,11 @@ function InProgress() {
   }
 
   return (
-    (recipeInProgress.ingredients === undefined || loading)
+    (loading || !recipeInProgress)
       ? <h5>Loading...</h5>
       : (
         <div>
+          { console.log(recipeInProgress) }
           <Header data-testid="recipe-title" />
           <img
             data-testid="recipe-photo"
@@ -159,7 +166,8 @@ function InProgress() {
           </p>
           <h3>Ingredients</h3>
           <form className="form-checkbox">
-            {recipeInProgress.ingredients.map((item, index) => (
+            {recipeInProgress.ingredients
+            && recipeInProgress.ingredients.map((item, index) => (
               <label
                 htmlFor="checkbox"
                 key={ index }
