@@ -51,13 +51,13 @@ function DetalhesComida() {
         }
       });
     }
-  }, []);
+  }, [idMeal]);
 
   useEffect(() => {
     if (!isLoading) {
       setDrinks(data[1].drinks.filter((_, index) => index < SEIS));
     }
-  }, [isLoading]);
+  }, [isLoading, data]);
 
   const changeNext = (valor) => {
     if ((next + valor) > QUATRO) return setNext(ZERO);

@@ -43,7 +43,7 @@ function ProcessoComida() {
         }
       }
     } else setChecked([]);
-  }, []);
+  }, [idMeal]);
 
   const handleChange = (target, index) => {
     if (target.checked) {
@@ -82,7 +82,7 @@ function ProcessoComida() {
     } else {
       setIsDisable(true);
     }
-  }, [checked]);
+  }, [checked, dataMeal, idMeal]);
 
   const handleClick = () => {
     setIsFavorite(!isFavorite);

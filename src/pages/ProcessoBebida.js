@@ -42,7 +42,7 @@ function ProcessoBebida() {
         setChecked([]);
       }
     } else setChecked([]);
-  }, []);
+  }, [idDrink]);
 
   useEffect(() => {
     async function fetchAPI() {
@@ -81,7 +81,7 @@ function ProcessoBebida() {
     } else {
       setIsDisable(true);
     }
-  }, [checked]);
+  }, [checked, dataDrinks, idDrink]);
 
   const handleClick = () => {
     setIsFavorite(!isFavorite);

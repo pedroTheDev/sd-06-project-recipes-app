@@ -37,7 +37,7 @@ function DetalhesBebida() {
     if (!isLoading) {
       setMeals(data[0].meals.filter((_, index) => index < SEIS));
     }
-  }, [isLoading]);
+  }, [isLoading, data]);
 
   useEffect(() => {
     async function fetchAPI() {
@@ -58,7 +58,7 @@ function DetalhesBebida() {
         }
       });
     }
-  }, []);
+  }, [idDrink]);
 
   const changeNext = (valor) => {
     if ((next + valor) > QUATRO) return setNext(ZERO);

@@ -56,7 +56,7 @@ function ComidasPorIngrediente() {
             >
               <img
                 data-testid={ `${index}-card-img` }
-                src={ `https://www.themealdb.com/images/ingredients/${ingredients.strIngredient}.png` }
+                src={ `https://www.themealdb.com/images/ingredients/${ingredients.strIngredient}-Small.png` }
                 alt={ ingredients.strIngredient }
               />
               <p
