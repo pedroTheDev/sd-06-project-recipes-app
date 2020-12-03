@@ -21,13 +21,18 @@ function BebidasInProgress(props) {
     },
   } = props;
 
+  let array;
   const [copied, setCopied] = useState(false);
   const [isFavorite, setIsFavorite] = useState(true);
   const [isFetching, setFetching] = useState(true);
-  // const [isDisabled, setIsDisabled] = useState(true);
   const recipesLocalStorage = JSON.parse(localStorage.getItem('recipes'));
+
+  const storageVerify = () => (
+    !recipesLocalStorage[id] ? [] : recipesLocalStorage[id]
+  );
+
   const [checkedIngredients, setCheckedIngredients] = useState(
-    !recipesLocalStorage ? [] : recipesLocalStorage[id],
+    !recipesLocalStorage ? [] : storageVerify(),
   );
 
   useEffect(() => {
@@ -43,8 +48,11 @@ function BebidasInProgress(props) {
       );
 
       const localStorageRecipes = JSON.parse(localStorage.getItem('recipes'));
+
       if (localStorageRecipes) {
-        setCheckedIngredients(localStorageRecipes[id]);
+        if (localStorageRecipes[id]) {
+          setCheckedIngredients(localStorageRecipes[id]);
+        }
       }
 
       if (!favoriteRecipes || !favoriteRecipes.length) {
@@ -73,6 +81,8 @@ function BebidasInProgress(props) {
         keys.push(obj[key]);
       }
     });
+
+    array = keys;
     return keys;
   };
 
@@ -248,7 +258,7 @@ function BebidasInProgress(props) {
               <button
                 type="button"
                 className="start-recipe-btn"
-                // disabled={ isDisabled }
+                disabled={ array.length !== checkedIngredients.length }
                 data-testid="finish-recipe-btn"
               >
                 Finalizar Receita!

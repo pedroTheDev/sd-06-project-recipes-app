@@ -20,13 +20,18 @@ function ComidasInProgress(props) {
     },
   } = props;
 
+  let array;
   const [copied, setCopied] = useState(false);
   const [isFavorite, setIsFavorite] = useState(true);
   const [isFetching, setFetching] = useState(true);
   const recipesLocalStorage = JSON.parse(localStorage.getItem('recipes'));
-  // const [isDisabled, setIsDisabled] = useState(true);
+
+  const verifyState = () => (
+    !recipesLocalStorage[id] ? [] : recipesLocalStorage[id]
+  );
+
   const [checkedIngredients, setCheckedIngredients] = useState(
-    !recipesLocalStorage ? [] : recipesLocalStorage[id],
+    !recipesLocalStorage ? [] : verifyState(),
   );
 
   useEffect(() => {
@@ -35,14 +40,15 @@ function ComidasInProgress(props) {
 
       setFetchById(responseID);
 
-      const favoriteRecipes = JSON.parse(
-        localStorage.getItem('favoriteRecipes'),
-      );
-
       const localStorageRecipes = JSON.parse(localStorage.getItem('recipes'));
+
       if (localStorageRecipes) {
-        setCheckedIngredients(localStorageRecipes[id]);
+        if (localStorageRecipes[id]) {
+          setCheckedIngredients(localStorageRecipes[id]);
+        }
       }
+
+      const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
 
       if (!favoriteRecipes || !favoriteRecipes.length) {
         setIsFavorite(false);
@@ -63,6 +69,19 @@ function ComidasInProgress(props) {
   }, [checkedIngredients]);
 
   const getIngredients = (obj, filter) => {
+    const keys = [];
+
+    Object.keys(obj).forEach((key) => {
+      if (key && filter.test(key) && obj[key] !== '' && obj[key] !== null) {
+        keys.push(obj[key]);
+      }
+    });
+
+    array = keys;
+    return keys;
+  };
+
+  const getMeasure = (obj, filter) => {
     const keys = [];
 
     Object.keys(obj).forEach((key) => {
@@ -159,16 +178,6 @@ function ComidasInProgress(props) {
     }
   };
 
-  // const handleButtomDisable = () => {
-  //   const lastIngredient = document.getElementById('ingredient-step').lastChild;
-  //   console.log('Last ingredient', lastIngredient.id);
-  //   if (checkedIngredients.length === lastIngredient.id - 1) {
-  //     console.log('Dentro do if', checkedIngredients.length);
-  //     return false;
-  //   }
-  //   return true;
-  // };
-
   const handleClick = (index, item) => {
     const label = document.querySelectorAll('label')[index];
     if (label.classList.contains('ingredient-not-done')) {
@@ -196,7 +205,6 @@ function ComidasInProgress(props) {
     } else {
       setCheckedIngredients(checkedIngredients.concat(item));
     }
-    // handleButtomDisable();
   };
 
   return isFetching ? (
@@ -227,7 +235,7 @@ function ComidasInProgress(props) {
           <p data-testid="recipe-category">{meal.strCategory}</p>
           <ul id="ingredient-step">
             {getIngredients(meal, /strIngredient/).map((item, indx) => {
-              const measure = getIngredients(meal, /strMeasure/);
+              const measure = getMeasure(meal, /strMeasure/);
               return (
                 <li
                   key={ indx }
@@ -261,8 +269,8 @@ function ComidasInProgress(props) {
               <button
                 type="button"
                 className="start-recipe-btn"
-                // disabled={ handleButtomDisable() }
                 data-testid="finish-recipe-btn"
+                disabled={ array.length !== checkedIngredients.length }
               >
                 Finalizar Receita!
               </button>
