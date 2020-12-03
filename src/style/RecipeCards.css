@@ -30,7 +30,7 @@
 .card-div img {
   border-radius: 25% 25% 25% 0%;
   cursor: pointer;
-  width: 100%;
+  width: 90%;
 }
 
 .card-div h1 {
@@ -59,8 +59,10 @@
 }
 
 @media only screen and ( min-width : 768px ) {
-  .card-div div,
+  .card-div div {
+    width: 360px;
+  }
   .card-div h1  {
-    width: 400px;
+    width: 325px;
   }
 }
