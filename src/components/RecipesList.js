@@ -12,6 +12,7 @@ function RecipesList(props) {
 
   const renderRecipesResults = () => {
     const maxRecipesNumber = 12;
+    console.log(recipes);
     if (recipes[type].length > 1) {
       return (
         recipes[type].filter((_recipe, index) => index < maxRecipesNumber)

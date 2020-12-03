@@ -12,6 +12,9 @@ const initialState = {
     category: {
       type: 'meals',
     },
+    ingredients: {
+      name: 'strIngredient',
+    },
 
   },
   bebidas: {
@@ -25,6 +28,9 @@ const initialState = {
     },
     category: {
       type: 'drinks',
+    },
+    ingredients: {
+      name: 'strIngredient1',
     },
 
   },
@@ -42,6 +48,8 @@ const initialState = {
       searchButton: false,
       title: 'Explorar Bebidas',
     },
+    recipeType: 'drinks',
+
   },
   explorarComidas: {
     header: {
@@ -50,6 +58,7 @@ const initialState = {
       searchButton: false,
       title: 'Explorar Comidas',
     },
+    recipeType: 'meals',
   },
   explorarComidasIngredientes: {
     header: {

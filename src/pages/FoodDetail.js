@@ -10,7 +10,6 @@ import {
   modifyResponseToFavoriteBtn,
 } from '../helpers/assets';
 import shareIcon from '../images/shareIcon.svg';
-
 import '../css/details.css';
 
 function FoodDetail(props) {
@@ -23,8 +22,9 @@ function FoodDetail(props) {
   const [mesuresItem, setMesuresItem] = useState([]);
   const [recomendation, setRecomendation] = useState([]);
   const [shareMessege, setShareMessege] = useState('');
-  const [objectRecipe, setObjectRecipe] = useState({});
+  // const [objectRecipe, setObjectRecipe] = useState({});
   const [favoriteResponseModified, setFavoriteResponseModified] = useState();
+  // const [loading, setLoading] = useState(true);
 
   const getIngredientsAndMesures = (object) => {
     const ingredients = filterMatchInKeys(/strIngredient/i, object);
@@ -41,20 +41,7 @@ function FoodDetail(props) {
   };
 
   const fetchRecipe = async () => {
-    if (path === '/bebidas/:id') {
-      const recipeType = 'drinks';
-      const nameType = 'Drink';
-      const name = 'bebida';
-      const changeCategory = 'strAlcoholic';
-      const response = await Bebidas.idDrink(id);
-      setObjectRecipe(response);
-      setObjResponse(modifyResponse(response, nameType, recipeType, changeCategory));
-      setFavoriteResponseModified(modifyResponseToFavoriteBtn(
-        response, nameType, recipeType, changeCategory, name,
-      ));
-      console.log(response);
-      getIngredientsAndMesures(response.drinks[0]);
-    } else {
+    if (path === '/comidas/:id') {
       const recipeType = 'meals';
       const nameType = 'Meal';
       const name = 'comida';
@@ -67,6 +54,24 @@ function FoodDetail(props) {
         response, nameType, recipeType, name,
       ));
       getIngredientsAndMesures(response.meals[0]);
+      // console.log(setButtonImg, objectRecipe);
+    }
+    if (path === '/bebidas/:id') {
+      const recipeType = 'drinks';
+      const nameType = 'Drink';
+      const name = 'bebida';
+      const changeCategory = 'strAlcoholic';
+      const response = await Bebidas.idDrink(id);
+      // setObjectRecipe(response);
+      setObjResponse(modifyResponse(response, nameType, recipeType, changeCategory));
+      // const respostaDoObjeto = modifyResponse(
+      //   response, nameType, recipeType, changeCategory,
+      // );
+      setFavoriteResponseModified(modifyResponseToFavoriteBtn(
+        response, nameType, recipeType, changeCategory, name,
+      ));
+      // localStorage.setItem('objeto', JSON.stringify(respostaDoObjeto));
+      getIngredientsAndMesures(response.drinks[0]);
     }
   };
 
@@ -128,8 +133,10 @@ function FoodDetail(props) {
       const getRecomendation = await fetch(URL);
       const response = await getRecomendation.json();
       console.log(response);
-      const filterResult = filterRecomendation(response);
-      setRecomendation(randomName(filterResult));
+      if (response) {
+        const filterResult = filterRecomendation(response);
+        setRecomendation(randomName(filterResult));
+      }
     } else {
       const URL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
       const getRecomendation = await fetch(URL);
@@ -141,6 +148,7 @@ function FoodDetail(props) {
   };
 
   useEffect(() => {
+    if (!fetchRecipe()) return <p>loading</p>;
     fetchRecipe();
     fetchRecomendation();
     // setFavoriteRecipe(objResponse)
@@ -160,8 +168,6 @@ function FoodDetail(props) {
       </video>
     );
   };
-  console.log(objectRecipe);
-  console.log(favoriteResponseModified);
   return (
     <div>
       <img
@@ -248,3 +254,9 @@ FoodDetail.propTypes = {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FoodDetail);
+
+// function FoodDetail() {
+//   return <p>ok</p>
+// }
+
+// export default FoodDetail;
