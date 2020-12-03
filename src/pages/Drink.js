@@ -23,11 +23,13 @@ class Drink extends React.Component {
 
   async componentDidMount() {
     this.changeH1Width();
-    const { control } = this.props;
+    const { control, dispatchControlState } = this.props;
     let drinksRender;
     const initList = 0;
     const maxList = 12;
+    let controlFirstIf = false;
     if (control !== '') {
+      controlFirstIf = true;
       const drinksExplorer = await fetchDrinks(control, 'ingrediente');
       drinksRender = drinksExplorer.slice(initList, maxList);
     } else { drinksRender = await drinksOnRender(); }
@@ -35,6 +37,7 @@ class Drink extends React.Component {
     const Categories = await drinksCategoriesOnRender();
     this.setInitialState(drinksRender, Categories);
     this.setKeyLocalStorage();
+    if (controlFirstIf) { dispatchControlState(''); }
   }
 
   async componentDidUpdate() {
@@ -49,11 +52,6 @@ class Drink extends React.Component {
     if (stateDrinks.length > MAXIMUM_LENGTH) {
       this.stateAfterProps(stateDrinks);
     }
-  }
-
-  componentWillUnmount() {
-    const { dispatchControlState } = this.props;
-    dispatchControlState('');
   }
 
   setKeyLocalStorage() {
