@@ -9,7 +9,6 @@ function DrinkInProgress() {
 
   const fetchIngredients = async () => {
     const recipesByIdApi = await fetchDrink('lookupIngredient', id);
-    console.log('recipes linha 16', recipesByIdApi);
     setRecipes(recipesByIdApi.drinks[0]);
   };
 
