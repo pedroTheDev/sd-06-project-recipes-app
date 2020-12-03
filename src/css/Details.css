@@ -58,13 +58,13 @@
   width: 100%;
 }
 
-.datail-ingredients-title {
+.detail-ingredients-title {
   width: 94%;
   background-color: #2D6A4F;
   color: white;
 }
 
-.datail-ingredients {
+.detail-ingredients {
   display: flex;
   justify-content: center;
   width: 100%;
@@ -72,11 +72,11 @@
   text-align: center;
 }
 
-.datail-ingredients ul {
+.detail-ingredients ul {
   width: 90%;
 }
 
-.datail-ingredients li {
+.detail-ingredients li {
   list-style-type: none;
   display: flex;
   justify-content: space-between;
@@ -90,13 +90,13 @@
   width: 100%;
 }
 
-.datail-instructions-title {
+.detail-instructions-title {
   width: 100%;
   background-color: #2D6A4F;
   color: white;
 }
 
-.datail-instructions {
+.detail-instructions {
   width: 100%;
   margin-top: 10px;
   display: flex;
