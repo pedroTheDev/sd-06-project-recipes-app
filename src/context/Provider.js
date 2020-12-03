@@ -30,6 +30,7 @@ const Provider = ({ children }) => {
         alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
       }
     }
+    console.log(searchParam);
     if (searchParam === 'Meal') {
       if (json.meals) {
         setFoods(json.meals);
