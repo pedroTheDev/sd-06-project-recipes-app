@@ -9,6 +9,7 @@ import Explore from './Explore';
 import ExploreFood from './ExploreFood';
 import DoneRecipes from './DoneRecipes';
 import FavoriteRecipes from './FavoriteRecipes';
+import ExploreIngredient from './ExploreIngredient';
 
 export default function MainPage(props) {
   const { title } = props;
@@ -51,7 +52,7 @@ export default function MainPage(props) {
     footerContent = <Footer />;
     break;
   case 'Explorar Ingredientes':
-    mainContent = <Explore />;
+    mainContent = <ExploreIngredient />;
     footerContent = <Footer />;
     break;
   case 'Explorar Origem':

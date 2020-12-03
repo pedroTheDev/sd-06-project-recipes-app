@@ -4,17 +4,26 @@ import { Link, Redirect } from 'react-router-dom';
 import RevenueContext from '../context/RevenueContext';
 
 export default function Foods() {
-  const { foods, fetchApi, searchParam, isLoading } = useContext(RevenueContext);
+  const { foods, fetchApi, searchParam,
+    isLoading, externFetchLink, setexternFetchLink } = useContext(RevenueContext);
   const TWELVE = 12;
   const TWO = 2;
   const ZERO = 0;
 
   useEffect(() => {
-    if (searchParam === 'Meal') {
-      fetchApi('https://www.themealdb.com/api/json/v1/1/search.php?s=');
-    } else if (searchParam === 'Drink') {
-      fetchApi('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+    if (!externFetchLink) {
+      if (searchParam === 'Meal') {
+        fetchApi('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+      } else if (searchParam === 'Drink') {
+        fetchApi('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+      }
+    } else {
+      fetchApi(externFetchLink);
     }
+
+    return () => {
+      setexternFetchLink(undefined);
+    };
   }, [searchParam]);
 
   const foodOrDrink = (searchParam === 'Meal') ? 'comidas' : 'bebidas';

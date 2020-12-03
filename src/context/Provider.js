@@ -12,6 +12,7 @@ const Provider = ({ children }) => {
   const [categories, setCategories] = useState();
   const [isLoading, setisLoading] = useState(false);
   const [searchParam, setSearchParam] = useState();
+  const [externFetchLink, setexternFetchLink] = useState();
   const [inProgress, setInProgress] = useState(false);
 
   const fetchApi = async (URL) => {
@@ -82,6 +83,8 @@ const Provider = ({ children }) => {
     categories,
     fetchCategories,
     fetchByCategory,
+    externFetchLink,
+    setexternFetchLink,
     inProgress,
     setInProgress,
   };

@@ -112,9 +112,23 @@ footer, .start-recipe-btn {
   display: flex;
 }
 
-.imageCardRecipe {
+.cardIngredients {
+  width: 40%;
+  border: 1px solid rgb(154, 177, 190);
+  border-radius: 5px;
+  text-align: center;
+  margin: 7px 0;
+}
+
+.imageCardRecipe,
+.imageCardIngredients {
   width: 150px;
   border-radius: 5px;
+}
+
+.imageCardIngredients {
+  width: 100%;
+
 }
 
 .bt-group {
@@ -178,7 +192,13 @@ footer, .start-recipe-btn {
 
 .filter-radios label input { 
   margin-right: 5px;
- }
+}
+
+.ingredients-explore {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
 
 input[type=checkbox]:checked + label {
   text-decoration: line-through;
