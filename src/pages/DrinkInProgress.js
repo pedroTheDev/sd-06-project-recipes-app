@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import fetchApiDrink from '../services/FetchApiDrink';
@@ -10,22 +10,35 @@ import '../App.css';
 export default function DrinkInProgress() {
   const { state, setState } = useContext(RecipesContext);
   const params = useParams();
-  //  const [check, setCheck] = useState([]);
+  const [checkIngred, setCheckIngred] = useState([]);
   const objStorage = [];
+
   // carregar API
   useEffect(() => {
     fetchApiDrink('6', setState, String(params.id));
+    if (localStorage.recipesInProgress) {
+      const getLocalStorage = JSON.parse(
+        localStorage
+          .getItem('recipesInProgress'),
+      );
+      if (getLocalStorage.drink[params.id]) {
+        setCheckIngred(getLocalStorage.drink[params.id]);
+        console.log(getLocalStorage.drink[params.id]);
+      }
+    }
   }, []);
 
   // função marcar os ingredientes e salvar no localStorage.
   const checked = (e) => {
+    console.log('estado', checkIngred);
     //  marcar ingredientes
     const vai = e.target;
     const label = document.getElementsByClassName('1')[vai.id];
+    console.log('input', label.htmlFor);
     label.classList.add('checked');
-    objStorage.push(Number(label.htmlFor));
-    //  objStorage.push(vai.checked);
-    const { idDrink } = state[0];
+    objStorage.push((label.htmlFor));
+    console.log('click', objStorage);
+    const { idDrink } = state[0]; // pega id da receita atual
     const initial = {
       meals: {},
     };
@@ -33,6 +46,7 @@ export default function DrinkInProgress() {
       localStorage
         .getItem('recipesInProgress'),
     ) || initial;
+    //  console.log('current', currentStorage);
     const newStorage = {
       ...currentStorage,
       drink: {
@@ -41,7 +55,7 @@ export default function DrinkInProgress() {
       },
     };
     localStorage.setItem('recipesInProgress', JSON.stringify(newStorage));
-    // console.log(state);
+    setCheckIngred(newStorage.drink[params.id]); // controla o click do input(checked)
   };
 
   // função favoritar
@@ -55,7 +69,7 @@ export default function DrinkInProgress() {
       click.src = white;
     }
   };
-
+  //  console.log('checado', checkIngred);
   return (
     <div>
       {state.map((el, idx) => (
@@ -80,8 +94,9 @@ export default function DrinkInProgress() {
                     { el.strIngredient1 }
                     <input
                       id="0"
+                      checked={ checkIngred.includes('0') }
                       type="checkbox"
-                      onClick={ (event) => checked(event) }
+                      onChange={ (event) => checked(event) }
                     />
                   </label>
                 )
@@ -97,8 +112,9 @@ export default function DrinkInProgress() {
                     { el.strIngredient2 }
                     <input
                       id="1"
+                      checked={ checkIngred.includes('1') }
                       type="checkbox"
-                      onClick={ (event) => checked(event) }
+                      onChange={ (event) => checked(event) }
                     />
                   </label>
                 )
@@ -114,8 +130,9 @@ export default function DrinkInProgress() {
                     { el.strIngredient3 }
                     <input
                       id="2"
+                      checked={ !checkIngred }
                       type="checkbox"
-                      onClick={ (event) => checked(event) }
+                      onChange={ (event) => checked(event) }
                     />
                   </label>
                 )
@@ -131,8 +148,9 @@ export default function DrinkInProgress() {
                     { el.strIngredient4 }
                     <input
                       id="3"
+                      checked={ !checkIngred }
                       type="checkbox"
-                      onClick={ (event) => checked(event) }
+                      onChange={ (event) => checked(event) }
                     />
                   </label>
                 )
@@ -148,8 +166,9 @@ export default function DrinkInProgress() {
                     { el.strIngredient5 }
                     <input
                       id="4"
+                      checked={ checkIngred }
                       type="checkbox"
-                      onClick={ (event) => checked(event) }
+                      onChange={ (event) => checked(event) }
                     />
                   </label>
                 )
@@ -165,8 +184,9 @@ export default function DrinkInProgress() {
                     { el.strIngredient6 }
                     <input
                       id="5"
+                      checked={ checkIngred }
                       type="checkbox"
-                      onClick={ (event) => checked(event) }
+                      onChange={ (event) => checked(event) }
                     />
                   </label>
                 )
@@ -182,8 +202,9 @@ export default function DrinkInProgress() {
                     { el.strIngredient7 }
                     <input
                       id="6"
+                      checked={ checkIngred }
                       type="checkbox"
-                      onClick={ (event) => checked(event) }
+                      onChange={ (event) => checked(event) }
                     />
                   </label>
                 )
@@ -199,8 +220,9 @@ export default function DrinkInProgress() {
                     { el.strIngredient8 }
                     <input
                       id="7"
+                      checked={ checkIngred }
                       type="checkbox"
-                      onClick={ (event) => checked(event) }
+                      onChange={ (event) => checked(event) }
                     />
                   </label>
                 )
@@ -216,8 +238,9 @@ export default function DrinkInProgress() {
                     { el.strIngredient9 }
                     <input
                       id="8"
+                      checked={ checkIngred }
                       type="checkbox"
-                      onClick={ (event) => checked(event) }
+                      onChange={ (event) => checked(event) }
                     />
                   </label>
                 )
@@ -233,8 +256,9 @@ export default function DrinkInProgress() {
                     { el.strIngredient10 }
                     <input
                       id="9"
+                      checked={ checkIngred }
                       type="checkbox"
-                      onClick={ (event) => checked(event) }
+                      onChange={ (event) => checked(event) }
                     />
                   </label>
                 )
@@ -250,8 +274,9 @@ export default function DrinkInProgress() {
                     { el.strIngredient11 }
                     <input
                       id="10"
+                      checked={ checkIngred }
                       type="checkbox"
-                      onClick={ (event) => checked(event) }
+                      onChange={ (event) => checked(event) }
                     />
                   </label>
                 )
@@ -267,8 +292,9 @@ export default function DrinkInProgress() {
                     { el.strIngredient12 }
                     <input
                       id="11"
+                      checked={ checkIngred }
                       type="checkbox"
-                      onClick={ (event) => checked(event) }
+                      onChange={ (event) => checked(event) }
                     />
                   </label>
                 )
@@ -284,8 +310,9 @@ export default function DrinkInProgress() {
                     { el.strIngredient13 }
                     <input
                       id="12"
+                      checked={ checkIngred }
                       type="checkbox"
-                      onClick={ (event) => checked(event) }
+                      onChange={ (event) => checked(event) }
                     />
                   </label>
                 )
