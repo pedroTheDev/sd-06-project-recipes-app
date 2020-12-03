@@ -7,7 +7,12 @@ import Provider from '../hooks/Provider';
 const renderWithRouter = (component) => {
   const history = createMemoryHistory();
   return ({
-    ...render(<Router history={ history }><Provider>{ component }</Provider></Router>), history,
+    ...render(
+      <Router history={ history }>
+        <Provider>{ component }</Provider>
+      </Router>,
+    ),
+    history,
   });
 };
 
