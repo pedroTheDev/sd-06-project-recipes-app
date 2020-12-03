@@ -21,14 +21,9 @@ class ExplorerIngredientsMeals extends Component {
   async getIngredients() {
     const endPoint = 'https://www.themealdb.com/api/json/v1/1/list.php?i=list';
     const { meals } = await theIngredientsAndAreaApi(endPoint);
-    // this.renderIngredients(meals);
     this.setState({
       ingredients: meals,
     });
-    // console.log("ings", this.state.ingredients);
-    // console.log("z", meals[1]);
-    // console.log("tudo", meals);
-    // link
   }
 
   renderIngredients() {

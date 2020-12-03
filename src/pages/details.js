@@ -13,6 +13,7 @@ import './style/details.css';
 class Details extends Component {
   constructor() {
     super();
+
     this.state = {
       details: [],
       recomendations: [],
@@ -22,12 +23,16 @@ class Details extends Component {
       clipboard: '',
       isFavorite: false,
       isDone: false,
+      inProgress: false,
     };
+
     this.requestDetails = this.requestDetails.bind(this);
     this.renderCardDetails = this.renderCardDetails.bind(this);
     this.handleShare = this.handleShare.bind(this);
     this.handleFavorite = this.handleFavorite.bind(this);
     this.checkIsFavorite = this.checkIsFavorite.bind(this);
+    this.checkInProgress = this.checkInProgress.bind(this);
+    this.checkIsDone = this.checkIsDone.bind(this);
   }
 
   componentDidMount() {
@@ -60,7 +65,7 @@ class Details extends Component {
     const { details } = this.state;
     const LS = JSON.parse(localStorage.getItem('favoriteRecipes'));
     if (LS && LS.find((recipe) => recipe.id === details[0].idMeal
-    || recipe.id === details[0].idDrink)) {
+      || recipe.id === details[0].idDrink)) {
       this.setState({
         isFavorite: true,
       });
@@ -71,9 +76,29 @@ class Details extends Component {
     const { details } = this.state;
     const LS = JSON.parse(localStorage.getItem('doneRecipes'));
     if (LS && LS.find((recipe) => recipe.id === details[0].idMeal
-    || recipe.id === details[0].idDrink)) {
+      || recipe.id === details[0].idDrink)) {
       this.setState({
         isDone: true,
+      });
+    }
+  }
+
+  checkInProgress() {
+    const { details, isDrink, isMeal } = this.state;
+    const LSP = JSON.parse(localStorage.getItem('inProgressRecipes'));
+
+    if (LSP !== null) {
+      const checkIdMeal = (isMeal && LSP.meals[details[0].idMeal]);
+      const checkIdDrink = (isDrink && LSP.cocktails[details[0].idDrink]);
+
+      if (checkIdMeal || checkIdDrink) {
+        return this.setState({
+          inProgress: true,
+        });
+      }
+
+      return this.setState({
+        inProgress: false,
       });
     }
   }
@@ -154,6 +179,7 @@ class Details extends Component {
         }, () => {
           this.checkIsFavorite();
           this.checkIsDone();
+          this.checkInProgress();
         });
       } else {
         this.setState({
@@ -163,6 +189,7 @@ class Details extends Component {
         }, () => {
           this.checkIsFavorite();
           this.checkIsDone();
+          this.checkInProgress();
         });
       }
     });
@@ -197,7 +224,14 @@ class Details extends Component {
 
   renderCardDetails() {
     const { match: { url }, history } = this.props;
-    const { details, recomendations, isMeal, clipboard, isFavorite, isDone } = this.state;
+    const { details,
+      recomendations,
+      isMeal,
+      clipboard,
+      isFavorite,
+      isDone,
+      inProgress,
+    } = this.state;
     const ingredientsAndMeasures = this.parseIngredientsAndMeasures(details);
     const zero = 0;
 
@@ -255,7 +289,7 @@ class Details extends Component {
           </p>
         ))}
         <p data-testid="instructions">{strInstructions}</p>
-        { isMeal && (<p data-testid="video">{strYoutube}</p>) }
+        { isMeal && (<p data-testid="video">{strYoutube}</p>)}
         {/*
           REQ 37:
           TODO: Pegar Carousel de 'react-bootstrap/Carousel'
@@ -264,9 +298,9 @@ class Details extends Component {
         {recomendations.map((item, idx) => (
           <div key={ idx } data-testid={ `${idx}-recomendation-card` }>
             {isMeal ? (
-              <DrinkCard drink={ item } idx={ idx } />
-            ) : (
               <MealCard meal={ item } idx={ idx } />
+            ) : (
+              <DrinkCard drink={ item } idx={ idx } />
             )}
           </div>
         ))}
@@ -277,7 +311,7 @@ class Details extends Component {
             className="start-recipe-btn"
             onClick={ () => history.push(`${url}/in-progress`) }
           >
-            Iniciar Receita
+            { inProgress ? 'Continuar Receita' : 'Iniciar Receita' }
           </button>
         )}
       </div>
