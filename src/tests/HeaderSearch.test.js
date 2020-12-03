@@ -1,22 +1,9 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { screen, fireEvent } from '@testing-library/react';
-import App from '../App';
 import Comidas from '../pages/Comidas';
 import renderWithRouter from './RenderWithRouter';
-import Provider from '../hooks/Provider';
 import Bebidas from '../pages/Bebidas';
-
-// const returnApiMockDrink = (urlCall) => ({
-//   drinks: urlCall,
-// });
-
-// const mockFetch = () => {
-//   jest.spyOn(global, 'fetch')
-//     .mockImplementation((urlCall) => Promise.resolve({
-//       json: () => Promise.resolve(returnApiMockDrink(urlCall)),
-//     }));
-// };
 
 describe('HeaderSearch test', () => {
   it('test search for first lettter of meal in HeaderSearch.js', () => {
@@ -46,33 +33,37 @@ describe('HeaderSearch test', () => {
       expect(apple).toBeInTheDocument();
     }, doisSec);
   });
-  it('test search for first lettter of meal in HeaderSearch.js with a 2 letters string', () => {
-    const { getByTestId } = renderWithRouter(<Comidas />);
+  it(
+    'test search for first lettter of mealin HeaderSearch.js with a 2 letters string',
+    () => {
+      const { getByTestId } = renderWithRouter(<Comidas />);
 
-    const buttonSearch = getByTestId('search-top-btn');
+      const buttonSearch = getByTestId('search-top-btn');
 
-    fireEvent.click(buttonSearch);
+      fireEvent.click(buttonSearch);
 
-    const radio = getByTestId('first-letter-search-radio');
+      const radio = getByTestId('first-letter-search-radio');
 
-    fireEvent.click(radio);
+      fireEvent.click(radio);
 
-    const imput = getByTestId('search-input');
+      const imput = getByTestId('search-input');
 
-    userEvent.type(imput, 'aa');
+      userEvent.type(imput, 'aa');
 
-    const buttonBuscar = getByTestId('exec-search-btn');
+      const buttonBuscar = getByTestId('exec-search-btn');
 
-    fireEvent.click(buttonBuscar);
+      fireEvent.click(buttonBuscar);
 
-    const doisSec = 2000;
+      const doisSec = 2000;
 
-    setTimeout(() => {
-      const apple = screen.getByText(/Apple/i);
+      setTimeout(() => {
+        const apple = screen.getByText(/Apple/i);
 
-      expect(apple).toBeInTheDocument();
-    }, doisSec);
-  });
+        expect(apple).toBeInTheDocument();
+      }, doisSec);
+    },
+  );
+
   it('test search for first lettter of drink in HeaderSearch.js', () => {
     const { getByTestId } = renderWithRouter(<Bebidas />);
 

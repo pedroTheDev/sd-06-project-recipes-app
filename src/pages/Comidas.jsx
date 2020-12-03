@@ -10,6 +10,7 @@ function Comidas() {
 
   return (
     <div>
+      { function batatinha() { console.log('batatinha'); } }
       <Header name={ namePage } button={ buttonIs } />
       <ButtonCategoriesFood />
       <CardsFood />
