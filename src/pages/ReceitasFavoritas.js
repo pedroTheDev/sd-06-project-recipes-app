@@ -5,7 +5,7 @@ function ReceitasFavoritas() {
   return (
     <main>
       <Header pageName="Receitas Favoritas" renderSearch={ false } />
-      ReceitasFavoritas Page
+      
     </main>
   );
 }
