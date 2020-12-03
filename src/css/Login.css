@@ -6,6 +6,7 @@
   margin: auto;
   min-height: 100vh;
   padding: 0;
+  width: 360px;
 }
 
 .content-login label {
@@ -13,6 +14,9 @@
   font-size: 1.3em;
   margin: 5vh;
   padding: 10px;
+  flex-flow: wrap;
+  display:flex;
+  width: 250px;
 }
 
 .content-login input {
