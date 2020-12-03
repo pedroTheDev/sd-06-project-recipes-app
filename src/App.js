@@ -16,7 +16,7 @@ import FavoriteRecipes from './pages/FavoriteRecipes';
 import ExploreFoodPage from './pages/ExploreFoodPage';
 import ExploreDrinksPage from './pages/ExploreDrinksPage';
 import ExploreByIngredients from './pages/ExploreByIngredients';
-import ExploreByArea from './'
+import ExploreByArea from './pages/ExploreByArea';
 
 function App() {
   return (
@@ -33,6 +33,7 @@ function App() {
               path="/explorar/bebidas/ingredientes"
               component={ ExploreByIngredients }
             />
+            <Route path="/explorar/comidas/area" component={ ExploreByArea } />
             <Route path="/explorar/bebidas" component={ ExploreDrinksPage } />
             <Route path="/explorar/comidas" component={ ExploreFoodPage } />
             <Route path="/explorar" component={ ExplorePage } />

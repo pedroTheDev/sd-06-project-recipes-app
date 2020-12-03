@@ -123,3 +123,9 @@ export async function requestMealByArea() {
   const result = await resolve.json();
   return result;
 }
+
+export async function requestIngredientImage(info) {
+  const resolve = await fetch(`https://www.themealdb.com/images/ingredients/${info}-Small.png`);
+  const result = await resolve.json();
+  return result;
+}
