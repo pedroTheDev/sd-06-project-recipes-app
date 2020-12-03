@@ -8,11 +8,9 @@ function ShareButton() {
 
   const handleShareClick = () => {
     let url = window.location.href;
+
     if (url.includes('in-progress')) {
       url = url.split('/in-progress');
-    }
-    if (url.includes('feitas')){
-      console.log('Corno!')
     }
 
     setWindowLink(url[0]);

@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import ShareButton from '../components/ShareBtn';
 import './ReceitasFeitas.css';
 
-import shareIcon from '../images/shareIcon.svg';
+// import shareIcon from '../images/shareIcon.svg';
 
 const ReceitasFeitas = () => {
   const [recipesComplete, setRecipesComplete] = useState();
