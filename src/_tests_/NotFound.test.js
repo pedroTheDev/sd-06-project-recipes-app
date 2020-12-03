@@ -6,7 +6,7 @@ describe('Deve aparecer quando usado uma rota não existente:', () => {
   it('Página não encontrada', () => {
     const { getByText, history } = renderWithRouter(<App />);
     history.push('/pagina-nao-existente');
-    
+
     const message = getByText(/Página não encontrada/i);
     expect(message).toBeInTheDocument();
   });
