@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -11,13 +11,20 @@ function Perfil(props) {
   const { header } = pageConfig;
   const getEmailFromLocalStorage = localStorage.getItem('user');
   const userEmail = JSON.parse(getEmailFromLocalStorage);
+  const [userEmailState, setUserEmailState] = useState({ email: 'loading' });
+
+  useEffect(() => {
+    if (userEmail) {
+      setUserEmailState(userEmail);
+    }
+  }, []);
 
   return (
     <div>
       <Header pathname={ pathname } componentConfig={ header } />
       <section className="profile-container">
         <section className="profile-email">
-          <h3 data-testid="profile-email">{userEmail.email}</h3>
+          <h3 data-testid="profile-email">{userEmailState.email}</h3>
         </section>
         <section className="profile-buttons">
           <Link to="/receitas-feitas">
