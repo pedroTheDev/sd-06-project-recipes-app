@@ -117,7 +117,6 @@ function FoodDetail(props) {
   };
 
   const handleClick = () => {
-
     const ingredientsAndMesures = {
       ingredients: ingredientsItem,
       mesures: mesuresItem,
