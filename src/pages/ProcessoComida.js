@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import SecondHeader from '../components/SecondHeader';
 import useCopyToClipboard from '../hooks/useCopyToClipboard';
 import { shareIcon, whiteHeartIcon, blackHeartIcon } from '../images';
 import '../style/Processo.css';
@@ -125,86 +126,89 @@ function ProcessoComida() {
   };
 
   return (isLoading) ? <p>Loading</p> : (
-    <div className="container-progress">
-      <img
-        data-testid="recipe-photo"
-        src={ dataMeal.strMealThumb }
-        alt="Foto da receita"
-        className="food-image"
-      />
-      <div className="div-header">
-        <div className="div-icon">
-          <span>
+    <div>
+      <SecondHeader title="Processo" />
+      <div className="container-progress">
+        <img
+          data-testid="recipe-photo"
+          src={ dataMeal.strMealThumb }
+          alt="Foto da receita"
+          className="food-image"
+        />
+        <div className="div-header">
+          <div className="div-icon">
+            <span>
+              <button
+                type="button"
+                data-testid="share-btn"
+                onClick={ () => handleCopy(`/comidas/${idMeal}`) }
+              >
+                <img
+                  src={ shareIcon }
+                  alt="Botão de Compartilhar"
+                />
+              </button>
+              { isCopied ? <p>Link copiado!</p> : true }
+            </span>
             <button
               type="button"
-              data-testid="share-btn"
-              onClick={ () => handleCopy(`/comidas/${idMeal}`) }
+              onClick={ handleClick }
             >
               <img
-                src={ shareIcon }
-                alt="Botão de Compartilhar"
+                data-testid="favorite-btn"
+                src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+                alt="Botão de Favorito"
               />
             </button>
-            { isCopied ? <p>Link copiado!</p> : true }
-          </span>
-          <button
-            type="button"
-            onClick={ handleClick }
-          >
-            <img
-              data-testid="favorite-btn"
-              src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
-              alt="Botão de Favorito"
-            />
-          </button>
-          <h1 className="h1" data-testid="recipe-title">
-            { dataMeal.strMeal }
-          </h1>
+            <h1 className="h1" data-testid="recipe-title">
+              { dataMeal.strMeal }
+            </h1>
+          </div>
         </div>
+        <div className="div-recipes">
+          <h2 data-testid="recipe-category">
+            Ingredientes
+          </h2>
+          { Object.keys(dataMeal)
+            .filter((keys) => keys.includes('Ingredient'))
+            .map((ingredient, index) => {
+              if (dataMeal[ingredient] !== '' && dataMeal[ingredient] !== null) {
+                return (
+                  <div
+                    className="label"
+                    key={ index }
+                    data-testid={ `${index}-ingredient-step` }
+                  >
+                    <input
+                      className="checkbox"
+                      type="checkbox"
+                      name={ dataMeal[ingredient] }
+                      checked={ checked.includes(index) }
+                      onChange={ ({ target }) => { handleChange(target, index); } }
+                    />
+                    { dataMeal[ingredient] }
+                  </div>
+                );
+              }
+              return '';
+            }) }
+          <h2 data-testid="instructions">
+            Instruções
+          </h2>
+          <p data-testid="instructions">{ dataMeal.strInstructions }</p>
+        </div>
+        <Link to="/receitas-feitas">
+          <button
+            className="finish-recipe"
+            type="button"
+            data-testid="finish-recipe-btn"
+            disabled={ isDisable }
+            onClick={ saveDoneRecipes }
+          >
+            Finalizar Receita
+          </button>
+        </Link>
       </div>
-      <div className="div-recipes">
-        <h2 data-testid="recipe-category">
-          Ingredientes
-        </h2>
-        { Object.keys(dataMeal)
-          .filter((keys) => keys.includes('Ingredient'))
-          .map((ingredient, index) => {
-            if (dataMeal[ingredient] !== '' && dataMeal[ingredient] !== null) {
-              return (
-                <div
-                  className="label"
-                  key={ index }
-                  data-testid={ `${index}-ingredient-step` }
-                >
-                  <input
-                    className="checkbox"
-                    type="checkbox"
-                    name={ dataMeal[ingredient] }
-                    checked={ checked.includes(index) }
-                    onChange={ ({ target }) => { handleChange(target, index); } }
-                  />
-                  { dataMeal[ingredient] }
-                </div>
-              );
-            }
-            return '';
-          }) }
-        <h2 data-testid="instructions">
-          Instruções
-        </h2>
-        <p data-testid="instructions">{ dataMeal.strInstructions }</p>
-      </div>
-      <Link to="/receitas-feitas">
-        <button
-          className="finish-recipe"
-          type="button"
-          data-testid="finish-recipe-btn"
-          disabled={ isDisable }
-          onClick={ saveDoneRecipes }
-        >
-          Finalizar Receita
-        </button>
-      </Link>
     </div>
   );
 }

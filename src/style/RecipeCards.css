@@ -1,87 +1,66 @@
-.div-bttn-category {
-  align-items: center;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-  margin: auto;
-  margin-top: 10%;
+.div-bttn-category-cards {
+  margin-top: 75px;
+  width: 100%;
 }
 
-.div-bttn-category button {
-  border: none;
-  border-radius: 5px;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 13px;
-  font-weight: 700;
-  margin: 5px;
-  padding: 10px;
-} 
-
-.div-bttn-category button:hover {
-  cursor: pointer;
-}
-
-.bttn-category-drink {
-  background-color: #f1e510;
-}
-
-.bttn-category-drink:hover {
-  background-color: #e4cd03;
-}
-
-.bttn-category-meals {
-  background-color: #e9b304;
-}
-
-.bttn-category-meals:hover {
-  background-color: #fac001;
+.cards-div {
+  padding: 50px 0px 75px;
+  width: 100%;
 }
 
 .card-div {
   align-items: center;
+  align-content: center;
   display: flex;
   flex-flow: row wrap;
-  justify-content: center;
-  margin: auto;
-  margin-bottom: 100px;
-  margin-top: 30px;
-  width: 360px;
+  justify-content: space-around;
+  width: 100%;
 }
 
 .card-div div {
   align-items: center;
+  align-content: center;
   display: flex;
   flex-flow: column wrap;
   justify-content: center;
-  margin: 2% auto;
-  width: 60%;
+  margin: 5%;
+  width: 300px;
 }
 
 .card-div img {
-  border-radius: 25%;
-  border-bottom-left-radius: 0%;
+  border-radius: 25% 25% 25% 0%;
   cursor: pointer;
   width: 100%;
 }
 
 .card-div h1 {
-  background-color: #272c35;
-  color: #ffffff;
+  background-color: #f5f5f5;
+  color: #272c35;
   cursor: pointer;
   font-family: 'Montserrat', sans-serif;
-  font-size: 20px;
+  font-size: 20pt;
   font-weight: 700;
   margin: 0;
   padding: 2% 0;
   text-align: center;
-  width: 100%;
+  width: 300px;
+}
+
+.card-div h1:hover {
+  background-color: #cecccc;
 }
 
 .card-div a {
   text-decoration: none !important;
-  cursor: alias;
 }
 
 .card-div a:hover {
   text-decoration: none !important;
+}
+
+@media only screen and ( min-width : 768px ) {
+  .card-div div,
+  .card-div h1  {
+    width: 400px;
+  }
 }

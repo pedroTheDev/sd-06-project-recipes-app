@@ -8,7 +8,7 @@ function SecondHeader({ title }) {
   const history = useHistory();
   return (
     <header>
-      <nav>
+      <nav className="header">
         <Link to="/perfil">
           <button type="button">
             <img
@@ -20,7 +20,7 @@ function SecondHeader({ title }) {
         <h1>
           { title }
         </h1>
-        <button onClick={ history.goBack }>
+        <button type="button" onClick={ history.goBack }>
           Voltar
         </button>
       </nav>

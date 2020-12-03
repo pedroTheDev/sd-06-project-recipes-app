@@ -33,36 +33,39 @@ describe('As seguintes rodas existem:', () => {
   });
 
   it('Possui uma página de Detalhes da Receita para Comidas', () => {
-    const { getByText, history } = renderWithRouter(<App />);
-    history.push('/bebidas/52978');
+    const { getByTestId, history } = renderWithRouter(<App />);
+    history.push('/comidas/52978');
 
     const { pathname } = history.location;
-    expect(pathname).toBe('/bebidas/52978');
+    expect(pathname).toBe('/comidas/52978');
 
-    const nomeComida = getByText(/Kumpir/i);
+    const nomeComida = getByTestId('recipe-title');
     expect(nomeComida).toBeInTheDocument();
+    expect(nomeComida).toHaveTextContent(/Kumpir/i);
   });
 
   it('Possui uma página de Detalhes da Receita para Bebidas', () => {
-    const { getByText, history } = renderWithRouter(<App />);
+    const { getByTestId, history } = renderWithRouter(<App />);
     history.push('/bebidas/15997');
 
     const { pathname } = history.location;
     expect(pathname).toBe('/bebidas/15997');
 
-    const nomeBebida = getByText(/GG/i);
+    const nomeBebida = getByTestId('recipe-title');
     expect(nomeBebida).toBeInTheDocument();
+    expect(nomeBebida).toHaveTextContent(/GG/i);
   });
 
   it('Possui uma página de Progresso da Receita para Comidas', () => {
-    const { getByText, history } = renderWithRouter(<App />);
+    const { getByTestId, history } = renderWithRouter(<App />);
     history.push('/comidas/52978/in-progress');
 
     const { pathname } = history.location;
     expect(pathname).toBe('/comidas/52978/in-progress');
 
-    const nomeComida = getByText(/Kumpir/i);
+    const nomeComida = getByTestId('recipe-title');
     expect(nomeComida).toBeInTheDocument();
+    expect(nomeComida).toHaveTextContent(/Kumpir/i);
   });
 
   it('Possui uma página de Progresso da Receita para Bebidas', () => {
@@ -72,19 +75,21 @@ describe('As seguintes rodas existem:', () => {
     const { pathname } = history.location;
     expect(pathname).toBe('/bebidas/15997/in-progress');
 
-    const nomeBebida = getByText(/GG/i);
+    const nomeBebida = getByText('recipe-title');
     expect(nomeBebida).toBeInTheDocument();
+    expect(nomeBebida).toHaveTextContent(/GG/i);
   });
 
   it('Possui uma página explorar', () => {
-    const { getByText, history } = renderWithRouter(<App />);
+    const { getByTestId, history } = renderWithRouter(<App />);
     history.push('/explorar');
 
     const { pathname } = history.location;
     expect(pathname).toBe('/explorar');
 
-    const explorar = getByText(/Explorar/i);
+    const explorar = getByTestId('page-title');
     expect(explorar).toBeInTheDocument();
+    expect(explorar).toHaveTextContent(/Explorar/i);
   });
 
   it('Possui uma página explorar Comidas', () => {
@@ -110,36 +115,39 @@ describe('As seguintes rodas existem:', () => {
   });
 
   it('Possui uma página explorar Comidas por ingredientes', () => {
-    const { getByText, history } = renderWithRouter(<App />);
+    const { getByTestId, history } = renderWithRouter(<App />);
     history.push('/explorar/comidas/ingredientes');
 
     const { pathname } = history.location;
     expect(pathname).toBe('/explorar/comidas/ingredientes');
 
-    const explorarIngredientes = getByText(/Explorar Ingredientes/i);
+    const explorarIngredientes = getByTestId('page-title');
     expect(explorarIngredientes).toBeInTheDocument();
+    expect(explorarIngredientes).toHaveTextContent(/Explorar Ingredientes/i);
   });
 
   it('Possui uma página explorar Bebidas por ingredientes', () => {
-    const { getByText, history } = renderWithRouter(<App />);
+    const { getByTestId, history } = renderWithRouter(<App />);
     history.push('/explorar/bebidas/ingredientes');
 
     const { pathname } = history.location;
     expect(pathname).toBe('/explorar/bebidas/ingredientes');
 
-    const explorarIngredientes = getByText(/Explorar Ingredientes/i);
+    const explorarIngredientes = getByTestId('page-title');
     expect(explorarIngredientes).toBeInTheDocument();
+    expect(explorarIngredientes).toHaveTextContent(/Explorar Ingredientes/i);
   });
 
   it('Possui uma página explorar comidas por local de origem', () => {
-    const { getByText, history } = renderWithRouter(<App />);
+    const { getByTestId, history } = renderWithRouter(<App />);
     history.push('/explorar/comidas/area');
 
     const { pathname } = history.location;
     expect(pathname).toBe('/explorar/comidas/area');
 
-    const explorarOrigem = getByText(/Explorar Origem/i);
+    const explorarOrigem = getByTestId('page-title');
     expect(explorarOrigem).toBeInTheDocument();
+    expect(explorarOrigem).toHaveTextContent(/Explorar Origem/i);
   });
 
   it('Possui uma página de perfil', () => {

@@ -32,12 +32,12 @@ describe('Testar header da tela de Receitas Favoritas', () => {
 describe('Testar conteúdo da Receitas Favoritas', () => {
   it(`Verificar se possui os botões "All", "Food" e "Drink"
     com data-testid específicos`, () => {
-    // const { getByTestId, history } = renderWithRouter(<App />);
-    // history.push('/receitas-favoritas');
+    const { getByTestId, history } = renderWithRouter(<App />);
+    history.push('/receitas-favoritas');
 
-    // expect(getByTestId('filter-by-all-btn')).toBeInTheDocument();
-    // expect(getByTestId('filter-by-food-btn')).toBeInTheDocument();
-    // expect(getByTestId('filter-by-drink-btn')).toBeInTheDocument();
+    expect(getByTestId('filter-by-all-btn')).toBeInTheDocument();
+    expect(getByTestId('filter-by-food-btn')).toBeInTheDocument();
+    expect(getByTestId('filter-by-drink-btn')).toBeInTheDocument();
   });
 
   it(`Verificar se ao clicar no botão "All" filtra as comidas 

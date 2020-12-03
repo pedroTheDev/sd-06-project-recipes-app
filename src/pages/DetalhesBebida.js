@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import SecondHeader from '../components/SecondHeader';
 import RecipesContext from '../context/RecipesContext';
 import useCopyToClipboard from '../hooks/useCopyToClipboard';
 import {
@@ -91,15 +92,27 @@ function DetalhesBebida() {
       {(LoadingDrink)
         ? <p>Loading...</p>
         : (
-          <div className="container-details">
-            <img
-              data-testid="recipe-photo"
-              src={ dataDrinks.strDrinkThumb }
-              alt={ dataDrinks.strDrink }
-            />
-            <div className="div-header">
-              <div className="div-icon">
-                <span>
+          <div>
+            <SecondHeader title="Detalhes" />
+            <div className="container-details">
+              <img
+                data-testid="recipe-photo"
+                src={ dataDrinks.strDrinkThumb }
+                alt={ dataDrinks.strDrink }
+              />
+              <div className="div-header">
+                <div className="div-details-icons">
+                  <button
+                    type="button"
+                    onClick={ handleClick }
+                  >
+                    <img
+                      data-testid="favorite-btn"
+                      src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+                      alt="Botão de Favorito"
+                      className="icons"
+                    />
+                  </button>
                   <button
                     data-testid="share-btn"
                     type="button"
@@ -112,96 +125,85 @@ function DetalhesBebida() {
                     />
                   </button>
                   { isCopied ? <p>Link copiado!</p> : true }
-                </span>
-                <button
-                  type="button"
-                  onClick={ handleClick }
-                >
-                  <img
-                    data-testid="favorite-btn"
-                    src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
-                    alt="Botão de Favorito"
-                    className="icons"
-                  />
-                </button>
-              </div>
-              <div className="div-title">
-                <h1 data-testid="recipe-title">{ dataDrinks.strDrink }</h1>
-                <p data-testid="recipe-category">{ dataDrinks.strAlcoholic }</p>
-              </div>
-            </div>
-            <div className="div-recipes">
-              <h2>Ingredientes:</h2>
-              <ul>
-                {
-                  Object.keys(dataDrinks)
-                    .filter((keys) => keys.includes('Ingredient'))
-                    .map((ingred, index) => {
-                      if (dataDrinks[ingred] !== '' && dataDrinks[ingred] !== null) {
-                        const measure = Object.keys(dataDrinks)
-                          .filter((keys) => keys.includes('Measure'));
-                        const measureIndex = measure[index];
-                        return (
-                          <li
-                            key={ index }
-                            data-testid={ `${index}-ingredient-name-and-measure` }
-                          >
-                            { `${dataDrinks[ingred]} - ${dataDrinks[measureIndex]} ` }
-                          </li>
-                        );
-                      }
-                      return '';
-                    })
-                }
-              </ul>
-              <br />
-              <h2>Instruções:</h2>
-              <p data-testid="instructions">{ dataDrinks.strInstructions }</p>
-              <br />
-
-              <h2>Recomendadas</h2>
-              <div className="cards">
-                <div className="scroller">
-                  { meals.map((meal, index) => (
-                    <div
-                      key={ index }
-                      className={
-                        (index !== next && index !== next + 1)
-                          ? 'card invisible'
-                          : 'card'
-                      }
-                      data-testid={ `${index}-recomendation-card` }
-                    >
-                      <Link to={ `/comidas/${meal.idMeal}` }>
-                        <img src={ meal.strMealThumb } alt={ meal.strMeal } />
-                        <h2
-                          data-testid={ `${index}-recomendation-title` }
-                        >
-                          { meal.strMeal }
-                        </h2>
-                      </Link>
-                    </div>
-                  )) }
+                </div>
+                <div className="div-details-title">
+                  <h1 data-testid="recipe-title">{ dataDrinks.strDrink }</h1>
+                  <p data-testid="recipe-category">{ dataDrinks.strAlcoholic }</p>
                 </div>
               </div>
-              <div className="div-buttons-scroller">
-                <button type="button" onClick={ () => { changeNext(-UM); } }>
-                  <img src={ setaEsquerda } alt="Anterior" />
-                </button>
-                <button type="button" onClick={ () => { changeNext(UM); } }>
-                  <img src={ setaDireita } alt="Próximo" />
-                </button>
+              <div className="div-details-recipes">
+                <h2>Ingredientes:</h2>
+                <ul>
+                  {
+                    Object.keys(dataDrinks)
+                      .filter((keys) => keys.includes('Ingredient'))
+                      .map((ingred, index) => {
+                        if (dataDrinks[ingred] !== '' && dataDrinks[ingred] !== null) {
+                          const measure = Object.keys(dataDrinks)
+                            .filter((keys) => keys.includes('Measure'));
+                          const measureIndex = measure[index];
+                          return (
+                            <li
+                              key={ index }
+                              data-testid={ `${index}-ingredient-name-and-measure` }
+                            >
+                              { `${dataDrinks[ingred]} - ${dataDrinks[measureIndex]} ` }
+                            </li>
+                          );
+                        }
+                        return '';
+                      })
+                  }
+                </ul>
+                <br />
+                <h2>Instruções:</h2>
+                <p data-testid="instructions">{ dataDrinks.strInstructions }</p>
+                <br />
+
+                <h2>Recomendadas</h2>
+                <div className="cards">
+                  <div className="scroller">
+                    { meals.map((meal, index) => (
+                      <div
+                        key={ index }
+                        className={
+                          (index !== next && index !== next + 1)
+                            ? 'card invisible'
+                            : 'card'
+                        }
+                        data-testid={ `${index}-recomendation-card` }
+                      >
+                        <Link to={ `/comidas/${meal.idMeal}` }>
+                          <img src={ meal.strMealThumb } alt={ meal.strMeal } />
+                          <h2
+                            data-testid={ `${index}-recomendation-title` }
+                          >
+                            { meal.strMeal }
+                          </h2>
+                        </Link>
+                      </div>
+                    )) }
+                  </div>
+                </div>
+                <div className="div-buttons-scroller">
+                  <button type="button" onClick={ () => { changeNext(-UM); } }>
+                    <img src={ setaEsquerda } alt="Anterior" />
+                  </button>
+                  <button type="button" onClick={ () => { changeNext(UM); } }>
+                    <img src={ setaDireita } alt="Próximo" />
+                  </button>
+                </div>
               </div>
+              <Link to={ `/bebidas/${idDrink}/in-progress` }>
+                <button
+                  className="start-recipe"
+                  data-testid="start-recipe-btn"
+                  type="button"
+                >
+                  { continuar ? 'Continuar Receita' : 'Iniciar Receita' }
+                </button>
+              </Link>
             </div>
-            <Link to={ `/bebidas/${idDrink}/in-progress` }>
-              <button
-                className="start-recipe"
-                data-testid="start-recipe-btn"
-                type="button"
-              >
-                { continuar ? 'Continuar Receita' : 'Iniciar Receita' }
-              </button>
-            </Link>
           </div>
         ) }
     </div>
