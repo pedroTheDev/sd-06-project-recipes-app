@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import App from '../App';
-import Provider from '../hooks/Provider';
+import Provider from '../context/Provider';
 
 test('Farewell, front-end', () => {
   const { getByText } = render(<Provider><App /></Provider>);
