@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { ApiExploreByPlaceOfOrigin, showSugestedFoods } from '../services/aPI';
+import {
+  ApiExploreByPlaceOfOrigin,
+  showSugestedFoods,
+  searchByOrigin,
+} from '../services/aPI';
 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -9,6 +13,7 @@ import './ComidasLocalOrigem.css';
 const ComidasLocalOrigem = () => {
   const [stateNamesOrigins, setNamesOrigins] = useState();
   const [stateSugestionsFoods, setSugestionsFoods] = useState();
+  // const [stateAllFoods, setAllFoods] = useState();
 
   const handleSearchExploreOrigin = async () => {
     const originsLocal = await ApiExploreByPlaceOfOrigin();
@@ -17,10 +22,15 @@ const ComidasLocalOrigem = () => {
   };
 
   const handleSugestedFoods = async () => {
+    const number = 12;
+
     const foods = await showSugestedFoods();
 
+    foods.meals.splice(number);
+
+    // console.log(foods);
+
     setSugestionsFoods({
-      ...stateSugestionsFoods,
       foods,
     });
   };
@@ -30,19 +40,39 @@ const ComidasLocalOrigem = () => {
     handleSugestedFoods();
   }, []);
 
-  const number = 11;
+  const searchAll = async ({ value }) => {
+    if (value === 'All') {
+      const allFoods = await showSugestedFoods();
+
+      setSugestionsFoods({
+        foods: allFoods,
+      });
+    } else {
+      const number = 12;
+
+      const originFoods = await searchByOrigin(value);
+
+      originFoods.meals.splice(number);
+
+      setSugestionsFoods({
+        foods: originFoods,
+      });
+    }
+  };
 
   return (
     <div>
-      {console.log(stateSugestionsFoods)}
       <Header />
       <div className="container-select">
         <select
+          name="select"
           className="select"
           data-testid="explore-by-area-dropdown"
+          onChange={ ({ target }) => searchAll(target) }
         >
           <option>Escolha um local de origem</option>
           <option
+            value="All"
             data-testid="All-option"
           >
             All
@@ -51,6 +81,7 @@ const ComidasLocalOrigem = () => {
           && stateNamesOrigins.meals.map((origin, i) => (
             <option
               key={ i }
+              value={ origin.strArea }
               data-testid={ `${origin.strArea}-option` }
             >
               {origin.strArea}
@@ -58,27 +89,26 @@ const ComidasLocalOrigem = () => {
           ))}
         </select>
       </div>
+
       <div className="main-cards">
         {!stateSugestionsFoods ? <div>Loading...</div> : (
           stateSugestionsFoods.foods.meals.map((meal, index) => (
-            index <= number && (
-              <div
-                className="card"
-                data-testid={ `${index}-recipe-card` }
-                key={ meal.strMeal }
+            <div
+              className="card"
+              data-testid={ `${index}-recipe-card` }
+              key={ meal.strMeal }
+            >
+              <p data-testid={ `${index}-card-name` }>{meal.strMeal}</p>
+              <button
+                type="button"
               >
-                <p data-testid={ `${index}-card-name` }>{meal.strMeal}</p>
-                <button
-                  type="button"
-                >
-                  <img
-                    data-testid={ `${index}-card-img` }
-                    src={ meal.strMealThumb }
-                    alt={ meal.strMeal }
-                  />
-                </button>
-              </div>
-            )
+                <img
+                  data-testid={ `${index}-card-img` }
+                  src={ meal.strMealThumb }
+                  alt={ meal.strMeal }
+                />
+              </button>
+            </div>
           ))) }
       </div>
       <Footer />
