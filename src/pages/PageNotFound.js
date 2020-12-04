@@ -8,7 +8,7 @@ function PageNotFound() {
   return (
     <div>
       <Header title="Not Found" search={ FALSE } />
-      Error 404
+      <h1>Error 404</h1>
       <Footer />
     </div>
   );
