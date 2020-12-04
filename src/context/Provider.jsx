@@ -5,7 +5,6 @@ import RecipesAppContext from './RecipesAppContext';
 function Provider({ children }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [searchHeader, setSearchHeader] = useState(false);
 
   const [cardFood, setCardFood] = useState([]);
   const [cardDrink, setCardDrink] = useState([]);
@@ -18,8 +17,8 @@ function Provider({ children }) {
     setEmail,
     password,
     setPassword,
-    searchHeader,
-    setSearchHeader,
+    // searchHeader,
+    // setSearchHeader,
     categories: {
       categoriesButtonFood,
       setCategoriesButtonFood,

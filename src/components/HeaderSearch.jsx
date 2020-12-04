@@ -1,6 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import RecipesAppContext from '../context/RecipesAppContext';
 import {
   requestApiFoodFilterIngredient,
@@ -21,10 +21,12 @@ function HeaderSearch({ name }) {
       cardFood,
       cardDrink,
     },
-    searchHeader,
   } = useContext(RecipesAppContext);
   const [radioValue, setRadioValue] = useState('');
   const [textSearch, setTextSearch] = useState('');
+
+  const [redirectFood, setRedirectFood] = useState(false);
+  const [redirectDrink, setRedirectDrink] = useState(false);
 
   const searchFood = () => {
     if (radioValue === 'ingredientes' && textSearch !== '') {
@@ -58,8 +60,11 @@ function HeaderSearch({ name }) {
     }
   };
 
+  const [searchButtonClick, setSearchButtonClick] = useState(false);
+
   const alertFilterNotExist = (answerApi) => {
     if (answerApi === null) {
+      setSearchButtonClick(false);
       // eslint-disable-next-line no-alert
       alert('Sinto muito, não encontramos '
       + 'nenhuma receita para esses filtros.');
@@ -68,15 +73,35 @@ function HeaderSearch({ name }) {
 
   const searchOnClick = async () => {
     if (name === 'Comidas') {
+      setSearchButtonClick(true);
       const answerApi = await searchFood();
       alertFilterNotExist(answerApi);
       if (answerApi) setCardFood(answerApi);
     } else if (name === 'Bebidas') {
+      setSearchButtonClick(true);
       const answerApi = await searchDrink();
       alertFilterNotExist(answerApi);
       if (answerApi) setCardDrink(answerApi);
     }
   };
+
+  useEffect(() => {
+    if (searchButtonClick) {
+      setSearchButtonClick(false);
+      if (cardDrink.length === 1) {
+        setRedirectDrink(true);
+      }
+    }
+  }, [cardDrink]);
+
+  useEffect(() => {
+    if (searchButtonClick) {
+      setSearchButtonClick(false);
+      if (cardFood.length === 1) {
+        setRedirectFood(true);
+      }
+    }
+  }, [cardFood]);
 
   const captureValue = (e) => {
     setRadioValue(e.target.value);
@@ -86,23 +111,14 @@ function HeaderSearch({ name }) {
     setTextSearch(e.target.value);
   };
 
-  if (!searchHeader) {
-    return (
-      <div />
-    );
+  if (redirectFood) {
+    const { idMeal } = cardFood[0];
+    return (<Redirect to={ `/comidas/${idMeal}` } />);
   }
 
-  if (name === 'Comidas') {
-    if (cardFood.length === 1) {
-      const { idMeal } = cardFood[0];
-      return (<Redirect to={ `/comidas/${idMeal}` } />);
-    }
-  }
-  if (name === 'Bebidas') {
-    if (cardDrink.length === 1) {
-      const { idDrink } = cardDrink[0];
-      return (<Redirect to={ `/bebidas/${idDrink}` } />);
-    }
+  if (redirectDrink) {
+    const { idDrink } = cardDrink[0];
+    return (<Redirect to={ `/bebidas/${idDrink}` } />);
   }
 
   return (
@@ -153,7 +169,7 @@ function HeaderSearch({ name }) {
 }
 
 HeaderSearch.propTypes = {
-  name: propTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
 };
 
 export default HeaderSearch;
