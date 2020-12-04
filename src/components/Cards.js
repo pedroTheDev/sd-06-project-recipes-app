@@ -16,7 +16,9 @@ function Cards({ info, recipe, index, recomendation }) {
         }
       >
         <img
-          src={ recipe === 'comidas' ? strMealThumb : strDrinkThumb }
+          src={ recipe === 'comidas'
+            ? `${strMealThumb}/preview`
+            : `${strDrinkThumb}/preview` }
           className="thumbnail"
           alt={ recipe === 'comidas' ? strMeal : strDrink }
           data-testid={ `${index}-card-img` }
