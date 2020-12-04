@@ -10,10 +10,10 @@ function DoneRecipe() {
   const [doneRecipes, setDoneRecipes] = useState([]);
 
   useEffect(() => {
-    if (!localStorage.doneRecipes) {
-      return <h1>Você ainda não tem nenhuma receita pronta. </h1>;
-    }
-    setDoneRecipes(JSON.parse(localStorage.doneRecipes));
+    // if (!localStorage.doneRecipes) {
+    //   return <h1>Você ainda não tem nenhuma receita pronta. </h1>;
+    // }
+    if (localStorage.doneRecipes) setDoneRecipes(JSON.parse(localStorage.doneRecipes));
   }, []);
 
   const filterRecipes = ({ innerText }) => {
@@ -69,8 +69,9 @@ function DoneRecipe() {
         </button>
       </div>
       <div className="recipes-recipes-maked">
-        {doneRecipes
-          .map((
+        { !localStorage.doneRecipes
+          ? <h1>Você ainda não tem nenhuma receita pronta!</h1>
+          : doneRecipes.map((
             { id,
               type,
               image,
