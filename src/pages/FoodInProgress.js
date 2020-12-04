@@ -1,55 +1,102 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import fetchApiFood from '../services/FetchApiFood';
 import ShareIcon from '../images/shareIcon.svg';
-import desFavorite from '../images/whiteHeartIcon.svg';
+//  import desFavorite from '../images/whiteHeartIcon.svg';
+//  import favorite from '../images/blackHeartIcon.svg';
 
 import '../App.css';
 
 export default function FoodInProgress() {
   const { state, setState } = useContext(RecipesContext);
   const params = useParams();
-  const objStorage = [];
-  // carregar API
-  useEffect(() => {
-    fetchApiFood('6', setState, String(params.id));
-  }, []);
+  const arrayClick = []; // popular com id dos clicks.
+  const [clickIngred, setClickIngred] = useState([]);// estado controle checked.
+  const [isfavorite, setIsFavorite] = useState(false); // estado controlar favoritar.
+  const [inputMark, setInputMark] = useState('');// estado controlar className.
 
-  // função marcar os ingredientes e salvar no localStorage.
-  const checked = (e) => {
-    //  marcar ingredientes
-    const vai = e.target;
-    const label = document.getElementsByClassName('1')[vai.id];
-    label.classList.add('checked');
-    //  salvar no localStorage
-    objStorage.push(Number(label.htmlFor));
+  // função clipboard
+  const handleShareButton = () => {
+    const copyText = window.location.href;
+    window.navigator.clipboard.writeText(copyText);
+    // eslint-disable-next-line no-alert
+    alert('Link copiado!');
+  };
+
+  // função controlar o componente ingrediente.
+  const checked = (even) => {
+    const click = (Number(even.target.id));
+    arrayClick.push(click);
+    setInputMark(click);
+    setClickIngred(arrayClick);
+    // salvar no localStorage.
     const { idMeal } = state[0];
     const initial = {
-      meals: {},
+      cocktails: {},
     };
     const currentStorage = JSON.parse(
       localStorage
-        .getItem('recipesInProgress'),
+        .getItem('inProgressRecipes'),
     ) || initial;
     const newStorage = {
       ...currentStorage,
       meals: {
         ...currentStorage.meals,
-        ...{ [idMeal]: objStorage },
+        ...{ [idMeal]: arrayClick },
       },
     };
-    localStorage.setItem('recipesInProgress', JSON.stringify(newStorage));
+    localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
   };
+
+  // função para renderizar os ingreditentes.
+  const renderIngredients = () => {
+    const ingredientsArray = [];
+    const maxPosition = 20;
+    for (let i = 1; maxPosition >= i; i += 1) {
+      if (state[0][`strIngredient${i}`] === '') {
+        break;
+      }
+      ingredientsArray.push(state[0][`strIngredient${i}`]);
+    }
+    return ingredientsArray.map((el, idx) => (
+      <label
+        key={ idx }
+        htmlFor={ idx }
+        className={ inputMark === idx ? 'checked' : '1' }
+        data-testid={ `${idx}-ingredient-step` }
+      >
+        { el }
+        <input
+          id={ idx }
+          checked={ clickIngred.includes(idx) }
+          type="checkbox"
+          onChange={ (event) => checked(event) }
+        />
+      </label>
+    ));
+  };
+
+  // carregar API
+  useEffect(() => {
+    fetchApiFood('6', setState, String(params.id));
+    if (localStorage.inProgressRecipes) {
+      const getStorage = JSON.parse(
+        localStorage
+          .getItem('inProgressRecipes'),
+      );
+      if (getStorage.meals[params.id]) {
+        setClickIngred(getStorage.meals[params.id]);
+      }
+    }
+  }, []);
+
   // função para favoritar
-  const favoritar = (e) => {
-    const click = e.target;
-    const white = 'http://localhost:3000/static/media/whiteHeartIcon.ea3b6ba8.svg';
-    const black = 'http://localhost:3000/static/media/blackHeartIcon.b8913346.svg';
-    if (click.src === white) {
-      click.src = black;
+  const favoritar = () => {
+    if (isfavorite === false) {
+      setIsFavorite(true);
     } else {
-      click.src = white;
+      setIsFavorite(false);
     }
   };
 
@@ -60,199 +107,13 @@ export default function FoodInProgress() {
           <img
             key={ idx }
             src={ el.strMealThumb }
-            alt="fodd-pic"
+            alt="food-pic"
             data-testid="recipe-photo"
           />
           <h1 data-testid="recipe-title">{el.strMeal}</h1>
           <h3 data-testid="recipe-category">{el.strCategory}</h3>
           <content>
-            {
-              (el.strIngredient1 !== '' && el.strIngredient1 !== null)
-                && (
-                  <label
-                    htmlFor="0"
-                    className="1"
-                    data-testid="1-ingredient-step"
-                  >
-                    { el.strIngredient1 }
-                    <input
-                      id="0"
-                      type="checkbox"
-                      onClick={ (event) => checked(event) }
-                    />
-                  </label>
-                )
-            }
-            {
-              (el.strIngredient2 !== '' && el.strIngredient2 !== null)
-                && (
-                  <label
-                    htmlFor="1"
-                    className="1"
-                    data-testid="1-ingredient-step"
-                  >
-                    { el.strIngredient2 }
-                    <input
-                      id="1"
-                      type="checkbox"
-                      onClick={ (event) => checked(event) }
-                    />
-                  </label>
-                )
-            }
-            {
-              (el.strIngredient3 !== '' && el.strIngredient3 !== null)
-                && (
-                  <label
-                    htmlFor="2"
-                    className="1"
-                    data-testid="1-ingredient-step"
-                  >
-                    { el.strIngredient3 }
-                    <input
-                      id="2"
-                      type="checkbox"
-                      onClick={ (event) => checked(event) }
-                    />
-                  </label>
-                )
-            }
-            {
-              (el.strIngredient4 !== '' && el.strIngredient4 !== null)
-                && (
-                  <label
-                    htmlFor="3"
-                    className="1"
-                    data-testid="1-ingredient-step"
-                  >
-                    { el.strIngredient4 }
-                    <input
-                      id="3"
-                      type="checkbox"
-                      onClick={ (event) => checked(event) }
-                    />
-                  </label>
-                )
-            }
-            {
-              (el.strIngredient5 !== '' && el.strIngredient5 !== null)
-                && (
-                  <label
-                    htmlFor="4"
-                    className="1"
-                    data-testid="1-ingredient-step"
-                  >
-                    { el.strIngredient5 }
-                    <input
-                      id="4"
-                      type="checkbox"
-                      onClick={ (event) => checked(event) }
-                    />
-                  </label>
-                )
-            }
-            {
-              (el.strIngredient6 !== '' && el.strIngredient6 !== null)
-                && (
-                  <label
-                    htmlFor="5"
-                    className="1"
-                    data-testid="1-ingredient-step"
-                  >
-                    { el.strIngredient6 }
-                    <input
-                      id="5"
-                      type="checkbox"
-                      onClick={ (event) => checked(event) }
-                    />
-                  </label>
-                )
-            }
-            {
-              (el.strIngredient7 !== '' && el.strIngredient7 !== null)
-                && (
-                  <label
-                    htmlFor="6"
-                    className="1"
-                    data-testid="1-ingredient-step"
-                  >
-                    { el.strIngredient7 }
-                    <input
-                      id="6"
-                      type="checkbox"
-                      onClick={ (event) => checked(event) }
-                    />
-                  </label>
-                )
-            }
-            {
-              (el.strIngredient8 !== '' && el.strIngredient8 !== null)
-                && (
-                  <label
-                    htmlFor="7"
-                    className="1"
-                    data-testid="1-ingredient-step"
-                  >
-                    { el.strIngredient8 }
-                    <input
-                      id="7"
-                      type="checkbox"
-                      onClick={ (event) => checked(event) }
-                    />
-                  </label>
-                )
-            }
-            {
-              (el.strIngredient9 !== '' && el.strIngredient9 !== null)
-                && (
-                  <label
-                    htmlFor="8"
-                    className="1"
-                    data-testid="1-ingredient-step"
-                  >
-                    { el.strIngredient9 }
-                    <input
-                      id="8"
-                      type="checkbox"
-                      onClick={ (event) => checked(event) }
-                    />
-                  </label>
-                )
-            }
-            {
-              (el.strIngredient10 !== '' && el.strIngredient10 !== null)
-                && (
-                  <label
-                    htmlFor="9"
-                    className="1"
-                    data-testid="1-ingredient-step"
-                  >
-                    { el.strIngredient10 }
-                    <input
-                      id="9"
-                      type="checkbox"
-                      onClick={ (event) => checked(event) }
-                    />
-                  </label>
-                )
-            }
-            {
-              (el.strIngredient11 !== '' && el.strIngredient11 !== null)
-                && (
-                  <label
-                    htmlFor="10"
-                    className="1"
-                    data-testid="1-ingredient-step"
-                  >
-                    { el.strIngredient11 }
-                    <input
-                      id="10"
-                      type="checkbox"
-                      onClick={ (event) => checked(event) }
-                    />
-                  </label>
-                )
-            }
+            { state.length > idx ? renderIngredients() : console.log('fora do ar')}
           </content>
           <content>
             <h2>Instructions</h2>
@@ -260,23 +121,32 @@ export default function FoodInProgress() {
           </content>
         </div>
       )) }
-      <a
-        href="/bebidas"
-      >
-        <img
-          src={ ShareIcon }
-          alt="foto-compratilhar"
-          data-testid="share-btn"
-        />
-      </a>
       <input
         type="image"
-        src={ desFavorite }
+        src={ ShareIcon }
+        onClick={ () => handleShareButton() }
+        alt="foto-compratilhar"
+        data-testid="share-btn"
+      />
+      <input
+        type="image"
+        src={ isfavorite === true
+          ? '/static/media/blackHeartIcon.b8913346.svg'
+          : '/static/media/whiteHeartIcon.ea3b6ba8.svg' }
         alt="foto=favorito"
         data-testid="favorite-btn"
-        onClick={ (event) => favoritar(event) }
+        onClick={ () => favoritar() }
       />
-      <button type="button" data-testid="finish-recipe-btn">Finalizar</button>
+      <a
+        href="/receitas-feitas"
+      >
+        <button
+          type="button"
+          data-testid="finish-recipe-btn"
+        >
+          Finalizar
+        </button>
+      </a>
     </div>
   );
 }
