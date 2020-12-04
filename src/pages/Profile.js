@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import LoginContext from '../context/LoginContext';
 import HeaderContext from '../context/HeaderContext';
+import './Profile.css';
 
 const Profile = () => {
   const { setTitle } = useContext(HeaderContext);
@@ -32,15 +33,20 @@ const Profile = () => {
   }, []);
 
   return (
-    <div>
-      <h1 data-testid="profile-email">{ userEmail }</h1>
+    <div className="main">
+      <h1
+        data-testid="profile-email"
+        style={ { textAlign: 'center', marginTop: 10, fontSize: 30 } }
+      >
+        { userEmail }
+      </h1>
       <Link to="/receitas-feitas">
-        <button type="button" data-testid="profile-done-btn">
+        <button type="button" data-testid="profile-done-btn" className="prof-btn">
           Receitas Feitas
         </button>
       </Link>
       <Link to="/receitas-favoritas">
-        <button type="button" data-testid="profile-favorite-btn">
+        <button type="button" data-testid="profile-favorite-btn" className="prof-btn">
           Receitas Favoritas
         </button>
       </Link>
@@ -49,6 +55,7 @@ const Profile = () => {
           type="button"
           data-testid="profile-logout-btn"
           onClick={ logout }
+          className="prof-btn"
         >
           Sair
         </button>

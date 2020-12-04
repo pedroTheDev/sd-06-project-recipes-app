@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import HeaderContext from '../context/HeaderContext';
 import fullLikeIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
+import './FavoriteRecipes.css';
 
 const FavoriteRecipes = () => {
   const { setTitle } = useContext(HeaderContext);
@@ -65,12 +66,13 @@ const FavoriteRecipes = () => {
   }, [recipesList]);
 
   return (
-    <div>
+    <div className="main">
       <button
         type="button"
         name="all"
         onClick={ handleFilter }
         data-testid="filter-by-all-btn"
+        className="btn-filter"
       >
         All
       </button>
@@ -79,6 +81,7 @@ const FavoriteRecipes = () => {
         name="foods"
         onClick={ handleFilter }
         data-testid="filter-by-food-btn"
+        className="btn-filter"
       >
         Food
       </button>
@@ -87,6 +90,7 @@ const FavoriteRecipes = () => {
         name="drinks"
         onClick={ handleFilter }
         data-testid="filter-by-drink-btn"
+        className="btn-filter"
       >
         Drinks
       </button>
@@ -102,11 +106,13 @@ const FavoriteRecipes = () => {
                       src={ recipe.image }
                       alt={ recipe.name }
                       className="image-display"
+                      style={ { width: 441, borderRadius: 10 } }
                     />
                     <h2 data-testid={ `${index}-horizontal-name` }>{ recipe.name }</h2>
                   </Link>
                   <h3
                     data-testid={ `${index}-horizontal-top-text` }
+                    style={ { textAlign: 'center' } }
                   >
                     { `${recipe.area} - ${recipe.category}` }
                   </h3>

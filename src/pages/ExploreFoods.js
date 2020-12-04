@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import HeaderContext from '../context/HeaderContext';
+import './ExploreFoods.css';
 
 const ExploreFoods = () => {
   const { setTitle } = useContext(HeaderContext);
@@ -19,19 +20,19 @@ const ExploreFoods = () => {
   }, []);
 
   return (
-    <div>
+    <div className="main">
       <Link to="/explorar/comidas/ingredientes">
-        <button type="button" data-testid="explore-by-ingredient">
+        <button type="button" data-testid="explore-by-ingredient" className="btn-explore">
           Por Ingredientes
         </button>
       </Link>
       <Link to="/explorar/comidas/area">
-        <button type="button" data-testid="explore-by-area">
+        <button type="button" data-testid="explore-by-area" className="btn-explore">
           Por Local de Origem
         </button>
       </Link>
       <Link to={ `/comidas/${randomRecipe.idMeal}` }>
-        <button type="button" data-testid="explore-surprise">
+        <button type="button" data-testid="explore-surprise" className="btn-explore">
           Me Surpreenda!
         </button>
       </Link>
