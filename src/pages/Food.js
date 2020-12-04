@@ -165,28 +165,35 @@ function Food() {
   return (
     <div className="food-container">
       <Header title="Comidas" />
-      {
-        categories.slice(firstMeal, limitCategory).map((category, id) => (
+      <div className="mobile-container">
+        <div>
+          {
+            categories.slice(firstMeal, limitCategory).map((category, id) => (
+              <button
+                data-testid={ `${category.strCategory}-category-filter` }
+                key={ id }
+                type="button"
+                value={ category.strCategory }
+                onClick={ handleClickCategory }
+                className="btn-sub-header"
+              >
+                {category.strCategory}
+              </button>
+            ))
+          }
           <button
-            data-testid={ `${category.strCategory}-category-filter` }
-            key={ id }
             type="button"
-            value={ category.strCategory }
-            onClick={ handleClickCategory }
+            data-testid="All-category-filter"
+            onClick={ () => setCurrentCategories('') }
+            className="btn-sub-header"
           >
-            {category.strCategory}
-          </button>))
-      }
-      <button
-        type="button"
-        data-testid="All-category-filter"
-        onClick={ () => setCurrentCategories('') }
-      >
-        Todas
-      </button>
-      {
-        renderMeals()
-      }
+            Todas
+          </button>
+        </div>
+        {
+          renderMeals()
+        }
+      </div>
       <Footer />
     </div>
   );

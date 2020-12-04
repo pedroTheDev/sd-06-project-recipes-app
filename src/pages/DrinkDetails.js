@@ -7,8 +7,8 @@ import handleFavorite from '../services/storageFunctions';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-
-import './DrinkDetails.css';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 function DrinkDetails() {
   const [recipe, setRecipe] = useState({ recipe: { } });
@@ -103,10 +103,11 @@ function DrinkDetails() {
   }
 
   return (
-    <main>
+    <div className="food-container">
+      <Header title="Detalhes" />
       {(isFetching) ? <div>Loading recipe...</div>
         : (
-          <section className="body-recipe">
+          <section className="mobile-container">
             <h1 data-testid="recipe-title">
               {strDrink}
             </h1>
@@ -165,7 +166,8 @@ function DrinkDetails() {
             )}
           </section>
         )}
-    </main>
+      <Footer />
+    </div>
   );
 }
 

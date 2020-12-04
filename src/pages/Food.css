@@ -2,8 +2,19 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin-bottom: 70px;
+  width: 100vw;
+  height: auto;
+  background: rgb(226, 226, 226);
+}
+
+.mobile-container {
   width: 360px;
+  background: white;
+  margin-top: 58px;
+}
+
+.btn-sub-header {
+  margin: 4px;
 }
 
 .recipe-card {

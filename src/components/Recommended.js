@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { fetchRecommended } from '../services/api';
-import './Recommended.css';
 
 function Recommended() {
   const location = useLocation().pathname;
