@@ -1,4 +1,3 @@
-/* eslint-disable no-alert */
 import React, { useEffect, useState, useContext } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import Footer from '../components/Footer';

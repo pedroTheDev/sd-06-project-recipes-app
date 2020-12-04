@@ -4,7 +4,6 @@ import clipboardCopy from 'clipboard-copy';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
-import './FavoriteRecipes.css';
 
 export default function FavoriteRecipes() {
   const favorites = JSON.parse(localStorage.getItem('favoriteRecipes'));

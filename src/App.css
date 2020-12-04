@@ -280,3 +280,41 @@ button {
   flex-direction: column;
   margin-top: 58px;
 }
+
+/* Food Page */
+
+.food-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100vw;
+  height: auto;
+  background: rgb(226, 226, 226);
+}
+
+.mobile-container {
+  width: 360px;
+  background: white;
+  margin-top: 58px;
+}
+
+.btn-sub-header {
+  margin: 4px;
+}
+
+.recipe-card {
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.329);
+  border-radius: 10px;
+  box-shadow: black 5px 4px 14px -4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 200px;
+  margin: 10px;
+  width: 150px;
+}
+
+.card-img {
+  width: 120px;
+}

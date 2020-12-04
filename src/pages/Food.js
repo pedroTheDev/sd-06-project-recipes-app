@@ -1,10 +1,8 @@
-/* eslint-disable no-alert */
 import React, { useEffect, useState, useContext } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import RecipeContext from '../context/RecipeContext';
-import './Food.css';
 
 function Food() {
   const { setFoodAPI,

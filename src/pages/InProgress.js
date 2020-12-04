@@ -7,7 +7,6 @@ import handleFavorite from '../services/storageFunctions';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import './InProgress.css';
 
 function InProgress() {
   const [recipe, setRecipe] = useState({ recipe: { } });

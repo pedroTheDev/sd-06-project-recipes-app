@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import SearchBar from './SearchBar';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
-import './Header.css';
 
 export default function Header(props) {
   const [ssBar, setssBar] = useState(false);
