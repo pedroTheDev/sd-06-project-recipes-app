@@ -6,7 +6,7 @@ import {
   shareIcon, whiteHeartIcon, blackHeartIcon,
   setaDireita, setaEsquerda, loading,
 } from '../images';
-import '../style/Detalhes.css';
+import '../style/DetalheProcesso.css';
 
 function DetalhesBebida() {
   const timeoutTextCopy = 3000;
@@ -93,7 +93,7 @@ function DetalhesBebida() {
     <div>
       {(LoadingDrink) ? <img className="loading" src={ loading } alt="loading" />
         : (
-          <div className="container-details">
+          <div className="container-details-progress">
             <img
               data-testid="recipe-photo"
               src={ dataDrinks.strDrinkThumb }
@@ -193,7 +193,7 @@ function DetalhesBebida() {
                 </button>
               </div>
             </div>
-            <div className="buttons-details">
+            <div className="buttons-footer">
               <div>
                 <Link to={ `/bebidas/${idDrink}/in-progress` }>
                   <button

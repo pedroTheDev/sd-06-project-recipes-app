@@ -3,14 +3,44 @@ body {
 }
 
 .loading {
-  align-items: center !important;
-  align-content: center !important;
-  color: #ffffff;
+  animation: rotate .4s linear infinite;
+  align-items: center;
+  align-content: center;
   display: flex;
-  flex-flow: row wrap !important;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 40pt !important;
-  font-weight: 900;
-  justify-content: center !important;
-  margin-top: 20%;
+  flex-flow: row wrap;
+  justify-content: center;
+  margin: auto;
+  margin-top: 50%;
+  width: 20%;
+  z-index: 80;
 }
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg)
+  }
+
+  25% {
+    transform: rotate(90deg)
+  }
+
+  50% {
+    transform: rotate(180deg)
+  }
+
+  75% {
+    transform: rotate(270deg)
+  }
+
+  100% {
+    transform: rotate(360deg)
+  }
+}
+
+/* @media only screen and (min-width: 768px) and (max-width: 1024px) {
+
+}
+
+@media only screen and (min-width: 1024px) {
+
+} */

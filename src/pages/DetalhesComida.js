@@ -6,7 +6,7 @@ import {
   shareIcon, whiteHeartIcon, blackHeartIcon,
   setaDireita, setaEsquerda, loading,
 } from '../images';
-import '../style/Detalhes.css';
+import '../style/DetalheProcesso.css';
 
 function DetalhesComida() {
   const timeoutTextCopy = 3000;
@@ -92,7 +92,7 @@ function DetalhesComida() {
     <div>
       {(loadingMeal) ? <img className="loading" src={ loading } alt="loading" />
         : (
-          <div className="container-details">
+          <div className="container-details-progress">
             <img
               data-testid="recipe-photo"
               src={ dataMeal.strMealThumb }
@@ -160,7 +160,7 @@ function DetalhesComida() {
               <p data-testid="instructions">{ dataMeal.strInstructions }</p>
               <br />
               <h2>Vídeo</h2>
-              <div data-testid="video">
+              <div className="video" data-testid="video">
                 <iframe
                   title="Recipe Video"
                   width="320"
@@ -209,7 +209,7 @@ function DetalhesComida() {
                 </button>
               </div>
             </div>
-            <div className="buttons-progress">
+            <div className="buttons-footer">
               <div>
                 <Link to={ `/comidas/${idMeal}/in-progress` }>
                   <button

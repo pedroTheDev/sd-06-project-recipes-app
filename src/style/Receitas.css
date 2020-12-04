@@ -72,7 +72,7 @@
   flex-flow: row wrap;
   justify-content: space-around;
   margin-top: 50px;
-  width: 300px;
+  width: 250px;
 }
 
 .receipe-img {
@@ -90,18 +90,18 @@
   justify-content: flex-start;
   margin: -5px;
   padding: 5px 0px;
-  width: 300px;
+  width: 250px;
 }
 
 .receipe-icon button {
-  height: 50px;
-  margin: 5px;
-  padding: 5px;
-  width: 50px;
+  height: 40px;
+  margin: 2px;
+  padding: 2px;
+  width: 40px;
 }
 
 .div-icon img {
-  width: 25px;
+  width: 20px !important;
 }
 
 .receipe-icon p {
@@ -124,7 +124,7 @@
 .title-recipes-card h1 {
   color: #272c35 !important; 
   font-family: 'Montserrat', sans-serif;
-  font-size: 20pt !important;
+  font-size: 16pt !important;
   font-weight: 900;
   margin: 0;
   text-align: center;
@@ -141,14 +141,22 @@
 .title-recipes-card p {
   color: #272c35 !important; 
   font-family: 'Montserrat', sans-serif;
-  font-size: 14pt !important;
+  font-size: 12pt !important;
   margin: 0;
 }
 
 .recipes-card h1 {
   color: #ffffff;
   font-family: 'Montserrat', sans-serif;
-  font-size: 30px;
+  font-size: 20pt;
   font-weight: 900;
   text-align: center;
 }
+
+/* @media only screen and (min-width: 768px) and (max-width: 1024px) {
+
+}
+
+@media only screen and (min-width: 1024px) {
+
+} */

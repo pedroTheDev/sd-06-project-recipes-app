@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import useCopyToClipboard from '../hooks/useCopyToClipboard';
 import { shareIcon, whiteHeartIcon, blackHeartIcon, loading } from '../images';
-import '../style/Processo.css';
+import '../style/DetalheProcesso.css';
 
 function ProcessoBebida() {
   const timeoutTextCopy = 3000;
@@ -127,7 +127,7 @@ function ProcessoBebida() {
   };
 
   return (isLoading) ? <img className="loading" src={ loading } alt="loading" /> : (
-    <div className="container-progress">
+    <div className="container-details-progress">
       <img
         data-testid="recipe-photo"
         src={ dataDrinks.strDrinkThumb }
@@ -135,7 +135,7 @@ function ProcessoBebida() {
         className="food-image"
       />
       <div className="div-header">
-        <div className="div-icons">
+        <div className="div-icon">
           <button
             type="button"
             onClick={ handleClick }
@@ -197,26 +197,28 @@ function ProcessoBebida() {
           Instruções
         </h2>
       </div>
-      <div className="buttons-progress">
-        <Link to="/receitas-feitas">
-          <button
-            className="finish-recipe"
-            type="button"
-            data-testid="finish-recipe-btn"
-            disabled={ isDisable }
-            onClick={ saveDoneRecipes }
-          >
-            Finalizar Receita
-          </button>
-        </Link>
-        <Link to="/bebidas">
-          <button
-            className="back"
-            type="button"
-          >
-            Ver Outras Receitas
-          </button>
-        </Link>
+      <div className="buttons-footer">
+        <div>
+          <Link to="/receitas-feitas">
+            <button
+              className="finish-recipe"
+              type="button"
+              data-testid="finish-recipe-btn"
+              disabled={ isDisable }
+              onClick={ saveDoneRecipes }
+            >
+              Finalizar Receita
+            </button>
+          </Link>
+          <Link to="/bebidas">
+            <button
+              className="back"
+              type="button"
+            >
+              Ver Outras Receitas
+            </button>
+          </Link>
+        </div>
       </div>
     </div>
   );

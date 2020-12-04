@@ -63,8 +63,10 @@
   cursor: pointer;
 }
 
-@media only screen and ( min-width : 1024px ) {
-  .div-profile {
-    margin-top: 10%;
-  }
+/* @media only screen and (min-width: 768px) and (max-width: 1024px) {
+
 }
+
+@media only screen and (min-width: 1024px) {
+
+} */

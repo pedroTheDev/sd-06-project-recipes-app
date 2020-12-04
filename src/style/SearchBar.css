@@ -17,7 +17,7 @@
   border: 1px solid #cecccc;
   border-radius: 5px;
   font-family: 'Montserrat', sans-serif;
-  font-size: 16pt;
+  font-size: 14pt;
   height: 30px;
   margin-top: 2%;
   text-align: center;
@@ -47,7 +47,7 @@
   border-radius: 5px;
   color: #ffffff;
   font-family: 'Montserrat', sans-serif;
-  font-size: 25px;
+  font-size: 16pt;
   font-weight: 700;
   height: 40px;
   margin: 2% 0%;
@@ -58,3 +58,11 @@
   background-color: #3e444e;
   cursor: pointer;
 }
+
+/* @media only screen and (min-width: 768px) and (max-width: 1024px) {
+
+}
+
+@media only screen and (min-width: 1024px) {
+
+} */

@@ -5,8 +5,7 @@
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-  margin-top: -5px;
-  position: fixed;
+  margin-top: 75px;
   width: 100%;
   z-index: 80;
 }
@@ -40,3 +39,11 @@
 .bttn-category-meals:hover {
   background-color: #fac001;
 }
+
+/* @media only screen and (min-width: 768px) and (max-width: 1024px) {
+
+}
+
+@media only screen and (min-width: 1024px) {
+
+} */
