@@ -44,9 +44,7 @@ function FavoritesRecipes() {
     paragraph.appendChild(span);
     span.innerHTML = 'Link copiado!';
   };
-
   const zero = 0;
-
   return (
     <div>
       <Header
