@@ -7,15 +7,13 @@ import { getRecipeMealByIdApi } from '../services/mealsAPI';
 import { getRecipeDrinkByIdApi } from '../services/drinksAPI';
 import blackIcon from '../images/blackHeartIcon.svg';
 import '../Css/inProgress.css';
-// import CheckboxInProgress from '../components/CheckboxInProgress';
 
 function InProgress() {
   const [recipeInProgress, setRecipeInProgress] = useState(false);
+  const [ingredientsRecipe, setIngredientsRecipe] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const [urlWasCopyToClipboard, seturlWasCopyToClipboard] = useState(false);
-
-  // const { recipeMeal, recipeDrink } = useContext(MealsContext);
 
   const location = useLocation();
   const { id } = useParams();
@@ -32,62 +30,103 @@ function InProgress() {
     return false;
   }
 
+  function getIngredients(recipe) {
+    const fimComida = 20;
+    const fimBebida = 15;
+    const range = [1, fimComida];
+    if (location.pathname.includes('bebidas')) {
+      range[1] = fimBebida;
+    }
+    let myIngredients = [];
+    for (let i = range[0]; i <= range[1]; i += 1) {
+      if (recipe[`strIngredient${i}`] !== '' && recipe[`strIngredient${i}`] !== null) {
+        myIngredients = [...myIngredients,
+          { ingredient: recipe[`strIngredient${i}`],
+            measure: recipe[`strMeasure${i}`],
+            checkbox: false,
+          }];
+      }
+    }
+    return myIngredients;
+  }
+
+  function verifyIngredientsLocalStorage() {
+    const localStorageInProgress = JSON.parse(
+      localStorage.getItem('inProgressRecipes'),
+    );
+    let myIngredients = [];
+    if (localStorageInProgress.meals[id] !== undefined) {
+      myIngredients = localStorageInProgress.meals[id];
+    } else if (localStorageInProgress.cocktails[id] !== undefined) {
+      myIngredients = localStorageInProgress.cocktails[id];
+    }
+    return myIngredients;
+  }
+
   useEffect(() => {
     async function fetchData() {
-      const localStorageInProgress = JSON.parse(
-        localStorage.getItem('inProgressRecipes'),
-      );
-      if (localStorageInProgress.meals[id] !== null
-          || localStorageInProgress.cocktails[id] !== null) {
-        if (location.pathname.includes('comidas')) {
-          const recipeMeal = await getRecipeMealByIdApi(id);
-          const newRecipe = {
-            id: recipeMeal[0].idMeal,
-            area: recipeMeal[0].strArea,
-            alcoholicOrNot: '',
-            image: recipeMeal[0].strMealThumb,
-            name: recipeMeal[0].strMeal,
-            category: recipeMeal[0].strCategory,
-            ingredients: localStorageInProgress.meals[id],
-            instructions: recipeMeal[0].strInstructions,
-          };
-          setRecipeInProgress(newRecipe);
-        } else {
-          const recipeDrink = await getRecipeDrinkByIdApi(id);
-          setLoading(false);
-          const newRecipe = {
-            id: recipeDrink[0].idDrink,
-            area: '',
-            alcoholicOrNot: recipeDrink[0].strAlcoholic,
-            image: recipeDrink[0].strDrinkThumb,
-            name: recipeDrink[0].strDrink,
-            category: recipeDrink[0].strCategory,
-            ingredients: localStorageInProgress.cocktails[id],
-            instructions: recipeDrink[0].strInstructions,
-          };
-          setRecipeInProgress(newRecipe);
+      let myIngredients = [];
+      let newRecipe = {};
+      myIngredients = verifyIngredientsLocalStorage();
+
+      if (location.pathname.includes('comidas')) {
+        const recipeMeal = await getRecipeMealByIdApi(id);
+        if (!myIngredients.length) {
+          myIngredients = getIngredients(recipeMeal[0]);
         }
+        newRecipe = {
+          id: recipeMeal[0].idMeal,
+          area: recipeMeal[0].strArea,
+          alcoholicOrNot: '',
+          image: recipeMeal[0].strMealThumb,
+          name: recipeMeal[0].strMeal,
+          category: recipeMeal[0].strCategory,
+          // ingredients: myIngredients,
+          instructions: recipeMeal[0].strInstructions,
+        };
+      } else {
+        const recipeDrink = await getRecipeDrinkByIdApi(id);
+        if (!myIngredients.length) {
+          myIngredients = getIngredients(recipeDrink[0]);
+        }
+        newRecipe = {
+          id: recipeDrink[0].idDrink,
+          area: '',
+          alcoholicOrNot: recipeDrink[0].strAlcoholic,
+          image: recipeDrink[0].strDrinkThumb,
+          name: recipeDrink[0].strDrink,
+          category: recipeDrink[0].strCategory,
+          // ingredients: myIngredients,
+          instructions: recipeDrink[0].strInstructions,
+        };
       }
+      setIngredientsRecipe(myIngredients);
+      setRecipeInProgress(newRecipe);
     }
     setLoading(true);
     const myFavorite = verifyFavoriteRecipe();
     setIsFavorite(myFavorite);
     fetchData();
-    setLoading(false);
   }, []);
 
-  // useEffect(() => {
-  //   if (recipeInProgress) {
-  //     setLoading(false);
-  //   }
-  // }, [recipeInProgress]);
+  useEffect(() => {
+    if (recipeInProgress) {
+      setLoading(false);
+    }
+  }, [recipeInProgress]);
 
-  // const handleChange = (index) => {
-  //   const value = !ingredientsCheckbox[index].checkbox;
-  //   const markedCheckbox = ingredientsCheckbox;
-  //   markedCheckbox[index].checkbox = value;
-  //   setIngredientsCheckbox(markedCheckbox);
-  // };
+  useEffect(() => {
+    console.log('loading', loading);
+    console.log('recipeInProgress', recipeInProgress);
+    console.log('ingredientsRecipe', ingredientsRecipe);
+  }, [loading]);
+
+  const handleChange = (index) => {
+    // const value = !ingredientsRecipe[index].checkbox;
+    const myIngredients = [...ingredientsRecipe];
+    myIngredients[index].checkbox = !ingredientsRecipe[index].checkbox;
+    setIngredientsRecipe(myIngredients);
+  };
 
   function copyToClipboard() {
     navigator.clipboard.writeText(window.location.href);
@@ -125,11 +164,11 @@ function InProgress() {
   }
 
   return (
-    (loading || !recipeInProgress)
+    (loading)
       ? <h5>Loading...</h5>
       : (
         <div>
-          { console.log(recipeInProgress) }
+          { console.log('Foi renderizado, recipeInProgress:', recipeInProgress) }
           <Header data-testid="recipe-title" />
           <img
             data-testid="recipe-photo"
@@ -166,15 +205,14 @@ function InProgress() {
           </p>
           <h3>Ingredients</h3>
           <form className="form-checkbox">
-            {recipeInProgress.ingredients
-            && recipeInProgress.ingredients.map((item, index) => (
+            {ingredientsRecipe.map((item, index) => (
               <label
                 htmlFor="checkbox"
                 key={ index }
                 data-testid={ `${index}ingredient-step` }
               >
                 <input
-                  // onChange={ () => handleChange(index) }
+                  onChange={ () => handleChange(index) }
                   value={ item.checked }
                   type="checkbox"
                   name="checkbox"
