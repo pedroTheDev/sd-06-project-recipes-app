@@ -172,7 +172,7 @@ function InProgress() {
           <Header data-testid="recipe-title" />
           <img
             data-testid="recipe-photo"
-            src={ recipeInProgress.image }
+            src={ recipeInProgress && recipeInProgress.image }
             alt="nome da receita"
           />
           <div>
