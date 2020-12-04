@@ -1,0 +1,13 @@
+.main{
+  background-color: #FCDCA2;
+}
+
+.btn-filter{
+  width: 110px;
+  height: 60px;
+  border-radius: 10px;
+  margin-left: 25px;
+  box-shadow: 5px 5px 5px rgba(0,0,0,0.25);
+  font-size: 18px;
+  font-weight: bold;
+}

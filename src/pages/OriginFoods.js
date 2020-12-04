@@ -48,8 +48,8 @@ const OriginFoods = () => {
   }, [areaSelected]);
 
   return (
-    <div>
-      <h1>
+    <div className="main">
+      <h1 style={ { textAlign: 'center' } }>
         { title }
       </h1>
       <select
@@ -81,6 +81,11 @@ const OriginFoods = () => {
             <div
               className="area-card"
               data-testid={ `${index}-recipe-card` }
+              style={ { border: '1px solid black',
+                marginTop: 20,
+                borderRadius: 10,
+                marginLeft: 5,
+                padding: 10 } }
             >
               <img
                 className="area-card-img"
@@ -88,7 +93,15 @@ const OriginFoods = () => {
                 alt={ item[0] }
                 data-testid={ `${index}-card-img` }
               />
-              <p data-testid={ `${index}-card-name` }>{ item[0] }</p>
+              <p
+                data-testid={ `${index}-card-name` }
+                style={ { textAlign: 'center',
+                  fontSize: 18,
+                  fontWeight: 'bold',
+                  color: 'black' } }
+              >
+                { item[0] }
+              </p>
             </div>
           </Link>
         ))}

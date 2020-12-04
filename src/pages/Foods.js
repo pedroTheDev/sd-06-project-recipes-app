@@ -5,6 +5,7 @@ import HeaderContext from '../context/HeaderContext';
 import RecipesContext from '../context/RecipesContext';
 import getRecipesInformation from '../services/recipesAPI';
 import CategoryButtons from '../components/CategoryButtons';
+import './Foods.css';
 
 const Foods = ({ history }) => {
   const { title, setTitle } = useContext(HeaderContext);
@@ -62,10 +63,18 @@ const Foods = ({ history }) => {
                 <div
                   className="meal-card"
                   data-testid={ `${index}-recipe-card` }
+                  style={ { borderRadius: 10,
+                    border: '1px solid black',
+                    marginTop: 20,
+                    marginLeft: 10 } }
                 >
                   <p
                     className="meal-title"
                     data-testid={ `${index}-card-name` }
+                    style={ { textAlign: 'center',
+                      color: 'black',
+                      fontSize: '24px',
+                      marginLeft: '10px' } }
                   >
                     { recipe.strMeal }
                   </p>
@@ -74,6 +83,7 @@ const Foods = ({ history }) => {
                     className="meal-img"
                     data-testid={ `${index}-card-img` }
                     alt={ recipe.strMeal }
+                    style={ { borderRadius: 40, marginLeft: 40 } }
                   />
                 </div>
               </Link>

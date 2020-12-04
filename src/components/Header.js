@@ -38,7 +38,7 @@ const Header = () => {
         <Link to="/perfil">
           <img src={ profileIcon } alt="Profile" data-testid="profile-top-btn" />
         </Link>
-        <h1 data-testid="page-title">{ title }</h1>
+        <h1 data-testid="page-title" style={ { color: 'orange' } }>{ title }</h1>
         {
           handleSearchImage() && (
             <button
@@ -46,6 +46,7 @@ const Header = () => {
               data-testid="search-top-btn"
               onClick={ toggleSearchBar }
               src={ searchIcon }
+              className="search"
             >
               <img
                 src={ searchIcon }

@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import RecipesContext from '../context/RecipesContext';
 import HeaderContext from '../context/HeaderContext';
 import getRecipesInformation from '../services/recipesAPI';
+import './SearchBar.css';
 
 function SearchBar() {
   const [searchRadioOption, setSearchRadioOption] = useState('');
@@ -85,10 +86,11 @@ function SearchBar() {
   };
 
   return (
-    <div>
+    <div className="main">
       <input
         type="text"
         data-testid="search-input"
+        className="search-input"
         placeholder="Buscar Receita"
         value={ searchTerm }
         onChange={ ({ target: { value } }) => setSearchTerm(value) }
@@ -115,7 +117,9 @@ function SearchBar() {
           onClick={ handleSearchRadioOption }
         />
       </label>
-      <label htmlFor="first-letter-search-radio">
+      <label
+        htmlFor="first-letter-search-radio"
+      >
         Primeira letra
         <input
           type="radio"
@@ -129,6 +133,7 @@ function SearchBar() {
       <button
         type="button"
         data-testid="exec-search-btn"
+        className="exec-search-btn"
         onClick={ handleSearchSubmitOption }
       >
         Buscar

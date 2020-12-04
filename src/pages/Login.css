@@ -1,0 +1,59 @@
+.img{
+  position: absolute;
+  background-size: cover;
+  background-image: url(../images/wallpaper.jpeg);
+  align-items: center;
+}
+
+.main{
+  background-color:#FCDCA2;
+  width: 441px;
+  height: 645px;
+  position: absolute;
+}
+
+.main-header{
+  text-align: center;
+  font-size:36px;
+}
+
+.email-input{
+  position: absolute;
+  width:351px;
+  height: 52px;
+  background-color: #FFF9F9;
+  border-radius: 10px;
+  margin-left: 40px;
+  margin-top: 70px;
+}
+
+.password-input{
+  position: absolute;
+  width:351px;
+  height: 52px;
+  background-color: #FFF9F9;
+  border-radius: 10px;
+  margin-left: 40px;
+  margin-top: 130px;
+}
+
+.login-submit-btn{
+  position: absolute;
+  border-radius: 10px;
+  background-color: #9AAD98;
+  width: 255px;
+  height: 52px;
+  margin-left: 95px;
+  margin-top: 190px;
+}
+
+.dev{
+  font-size: 14px;
+  text-align: center;
+  margin-top: 250px;
+}
+
+.name{
+  text-align: center;
+  text-decoration: none;
+}

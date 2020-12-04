@@ -18,6 +18,7 @@ const Footer = () => (
         <img src={ mealIcon } alt="food" data-testid="food-bottom-btn" />
       </Link>
     </div>
+    <div className="barra" />
   </div>
 );
 

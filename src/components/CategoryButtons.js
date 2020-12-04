@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesContext';
 import fetchCategories from '../services/categoriesAPI';
 import getRecipesInformation from '../services/recipesAPI';
+import './CategoryButtons.css';
 
 function CategoryButtons({ type }) {
   const {
@@ -69,6 +70,7 @@ function CategoryButtons({ type }) {
               name={ category.strCategory }
               key={ category.strCategory }
               data-testid={ `${category.strCategory}-category-filter` }
+              className="category"
             >
               { category.strCategory }
             </button>
@@ -83,6 +85,7 @@ function CategoryButtons({ type }) {
             name="all"
             key="all"
             data-testid="All-category-filter"
+            className="category"
           >
             All
           </button>

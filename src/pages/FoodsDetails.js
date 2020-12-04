@@ -191,8 +191,8 @@ const FoodsDetails = (props) => {
   }, []);
 
   return (
-    <div>
-      <h1>
+    <div className="main">
+      <h1 style={ { textAlign: 'center', marginTop: 20 } }>
         {title}
       </h1>
       <img
@@ -200,12 +200,22 @@ const FoodsDetails = (props) => {
         alt={ recipeTitle }
         data-testid="recipe-photo"
         className="image-display"
+        style={ { borderRadius: 10, marginLeft: 65 } }
       />
       <div>
-        <p data-testid="recipe-title">{recipeTitle}</p>
+        <p
+          data-testid="recipe-title"
+          style={ { textAlign: 'center' } }
+        >
+          {recipeTitle}
+        </p>
         <div>
           <ShareButton path={ pathname } />
-          <button type="button" onClick={ handleImage }>
+          <button
+            type="button"
+            onClick={ handleImage }
+            style={ { width: 70, marginLeft: 180 } }
+          >
             <img
               src={ btnImg }
               alt="like"
@@ -214,7 +224,15 @@ const FoodsDetails = (props) => {
           </button>
         </div>
       </div>
-      <p data-testid="recipe-category">{recipeCategory}</p>
+      <p
+        data-testid="recipe-category"
+        style={ { fontSize: 24,
+          fontWeight: 'bold',
+          textAlign: 'center',
+          marginTop: 10 } }
+      >
+        {recipeCategory}
+      </p>
 
       <ul>
         {recipeIngredients.map((item, index) => (
@@ -227,14 +245,30 @@ const FoodsDetails = (props) => {
         ))}
       </ul>
 
-      <h3 data-testid="instructions">{recipeInstructions}</h3>
+      <h3
+        data-testid="instructions"
+        style={ { border: '1px solid black',
+          padding: 10,
+          marginLeft: 20,
+          marginRight: 20,
+          borderRadius: 10,
+          fontSize: 16 } }
+      >
+        {recipeInstructions}
+      </h3>
 
-      <iframe src={ recipeVideo } title={ recipeTitle } data-testid="video" />
+      <iframe
+        src={ recipeVideo }
+        title={ recipeTitle }
+        data-testid="video"
+        style={ { marginLeft: 60, borderRadius: 10, marginTop: 20 } }
+      />
 
       <div
         className="carousel slide w-25"
         data-ride="carousel"
         id="carousel1"
+        style={ { marginLeft: 10 } }
       >
         <div className="carousel-inner">
           {recommendations1.map((item, index) => {
@@ -326,6 +360,12 @@ const FoodsDetails = (props) => {
             data-testid="start-recipe-btn"
             className="start-recipe-btn"
             onClick={ handleClick }
+            style={ { borderRadius: 10,
+              backgroundColor: '#9AAD98',
+              width: 150,
+              height: 55,
+              fontWeight: 'bold',
+              fontSize: 16 } }
           >
             {btnTitle}
           </button>

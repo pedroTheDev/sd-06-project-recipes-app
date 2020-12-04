@@ -43,31 +43,33 @@ const IngredientFoods = () => {
   }, []);
 
   return (
-    <h1>
-      { title}
-      <div className="ingredient-container">
-        {ingredients.map((item, index) => (
-          <Link to="/comidas" key={ item }>
-            <button
-              type="button"
-              onClick={ () => handleClick({ item }) }
-            >
-              <div
-                className="ingredient-card"
-                data-testid={ `${index}-ingredient-card` }
+    <div className="main">
+      <h1 style={ { textAlign: 'center', marginTop: 20 } }>
+        { title}
+        <div className="ingredient-container">
+          {ingredients.map((item, index) => (
+            <Link to="/comidas" key={ item }>
+              <button
+                type="button"
+                onClick={ () => handleClick({ item }) }
               >
-                <img
-                  src={ ingredientsImg[index] }
-                  alt={ item }
-                  data-testid={ `${index}-card-img` }
-                />
-                <p data-testid={ `${index}-card-name` }>{item}</p>
-              </div>
-            </button>
-          </Link>
-        ))}
-      </div>
-    </h1>
+                <div
+                  className="ingredient-card"
+                  data-testid={ `${index}-ingredient-card` }
+                >
+                  <img
+                    src={ ingredientsImg[index] }
+                    alt={ item }
+                    data-testid={ `${index}-card-img` }
+                  />
+                  <p data-testid={ `${index}-card-name` }>{item}</p>
+                </div>
+              </button>
+            </Link>
+          ))}
+        </div>
+      </h1>
+    </div>
   );
 };
 

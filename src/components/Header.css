@@ -1,4 +1,11 @@
 .main-header {
   display: flex;
   justify-content: space-around;
+  background-image: url(../images/header.jpg);
+  height: 100px;
+}
+
+.search{
+  background-color: rgba(0,0,0,0.001);
+  border: none;
 }

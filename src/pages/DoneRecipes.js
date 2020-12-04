@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import HeaderContext from '../context/HeaderContext';
 import shareIcon from '../images/shareIcon.svg';
+import './DoneRecipes.css';
 
 const DoneRecipes = () => {
   const { setTitle } = useContext(HeaderContext);
@@ -53,12 +54,13 @@ const DoneRecipes = () => {
   }, [recipesList]);
 
   return (
-    <div>
+    <div className="main">
       <button
         type="button"
         name="all"
         onClick={ handleFilter }
         data-testid="filter-by-all-btn"
+        className="btn-done"
       >
         All
       </button>
@@ -67,6 +69,7 @@ const DoneRecipes = () => {
         name="foods"
         onClick={ handleFilter }
         data-testid="filter-by-food-btn"
+        className="btn-done"
       >
         Food
       </button>
@@ -75,6 +78,7 @@ const DoneRecipes = () => {
         name="drinks"
         onClick={ handleFilter }
         data-testid="filter-by-drink-btn"
+        className="btn-done"
       >
         Drinks
       </button>

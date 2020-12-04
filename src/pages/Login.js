@@ -2,6 +2,8 @@ import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import LoginContext from '../context/LoginContext';
 import HeaderContext from '../context/HeaderContext';
+import wallpaper from '../images/wallpaper.jpeg';
+import './Login.css';
 
 const Login = () => {
   const {
@@ -34,34 +36,43 @@ const Login = () => {
   };
 
   return (
-    <form>
-      <input
-        type="email"
-        data-testid="email-input"
-        placeholder="email"
-        value={ email }
-        onChange={ ({ target: { value } }) => setEmail(value) }
-        required
-      />
-      <input
-        type="password"
-        data-testid="password-input"
-        placeholder="senha"
-        value={ password }
-        onChange={ ({ target: { value } }) => setPassword(value) }
-        required
-      />
-      <Link to="/comidas">
-        <button
-          type="submit"
-          data-testid="login-submit-btn"
-          onClick={ handleClick }
-          disabled={ infoVerifier() }
-        >
-          Entrar
-        </button>
-      </Link>
-    </form>
+    <div className="main">
+      <div className="header">
+        <img src={ wallpaper } alt="wallpaper" style={ { width: 441, height: 207 } } />
+      </div>
+      <div className="main-header">Login</div>
+      <form>
+        <input
+          type="email"
+          data-testid="email-input"
+          className="email-input"
+          placeholder="email"
+          value={ email }
+          onChange={ ({ target: { value } }) => setEmail(value) }
+          required
+        />
+        <input
+          type="password"
+          data-testid="password-input"
+          className="password-input"
+          placeholder="senha"
+          value={ password }
+          onChange={ ({ target: { value } }) => setPassword(value) }
+          required
+        />
+        <Link to="/comidas">
+          <button
+            type="submit"
+            data-testid="login-submit-btn"
+            className="login-submit-btn"
+            onClick={ handleClick }
+            disabled={ infoVerifier() }
+          >
+            Entrar
+          </button>
+        </Link>
+      </form>
+    </div>
   );
 };
 
