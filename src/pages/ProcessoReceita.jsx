@@ -16,6 +16,7 @@ function ProcessoReceita({ match: { params: { id } }, history }) {
     requestApiFoodDetails(id)
       .then((response) => {
         setDetailsFood(response[0]);
+        console.log(response[0]);
       });
   }, []);
 
@@ -73,6 +74,7 @@ function ProcessoReceita({ match: { params: { id } }, history }) {
       strMealThumb,
       strTags,
     } = detailsFood;
+    const tag = strTags ? strTags.split(',') : null;
     saveState('doneRecipes', [
       ...loadState('doneRecipes', []),
       {
@@ -84,7 +86,7 @@ function ProcessoReceita({ match: { params: { id } }, history }) {
         name: strMeal,
         image: strMealThumb,
         doneDate: date,
-        tags: strTags.split(','),
+        tags: tag,
       },
     ]);
     history.push('/receitas-feitas');
@@ -108,7 +110,7 @@ function ProcessoReceita({ match: { params: { id } }, history }) {
       </div>
       {arrayIngredients.map((element, index) => (
         <label
-          htmlFor="scales"
+          htmlFor={ index }
           key={ index }
           data-testid={ `${index}-ingredient-step` }
           name={ index }

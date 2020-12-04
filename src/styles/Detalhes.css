@@ -13,3 +13,7 @@
 .carrossel-iten {
   width: 55%;
 }
+
+.inprogress-btn {
+  display: none;
+}

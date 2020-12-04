@@ -45,11 +45,23 @@ function DetalhesReceita({ match: { params: { id } } }) {
     }
   };
 
+  const testRecipeDone = () => {
+    const doneRecipe = loadState('doneRecipes', []);
+    const arrayDoneRecipe = doneRecipe.filter((element) => element.id === id);
+    console.log(arrayDoneRecipe);
+    if (arrayDoneRecipe.length !== zero) {
+      document.getElementById('inprogress-btn').style.visibility = 'hidden';
+    } else {
+      document.getElementById('inprogress-btn').style.visibility = 'visible';
+    }
+  };
+
   useEffect(() => {
     requestApiFoodDetails(id)
       .then((response) => {
         setDetailsFood(response[0]);
         startRecipeFunc(response[0].idMeal);
+        testRecipeDone();
       });
   }, []);
 
@@ -152,6 +164,7 @@ function DetalhesReceita({ match: { params: { id } } }) {
       </div>
       <Link to={ `/comidas/${id}/in-progress` }>
         <button
+          id="inprogress-btn"
           type="button"
           data-testid="start-recipe-btn"
           className="btn-footer"
