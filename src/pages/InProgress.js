@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import Header from '../components/Header';
 import whiteIcon from '../images/whiteHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 import { getRecipeMealByIdApi } from '../services/mealsAPI';
@@ -9,7 +8,7 @@ import blackIcon from '../images/blackHeartIcon.svg';
 import '../Css/inProgress.css';
 
 function InProgress() {
-  const [recipeInProgress, setRecipeInProgress] = useState(false);
+  const [recipeInProgress, setRecipeInProgress] = useState();
   const [ingredientsRecipe, setIngredientsRecipe] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -74,6 +73,10 @@ function InProgress() {
         if (!myIngredients.length) {
           myIngredients = getIngredients(recipeMeal[0]);
         }
+        let myTags = [];
+        if (recipeMeal[0].strTags !== '') {
+          myTags = recipeMeal[0].strTags.split(',');
+        }
         newRecipe = {
           id: recipeMeal[0].idMeal,
           area: recipeMeal[0].strArea,
@@ -81,13 +84,17 @@ function InProgress() {
           image: recipeMeal[0].strMealThumb,
           name: recipeMeal[0].strMeal,
           category: recipeMeal[0].strCategory,
-          // ingredients: myIngredients,
+          tags: myTags,
           instructions: recipeMeal[0].strInstructions,
         };
       } else {
         const recipeDrink = await getRecipeDrinkByIdApi(id);
         if (!myIngredients.length) {
           myIngredients = getIngredients(recipeDrink[0]);
+        }
+        let myTags = [];
+        if (recipeDrink[0].strTags !== '') {
+          myTags = recipeDrink[0].strTags.split(',');
         }
         newRecipe = {
           id: recipeDrink[0].idDrink,
@@ -96,30 +103,25 @@ function InProgress() {
           image: recipeDrink[0].strDrinkThumb,
           name: recipeDrink[0].strDrink,
           category: recipeDrink[0].strCategory,
-          // ingredients: myIngredients,
+          tags: myTags,
           instructions: recipeDrink[0].strInstructions,
         };
       }
+      const myFavorite = verifyFavoriteRecipe();
+      setIsFavorite(myFavorite);
       setIngredientsRecipe(myIngredients);
       setRecipeInProgress(newRecipe);
+      setLoading(false);
     }
     setLoading(true);
-    const myFavorite = verifyFavoriteRecipe();
-    setIsFavorite(myFavorite);
     fetchData();
   }, []);
 
-  useEffect(() => {
-    if (recipeInProgress) {
-      setLoading(false);
-    }
-  }, [recipeInProgress]);
-
-  useEffect(() => {
-    console.log('loading', loading);
-    console.log('recipeInProgress', recipeInProgress);
-    console.log('ingredientsRecipe', ingredientsRecipe);
-  }, [loading]);
+  // useEffect(() => {
+  //   console.log('loading', loading);
+  //   console.log('recipeInProgress', recipeInProgress);
+  //   console.log('ingredientsRecipe', ingredientsRecipe);
+  // }, [loading]);
 
   const handleChange = (index) => {
     // const value = !ingredientsRecipe[index].checkbox;
@@ -163,79 +165,149 @@ function InProgress() {
     }
   }
 
+  function doneRecipeClick() {
+    const myDate = new Date().toLocaleDateString();
+    console.log(myDate);
+
+    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+    if (doneRecipes !== undefined) {
+      let myType = 'comida';
+      if (location.pathname.includes('bebidas')) {
+        myType = 'bebida';
+      }
+      const newDoneRecipe = {
+        id: recipeInProgress.id,
+        type: myType,
+        area: recipeInProgress.area,
+        category: recipeInProgress.category,
+        alcoholicOrNot: recipeInProgress.alcoholicOrNot,
+        name: recipeInProgress.name,
+        image: recipeInProgress.image,
+        tags: recipeInProgress.tags,
+        doneDate: myDate,
+      };
+      const arrayDoneRecipe = [...doneRecipes, newDoneRecipe];
+      localStorage.setItem('doneRecipes', JSON.stringify(arrayDoneRecipe));
+    }
+  }
+
+  function imgInProgress() {
+    return (
+      <div className="img-container">
+        <img
+          data-testid="recipe-photo"
+          src={ recipeInProgress.image }
+          alt="nome da receita"
+        />
+      </div>
+    );
+  }
+
+  function titleInProgress() {
+    return (
+      <div>
+        <h2 data-testid="recipe-title">{ recipeInProgress.name }</h2>
+        <div>
+          <button
+            type="button"
+            data-testid="share-btn"
+            className="app-button-transparent"
+            onClick={ copyToClipboard }
+          >
+            <img src={ shareIcon } alt="Share" />
+          </button>
+          <button
+            type="button"
+            className="app-button-transparent"
+            onClick={ FavoriteRecipeClick }
+          >
+            <img
+              src={ isFavorite ? blackIcon : whiteIcon }
+              alt="Favorite"
+              data-testid="favorite-btn"
+            />
+          </button>
+        </div>
+        { urlWasCopyToClipboard ? <h6>Link copiado!</h6> : null }
+      </div>
+    );
+  }
+
+  function categoryInProgress() {
+    return (
+      <div>
+        <h4 data-testid="recipe-category">{ recipeInProgress.category }</h4>
+      </div>
+    );
+  }
+
+  function ingredientsInProgress() {
+    return (
+      <div>
+        <h3>Ingredients</h3>
+        <form className="form-checkbox">
+          {ingredientsRecipe.map((item, index) => (
+            <label
+              htmlFor="checkbox"
+              key={ index }
+              data-testid={ `${index}ingredient-step` }
+            >
+              <input
+                onChange={ () => handleChange(index) }
+                value={ item.checked }
+                type="checkbox"
+                name="checkbox"
+                id="checkbox"
+              />
+              { ` ${item.ingredient} (${item.measure})` }
+            </label>
+          ))}
+        </form>
+      </div>
+    );
+  }
+
+  function instructionsInProgress() {
+    return (
+      <div>
+        <h3>Instrucoes</h3>
+        <p
+          data-testid="instructions"
+        >
+          {recipeInProgress.instructions}
+        </p>
+      </div>
+    );
+  }
+
+  function buttonInProgress() {
+    return (
+      <div>
+        <Link to="/receitas-feitas">
+          <button
+            type="button"
+            data-testid="finish-recipe-btn"
+            onClick={ doneRecipeClick }
+          >
+            Finalizar Receita
+          </button>
+        </Link>
+      </div>
+    );
+  }
+
   return (
-    (loading)
+    (loading || !recipeInProgress)
       ? <h5>Loading...</h5>
       : (
         <div>
           { console.log('Foi renderizado, recipeInProgress:', recipeInProgress) }
-          <Header data-testid="recipe-title" />
-          <img
-            data-testid="recipe-photo"
-            src={ recipeInProgress && recipeInProgress.image }
-            alt="nome da receita"
-          />
-          <div>
-            <h2 data-testid="recipe-title">{ recipeInProgress.name }</h2>
-            <div>
-              <button
-                type="button"
-                data-testid="share-btn"
-                className="app-button-transparent"
-                onClick={ copyToClipboard }
-              >
-                <img src={ shareIcon } alt="Share" />
-              </button>
-              <button
-                type="button"
-                className="app-button-transparent"
-                onClick={ FavoriteRecipeClick }
-              >
-                <img
-                  src={ isFavorite ? blackIcon : whiteIcon }
-                  alt="Favorite"
-                  data-testid="favorite-btn"
-                />
-              </button>
-            </div>
-            { urlWasCopyToClipboard ? <h6>Link copiado!</h6> : null }
-          </div>
-          <p data-testid="recipe-category">
-            {recipeInProgress.category}
-          </p>
-          <h3>Ingredients</h3>
-          <form className="form-checkbox">
-            {ingredientsRecipe.map((item, index) => (
-              <label
-                htmlFor="checkbox"
-                key={ index }
-                data-testid={ `${index}ingredient-step` }
-              >
-                <input
-                  onChange={ () => handleChange(index) }
-                  value={ item.checked }
-                  type="checkbox"
-                  name="checkbox"
-                  id="checkbox"
-                />
-                { ` ${item.ingredient} (${item.measure})` }
-              </label>
-            ))}
-          </form>
-          <h3>Instrucoes</h3>
-          <p
-            data-testid="instructions"
-          >
-            {recipeInProgress.instructions}
-          </p>
-          <Link to="/receitas-feitas">
-            <button
-              type="button"
-              data-testid="finish-recipe-btn"
-            >
-              Finalizar Receita
-            </button>
-          </Link>
+          { imgInProgress() }
+          { titleInProgress() }
+          { categoryInProgress() }
+          { ingredientsInProgress() }
+          { instructionsInProgress() }
+          { buttonInProgress() }
         </div>
       ));
 }
