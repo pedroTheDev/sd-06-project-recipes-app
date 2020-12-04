@@ -8,6 +8,7 @@ import { fetchDrinkAPI } from '../services/drinkAPI';
 import { foodAPI } from '../services/foodAPI';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import share from '../images/shareIcon.svg';
 import '../style/RecipesInProgress.css';
 import load from '../images/load.png';
 import '../style/Loading.css';
@@ -207,21 +208,14 @@ function BebidasInProgress(props) {
     <section>
       <Header title="Detalhes Bebidas" />
       {fetchById.map((drink, index) => (
-        <div key={ index }>
-          <img data-testid="recipe-photo" src={ drink.strDrinkThumb } alt="" />
-          <h2 data-testid="recipe-title">{drink.strDrink}</h2>
-          <div>
-            <button data-testid="share-btn" type="button" onClick={ copyToCB }>
-              Compartilhar
-            </button>
-            {copied ? 'Link copiado!' : null}
-          </div>
-          <button type="button" onClick={ () => setFavorite(drink.idDrink) }>
+        <div className="justify-content-center" key={ index }>
+          <div className="detail-card">
             <img
-              data-testid="favorite-btn"
-              id="favorite-img"
-              src={ !isFavorite ? whiteHeartIcon : blackHeartIcon }
-              alt=""
+              data-testid="recipe-photo"
+              src={ drink.strDrinkThumb }
+              alt="drink"
+              width="40%"
+              className="rounded"
             />
           </button>
           <p data-testid="recipe-category">{drink.strAlcoholic}</p>
@@ -258,11 +252,70 @@ function BebidasInProgress(props) {
                 className="start-recipe-btn"
                 disabled={ array.length !== checkedIngredients.length }
                 data-testid="finish-recipe-btn"
+            <h3 data-testid="recipe-title">{drink.strDrink}</h3>
+            <div className="detail-btn my-2">
+              <button
+                data-testid="share-btn"
+                type="button"
+                className="btn"
+                onClick={ copyToCB }
               >
-                Finalizar Receita!
+                <img src={ share } alt="share" />
               </button>
-            </Link>
-          )}
+              {copied ? 'Link copiado!' : null}
+            </div>
+            <button
+              type="button"
+              className="btn"
+              onClick={ () => setFavorite(drink.idDrink) }
+            >
+              <img
+                data-testid="favorite-btn"
+                id="favorite-img"
+                src={ !isFavorite ? whiteHeartIcon : blackHeartIcon }
+                alt=""
+              />
+            </button>
+            <h5 data-testid="recipe-category">{drink.strAlcoholic}</h5>
+            <ul>
+              {getIngredients(drink, /strIngredient/).map((item, indx) => {
+                const measure = getIngredients(drink, /strMeasure/);
+                return (
+                  <li key={ indx } data-testid={ `${indx}-ingredient-step` }>
+                    <label
+                      htmlFor={ `${indx}-drink` }
+                      className="ingredient-not-done"
+                    >
+                      <input
+                        id={ `${indx}-drink` }
+                        type="checkbox"
+                        onClick={ () => handleClick(indx) }
+                      />
+                      {`${item} - ${measure[indx]}`}
+                    </label>
+                  </li>
+                );
+              })}
+            </ul>
+            <p
+              data-testid="instructions"
+              className="text-justify"
+            >
+              { drink.strInstructions }
+            </p>
+            {!doneRecipes.includes(drink.idDrink) && (
+              <Link to={ `/bebidas/${drink.idDrink}/in-progress` }>
+                <button
+                  data-testid="finish-recipe-btn"
+                  type="button"
+                  className="btn btn-block fixed-bottom"
+                  style={ { background: '#7850B8', color: 'white' } }
+                >
+                  Finalizar Receita!
+                </button>
+              </Link>
+            ) }
+          </div>
         </div>
       ))}
     </section>

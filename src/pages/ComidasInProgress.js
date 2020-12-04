@@ -7,6 +7,7 @@ import Header from '../components/Header';
 import { fetchFoodAPI } from '../services/foodAPI';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import share from '../images/shareIcon.svg';
 import '../style/RecipesInProgress.css';
 import load from '../images/load.png';
 import '../style/Loading.css';
@@ -213,21 +214,14 @@ function ComidasInProgress(props) {
     <section>
       <Header title="Detalhes Comidas" />
       {fetchById.map((meal, index) => (
-        <div key={ index }>
-          <img data-testid="recipe-photo" src={ meal.strMealThumb } alt="" />
-          <h2 data-testid="recipe-title">{meal.strMeal}</h2>
-          <div>
-            <button data-testid="share-btn" type="button" onClick={ copyToCB }>
-              Compartilhar
-            </button>
-            {copied ? 'Link copiado!' : null}
-          </div>
-          <button type="button" onClick={ () => setFavorite(meal.idMeal) }>
+        <div className="justify-content-center" key={ index }>
+          <div className="detail-card">
             <img
-              data-testid="favorite-btn"
-              id="favorite-img"
-              src={ !isFavorite ? whiteHeartIcon : blackHeartIcon }
-              alt=""
+              data-testid="recipe-photo"
+              src={ meal.strMealThumb }
+              width="40%"
+              alt="recipe"
+              className="rounded"
             />
           </button>
           <p data-testid="recipe-category">{meal.strCategory}</p>
@@ -269,11 +263,70 @@ function ComidasInProgress(props) {
                 className="start-recipe-btn"
                 data-testid="finish-recipe-btn"
                 disabled={ array.length !== checkedIngredients.length }
+            <h3 data-testid="recipe-title">{meal.strMeal}</h3>
+            <div className="detail-btn my-2">
+              <button
+                data-testid="share-btn"
+                type="button"
+                onClick={ copyToCB }
+                className="btn"
               >
-                Finalizar Receita!
+                <img src={ share } alt="share" />
               </button>
-            </Link>
-          )}
+              {copied ? 'Link copiado!' : null}
+              <button
+                type="button"
+                onClick={ () => setFavorite(meal.idMeal) }
+                className="btn"
+              >
+                <img
+                  data-testid="favorite-btn"
+                  id="favorite-img"
+                  src={ !isFavorite ? whiteHeartIcon : blackHeartIcon }
+                  alt=""
+                />
+              </button>
+            </div>
+            <h5 data-testid="recipe-category">{meal.strCategory}</h5>
+            <ul>
+              {getIngredients(meal, /strIngredient/).map((item, indx) => {
+                const measure = getIngredients(meal, /strMeasure/);
+                return (
+                  <li key={ indx } data-testid={ `${indx}-ingredient-step` }>
+                    <label
+                      htmlFor={ `${indx}-drink` }
+                      className="ingredient-not-done"
+                    >
+                      <input
+                        id={ `${indx}-drink` }
+                        type="checkbox"
+                        onClick={ () => handleClick(indx) }
+                      />
+                      {`${item} - ${measure[indx]}`}
+                    </label>
+                  </li>
+                );
+              })}
+            </ul>
+            <p
+              data-testid="instructions"
+              className="text-justify"
+            >
+              { meal.strInstructions }
+            </p>
+            {!doneRecipes.includes(meal.idMeal) && (
+              <Link to={ `/comidas/${meal.idMeal}/in-progress` }>
+                <button
+                  className="btn btn-block fixed-bottom"
+                  style={ { background: '#7850B8', color: 'white' } }
+                  data-testid="finish-recipe-btn"
+                  type="button"
+                >
+                  Finalizar Receita!
+                </button>
+              </Link>
+            ) }
+          </div>
         </div>
       ))}
     </section>
