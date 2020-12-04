@@ -321,7 +321,6 @@ function BebidasInProgress(props) {
           )}
         </div>
       ))}
-      <div>teste</div>
     </section>
   );
 }
