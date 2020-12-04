@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import DrinkCard from './DrinkCard';
 import DrinkFilterCategories from './DrinkFilterCategories';
-import '../css/Lists.css';
+import '../css/CardList.css';
 
 function DrinkList() {
   const {
@@ -20,7 +20,11 @@ function DrinkList() {
   }, [searchInput]);
 
   useEffect(() => {
-    getDrinkAPI('name-filter', '');
+    const { readyToSearch } = searchInput;
+
+    if (!readyToSearch) {
+      getDrinkAPI('name-filter', '');
+    }
   }, []);
 
   const handleDrinkData = () => {
@@ -30,7 +34,7 @@ function DrinkList() {
     if (drinkData.length > maxSize) {
       return drinkData.slice(startIndex, maxSize).map((item, index) => (
         <DrinkCard
-          index={ index }
+          testid={ index }
           key={ `recipe${index}` }
           recipe={ item }
           idDrink={ item.idDrink }
@@ -45,7 +49,7 @@ function DrinkList() {
 
     return drinkData.map((item, index) => (
       <DrinkCard
-        index={ index }
+        testid={ index }
         key={ `recipe${index}` }
         recipe={ item }
         idDrink={ item.idDrink }

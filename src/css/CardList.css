@@ -2,6 +2,5 @@
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
-  height: 300px;
-  width: 360px;
+  width: 100%;
 }

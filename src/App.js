@@ -16,6 +16,7 @@ import {
   ReceitasFavoritas,
   Perfil,
   EmProgresso,
+  NotFound,
 
 } from './pages';
 
@@ -28,6 +29,7 @@ function App() {
         <Route path="/explorar/comidas/ingredientes" component={ ExplorarIngredientes } />
         <Route path="/explorar/bebidas/ingredientes" component={ ExplorarIngredientes } />
         <Route path="/explorar/comidas/area" component={ ExplorarOrigem } />
+        <Route path="/explorar/bebidas/area" component={ NotFound } />
         <Route path="/comidas/:id/" component={ DetalhesComidas } />
         <Route path="/bebidas/:id/" component={ DetalhesBebidas } />
         <Route path="/explorar/comidas/" component={ ExplorarComidas } />

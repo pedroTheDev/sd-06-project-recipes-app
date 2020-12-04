@@ -3,15 +3,21 @@ import { Link } from 'react-router-dom';
 
 function ExploreDrinks() {
   return (
-    <Link to="/explorar/bebidas">
-      <button
-        type="button"
-        data-testid="explore-drinks"
-        name="drinks-btn"
+    <div className="explore-drink-container">
+      <Link
+        to="/explorar/bebidas"
+        className="link-explore"
       >
-        Explorar Bebidas
-      </button>
-    </Link>
+        <button
+          className="btn-explore"
+          type="button"
+          data-testid="explore-drinks"
+          name="drinks-btn"
+        >
+          Explorar Bebidas
+        </button>
+      </Link>
+    </div>
 
   );
 }

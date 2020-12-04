@@ -1,31 +1,37 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import '../css/Cards.css';
+import '../css/RecomendationCard.css';
 
 function DrinkCard({ recipe, testid, idDrink }) {
   return (
-    <Link to={ `/bebidas/${idDrink}` }>
+    <Link
+      className="link-slide-card-container"
+      to={ `/bebidas/${idDrink}` }
+    >
       <div
-        className="card-container"
-        data-testid={ `${testid}-recipe-card` }
+        className="slide-card-container"
+        data-testid={ `${testid}-recomendation-card` }
       >
-        <div className="img-container">
+        <div className="img-slide-container">
           <img
             src={ recipe.strDrinkThumb }
             alt="Receita"
             data-testid={ `${testid}-card-img` }
           />
         </div>
-        <div className="title-container">
 
+        <div
+          className="title-slide-container"
+          data-testid={ `${testid}-recomendation-title` }
+        >
           <h3
             data-testid={ `${testid}-card-name` }
           >
             { recipe.strDrink }
           </h3>
-
         </div>
+
       </div>
     </Link>
   );
@@ -39,5 +45,5 @@ DrinkCard.propTypes = {
     strDrinkThumb: PropTypes.string,
   }).isRequired,
   testid: PropTypes.number.isRequired,
-  idDrink: PropTypes.string.isRequired,
+  idDrink: PropTypes.number.isRequired,
 };

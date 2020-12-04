@@ -5,15 +5,15 @@ import '../css/CategoryFilters.css';
 
 function FoodFilterCategories({ categories }) {
   const {
-    filteredCategories,
-    getFoodCategories,
+    filteredList,
+    getFoodList,
     getFoodAPI,
     setActiveFilter,
     activeFilter,
   } = useContext(RecipesContext);
 
   useEffect(() => {
-    getFoodCategories();
+    getFoodList('category-list');
   }, []);
 
   const onClick = (value) => {
@@ -37,7 +37,7 @@ function FoodFilterCategories({ categories }) {
       >
         All
       </button>
-      {filteredCategories !== null && filteredCategories.map((category, index) => (
+      {filteredList !== null && filteredList.map((category, index) => (
         <button
           className="btn-filter"
           data-testid={ `${category}-category-filter` }

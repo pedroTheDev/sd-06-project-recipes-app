@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import FoodCard from './FoodCard';
 import FoodFilterCategories from './FoodFilterCategories';
-import '../css/Lists.css';
+import '../css/CardList.css';
 
 function FoodList() {
   const {
@@ -20,7 +20,11 @@ function FoodList() {
   }, [searchInput]);
 
   useEffect(() => {
-    getFoodAPI('name-filter', '');
+    const { readyToSearch } = searchInput;
+
+    if (!readyToSearch) {
+      getFoodAPI('name-filter', '');
+    }
   }, []);
 
   const handleFoodData = () => {
@@ -30,7 +34,7 @@ function FoodList() {
     if (foodData.length > maxSize) {
       return foodData.slice(startIndex, maxSize).map((item, index) => (
         <FoodCard
-          index={ index }
+          testid={ index }
           key={ `recipe${index}` }
           recipe={ item }
           idMeal={ item.idMeal }
@@ -45,7 +49,7 @@ function FoodList() {
 
     return foodData.map((item, index) => (
       <FoodCard
-        index={ index }
+        testid={ index }
         key={ `recipe${index}` }
         recipe={ item }
         idMeal={ item.idMeal }
