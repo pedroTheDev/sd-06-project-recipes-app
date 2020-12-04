@@ -40,7 +40,19 @@ function DetalhesBebida({ match: { params: { id } } }) {
         ...loadStorage,
         cocktails:
           { ...loadStorage.cocktails, [detailsDrink.idDrink]: [...arrayIngredients] },
+        // { ...loadStorage.cocktails, [detailsDrink.idDrink]: [] },
       });
+    }
+  };
+
+  const testRecipeDone = () => {
+    const doneRecipe = loadState('doneRecipes', []);
+    const arrayDoneRecipe = doneRecipe.filter((element) => element.id === id);
+    console.log(arrayDoneRecipe);
+    if (arrayDoneRecipe.length !== zero) {
+      document.getElementById('inprogress-btn').style.visibility = 'hidden';
+    } else {
+      document.getElementById('inprogress-btn').style.visibility = 'visible';
     }
   };
 
@@ -49,6 +61,7 @@ function DetalhesBebida({ match: { params: { id } } }) {
       .then((response) => {
         setDetailsDrink(response[0]);
         startRecipeFunc(response[0].idDrink);
+        testRecipeDone();
       });
   }, []);
 
@@ -138,6 +151,7 @@ function DetalhesBebida({ match: { params: { id } } }) {
       </div>
       <Link to={ `/bebidas/${id}/in-progress` }>
         <button
+          id="inprogress-btn"
           type="button"
           data-testid="start-recipe-btn"
           className="btn-footer"

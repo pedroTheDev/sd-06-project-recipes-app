@@ -15,6 +15,7 @@ function ProcessoBebida({ match: { params: { id } }, history }) {
     requestApiDrinkDetails(id)
       .then((response) => {
         setdetailsDrink(response[0]);
+        // console.log(response[0]);
       });
   }, []);
 
@@ -23,7 +24,6 @@ function ProcessoBebida({ match: { params: { id } }, history }) {
       const array = [];
       for (let i = 1; i <= quinze; i += 1) {
         const detIngredient = `${detailsDrink[`strIngredient${i}`]}`;
-        // const detMeasure = `${detailsDrink[`strMeasure${i}`]}`;
         const ingredient = `${detIngredient}`;
         array.push(ingredient);
       }
@@ -72,6 +72,7 @@ function ProcessoBebida({ match: { params: { id } }, history }) {
       strDrinkThumb,
       strTags,
     } = detailsDrink;
+    const tag = strTags ? strTags.split(',') : null;
     saveState('doneRecipes', [
       ...loadState('doneRecipes', []),
       {
@@ -83,7 +84,7 @@ function ProcessoBebida({ match: { params: { id } }, history }) {
         name: strDrink,
         image: strDrinkThumb,
         doneDate: date,
-        tags: strTags.split(','),
+        tags: tag,
       },
     ]);
     history.push('/receitas-feitas');
@@ -111,7 +112,7 @@ function ProcessoBebida({ match: { params: { id } }, history }) {
       </div>
       {arrayIngredients.map((element, index) => (
         <label
-          htmlFor="scales"
+          htmlFor={ index }
           key={ index }
           data-testid={ `${index}-ingredient-step` }
           name={ index }
