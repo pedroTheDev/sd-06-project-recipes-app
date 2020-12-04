@@ -39,6 +39,8 @@ function ProcessoBebida({ match: { params: { id } }, history }) {
       labelBox[0].className = 'riscado';
       setCountCheck(countCheck + 1);
     } else {
+      const labelBox = document.getElementsByName(`${event.target.id}`);
+      labelBox[0].className = 'non-riscado';
       setCountCheck(countCheck - 1);
     }
   };
