@@ -3,7 +3,7 @@
   width: 100%;
 }
 
-.container-details-progress img{
+.img-details-progress {
   width: 100%;
 }
 
@@ -15,14 +15,14 @@
 }
 
 .div-icon {
-    height: 50px;
+  height: 30px;
 }
 
 .div-icon button {
-  height: 40px;
+  height: 30px;
   margin: 2px;
-  padding: 2px;
-  width: 40px;
+  padding: 1px;
+  width: 30px;
   z-index: 100;
 }
 
@@ -33,10 +33,10 @@
 .div-icon p {
   color: #ffffff;
   font-family: 'Montserrat', sans-serif;
-  font-size: 12pt;
+  font-size: 10pt;
   font-weight: 700;
-  left: 100px;
-  top: -50px;
+  left: 70px;
+  top: -40px;
   position: relative;
 }
 
@@ -254,10 +254,46 @@
   cursor: pointer;
 }
 
-/* @media only screen and (min-width: 768px) and (max-width: 1024px) {
+@media only screen and (min-width: 768px) {
+  .img-details-progress{
+    margin-top: 150px;
+    position: fixed;
+    right: 0;
+    width: 50%;
+    z-index: 50;
+  }
+
+  .div-header {
+    height: 100%;
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 50% !important;
+  }
+
+  .buttons-footer {
+    background-color: #960051;
+    bottom: 0px;
+    height: 100px;
+    position: fixed;
+    right: 0;
+    width: 50%;
+    z-index: 100;
+  }
+
+  .div-recipes {
+    align-items: flex-start !important;
+    align-content: flex-start !important;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: flex-start !important;
+    margin-left: 0;
+    width: 50% !important;
+  }  
+
+  .cards {
+    margin: auto;
+    width: 400px;
+  }
 
 }
-
-@media only screen and (min-width: 1024px) {
-
-} */

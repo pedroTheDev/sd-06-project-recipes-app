@@ -130,6 +130,7 @@ function ProcessoComida() {
   return (isLoading) ? <img className="loading" src={ loading } alt="loading" /> : (
     <div className="container-details-progress">
       <img
+        className="img-details-progress"
         data-testid="recipe-photo"
         src={ dataMeal.strMealThumb }
         alt="Foto da receita"

@@ -94,6 +94,7 @@ function DetalhesComida() {
         : (
           <div className="container-details-progress">
             <img
+              className="img-details-progress"
               data-testid="recipe-photo"
               src={ dataMeal.strMealThumb }
               alt={ dataMeal.strMeal }

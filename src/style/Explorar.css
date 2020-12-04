@@ -5,7 +5,7 @@
   flex-flow: column wrap;
   justify-content: center;
   margin: auto;
-  margin-top: 50%;
+  margin-top: 200px;
 }
 
 .div-buttons button {
@@ -64,11 +64,3 @@
   background-color: #ac015c;
   cursor: pointer;
 }
-
-/* @media only screen and (min-width: 768px) and (max-width: 1024px) {
-
-}
-
-@media only screen and (min-width: 1024px) {
-
-} */

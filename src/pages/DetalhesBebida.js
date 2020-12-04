@@ -95,6 +95,7 @@ function DetalhesBebida() {
         : (
           <div className="container-details-progress">
             <img
+              className="img-details-progress"
               data-testid="recipe-photo"
               src={ dataDrinks.strDrinkThumb }
               alt={ dataDrinks.strDrink }

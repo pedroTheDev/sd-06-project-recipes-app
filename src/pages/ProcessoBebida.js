@@ -129,10 +129,10 @@ function ProcessoBebida() {
   return (isLoading) ? <img className="loading" src={ loading } alt="loading" /> : (
     <div className="container-details-progress">
       <img
+        className="img-details-progress"
         data-testid="recipe-photo"
         src={ dataDrinks.strDrinkThumb }
         alt="Foto da receita"
-        className="food-image"
       />
       <div className="div-header">
         <div className="div-icon">

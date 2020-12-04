@@ -9,7 +9,7 @@ body {
   flex-flow: column wrap;
   justify-content: center;
   margin: auto;
-  margin-top: 20%;
+  margin-top: 100px;
   width: 100%;
 }
 
@@ -70,22 +70,3 @@ form button:hover:disabled {
   background-color: #cccccc;
   color: #666666;
 }
-
-@media only screen and (min-width: 768px) and (max-width: 1024px) {
-  .login {
-    flex-flow: row nowrap;
-    margin-top: 20%;
-  }
-
-  .login img {
-    width: 300px;
-  }
-} 
-
-/* @media only screen and (min-width: 768px) and (max-width: 1024px) {
-
-}
-
-@media only screen and (min-width: 1024px) {
-
-} */
