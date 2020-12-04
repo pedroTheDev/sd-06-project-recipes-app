@@ -115,8 +115,10 @@ export function addDoneRecipe(recipe) {
   const month = String(today.getMonth() + 1).padStart(two, '0');
   const year = today.getFullYear();
   const date = `${day}/${month}/${year}`;
+  if ('idDrink' in recipe) recipe.strCategory = recipe.strAlcoholic;
   recipe = treatRecipe(recipe);
   recipe.doneDate = date;
+  if (recipe.tags === null) recipe.tags = '';
   const temp = getDoneRecipes();
   if (!temp.find((item) => item.id === recipe.id)) temp.push(recipe);
   updateDoneRecipes(temp);

@@ -34,7 +34,10 @@ export default function MealInProgress() {
     for (i = 1; i <= twenty; i += 1) {
       const keyName = `strIngredient${i}`;
       const measureKeyName = `strMeasure${i}`;
-      if (recipes[keyName] !== '' && recipes[keyName] !== null) {
+      if (recipes[keyName] !== ''
+          && recipes[keyName] !== undefined
+          && recipes[keyName] !== null
+      ) {
         const obj = {
           name: recipes[keyName],
           measure: recipes[measureKeyName],
@@ -52,10 +55,10 @@ export default function MealInProgress() {
       const checkIngredient = document.getElementById(ingredient.name);
       if (selectedIngredient(id, ingredient.name)) {
         checkIngredient.classList.add('selected');
-        checkIngredient.children[0].checked = true;
+        checkIngredient.children[0].setAttribute('checked', 'true');
       } else {
         checkIngredient.classList.remove('selected');
-        checkIngredient.children[0].checked = false;
+        checkIngredient.children[0].removeAttribute('checked');
       }
     });
   };
@@ -84,12 +87,14 @@ export default function MealInProgress() {
 
   function selectItem(event) {
     const completedItem = event.target.parentNode;
-    addRecipeProgress(id, completedItem.id);
-    if (completedItem.classList.contains('selected')) {
-      completedItem.classList.remove('selected');
+    addRecipeProgress(id, event.target.name);
+    if (selectedIngredient(id, event.target.name)) {
+      completedItem.classList.add('selected');
+      event.target.setAttribute('checked', 'true');
       verifyChecked();
     } else {
-      completedItem.classList.add('selected');
+      completedItem.classList.remove('selected');
+      event.target.removeAttribute('checked');
       verifyChecked();
     }
   }
@@ -118,7 +123,6 @@ export default function MealInProgress() {
                       id={ ingredient.name }
                     >
                       <input
-                        checked="false"
                         name={ ingredient.name }
                         type="checkbox"
                         key={ index }
@@ -146,7 +150,6 @@ export default function MealInProgress() {
             type="button"
             className="start-recipe"
             data-testid="finish-recipe-btn"
-            disabled="true"
             onClick={ () => addDoneRecipe(recipes) }
           >
             Finalizar Receita

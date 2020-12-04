@@ -9,7 +9,6 @@ function CompletedRecipes() {
   const [type, setType] = useState('');
   const doneRecipes = getDoneRecipes();
 
-  console.log('done', doneRecipes);
   const handleShareIcon = (target) => {
     const keys = target.id.split(',');
     let urlLinkDetail = '';
