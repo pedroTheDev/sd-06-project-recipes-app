@@ -147,7 +147,7 @@ export default function MealInProgress() {
             className="start-recipe"
             data-testid="finish-recipe-btn"
             disabled="true"
-            onClick={ addDoneRecipe }
+            onClick={ () => addDoneRecipe(recipes) }
           >
             Finalizar Receita
           </button>

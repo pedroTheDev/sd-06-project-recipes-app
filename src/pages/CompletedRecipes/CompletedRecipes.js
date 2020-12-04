@@ -96,7 +96,7 @@ function CompletedRecipes() {
                   onClick={ ({ target }) => handleShareIcon(target) }
                 />
                 <p className={ `copied-link-${recipe.id}` } />
-                {recipe.tags.map((tagName) => (
+                {recipe.tags.split(',').map((tagName) => (
                   <p
                     data-testid={ `${index}-${tagName}-horizontal-tag` }
                     key={ tagName }
