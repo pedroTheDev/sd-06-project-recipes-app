@@ -3,8 +3,6 @@ import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 
 import { detailsDrinkById } from '../services/aPI';
-import { FavoriteDrinkButton } from '../components/FavoriteBtn';
-import ShareButton from '../components/ShareBtn';
 import ContextAPI from '../Context/ContextAPI';
 
 import './ProcessoComida.css';

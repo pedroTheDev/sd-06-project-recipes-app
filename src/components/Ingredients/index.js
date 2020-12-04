@@ -6,8 +6,8 @@ const Ingredients = () => {
 
   const getIngredientsOrMeasure = (param) => {
     const path = window.location.href;
-    console.log(path);
     let dataObject = {};
+
     if (path.includes('comidas')) dataObject = detailsInfo.foods;
     else dataObject = detailsInfo.drinks;
 

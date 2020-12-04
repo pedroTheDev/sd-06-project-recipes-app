@@ -7,6 +7,7 @@ const RecipesProvider = ({ children }) => {
   const [searchComponent, setSearchComponent] = useState(false);
   const [pageName, setPageName] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [isRecipeFinished, setIsRecipeFinished] = useState(false);
   const [apiValueSearch, setApiValueSearch] = useState({
     foods: [],
     drinks: [],
@@ -29,6 +30,8 @@ const RecipesProvider = ({ children }) => {
     setCategories,
     detailsInfo,
     setDetailsInfo,
+    isRecipeFinished,
+    setIsRecipeFinished,
   };
 
   return (

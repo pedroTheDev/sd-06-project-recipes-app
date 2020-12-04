@@ -8,11 +8,16 @@ function ShareButton() {
 
   const handleShareClick = () => {
     let url = window.location.href;
+
     if (url.includes('in-progress')) {
       url = url.split('/in-progress');
+      setWindowLink(url[0]);
+      setLinkCopied(true);
+
+      return;
     }
 
-    setWindowLink(url[0]);
+    setWindowLink(url);
     setLinkCopied(true);
   };
 
@@ -21,9 +26,12 @@ function ShareButton() {
 
     if (url.includes('in-progress')) {
       url = url.split('/in-progress');
+      setWindowLink(url[0]);
+
+      return;
     }
 
-    setWindowLink(url[0]);
+    setWindowLink(url);
   }, []);
 
   return (

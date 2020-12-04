@@ -7,15 +7,15 @@ import './ProcessoComida.css';
 import Instructions from '../components/Instructions';
 import ContextAPI from '../Context/ContextAPI';
 import BasicInfo from '../components/BasicInfo';
+import IngredientsCheckbox from '../components/IngredientsCheckbox';
 
 const ReceitaProcessoComida = () => {
   const [foodDetails, setFoodDetails] = useState();
   const [isRecipeDone, setIsRecipeDone] = useState(false);
-  const [checkedIdList, setCheckedIdList] = useState([]);
 
   const idFood = useParams().id;
 
-  const { detailsInfo, setDetailsInfo } = useContext(ContextAPI);
+  const { detailsInfo, setDetailsInfo, isRecipeFinished } = useContext(ContextAPI);
 
   const getFoodDetails = async () => {
     const food = await detailsFoodById(idFood);
@@ -25,19 +25,6 @@ const ReceitaProcessoComida = () => {
       food: food.meals[0],
     });
     setDetailsInfo({ ...detailsInfo, foods: food.meals[0] });
-  };
-
-  const loadCheckedIngredientsLocalStorage = () => {
-    if (localStorage.getItem('checkedIngredients') === null) {
-      const checkedIngredients = {
-        cocktails: {},
-        meals: {},
-      };
-      localStorage.setItem('checkedIngredients', JSON.stringify(checkedIngredients));
-    }
-
-    const checkedIngredients = JSON.parse(localStorage.getItem('checkedIngredients'));
-    setCheckedIdList(checkedIngredients.meals[idFood] || []);
   };
 
   const loadDoneRecipesFromStorage = () => {
@@ -53,22 +40,8 @@ const ReceitaProcessoComida = () => {
 
   useEffect(() => {
     getFoodDetails();
-    loadCheckedIngredientsLocalStorage();
     loadDoneRecipesFromStorage();
   }, []);
-
-  const getIngredientsOrMeasure = (param) => {
-    const dataObject = foodDetails.food;
-
-    const dataKeys = Object.keys(dataObject)
-      .filter((key) => key.includes(param)
-        && dataObject[key] !== '' && dataObject[key] !== ' ' && dataObject[key] !== null);
-
-    const ingredients = dataKeys
-      .map((key) => dataObject[key]);
-
-    return ingredients;
-  };
 
   const setDoneRecipes = () => {
     if (foodDetails) {
@@ -110,86 +83,16 @@ const ReceitaProcessoComida = () => {
     }
   };
 
-  const saveCheckedIngredient = (checkedIngredients, target) => {
-    const ingredientsToSave = {
-      ...checkedIngredients,
-      meals: {
-        ...checkedIngredients.meals,
-        [idFood]: checkedIngredients.meals[idFood] ? [
-          ...checkedIngredients.meals[idFood],
-          target.id,
-        ] : [target.id],
-      },
-    };
-    localStorage.setItem('checkedIngredients', JSON.stringify(ingredientsToSave));
-    setCheckedIdList(ingredientsToSave.meals[idFood]);
-  };
-
-  const removeCheckedIngredient = (checkedIngredients, target) => {
-    const ingredientsToSave = {
-      ...checkedIngredients,
-      meals: {
-        ...checkedIngredients.meals,
-        [idFood]: [
-          ...checkedIngredients.meals[idFood].filter((id) => id !== target.id),
-        ],
-      },
-    };
-    localStorage.setItem('checkedIngredients', JSON.stringify(ingredientsToSave));
-    setCheckedIdList(ingredientsToSave.meals[idFood]);
-  };
-
-  const handleCheckbox = (target) => {
-    const checkedIngredients = JSON.parse(localStorage.getItem('checkedIngredients'));
-
-    if (target.checked === true) {
-      saveCheckedIngredient(checkedIngredients, target);
-    } else {
-      removeCheckedIngredient(checkedIngredients, target);
-    }
-
-    return target.id;
-  };
-
-  const showIngredientsCheckbox = () => {
-    const ingredientsList = getIngredientsOrMeasure('strIngredient');
-    const measuresList = getIngredientsOrMeasure('strMeasure');
-
-    return (
-      ingredientsList.map((ingred, i) => (
-        <label
-          key={ i }
-          htmlFor={ i }
-          className="input-checkbox"
-          data-testid={ `${i}-ingredient-step` }
-        >
-          <input
-            className="checkbox-input"
-            type="checkbox"
-            checked={ checkedIdList.includes(i.toString()) }
-            id={ i }
-            onChange={ (({ target }) => handleCheckbox(target)) }
-          />
-          {`${ingred} - ${measuresList[i]}`}
-        </label>
-      ))
-    );
-  };
-
-  const showDoneRecipeBtn = () => {
-    const ingredientsList = getIngredientsOrMeasure('strIngredient');
-
-    return (
-      <button
-        type="button"
-        data-testid="finish-recipe-btn"
-        onClick={ setDoneRecipes }
-        disabled={ !(ingredientsList.length === checkedIdList.length) }
-      >
-        Finalizar Receita
-      </button>
-    );
-  };
+  const showDoneRecipeBtn = () => (
+    <button
+      type="button"
+      data-testid="finish-recipe-btn"
+      onClick={ setDoneRecipes }
+      disabled={ !(isRecipeFinished) }
+    >
+      Finalizar Receita
+    </button>
+  );
 
   return (
 
@@ -199,12 +102,7 @@ const ReceitaProcessoComida = () => {
         : (
           <div className="body-progress">
             <BasicInfo />
-            <div className="span-ingredients">
-              <span>Ingredients</span>
-            </div>
-            <div className="container-checkbox">
-              {showIngredientsCheckbox()}
-            </div>
+            <IngredientsCheckbox />
             <Instructions />
             <div className="container-button">
               {!isRecipeDone && showDoneRecipeBtn()}

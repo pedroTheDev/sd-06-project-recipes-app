@@ -14,7 +14,8 @@ const BasicInfo = () => {
         <img
           data-testid="recipe-photo"
           className="img-initial"
-          src={ isFoodPage ? detailsInfo.foods.strMealThumb : detailsInfo.drinks.strDrinkThumb }
+          src={ isFoodPage
+            ? detailsInfo.foods.strMealThumb : detailsInfo.drinks.strDrinkThumb }
           alt={ isFoodPage ? detailsInfo.foods.strMeal : detailsInfo.drinks.strDrink }
         />
       </div>
