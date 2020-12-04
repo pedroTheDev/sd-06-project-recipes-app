@@ -267,7 +267,7 @@ function BebidasInProgress(props) {
           <h2 data-testid="recipe-title">{drink.strDrink}</h2>
           <div>
             <button data-testid="share-btn" type="button" onClick={ copyToCB }>
-              Compartilhar
+              Compartilhar!
             </button>
             {copied ? 'Link copiado!' : null}
           </div>
