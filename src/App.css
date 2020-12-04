@@ -70,7 +70,7 @@ main {
 padding-bottom: 40px;
 }
 
-header, footer, .start-recipe-btn {
+header, footer, .start-recipe-btn, .finish-recipe-btn {
   background-color: darkgray;
   width: 360px;
 }
@@ -85,11 +85,11 @@ header, footer, .start-recipe-btn {
 margin-bottom: 20px;
 }
 
-.start-recipe-btn {
+.start-recipe-btn, .finish-recipe-btn  {
 align-content: center;
 }
 
-footer, .start-recipe-btn {
+footer, .start-recipe-btn, .finish-recipe-btn {
   position: fixed;
   bottom: 0px;
 }
