@@ -8,8 +8,8 @@ import { fetchDrinkAPI } from '../services/drinkAPI';
 import { foodAPI } from '../services/foodAPI';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import '../style/RecipesInProgress.css';
 import load from '../images/load.png';
+import '../style/RecipesInProgress.css';
 import '../style/Loading.css';
 
 function BebidasInProgress(props) {

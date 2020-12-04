@@ -52,6 +52,19 @@ const ReceitasFeitas = () => {
             >
               {recipe.doneDate}
             </p>
+            <button
+              data-testid={ `${index}-horizontal-share-btn` }
+              type="button"
+              // onClick={ copyToCB }
+            >
+              Compartilhar
+            </button>
+            {recipe.tags.map((tagName, index) => (
+              <div
+                data-testid={ `${index}-${tagName}-horizontal-tag` }
+              >
+              </div>
+            ))}
           </div>
         ))}
       </section>
