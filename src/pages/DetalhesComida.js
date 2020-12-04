@@ -91,8 +91,6 @@ function DetalhesComida() {
       {(loadingMeal)
         ? <p>Loading</p>
         : (
-          <div>
-            <SecondHeader title="Detalhes" />
             <div className="container-details">
               <img
                 className="img"
@@ -221,7 +219,6 @@ function DetalhesComida() {
                 </Link>
               </div>
             </div>
-          </div>
         ) }
     </div>
   );

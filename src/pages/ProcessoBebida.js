@@ -125,8 +125,6 @@ function ProcessoBebida() {
   };
 
   return (isLoading) ? <p>Loading</p> : (
-    <div>
-      <SecondHeader title="Processo" />
       <div className="container-progress">
         <img
           data-testid="recipe-photo"
@@ -211,7 +209,6 @@ function ProcessoBebida() {
           </button>
         </Link>
       </div>
-    </div>
   );
 }
 

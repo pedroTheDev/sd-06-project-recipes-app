@@ -92,8 +92,6 @@ function DetalhesBebida() {
       {(LoadingDrink)
         ? <p>Loading...</p>
         : (
-          <div>
-            <SecondHeader title="Detalhes" />
             <div className="container-details">
               <img
                 data-testid="recipe-photo"
@@ -204,7 +202,6 @@ function DetalhesBebida() {
                 </button>
               </Link>
             </div>
-          </div>
         ) }
     </div>
   );
