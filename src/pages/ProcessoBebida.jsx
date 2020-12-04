@@ -15,7 +15,7 @@ function ProcessoBebida({ match: { params: { id } }, history }) {
     requestApiDrinkDetails(id)
       .then((response) => {
         setdetailsDrink(response[0]);
-        console.log(response[0]);
+        // console.log(response[0]);
       });
   }, []);
 
@@ -24,7 +24,6 @@ function ProcessoBebida({ match: { params: { id } }, history }) {
       const array = [];
       for (let i = 1; i <= quinze; i += 1) {
         const detIngredient = `${detailsDrink[`strIngredient${i}`]}`;
-        // const detMeasure = `${detailsDrink[`strMeasure${i}`]}`;
         const ingredient = `${detIngredient}`;
         array.push(ingredient);
       }

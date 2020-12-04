@@ -40,6 +40,7 @@ function DetalhesBebida({ match: { params: { id } } }) {
         ...loadStorage,
         cocktails:
           { ...loadStorage.cocktails, [detailsDrink.idDrink]: [...arrayIngredients] },
+        // { ...loadStorage.cocktails, [detailsDrink.idDrink]: [] },
       });
     }
   };
