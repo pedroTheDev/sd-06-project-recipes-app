@@ -158,19 +158,6 @@
   overflow-x: auto;
 }
 
-.recipe-card {
-  align-items: center;
-  border: 1px solid rgba(0, 0, 0, 0.329);
-  border-radius: 10px;
-  box-shadow: 5px 4px 14px -4px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 200px;
-  margin: 10px;
-  width: 150px;
-}
-
 .card-img {
   width: 120px;
 }
@@ -261,10 +248,6 @@
   position: fixed;
 }
 
-button {
-  margin-top: 20px;
-}
-
 .ingredient-checkbox:checked + label {
   text-decoration: line-through;
 }
@@ -300,19 +283,6 @@ button {
 
 .btn-sub-header {
   margin: 4px;
-}
-
-.recipe-card {
-  align-items: center;
-  border: 1px solid rgba(0, 0, 0, 0.329);
-  border-radius: 10px;
-  box-shadow: black 5px 4px 14px -4px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 200px;
-  margin: 10px;
-  width: 150px;
 }
 
 .card-img {
