@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import shareIcon from '../images/shareIcon.svg';
-import formatInProgressLink from '../utils/formatInProgressLink';
 
-function ShareButton({ setMessage, page = null }) {
+function ShareButton({ datatestid, linkToCopy }) {
+  const [message, setMessage] = useState(false);
   function setFeedBackMessage() {
-    setMessage(true);
     const resetInterval = 2500;
     setTimeout(() => {
       setMessage(false);
@@ -13,24 +12,34 @@ function ShareButton({ setMessage, page = null }) {
   }
 
   function copyToClip() {
-    let link = window.location.href.toString();
-    if (page !== null) {
-      link = formatInProgressLink(page, link);
-    }
+    if (linkToCopy) return navigator.clipboard.writeText(`http://localhost:3000${linkToCopy}`);
+    const link = window.location.href.toString();
     navigator.clipboard.writeText(link);
     setFeedBackMessage();
   }
 
   return (
-    <button data-testid="share-btn" type="button" onClick={ copyToClip }>
-      <img src={ shareIcon } alt="shareIcon" />
+    <button
+      type="button"
+      onClick={ () => {
+        copyToClip();
+        setMessage(true);
+      } }
+    >
+      <img
+        data-testid={ datatestid || 'share-btn' }
+        type="button"
+        src={ shareIcon }
+        alt="shareIcon"
+      />
+      { message ? 'Link Copiado!' : 'Copiar' }
     </button>
   );
 }
 
 ShareButton.propTypes = {
-  setMessage: PropTypes.func.isRequired,
-  page: PropTypes.string.isRequired,
+  datatestid: PropTypes.string.isRequired,
+  linkToCopy: PropTypes.string.isRequired,
 };
 
 export default ShareButton;
