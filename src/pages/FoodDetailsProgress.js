@@ -148,7 +148,7 @@ function FoodDetailsProgress() {
         name: foodDetails.strMeal,
         image: foodDetails.strMealThumb,
         doneDate: time,
-        tags: foodDetails.strTags.split(','),
+        tags: foodDetails.strTags && foodDetails.strTags.split(','),
       },
     ];
 
