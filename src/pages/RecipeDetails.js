@@ -49,8 +49,8 @@ export default function RecipeDetails() {
   const location = useLocation();
   const idRecipe = location.pathname.split('/');
   const [heartIcon, setheartIcon] = useState(WhiteHeartIcon);
-  const [alert, setAlert] = useState();
-  // const [isChecked, setIsChecked] = useState([]);
+  const [alertMsg, setAlertMsg] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
 
   if (idRecipe[3] === 'in-progress' && inProgress === false)(setInProgress(!inProgress));
   if (idRecipe[1] === 'comidas') setSearchParam('Meal');
@@ -64,12 +64,6 @@ export default function RecipeDetails() {
       .parse(localStorage
         .getItem('favoriteRecipes')),
   );
-
-  // const [localStorageInProgress, setLocalStorageInProgress] = useState(
-  //   JSON
-  //     .parse(localStorage
-  //       .getItem('inProgressRecipes')),
-  // );
 
   const [localStorageDoneRecipes, setLocalStorageDoneRecipes] = useState(
     JSON
@@ -86,7 +80,7 @@ export default function RecipeDetails() {
   }
 
   let actualRecipe = [];
-  function checkLocalStorage() {
+  function checkLocalStorageFavorites() {
     if (searchParam === 'Meal') {
       actualRecipe = ([
         {
@@ -133,33 +127,25 @@ export default function RecipeDetails() {
   }
 
   function shareRecipeLink() {
-    // const time = 15000;
+    const time = 3000;
     navigator.clipboard.writeText(`http://localhost:3000${location.pathname}`);
-    setAlert(true);
-    // setTimeout(() => {
-    //   setAlert(false);
-    // }, time);
+    setAlertMsg(true);
+    setTimeout(() => {
+      setAlertMsg(false);
+    }, time);
     // alert('Link copiado!');
   }
 
   function whiteToBlackHeart() {
     if (heartIcon === WhiteHeartIcon) {
-      // // ...
-      // if (localStorageFavorites !== 'null') {
       const newLocalStorageFavorites = localStorageFavorites;
       newLocalStorageFavorites.push(actualRecipe[0]);
       setLocalStorageFavorites(newLocalStorageFavorites);
       localStorage
         .setItem('favoriteRecipes', JSON
           .stringify(localStorageFavorites));
-      // } else {
-      //   const setLocal = async () =>
-      //   { localStorage.setItem('favoriteRecipes', JSON.stringify(actualRecipe));
-      //   await setheartIcon(BlackHeartIcon);
-      // }
       setheartIcon(BlackHeartIcon);
     } else {
-      // ...
       const newLocalStorageFavorites = localStorageFavorites;
       newLocalStorageFavorites
         .splice(localStorageFavorites
@@ -171,12 +157,6 @@ export default function RecipeDetails() {
           .stringify(localStorageFavorites));
       setheartIcon(WhiteHeartIcon);
     }
-    // AO CLICAR NO BOTÃO DO CORÇÃO DEVE MUDAR O SRC PARA {BlackHeartIcon} E FICAR GRAVADO
-    // LOCALSTORAGE?
-    // USAR A MESMA LÓGICA DO DISABLED?
-    // Salve as receitas favoritas no localStorage na chave favoriteRecipes
-    // O formato deve ser [{ id, type, area, category, alcoholicOrNot, name, image }].
-    // As receitas feitas devem ser salvas em localStorage na chave doneRecipes no formato [{ id, type, area, category, alcoholicOrNot, name, image, doneDate, tags }].
   }
 
   function listContent() {
@@ -195,44 +175,111 @@ export default function RecipeDetails() {
     return ingredientsMeasureArray;
   }
 
-  // function handleCheckbox({ target }, pairArray) {
-  //   if (!localStorageInProgress) {
-  //     localStorage
-  //       .setItem('inProgressRecipes', JSON
-  //         .stringify({
-  //           cocktails: { [foods[0].id]: [] },
-  //           meals: { id: [] },
-  //         }));
-  //   }
-  // }
+  function handleCheckbox({ target }, index) {
+    // Carrega aas informações do localStorage in progress na variável localStorageInProgressAux
+    let localStorageInProgressAux = JSON
+      .parse(localStorage
+        .getItem('inProgressRecipes'));
+    // Se inProgressRecipes ainda não existir grava primeiro item, bebida ou comida
+    if (!localStorageInProgressAux) {
+      console.log('EXISTE');
+      if (searchParam === 'Meal') {
+        localStorageInProgressAux = {
+          cocktails: {},
+          meals: { [actualRecipe[0].id]: [index] },
+        };
+      }
+      if (searchParam === 'Drink') {
+        localStorageInProgressAux = {
+          cocktails: { [actualRecipe[0].id]: [index] },
+          meals: {},
+        };
+      }
+      localStorage
+        .setItem('inProgressRecipes', JSON
+          .stringify(localStorageInProgressAux));
 
-  //   localStorage
-  //     .setItem('inProgressRecipes', JSON
-  //       .stringify(setLocalStorageInProgress));
-  // }
+    // Se inProgressRecipes já existe e verifica se aquela receita já foi iniciada
+    // Se a receita já foi iniciada inclui o ítem no array
+    // Se a receita ainda não foi iniciada, inclui a receita e seu respectivo array de ítens
+    } else {
+      if (searchParam === 'Meal') {
+        if (localStorageInProgressAux.meals[actualRecipe[0].id]) {
+          if (target.checked === true) {
+            localStorageInProgressAux.meals[actualRecipe[0].id].push(index);
+          } else {
+            localStorageInProgressAux.meals[actualRecipe[0].id]
+              .splice(localStorageInProgressAux.meals[actualRecipe[0].id]
+                .indexOf(index), 1);
+          }
+        } else {
+          localStorageInProgressAux.meals[actualRecipe[0].id] = [index];
+        }
+      }
 
-  // } else if (idRecipe[1] === 'comidas') {
-  // if (idRecipe[1] === 'bebidas') {
-  //   keyInProgressMealsOrDrinks = 'inProgressRecipes.meals';
-  // } else {
-  //   keyInProgressMealsOrDrinks = 'inProgressRecipes.cocktails';
-  // }
-  // localStorage
-  //   .setItem(keyInProgressMealsOrDrinks, JSON
-  //     .stringify(setLocalStorageInProgress));
+      if (searchParam === 'Drink') {
+        if (localStorageInProgressAux.cocktails[actualRecipe[0].id]) {
+          if (target.checked === true) {
+            localStorageInProgressAux.cocktails[actualRecipe[0].id].push(index);
+          } else {
+            localStorageInProgressAux.cocktails[actualRecipe[0].id]
+              .splice(localStorageInProgressAux.cocktails[actualRecipe[0].id]
+                .indexOf(index), 1);
+          }
+        } else {
+          localStorageInProgressAux.cocktails[actualRecipe[0].id] = [index];
+        }
+      }
+
+      localStorage
+        .setItem('inProgressRecipes', JSON
+          .stringify(localStorageInProgressAux));
+
+      setIsChecked(!isChecked);
+    }
+    return localStorageInProgressAux;
+  }
+
+  const finishButtonEnable = () => {
+    const checkedLength = document
+      .querySelectorAll('input[type=checkbox]:checked').length;
+    const checkboxLength = document.querySelectorAll('input[type=checkbox]').length;
+    if (checkedLength === checkboxLength) {
+      return false;
+    }
+    return true;
+  };
 
   useEffect(() => {
     fetchApi(linkRecipeAPI);
   }, [searchParam]);
 
+  useEffect(() => {}, [isChecked]);
+
   const render = () => {
     const ZERO = 0;
     if (foods.length > ZERO) {
-      checkLocalStorage();
+      checkLocalStorageFavorites();
       let videoCode;
+      let typeFood;
+      const getInProgress = JSON
+        .parse(localStorage
+          .getItem('inProgressRecipes'));
+
       if (searchParam === 'Meal') {
         videoCode = (foods[0].strYoutube) ? foods[0].strYoutube.split('=') : undefined;
+        typeFood = 'meals';
+      } else {
+        typeFood = 'cocktails';
       }
+      const checked = (index) => {
+        if (getInProgress) {
+          return getInProgress[typeFood][actualRecipe[0].id]
+            .includes(index);
+        }
+        return false;
+      };
+
       return (
         <Container>
           <img
@@ -245,7 +292,7 @@ export default function RecipeDetails() {
           <div className="d-flex justify-content-around">
             <a href onClick={ () => shareRecipeLink() }>
               <img src={ ShareIcon } alt="Share Button" data-testid="share-btn" />
-              {alert && <span>Link copiado!</span>}
+              {alertMsg && <span>Link copiado!</span>}
             </a>
             <a href onClick={ () => whiteToBlackHeart() }>
               <img src={ heartIcon } alt="Favorite Button" data-testid="favorite-btn" />
@@ -254,15 +301,17 @@ export default function RecipeDetails() {
           <h6 data-testid="recipe-category">
             { searchParam === 'Meal' ? foods[0].strCategory : foods[0].strAlcoholic }
           </h6>
+          { }
           <ul data-testid="0-recipe-card">
             { listContent().map((pairArray, index) => (
-              (inProgress === false)
+
+              inProgress === false
                 ? (
                   <li
                     key={ index }
                     data-testid={ `${index}-ingredient-name-and-measure` }
                   >
-                    {pairArray[0] }
+                    {pairArray[0]}
                     { pairArray[1] ? ` - ${pairArray[1]}` : undefined }
                   </li>
                 )
@@ -272,11 +321,15 @@ export default function RecipeDetails() {
                     data-testid={ `${index}-ingredient-step` }
                   >
                     <input
+                      checked={ checked(index) }
                       className="lineThrough"
                       type="checkbox"
                       name={ index }
                       id={ index }
-                      // onChange={ (e) => handleCheckbox(e, pairArray) }
+                      onChange={ (e) => {
+                        handleCheckbox(e, index, pairArray, typeFood);
+                        // window.location.reload();
+                      } }
                     />
                     {' '}
                     <label
@@ -327,16 +380,19 @@ export default function RecipeDetails() {
               </Link>
             )
             : (
-              <Link to={ `/${idRecipe[1]}/${idRecipe[2]}` }>
+              <Link to="/receitas-feitas">
                 <button
                   style={ {
                     postion: 'fixed',
                     bottom: '0px',
                   } }
                   data-testid="finish-recipe-btn"
-                  className="start-recipe-btn"
+                  className="finish-recipe-btn"
+                  id="finish-recipe-btn"
                   type="button"
                   onClick={ () => setInProgress(!inProgress) }
+                  name="finish"
+                  disabled={ finishButtonEnable() }
                 >
                   FINALIZAR RECEITA
                 </button>
