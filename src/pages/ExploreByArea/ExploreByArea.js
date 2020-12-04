@@ -8,23 +8,30 @@ function ExploreByArea() {
   const [areas, setAreas] = useState({});
 
   const fetchByArea = async () => {
-    const resultAreas = await listByArea();
-    setAreas(resultAreas);
+    const result = await listByArea();
+    setAreas(result.meals);
+    console.log('result:', result);
+    console.log('areas:', areas);
   };
 
   useEffect(() => {
     fetchByArea();
+    console.log(areas);
   }, []);
 
-  const renderSelect = () => {
+  const renderSelect = () => (
     <select
       data-testid="explore-by-area-dropdown"
       className="area-select"
       name="area"
     >
-      const option = areas.map(area => { <option data-testid={ `${area}-option` } value={ area.strArea }> {area.strArea} </option> })
-    </select>;
-  };
+      {/* {areas.meals.map((area) => {
+        <option data-testid={ `${area}-option` } value={ area.strArea }>
+          {area.strArea}
+        </option>;
+      })} */}
+    </select>
+  );
 
   return (
     <div>
@@ -35,6 +42,15 @@ function ExploreByArea() {
       />
       <div className="drop-down-container">
         {renderSelect()}
+        <select
+          data-testid="explore-by-area-dropdown"
+          className="area-select"
+          name="area"
+        >
+          {/* <option data-testid={ `${areas.meals[0]}-option` } value={ areas.meals[0].strArea }>
+            {areas.meals[0].strArea}
+          </option> */}
+        </select>
       </div>
       <div className="footer">
         <Footer />
