@@ -26,6 +26,12 @@ async function fetchMeal(filter, searchTerm = '') {
     return firstLetterResponse.meals;
   }
 
+  case 'area': {
+    const fetchByArea = await fetch(`${url}filter.php?a=${searchTerm}`);
+    const areaResponse = await fetchByArea.json();
+    return areaResponse.meals;
+  }
+
   case 'allIngredients': {
     const fetchAllIngredients = await fetch(`${url}list.php?i=list`);
     const allIngredientsResponse = await fetchAllIngredients.json();

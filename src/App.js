@@ -14,6 +14,7 @@ import Profile from './pages/Profile';
 import DoneRecipe from './pages/DoneRecipe';
 import FavRecipe from './pages/FavRecipe';
 import RecipeDetails from './pages/RecipeDetails';
+import Page404 from './pages/PageNotFound';
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
         <Route exact path="/receitas-feitas" component={ DoneRecipe } />
         <Route exact path="/receitas-favoritas" component={ FavRecipe } />
         <Route exact path="/" component={ Login } />
+        <Route path="*" component={ Page404 } />
       </Switch>
     </BrowserRouter>
   );

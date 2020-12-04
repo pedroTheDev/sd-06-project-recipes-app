@@ -146,6 +146,21 @@ function RecipesAppProvider({ children }) {
     }
   };
 
+  const recipesToRenderByArea = async (areaSearch = '') => {
+    let fetchedRecipes = await (areaSearch === 'All'
+      ? fetchMeal('name')
+      : fetchMeal('area', areaSearch)
+    );
+
+    const first = 0;
+    const twelfth = 12;
+
+    if (fetchedRecipes) {
+      fetchedRecipes = fetchedRecipes.slice(first, twelfth);
+      setRecipes(fetchedRecipes);
+    } else setRecipes([]);
+  };
+
   const getMealDetail = async (id) => {
     const api = await fetchMeal('details', id);
     setDetails(api);
@@ -204,6 +219,7 @@ function RecipesAppProvider({ children }) {
     recipesToRenderByCategory,
     recipesToRenderByIngredient,
     recipesToRenderByFirstLetter,
+    recipesToRenderByArea,
   };
 
   return (
