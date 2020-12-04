@@ -205,6 +205,61 @@ function ComidasInProgress(props) {
     }
   };
 
+  const handleDoneRecipes = () => {
+    const recipesDone = JSON.parse(localStorage.getItem('doneRecipes'));
+
+    const today = new Date();
+    const date = `${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`;
+    const time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+    const dateTime = date + ' ' + time;
+
+    const {
+      idMeal,
+      strArea,
+      strCategory,
+      strMeal,
+      strMealThumb,
+      strTag,
+    } = fetchById[0];
+
+    if (!recipesDone) {
+      localStorage.setItem(
+        'doneRecipes',
+        JSON.stringify([
+          {
+            id: idMeal,
+            type: 'comida',
+            area: strArea,
+            category: strCategory,
+            alcoholicOrNot: '',
+            name: strMeal,
+            image: strMealThumb,
+            doneDate: dateTime,
+            tags: strTag ? [strTag.split(',')] : [],
+          },
+        ]),
+      );
+    } else {
+      localStorage.setItem(
+        'doneRecipes',
+        JSON.stringify([
+          ...doneRecipes,
+          {
+            id: idMeal,
+            type: 'comida',
+            area: strArea,
+            category: strCategory,
+            alcoholicOrNot: '',
+            name: strMeal,
+            image: strMealThumb,
+            doneDate: dateTime,
+            tags: strTag ? [strTag.split(',')] : [],
+          },
+        ]),
+      );
+    }
+  };
+
   return isFetching ? (
     <div className="align-self-center d-flex justify-content-center">
       <img src={ load } alt="loading" className="loading" />
@@ -269,6 +324,7 @@ function ComidasInProgress(props) {
                 className="start-recipe-btn"
                 data-testid="finish-recipe-btn"
                 disabled={ array.length !== checkedIngredients.length }
+                onClick={ handleDoneRecipes }
               >
                 Finalizar Receita!
               </button>

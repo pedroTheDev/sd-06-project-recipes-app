@@ -199,6 +199,61 @@ function BebidasInProgress(props) {
     }
   };
 
+  const handleDoneRecipes = () => {
+    const recipesDone = JSON.parse(localStorage.getItem('doneRecipes'));
+
+    const today = new Date();
+    const date = `${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`;
+    const time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+    const dateTime = date + ' ' + time;
+
+    const {
+      idDrink,
+      strCategory,
+      strAlcoholic,
+      strDrink,
+      strDrinkThumb,
+      strTag,
+    } = fetchById[0];
+
+    if (!recipesDone) {
+      localStorage.setItem(
+        'doneRecipes',
+        JSON.stringify([
+          {
+            id: idDrink,
+            type: 'bebida',
+            area: '',
+            category: strCategory,
+            alcoholicOrNot: strAlcoholic,
+            name: strDrink,
+            image: strDrinkThumb,
+            doneDate: dateTime,
+            tags: strTag ? [strTag.split(',')] : [],
+          },
+        ]),
+      );
+    } else {
+      localStorage.setItem(
+        'doneRecipes',
+        JSON.stringify([
+          ...doneRecipes,
+          {
+            id: idDrink,
+            type: 'bebida',
+            area: '',
+            category: strCategory,
+            alcoholicOrNot: strAlcoholic,
+            name: strDrink,
+            image: strDrinkThumb,
+            doneDate: dateTime,
+            tags: strTag ? [strTag.split(',')] : [],
+          },
+        ]),
+      );
+    }
+  };
+
   return isFetching ? (
     <div className="align-self-center d-flex justify-content-center">
       <img src={ load } alt="loading" className="loading" />
@@ -258,6 +313,7 @@ function BebidasInProgress(props) {
                 className="start-recipe-btn"
                 disabled={ array.length !== checkedIngredients.length }
                 data-testid="finish-recipe-btn"
+                onClick={ handleDoneRecipes }
               >
                 Finalizar Receita!
               </button>

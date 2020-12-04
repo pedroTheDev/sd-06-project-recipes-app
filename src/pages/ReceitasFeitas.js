@@ -1,10 +1,13 @@
 import React from 'react';
 import Header from '../components/Header';
 
-const ReceitasFeitas = () => (
-  <div>
-    <Header title="Receitas Feitas" />
-  </div>
-);
+const ReceitasFeitas = () => {
+  return (
+    <section>
+      <Header title="Receitas Feitas" />
+      
+    </section>
+  );
+}
 
 export default ReceitasFeitas;
