@@ -33,7 +33,7 @@ function DrinkDetails() {
       const allIngredients = filterDrink
         .map((item, index) => ({
           ingredient: drink[item], measure: drink[filterMeasure[index]],
-        }));
+        })).filter((item) => item.ingredient !== '' && item.ingredient !== null);
       setIngredients(allIngredients);
     }
     fetchData();

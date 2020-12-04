@@ -34,7 +34,7 @@ function FoodDetails() {
       const allIngredients = filterMeal
         .map((item, index) => ({
           ingredient: meal[item], measure: meal[filterMeasure[index]],
-        }));
+        })).filter((item) => item.ingredient !== '' && item.ingredient !== null);
 
       console.log(allIngredients);
       setIngredients(allIngredients);
