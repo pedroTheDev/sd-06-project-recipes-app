@@ -4,7 +4,7 @@ import ShareIcon from '../images/shareIcon.svg';
 
 export default function ShareButton({ index, id, type }) {
   const [alert, setAlert] = useState();
-  console.log(type);
+  // console.log(type);
   function shareRecipeLink() {
     const drinkOrFood = (type === 'Meal' || type === 'comida')
       ? '/comidas/' : '/bebidas/';
