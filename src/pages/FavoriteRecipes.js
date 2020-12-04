@@ -27,7 +27,7 @@ export default function FavoriteRecipes() {
   };
 
   useEffect(() => {
-    console.log('update');
+    // console.log('update');
   }, [update]);
 
   function handleLocalStorage(id) {

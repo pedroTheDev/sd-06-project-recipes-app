@@ -20,7 +20,7 @@ export default function ExploreIngredient() {
       ? json.meals
       : json.drinks;
     setingredients(jsonIngredients);
-    console.log(jsonIngredients);
+    // console.log(jsonIngredients);
   };
 
   useEffect(() => { fetchIngredients(); }, []);
