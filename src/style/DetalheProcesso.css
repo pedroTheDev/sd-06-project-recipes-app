@@ -60,7 +60,7 @@
 }
 
 .div-title p {
-  color: #ffffff !important; 
+  color: #ffffff !important;
   font-family: 'Montserrat', sans-serif;
   font-size: 16pt !important;
   margin: 0;
@@ -293,6 +293,10 @@
   cursor: pointer;
 }
 
+.copy {  
+  color: black;
+}
+
 @media only screen and (min-width: 768px) {
   .img-details-progress{
     margin-top: 150px;
@@ -334,5 +338,4 @@
     margin: auto;
     width: 400px;
   }
-
 }

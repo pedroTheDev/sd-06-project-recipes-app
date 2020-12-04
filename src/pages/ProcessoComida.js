@@ -165,7 +165,7 @@ function ProcessoComida() {
               alt="Botão de Compartilhar"
             />
           </button>
-          { isCopied ? <p>Link copiado!</p> : true }
+          { isCopied ? <span>Link copiado!</span> : true }
         </div>
         <div className="div-title">
           <h1 className="h1" data-testid="recipe-title">

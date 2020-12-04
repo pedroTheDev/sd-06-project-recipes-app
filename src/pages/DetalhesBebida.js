@@ -121,7 +121,7 @@ function DetalhesBebida() {
                       className="icons"
                     />
                   </button>
-                  { isCopied ? <p>Link copiado!</p> : true }
+                  { isCopied && <span className="copy">Link copiado!</span> }
                 </div>
                 <div className="div-details-title">
                   <h1 data-testid="recipe-title">{ dataDrinks.strDrink }</h1>
