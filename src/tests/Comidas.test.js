@@ -1,9 +1,14 @@
 import React from 'react';
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, waitForElement } from '@testing-library/react';
 import renderWithRouter from './services/renderWithRouter';
 import Comidas from '../pages/Comidas';
+import mockFetch from './mocks/fetch';
 
 describe('A página de comidas: ', () => {
+
+  beforeAll(() => jest.spyOn(global, 'fetch'));
+  beforeEach(() => global.fetch.mockImplementation(mockFetch));
+
   it('deve ter um header com o título "Comidas"', () => {
     const {
       history,
@@ -77,25 +82,14 @@ describe('A página de comidas: ', () => {
     expect(currentUrl).toBe('/comidas');
   });
 
-  it('renderiza cards de receitas', () => {
-    const mockedResult = [{
-      idMeal: "51489",
-      strMeal: "Prato bom bagarai",
-      strMealThumb:
-        "https:\/\/www.themealdb.com\/images\/media\/meals\/58oia61564916529.jpg",
-    }];
-    jest.spyOn(global, 'fetch')
-      .mockImplementation(() => Promise.resolve({
-        status: 200,
-        json: () => Promise.resolve({
-          meals: mockedResult,
-        }),
-      }));
+  it('renderiza cards de receitas', async () => {
+    const { getAllByRole } = renderWithRouter(<Comidas />);
+    const cardsQuantity = 12;
 
-    const { getAllByRole, getByAltText } = renderWithRouter(<Comidas />);
-    const cardsQuantity = 1;
-
-    const cardsNumber = getAllByRole('img', { name: 'Receita' });
+    const cardsNumber = await waitForElement(
+      () => getAllByRole('img', { name: 'Receita' }),
+      { document },
+    );
 
     expect(cardsNumber.length).toEqual(cardsQuantity);
   });
