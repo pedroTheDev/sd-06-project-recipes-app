@@ -1,27 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 
 import { detailsDrinkById } from '../services/aPI';
 import { FavoriteDrinkButton } from '../components/FavoriteBtn';
 import ShareButton from '../components/ShareBtn';
+import ContextAPI from '../Context/ContextAPI';
 
 import './ProcessoComida.css';
+import Instructions from '../components/Instructions';
+import BasicInfo from '../components/BasicInfo';
 
 const ProcessoBebidas = () => {
-  const [recipeProgress, setRecipeProgress] = useState();
-  const [attributesNames, setAttributesNames] = useState();
+  const [drinkDetails, setDrinkDetails] = useState();
   const [checkedId, setCheckedId] = useState([]);
 
   const idDrink = useParams().id;
 
-  const handleIdInProgress = async () => {
-    const recipeById = await detailsDrinkById(idDrink);
+  const { detailsInfo, setDetailsInfo } = useContext(ContextAPI);
 
-    setRecipeProgress({
-      ...recipeProgress,
-      drink: recipeById,
+  const handleIdInProgress = async () => {
+    const drink = await detailsDrinkById(idDrink);
+    console.log(drink.drinks[0]);
+
+    setDrinkDetails({
+      ...drinkDetails,
+      drink: drink.drinks[0],
     });
+    setDetailsInfo({ ...detailsInfo, drinks: drink.drinks[0] });
   };
 
   const loadCheckedIngredientsLocalStorage = () => {
@@ -50,31 +56,8 @@ const ProcessoBebidas = () => {
     loadDoneRecipesFromStorage();
   }, []);
 
-  const handleAttributesNames = () => {
-    if (recipeProgress) {
-      setAttributesNames({
-        idDrink: recipeProgress.drink.drinks[0].idDrink,
-        photoDrink: recipeProgress.drink.drinks[0].strDrinkThumb,
-        area: recipeProgress.drink.drinks[0].strArea,
-        nameDrink: recipeProgress.drink.drinks[0].strDrink,
-        categoryDrink: recipeProgress.drink.drinks[0].strCategory,
-        instructionsDrink: recipeProgress.drink.drinks[0].strInstructions,
-        doneDate: '',
-        tags: recipeProgress.drink.drinks[0].strTags
-          ? recipeProgress.drink.drinks.strTags
-          : [],
-      });
-    } else {
-      return '';
-    }
-  };
-
-  useEffect(() => {
-    handleAttributesNames();
-  }, [recipeProgress]);
-
   const getIngredientsOrMeasure = (param) => {
-    const dataObject = recipeProgress.drink.drinks[0];
+    const dataObject = drinkDetails.drink;
 
     const dataKeys = Object.keys(dataObject)
       .filter((key) => key.includes(param)
@@ -87,19 +70,19 @@ const ProcessoBebidas = () => {
   };
 
   const setDoneRecipes = () => {
-    if (recipeProgress) {
+    if (drinkDetails) {
       const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
       localStorage.setItem('doneRecipes', JSON.stringify([...doneRecipes, {
-        id: recipeProgress.drink.drinks[0].idDrink,
+        id: drinkDetails.drink.idDrink,
         type: 'bebida',
-        area: recipeProgress.drink.drinks[0].strArea,
-        category: recipeProgress.drink.drinks[0].strCategory,
+        area: drinkDetails.drink.strArea,
+        category: drinkDetails.drink.strCategory,
         alcoholicOrNot: '',
-        name: recipeProgress.drink.drinks[0].strDrink,
-        photoFood: recipeProgress.drink.drinks[0].strDrinkThumb,
+        name: drinkDetails.drink.strDrink,
+        photoFood: drinkDetails.drink.strDrinkThumb,
         doneDate: '',
-        tags: recipeProgress.drink.drinks[0].strTags
-          ? recipeProgress.drink.drinks[0].strTags
+        tags: drinkDetails.drink.strTags
+          ? drinkDetails.drink.strTags
           : [],
       }]));
     } else {
@@ -140,35 +123,11 @@ const ProcessoBebidas = () => {
 
   return (
     <div>
-      {!attributesNames
+      {!drinkDetails
         ? <div className="loading">Loading...</div>
         : (
           <div className="body-progress">
-            <div className="container-photo">
-              <img
-                data-testid="recipe-photo"
-                src={ attributesNames.photoDrink }
-                alt={ attributesNames.nameDrink }
-              />
-            </div>
-            <div className="container-title">
-              <div
-                className="title"
-                data-testid="recipe-title"
-              >
-                {attributesNames.nameDrink}
-              </div>
-              <div className="container-icons">
-                <ShareButton />
-                <FavoriteDrinkButton />
-              </div>
-            </div>
-            <div
-              className="container-cotegory"
-              data-testid="recipe-category"
-            >
-              {attributesNames.categoryDrink}
-            </div>
+            <BasicInfo />
             <div className="span-ingredients">
               <span>Ingredients</span>
             </div>
@@ -190,15 +149,7 @@ const ProcessoBebidas = () => {
                 </label>
               ))}
             </div>
-            <div
-              className="container-instructions"
-              data-testid="instructions"
-            >
-              <span>Instructions</span>
-              <div className="text-instructions">
-                {attributesNames.instructionsDrink}
-              </div>
-            </div>
+            <Instructions />
             <div className="container-button">
               <button
                 type="button"

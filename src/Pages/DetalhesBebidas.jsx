@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
+
 import { detailsDrinkById, showSugestedFoods } from '../services/aPI';
+import ContextAPI from '../Context/ContextAPI';
+import Instructions from '../components/Instructions';
+import BasicInfo from '../components/BasicInfo';
+import Ingredients from '../components/Ingredients';
+
 import './DetalhesBebidas.css';
-import { FavoriteDrinkButton } from '../components/FavoriteBtn';
-import ShareButton from '../components/ShareBtn';
 
 const DetalhesBebidas = () => {
   const [stateLocal, setStatelocal] = useState();
@@ -13,11 +17,13 @@ const DetalhesBebidas = () => {
 
   const currentDrinkID = useParams().id;
 
+  const { detailsInfo, setDetailsInfo } = useContext(ContextAPI);
+
   const handleIdDetails = async () => {
     const drink = await detailsDrinkById(currentDrinkID);
-    console.log(drink);
 
     setStatelocal({ ...stateLocal, drink });
+    setDetailsInfo({ ...detailsInfo, drinks: drink.drinks[0] });
   };
 
   const getSugestedFoods = async () => {
@@ -77,63 +83,9 @@ const DetalhesBebidas = () => {
     <div className="body-details">
       {stateLocal ? (
         <div className="container-main">
-          {console.log(stateLocal)}
-          <div className="container-photo">
-            <img
-              data-testid="recipe-photo"
-              className="img-initial"
-              src={ stateLocal.drink.drinks[0].strDrinkThumb }
-              alt={ stateLocal.drink.drinks[0].strDrink }
-            />
-          </div>
-          <div className="container-title">
-            <span
-              className="title"
-              data-testid="recipe-title"
-            >
-              { stateLocal.drink.drinks[0].strDrink }
-            </span>
-            <div className="container-icons">
-              <ShareButton />
-              <FavoriteDrinkButton />
-            </div>
-          </div>
-          <div
-            className="container-cotegory"
-            data-testid="recipe-category"
-          >
-            {stateLocal.drink.drinks[0].strCategory}
-            {stateLocal.drink.drinks[0].strAlcoholic}
-          </div>
-          <div
-            className="span-ingredients"
-          >
-            <span>
-              Ingredients
-            </span>
-          </div>
-          <div className="box-ingredients">
-            <ul>
-              {getIngredientsOrMeasure('strIngredient').map((ingred, i) => (
-                <li
-                  data-testid={ `${i}-ingredient-name-and-measure` }
-                  key={ i }
-                >
-                  {`${ingred} - ${getIngredientsOrMeasure('strMeasure')[i]}`}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="container-span">
-            <span>Instructions</span>
-          </div>
-          <div className="box-instructions">
-            <span
-              data-testid="instructions"
-            >
-              {stateLocal.drink.drinks[0].strInstructions}
-            </span>
-          </div>
+          <BasicInfo />
+          <Ingredients />
+          <Instructions />
           <div className="recomendation-span">
             <span>
               Recomendadas

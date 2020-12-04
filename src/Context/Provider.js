@@ -11,6 +11,10 @@ const RecipesProvider = ({ children }) => {
     foods: [],
     drinks: [],
   });
+  const [detailsInfo, setDetailsInfo] = useState({
+    foods: {},
+    drinks: {},
+  });
 
   const contextState = {
     email,
@@ -23,6 +27,8 @@ const RecipesProvider = ({ children }) => {
     setPageName,
     categories,
     setCategories,
+    detailsInfo,
+    setDetailsInfo,
   };
 
   return (

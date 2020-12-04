@@ -18,7 +18,7 @@ function ShareButton() {
 
   useEffect(() => {
     let url = window.location.href;
-    console.log(url);
+
     if (url.includes('in-progress')) {
       url = url.split('/in-progress');
     }

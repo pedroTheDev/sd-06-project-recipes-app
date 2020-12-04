@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import { detailsFoodById, showSugestedDrinks } from '../services/aPI';
 import './DetalhesComida.css';
 
-import { FavoriteFoodButton } from '../components/FavoriteBtn';
-import ShareButton from '../components/ShareBtn';
+import ContextAPI from '../Context/ContextAPI';
+import Instructions from '../components/Instructions';
+import Ingredients from '../components/Ingredients';
+import BasicInfo from '../components/BasicInfo';
 
 const DetalhesComida = () => {
   const [stateLocal, setStatelocal] = useState();
@@ -14,10 +16,13 @@ const DetalhesComida = () => {
 
   const currentFoodID = useParams().id;
 
+  const { detailsInfo, setDetailsInfo } = useContext(ContextAPI);
+
   const handleIdDetails = async () => {
     const food = await detailsFoodById(currentFoodID);
     console.log(food);
     setStatelocal({ ...stateLocal, food });
+    setDetailsInfo({ ...detailsInfo, foods: food.meals[0] });
   };
 
   const getSugestedDrinks = async () => {
@@ -76,61 +81,9 @@ const DetalhesComida = () => {
     <div className="body-details">
       {stateLocal ? (
         <div className="container-main">
-          {/* {console.log(JSON.parse(localStorage.getItem('heart')).heart)} */}
-          <div className="container-photo">
-            <img
-              data-testid="recipe-photo"
-              className="img-initial"
-              src={ stateLocal.food.meals[0].strMealThumb }
-              alt={ stateLocal.food.meals[0].strMeal }
-            />
-          </div>
-          <div className="container-title">
-            <span
-              className="title"
-              data-testid="recipe-title"
-            >
-              { stateLocal.food.meals[0].strMeal }
-            </span>
-            <div className="container-icons">
-              <ShareButton />
-              <FavoriteFoodButton />
-            </div>
-          </div>
-          <div
-            className="container-cotegory"
-            data-testid="recipe-category"
-          >
-            {stateLocal.food.meals[0].strCategory}
-          </div>
-          <div
-            className="span-ingredients"
-          >
-            <span>Ingredients</span>
-          </div>
-          <div className="box-ingredients">
-            <ul>
-              {getIngredientsOrMeasure('strIngredient').map((ingred, i) => (
-                <li
-                  data-testid={ `${i}-ingredient-name-and-measure` }
-                  key={ i }
-                >
-                  {`${ingred} - ${getIngredientsOrMeasure('strMeasure')[i]}`}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="container-span">
-            <span>Instructions</span>
-          </div>
-          <div className="box-instructions">
-            <span
-              className="text-instructions-details"
-              data-testid="instructions"
-            >
-              {stateLocal.food.meals[0].strInstructions}
-            </span>
-          </div>
+          <BasicInfo />
+          <Ingredients />
+          <Instructions />
           <div className="container-span-video">
             <span>Video</span>
           </div>
