@@ -1,16 +1,24 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import profileIcon from '../images/profileIcon.svg';
-import searchIcon from '../images/searchIcon.svg';
-import SearchBar from './SearchBar';
+// import profileIcon from '../images/profileIcon.svg';
+// import searchIcon from '../images/searchIcon.svg';
 
-// CSS
-import '../styles/header.css';
+// Icons
+import { faUser, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+// Styled Components
+import { HeaderContainer, HeaderTitle, IconStyle } from '../styles/headerStyle';
+
+// Context
+import RecipesContext from '../context/RecipesContext';
 
 function HeaderFood() {
-  const [showBar, setShowBar] = useState(false);
+  const { searchBar, setSearchBar } = useContext(RecipesContext);
+
   const path = window.location.pathname;
   let title = '';
+  // eslint-disable-next-line no-unused-vars
   let searchIconShow;
   if (path === '/comidas') {
     title = 'Comidas'; searchIconShow = true;
@@ -37,33 +45,32 @@ function HeaderFood() {
   }
 
   const handleShowBar = () => {
-    if (showBar) {
-      setShowBar(false);
-    } else if (!showBar) {
-      setShowBar(true);
+    setSearchBar(true);
+    if (searchBar === true) {
+      setSearchBar(false);
     }
   };
 
   return (
-    <div className="header-container">
-      <Link to="/perfil">
-        <img
-          data-testid="profile-top-btn"
-          className="profile-top-img"
-          src={ profileIcon }
-          alt="profile"
+    <HeaderContainer>
+      <IconStyle>
+        <Link to="/perfil">
+          <FontAwesomeIcon icon={ faUser } size="3x" />
+        </Link>
+      </IconStyle>
+
+      <HeaderTitle>
+        {`[  ${title}  ]`}
+      </HeaderTitle>
+
+      <IconStyle>
+        <FontAwesomeIcon
+          icon={ faSearch }
+          size="3x"
+          onClick={ handleShowBar }
         />
-      </Link>
-      <h1 data-testid="page-title">{title}</h1>
-      { searchIconShow ? <input
-        onClick={ handleShowBar }
-        type="image"
-        data-testid="search-top-btn"
-        src={ searchIcon }
-        alt="search"
-      /> : null}
-      { showBar ? <SearchBar /> : null}
-    </div>
+      </IconStyle>
+    </HeaderContainer>
   );
 }
 

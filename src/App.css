@@ -8,3 +8,42 @@ body {
 input:focus {
   outline: none;
 }
+
+@font-face {
+  font-family: 'Foodpacker';
+  src: url(./fonts/Foodpacker.otf);
+}
+
+::-webkit-scrollbar {
+  width: 2px;
+  height: 2px;
+}
+::-webkit-scrollbar-button {
+  width: 2px;
+  height: 2px;
+}
+::-webkit-scrollbar-thumb {
+  background: #f28787;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #f28787;
+}
+::-webkit-scrollbar-thumb:active {
+  background: #000000;
+}
+::-webkit-scrollbar-track {
+  background: #872222;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+::-webkit-scrollbar-track:hover {
+  background: #872222;
+}
+::-webkit-scrollbar-track:active {
+  background: #872222;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
