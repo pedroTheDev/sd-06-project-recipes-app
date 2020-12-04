@@ -229,7 +229,7 @@ function DetalhesBebida() {
   }
 
   function checkDisable() {
-    const checkBoxesHtml = document.querySelectorAll('.checkBox');
+    const checkBoxesHtml = document.getElementsByClassName('checkBox');
     console.log(checkBoxesHtml);
     return true;
   }
