@@ -15,7 +15,7 @@
 .header h1 {
   color: #ffffff;
   font-family: 'Montserrat', sans-serif;
-  font-size: 25pt;
+  font-size: 20pt;
   font-weight: 700;
   text-align: center;
 }
@@ -35,10 +35,4 @@
 
 .header-logo {
   width: 50px;
-}
-
-@media only screen and ( min-width : 768px ) {
-  .header h1 {
-    font-size: 30pt;
-  }
 }

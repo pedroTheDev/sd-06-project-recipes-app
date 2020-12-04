@@ -5,7 +5,7 @@
   flex-flow: column wrap;
   justify-content: center;
   margin: auto;
-  margin-top: 50%;
+  margin-top: 200px;
 }
 
 .div-buttons button {
@@ -63,10 +63,4 @@
 .button-surprise:hover {
   background-color: #ac015c;
   cursor: pointer;
-}
-
-@media only screen and ( min-width : 1024px ) {
-  .div-buttons {
-    margin-top: 20%;
-  }
 }

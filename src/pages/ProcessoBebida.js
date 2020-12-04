@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import SecondHeader from '../components/SecondHeader';
 import useCopyToClipboard from '../hooks/useCopyToClipboard';
-import { shareIcon, whiteHeartIcon, blackHeartIcon } from '../images';
-import '../style/Processo.css';
+import { shareIcon, whiteHeartIcon, blackHeartIcon, loading } from '../images';
+import '../style/DetalheProcesso.css';
 
 function ProcessoBebida() {
   const timeoutTextCopy = 3000;
@@ -124,91 +123,99 @@ function ProcessoBebida() {
     }]);
   };
 
-  return (isLoading) ? <p>Loading</p> : (
-      <div className="container-progress">
-        <img
-          data-testid="recipe-photo"
-          src={ dataDrinks.strDrinkThumb }
-          alt="Foto da receita"
-          className="food-image"
-        />
-        <div className="div-header">
-          <div className="div-icon">
-            <span>
-              <button
-                type="button"
-                data-testid="share-btn"
-                onClick={ () => handleCopy(`/bebidas/${idDrink}`) }
-              >
-                <img
-                  src={ shareIcon }
-                  alt="Botão de Compartilhar"
-                />
-              </button>
-              { isCopied ? <p>Link copiado!</p> : true }
-            </span>
-            <button
-              type="button"
-              onClick={ handleClick }
-            >
-              <img
-                data-testid="favorite-btn"
-                src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
-                alt="Botão de Favorito"
-              />
-            </button>
-            <h1
-              className="h1"
-              data-testid="recipe-title"
-            >
-              { dataDrinks.strDrink }
-            </h1>
-          </div>
-        </div>
-        <div className="div-recipes">
-          <h2 data-testid="recipe-category">
-            Ingredientes
-          </h2>
-          { Object.keys(dataDrinks)
-            .filter((keys) => keys.includes('Ingredient'))
-            .map((ingredient, index) => {
-              if (dataDrinks[ingredient] !== '' && dataDrinks[ingredient] !== null) {
-                return (
-                  <div
-                    className="label"
-                    key={ index }
-                    data-testid={ `${index}-ingredient-step` }
-                  >
-                    <input
-                      className="checkbox"
-                      type="checkbox"
-                      name={ dataDrinks[ingredient] }
-                      checked={ checked.includes(index) }
-                      onChange={ ({ target }) => { handleChange(target, index); } }
-                    />
-                    { dataDrinks[ingredient] }
-                  </div>
-                );
-              }
-              return '';
-            }) }
-          <h2 data-testid="instructions">
-            Instruções
-          </h2>
-          <p data-testid="instructions">{ dataDrinks.strInstructions }</p>
-        </div>
-        <Link to="/receitas-feitas">
+  return (isLoading) ? <img className="loading" src={ loading } alt="loading" /> : (
+    <div className="container-details-progress">
+      <img
+        className="img-details-progress"
+        data-testid="recipe-photo"
+        src={ dataDrinks.strDrinkThumb }
+        alt="Foto da receita"
+      />
+      <div className="div-header">
+        <div className="div-icon">
           <button
-            className="finish-recipe"
             type="button"
-            data-testid="finish-recipe-btn"
-            disabled={ isDisable }
-            onClick={ saveDoneRecipes }
+            onClick={ handleClick }
           >
-            Finalizar Receita
+            <img
+              data-testid="favorite-btn"
+              src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+              alt="Botão de Favorito"
+            />
           </button>
-        </Link>
+          <button
+            type="button"
+            data-testid="share-btn"
+            onClick={ () => handleCopy(`/bebidas/${idDrink}`) }
+          >
+            <img
+              src={ shareIcon }
+              alt="Botão de Compartilhar"
+            />
+          </button>
+          { isCopied ? <p>Link copiado!</p> : true }
+        </div>
+        <div className="div-title">
+          <h1 data-testid="recipe-title">
+            { dataDrinks.strDrink }
+          </h1>
+        </div>
       </div>
+      <div className="div-recipes">
+        <h2 data-testid="recipe-category">
+          Categoria
+        </h2>
+        { Object.keys(dataDrinks)
+          .filter((keys) => keys.includes('Ingredient'))
+          .map((ingredient, index) => {
+            if (dataDrinks[ingredient] !== '' && dataDrinks[ingredient] !== null) {
+              return (
+                <div
+                  className="label"
+                  key={ index }
+                  data-testid={ `${index}-ingredient-step` }
+                >
+                  <input
+                    className="checkbox"
+                    type="checkbox"
+                    name={ dataDrinks[ingredient] }
+                    checked={ checked.includes(index) }
+                    onChange={ ({ target }) => { handleChange(target, index); } }
+                  />
+                  { dataDrinks[ingredient] }
+                </div>
+              );
+            }
+            return '';
+          }) }
+        <h2 data-testid="instructions">
+          Instruções
+        </h2>
+      </div>
+      <div className="buttons-footer">
+        <div>
+          <Link to="/receitas-feitas">
+            <button
+              className="finish-recipe"
+              type="button"
+              data-testid="finish-recipe-btn"
+              disabled={ isDisable }
+              onClick={ saveDoneRecipes }
+            >
+              Finalizar Receita
+            </button>
+          </Link>
+          <Link to="/bebidas">
+            <button
+              className="back"
+              type="button"
+            >
+              Ver Outras Receitas
+            </button>
+          </Link>
+        </div>
+      </div>
+    </div>
   );
 }
 

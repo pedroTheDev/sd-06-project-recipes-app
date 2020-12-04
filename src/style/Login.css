@@ -9,7 +9,7 @@ body {
   flex-flow: column wrap;
   justify-content: center;
   margin: auto;
-  margin-top: 20%;
+  margin-top: 100px;
   width: 100%;
 }
 
@@ -19,7 +19,7 @@ body {
   margin: auto;
   margin-bottom: 5%;
   padding: 3%;
-  width: 250px;
+  width: 200px;
 }
 
 .login form {
@@ -52,7 +52,7 @@ form button {
   border-radius: 5px;
   color: #ffffff;
   font-family: 'Montserrat', sans-serif;
-  font-size: 25px;
+  font-size: 16pt;
   font-weight: 700;
   height: 40px;
   margin-top: 5px;
@@ -70,25 +70,3 @@ form button:hover:disabled {
   background-color: #cccccc;
   color: #666666;
 }
-
-@media only screen and (min-width: 768px) and (max-width: 1024px) {
-  .login {
-    flex-flow: row nowrap;
-    margin-top: 20%;
-  }
-
-  .login img {
-    width: 300px;
-  }
-} 
-
-@media only screen and (min-width: 1024px) {
-  .login {
-    flex-flow: row nowrap;
-    margin-top: 5%;
-  }
-
-  .login img {
-    width: 500px;
-  }
-} 

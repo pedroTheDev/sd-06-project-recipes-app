@@ -5,7 +5,7 @@
   flex-flow: column wrap;
   justify-content: center;
   margin: auto;
-  margin-top: 20%;
+  margin-top: 200px;
 }
 
 .email {
@@ -63,8 +63,8 @@
   cursor: pointer;
 }
 
-@media only screen and ( min-width : 1024px ) {
+/* @media only screen and ( min-width : 1024px ) {
   .div-profile {
     margin-top: 10%;
   }
-}
+} */

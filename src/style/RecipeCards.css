@@ -4,7 +4,7 @@
 }
 
 .cards-div {
-  padding: 50px 0px 75px;
+  padding: 10px 0px 75px;
   width: 100%;
 }
 
@@ -23,8 +23,8 @@
   display: flex;
   flex-flow: column wrap;
   justify-content: center;
-  margin: 5%;
-  width: 300px;
+  margin-top: 10%;
+  width: 250px;
 }
 
 .card-div img {
@@ -38,12 +38,12 @@
   color: #272c35;
   cursor: pointer;
   font-family: 'Montserrat', sans-serif;
-  font-size: 20pt;
+  font-size: 16pt;
   font-weight: 700;
   margin: 0;
   padding: 2% 0;
   text-align: center;
-  width: 300px;
+  width: 250px;
 }
 
 .card-div h1:hover {
@@ -58,11 +58,20 @@
   text-decoration: none !important;
 }
 
-@media only screen and ( min-width : 768px ) {
+/* @media only screen and ( min-width : 768px ) {
   .card-div div {
     width: 360px;
   }
   .card-div h1  {
     width: 325px;
+} */
+
+@media only screen and (min-width: 768px) {
+  .cards-div {
+    padding-top: 50px;
+  }
+
+  .card-div div {
+    margin: 10px 10px;
   }
 }

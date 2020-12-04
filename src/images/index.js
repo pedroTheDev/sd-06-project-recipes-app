@@ -11,3 +11,4 @@ export { default as logo } from './logo.png';
 export { default as logoImg } from './logo_img.png';
 export { default as setaDireita } from './setaDireita.png';
 export { default as setaEsquerda } from './setaEsquerda.png';
+export { default as loading } from './loading.png';

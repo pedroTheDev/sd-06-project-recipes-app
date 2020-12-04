@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import CategoriesButtonsDrinks from './CategoriesButtonsDrinks';
 import RecipesContext from '../context/RecipesContext';
+import { loading } from '../images';
 import '../style/RecipeCards.css';
 
 function RecipesDrinksCards({ categories }) {
@@ -10,7 +11,7 @@ function RecipesDrinksCards({ categories }) {
   const DOZE = 12;
 
   if (!categories || data.length < 1) {
-    return <h2>Loading...</h2>;
+    return <img className="loading" src={ loading } alt="loading" />;
   }
 
   return (
