@@ -175,20 +175,19 @@ function ProcessoBebida() {
           .map((ingredient, index) => {
             if (dataDrinks[ingredient] !== '' && dataDrinks[ingredient] !== null) {
               return (
-                <div
-                  className="label"
+                <label
                   key={ index }
                   data-testid={ `${index}-ingredient-step` }
+                  className="container-checkbox"
                 >
                   <input
-                    className="checkbox"
                     type="checkbox"
                     name={ dataDrinks[ingredient] }
                     checked={ checked.includes(index) }
                     onChange={ ({ target }) => { handleChange(target, index); } }
                   />
-                  { dataDrinks[ingredient] }
-                </div>
+                  <span class="checkmark">{ dataDrinks[ingredient] }</span>
+                </label>
               );
             }
             return '';

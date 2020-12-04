@@ -95,16 +95,55 @@
   width: 90% !important;
 }
 
-.label, 
-.checkbox {
-  color: #272c35 !important; 
+.container-checkbox {
+  color: #272c35 !important;
+  cursor: pointer;
+  display: block;
   font-family: 'Montserrat', sans-serif;
-  font-size: 16pt !important;
-  margin-left: 30px
+  font-size: 14pt;
+  margin-bottom: 12px;
+  margin-left: 30px;
+  position: relative;
+  padding-left: 35px;
 }
 
-.label:checked {
-  text-decoration: line-through;
+.container-checkbox input {
+  display: none
+}
+/* Create a custom checkbox - using ::before */
+.checkmark::before {
+  content: "";
+  height: 25px;
+  width: 25px;
+  background-color: #e2dfdf;
+  position: absolute;
+  left:0;
+  top:0;
+}
+/* On mouse-over, add a grey background color */
+.container-checkbox:hover input~.checkmark::before {
+  background-color: #cfcccc;
+}
+
+.container-checkbox input:checked~.checkmark::before {
+  background-color: #960051;
+}
+
+.container-checkbox input:checked~.checkmark:after {
+  display: block;
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+  content: "";
+  position: absolute;
+}
+
+.container-checkbox input:checked~.checkmark {
+  text-decoration: line-through !important;
 }
 
 .video {
