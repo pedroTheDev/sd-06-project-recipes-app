@@ -49,7 +49,6 @@ function DetalhesComida(props) {
       const favoriteRecipes = JSON.parse(
         localStorage.getItem('favoriteRecipes'),
       );
-      console.log(favoriteRecipes);
 
       if (!favoriteRecipes || !favoriteRecipes.length) {
         setIsFavorite(false);

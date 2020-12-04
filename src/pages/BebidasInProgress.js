@@ -87,9 +87,7 @@ function BebidasInProgress(props) {
   };
 
   const copyToCB = () => {
-    const url = window.location.href;
-
-    copy(url);
+    copy(`http://localhost:3000/bebidas/${id}`);
     setCopied(true);
   };
 

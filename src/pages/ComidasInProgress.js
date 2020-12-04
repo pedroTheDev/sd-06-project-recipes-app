@@ -93,9 +93,7 @@ function ComidasInProgress(props) {
   };
 
   const copyToCB = () => {
-    const url = window.location.href;
-
-    copy(url);
+    copy(`http://localhost:3000/comidas/${id}`);
     setCopied(true);
   };
 
