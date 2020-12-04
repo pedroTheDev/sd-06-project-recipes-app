@@ -229,8 +229,8 @@ function DetalhesBebida() {
   }
 
   function checkDisable() {
-    const checkBoxesHtml = document.getElementsByClassName('checkBox');
-    console.log(checkBoxesHtml)
+    const checkBoxesHtml = document.querySelectorAll('.checkBox');
+    console.log(checkBoxesHtml);
     return true;
   }
 
@@ -260,7 +260,13 @@ function DetalhesBebida() {
           </div>
           <h3 className="titulo">Instruções</h3>
           <p data-testid="instructions" className="intrucoes">{bebida.strInstructions}</p>
-          <button type="button" data-testid="finish-recipe-btn" disabled={ checkDisable() }>Finalizar receita</button>
+          <button
+            type="button"
+            data-testid="finish-recipe-btn"
+            disabled={ checkDisable() }
+          >
+            Finalizar receita
+          </button>
         </div>
       )));
 }
