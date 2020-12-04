@@ -179,18 +179,16 @@ function ProcessoComida() {
             if (dataMeal[ingredient] !== '' && dataMeal[ingredient] !== null) {
               return (
                 <div
-                  className="label"
                   key={ index }
                   data-testid={ `${index}-ingredient-step` }
                 >
                   <input
-                    className="checkbox"
                     type="checkbox"
                     name={ dataMeal[ingredient] }
                     checked={ checked.includes(index) }
                     onChange={ ({ target }) => { handleChange(target, index); } }
                   />
-                  { dataMeal[ingredient] }
+                  <span className="checkmark">{ dataMeal[ingredient] }</span>
                 </div>
               );
             }

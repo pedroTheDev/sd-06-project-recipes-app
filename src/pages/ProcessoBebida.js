@@ -175,7 +175,7 @@ function ProcessoBebida() {
           .map((ingredient, index) => {
             if (dataDrinks[ingredient] !== '' && dataDrinks[ingredient] !== null) {
               return (
-                <label
+                <div
                   key={ index }
                   data-testid={ `${index}-ingredient-step` }
                   className="container-checkbox"
@@ -186,8 +186,8 @@ function ProcessoBebida() {
                     checked={ checked.includes(index) }
                     onChange={ ({ target }) => { handleChange(target, index); } }
                   />
-                  <span class="checkmark">{ dataDrinks[ingredient] }</span>
-                </label>
+                  <span className="checkmark">{ dataDrinks[ingredient] }</span>
+                </div>
               );
             }
             return '';
