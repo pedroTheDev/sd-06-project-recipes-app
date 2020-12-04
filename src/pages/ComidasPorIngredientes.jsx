@@ -37,7 +37,7 @@ function ComidaPorIngredientes({ history }) {
 
   return (
     <>
-      <Header name="Comida por Ingredientes" button={ false } />
+      <Header name="Explorar Ingredientes" button={ false } />
       {nameIngredientsFood.slice(ofTheFirstParameter, upToParameter12)
         .map((ingredient, index) => (
           <button

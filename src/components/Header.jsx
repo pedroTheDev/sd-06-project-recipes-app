@@ -25,8 +25,8 @@ function Header({ name, button }) {
     <div data-testid="header">
       <header className="header">
         <Link to="/perfil">
-          <button type="button" className="logo-profile" data-testid="profile-top-btn">
-            <img src={ profileIcon } alt="profile icon" />
+          <button type="button" className="logo-profile">
+            <img src={ profileIcon } alt="profile icon" data-testid="profile-top-btn" />
           </button>
         </Link>
         <h1 data-testid="page-title">{name}</h1>
@@ -34,10 +34,9 @@ function Header({ name, button }) {
           <button
             type="button"
             className="logo-search"
-            data-testid="search-top-btn"
             onClick={ isClick }
           >
-            <img src={ searchIcon } alt="search icon" />
+            <img src={ searchIcon } alt="search icon" data-testid="search-top-btn" />
           </button>
         )}
 

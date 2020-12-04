@@ -10,6 +10,7 @@ import {
 } from '../services/requestFood';
 
 function ComidasPorOrigem() {
+  const verdadeiro = true;
   const {
     cards: {
       setCardFood,
@@ -39,7 +40,7 @@ function ComidasPorOrigem() {
 
   return (
     <>
-      <Header name="Comida por Origem" button={ false } />
+      <Header name="Explorar Origem" button={ verdadeiro } />
       <select
         data-testid="explore-by-area-dropdown"
         onChange={ onChangeDropdown }
