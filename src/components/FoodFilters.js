@@ -39,7 +39,7 @@ function FoodFilters() {
           key={ filter }
           type="button"
           data-testid={ `${filter}-category-filter` }
-          className="btn btn-lg m-1 w-25"
+          className="btn m-1 col-3"
           style={ { background: '#7ed957', color: 'black' } }
           onClick={ (event) => filterByCategory(event.target.innerHTML) }
         >

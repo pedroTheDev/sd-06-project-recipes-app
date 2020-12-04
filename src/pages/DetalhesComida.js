@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import copy from 'clipboard-copy';
 import ReceitasContext from '../context/ReceitasContext';
-import DrinksCard from '../components/DrinksCard';
 import Header from '../components/Header';
 import { drinkAPI } from '../services/drinkAPI';
 import { fetchFoodAPI } from '../services/foodAPI';
@@ -251,7 +250,7 @@ function DetalhesComida(props) {
                 </div>
                 <h5 className="mt-3">Instructions</h5>
                 <p
-                  className="text-center text-justify"
+                  className="text-justify"
                   data-testid="instructions"
                 >
                   { meal.strInstructions }
@@ -261,17 +260,39 @@ function DetalhesComida(props) {
                   src={ meal.strYoutube.replace('watch?v=', 'embed/') }
                   title="frame"
                 />
-                <h5 className="mt-4">Receitas Recomendadas</h5>
-                <div className="carousel">
-                  {drinks
-                    .filter((_, indx) => indx < seis)
-                    .map((drink, i) => (
-                      <div key={ i } data-testid={ `${i}-recomendation-card` }>
-                        <div data-testid={ `${i}-recomendation-title` }>
-                          <DrinksCard key={ drink } drink={ drink } index={ i } />
-                        </div>
-                      </div>
-                    ))}
+                <div className="row mb-3">
+                  <div className="col">
+                    <h5>Recomendadas</h5>
+                    <div className="carousel">
+                      {drinks
+                        .filter((_, indx) => indx < seis)
+                        .map((drink, i) => (
+                          <div
+                            key={ i }
+                            data-testid={ `${i}-recomendation-card` }
+                          >
+                            <div className="card">
+                              <img
+                                src={ drink.strDrinkThumb }
+                                className="card-img-top"
+                                alt={ drink.strDrink }
+                              />
+                              <div className="card-body">
+                                <p className="card-subtitle text-muted">
+                                  {drink.strAlcoholic}
+                                </p>
+                                <h5
+                                  data-testid={ `${i}-recomendation-title` }
+                                  className="card-title text-center fonte"
+                                >
+                                  {drink.strDrink}
+                                </h5>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

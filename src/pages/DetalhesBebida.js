@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import copy from 'clipboard-copy';
 import ReceitasContext from '../context/ReceitasContext';
-import MealsCard from '../components/MealsCard';
 import Header from '../components/Header';
 import { fetchDrinkAPI } from '../services/drinkAPI';
 import { foodAPI } from '../services/foodAPI';
@@ -255,24 +254,47 @@ function DetalhesBebida(props) {
                 >
                   { drink.strInstructions }
                 </p>
-                <h5 className="mt-4">Receitas Recomendadas</h5>
-                <div className="carousel">
-                  {meals.length && meals
-                    .filter((_, indx) => indx < seis)
-                    .map((food, i) => (
-                      <div key={ i } data-testid={ `${i}-recomendation-card` }>
-                        <div data-testid={ `${i}-recomendation-title` }>
-                          <MealsCard food={ food } index={ i } />
-                        </div>
-                      </div>
-                    ))}
+                <div className="row mb-3">
+                  <div className="col">
+                    <h5>Recomendadas</h5>
+                    <div className="carousel">
+                      {meals
+                        .filter((_, indx) => indx < seis)
+                        .map((food, i) => (
+                          <div
+                            key={ i }
+                            data-testid={ `${i}-recomendation-card` }
+                          >
+                            <div className="card">
+                              <img
+                                src={ food.strMealThumb }
+                                className="card-img-top"
+                                alt={ food.strMeal }
+                              />
+                              <div className="card-body">
+                                <p className="card-subtitle text-muted">
+                                  {food.strAlcoholic}
+                                </p>
+                                <h5
+                                  data-testid={ `${i}-recomendation-title` }
+                                  className="card-title text-center"
+                                >
+                                  {food.strMeal}
+                                </h5>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
             {!doneRecipes.includes(drink.idDrink) && (
               <Link to={ `/bebidas/${drink.idDrink}/in-progress` }>
                 <button
-                  className="start-recipe-btn btn btn-block btn-success fixed-bottom"
+                  className="btn btn-block fixed-bottom"
+                  style={ { background: '#7850B8', color: 'white' } }
                   data-testid="start-recipe-btn"
                   type="button"
                   onClick={ () => startRecipe(drink.idDrink) }

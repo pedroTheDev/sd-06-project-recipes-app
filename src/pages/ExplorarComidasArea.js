@@ -15,19 +15,20 @@ const ExplorarComidasArea = () => {
     const minusOne = -1;
     let hasAll = false;
     foodAPI().then((response) => setMeals(response));
-    getAreas().then((response) => {
-      response.forEach((obj) => {
-        if (Object.values(obj).indexOf('All') > minusOne) {
-          hasAll = true;
-          return hasAll;
+    getAreas()
+      .then((response) => {
+        response.forEach((obj) => {
+          if (Object.values(obj).indexOf('All') > minusOne) {
+            hasAll = true;
+            return hasAll;
+          }
+        });
+        if (!hasAll) {
+          response.push(allOption);
         }
-      });
-      if (!hasAll) {
-        response.push(allOption);
-      }
-      console.log(response);
-      return response;
-    })
+        console.log(response);
+        return response;
+      })
       .then((response) => setAreas(response));
   }, []);
 
@@ -37,8 +38,7 @@ const ExplorarComidasArea = () => {
     if (selected === 'All') {
       foodAPI().then((response) => setMeals(response));
     } else {
-      getByArea(selected)
-        .then((response) => setMeals(response));
+      getByArea(selected).then((response) => setMeals(response));
     }
   };
 
@@ -47,29 +47,29 @@ const ExplorarComidasArea = () => {
       <Header title="Explorar Origem" searchBtn />
       <label htmlFor="area-dropdown">
         Locais:
-        <select
-          data-testid="explore-by-area-dropdown"
-          id="area-dropdown"
-          onChange={ (target) => handleSelect(target) }
-        >
-          {areas.map((area, i) => (
-            <option
-              data-testid={ `${area.strArea}-option` }
-              key={ i }
-              value={ area.strArea }
-            >
-              {' '}
-              {area.strArea}
-            </option>))}
-
-        </select>
+        <div>
+          <select
+            data-testid="explore-by-area-dropdown"
+            id="area-dropdown"
+            className="form-control"
+            onChange={ (target) => handleSelect(target) }
+          >
+            {areas.map((area, i) => (
+              <option
+                data-testid={ `${area.strArea}-option` }
+                key={ i }
+                value={ area.strArea }
+              >
+                {area.strArea}
+              </option>
+            ))}
+          </select>
+        </div>
       </label>
-      <main>
-        {meals.length && (meals
+      <main className="row my-4">
+        {meals.length && meals
           .filter((x, index) => index < doze)
-          .map((food, i) => (
-            <MealsCard key={ i } food={ food } index={ i } />
-          )))}
+          .map((food, i) => <MealsCard key={ i } food={ food } index={ i } />)}
       </main>
       <Footer />
     </div>

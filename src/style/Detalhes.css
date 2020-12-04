@@ -1,18 +1,13 @@
 /* body {
-  background-image: url('../images/bg.png');
+  background-image: url('../images/bg2.jpg');
 } */
 
 .carousel {
   display: flex;
-  overflow: auto;
-  width: 300px;
+  overflow-x: scroll;
+  width: 63%;
+  margin: 0 auto;
 }
-
-/* .start-recipe-btn {
-  margin-top: 30px;
-  bottom: 0;
-  position: fixed;
-} */
 
 .detail-container {
   justify-content: center;
