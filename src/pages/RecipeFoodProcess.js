@@ -12,6 +12,7 @@ function RecipeFoodProcess(props) {
   const { match } = props;
   const { id } = match.params;
   const ZERO = 0;
+  const DOIS = 2;
   const VINTE = 20;
   const [arrIngredient, setArrIngredient] = useState([]);
   const [share, setShare] = useState(false);
@@ -178,6 +179,38 @@ function RecipeFoodProcess(props) {
     checkIfIngredientIsSave();
   }, []);
 
+  const handleEndRecipe = (recipeFinalized) => {
+    console.log('o que é recipeFinaled:', recipeFinalized);
+    const finalizedDate = new Date();
+    const formatDate = `Finalizada em:
+      ${finalizedDate.getDate()}/
+      ${finalizedDate.getMonth()}/
+      ${finalizedDate.getFullYear()}`;
+
+    if (!localStorage.doneRecipes) {
+      localStorage.setItem('doneRecipes', JSON.stringify([]));
+    }
+    let tagEvaluate = '';
+    if (recipeFinalized.strTags) {
+      tagEvaluate = recipeFinalized.strTags.split(',').slice(ZERO, DOIS);
+    }
+    const recipe = {
+      id: recipeFinalized.idMeal,
+      type: 'comida',
+      area: recipeFinalized.strArea || '',
+      category: recipeFinalized.strCategory,
+      alcoholicOrNot: recipeFinalized.strAlcoholic,
+      name: recipeFinalized.strMeal,
+      image: recipeFinalized.strMealThumb,
+      doneDate: formatDate,
+      tags: tagEvaluate,
+    };
+    const storageRecipe = JSON.parse(localStorage.getItem('doneRecipes'));
+    const storageDoneSpread = [...storageRecipe, recipe];
+    localStorage.setItem('doneRecipes', JSON.stringify(storageDoneSpread));
+    return props.history.push('/receitas-feitas');
+  };
+
   useEffect(() => {
     if (recipes.length > ZERO) renderIngredients();
   }, [recipes]);
@@ -233,7 +266,7 @@ function RecipeFoodProcess(props) {
           <button
             type="button"
             data-testid="finish-recipe-btn"
-            onClick={ () => props.history.push('/receitas-feitas') }
+            onClick={ () => handleEndRecipe(recipes[0]) }
             disabled={ !arrIngredient.every((item) => item.checked) }
           >
             Finalizar Receita
