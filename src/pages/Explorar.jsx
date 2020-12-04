@@ -6,8 +6,8 @@ import RecipesAppContext from '../context/RecipesAppContext';
 import '../styles/Explorar.css';
 
 function Explorar() {
-  const { setSearchHeader } = useContext(RecipesAppContext);
-  useEffect(() => setSearchHeader(false), []);
+  // const { setSearchHeader } = useContext(RecipesAppContext);
+  // useEffect(() => setSearchHeader(false), []);
   return (
     <>
       <Header name="Explorar" button={ false } />

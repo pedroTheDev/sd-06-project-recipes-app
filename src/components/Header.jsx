@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import RecipesAppContext from '../context/RecipesAppContext';
@@ -8,10 +8,11 @@ import HeaderSearch from './HeaderSearch';
 // import './components.css';
 
 function Header({ name, button }) {
-  const {
-    searchHeader,
-    setSearchHeader,
-  } = useContext(RecipesAppContext);
+  // const {
+  //   searchHeader,
+  //   setSearchHeader,
+  // } = useContext(RecipesAppContext);
+  const [searchHeader, setSearchHeader] = useState(false);
 
   const isClick = () => {
     if (searchHeader) {
@@ -42,7 +43,7 @@ function Header({ name, button }) {
         )}
 
       </header>
-      <HeaderSearch enable={ searchHeader } name={ name } />
+      {searchHeader && <HeaderSearch name={ name } />}
     </div>
   );
 }
