@@ -13,6 +13,7 @@ function ExplorePage() {
       <br />
       <br />
       <br />
+      <h2 data-testid="page-title">Explorar</h2>
       <div>
         <Link to="/explorar/comidas">
           <button data-testid="explore-food" type="button">Explorar Comidas</button>

@@ -22,6 +22,7 @@ function ExploreDrinksPage() {
       <br />
       <br />
       <br />
+      <h2 data-testid="page-title">Explorar Bebidas</h2>
       <div>
         <Link to="/explorar/bebidas/ingredientes">
           <button type="button" data-testid="explore-by-ingredient">

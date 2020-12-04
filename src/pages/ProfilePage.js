@@ -14,7 +14,7 @@ function ProfilePage() {
       <br />
       <br />
       <div className="profile-page-div">
-        <p data-testid="profile-email">{ userEmail.email }</p>
+        <p data-testid="profile-email">{ userEmail && userEmail.email }</p>
         <Link to="/receitas-feitas">
           <button type="button" data-testid="profile-done-btn">Receitas Feitas</button>
         </Link>

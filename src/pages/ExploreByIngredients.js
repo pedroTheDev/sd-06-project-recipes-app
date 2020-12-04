@@ -27,6 +27,7 @@ function ExploreByIngredientsFoods() {
       <br />
       <br />
       <br />
+      <h2 data-testid="page-title">Explorar Ingredientes</h2>
       <div>
         {ingredients && ingredients.slice(zero, twelve)
           .map((ingredient, index) => (<IngredientCard

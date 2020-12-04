@@ -60,7 +60,7 @@ function FavoriteRecipes() {
       <br />
       <br />
       <br />
-      <h2>Receitas favoritas</h2>
+      <h2 data-testid="page-title">Receitas Favoritas</h2>
       <div className="favorite-recipes-button">
         <button
           type="button"

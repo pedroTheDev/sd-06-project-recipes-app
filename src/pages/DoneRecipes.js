@@ -48,6 +48,7 @@ function DoneRecipes() {
       <br />
       <br />
       <br />
+      <h2 data-testid="page-title">Receitas Feitas</h2>
       <div className="done-recipes-buttons-div">
         <button
           type="button"
