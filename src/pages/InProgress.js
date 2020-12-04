@@ -16,8 +16,6 @@ function InProgress() {
   const [isFavorite, setIsFavorite] = useState(false);
   const [urlWasCopyToClipboard, seturlWasCopyToClipboard] = useState(false);
 
-  // const { recipeMeal, recipeDrink } = useContext(MealsContext);
-
   const location = useLocation();
   const { id } = useParams();
 
