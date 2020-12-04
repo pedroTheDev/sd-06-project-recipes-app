@@ -1,19 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../components/Header';
+import HeaderExplorePages from '../components/HeaderExplorePages';
 import Footer from '../components/Footer';
 
 function ExplorePage() {
   return (
     <div>
-      <Header />
+      <HeaderExplorePages pageName="Explorar" />
       <br />
       <br />
       <br />
       <br />
       <br />
       <br />
-      <h2 data-testid="page-title">Explorar</h2>
       <div>
         <Link to="/explorar/comidas">
           <button data-testid="explore-food" type="button">Explorar Comidas</button>

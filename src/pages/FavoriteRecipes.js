@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+import HeaderExplorePages from '../components/HeaderExplorePages';
 // import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
 function FavoriteRecipes() {
@@ -56,7 +56,7 @@ function FavoriteRecipes() {
 
   return (
     <div>
-      <Header />
+      <HeaderExplorePages pageName="Receitas Favoritas" />
       <br />
       <br />
       <br />

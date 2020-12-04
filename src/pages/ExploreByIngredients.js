@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 // import { Link } from 'react-router-dom';
-import Header from '../components/Header';
+import HeaderExplorePages from '../components/HeaderExplorePages';
 import Footer from '../components/Footer';
 import IngredientCard from '../components/IngredientCard';
 import { requestByIngredients } from '../services/requestsAPI';
@@ -20,14 +20,13 @@ function ExploreByIngredientsFoods() {
   console.log(ingredients);
   return (
     <div>
-      <Header />
+      <HeaderExplorePages pageName="Explorar Ingredientes " />
       <br />
       <br />
       <br />
       <br />
       <br />
       <br />
-      <h2 data-testid="page-title">Explorar Ingredientes</h2>
       <div>
         {ingredients && ingredients.slice(zero, twelve)
           .map((ingredient, index) => (<IngredientCard

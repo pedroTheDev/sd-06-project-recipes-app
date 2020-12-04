@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import Header from '../components/Header';
+import HeaderExplorePages from '../components/HeaderExplorePages';
 import Footer from '../components/Footer';
 import { requestRandomFood } from '../services/requestsAPI';
 
@@ -16,12 +16,11 @@ function ExploreFoodPage() {
 
   return (
     <div>
-      <Header />
+      <HeaderExplorePages pageName="Explorar Comidas" />
       <br />
       <br />
       <br />
       <br />
-      <h2 data-testid="page-title">Explorar Comidas</h2>
       <div>
         <Link to="/explorar/comidas/ingredientes">
           <button type="button" data-testid="explore-by-ingredient">

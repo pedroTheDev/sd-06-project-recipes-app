@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../components/Header';
+import HeaderExplorePages from '../components/HeaderExplorePages';
 import shareIcon from '../images/shareIcon.svg';
 
 function DoneRecipes() {
@@ -42,8 +42,7 @@ function DoneRecipes() {
 
   return (
     <div>
-      <Header pageName="Receitas feitas" />
-      {/* <h2 className="page-title">Receitas feitas</h2> */}
+      <HeaderExplorePages pageName="Receitas feitas" />
       <br />
       <br />
       <br />

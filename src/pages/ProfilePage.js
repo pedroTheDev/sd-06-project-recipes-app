@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../components/Header';
 import Footer from '../components/Footer';
+import HeaderExplorePages from '../components/HeaderExplorePages';
 
 function ProfilePage() {
   const userEmail = JSON.parse(localStorage.getItem('user'));
 
   return (
     <div>
-      <Header pageName="Perfil" />
+      <HeaderExplorePages pageName="Perfil" />
       <br />
       <br />
       <br />
