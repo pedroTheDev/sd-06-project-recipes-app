@@ -1,17 +1,12 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import RecipesAppContext from '../context/RecipesAppContext';
 import profileIcon from '../styles/images/profileIcon.svg';
 import searchIcon from '../styles/images/searchIcon.svg';
 import HeaderSearch from './HeaderSearch';
 // import './components.css';
 
 function Header({ name, button }) {
-  // const {
-  //   searchHeader,
-  //   setSearchHeader,
-  // } = useContext(RecipesAppContext);
   const [searchHeader, setSearchHeader] = useState(false);
 
   const isClick = () => {

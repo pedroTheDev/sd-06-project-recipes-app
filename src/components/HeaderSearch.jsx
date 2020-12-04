@@ -170,7 +170,6 @@ function HeaderSearch({ name }) {
 
 HeaderSearch.propTypes = {
   name: PropTypes.string.isRequired,
-  // searchHeader: PropTypes.bool.isRequired,
 };
 
 export default HeaderSearch;

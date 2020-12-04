@@ -1,13 +1,10 @@
-import React, { useEffect, useContext } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import RecipesAppContext from '../context/RecipesAppContext';
 import '../styles/Explorar.css';
 
 function Explorar() {
-  // const { setSearchHeader } = useContext(RecipesAppContext);
-  // useEffect(() => setSearchHeader(false), []);
   return (
     <>
       <Header name="Explorar" button={ false } />
