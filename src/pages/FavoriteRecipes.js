@@ -57,6 +57,9 @@ function FavoriteRecipes() {
   return (
     <div>
       <Header />
+      <br />
+      <br />
+      <br />
       <h2>Receitas favoritas</h2>
       <div className="favorite-recipes-button">
         <button

@@ -114,45 +114,48 @@ function DrinkDetails() {
   }
 
   return (
-    <div>
-
+    <div className="recipe-details-div">
       <img
         data-testid="recipe-photo"
         width="100px"
         src={ drinkDetails.strDrinkThumb }
         alt="Drink"
+        className="recipe-details-img"
       />
+      <div className="recipe-title-and-share-fav-buttons">
+        <h3 data-testid="recipe-title" className="recipe-details-title">
+          {
+            drinkDetails.strDrink
+          }
+        </h3>
+        <div className="fav-and-shar-buttons">
+          <button
+            type="button"
+            className="recipe-button"
+            data-testid="share-btn"
+            onClick={ () => copyToClipBoard(document.URL) }
+          >
+            <img src={ shareIcon } alt="Share" />
+          </button>
+          <button
+            aria-label="favorite-button"
+            type="button"
+            className="recipe-button"
+            data-testid="favorite-btn"
+            onClick={ handleFavoriteDrink }
+            src={ favoriteDrink ? blackHeartIcon : whiteHeartIcon }
+          >
+            <img alt="bla" src={ favoriteDrink ? blackHeartIcon : whiteHeartIcon } />
+          </button>
+          <span hidden={ spanHidden }>Link copiado!</span>
+        </div>
+      </div>
 
-      <h3 data-testid="recipe-title">
-        {
-          drinkDetails.strDrink
-        }
-      </h3>
-
-      <button
-        type="button"
-        data-testid="share-btn"
-        onClick={ () => copyToClipBoard(document.URL) }
-      >
-        <img src={ shareIcon } alt="Share" />
-      </button>
-
-      <span hidden={ spanHidden }>Link copiado!</span>
-
-      <button
-        aria-label="favorite-button"
-        type="button"
-        data-testid="favorite-btn"
-        onClick={ handleFavoriteDrink }
-        src={ favoriteDrink ? blackHeartIcon : whiteHeartIcon }
-      >
-        <img alt="bla" src={ favoriteDrink ? blackHeartIcon : whiteHeartIcon } />
-      </button>
-      <h4 data-testid="recipe-category">
+      <h4 data-testid="recipe-category" className="recipe-category">
         {drinkDetails.strAlcoholic}
       </h4>
-
-      <div id="ingredients-div">
+      <h3 className="ingredients-title">Ingredients</h3>
+      <div id="ingredients-div" className="ingredients-div">
         {ingredients && ingredients
           .map((item, index) => (
             <p
@@ -167,8 +170,9 @@ function DrinkDetails() {
             </p>
           ))}
       </div>
-
+      <h3 className="intructions-title">Instructions</h3>
       <p
+        className="instructions"
         data-testid="instructions"
       >
         {drinkDetails.strInstructions}
