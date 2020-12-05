@@ -8,30 +8,30 @@ function Footer() {
       <nav>
         <Link to="/bebidas">
           <p src={ drinkIcon } data-testid="drinks-bottom-btn">
-            Drinks
+            Navegar para bebidas
             <img
               src={ drinkIcon }
-              alt="Imagem de drink"
+              alt="Icone bebidas"
               height="25"
             />
           </p>
         </Link>
         <Link to="/comidas">
           <p src={ mealIcon } data-testid="food-bottom-btn">
-            Comidas
+            Navegar para comidas
             <img
               src={ mealIcon }
-              alt="Imagem de alimento"
+              alt="Icone alimentos"
               height="25"
             />
           </p>
         </Link>
         <Link to="/explorar">
           <p src={ exploreIcon } data-testid="explore-bottom-btn">
-            Explore
+            Explorar receitas
             <img
               src={ exploreIcon }
-              alt="Explore o Site"
+              alt="Icone explorar"
               height="25"
             />
           </p>

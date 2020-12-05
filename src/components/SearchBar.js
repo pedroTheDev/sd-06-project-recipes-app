@@ -52,13 +52,18 @@ export default function SearchBar() {
   return (
     <form className="form-group searchBar">
       <div className="col-sm-6 inputForm">
-        <input
-          className="form-control"
-          data-testid="search-input"
-          type="text"
-          required
-          onChange={ (e) => setProduct(e.target.value) }
-        />
+        <label htmlFor="search">
+          Pesquisar
+          <input
+            className="form-control"
+            data-testid="search-input"
+            type="text"
+            id="search"
+            required
+            placeholder="Chicken"
+            onChange={ (e) => setProduct(e.target.value) }
+          />
+        </label>
       </div>
       <div className="radioBtns">
         <div>
@@ -114,7 +119,7 @@ export default function SearchBar() {
           type="button"
           onClick={ () => validateForm(filterType, product) }
         >
-          Buscar
+          Buscar receitas
         </button>
       </div>
     </form>

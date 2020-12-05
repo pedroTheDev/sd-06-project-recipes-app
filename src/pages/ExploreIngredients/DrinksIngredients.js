@@ -19,6 +19,14 @@ function DrinksIngredients() {
     fetchDrinksIngredients();
   }, []);
 
+  if (Object.keys(drinksIngredients).length === zero) {
+    return (
+      <div className="loading">
+        <h2 className="loading-text">Carregando...</h2>
+      </div>
+    );
+  }
+
   return (
     <div>
       <Header

@@ -17,7 +17,14 @@ function MealsIngredients() {
   useEffect(() => {
     fetchMealsIngredients();
   }, []);
-  console.log('ingredientes api', mealsIngredients);
+
+  if (Object.keys(mealsIngredients).length === zero) {
+    return (
+      <div className="loading">
+        <h2 className="loading-text">Carregando...</h2>
+      </div>
+    );
+  }
 
   return (
     <div>

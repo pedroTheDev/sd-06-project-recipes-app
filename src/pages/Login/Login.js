@@ -71,7 +71,7 @@ function Login() {
           disabled={ isDisabled }
           onClick={ () => handleRedirect() }
         >
-          Entrar
+          Entrar no aplicativo
         </button>
       </form>
     </div>

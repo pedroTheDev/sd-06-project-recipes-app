@@ -10,6 +10,7 @@ function MealDetail() {
   const [recommendations, setRecommendations] = useState([]);
   const [newRecipe, setNewRecipe] = useState(true);
   const { recipesMeals, fetchMealIngredients } = useContext(recipesAppContext);
+  console.log(recipesMeals.strYoutube);
 
   const { id } = useParams();
   const zero = 0;
