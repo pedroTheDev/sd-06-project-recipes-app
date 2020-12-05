@@ -4,7 +4,7 @@ import renderWithRouter from '../renderWithRouter';
 import App from '../App';
 
 describe('A tele de explorar deve possuir:', () => {
-  it('Possui 2 botões, um para explorar comidas e outro para explorar bebidas:', () => {
+  it('2 botões, um para explorar comidas e outro para explorar bebidas:', () => {
     const { getByTestId, history } = renderWithRouter(<App />);
     history.push('/explorar');
 
@@ -74,15 +74,56 @@ describe('A tele de explorar deve possuir:', () => {
     expect(surpriseBtn).toBeInTheDocument();
   });
 
-  it('', () => {
+  it('Redireciona a tela de Explorar Comidas por Ingrediente', () => {
     const { getByTestId, getByText, history } = renderWithRouter(<App />);
     history.push('/explorar/comidas');
 
     const ingredientComidasBtn = getByTestId('explore-by-ingredient');
+    expect(ingredientComidasBtn).toBeInTheDocument();
 
     fireEvent.click(ingredientComidasBtn);
 
     const ingredientExplorar = getByText(/Explorar Ingredientes/i);
     expect(ingredientExplorar).toBeInTheDocument();
+  });
+
+  it('Redireciona a tela de Explorar Bebidas por Ingrediente', () => {
+    const { getByTestId, getByText, history } = renderWithRouter(<App />);
+    history.push('/explorar/bebidas');
+
+    const ingredientBebidasBtn = getByTestId('explore-by-ingredient');
+    expect(ingredientBebidasBtn).toBeInTheDocument();
+
+    fireEvent.click(ingredientBebidasBtn);
+
+    const ingredientExplorar = getByText(/Explorar Ingredientes/i);
+    expect(ingredientExplorar).toBeInTheDocument();
+  });
+
+  it('Redireciona ao clicar em por Local de Origem', () => {
+    const { getByTestId, getByText, history } = renderWithRouter(<App />);
+    history.push('/explorar/comidas');
+
+    const areaBtn = getByTestId('explore-by-area');
+    expect(areaBtn).toBeInTheDocument();
+
+    fireEvent.click(areaBtn);
+
+    const areaExplorar = getByText(/Explorar Origem/i);
+    expect(areaExplorar).toBeInTheDocument();
+  });
+
+  it('Redireciona ao clicar em `Me Surpreenda!`', () => {
+    const { getByTestId, getByText, history } = renderWithRouter(<App />);
+    history.push('/explorar/comidas');
+
+    const surpriseBtn = getByTestId('explore-surprise');
+    expect(surpriseBtn).toBeInTheDocument();
+
+    // fireEvent.click(surpriseBtn);
+
+    // const areaExplorar = getByText(/Explorar Origem/i);
+    // expect(areaExplorar).toBeInTheDocument();
+  });
   });
 });

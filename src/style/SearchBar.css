@@ -13,7 +13,7 @@
   z-index: 100;
 }
 
-.searchBar input[type='text'] {
+.searchBar input[type='search'] {
   border: 1px solid #cecccc;
   border-radius: 5px;
   font-family: 'Montserrat', sans-serif;
@@ -24,7 +24,7 @@
   width: 280px;
 }
 
-.searchBar input[type='text']:focus {
+.searchBar input[type='search']:focus {
   border: 2px solid #272c35;
   outline: none !important;
 }

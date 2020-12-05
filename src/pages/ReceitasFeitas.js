@@ -10,6 +10,7 @@ function ReceitasFeitas() {
   const ZERO = 0;
   const [isCopied, handleCopy] = useCopyToClipboard(timeoutTextCopy);
   const [doneRecipes, setDoneRecipes] = useState([]);
+  const [position, setPosition] = useState();
 
   useEffect(() => {
     if (localStorage.doneRecipes) {
@@ -31,6 +32,11 @@ function ReceitasFeitas() {
     } else {
       setDoneRecipes(JSON.parse(localStorage.doneRecipes));
     }
+  };
+
+  const handleClick = (pathname, index) => {
+    handleCopy(pathname);
+    setPosition(index);
   };
 
   return (
@@ -94,7 +100,7 @@ function ReceitasFeitas() {
                     <button
                       data-testid="share-btn"
                       type="button"
-                      onClick={ () => handleCopy(`/${type}s/${id}`) }
+                      onClick={ () => handleClick(`/${type}s/${id}`, index) }
                     >
                       <img
                         src={ shareIcon }
@@ -102,7 +108,7 @@ function ReceitasFeitas() {
                         data-testid={ `${index}-horizontal-share-btn` }
                       />
                     </button>
-                    { isCopied ? <p>Link copiado!</p> : true }
+                    { isCopied && index === position ? <p>Link copiado!</p> : true }
                     { tags.map((tag) => (
                       <p
                         key={ tag }

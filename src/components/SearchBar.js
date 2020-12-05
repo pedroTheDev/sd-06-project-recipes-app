@@ -93,7 +93,7 @@ function SearchBar({ title, searchBar, setSearchBar }) {
           value={ inputRecipe }
           onChange={ ({ target: { value } }) => { setInputRecipe(value); } }
           data-testid="search-input"
-          type="text"
+          type="search"
           placeholder="Buscar Receita"
         />
         <div>

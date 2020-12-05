@@ -298,11 +298,11 @@
 
 @media only screen and (min-width: 768px) {
   .img-details-progress{
-    margin-top: 150px;
+    margin-top: 110px;
     position: fixed;
     right: 0;
-    width: 675px;
-    height: 350px;
+    height: 80%;
+    width: 50%;
     z-index: 50;
   }
 
@@ -332,7 +332,7 @@
     justify-content: flex-start !important;
     margin-left: 0;
     width: 50% !important;
-  }  
+  }
 
   .cards {
     margin: auto;

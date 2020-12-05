@@ -10,7 +10,7 @@ body {
   flex-flow: row wrap;
   justify-content: center;
   margin: auto;
-  margin-top: 150px;
+  margin-top: 250px;
   width: 50px;
   z-index: 80;
 }
