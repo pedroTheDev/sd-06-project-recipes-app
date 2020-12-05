@@ -1,0 +1,28 @@
+.ingredient-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.ingredient-btn {
+  background: none;
+  border: none;
+}
+
+.ingredient-card {
+  align-items: center;
+  background-color: #FFEBC7;
+  border-radius: 10%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  padding: 10px;
+  width: 150px;
+}
+
+.ingredient-name {
+  font-family: cursive;
+  font-size: 18px;
+  margin-top: 10px;
+}
