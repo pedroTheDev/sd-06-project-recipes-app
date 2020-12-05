@@ -39,8 +39,8 @@ function DetalhesBebida({ match: { params: { id } } }) {
       saveState('inProgressRecipes', {
         ...loadStorage,
         cocktails:
-          { ...loadStorage.cocktails, [detailsDrink.idDrink]: [...arrayIngredients] },
-        // { ...loadStorage.cocktails, [detailsDrink.idDrink]: [] },
+        // { ...loadStorage.cocktails, [detailsDrink.idDrink]: [...arrayIngredients] },
+        { ...loadStorage.cocktails, [detailsDrink.idDrink]: [] },
       });
     }
   };
