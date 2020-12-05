@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { ReactComponent as Logo } from '../visual_identity/logo.svg';
-import setMockedLocalStorage from '../setup/localStorage';
 
 const checkLogin = (email, passwordInput) => {
   const validEmail = email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{3})$/i);
