@@ -1,6 +1,7 @@
 .header-page-title {
   color: #FCDCA2;
   text-shadow:#000 1px -1px, #000 -1px 1px, #000 1px 1px, #000 -1px -1px;
+  font-size: 50px;
 }
 
 .header-container {
@@ -16,7 +17,6 @@
   background-repeat: no-repeat;
   display: flex;
   font-family: cursive;
-  font-size: 50px;
   height: 150px;
   justify-content: space-around;
   text-align: center;

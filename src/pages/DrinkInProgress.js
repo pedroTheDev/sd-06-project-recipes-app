@@ -174,6 +174,31 @@ const DrinkInProgress = ({
     }
   };
 
+  const getFormattedDate = () => {
+    const monthCorrection = 1;
+    const twoDecimalPlaces = 10;
+    const date = new Date();
+    const day = date.getDate();
+    const month = date.getMonth() + monthCorrection;
+    const year = date.getFullYear();
+
+    let formatterDay;	
+    if (day < twoDecimalPlaces) {
+        formatterDay = `0${day}`;
+    } else {
+        formatterDay = day;
+    }
+		
+    let formatterMonth;	
+    if (month < twoDecimalPlaces) {
+        formatterMonth = `0${month}`;
+    } else {
+        formatterMonth = month;
+    }
+
+    return `${formatterDay}/${formatterMonth}/${year}`;
+  }
+
   const handleDoneLocalStorage = () => {
     if (!localStorage.getItem('doneRecipes')) {
       localStorage.setItem('doneRecipes', JSON.stringify([]));
@@ -189,7 +214,7 @@ const DrinkInProgress = ({
         alcoholicOrNot: recipeAlc,
         name: recipeTitle,
         image: recipeImage,
-        doneDate: Date('DD-MM-YYYY'),
+        doneDate: getFormattedDate(),
         tags: '',
       },
     ];

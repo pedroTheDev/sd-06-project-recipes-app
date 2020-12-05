@@ -4,24 +4,7 @@ body{
   overflow: auto;
 }
 
-.image-display {
-  width: 300px;
-}
 
-.btn-done{
-  margin-top: 20px;
-  width: 200px;
-  margin-left: 120px;
-  height: 60px;
-  border-radius: 10px;
-  box-shadow: 5px 5px 5px rgba(0,0,0,0.25);
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.is-checked {
-  text-decoration: line-through;
-}
 
 .prof-btn {
   background-color: #f5f2f2;
@@ -81,14 +64,6 @@ body{
 
 .area-card-img {
   width: 25vw;
-}
-
-.is-checked {
-  text-decoration: line-through;
-}
-
-.is-not-checked {
-  text-decoration: none;
 }
 
 .btn-filter {

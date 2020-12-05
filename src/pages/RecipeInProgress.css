@@ -56,3 +56,11 @@
 .finish-recipe-btn:disabled {
   opacity: 20%;
 }
+
+.is-checked {
+  text-decoration: line-through;
+}
+
+.is-not-checked {
+  text-decoration: none;
+}
