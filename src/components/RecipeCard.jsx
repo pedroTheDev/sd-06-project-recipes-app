@@ -12,7 +12,9 @@ const RecipeCard = ({ recipeName, recipeImage, id, foodOrDrink, index }) => (
         src={ recipeImage }
         alt="Foto da receita"
       />
-      <h5 data-testid={ `${index}-card-name` }>{recipeName}</h5>
+      <div className="recipe-card-tag">
+        <h5 data-testid={ `${index}-card-name` }>{recipeName}</h5>
+      </div>
     </div>
   </Link>
 );

@@ -4,8 +4,10 @@ import categoryReducer from './categoryReducer';
 import searchReducer from './searchReducer';
 import exploreReducer from './exploreReducer';
 import recommendationsReducer from './recomendationsReducer';
+import areaReducer from './areaReducer';
 
 const rootReducer = combineReducers({
+  areaReducer,
   mainPageReducer,
   categoryReducer,
   searchReducer,
