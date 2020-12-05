@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import '../style/SearchBar.css';
 
-function SearchBar({ title, searchBar }) {
+function SearchBar({ title, searchBar, setSearchBar }) {
   const { data, setData } = useContext(RecipesContext);
   const [inputRecipe, setInputRecipe] = useState('');
   const [radioValue, setRadioValue] = useState('i');
@@ -33,6 +33,7 @@ function SearchBar({ title, searchBar }) {
   };
 
   const searchFood = async () => {
+    setSearchBar(false);
     if (title === 'Comidas') {
       if (radioValue === 'i') {
         const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${inputRecipe}`);

@@ -182,6 +182,7 @@ function ProcessoComida() {
                       type="checkbox"
                       name={ dataMeal[ingredient] }
                       checked={ checked.includes(index) }
+                      // hidden={true}
                       onChange={ ({ target }) => { handleChange(target, index); } }
                     />
                     <span className="checkmark">{ dataMeal[ingredient] }</span>

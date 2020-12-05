@@ -181,6 +181,7 @@ function ProcessoBebida() {
                       type="checkbox"
                       name={ dataDrinks[ingredient] }
                       checked={ checked.includes(index) }
+                      // hidden={true}
                       onChange={ ({ target }) => { handleChange(target, index); } }
                     />
                     <span className="checkmark">{ dataDrinks[ingredient] }</span>

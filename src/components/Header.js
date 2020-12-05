@@ -55,6 +55,7 @@ function Header({ title }) {
       <SearchBar
         title={ title }
         searchBar={ searchBar }
+        setSearchBar={ setSearchBar }
       />
     </header>
   );

@@ -107,9 +107,9 @@
   padding-left: 35px;
 }
 
-.container-checkbox input {
+/* .container-checkbox input {
   display: none; 
-}
+} */
 /* Create a custom checkbox - using ::before */
 .checkmark::before {
   content: "";
