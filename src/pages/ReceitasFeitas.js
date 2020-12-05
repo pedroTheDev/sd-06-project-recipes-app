@@ -69,6 +69,7 @@ const ReceitasFeitas = () => {
                 <img
                   data-testid={ `${index}-horizontal-image` }
                   src={ recipe.image }
+                  width="40%"
                   alt=""
                 />
               </Link>
