@@ -13,6 +13,8 @@ const endpoints = {
   lookupIngredient: 'lookup.php?i=',
   random: 'random.php',
   listIngredient: 'list.php?i=list',
+  mealsByArea: 'filter.php?a=',
+  areaList: 'list.php?a=list',
 };
 
 export async function fetchMeal(type, key) {

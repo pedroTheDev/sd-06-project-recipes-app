@@ -1,15 +1,19 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../../components/Header';
 import BtnSearchBar from '../../components/BtnSearchBar';
 import Footer from '../../components/Footer';
-import { listByArea } from '../../services/mealAPI';
-import recipesAppContext from '../../context/recipesAppContext';
+import { fetchMeal } from '../../services/mealAPI';
 
 function ExploreByArea() {
-  const { areas, setAreas } = useContext(recipesAppContext);
+  /* const { areas, setAreas, mealsByArea, setMealsByArea } = useContext(recipesAppContext);
+  let selectedArea = ''; */
+
+  const [areas, setAreas] = useState({ meal: [] });
+  const [mealsByArea, setMealsByArea] = useState([]);
 
   const fetchByArea = async () => {
-    setAreas(await listByArea());
+    setAreas(await fetchMeal('areaList', ''));
   };
 
   useEffect(() => {
@@ -19,24 +23,38 @@ function ExploreByArea() {
   const areaSelect = (meal) => (
     <option
       data-testid={ `${meal}-option` }
+      key={ meal.strArea }
+      name={ meal.strArea }
       value={ meal.strArea }
+      id={ meal.strArea }
     >
       {meal.strArea}
     </option>
   );
 
-  const renderSelect = () => (
-    <select
-      data-testid="explore-by-area-dropdown"
-      className="area-select"
-      name="area"
-    >
-      {/* {areas.meals.map((area) => {
-        <option data-testid={ `${area}-option` } value={ area.strArea }>
-          {area.strArea}
-        </option>;
-      })} */}
-    </select>
+  const handleChange = async ({ target }) => {
+    setAreas({ meals: [{ strArea: target.value }] });
+    const returnedMeals = await fetchMeal('mealsByArea', target.value);
+    setMealsByArea(returnedMeals.meals);
+  };
+
+  const renderMealsByArea = () => (
+    mealsByArea.map((meal) => (
+      <Link key={ meal.strMeal } to={ `/comidas/${meal.idMeal}` }>
+        <div className="recipe-card" key={ meal.strMeal }>
+          <img
+            alt="Meal Thumb"
+            src={ meal.strMealThumb }
+            className="recipe-thumb"
+            height="250"
+          />
+          <h2
+            className="recipe-name"
+          >
+            {meal.strMeal}
+          </h2>
+        </div>
+      </Link>))
   );
 
   return (
@@ -47,19 +65,21 @@ function ExploreByArea() {
         BtnSearchBar={ BtnSearchBar }
       />
       <div className="drop-down-container">
-        {renderSelect()}
         <select
           data-testid="explore-by-area-dropdown"
           className="area-select"
           name="area"
+          value=""
+          onChange={ (e) => handleChange(e) }
         >
           {
             areas.meals
               ? areas.meals.map((meal) => areaSelect(meal))
-              : <div>Loading...</div>
+              : <option>Loading...</option>
           }
         </select>
       </div>
+      { mealsByArea && renderMealsByArea() }
       <div className="footer">
         <Footer />
       </div>
