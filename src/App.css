@@ -1,7 +1,10 @@
 body{
   background-color: #FCDCA2;
   border: solid 5px #FFEBC7;
+  height: 640px;
+  width: 360px;
 }
+
 .header-page-title {
   color: orange;
   color:#FFCCAC;
@@ -12,8 +15,11 @@ body{
   display: flex;
   justify-content: space-around;
   align-items: center;
-  margin: 0;
-  width: 360px;
+}
+
+.login-image {
+  width: 350px;
+  margin-bottom: 30px;
 }
 
 .profile-btn, .search-btn {
@@ -31,7 +37,6 @@ body{
   font-size: 50px;
   height: 100px;
   justify-content: space-around;
-  margin-bottom: 0;
   text-align: center;
   text-shadow: 0 0 10px #fff;
   width: 100%;
@@ -42,7 +47,7 @@ body{
   border: none;
 }
 
-.exec-search-btn{
+.exec-search-btn {
   background-color: #f5f2f2;
   border-radius: 10px;
   padding: 10px;
@@ -185,7 +190,7 @@ body{
   width: 30vh;
 }
 
-.prof-btn{
+.prof-btn {
   background-color: #f5f2f2;
   border-radius: 10px;
   padding: 10px;
@@ -208,47 +213,18 @@ body{
 }
 
 .carousels-container {
+  border: 1px solid black;
   display: flex;
   justify-content: center;
 }
 
-.email-input{
-  position: absolute;
-  width:351px;
-  height: 52px;
-  background-color: #FFF9F9;
-  border-radius: 10px;
-  margin-left: 40px;
-  margin-top: 70px;
-}
-
-.password-input{
-  position: absolute;
-  width:351px;
-  height: 52px;
-  background-color: #FFF9F9;
-  border-radius: 10px;
-  margin-left: 40px;
-  margin-top: 130px;
-}
-
-.login-submit-btn{
-  position: absolute;
-  border-radius: 10px;
-  background-color: #9AAD98;
-  width: 255px;
-  height: 52px;
-  margin-left: 95px;
-  margin-top: 190px;
-}
-
-.dev{
+.dev {
   font-size: 14px;
   text-align: center;
   margin-top: 250px;
 }
 
-.name{
+.name {
   text-align: center;
   text-decoration: none;
 }
@@ -267,7 +243,7 @@ body{
   border-radius: 10px;
 }
 
-.meals-container{
+.meals-container {
   background-color: #FCDCA2;
   margin-top: 50px;
 }
@@ -295,7 +271,7 @@ body{
   text-decoration: none;
 }
 
-.btn-filter{
+.btn-filter {
   width: 110px;
   height: 60px;
   border-radius: 10px;
@@ -305,7 +281,7 @@ body{
   font-weight: bold;
 }
 
-.btn-explore{
+.btn-explore {
   background-color: #f5f2f2;
   border-radius: 10px;
   padding: 10px;
@@ -341,16 +317,11 @@ body{
   width: 100%;
 }
 
-.barra{
+.barra {
   background-color: #CF1818;
   opacity: 0.5;
   position: fixed;
   width: 100%;
   height: 48px;
   bottom: 0;
-}
-
-.main{
-  margin-top: 10px;
-  margin-left: 10px;
 }

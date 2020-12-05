@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import LoginContext from '../context/LoginContext';
 import HeaderContext from '../context/HeaderContext';
 import wallpaper from '../images/wallpaper.jpeg';
+import './Login.css'
 
 const Login = () => {
   const {
@@ -35,17 +36,17 @@ const Login = () => {
   };
 
   return (
-    <div className="main">
+    <div className="login-container">
       <h1 className="main-header">Login</h1>
-      <div className="header">
-        <img src={ wallpaper } alt="wallpaper" style={ { width: 441, height: 207 } } />
+      <div className="login-image-container">
+        <img src={ wallpaper } alt="wallpaper" className="login-image pulse" />
       </div>
-      <form>
+      <form className="login-form">
         <input
           type="email"
           data-testid="email-input"
           className="email-input"
-          placeholder="email"
+          placeholder="Digite seu e-mail"
           value={ email }
           onChange={ ({ target: { value } }) => setEmail(value) }
           required
@@ -54,12 +55,12 @@ const Login = () => {
           type="password"
           data-testid="password-input"
           className="password-input"
-          placeholder="senha"
+          placeholder="Digite sua senha"
           value={ password }
           onChange={ ({ target: { value } }) => setPassword(value) }
           required
         />
-        <Link to="/comidas">
+        <Link className="login-form" to="/comidas">
           <button
             type="submit"
             data-testid="login-submit-btn"
