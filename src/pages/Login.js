@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import LoginContext from '../context/LoginContext';
 import HeaderContext from '../context/HeaderContext';
 import wallpaper from '../images/wallpaper.jpeg';
-import './Login.css'
+import './Login.css';
 
 const Login = () => {
   const {
@@ -37,7 +37,6 @@ const Login = () => {
 
   return (
     <div className="login-container">
-      <h1 className="main-header">Login</h1>
       <div className="login-image-container">
         <img src={ wallpaper } alt="wallpaper" className="login-image pulse" />
       </div>

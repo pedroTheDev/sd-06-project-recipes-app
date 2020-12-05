@@ -10,17 +10,17 @@
 }
 
 .email-input, .password-input {
-  text-align: center;
   background-color: #FFF9F9;
   border-radius: 10px;
   height: 52px;
   margin-bottom: 20px;
+  text-align: center;
   width:300px;
 }
 
 .login-submit-btn {
-  border-radius: 10px;
   background-color: #A98036;
+  border-radius: 10px;
   color: white;
   font-family: cursive;
   font-size: 30px;
@@ -32,37 +32,43 @@
 }
 
 .login-image-container {
+  border-bottom: solid 5px #FFEBC7;
+  margin-bottom: 30px;
   overflow: hidden;
-  margin-bottom: 40px;
+}
+
+.login-image {
+  width: 350px;
+  margin-bottom: 30px;
 }
 
 .pulse {
   animation: pulse 1.7s infinite;
-  margin: 0 auto;
-  display: table;
   animation-direction: alternate;
-  -webkit-animation-name: pulse;
   animation-name: pulse;
+  display: table;
+  margin: 0 auto;
+  -webkit-animation-name: pulse;
 }
 
 @-webkit-keyframes pulse {
   0% {
-    transform: scale(1);
     filter: brightness(100%);
+    transform: scale(1);
   }
   100% {
-    transform: scale(1.05);
     filter: brightness(130%);
+    transform: scale(1.05);
   }
 }
 
 @keyframes pulse {
   0% {
-    transform: scale(1);
     filter: brightness(100%);
+    transform: scale(1);
   }
   100% {
-    transform: scale(1.05);
     filter: brightness(130%);
+    transform: scale(1.05);
   }
 }

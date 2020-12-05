@@ -1,68 +1,7 @@
 body{
   background-color: #FCDCA2;
   border: solid 5px #FFEBC7;
-  height: 640px;
-  width: 360px;
-}
-
-.header-page-title {
-  color: orange;
-  color:#FFCCAC;
-  text-shadow:#000 1px -1px, #000 -1px 1px, #000 1px 1px, #000 -1px -1px;
-}
-
-.header-container {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.login-image {
-  width: 350px;
-  margin-bottom: 30px;
-}
-
-.profile-btn, .search-btn {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.main-header {
-  align-items: center;
-  background-image: url(./images/header.jpg);
-  background-repeat: no-repeat;
-  display: flex;
-  font-family: cursive;
-  font-size: 50px;
-  height: 100px;
-  justify-content: space-around;
-  text-align: center;
-  text-shadow: 0 0 10px #fff;
-  width: 100%;
-}
-
-.search-btn {
-  background: none;
-  border: none;
-}
-
-.exec-search-btn {
-  background-color: #f5f2f2;
-  border-radius: 10px;
-  padding: 10px;
-  box-shadow: 5px 5px rgba(0, 0, 0, 0.25);
-  margin-left: 50px;
-  margin-top: 20px;
-  width: 113px;
-  height: 39px;
-  border: none;
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.search-input {
-  border-radius: 10px;
+  overflow: auto;
 }
 
 .recipe-details-container {

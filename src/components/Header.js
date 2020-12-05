@@ -4,6 +4,7 @@ import searchIcon from '../images/searchIcon.svg';
 import profileIcon from '../images/profileIcon.svg';
 import HeaderContext from '../context/HeaderContext';
 import SearchBar from './SearchBar';
+import './Header.css';
 
 const Header = () => {
   const {
@@ -33,7 +34,7 @@ const Header = () => {
 
   return (
     <div className="header-container">
-      <div className="main-header">
+      <div className="main-header-container">
         <Link className="profile-btn" to="/perfil">
           <img src={ profileIcon } alt="Profile" data-testid="profile-top-btn" />
         </Link>
