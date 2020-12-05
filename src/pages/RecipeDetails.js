@@ -7,7 +7,7 @@ import recomendationsThunk from '../redux/actions/pageDetailsFetcher';
 import recipeDetailsProcessing from '../utils/recipeDetailsProcessing';
 import checkRecipeInProgress from '../utils/checkRecipeInProgress';
 import checkSavedRecipe from '../utils/checkSavedRecipe';
-import checkFavoriteRecipe from '../utils/checkFavoriteRecipe';
+// import checkFavoriteRecipe from '../utils/checkFavoriteRecipe';
 import DetailAndProgressBody from '../components/DetailAndProgressBody';
 
 function RecipeDetails(

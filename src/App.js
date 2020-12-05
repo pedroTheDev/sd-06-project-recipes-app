@@ -4,10 +4,10 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.css';
 import { Provider } from 'react-redux';
 import {
-  Login, MainPage, Explorar, Perfil, ReceitasFavoritas, ReceitasFeitas,
+  Login, MainPage, Explorar, Perfil, ReceitasFavoritas,
   RecipeDetails, BebidasIngredientes,
   ExplorarOrigem, ComidasIngredientes,
-  Explorer, ReceitaProgresso, ComidasArea, DoneRecipes
+  Explorer, ReceitaProgresso, DoneRecipes,
 } from './pages';
 import store from './redux/store';
 import './visual_identity/styles/main.scss';
