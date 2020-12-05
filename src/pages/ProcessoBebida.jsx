@@ -8,9 +8,12 @@ import { loadState, saveState } from '../services/localStorage';
 function ProcessoBebida({ match: { params: { id } }, history }) {
   const zero = 0;
   const quinze = 15;
+  const storageReturn = loadState('inProgressRecipes', { cocktails: {
+    [id]: [] } }).cocktails[id];
   const [detailsDrink, setdetailsDrink] = useState([]);
   const [arrayIngredients, setArrayIngredients] = useState([]);
   const [countCheck, setCountCheck] = useState(zero);
+  const [arrayCheckBox, setArrayCheckBox] = useState(storageReturn);
   useEffect(() => {
     requestApiDrinkDetails(id)
       .then((response) => {
@@ -18,6 +21,15 @@ function ProcessoBebida({ match: { params: { id } }, history }) {
         // console.log(response[0]);
       });
   }, []);
+
+  useEffect(() => {
+    const loadStorage = loadState('inProgressRecipes', {});
+    saveState('inProgressRecipes', {
+      ...loadStorage,
+      cocktails:
+        { ...loadStorage.cocktails, [id]: [...arrayCheckBox] },
+    });
+  }, [arrayCheckBox]);
 
   const ingredientsFunc = () => {
     if (detailsDrink.length !== zero) {
@@ -32,14 +44,20 @@ function ProcessoBebida({ match: { params: { id } }, history }) {
     }
   };
 
-  const riskCheckBox = (event) => {
+  const riskCheckBox = (event, element) => {
     const checkBox = document.getElementById(`${event.target.id}`);
     if (checkBox.checked) {
       const labelBox = document.getElementsByName(`${event.target.id}`);
       labelBox[0].className = 'riscado';
       setCountCheck(countCheck + 1);
+      setArrayCheckBox([...arrayCheckBox, element]);
     } else {
+      const labelBox = document.getElementsByName(`${event.target.id}`);
+      labelBox[0].className = 'non-riscado';
       setCountCheck(countCheck - 1);
+      const filterArrayCheckBox = arrayCheckBox
+        .filter((ingredient) => ingredient !== element);
+      setArrayCheckBox(filterArrayCheckBox);
     }
   };
 
@@ -110,17 +128,27 @@ function ProcessoBebida({ match: { params: { id } }, history }) {
         </button>
         <FavoriteHeart id={ id } detailsDrink={ detailsDrink } />
       </div>
-      {arrayIngredients.map((element, index) => (
-        <label
-          htmlFor={ index }
-          key={ index }
-          data-testid={ `${index}-ingredient-step` }
-          name={ index }
-        >
-          <input type="checkbox" id={ index } name="scales" onChange={ riskCheckBox } />
-          { element }
-        </label>
-      ))}
+      {arrayIngredients.map((element, index) => {
+        const checked = arrayCheckBox.some((checkElement) => checkElement === element);
+        return (
+          <label
+            htmlFor={ index }
+            key={ index }
+            data-testid={ `${index}-ingredient-step` }
+            name={ index }
+            className={ checked ? 'riscado' : 'non-riscado' }
+          >
+            <input
+              type="checkbox"
+              id={ index }
+              name="scales"
+              checked={ checked }
+              onChange={ (event) => riskCheckBox(event, element) }
+            />
+            { element }
+          </label>
+        );
+      })}
       <h4 data-testid="instructions">{detailsDrink.strInstructions}</h4>
       <button
         type="button"
