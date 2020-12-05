@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import shareIcon from '../images/shareIcon.svg';
+import './ShareButton.css';
 
 function ShareButton({ path }) {
   const [copiedPath, setCopiedPath] = useState();
@@ -12,7 +13,7 @@ function ShareButton({ path }) {
   };
 
   return (
-    <div>
+    <div className="share-btn-container">
       <button
         type="button"
         onClick={ handleShare }
@@ -24,7 +25,7 @@ function ShareButton({ path }) {
           data-testid="share-btn"
         />
       </button>
-      { copiedPath && <p>Link copiado!</p> }
+      { copiedPath && <p className="share-text">Link copiado!</p> }
     </div>
   );
 }

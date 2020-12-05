@@ -191,46 +191,41 @@ const FoodsDetails = (props) => {
 
   return (
     <div className="recipe-details-container">
-      <h1 className="recipe-details-title">
-        {title}
-      </h1>
       <img
         src={ recipeImage }
         alt={ recipeTitle }
         data-testid="recipe-photo"
         className="recipe-details-image"
       />
-      <div>
-        <p
-          data-testid="recipe-title"
-          className="recipe-details-name"
+      <p
+        data-testid="recipe-title"
+        className="recipe-details-name"
+      >
+        {recipeTitle}
+      </p>
+      <div className="favorite-and-share-btn-container">
+        <button
+          type="button"
+          onClick={ handleImage }
+          className="favorite-btn"
         >
-          {recipeTitle}
-        </p>
-        <div>
-          <ShareButton path={ pathname } />
-          <button
-            type="button"
-            onClick={ handleImage }
-            className="favorite-btn"
-          >
-            <img
-              src={ btnImg }
-              alt="like"
-              data-testid="favorite-btn"
-            />
-          </button>
-        </div>
+          <img
+            src={ btnImg }
+            alt="like"
+            data-testid="favorite-btn"
+          />
+        </button>
+        <ShareButton path={ pathname } />
       </div>
       <p
         className="recipe-details-category"
       >
+        Category-
         <span data-testid="recipe-category">
           {recipeCategory}
         </span>
       </p>
-
-      <ul>
+      <ul className="ingredients-list">
         {recipeIngredients.map((item, index) => (
           <li
             key={ index }
@@ -240,7 +235,6 @@ const FoodsDetails = (props) => {
           </li>
         ))}
       </ul>
-
       <h3
         data-testid="instructions"
         className="recipe-details-instructions"
@@ -253,6 +247,7 @@ const FoodsDetails = (props) => {
         data-testid="video"
         className="recipe-details-video"
       />
+      <h3>Recommendations:</h3>
       <div className="carousels-container">
         <div
           className="carousel slide w-25"

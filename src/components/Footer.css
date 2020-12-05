@@ -1,0 +1,19 @@
+.main-footer {
+  bottom: 0;
+  display: flex;
+  justify-content: space-around;
+  height: 44px;
+  left: 0;
+  position: fixed;
+  width: 100%;
+}
+
+.colored-bar {
+  background-color: #CF1818;
+  bottom: 0;
+  height: 48px;
+  opacity: 0.5;
+  position: fixed;
+  width: 100%;
+  z-index: -1;
+}
