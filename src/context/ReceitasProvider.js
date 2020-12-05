@@ -9,7 +9,7 @@ const ReceitasProvider = ({ children }) => {
   const [stopApi, setStopApi] = useState([]);
   const [drinksIngredientList, setDrinksIngredientList] = useState([]);
   const [searchBox, setSearchBox] = useState(false);
-  const [fetching, setFetching] = useState(true);
+  const [filtersDrinkData, setFiltersDrinkData] = useState(true);
   const [filtersData, setFiltersData] = useState(['All']);
   const [selectedFilter, setSelectedFilter] = useState('All');
   const [randomDrinkID, setRandomDrink] = useState();
@@ -25,8 +25,8 @@ const ReceitasProvider = ({ children }) => {
     setDrinks,
     searchBox,
     setSearchBox,
-    fetching,
-    setFetching,
+    filtersDrinkData,
+    setFiltersDrinkData,
     filtersData,
     setFiltersData,
     selectedFilter,

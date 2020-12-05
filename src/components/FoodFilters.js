@@ -1,11 +1,21 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import ReceitasContext from '../context/ReceitasContext';
-import { foodByCategoryApi, foodAPI } from '../services/foodAPI';
+import { foodByCategoryApi, foodAPI, foodCategoryApi } from '../services/foodAPI';
 
 function FoodFilters() {
   const {
-    filtersData, setMeals, selectedFilter, setSelectedFilter,
+    filtersData, setMeals, selectedFilter, setSelectedFilter, setFiltersData, 
   } = useContext(ReceitasContext);
+
+  useEffect(() => {
+    async function fetchMeal() {
+      const data = await foodCategoryApi();
+
+      setFiltersData(data);
+    };
+
+    fetchMeal();
+  }, [])
 
   async function fetchFood() {
     const responseFoodApi = await foodAPI();

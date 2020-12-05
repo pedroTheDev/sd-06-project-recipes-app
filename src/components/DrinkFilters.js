@@ -4,7 +4,7 @@ import { drinkByCategoryApi, drinkAPI } from '../services/drinkAPI';
 
 function DrinkFilters() {
   const {
-    filtersData, setDrinks, selectedFilter, setSelectedFilter,
+    filtersDrinkData, setDrinks, selectedFilter, setSelectedFilter,
   } = useContext(ReceitasContext);
 
   async function fetchDrink() {
@@ -34,7 +34,7 @@ function DrinkFilters() {
 
   return (
     <div className="row justify-content-center mb-2">
-      {filtersData.map((filter) => (
+      {filtersDrinkData.map((filter) => (
         <button
           key={ filter }
           type="button"

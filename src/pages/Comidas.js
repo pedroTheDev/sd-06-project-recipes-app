@@ -6,24 +6,23 @@ import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
 import ReceitasContext from '../context/ReceitasContext';
 import FoodFilters from '../components/FoodFilters';
-import { foodAPI, foodCategoryApi } from '../services/foodAPI';
+import { foodAPI } from '../services/foodAPI';
 import load from '../images/load.png';
 import '../style/Loading.css';
 
 const Comidas = (history) => {
-  const { searchBox, meals, setMeals, setFiltersData } = useContext(ReceitasContext);
+  const { searchBox, meals, setMeals } = useContext(ReceitasContext);
 
   const location = useLocation();
   const doze = 12;
 
   useEffect(() => {
     async function fetchFood() {
-      const data = await foodCategoryApi();
       const responseFoodsAPI = await foodAPI();
 
-      setFiltersData(data);
       setMeals(responseFoodsAPI);
     }
+
     if (!meals.length) fetchFood();
   }, []);
 

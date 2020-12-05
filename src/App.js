@@ -24,12 +24,12 @@ function App() {
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={ Login } />
-        <Route path="/comidas/:id/in-progress" component={ ComidasInProgress } />
-        <Route path="/comidas/:id" component={ DetalhesComida } />
-        <Route path="/comidas" component={ Comidas } />
-        <Route path="/bebidas/:id/in-progress" component={ BebidasInProgress } />
-        <Route path="/bebidas/:id" component={ DetalhesBebida } />
-        <Route path="/bebidas" component={ Bebidas } />
+        <Route exact path="/comidas" component={ Comidas } />
+        <Route exact path="/comidas/:id" component={ DetalhesComida } />
+        <Route exact path="/comidas/:id/in-progress" component={ ComidasInProgress } />
+        <Route exact path="/bebidas" component={ Bebidas } />
+        <Route exact path="/bebidas/:id" component={ DetalhesBebida } />
+        <Route exact path="/bebidas/:id/in-progress" component={ BebidasInProgress } />
         <Route exact path="/explorar" component={ Explorar } />
         <Route exact path="/explorar/comidas" component={ ExplorarComidas } />
         <Route exact path="/explorar/bebidas" component={ ExplorarBebidas } />

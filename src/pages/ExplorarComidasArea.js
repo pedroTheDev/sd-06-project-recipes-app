@@ -26,7 +26,7 @@ const ExplorarComidasArea = () => {
         if (!hasAll) {
           response.push(allOption);
         }
-        console.log(response);
+
         return response;
       })
       .then((response) => setAreas(response));

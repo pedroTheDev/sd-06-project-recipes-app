@@ -11,7 +11,9 @@ import load from '../images/load.png';
 import '../style/Loading.css';
 
 function Bebidas() {
-  const { searchBox, drinks, setDrinks, setFiltersData } = useContext(ReceitasContext);
+  const {
+    searchBox, drinks, setDrinks, setFiltersDrinkData,
+  } = useContext(ReceitasContext);
 
   const location = useLocation();
   const doze = 12;
@@ -21,7 +23,7 @@ function Bebidas() {
       const data = await drinkCategoryApi();
       const responseDrinksAPI = await drinkAPI();
 
-      setFiltersData(data);
+      setFiltersDrinkData(data);
       setDrinks(responseDrinksAPI);
     }
 
