@@ -5,14 +5,8 @@ import './App.css';
 import { Provider } from 'react-redux';
 import {
   Login, MainPage, Explorar, Perfil, ReceitasFavoritas,
-<<<<<<< HEAD
-  ReceitasFeitas, BebidasDetalhes, BebidasProgresso,
-  ComidasArea, ComidasDetalhes, ComidasIngredientes, ComidasProgresso, Explorer,
-=======
-  RecipeDetails, BebidasIngredientes,
-  ExplorarOrigem, ComidasIngredientes,
-  Explorer, ReceitaProgresso, DoneRecipes,
->>>>>>> edbf7887dd8a64df5a0c1e5844df614f723364b0
+  ComidasIngredientes, Explorer, RecipeDetails, ExplorarOrigem,
+  ReceitaProgresso, DoneRecipes,
 } from './pages';
 import store from './redux/store';
 import './visual_identity/styles/main.scss';
