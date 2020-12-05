@@ -5,7 +5,7 @@ import {
   requestApiFoodDetails,
 } from '../services/requestFood';
 import {
-  recommendDrinksList,
+  requestApiDrinkFilterName,
 } from '../services/requestDrink';
 import '../styles/Detalhes.css';
 import buttonShare from '../styles/images/shareIcon.svg';
@@ -56,7 +56,7 @@ function DetalhesReceita({ match: { params: { id } } }) {
 
   const recommendFoodFunction = async () => {
     if (detailsFood.length !== zero) {
-      const response = await recommendDrinksList();
+      const response = await requestApiDrinkFilterName();
       setRecommendFood(response.drinks.slice(zero, seis));
     }
   };
