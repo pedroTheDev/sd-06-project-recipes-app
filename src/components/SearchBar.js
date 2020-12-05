@@ -142,6 +142,7 @@ function SearchBar({ title, searchBar, setSearchBar }) {
 SearchBar.propTypes = {
   title: PropTypes.string.isRequired,
   searchBar: PropTypes.bool.isRequired,
+  setSearchBar: PropTypes.func.isRequired,
 };
 
 export default SearchBar;
