@@ -21,10 +21,10 @@ function DetalhesComida() {
   const [next, setNext] = useState(ZERO);
   const [loadingMeal, setloadingMeal] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [isDone, setIsDone] = useState(false);
   const history = useHistory();
   const idMeal = history.location.pathname.split('/')[2];
   const { location: { pathname } } = history;
-
 
   let continuar = false;
   if (localStorage.inProgressRecipes) {
@@ -40,6 +40,14 @@ function DetalhesComida() {
       favoriteRecipes.forEach((favorite) => {
         if (favorite.id === idMeal) {
           setIsFavorite(true);
+        }
+      });
+    }
+    if (localStorage.doneRecipes) {
+      const doneRecipes = JSON.parse(localStorage.doneRecipes);
+      doneRecipes.forEach((done) => {
+        if (done.id === idMeal) {
+          setIsDone(true);
         }
       });
     }
@@ -86,7 +94,6 @@ function DetalhesComida() {
       localStorage.favoriteRecipes = JSON.stringify(favoriteRecipes);
     }
   };
-
 
   return (
     <div>
@@ -210,21 +217,22 @@ function DetalhesComida() {
             </div>
             <div className="buttons-footer">
               <div>
-                <Link to={ `/comidas/${idMeal}/in-progress` }>
-                  <button
-                    className="start-recipe"
-                    data-testid="start-recipe-btn"
-                    type="button"
-                  >
-                    { continuar ? 'Continuar Receita' : 'Iniciar Receita' }
-                  </button>
-                </Link>
                 <Link to="/comidas">
                   <button
                     className="back"
                     type="button"
                   >
                     Voltar
+                  </button>
+                </Link>
+                <Link to={ `/comidas/${idMeal}/in-progress` }>
+                  <button
+                    className="finish-recipe"
+                    data-testid="start-recipe-btn"
+                    type="button"
+                    hidden={ isDone }
+                  >
+                    { continuar ? 'Continuar Receita' : 'Iniciar Receita' }
                   </button>
                 </Link>
               </div>

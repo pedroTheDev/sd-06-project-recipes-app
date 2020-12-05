@@ -9,7 +9,7 @@ body {
   flex-flow: column wrap;
   justify-content: center;
   margin: auto;
-  margin-top: 100px;
+  margin-top: 80px;
   width: 100%;
 }
 
@@ -69,4 +69,14 @@ form button:hover:disabled {
   border: 1px solid #999999;
   background-color: #cccccc;
   color: #666666;
+}
+
+@media only screen and (min-width: 1000px) {
+  .login {
+    margin-top: 4vh;
+  }
+  
+  .login img {
+    margin-bottom: 4%;
+  }
 }

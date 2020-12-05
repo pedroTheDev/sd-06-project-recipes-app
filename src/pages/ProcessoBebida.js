@@ -153,7 +153,7 @@ function ProcessoBebida() {
               alt="Botão de Compartilhar"
             />
           </button>
-          { isCopied ? <span>Link copiado!</span> : true }
+          { isCopied && <span className="copy">Link copiado!</span> }
         </div>
         <div className="div-title">
           <h1 data-testid="recipe-title">
@@ -175,13 +175,16 @@ function ProcessoBebida() {
                   data-testid={ `${index}-ingredient-step` }
                   className="container-checkbox"
                 >
-                  <input
-                    type="checkbox"
-                    name={ dataDrinks[ingredient] }
-                    checked={ checked.includes(index) }
-                    onChange={ ({ target }) => { handleChange(target, index); } }
-                  />
-                  <span className="checkmark">{ dataDrinks[ingredient] }</span>
+                  <label htmlFor={ `check${index}` }>
+                    <input
+                      id={ `check${index}` }
+                      type="checkbox"
+                      name={ dataDrinks[ingredient] }
+                      checked={ checked.includes(index) }
+                      onChange={ ({ target }) => { handleChange(target, index); } }
+                    />
+                    <span className="checkmark">{ dataDrinks[ingredient] }</span>
+                  </label>
                 </div>
               );
             }
@@ -190,6 +193,7 @@ function ProcessoBebida() {
         <h2 data-testid="instructions">
           Instruções
         </h2>
+        <p>{ dataDrinks.strInstructions }</p>
       </div>
       <div className="buttons-footer">
         <div>

@@ -124,17 +124,6 @@ function ProcessoComida() {
     }]);
   };
 
-  // return (isLoading) ? <p>Loading</p> : (
-  //     <div className="container-progress">
-  //       <img
-  //         data-testid="recipe-photo"
-  //         src={ dataMeal.strMealThumb }
-  //         alt="Foto da receita"
-  //         className="food-image"
-  //       />
-  //       <div className="div-header">
-  //         <div className="div-icon">
-
   return (isLoading) ? <img className="loading" src={ loading } alt="loading" /> : (
     <div className="container-details-progress">
       <img
@@ -165,7 +154,7 @@ function ProcessoComida() {
               alt="Botão de Compartilhar"
             />
           </button>
-          { isCopied ? <span>Link copiado!</span> : true }
+          { isCopied ? <span className="copy">Link copiado!</span> : true }
         </div>
         <div className="div-title">
           <h1 className="h1" data-testid="recipe-title">
@@ -185,14 +174,18 @@ function ProcessoComida() {
                 <div
                   key={ index }
                   data-testid={ `${index}-ingredient-step` }
+                  className="container-checkbox"
                 >
-                  <input
-                    type="checkbox"
-                    name={ dataMeal[ingredient] }
-                    checked={ checked.includes(index) }
-                    onChange={ ({ target }) => { handleChange(target, index); } }
-                  />
-                  <span className="checkmark">{ dataMeal[ingredient] }</span>
+                  <label htmlFor={ `check${index}` }>
+                    <input
+                      id={ `check${index}` }
+                      type="checkbox"
+                      name={ dataMeal[ingredient] }
+                      checked={ checked.includes(index) }
+                      onChange={ ({ target }) => { handleChange(target, index); } }
+                    />
+                    <span className="checkmark">{ dataMeal[ingredient] }</span>
+                  </label>
                 </div>
               );
             }
@@ -201,9 +194,18 @@ function ProcessoComida() {
         <h2 data-testid="instructions">
           Instruções
         </h2>
+        <p>{ dataMeal.strInstructions }</p>
       </div>
       <div className="buttons-footer">
         <div>
+          <Link to="/comidas">
+            <button
+              className="back"
+              type="button"
+            >
+              Ver Outras Receitas
+            </button>
+          </Link>
           <Link to="/receitas-feitas">
             <button
               className="finish-recipe"
@@ -213,14 +215,6 @@ function ProcessoComida() {
               onClick={ saveDoneRecipes }
             >
               Finalizar Receita
-            </button>
-          </Link>
-          <Link to="/comidas">
-            <button
-              className="back"
-              type="button"
-            >
-              Ver Outras Receitas
             </button>
           </Link>
         </div>
