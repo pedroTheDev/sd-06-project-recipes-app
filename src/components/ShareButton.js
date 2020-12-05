@@ -12,10 +12,10 @@ function ShareButton({ datatestid, linkToCopy }) {
   }
 
   function copyToClip() {
+    setFeedBackMessage();
     if (linkToCopy) return navigator.clipboard.writeText(`http://localhost:3000${linkToCopy}`);
     const link = window.location.href.toString();
     navigator.clipboard.writeText(link);
-    setFeedBackMessage();
   }
 
   return (

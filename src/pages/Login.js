@@ -19,6 +19,7 @@ function Login() {
 
   useEffect(() => {
     setIsDisabled(checkLogin(email, passwordInput));
+    // setMockedLocalStorage();
   }, [email, passwordInput]);
 
   const handleInput = (event) => {
