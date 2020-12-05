@@ -1,7 +1,8 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import RecipesAppContext from '../context/RecipesAppContext';
 import { requestApiDrinkFilterName } from '../services/requestDrink';
+import FavoriteHeart from './FavoriteHeart';
 import '../styles/imgBig.css';
 
 function CardsDrink() {
@@ -20,36 +21,61 @@ function CardsDrink() {
     }
   }, []);
 
-  const ofTheFirstParameter = 0;
   const upToParameter12 = 12;
+  const [upToParameter, setUpToParameter] = useState(upToParameter12);
+
+  const onClickMoreDrink = () => {
+    setUpToParameter(upToParameter + upToParameter12);
+  };
+
+  const ofTheFirstParameter = 0;
+  const disableButtonMoreResults = true;
+
+  if (cardDrink.length === arrayVoid) {
+    return (<span>Loading...</span>);
+  }
 
   return (
     <div>
-      {(cardDrink.length === arrayVoid) ? <span>Loading...</span> : cardDrink
-        .slice(ofTheFirstParameter, upToParameter12).map(({
-          idDrink,
-          strDrink,
-          strDrinkThumb,
-        }, index) => (
-          <Link
-            key={ idDrink }
-            to={ `/bebidas/${idDrink}` }
-          >
-            <div data-testid={ `${index}-recipe-card` }>
-              <img
-                className="imgBig"
-                src={ strDrinkThumb }
-                alt={ strDrink }
-                data-testid={ `${index}-card-img` }
-              />
-              <h4
-                data-testid={ `${index}-card-name` }
+      {cardDrink.slice(ofTheFirstParameter, upToParameter)
+        .map((objDrink, index) => {
+          const {
+            idDrink,
+            strDrink,
+            strDrinkThumb,
+          } = objDrink;
+          return (
+            <div key={ idDrink } data-testid={ `${index}-recipe-card` }>
+              <Link
+                to={ `/bebidas/${idDrink}` }
               >
-                { strDrink }
-              </h4>
+                <img
+                  className="imgBig"
+                  src={ strDrinkThumb }
+                  alt={ strDrink }
+                  data-testid={ `${index}-card-img` }
+                />
+              </Link>
+              <Link
+                to={ `/bebidas/${idDrink}` }
+              >
+                <h4
+                  data-testid={ `${index}-card-name` }
+                >
+                  { strDrink }
+                </h4>
+              </Link>
+              <FavoriteHeart id={ idDrink } detailsDrink={ objDrink } />
             </div>
-          </Link>
-        ))}
+          );
+        })}
+      <button
+        type="button"
+        onClick={ onClickMoreDrink }
+        disabled={ upToParameter > cardDrink.length ? disableButtonMoreResults : false }
+      >
+        Mostrar mais resultados
+      </button>
     </div>
   );
 }

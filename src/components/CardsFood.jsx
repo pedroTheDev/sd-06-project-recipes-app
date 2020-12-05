@@ -1,9 +1,10 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import RecipesAppContext from '../context/RecipesAppContext';
 import {
   requestApiFoodFilterName,
 } from '../services/requestFood';
+import FavoriteHeart from './FavoriteHeart';
 import '../styles/imgBig.css';
 
 function CardsFood() {
@@ -22,36 +23,61 @@ function CardsFood() {
     }
   }, []);
 
-  const ofTheFirstParameter = 0;
   const upToParameter12 = 12;
+  const [upToParameter, setUpToParameter] = useState(upToParameter12);
+
+  const onClickMoreFood = () => {
+    setUpToParameter(upToParameter + upToParameter12);
+  };
+
+  const ofTheFirstParameter = 0;
+  const disableButtonMoreResults = true;
+
+  if (cardFood.length === arrayVoid) {
+    return (<span>Loading...</span>);
+  }
 
   return (
     <div>
-      {(cardFood.length === arrayVoid) ? <span>Loading...</span> : cardFood
-        .slice(ofTheFirstParameter, upToParameter12).map(({
-          idMeal,
-          strMeal,
-          strMealThumb,
-        }, index) => (
-          <Link
-            key={ idMeal }
-            to={ `/comidas/${idMeal}` }
-          >
-            <div data-testid={ `${index}-recipe-card` }>
-              <img
-                className="imgBig"
-                src={ strMealThumb }
-                alt={ strMeal }
-                data-testid={ `${index}-card-img` }
-              />
-              <h4
-                data-testid={ `${index}-card-name` }
+      {cardFood.slice(ofTheFirstParameter, upToParameter)
+        .map((objFood, index) => {
+          const {
+            idMeal,
+            strMeal,
+            strMealThumb,
+          } = objFood;
+          return (
+            <div key={ idMeal } data-testid={ `${index}-recipe-card` }>
+              <Link
+                to={ `/comidas/${idMeal}` }
               >
-                { strMeal }
-              </h4>
+                <img
+                  className="imgBig"
+                  src={ strMealThumb }
+                  alt={ strMeal }
+                  data-testid={ `${index}-card-img` }
+                />
+              </Link>
+              <Link
+                to={ `/comidas/${idMeal}` }
+              >
+                <h4
+                  data-testid={ `${index}-card-name` }
+                >
+                  { strMeal }
+                </h4>
+              </Link>
+              <FavoriteHeart id={ idMeal } detailsFood={ objFood } />
             </div>
-          </Link>
-        ))}
+          );
+        })}
+      <button
+        type="button"
+        onClick={ onClickMoreFood }
+        disabled={ upToParameter > cardFood.length ? disableButtonMoreResults : false }
+      >
+        Mostrar mais resultados
+      </button>
     </div>
   );
 }
