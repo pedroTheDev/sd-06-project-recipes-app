@@ -258,7 +258,6 @@ const FoodsDetails = (props) => {
           className="carousel slide w-25"
           data-ride="carousel"
           id="carousel1"
-          style={ { marginLeft: 10 } }
         >
           <div className="carousel-inner">
             {recommendations1.map((item, index) => {
@@ -351,12 +350,6 @@ const FoodsDetails = (props) => {
             data-testid="start-recipe-btn"
             className="start-recipe-btn"
             onClick={ handleClick }
-            style={ { borderRadius: 10,
-              backgroundColor: '#9AAD98',
-              width: 150,
-              height: 55,
-              fontWeight: 'bold',
-              fontSize: 16 } }
           >
             {btnTitle}
           </button>

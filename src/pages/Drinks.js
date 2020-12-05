@@ -5,6 +5,7 @@ import HeaderContext from '../context/HeaderContext';
 import RecipesContext from '../context/RecipesContext';
 import getRecipesInformation from '../services/recipesAPI';
 import CategoryButtons from '../components/CategoryButtons';
+import './FoodsAndDrinks.css';
 
 const Drinks = ({ history }) => {
   const { title, setTitle } = useContext(HeaderContext);
@@ -50,44 +51,36 @@ const Drinks = ({ history }) => {
   }, [fetchedResults]);
 
   return (
-    <div className="meals-container">
+    <div className="recipe-page-container">
       <CategoryButtons type="drinks" />
-      {
-        isFetching
-          ? <p>Faça uma Pesquisa</p>
-          : fetchedResults.recipes
-            .map((recipe, index) => (
-              <Link to={ `/bebidas/${recipe.idDrink}` } key={ recipe.idDrink }>
-                <div
-                  className="meal-card"
-                  data-testid={ `${index}-recipe-card` }
-                  style={ { border: '1px solid black',
-                    marginTop: 30,
-                    marginLeft: 10,
-                    borderRadius: 10 } }
-                >
-                  <p
-                    className="meal-title"
-                    data-testid={ `${index}-card-name` }
-                    style={ {
-                      textAlign: 'center',
-                      fontWeight: 'bold',
-                      color: 'black',
-                      fontSize: 24 } }
+      <div className="recipes-container">
+        {
+          isFetching
+            ? <p>Faça uma Pesquisa</p>
+            : fetchedResults.recipes
+              .map((recipe, index) => (
+                <Link to={ `/bebidas/${recipe.idDrink}` } key={ recipe.idDrink }>
+                  <div
+                    className="recipe-card"
+                    data-testid={ `${index}-recipe-card` }
                   >
-                    { recipe.strDrink }
-                  </p>
-                  <img
-                    src={ recipe.strDrinkThumb }
-                    data-testid={ `${index}-card-img` }
-                    style={ { borderRadius: 10, height: 180 } }
-                    className="meal-img"
-                    alt={ recipe.strDrink }
-                  />
-                </div>
-              </Link>
-            ))
-      }
+                    <p
+                      className="recipe-title"
+                      data-testid={ `${index}-card-name` }
+                    >
+                      { recipe.strDrink }
+                    </p>
+                    <img
+                      src={ recipe.strDrinkThumb }
+                      data-testid={ `${index}-card-img` }
+                      className="recipe-img"
+                      alt={ recipe.strDrink }
+                    />
+                  </div>
+                </Link>
+              ))
+        }
+      </div>
     </div>
   );
 };

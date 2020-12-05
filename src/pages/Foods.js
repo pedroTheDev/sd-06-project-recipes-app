@@ -5,6 +5,7 @@ import HeaderContext from '../context/HeaderContext';
 import RecipesContext from '../context/RecipesContext';
 import getRecipesInformation from '../services/recipesAPI';
 import CategoryButtons from '../components/CategoryButtons';
+import './FoodsAndDrinks.css';
 
 const Foods = ({ history }) => {
   const { title, setTitle } = useContext(HeaderContext);
@@ -53,7 +54,7 @@ const Foods = ({ history }) => {
   return (
     <div className="recipe-page-container">
       <CategoryButtons type="meals" />
-      <div className="recipe-container">
+      <div className="recipes-container">
         {
           isFetching
             ? <p>Faça uma Pesquisa</p>
@@ -61,18 +62,18 @@ const Foods = ({ history }) => {
               .map((recipe, index) => (
                 <Link to={ `/comidas/${recipe.idMeal}` } key={ recipe.idMeal }>
                   <div
-                    className="meal-card"
+                    className="recipe-card"
                     data-testid={ `${index}-recipe-card` }
                   >
                     <p
-                      className="meal-title"
+                      className="recipe-title"
                       data-testid={ `${index}-card-name` }
                     >
                       { recipe.strMeal }
                     </p>
                     <img
                       src={ recipe.strMealThumb }
-                      className="meal-img"
+                      className="recipe-img"
                       data-testid={ `${index}-card-img` }
                       alt={ recipe.strMeal }
                     />
