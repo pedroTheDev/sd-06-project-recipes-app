@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import '../styles/Explorar.css';
 import { requestApiMealSurprise } from '../services/requestFood';
+import '../styles/marginHederAndFooter.css';
 
 function ExplorarComidas({ history }) {
   async function handleRandomMealPage() {
@@ -16,7 +17,7 @@ function ExplorarComidas({ history }) {
   }
 
   return (
-    <>
+    <div className="container-margin-heder container-margin-footer">
       <Header name="Explorar Comidas" button={ false } />
       <div className="explore-btn">
         <Link to="/explorar/comidas/ingredientes">
@@ -44,7 +45,7 @@ function ExplorarComidas({ history }) {
         </button>
       </div>
       <Footer />
-    </>
+    </div>
   );
 }
 

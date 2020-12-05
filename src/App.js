@@ -22,7 +22,7 @@ import ProcessoBebida from './pages/ProcessoBebida';
 
 function App() {
   return (
-    <div className="container-app">
+    <div>
       <Provider>
         <Switch>
           <Route path="/" exact component={ Home } />

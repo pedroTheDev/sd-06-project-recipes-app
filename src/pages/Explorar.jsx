@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import '../styles/Explorar.css';
+import '../styles/marginHederAndFooter.css';
 
 function Explorar() {
   return (
-    <>
+    <div className="container-margin-heder container-margin-footer">
       <Header name="Explorar" button={ false } />
       <div className="explore-btn">
         <Link to="/explorar/comidas">
@@ -27,7 +28,7 @@ function Explorar() {
         </Link>
       </div>
       <Footer />
-    </>
+    </div>
   );
 }
 

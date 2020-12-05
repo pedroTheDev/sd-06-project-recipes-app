@@ -7,6 +7,7 @@ import {
   requestApiDrinkFilterIngredient,
   requestApiDrinkListIngredients,
 } from '../services/requestDrink';
+import '../styles/marginHederAndFooter.css';
 
 function BebidasPorIngredientes({ history }) {
   const {
@@ -36,7 +37,7 @@ function BebidasPorIngredientes({ history }) {
   const upToParameter12 = 12;
 
   return (
-    <>
+    <div className="container-margin-heder container-margin-footer">
       <Header name="Explorar Ingredientes" button={ false } />
       {nameIngredientsDrink.slice(ofTheFirstParameter, upToParameter12)
         .map((ingredient, index) => (
@@ -59,7 +60,7 @@ function BebidasPorIngredientes({ history }) {
           </button>
         ))}
       <Footer />
-    </>
+    </div>
   );
 }
 

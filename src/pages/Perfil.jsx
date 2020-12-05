@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import '../styles/Profile.css';
 import { loadState } from '../services/localStorage';
+import '../styles/Profile.css';
+import '../styles/marginHederAndFooter.css';
 
 function Perfil({ history }) {
   const user = loadState('user', { email: '' });
@@ -16,7 +17,7 @@ function Perfil({ history }) {
   };
 
   return (
-    <>
+    <div className="container-margin-heder container-margin-footer">
       <Header name="Perfil" button={ false } />
       <div className="profile">
         <span data-testid="profile-email">
@@ -47,7 +48,7 @@ function Perfil({ history }) {
         </button>
       </div>
       <Footer />
-    </>
+    </div>
   );
 }
 
