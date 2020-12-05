@@ -33,10 +33,14 @@ function CardsFood() {
   const ofTheFirstParameter = 0;
   const disableButtonMoreResults = true;
 
+  if (cardFood.length === arrayVoid) {
+    return (<span>Loading...</span>);
+  }
+
   return (
     <div>
-      {(cardFood.length === arrayVoid) ? <span>Loading...</span> : cardFood
-        .slice(ofTheFirstParameter, upToParameter).map((objFood, index) => {
+      {cardFood.slice(ofTheFirstParameter, upToParameter)
+        .map((objFood, index) => {
           const {
             idMeal,
             strMeal,
