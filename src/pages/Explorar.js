@@ -5,9 +5,9 @@ import Footer from '../components/Footer';
 
 function Explorar() {
   return (
-    <main>
+    <main className="option-page-container">
       <Header pageName="Explorar" renderSearch={ false } />
-      <div className="default-page">
+      <div className="default-page option-page">
 
         <Link to="/explorar/comidas">
           <button

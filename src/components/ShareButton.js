@@ -4,9 +4,7 @@ import shareIcon from '../images/shareIcon.svg';
 
 function ShareButton({ datatestid, linkToCopy }) {
   const [message, setMessage] = useState(false);
-
   function setFeedBackMessage() {
-    setMessage(true);
     const resetInterval = 2500;
     setTimeout(() => {
       setMessage(false);
@@ -23,16 +21,18 @@ function ShareButton({ datatestid, linkToCopy }) {
   return (
     <button
       type="button"
-      onClick={ () => copyToClip() }
+      onClick={ () => {
+        copyToClip();
+        setMessage(true);
+      } }
     >
-      { message ? 'Link Copiado!' : (
-        <img
-          data-testid={ datatestid || 'share-btn' }
-          type="button"
-          src={ shareIcon }
-          alt="shareIcon"
-        />
-      )}
+      <img
+        data-testid={ datatestid || 'share-btn' }
+        type="button"
+        src={ shareIcon }
+        alt="shareIcon"
+      />
+      { message ? 'Link Copiado!' : 'Copiar' }
     </button>
   );
 }

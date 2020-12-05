@@ -22,9 +22,9 @@ const Explorer = (props) => {
   }
 
   return (
-    <>
+    <main className="option-page-container">
       <Header pageName={ pathname } />
-      <div className="default-page">
+      <div className="default-page option-page">
         <Link to={ `${pathname}/ingredientes` }>
           <button
             type="button"
@@ -64,7 +64,7 @@ const Explorer = (props) => {
         </button>
       </div>
       <Footer />
-    </>
+    </main>
   );
 };
 

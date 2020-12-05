@@ -4,10 +4,10 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.css';
 import { Provider } from 'react-redux';
 import {
-  Login, MainPage, Explorar, Perfil, ReceitasFavoritas,
-  RecipeDetails, BebidasIngredientes, BebidasProgresso,
-  ComidasArea, ComidasIngredientes, ComidasProgresso,
-  Explorer, DoneRecipes,
+  Login, MainPage, Explorar, Perfil, ReceitasFavoritas, ReceitasFeitas,
+  RecipeDetails, BebidasIngredientes,
+  ExplorarOrigem, ComidasIngredientes,
+  Explorer, ReceitaProgresso, ComidasArea, DoneRecipes
 } from './pages';
 import store from './redux/store';
 import './visual_identity/styles/main.scss';
@@ -20,7 +20,7 @@ function App() {
           <Route exact path="/" component={ Login } />
           <Route exact path="/bebidas" component={ MainPage } />
           <Route exact path="/bebidas/:id" component={ RecipeDetails } />
-          <Route exact path="/bebidas/:id/in-progress" component={ BebidasProgresso } />
+          <Route exact path="/bebidas/:id/in-progress" component={ ReceitaProgresso } />
           <Route
             exact
             path="/explorar/bebidas/ingredientes"
@@ -28,13 +28,14 @@ function App() {
           />
           <Route exact path="/comidas" component={ MainPage } />
           <Route exact path="/comidas/:id" component={ RecipeDetails } />
-          <Route exact path="/comidas/:id/in-progress" component={ ComidasProgresso } />
+          <Route exact path="/comidas/:id/in-progress" component={ ReceitaProgresso } />
           <Route
             exact
             path="/explorar/comidas/ingredientes"
             component={ ComidasIngredientes }
           />
-          <Route exact path="/explorar/comidas/area" component={ ComidasArea } />
+          <Route exact path="/explorar/comidas/area" component={ ExplorarOrigem } />
+          <Route exact path="/explorar/bebidas/area" component={ ExplorarOrigem } />
           <Route exact path="/explorar" component={ Explorar } />
           <Route exact path="/explorar/comidas" component={ Explorer } />
           <Route exact path="/explorar/bebidas" component={ Explorer } />
