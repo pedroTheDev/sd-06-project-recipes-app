@@ -9,12 +9,26 @@ import { loadState, saveState } from '../services/localStorage';
 function ProcessoReceita({ match: { params: { id } }, history }) {
   const zero = 0;
   const vinte = 20;
-  const storageReturn = loadState('inProgressRecipes', { meals: {
-    [id]: [] } }).meals[id];
   const [detailsFood, setDetailsFood] = useState([]);
   const [arrayIngredients, setArrayIngredients] = useState([]);
   const [countCheck, setCountCheck] = useState(zero);
-  const [arrayCheckBox, setArrayCheckBox] = useState(storageReturn);
+
+  const initialValueArrayCheckBox = () => {
+    const arrayVoid = [];
+    const loadStateStorage = loadState('inProgressRecipes', { meals: {
+      [id]: arrayVoid } });
+    if (Object.keys(loadStateStorage)
+      .some((key) => key === 'meals')
+    && Object.keys(loadStateStorage.meals)
+      .some((key) => key === id)) {
+      return loadStateStorage.meals[id];
+    }
+    return arrayVoid;
+  };
+
+  const [arrayCheckBox, setArrayCheckBox] = useState(initialValueArrayCheckBox());
+
+
   useEffect(() => {
     requestApiFoodDetails(id)
       .then((response) => {

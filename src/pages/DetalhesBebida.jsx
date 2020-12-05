@@ -10,7 +10,7 @@ import {
 import '../styles/Detalhes.css';
 import buttonShare from '../styles/images/shareIcon.svg';
 import FavoriteHeart from '../components/FavoriteHeart';
-import { loadState, saveState } from '../services/localStorage';
+import { loadState } from '../services/localStorage';
 import '../styles/imgBig.css';
 
 function DetalhesBebida({ match: { params: { id } } }) {
@@ -30,18 +30,6 @@ function DetalhesBebida({ match: { params: { id } } }) {
           setStartRecipe('Continuar Receita');
         }
       }
-    }
-  };
-
-  const clickStartRecipeFunc = () => {
-    const loadStorage = loadState('inProgressRecipes', '');
-    if (startRecipe === 'Iniciar Receita') {
-      saveState('inProgressRecipes', {
-        ...loadStorage,
-        cocktails:
-        // { ...loadStorage.cocktails, [detailsDrink.idDrink]: [...arrayIngredients] },
-        { ...loadStorage.cocktails, [detailsDrink.idDrink]: [] },
-      });
     }
   };
 
@@ -155,7 +143,6 @@ function DetalhesBebida({ match: { params: { id } } }) {
           type="button"
           data-testid="start-recipe-btn"
           className="btn-footer"
-          onClick={ clickStartRecipeFunc }
         >
           { startRecipe }
         </button>
