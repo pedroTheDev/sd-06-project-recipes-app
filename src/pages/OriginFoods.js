@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import HeaderContext from '../context/HeaderContext';
+import './OriginFoods.css';
 
 const OriginFoods = () => {
   const { title, setTitle } = useContext(HeaderContext);
@@ -47,13 +48,11 @@ const OriginFoods = () => {
   }, [areaSelected]);
 
   return (
-    <div className="main">
-      <h1 style={ { textAlign: 'center' } }>
-        { title }
-      </h1>
+    <div className="origin-container">
       <select
         data-testid="explore-by-area-dropdown"
         onChange={ handleChange }
+        className="origin-select"
       >
         {areas.map((item) => (
           <option
@@ -71,33 +70,25 @@ const OriginFoods = () => {
           All
         </option>
       </select>
-      <div className="card-container">
+      <div className="cards-container">
         {recipes.map((item, index) => (
           <Link
             to={ `/comidas/${item[2]}` }
             key={ item[0] }
           >
             <div
-              className="area-card"
+              className="origin-food-card"
               data-testid={ `${index}-recipe-card` }
-              style={ { border: '1px solid black',
-                marginTop: 20,
-                borderRadius: 10,
-                marginLeft: 5,
-                padding: 10 } }
             >
               <img
-                className="area-card-img"
+                className="origin-food-image"
                 src={ item[1] }
                 alt={ item[0] }
                 data-testid={ `${index}-card-img` }
               />
               <p
                 data-testid={ `${index}-card-name` }
-                style={ { textAlign: 'center',
-                  fontSize: 18,
-                  fontWeight: 'bold',
-                  color: 'black' } }
+                className="origin-food-name"
               >
                 { item[0] }
               </p>
