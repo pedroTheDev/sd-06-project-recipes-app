@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import HeaderContext from '../context/HeaderContext';
 import RecipesContext from '../context/RecipesContext';
-import './IngredientDrinks.css';
 
 const IngredientFoods = () => {
   const { title, setTitle } = useContext(HeaderContext);

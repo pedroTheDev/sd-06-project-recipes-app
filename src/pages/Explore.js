@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import HeaderContext from '../context/HeaderContext';
-import './Explore.css';
 
 const Explore = () => {
   const { setTitle } = useContext(HeaderContext);

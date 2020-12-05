@@ -5,7 +5,6 @@ import RecipesContext from '../context/RecipesContext';
 import likeIcon from '../images/whiteHeartIcon.svg';
 import fullLikeIcon from '../images/blackHeartIcon.svg';
 import ShareButton from '../components/ShareButton';
-import './DrinksDetails.css';
 
 const DrinksDetails = (props) => {
   const [btnTitle, setBtnTitle] = useState('Iniciar Receita');
@@ -242,101 +241,102 @@ const DrinksDetails = (props) => {
         {recipeInstructions}
       </h3>
 
-      <div
-        className="carousel slide w-25"
-        data-ride="carousel"
-        id="carousel1"
-        style={ { borderRadius: 10 } }
-      >
-        <div className="carousel-inner">
-          {recommendations1.map((item, index) => {
-            if (index === carouselActiveIndex) {
+      <div className="carousels-container">
+        <div
+          className="carousel slide w-25"
+          data-ride="carousel"
+          id="carousel1"
+          style={ { borderRadius: 10 } }
+        >
+          <div className="carousel-inner">
+            {recommendations1.map((item, index) => {
+              if (index === carouselActiveIndex) {
+                return (
+                  <div
+                    key={ item.idMeal }
+                    data-testid={ `${index}-recomendation-card` }
+                    className="carousel-item active"
+                  >
+                    <img
+                      src={ item.strMealThumb }
+                      alt={ item.strMeal }
+                      className="d-block w-100"
+                      style={ { marginTop: 65, marginLeft: 20, borderRadius: 10 } }
+                    />
+                    <h5
+                      data-testid={ `${index}-recomendation-title` }
+                      style={ { marginLeft: 20, borderRadius: 10 } }
+                    >
+                      { item.strMeal }
+                    </h5>
+                  </div>
+                );
+              }
               return (
                 <div
                   key={ item.idMeal }
                   data-testid={ `${index}-recomendation-card` }
-                  className="carousel-item active"
+                  className="carousel-item"
                 >
                   <img
                     src={ item.strMealThumb }
                     alt={ item.strMeal }
                     className="d-block w-100"
-                    style={ { marginTop: 65, marginLeft: 20, borderRadius: 10 } }
                   />
-                  <h5
-                    data-testid={ `${index}-recomendation-title` }
-                    style={ { marginLeft: 20, borderRadius: 10 } }
-                  >
+                  <h5 data-testid={ `${index}-recomendation-title` }>
                     { item.strMeal }
                   </h5>
                 </div>
               );
-            }
-            return (
-              <div
-                key={ item.idMeal }
-                data-testid={ `${index}-recomendation-card` }
-                className="carousel-item"
-              >
-                <img
-                  src={ item.strMealThumb }
-                  alt={ item.strMeal }
-                  className="d-block w-100"
-                />
-                <h5 data-testid={ `${index}-recomendation-title` }>
-                  { item.strMeal }
-                </h5>
-              </div>
-            );
-          })}
+            })}
+          </div>
         </div>
-      </div>
-      <div
-        className="carousel slide w-25"
-        data-ride="carousel"
-        id="carousel2"
-      >
-        <div className="carousel-inner">
-          {recommendations2.map((item, index) => {
-            if (index === carouselActiveIndex) {
+        <div
+          className="carousel slide w-25"
+          data-ride="carousel"
+          id="carousel2"
+        >
+          <div className="carousel-inner">
+            {recommendations2.map((item, index) => {
+              if (index === carouselActiveIndex) {
+                return (
+                  <div
+                    key={ item.idMeal }
+                    data-testid={ `${index + carouselPartition}-recomendation-card` }
+                    className="carousel-item active"
+                  >
+                    <img
+                      src={ item.strMealThumb }
+                      alt={ item.strMeal }
+                      className="d-block w-100"
+                    />
+                    <h5 data-testid={ `${index + carouselPartition}-recomendation-title` }>
+                      { item.strMeal }
+                    </h5>
+                  </div>
+                );
+              }
               return (
                 <div
                   key={ item.idMeal }
                   data-testid={ `${index + carouselPartition}-recomendation-card` }
-                  className="carousel-item active"
+                  className="carousel-item"
                 >
                   <img
                     src={ item.strMealThumb }
                     alt={ item.strMeal }
                     className="d-block w-100"
+                    style={ { borderRadius: 10 } }
                   />
                   <h5 data-testid={ `${index + carouselPartition}-recomendation-title` }>
                     { item.strMeal }
                   </h5>
                 </div>
               );
-            }
-            return (
-              <div
-                key={ item.idMeal }
-                data-testid={ `${index + carouselPartition}-recomendation-card` }
-                className="carousel-item"
-              >
-                <img
-                  src={ item.strMealThumb }
-                  alt={ item.strMeal }
-                  className="d-block w-100"
-                  style={ { borderRadius: 10 } }
-                />
-                <h5 data-testid={ `${index + carouselPartition}-recomendation-title` }>
-                  { item.strMeal }
-                </h5>
-              </div>
-            );
-          })}
+            })}
+          </div>
         </div>
       </div>
-
       {
         buttonMount() && (
           <button

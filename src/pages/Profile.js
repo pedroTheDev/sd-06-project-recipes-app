@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import LoginContext from '../context/LoginContext';
 import HeaderContext from '../context/HeaderContext';
-import './Profile.css';
 
 const Profile = () => {
   const { setTitle } = useContext(HeaderContext);

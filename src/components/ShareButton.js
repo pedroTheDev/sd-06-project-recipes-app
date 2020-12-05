@@ -16,7 +16,7 @@ function ShareButton({ path }) {
       <button
         type="button"
         onClick={ handleShare }
-        style={ { width: 70, marginLeft: 180 } }
+        className="share-btn"
       >
         <img
           src={ shareIcon }

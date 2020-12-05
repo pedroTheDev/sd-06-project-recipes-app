@@ -6,7 +6,6 @@ import RecipesContext from '../context/RecipesContext';
 import likeIcon from '../images/whiteHeartIcon.svg';
 import fullLikeIcon from '../images/blackHeartIcon.svg';
 import ShareButton from '../components/ShareButton';
-import './FoodInProgress.css';
 
 const FoodInProgress = ({
   match: { params: { id } },

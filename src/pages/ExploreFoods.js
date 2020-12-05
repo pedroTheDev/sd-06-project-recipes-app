@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import HeaderContext from '../context/HeaderContext';
-import './ExploreFoods.css';
 
 const ExploreFoods = () => {
   const { setTitle } = useContext(HeaderContext);

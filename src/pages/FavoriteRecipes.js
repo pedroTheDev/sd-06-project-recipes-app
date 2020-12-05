@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import HeaderContext from '../context/HeaderContext';
 import fullLikeIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
-import './FavoriteRecipes.css';
 
 const FavoriteRecipes = () => {
   const { setTitle } = useContext(HeaderContext);

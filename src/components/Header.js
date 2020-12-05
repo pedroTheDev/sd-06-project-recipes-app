@@ -4,7 +4,6 @@ import searchIcon from '../images/searchIcon.svg';
 import profileIcon from '../images/profileIcon.svg';
 import HeaderContext from '../context/HeaderContext';
 import SearchBar from './SearchBar';
-import './Header.css';
 
 const Header = () => {
   const {
@@ -33,12 +32,12 @@ const Header = () => {
   };
 
   return (
-    <div>
+    <div className="header-container">
       <div className="main-header">
-        <Link to="/perfil">
+        <Link className="profile-btn" to="/perfil">
           <img src={ profileIcon } alt="Profile" data-testid="profile-top-btn" />
         </Link>
-        <h1 data-testid="page-title" style={ { color: 'orange' } }>{ title }</h1>
+        <h1 data-testid="page-title" className="header-page-title">{ title }</h1>
         {
           handleSearchImage() && (
             <button
@@ -46,7 +45,7 @@ const Header = () => {
               data-testid="search-top-btn"
               onClick={ toggleSearchBar }
               src={ searchIcon }
-              className="search"
+              className="search-btn"
             >
               <img
                 src={ searchIcon }

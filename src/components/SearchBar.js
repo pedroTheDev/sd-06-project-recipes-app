@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react';
 import RecipesContext from '../context/RecipesContext';
 import HeaderContext from '../context/HeaderContext';
 import getRecipesInformation from '../services/recipesAPI';
-import './SearchBar.css';
 
 function SearchBar() {
   const [searchRadioOption, setSearchRadioOption] = useState('');

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import LoginContext from '../context/LoginContext';
 import HeaderContext from '../context/HeaderContext';
 import wallpaper from '../images/wallpaper.jpeg';
-import './Login.css';
 
 const Login = () => {
   const {
@@ -37,10 +36,10 @@ const Login = () => {
 
   return (
     <div className="main">
+      <h1 className="main-header">Login</h1>
       <div className="header">
         <img src={ wallpaper } alt="wallpaper" style={ { width: 441, height: 207 } } />
       </div>
-      <div className="main-header">Login</div>
       <form>
         <input
           type="email"
