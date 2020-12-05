@@ -7,7 +7,7 @@ import {
 const INITIAL_STATE = {
   id: '',
   ingredients: ['Chicken'],
-  isLoading: false,
+  isLoading: true,
 };
 
 function exploreReducer(state = INITIAL_STATE, action) {

@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { connect, useDispatch } from 'react-redux';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import RecipeCard from '../components/RecipeCard';
+import IngredientCard from '../components/IngredientCard';
 import { ingredientsThunk, successIngredients } from '../redux/actions/exploreActions';
 
 function ComidasIngredientes(props) {
@@ -11,48 +12,33 @@ function ComidasIngredientes(props) {
   const dispatch = useDispatch();
   useEffect(() => {
     if (pathname === '/explorar/comidas/ingredientes') {
-      return dispatch(ingredientsThunk('https://www.themealdb.com/api/json/v1/1/list.php?i=list'));
+      dispatch(ingredientsThunk('https://www.themealdb.com/api/json/v1/1/list.php?i=list'));
     }
-
-
-  }, []);
+  }, [dispatch, pathname]);
 
   useEffect(() => {
     if (pathname === '/explorar/bebidas/ingredientes') {
-      return dispatch(ingredientsThunk('https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list'));
+      dispatch(ingredientsThunk('https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list'));
     }
-  }, []);
-
-
+  }, [dispatch, pathname]);
 
   if (isLoading) return <div>Carregando</div>;
   return (
     <main>
       <Header pageName="Explorar Ingredientes" renderSearch={ false } />
-      ComidasIngredientes Page
-      { 
+      {
         ingredients.map((ingredient, index) => (
-            <RecipeCard
-              dataTestId='ingredient'
-              key={ ingredient }
-              recipeName={ ingredient }
-              recipeImage={
-                pathname === '/explorar/bebidas/ingredientes'
-                  ? `https://www.thecocktaildb.com/images/ingredients/${ingredient}-Small.png`
-                  : `https://www.themealdb.com/images/ingredients/${ingredient}-Small.png`
-              }
-              redirectIngredient={
-                pathname.includes('comidas')
-                  ? '/comidas'
-                  : '/bebidas'
-              }
-              id={ ingredient }
-              foodOrDrink={ '/comidas' }
-              index={ index }
-              />
-            ))
-          }
-      
+          <IngredientCard
+            key={ ingredient }
+            ingredientName={ ingredient }
+            ingredientImage={ pathname === '/explorar/bebidas/ingredientes'
+              ? `https://www.thecocktaildb.com/images/ingredients/${ingredient}-Small.png`
+              : `https://www.themealdb.com/images/ingredients/${ingredient}-Small.png` }
+            foodOrDrink={ pathname.includes('comidas') ? '/comidas' : '/bebidas' }
+            index={ index }
+          />
+        ))
+      }
       <Footer />
     </main>
   );
@@ -64,7 +50,13 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  test: () => dispatch(successIngredients())
+  test: () => dispatch(successIngredients()),
 });
+
+ComidasIngredientes.propTypes = {
+  ingredients: PropTypes.instanceOf(Array),
+  location: PropTypes.instanceOf(Object),
+  isLoading: PropTypes.bool,
+}.isRequired;
 
 export default connect(mapStateToProps, mapDispatchToProps)(ComidasIngredientes);
