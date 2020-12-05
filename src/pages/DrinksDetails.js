@@ -5,13 +5,14 @@ import RecipesContext from '../context/RecipesContext';
 import likeIcon from '../images/whiteHeartIcon.svg';
 import fullLikeIcon from '../images/blackHeartIcon.svg';
 import ShareButton from '../components/ShareButton';
+import './RecipeDetails.css';
 
 const DrinksDetails = (props) => {
   const [btnTitle, setBtnTitle] = useState('Iniciar Receita');
   const [btnImg, setBtnImg] = useState('');
   const [recommendations1, setRecommendations1] = useState([]);
   const [recommendations2, setRecommendations2] = useState([]);
-  const { title, setTitle } = useContext(HeaderContext);
+  const { setTitle } = useContext(HeaderContext);
   const {
     recipeObject,
     recipesInProgress,
@@ -179,30 +180,25 @@ const DrinksDetails = (props) => {
   }, []);
 
   return (
-    <div className="main">
-      <h1 style={ { textAlign: 'center', marginTop: 20 } }>
-        { title }
-      </h1>
+    <div className="recipe-details-container">
       <img
         src={ recipeImage }
         alt={ recipeTitle }
         data-testid="recipe-photo"
-        className="image-display"
-        style={ { borderRadius: 10, marginLeft: 65 } }
+        className="recipe-details-image"
       />
       <div>
         <p
           data-testid="recipe-title"
-          style={ { textAlign: 'center' } }
+          className="recipe-details-name"
         >
           { recipeTitle }
         </p>
-        <div>
-          <ShareButton path={ pathname } />
+        <div className="favorite-and-share-btn-container">
           <button
             type="button"
             onClick={ handleImage }
-            style={ { width: 70, marginLeft: 180 } }
+            className="favorite-btn"
           >
             <img
               src={ btnImg }
@@ -210,16 +206,16 @@ const DrinksDetails = (props) => {
               data-testid="favorite-btn"
             />
           </button>
+          <ShareButton path={ pathname } />
         </div>
       </div>
-      <p
-        data-testid="recipe-category"
-        style={ { fontSize: 24, fontWeight: 'bold', textAlign: 'center', marginTop: 10 } }
-      >
-        { recipeAlc }
+      <p className="recipe-details-category">
+        Category-
+        <span data-testid="recipe-category">
+          { recipeAlc }
+        </span>
       </p>
-
-      <ul style={ { fontSize: 20, fontWeight: 'bold' } }>
+      <ul className="ingredients-list">
         {recipeIngredients.map((item, index) => (
           <li
             key={ index }
@@ -229,24 +225,18 @@ const DrinksDetails = (props) => {
           </li>
         ))}
       </ul>
-
       <h3
         data-testid="instructions"
-        style={ { border: '1px solid black',
-          padding: 10,
-          marginLeft: 20,
-          marginRight: 20,
-          borderRadius: 10 } }
+        className="recipe-details-instructions"
       >
         {recipeInstructions}
       </h3>
-
+      <h3>Recommendations:</h3>
       <div className="carousels-container">
         <div
           className="carousel slide w-25"
           data-ride="carousel"
           id="carousel1"
-          style={ { borderRadius: 10 } }
         >
           <div className="carousel-inner">
             {recommendations1.map((item, index) => {
@@ -261,11 +251,9 @@ const DrinksDetails = (props) => {
                       src={ item.strMealThumb }
                       alt={ item.strMeal }
                       className="d-block w-100"
-                      style={ { marginTop: 65, marginLeft: 20, borderRadius: 10 } }
                     />
                     <h5
                       data-testid={ `${index}-recomendation-title` }
-                      style={ { marginLeft: 20, borderRadius: 10 } }
                     >
                       { item.strMeal }
                     </h5>
@@ -326,7 +314,6 @@ const DrinksDetails = (props) => {
                     src={ item.strMealThumb }
                     alt={ item.strMeal }
                     className="d-block w-100"
-                    style={ { borderRadius: 10 } }
                   />
                   <h5 data-testid={ `${index + carouselPartition}-recomendation-title` }>
                     { item.strMeal }
@@ -344,12 +331,6 @@ const DrinksDetails = (props) => {
             data-testid="start-recipe-btn"
             className="start-recipe-btn"
             onClick={ handleClick }
-            style={ { borderRadius: 10,
-              backgroundColor: '#9AAD98',
-              width: 150,
-              height: 55,
-              fontWeight: 'bold',
-              fontSize: 16 } }
           >
             {btnTitle}
           </button>

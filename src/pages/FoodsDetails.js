@@ -5,13 +5,14 @@ import RecipesContext from '../context/RecipesContext';
 import likeIcon from '../images/whiteHeartIcon.svg';
 import fullLikeIcon from '../images/blackHeartIcon.svg';
 import ShareButton from '../components/ShareButton';
+import './RecipeDetails.css';
 
 const FoodsDetails = (props) => {
   const [btnTitle, setBtnTitle] = useState('Iniciar Receita');
   const [btnImg, setBtnImg] = useState('');
   const [recommendations1, setRecommendations1] = useState([]);
   const [recommendations2, setRecommendations2] = useState([]);
-  const { title, setTitle } = useContext(HeaderContext);
+  const { setTitle } = useContext(HeaderContext);
   const {
     recipeObject,
     recipesInProgress,
@@ -217,9 +218,7 @@ const FoodsDetails = (props) => {
         </button>
         <ShareButton path={ pathname } />
       </div>
-      <p
-        className="recipe-details-category"
-      >
+      <p className="recipe-details-category">
         Category-
         <span data-testid="recipe-category">
           {recipeCategory}
