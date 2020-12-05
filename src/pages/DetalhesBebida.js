@@ -207,7 +207,7 @@ function DetalhesBebida() {
                     className="start-recipe"
                     data-testid="start-recipe-btn"
                     type="button"
-                    hidden={isDone}
+                    hidden={ isDone }
                   >
                     { continuar ? 'Continuar Receita' : 'Iniciar Receita' }
                   </button>
