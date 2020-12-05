@@ -110,18 +110,22 @@ function FoodDetails() {
         : (
           <div className="mobile-container">
             <header>
+              <div>
+                <h1 data-testid="recipe-title">
+                  { strMeal }
+                </h1>
+              </div>
+              <div>
+                <h3 data-testid="recipe-category">
+                  { strCategory }
+                </h3>
+              </div>
               <img
                 data-testid="recipe-photo"
                 className="recipe-img"
                 src={ strMealThumb }
                 alt={ `${strMeal}` }
               />
-              <h1 data-testid="recipe-title">
-                { strMeal }
-              </h1>
-              <h3 data-testid="recipe-category">
-                { strCategory }
-              </h3>
             </header>
             <button
               type="button"
@@ -161,17 +165,19 @@ function FoodDetails() {
               {strInstructions}
             </p>
             <Recommended />
-            {(!isDone) && (
-              <Link to={ `${itemUrl}/in-progress` }>
-                <button
-                  type="button"
-                  className="start-recipe-btn"
-                  data-testid="start-recipe-btn"
-                >
-                  Iniciar Receita
-                </button>
-              </Link>
-            )}
+            <div className="btn-div">
+              {(!isDone) && (
+                <Link to={ `${itemUrl}/in-progress` }>
+                  <button
+                    type="button"
+                    className="start-recipe-btn"
+                    data-testid="start-recipe-btn"
+                  >
+                    Iniciar Receita
+                  </button>
+                </Link>
+              )}
+            </div>
           </div>
         )}
       <Footer />

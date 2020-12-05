@@ -7,6 +7,8 @@ import handleFavorite from '../services/storageFunctions';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
 
 function InProgress() {
   const [recipe, setRecipe] = useState({ recipe: { } });
@@ -216,62 +218,66 @@ function InProgress() {
   }, [allChecked]);
 
   return (
-    <main>
-      {(isFetching) ? <div>Loading recipe...</div>
-        : (
-          <section className="body-recipe">
-            <h1 data-testid="recipe-title">
-              { title }
-            </h1>
-            <h3 data-testid="recipe-category">
-              { recCategory }
-            </h3>
-            <img
-              data-testid="recipe-photo"
-              className="recipe-img"
-              src={ thumbnail }
-              alt={ `${title}` }
-            />
-            <button
-              type="button"
-              data-testid="share-btn"
-              onClick={ handleShareClick }
-            >
-              <img src={ shareIcon } alt="Compartilhar" />
-              Compartilhar
-            </button>
-            {(copied) && <span>Link copiado!</span>}
-            <button
-              type="button"
-              onClick={ handleFavoriteClick }
-            >
+    <div className="food-container">
+      <Header title="Em Andamento" />
+      <div className="mobile-container">
+        {(isFetching) ? <div>Loading recipe...</div>
+          : (
+            <section className="body-recipe">
+              <h1 data-testid="recipe-title">
+                { title }
+              </h1>
+              <h3 data-testid="recipe-category">
+                { recCategory }
+              </h3>
               <img
-                data-testid="favorite-btn"
-                src={ isFavorite }
-                alt="Favoritar"
+                data-testid="recipe-photo"
+                className="recipe-img"
+                src={ thumbnail }
+                alt={ `${title}` }
               />
-              Favoritar
-            </button>
-            {isFood && video()}
-            {ingredientsList()}
-            <p data-testid="instructions">
-              {strInstructions}
-            </p>
-            <Recommended />
-            <Link to="/receitas-feitas">
               <button
                 type="button"
-                className="start-recipe-btn"
-                data-testid="finish-recipe-btn"
-                disabled={ isDisabled }
-                onClick={ handleFinishRecipe }
+                data-testid="share-btn"
+                onClick={ handleShareClick }
               >
-                Finalizar Receita
+                <img src={ shareIcon } alt="Compartilhar" />
+                Compartilhar
               </button>
-            </Link>
-          </section>
-        )}
-    </main>
+              {(copied) && <span>Link copiado!</span>}
+              <button
+                type="button"
+                onClick={ handleFavoriteClick }
+              >
+                <img
+                  data-testid="favorite-btn"
+                  src={ isFavorite }
+                  alt="Favoritar"
+                />
+                Favoritar
+              </button>
+              {isFood && video()}
+              {ingredientsList()}
+              <p data-testid="instructions">
+                {strInstructions}
+              </p>
+              <Recommended />
+              <Link to="/receitas-feitas">
+                <button
+                  type="button"
+                  className="start-recipe-btn"
+                  data-testid="finish-recipe-btn"
+                  disabled={ isDisabled }
+                  onClick={ handleFinishRecipe }
+                >
+                  Finalizar Receita
+                </button>
+              </Link>
+            </section>
+          )}
+      </div>
+      <Footer />
+    </div>
   );
 }
 

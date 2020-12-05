@@ -68,15 +68,17 @@ function Recommended() {
   );
 
   return (
-    <section>
+    <div>
       <h5>
         Recomendações
       </h5>
-      {(isFetching) ? <div>Carregando</div>
-        : (
-          renderRecommended()
-        )}
-    </section>
+      <div>
+        {(isFetching) ? <div>Carregando</div>
+          : (
+            renderRecommended()
+          )}
+      </div>
+    </div>
   );
 }
 

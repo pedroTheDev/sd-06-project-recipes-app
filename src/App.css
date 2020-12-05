@@ -154,23 +154,11 @@
 
 .cards-container {
   display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-}
-
-.card-img {
-  width: 120px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 /* Drink page */
-
-.drink-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-bottom: 70px;
-  width: 360px;
-}
 
 .recipe-card {
   align-items: center;
@@ -183,10 +171,6 @@
   height: 200px;
   margin: 10px;
   width: 150px;
-}
-
-.card-img {
-  width: 120px;
 }
 
 /* Explore page */
@@ -226,13 +210,16 @@
   font-size: 1.3em;
   width: 360px;
   bottom: 0px;
-  padding: 0vh 40%;
+  margin-bottom: 58px;
+}
+
+.btn-div {
+  height: 37px;
 }
 
 /* Progress */
 
 .body-recipe {
-  position: relative;
   width: 360px;
   height: 550px;
   background: #FFFFFF;
@@ -243,11 +230,6 @@
   width: 360px;
 }
 
-.start-recipe-btn {
-  bottom: 0px;
-  position: fixed;
-}
-
 .ingredient-checkbox:checked + label {
   text-decoration: line-through;
 }
@@ -256,7 +238,7 @@
 
 .body-perfil {
   width: 360px;
-  height: 100vh;
+  height: 90vh;
   background: white;
   text-align: center;
   display: flex;
@@ -264,11 +246,10 @@
   margin-top: 58px;
 }
 
-/* Food Page */
+/* Food Page/Drink page */
 
 .food-container {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
   width: 100vw;
   height: auto;
@@ -279,10 +260,15 @@
   width: 360px;
   background: white;
   margin-top: 58px;
+  margin-bottom: 58px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
 }
 
 .btn-sub-header {
-  margin: 4px;
+  margin: 2px;
 }
 
 .card-img {

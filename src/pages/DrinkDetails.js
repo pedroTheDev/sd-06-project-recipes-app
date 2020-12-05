@@ -107,19 +107,25 @@ function DrinkDetails() {
       <Header title="Detalhes" />
       {(isFetching) ? <div>Loading recipe...</div>
         : (
-          <section className="mobile-container">
-            <h1 data-testid="recipe-title">
-              {strDrink}
-            </h1>
-            <h3 data-testid="recipe-category">
-              {strAlcoholic}
-            </h3>
-            <img
-              data-testid="recipe-photo"
-              className="recipe-img"
-              src={ strDrinkThumb }
-              alt={ `${strDrink}` }
-            />
+          <div className="mobile-container">
+            <header>
+              <div>
+                <h1 data-testid="recipe-title">
+                  {strDrink}
+                </h1>
+              </div>
+              <div>
+                <h3 data-testid="recipe-category">
+                  {strAlcoholic}
+                </h3>
+              </div>
+              <img
+                data-testid="recipe-photo"
+                className="recipe-img"
+                src={ strDrinkThumb }
+                alt={ `${strDrink}` }
+              />
+            </header>
             <button
               type="button"
               data-testid="share-btn"
@@ -153,18 +159,20 @@ function DrinkDetails() {
               {strInstructions}
             </p>
             <Recommended />
-            {(!isDone) && (
-              <Link to={ `${itemUrl}/in-progress` }>
-                <button
-                  type="button"
-                  className="start-recipe-btn"
-                  data-testid="start-recipe-btn"
-                >
-                  Iniciar Receita
-                </button>
-              </Link>
-            )}
-          </section>
+            <div className="btn-div">
+              {(!isDone) && (
+                <Link to={ `${itemUrl}/in-progress` }>
+                  <button
+                    type="button"
+                    className="start-recipe-btn"
+                    data-testid="start-recipe-btn"
+                  >
+                    Iniciar Receita
+                  </button>
+                </Link>
+              )}
+            </div>
+          </div>
         )}
       <Footer />
     </div>
