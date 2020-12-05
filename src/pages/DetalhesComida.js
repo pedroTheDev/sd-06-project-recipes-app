@@ -217,14 +217,6 @@ function DetalhesComida() {
             </div>
             <div className="buttons-footer">
               <div>
-                <Link to="/comidas">
-                  <button
-                    className="back"
-                    type="button"
-                  >
-                    Voltar
-                  </button>
-                </Link>
                 <Link to={ `/comidas/${idMeal}/in-progress` }>
                   <button
                     className="finish-recipe"
@@ -233,6 +225,14 @@ function DetalhesComida() {
                     hidden={ isDone }
                   >
                     { continuar ? 'Continuar Receita' : 'Iniciar Receita' }
+                  </button>
+                </Link>
+                <Link to="/comidas">
+                  <button
+                    className="back"
+                    type="button"
+                  >
+                    Voltar
                   </button>
                 </Link>
               </div>
