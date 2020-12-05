@@ -190,3 +190,8 @@
 .recipe-thumb {
   border-radius: inherit;
 }
+
+.selected {
+  text-decoration: line-through;
+  }
+  
