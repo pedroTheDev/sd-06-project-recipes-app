@@ -9,8 +9,8 @@ import { loadState, saveState } from '../services/localStorage';
 function ProcessoReceita({ match: { params: { id } }, history }) {
   const zero = 0;
   const vinte = 20;
-  const storageReturn = loadState('inProgressRecipes', { cocktails: {
-    [id]: [] } }).cocktails[id];
+  const storageReturn = loadState('inProgressRecipes', { meals: {
+    [id]: [] } }).meals[id];
   const [detailsFood, setDetailsFood] = useState([]);
   const [arrayIngredients, setArrayIngredients] = useState([]);
   const [countCheck, setCountCheck] = useState(zero);
