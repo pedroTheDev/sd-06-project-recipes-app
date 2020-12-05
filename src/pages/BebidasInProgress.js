@@ -214,7 +214,7 @@ function BebidasInProgress(props) {
       strAlcoholic,
       strDrink,
       strDrinkThumb,
-      strTag,
+      strTags,
     } = fetchById[0];
 
     if (!recipesDone) {
@@ -230,7 +230,7 @@ function BebidasInProgress(props) {
             name: strDrink,
             image: strDrinkThumb,
             doneDate: dateTime,
-            tags: strTag ? [strTag.split(',')] : [],
+            tags: strTags ? strTags.split(',') : [],
           },
         ]),
       );
@@ -248,7 +248,7 @@ function BebidasInProgress(props) {
             name: strDrink,
             image: strDrinkThumb,
             doneDate: dateTime,
-            tags: strTag ? [strTag.split(',')] : [],
+            tags: strTags ? strTags.split(',') : [],
           },
         ]),
       );

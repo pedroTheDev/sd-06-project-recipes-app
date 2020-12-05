@@ -220,7 +220,7 @@ function ComidasInProgress(props) {
       strCategory,
       strMeal,
       strMealThumb,
-      strTag,
+      strTags,
     } = fetchById[0];
 
     if (!recipesDone) {
@@ -236,7 +236,7 @@ function ComidasInProgress(props) {
             name: strMeal,
             image: strMealThumb,
             doneDate: dateTime,
-            tags: strTag ? [strTag.split(',')] : [],
+            tags: strTags ? strTags.split(',') : [],
           },
         ]),
       );
@@ -254,7 +254,7 @@ function ComidasInProgress(props) {
             name: strMeal,
             image: strMealThumb,
             doneDate: dateTime,
-            tags: strTag ? [strTag.split(',')] : [],
+            tags: strTags ? strTags.split(',') : [],
           },
         ]),
       );
