@@ -27,8 +27,8 @@ function ProcessoReceita({ match: { params: { id } }, history }) {
     const loadStorage = loadState('inProgressRecipes', {});
     saveState('inProgressRecipes', {
       ...loadStorage,
-      cocktails:
-        { ...loadStorage.cocktails, [id]: [...arrayCheckBox] },
+      meals:
+        { ...loadStorage.meals, [id]: [...arrayCheckBox] },
     });
   }, [arrayCheckBox]);
 
