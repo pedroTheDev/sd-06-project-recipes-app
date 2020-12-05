@@ -4,7 +4,9 @@ import { connect } from 'react-redux';
 import { success } from '../redux/actions/mainPageFetcher';
 import { fetchMealAPI, fetchDrinkAPI } from '../services/searchAPI';
 
-function SearchBar({ page, dispatchSuccess }) {
+function SearchBar({
+  page, dispatchSuccess, setDisplay: { setShowSearchBar, showSearchBar },
+}) {
   const [searchInput, setSearchInput] = useState('');
   const [option, setOption] = useState('');
 
@@ -25,6 +27,8 @@ function SearchBar({ page, dispatchSuccess }) {
       return alert('Sua busca deve conter somente 1 (um) caracter');
     }
     pageCheckSwitch(page);
+
+    setShowSearchBar(!showSearchBar);
 
     return null;
   }
@@ -87,6 +91,7 @@ function SearchBar({ page, dispatchSuccess }) {
 SearchBar.propTypes = {
   page: PropTypes.string.isRequired,
   dispatchSuccess: PropTypes.func.isRequired,
+  setDisplay: PropTypes.shape.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({

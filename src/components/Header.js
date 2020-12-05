@@ -43,7 +43,8 @@ export default function Header({ pageName, renderSearch }) {
       </Link>
       <h2 data-testid="page-title">{ title }</h2>
       { renderSearch ? renderSearchIcon() : null }
-      { showSearchBar && <SearchBar page={ title } /> }
+      { showSearchBar
+      && <SearchBar page={ title } setDisplay={ { setShowSearchBar, showSearchBar } } /> }
     </header>
   );
 }

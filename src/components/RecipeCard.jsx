@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import './recipeCard.css';
 import { Link } from 'react-router-dom';
 import { clearState } from '../redux/actions/mainPageFetcher';
+import './recipeCard.css';
 
 const RecipeCard = ({ recipeName, recipeImage, id, foodOrDrink, index, limpar }) => (
   <Link to={ `${foodOrDrink}/${id}` } onClick={ () => limpar() }>
