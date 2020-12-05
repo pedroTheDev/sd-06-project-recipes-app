@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesContext';
 import fetchCategories from '../services/categoriesAPI';
 import getRecipesInformation from '../services/recipesAPI';
+import './CategoryButtons.css';
 
 function CategoryButtons({ type }) {
   const {

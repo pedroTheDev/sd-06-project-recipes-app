@@ -1,0 +1,18 @@
+.category-btn-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.category-btn {
+  background-color: #f5f2f2;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 5px 5px rgba(0, 0, 0, 0.25);
+  font-family: cursive;
+  font-size: 12px;
+  height: 60px;
+  margin-bottom: 20px;
+  width: 100px;
+}
