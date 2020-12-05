@@ -111,7 +111,7 @@ function FavoriteRecipes() {
               >
                 { recipe.name }
               </h5>
-              <div>
+              <div className="img-card">
                 <img
                   src={ shareIcon }
                   alt="share"

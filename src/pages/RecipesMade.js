@@ -40,86 +40,105 @@ function RecipesMade() {
   };
 
   const renderFood = (recipe, index) => (
-    <div key={ index }>
-      <img
-        data-testid={ `${index}-horizontal-image` }
-        src={ recipe.image }
-        alt="foto"
-        width="100px"
-        id={ recipe.id }
-        value="comidas"
-        onClick={ () => {
-          goToDetails(recipe.id, 'comidas');
-        } }
-        aria-hidden="true"
-      />
-      <span
-        data-testid={ `${index}-horizontal-top-text` }
-      >
-        {`${recipe.area} - ${recipe.category}`}
-      </span>
-      <span
-        data-testid={ `${index}-horizontal-name` }
-        id={ recipe.id }
-        value="comidas"
-        onClick={ () => {
-          goToDetails(recipe.id, 'comidas');
-        } }
-        aria-hidden="true"
-      >
-        {recipe.name}
-      </span>
-      <span data-testid={ `${index}-horizontal-done-date` }>{recipe.doneDate}</span>
-      <img
-        data-testid={ `${index}-horizontal-share-btn` }
-        src={ shareIcon }
-        alt="share icon"
-        onClick={ () => handleShareIcon(recipe.id, 'comidas') }
-        aria-hidden="true"
-      />
-      {renderTags(recipe.tags, index)}
+    <div key={ index } className="container-card">
+      <div className="recipe-card">
+        <img
+          data-testid={ `${index}-horizontal-image` }
+          src={ recipe.image }
+          alt="comida-foto"
+          width="45%"
+          id={ recipe.id }
+          value="comidas"
+          onClick={ () => {
+            goToDetails(recipe.id, 'comidas');
+          } }
+          aria-hidden="true"
+        />
+        <div className="recipe-card-text">
+          <h6
+            data-testid={ `${index}-horizontal-top-text` }
+          >
+            {`${recipe.area} - ${recipe.category}`}
+          </h6>
+          <h5
+            data-testid={ `${index}-horizontal-name` }
+            id={ recipe.id }
+            value="comidas"
+            onClick={ () => {
+              goToDetails(recipe.id, 'comidas');
+            } }
+            aria-hidden="true"
+          >
+            {recipe.name}
+          </h5>
+          <h6
+            className="date-text"
+            data-testid={ `${index}-horizontal-done-date` }
+          >
+            {recipe.doneDate}
+          </h6>
+          <div className="img-card">
+            {renderTags(recipe.tags, index)}
+            <img
+              data-testid={ `${index}-horizontal-share-btn` }
+              src={ shareIcon }
+              alt="share icon"
+              onClick={ () => handleShareIcon(recipe.id, 'comidas') }
+              aria-hidden="true"
+            />
+          </div>
+        </div>
+      </div>
     </div>
   );
 
   const renderDrinks = (recipe, index) => (
-    <div key={ index }>
-      <img
-        data-testid={ `${index}-horizontal-image` }
-        src={ recipe.image }
-        alt="foto"
-        width="100px"
-        id={ recipe.id }
-        value="bebidas"
-        onClick={ () => {
-          goToDetails(recipe.id, 'bebidas');
-        } }
-        aria-hidden="true"
-      />
-      <span
-        data-testid={ `${index}-horizontal-top-text` }
-      >
-        {recipe.alcoholicOrNot}
-
-      </span>
-      <span
-        data-testid={ `${index}-horizontal-name` }
-        id={ recipe.id }
-        value="bebidas"
-        onClick={ () => {
-          goToDetails(recipe.id, 'bebidas');
-        } }
-        aria-hidden="true"
-      >
-        {recipe.name}
-      </span>
-      <span data-testid={ `${index}-horizontal-done-date` }>{recipe.doneDate}</span>
-      <img
-        data-testid={ `${index}-horizontal-share-btn` }
-        src={ shareIcon }
-        alt="share icon"
-        onClick={ () => handleShareIcon(recipe.id, 'bebidas') }
-        aria-hidden="true"
-      />
+    <div key={ index } className="container-card">
+      <div className="recipe-card">
+        <img
+          data-testid={ `${index}-horizontal-image` }
+          src={ recipe.image }
+          alt="bebida-foto"
+          width="45%"
+          id={ recipe.id }
+          value="bebidas"
+          onClick={ () => {
+            goToDetails(recipe.id, 'bebidas');
+          } }
+          aria-hidden="true"
+        />
+        <div className="recipe-card-text">
+          <h6
+            data-testid={ `${index}-horizontal-top-text` }
+          >
+            {recipe.alcoholicOrNot}
+          </h6>
+          <h5
+            data-testid={ `${index}-horizontal-name` }
+            id={ recipe.id }
+            value="bebidas"
+            onClick={ () => {
+              goToDetails(recipe.id, 'bebidas');
+            } }
+            aria-hidden="true"
+          >
+            {recipe.name}
+          </h5>
+          <h6
+            className="date-text"
+            data-testid={ `${index}-horizontal-done-date` }
+          >
+            {recipe.doneDate}
+          </h6>
+          <img
+            data-testid={ `${index}-horizontal-share-btn` }
+            src={ shareIcon }
+            alt="share icon"
+            onClick={ () => handleShareIcon(recipe.id, 'bebidas') }
+            aria-hidden="true"
+          />
+        </div>
+      </div>
     </div>
   );
 
