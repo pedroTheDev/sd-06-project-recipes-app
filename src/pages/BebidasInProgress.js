@@ -9,22 +9,32 @@ import { foodAPI } from '../services/foodAPI';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import share from '../images/shareIcon.svg';
-import '../style/RecipesInProgress.css';
 import load from '../images/load.png';
+import '../style/RecipesInProgress.css';
 import '../style/Loading.css';
 
 function BebidasInProgress(props) {
   const { setMeals, fetchById, setFetchById, doneRecipes } = useContext(ReceitasContext);
-
-  const [copied, setCopied] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(true);
-  const [isFetching, setFetching] = useState(true);
 
   const {
     match: {
       params: { id },
     },
   } = props;
+
+  let array;
+  const [copied, setCopied] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(true);
+  const [isFetching, setFetching] = useState(true);
+  const recipesLocalStorage = JSON.parse(localStorage.getItem('recipes'));
+
+  const storageVerify = () => (
+    !recipesLocalStorage[id] ? [] : recipesLocalStorage[id]
+  );
+
+  const [checkedIngredients, setCheckedIngredients] = useState(
+    !recipesLocalStorage ? [] : storageVerify(),
+  );
 
   useEffect(() => {
     async function fetchFood() {
@@ -37,6 +47,14 @@ function BebidasInProgress(props) {
       const favoriteRecipes = JSON.parse(
         localStorage.getItem('favoriteRecipes'),
       );
+
+      const localStorageRecipes = JSON.parse(localStorage.getItem('recipes'));
+
+      if (localStorageRecipes) {
+        if (localStorageRecipes[id]) {
+          setCheckedIngredients(localStorageRecipes[id]);
+        }
+      }
 
       if (!favoriteRecipes || !favoriteRecipes.length) {
         setIsFavorite(false);
@@ -52,6 +70,10 @@ function BebidasInProgress(props) {
     fetchFood();
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem('recipes', JSON.stringify({ [id]: checkedIngredients }));
+  }, [checkedIngredients]);
+
   const getIngredients = (obj, filter) => {
     const keys = [];
 
@@ -60,13 +82,13 @@ function BebidasInProgress(props) {
         keys.push(obj[key]);
       }
     });
+
+    array = keys;
     return keys;
   };
 
   const copyToCB = () => {
-    const url = window.location.href;
-
-    copy(url);
+    copy(`http://localhost:3000/bebidas/${id}`);
     setCopied(true);
   };
 
@@ -149,7 +171,7 @@ function BebidasInProgress(props) {
     }
   };
 
-  const handleClick = (index) => {
+  const handleClick = (index, item) => {
     const label = document.querySelectorAll('label')[index];
     if (label.classList.contains('ingredient-not-done')) {
       label.classList.remove('ingredient-not-done');
@@ -157,6 +179,79 @@ function BebidasInProgress(props) {
     } else {
       label.classList.remove('ingredient-done');
       label.classList.add('ingredient-not-done');
+    }
+
+    if (checkedIngredients.includes(item)) {
+      const zero = 0;
+      let position;
+      checkedIngredients.forEach((name, i) => {
+        if (name === item) {
+          position = i;
+        } else {
+          return position;
+        }
+      });
+      setCheckedIngredients([
+        ...checkedIngredients.slice(zero, position),
+        ...checkedIngredients.slice(position + 1, checkedIngredients.length),
+      ]);
+    } else {
+      setCheckedIngredients(checkedIngredients.concat(item));
+    }
+  };
+
+  const handleDoneRecipes = () => {
+    const recipesDone = JSON.parse(localStorage.getItem('doneRecipes'));
+
+    const today = new Date();
+    const date = `${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`;
+    const time = `${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
+    const dateTime = `${date} ${time}`;
+
+    const {
+      idDrink,
+      strCategory,
+      strAlcoholic,
+      strDrink,
+      strDrinkThumb,
+      strTags,
+    } = fetchById[0];
+
+    if (!recipesDone) {
+      localStorage.setItem(
+        'doneRecipes',
+        JSON.stringify([
+          {
+            id: idDrink,
+            type: 'bebida',
+            area: '',
+            category: strCategory,
+            alcoholicOrNot: strAlcoholic,
+            name: strDrink,
+            image: strDrinkThumb,
+            doneDate: dateTime,
+            tags: strTags ? strTags.split(',') : [],
+          },
+        ]),
+      );
+    } else if (!recipesDone.some((item) => item.id === idDrink)) {
+      localStorage.setItem(
+        'doneRecipes',
+        JSON.stringify([
+          ...recipesDone,
+          {
+            id: idDrink,
+            type: 'bebida',
+            area: '',
+            category: strCategory,
+            alcoholicOrNot: strAlcoholic,
+            name: strDrink,
+            image: strDrinkThumb,
+            doneDate: dateTime,
+            tags: strTags ? strTags.split(',') : [],
+          },
+        ]),
+      );
     }
   };
 
@@ -209,12 +304,17 @@ function BebidasInProgress(props) {
                   <li key={ indx } data-testid={ `${indx}-ingredient-step` }>
                     <label
                       htmlFor={ `${indx}-drink` }
-                      className="ingredient-not-done"
+                      className={
+                        checkedIngredients.includes(item)
+                          ? 'ingredient-done'
+                          : 'ingredient-not-done'
+                      }
                     >
                       <input
-                        id={ `${indx}-drink` }
                         type="checkbox"
-                        onClick={ () => handleClick(indx) }
+                        id={ `${indx}-drink` }
+                        checked={ checkedIngredients.includes(item) }
+                        onClick={ () => handleClick(indx, item) }
                       />
                       {`${item} - ${measure[indx]}`}
                     </label>
@@ -229,12 +329,14 @@ function BebidasInProgress(props) {
               { drink.strInstructions }
             </p>
             {!doneRecipes.includes(drink.idDrink) && (
-              <Link to={ `/bebidas/${drink.idDrink}/in-progress` }>
+              <Link to="/receitas-feitas">
                 <button
                   data-testid="finish-recipe-btn"
                   type="button"
                   className="btn btn-block fixed-bottom"
                   style={ { background: '#7850B8', color: 'white' } }
+                  disabled={ array.length !== checkedIngredients.length }
+                  onClick={ handleDoneRecipes }
                 >
                   Finalizar Receita!
                 </button>

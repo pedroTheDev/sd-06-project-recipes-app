@@ -55,7 +55,6 @@ const FavoriteRecipes = () => {
   return (
     <div>
       <Header title="Receitas Favoritas" />
-
       <div className="row justify-content-center align-items-center m-4">
         <div className="col my-3">
           <button
