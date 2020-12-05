@@ -107,11 +107,9 @@
   padding-left: 35px;
 }
 
-/* Desabilitar para passar no teste e habilitar para arrumar o layout
-.container-checkbox input {
+/* .container-checkbox input {
   display: none; 
-}  */
-
+} */
 /* Create a custom checkbox - using ::before */
 .checkmark::before {
   content: "";
@@ -282,13 +280,6 @@
   cursor: pointer;
 }
 
-/* Desabilitar para arrumar o layout e habilitar para passar no teste */
-.start-recipe,
-.finish-recipe {
-  position: fixed;
-}
-
-
 .start-recipe:disabled,
 .finish-recipe:disabled {
   background-color: #cccccc;
@@ -310,7 +301,8 @@
     margin-top: 150px;
     position: fixed;
     right: 0;
-    width: 50%;
+    width: 675px;
+    height: 350px;
     z-index: 50;
   }
 
@@ -321,7 +313,7 @@
     top: 0;
     width: 50% !important;
   }
-  
+
   .buttons-footer {
     background-color: #960051;
     bottom: 0px;
