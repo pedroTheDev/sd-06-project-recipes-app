@@ -23,12 +23,20 @@ const ExploreDrinks = () => {
   return (
     <div className="explore-container">
       <Link className="explore-btn-link" to="/explorar/bebidas/ingredientes">
-        <button type="button" data-testid="explore-by-ingredient" className="explore-btn-option">
+        <button
+          type="button"
+          data-testid="explore-by-ingredient"
+          className="explore-btn-option"
+        >
           Por Ingredientes
         </button>
       </Link>
       <Link className="explore-btn-link" to={ `/bebidas/${randomRecipe.idDrink}` }>
-        <button type="button" data-testid="explore-surprise" className="explore-btn-option">
+        <button
+          type="button"
+          data-testid="explore-surprise"
+          className="explore-btn-option"
+        >
           Me Surpreenda!
         </button>
       </Link>

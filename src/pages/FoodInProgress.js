@@ -185,22 +185,22 @@ const FoodInProgress = ({
     const month = date.getMonth() + monthCorrection;
     const year = date.getFullYear();
 
-    let formatterDay;	
+    let formatterDay;
     if (day < twoDecimalPlaces) {
-        formatterDay = `0${day}`;
+      formatterDay = `0${day}`;
     } else {
-        formatterDay = day;
+      formatterDay = day;
     }
-		
-    let formatterMonth;	
+
+    let formatterMonth;
     if (month < twoDecimalPlaces) {
-        formatterMonth = `0${month}`;
+      formatterMonth = `0${month}`;
     } else {
-        formatterMonth = month;
+      formatterMonth = month;
     }
 
     return `${formatterDay}/${formatterMonth}/${year}`;
-  }
+  };
 
   const handleDoneLocalStorage = () => {
     if (!localStorage.getItem('doneRecipes')) {

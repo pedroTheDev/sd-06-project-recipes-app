@@ -41,12 +41,20 @@ const Profile = () => {
         { userEmail }
       </h1>
       <Link className="profile-btn-link" to="/receitas-feitas">
-        <button type="button" data-testid="profile-done-btn" className="profile-btn-option">
+        <button
+          type="button"
+          data-testid="profile-done-btn"
+          className="profile-btn-option"
+        >
           Receitas Feitas
         </button>
       </Link>
       <Link className="profile-btn-link" to="/receitas-favoritas">
-        <button type="button" data-testid="profile-favorite-btn" className="profile-btn-option">
+        <button
+          type="button"
+          data-testid="profile-favorite-btn"
+          className="profile-btn-option"
+        >
           Receitas Favoritas
         </button>
       </Link>

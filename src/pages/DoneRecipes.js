@@ -150,7 +150,7 @@ const DoneRecipes = () => {
                     src={ recipe.image }
                     alt={ recipe.name }
                     className="done-recipe-image"
-                    />
+                  />
                   <h2
                     data-testid={ `${index}-horizontal-name` }
                     className="done-recipe-name"
@@ -173,7 +173,7 @@ const DoneRecipes = () => {
                     type="button"
                     onClick={ () => handleShare(recipe.id, recipe.type) }
                     className="share-btn"
-                    >
+                  >
                     <img
                       src={ shareIcon }
                       alt="share"

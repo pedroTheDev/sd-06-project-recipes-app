@@ -298,7 +298,9 @@ const DrinksDetails = (props) => {
                       alt={ item.strMeal }
                       className="d-block w-100"
                     />
-                    <h5 data-testid={ `${index + carouselPartition}-recomendation-title` }>
+                    <h5
+                      data-testid={ `${index + carouselPartition}-recomendation-title` }
+                    >
                       { item.strMeal }
                     </h5>
                   </div>
