@@ -1,23 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Header from '../../components/Header';
 import BtnSearchBar from '../../components/BtnSearchBar';
 import Footer from '../../components/Footer';
 import { listByArea } from '../../services/mealAPI';
+import recipesAppContext from '../../context/recipesAppContext';
 
 function ExploreByArea() {
-  const [areas, setAreas] = useState({});
+  const { areas, setAreas } = useContext(recipesAppContext);
 
   const fetchByArea = async () => {
-    const result = await listByArea();
-    setAreas(result.meals);
-    console.log('result:', result);
-    console.log('areas:', areas);
+    setAreas(await listByArea());
   };
 
   useEffect(() => {
     fetchByArea();
-    console.log(areas);
   }, []);
+
+  const areaSelect = (meal) => (
+    <option
+      data-testid={ `${meal}-option` }
+      value={ meal.strArea }
+    >
+      {meal.strArea}
+    </option>
+  );
 
   const renderSelect = () => (
     <select
@@ -47,9 +53,11 @@ function ExploreByArea() {
           className="area-select"
           name="area"
         >
-          {/* <option data-testid={ `${areas.meals[0]}-option` } value={ areas.meals[0].strArea }>
-            {areas.meals[0].strArea}
-          </option> */}
+          {
+            areas.meals
+              ? areas.meals.map((meal) => areaSelect(meal))
+              : <div>Loading...</div>
+          }
         </select>
       </div>
       <div className="footer">

@@ -10,6 +10,7 @@ function RecipesAppProvider({ children }) {
   const [control, setControl] = useState(false);
   const [recipesMeals, setRecipesMeals] = useState({});
   const [recipesDrinks, setRecipesDrinks] = useState({});
+  const [areas, setAreas] = useState({ });
   /* const [isFavorite, setIsFavorite] = useState(false); */
 
   const setFetchMeal = async (type, key) => {
@@ -63,6 +64,8 @@ function RecipesAppProvider({ children }) {
   };
 
   const contextValue = {
+    areas,
+    setAreas,
     searchBar,
     setSearchBar,
     data,
