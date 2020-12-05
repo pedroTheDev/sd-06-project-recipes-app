@@ -1,0 +1,30 @@
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+}
+
+h1.profile-email {
+  font-family: cursive;
+  font-size: 30px;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.profile-btn-link {
+  display: flex;
+  justify-content: center;
+}
+
+.profile-btn-option {
+  background-color: #A98036;
+  border-radius: 10px;
+  color: white;
+  font-family: cursive;
+  font-size: 30px;
+  font-weight: bold;
+  height: 52px;
+  margin-bottom: 30px;
+  text-shadow:#000 1px -1px, #000 -1px 1px, #000 1px 1px, #000 -1px -1px;
+}
