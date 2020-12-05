@@ -4,7 +4,7 @@ import HeaderContext from '../context/HeaderContext';
 import './OriginFoods.css';
 
 const OriginFoods = () => {
-  const { title, setTitle } = useContext(HeaderContext);
+  const { setTitle } = useContext(HeaderContext);
   const [areas, setAreas] = useState([]);
   const [areaSelected, setAreaSelected] = useState('All');
   const [recipes, setRecipes] = useState([]);

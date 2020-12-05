@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import HeaderContext from '../context/HeaderContext';
 import shareIcon from '../images/shareIcon.svg';
-import './DoneRecipes.css';
+import './DoneAndFavoriteRecipes.css';
 
 const DoneRecipes = () => {
   const { setTitle } = useContext(HeaderContext);

@@ -3,29 +3,3 @@ body{
   border: solid 5px #FFEBC7;
   overflow: auto;
 }
-
-.dev {
-  font-size: 14px;
-  margin-top: 250px;
-  text-align: center;
-}
-
-.name {
-  text-align: center;
-  text-decoration: none;
-}
-
-.meals-container {
-  background-color: #FCDCA2;
-  margin-top: 50px;
-}
-
-.btn-filter {
-  border-radius: 10px;
-  box-shadow: 5px 5px 5px rgba(0,0,0,0.25);
-  font-size: 18px;
-  font-weight: bold;
-  height: 60px;
-  margin-left: 25px;
-  width: 110px;
-}
