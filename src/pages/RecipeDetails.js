@@ -5,6 +5,7 @@ import { fetchAPIDrinks, fetchAPIRecipes } from '../services';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+import '../styles/details.css';
 
 function RecipeDetails() {
   const {
@@ -198,50 +199,70 @@ function RecipeDetails() {
   };
 
   return (
-    <div>
+    <div className="details-card">
       {(isFetching) ? <h2>Carregando receita...</h2>
         : (
-          <div className="container">
-            <h2>Detalhes da Receita</h2>
+          <div>
             {(location.includes('comidas')) ? (
-              <div>
+              <div className="details-container">
                 <img
                   src={ singleRecipe.strMealThumb }
+                  className="img-card-details"
                   alt="food"
                   data-testid="recipe-photo"
-                  className="box-card"
-                  width="200px"
+                  // className="box-card"
+                  // width="200px"
                 />
-                <section className="icons-area">
-                  <img
-                    src={ shareIcon }
-                    alt="Share"
-                    data-testid="share-btn"
-                    id="share-btn"
-                    onClick={ handleShareIcon }
-                    aria-hidden="true"
-                  />
-                  <img
-                    src={ favoriteRecipe ? blackHeartIcon : whiteHeartIcon }
-                    alt="Favorite"
-                    data-testid="favorite-btn"
-                    onClick={ handleFavoriteRecipes }
-                    aria-hidden="true"
-                  />
+                <h3
+                  data-testid="recipe-title"
+                  className="title"
+                >
+                  { singleRecipe.strMeal }
+
+                </h3>
+                <div className="sub-title">
+                  <h4 data-testid="recipe-category">{ singleRecipe.strCategory }</h4>
+                  <section className="icons-area">
+                    <img
+                      src={ shareIcon }
+                      alt="Share"
+                      data-testid="share-btn"
+                      id="share-btn"
+                      onClick={ handleShareIcon }
+                      aria-hidden="true"
+                      className="share-btn"
+                    />
+                    <img
+                      src={ favoriteRecipe ? blackHeartIcon : whiteHeartIcon }
+                      alt="Favorite"
+                      data-testid="favorite-btn"
+                      onClick={ handleFavoriteRecipes }
+                      aria-hidden="true"
+                    />
+                  </section>
+
+                </div>
+                <h5 className="section-title"> Ingredients </h5>
+                <section className="ingredients-area">
+                  {allIngredients.map((ingredient, index) => (
+                    <p
+                      data-testid={ `${index}-ingredient-name-and-measure` }
+                      key={ index }
+                    >
+                      {`- ${ingredient.ingredient}: ${(ingredient.measure === null)
+                        ? 'a gosto'
+                        : ingredient.measure}`}
+                    </p>
+                  ))}
                 </section>
-                <h3 data-testid="recipe-title">{ singleRecipe.strMeal }</h3>
-                <h4 data-testid="recipe-category">{ singleRecipe.strCategory }</h4>
-                {allIngredients.map((ingredient, index) => (
-                  <p
-                    data-testid={ `${index}-ingredient-name-and-measure` }
-                    key={ index }
-                  >
-                    {`${ingredient.ingredient}: ${(ingredient.measure === null)
-                      ? 'a gosto'
-                      : ingredient.measure}`}
-                  </p>
-                ))}
-                <p data-testid="instructions">{ singleRecipe.strInstructions }</p>
+                <h5 className="section-title"> Instructions </h5>
+                <p
+                  data-testid="instructions"
+                  className="ingredients-area"
+                >
+                  { singleRecipe.strInstructions }
+
+                </p>
                 <video data-testid="video" width="320" height="240">
                   <track
                     default
@@ -251,87 +272,119 @@ function RecipeDetails() {
                   <source src={ singleRecipe.strYoutube } />
                 </video>
                 <section>
-                  Recomendações:
-                  {recipes.map((recipe, index) => (
-                    <div key={ index } data-testid={ `${index}-recomendation-card` }>
-                      <h5>{ recipe.strAlcoholic }</h5>
-                      <h4
-                        data-testid={ `${index}-recomendation-title` }
+                  <h5 className="section-title"> Recomendações: </h5>
+                  <div className="container-card">
+                    {recipes.map((recipe, index) => (
+                      <div
+                        key={ index }
+                        className="unit-card"
+                        data-testid={ `${index}-recomendation-card` }
                       >
-                        { recipe.strDrink }
-                      </h4>
-                      <img
-                        src={ recipe.strDrinkThumb }
-                        alt="drink"
-                        width="50px"
-                        id={ recipe.idDrink }
-                        onClick={ handleRecomendatioNRecipes }
-                        aria-hidden="true"
-                      />
-                    </div>
-                  )).filter((_, index) => index < maxCards)}
+                        <h4
+                          data-testid={ `${index}-recomendation-title` }
+                        >
+                          { recipe.strDrink }
+                        </h4>
+                        <span>{ recipe.strAlcoholic }</span>
+                        <img
+                          src={ recipe.strDrinkThumb }
+                          alt="drink"
+                          width="90%"
+                          id={ recipe.idDrink }
+                          onClick={ handleRecomendatioNRecipes }
+                          aria-hidden="true"
+                        />
+                      </div>
+                    )).filter((_, index) => index < maxCards)}
+                  </div>
                 </section>
               </div>
             ) : (
-              <div>
+              <div className="details-container">
                 <img
-                  className="img-grink"
+                  // className="img-grink"
+                  className="img-card-details"
                   src={ singleRecipe.strDrinkThumb }
                   alt="drink"
                   data-testid="recipe-photo"
                   width="200px"
                 />
-                <section className="icons-area">
-                  <img
-                    src={ shareIcon }
-                    alt="Share"
-                    data-testid="share-btn"
-                    id="share-btn"
-                    onClick={ handleShareIcon }
-                    aria-hidden="true"
-                  />
-                  <img
-                    src={ favoriteRecipe ? blackHeartIcon : whiteHeartIcon }
-                    alt="Favorite"
-                    data-testid="favorite-btn"
-                    onClick={ handleFavoriteRecipes }
-                    aria-hidden="true"
-                  />
+                <h3
+                  data-testid="recipe-title"
+                  className="title"
+                >
+                  { singleRecipe.strDrink }
+
+                </h3>
+                <div className="sub-title">
+                  <h4 data-testid="recipe-category">{ singleRecipe.strAlcoholic }</h4>
+                  <section className="icons-area">
+                    <img
+                      src={ shareIcon }
+                      alt="Share"
+                      data-testid="share-btn"
+                      id="share-btn"
+                      onClick={ handleShareIcon }
+                      aria-hidden="true"
+                      className="share-btn"
+                    />
+                    <img
+                      src={ favoriteRecipe ? blackHeartIcon : whiteHeartIcon }
+                      alt="Favorite"
+                      data-testid="favorite-btn"
+                      onClick={ handleFavoriteRecipes }
+                      aria-hidden="true"
+                    />
+                  </section>
+                </div>
+                <h5 className="section-title"> Ingredients </h5>
+                <section className="ingredients-area">
+                  {allIngredients.map((ingredient, index) => (
+                    <p
+                      data-testid={ `${index}-ingredient-name-and-measure` }
+                      key={ index }
+                    >
+                      {`${ingredient.ingredient}: ${(ingredient.measure === null)
+                        ? 'a gosto'
+                        : ingredient.measure}`}
+                    </p>
+                  ))}
                 </section>
-                <h3 data-testid="recipe-title">{ singleRecipe.strDrink }</h3>
-                <h4 data-testid="recipe-category">{ singleRecipe.strAlcoholic }</h4>
-                {allIngredients.map((ingredient, index) => (
-                  <p
-                    data-testid={ `${index}-ingredient-name-and-measure` }
-                    key={ index }
-                  >
-                    {`${ingredient.ingredient}: ${(ingredient.measure === null)
-                      ? 'a gosto'
-                      : ingredient.measure}`}
-                  </p>
-                ))}
-                <p data-testid="instructions">{ singleRecipe.strInstructions }</p>
+                <h5 className="section-title"> Instructions </h5>
+                <p
+                  data-testid="instructions"
+                  className="ingredients-area"
+                >
+                  { singleRecipe.strInstructions }
+
+                </p>
                 <section>
-                  Recomendações:
-                  {recipes.map((recipe, index) => (
-                    <div key={ index } data-testid={ `${index}-recomendation-card` }>
-                      <h5>{ recipe.strCategory }</h5>
-                      <h4
-                        data-testid={ `${index}-recomendation-title` }
+                  <h5 className="section-title"> Recomendações: </h5>
+                  <div className="container-card">
+                    {recipes.map((recipe, index) => (
+                      <div
+                        key={ index }
+                        className="unit-card"
+                        data-testid={ `${index}-recomendation-card` }
                       >
-                        { recipe.strMeal }
-                      </h4>
-                      <img
-                        className="recipe-food"
-                        src={ recipe.strMealThumb }
-                        alt="food"
-                        id={ recipe.idMeal }
-                        width="50px"
-                        onClick={ handleRecomendatioNRecipes }
-                        aria-hidden="true"
-                      />
-                    </div>
-                  )).filter((_, index) => index < maxCards)}
+                        <h4
+                          data-testid={ `${index}-recomendation-title` }
+                        >
+                          { recipe.strMeal }
+                        </h4>
+                        <span>{ recipe.strCategory }</span>
+                        <img
+                          className="recipe-food"
+                          src={ recipe.strMealThumb }
+                          alt="food"
+                          id={ recipe.idMeal }
+                          width="90%"
+                          onClick={ handleRecomendatioNRecipes }
+                          aria-hidden="true"
+                        />
+                      </div>
+                    )).filter((_, index) => index < maxCards)}
+                  </div>
                 </section>
               </div>
             )}
@@ -339,7 +392,7 @@ function RecipeDetails() {
               <button
                 type="button"
                 data-testid="start-recipe-btn"
-                className="footer"
+                className="btn btn-light btn-lg btn-block btn-init"
                 onClick={ handleProgressRecipes }
               >
                 {recipeStarted ? 'Continuar Receita' : 'Iniciar Receita'}

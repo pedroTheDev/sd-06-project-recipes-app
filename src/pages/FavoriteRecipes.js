@@ -75,6 +75,7 @@ function FavoriteRecipes() {
         favorites.map((recipe, index) => (
           <div key={ index } className="recipe-card">
             <img
+              className="img-card"
               aria-hidden="true"
               width="45%"
               src={ recipe.image }
@@ -111,7 +112,7 @@ function FavoriteRecipes() {
               >
                 { recipe.name }
               </h5>
-              <div className="img-card">
+              <div className="icons-card">
                 <img
                   src={ shareIcon }
                   alt="share"

@@ -34,9 +34,21 @@
   align-items: center;
   width: 50%;
   justify-content: center;
+  padding-left: 10px;
+  padding-top: 5px;
+}
+
+.icons-card {
+  display: flex;
+  justify-content: space-around;
+  width: 70%;
 }
 
 .img-card {
+  border-radius: 10px;
+}
+
+.tags-card {
   display: flex;
   justify-content: space-around;
   width: 70%;
@@ -58,4 +70,24 @@
 
 .date-text {
   font-size: 14px;
+}
+
+.title-card {
+  max-width: 30ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* white-space: nowrap; */
+}
+
+.title-card-done {
+  max-width: 11ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tag {
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  padding: 0px 3px;
 }

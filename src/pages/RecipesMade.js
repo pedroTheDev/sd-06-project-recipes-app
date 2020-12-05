@@ -13,10 +13,11 @@ function RecipesMade() {
       <span
         key={ index }
         data-testid={ `${index}-${tag}-horizontal-tag` }
+        className="tag"
       >
         {tag}
       </span>
-    ))
+    )).filter((_, indexFilter) => indexFilter <= 1)
   );
 
   const goToDetails = (idRecipe, path) => {
@@ -43,6 +44,7 @@ function RecipesMade() {
     <div key={ index } className="container-card">
       <div className="recipe-card">
         <img
+          className="img-card"
           data-testid={ `${index}-horizontal-image` }
           src={ recipe.image }
           alt="comida-foto"
@@ -68,6 +70,7 @@ function RecipesMade() {
               goToDetails(recipe.id, 'comidas');
             } }
             aria-hidden="true"
+            className="title-card-done"
           >
             {recipe.name}
           </h5>
@@ -77,16 +80,16 @@ function RecipesMade() {
           >
             {recipe.doneDate}
           </h6>
-          <div className="img-card">
+          <div className="tags-card">
             {renderTags(recipe.tags, index)}
-            <img
-              data-testid={ `${index}-horizontal-share-btn` }
-              src={ shareIcon }
-              alt="share icon"
-              onClick={ () => handleShareIcon(recipe.id, 'comidas') }
-              aria-hidden="true"
-            />
           </div>
+          <img
+            data-testid={ `${index}-horizontal-share-btn` }
+            src={ shareIcon }
+            alt="share icon"
+            onClick={ () => handleShareIcon(recipe.id, 'comidas') }
+            aria-hidden="true"
+          />
         </div>
       </div>
     </div>
@@ -121,6 +124,7 @@ function RecipesMade() {
               goToDetails(recipe.id, 'bebidas');
             } }
             aria-hidden="true"
+            className="title-card-done"
           >
             {recipe.name}
           </h5>

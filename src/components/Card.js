@@ -46,6 +46,7 @@ function Card() {
           className="unit-card"
         >
           <h5
+            className="title-card"
             data-testid={ `${index}-card-name` }
             id={ recipe[id] }
           >
