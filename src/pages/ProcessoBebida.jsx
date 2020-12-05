@@ -8,12 +8,25 @@ import { loadState, saveState } from '../services/localStorage';
 function ProcessoBebida({ match: { params: { id } }, history }) {
   const zero = 0;
   const quinze = 15;
-  const storageReturn = loadState('inProgressRecipes', { cocktails: {
-    [id]: [] } }).cocktails[id];
   const [detailsDrink, setdetailsDrink] = useState([]);
   const [arrayIngredients, setArrayIngredients] = useState([]);
   const [countCheck, setCountCheck] = useState(zero);
-  const [arrayCheckBox, setArrayCheckBox] = useState(storageReturn);
+
+  const initialValueArrayCheckBox = () => {
+    const arrayVoid = [];
+    const loadStateStorage = loadState('inProgressRecipes', { cocktails: {
+      [id]: arrayVoid } });
+    if (Object.keys(loadStateStorage)
+      .some((key) => key === 'cocktails')
+    && Object.keys(loadStateStorage.cocktails)
+      .some((key) => key === id)) {
+      return loadStateStorage.cocktails[id];
+    }
+    return arrayVoid;
+  };
+
+  const [arrayCheckBox, setArrayCheckBox] = useState(initialValueArrayCheckBox());
+
   useEffect(() => {
     requestApiDrinkDetails(id)
       .then((response) => {
@@ -23,7 +36,8 @@ function ProcessoBebida({ match: { params: { id } }, history }) {
   }, []);
 
   useEffect(() => {
-    const loadStorage = loadState('inProgressRecipes', {});
+    console.log('arrayCheckBox', arrayCheckBox)
+    const loadStorage = loadState('inProgressRecipes', { cocktails: {} });
     saveState('inProgressRecipes', {
       ...loadStorage,
       cocktails:

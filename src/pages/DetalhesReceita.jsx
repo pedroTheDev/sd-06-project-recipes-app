@@ -10,7 +10,7 @@ import {
 import '../styles/Detalhes.css';
 import buttonShare from '../styles/images/shareIcon.svg';
 import FavoriteHeart from '../components/FavoriteHeart';
-import { loadState, saveState } from '../services/localStorage';
+import { loadState } from '../services/localStorage';
 import '../styles/imgBig.css';
 
 function DetalhesReceita({ match: { params: { id } } }) {
@@ -31,17 +31,6 @@ function DetalhesReceita({ match: { params: { id } } }) {
           setStartRecipe('Continuar Receita');
         }
       }
-    }
-  };
-
-  const clickStartRecipeFunc = () => {
-    const loadStorage = loadState('inProgressRecipes', '');
-    if (startRecipe === 'Iniciar Receita') {
-      saveState('inProgressRecipes', {
-        ...loadStorage,
-        meals:
-          { ...loadStorage.meals, [detailsFood.idMeal]: [...arrayIngredients] },
-      });
     }
   };
 
@@ -168,7 +157,6 @@ function DetalhesReceita({ match: { params: { id } } }) {
           type="button"
           data-testid="start-recipe-btn"
           className="btn-footer"
-          onClick={ clickStartRecipeFunc }
         >
           { startRecipe }
         </button>
