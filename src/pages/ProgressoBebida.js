@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { fetchApiBebidasDetalhes } from '../services/FetchApiBebidas';
 import '../components/MenuInferior.css';
 import '../components/detalhes.css';
@@ -18,19 +18,35 @@ function DetalhesBebida() {
   const [
     ingredientesNoLocalStorage, setIngredientesNoLocalStorage] = useState(ingredientes);
   console.log(receitasSalvas);
+  const [disable, setDisable] = useState(true);
 
   const fetchBebidasDetalhes = async () => {
     const response = await fetchApiBebidasDetalhes(idDaReceita);
     setEstadoApiBebidas(response);
   };
 
-  // const history = useHistory();
+  const history = useHistory();
 
   const inProgress = JSON.parse((localStorage.getItem('inProgressRecipes')));
   let bebidaLocalStorage;
   // let bebidaLocalStorage = inProgress.cocktails[idDaReceita];
 
+  function checks() {
+    const checkBoxes = document.getElementsByClassName('checkBox').length;
+    // const ingredientesSalvos = ingredientesNoLocalStorage.length;
+    if (localStorage.getItem('inProgressRecipes')) {
+      const progress = JSON.parse((localStorage.getItem('inProgressRecipes')));
+      bebidaLocalStorage = progress.cocktails[idDaReceita].length;
+      if (checkBoxes === bebidaLocalStorage) {
+        setDisable(false);
+      } else {
+        setDisable(true);
+      }
+    }
+  }
+
   function checkHandle(e, index) {
+    checks();
     if (e.target.checked === true) {
       document.getElementById(`${index - 1}-ingredient-check`)
         .style.textDecoration = 'line-through';
@@ -101,7 +117,12 @@ function DetalhesBebida() {
 
   useEffect(() => {
     fetchBebidasDetalhes();
+    checks();
   }, []);
+
+  useEffect(() => {
+    checks();
+  }, [ingredientesNoLocalStorage]);
 
   const quinze = 15;
   function renderIngrediente(bebida) {
@@ -228,10 +249,14 @@ function DetalhesBebida() {
       </button>);
   }
 
-  function checkDisable() {
-    const checkBoxesHtml = document.getElementsByClassName('checkBox');
-    console.log(checkBoxesHtml);
-    return true;
+  // function checkDisable() {
+  //   const checkBoxesHtml = document.getElementsByClassName('checkBox');
+  //   console.log(checkBoxesHtml);
+  //   return true;
+  // }
+
+  function redirectFeitas() {
+    history.push('/receitas-feitas');
   }
 
   return (
@@ -263,7 +288,8 @@ function DetalhesBebida() {
           <button
             type="button"
             data-testid="finish-recipe-btn"
-            disabled={ checkDisable() }
+            disabled={ disable }
+            onClick={ redirectFeitas }
           >
             Finalizar receita
           </button>

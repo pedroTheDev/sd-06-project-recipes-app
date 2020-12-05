@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { fetchApiComidasDetalhes } from '../services/FetchApiComidas';
 import '../components/MenuInferior.css';
 import '../components/detalhes.css';
@@ -17,6 +17,7 @@ function ProgressoComida() {
 
   const [
     ingredientesNoLocalStorage, setIngredientesNoLocalStorage] = useState(ingredientes);
+  const [disable, setDisable] = useState(true);
 
   console.log(receitasSalvas);
   console.log('teste', estadoApiComidas);
@@ -26,15 +27,35 @@ function ProgressoComida() {
     setEstadoApiComidas(response);
   };
 
+  function checks() {
+    const checkBoxes = document.getElementsByClassName('checkBox').length;
+    // const ingredientesSalvos = ingredientesNoLocalStorage.length;
+    if (localStorage.getItem('inProgressRecipes')) {
+      const progress = JSON.parse((localStorage.getItem('inProgressRecipes')));
+      const comidaLocalStorage = progress.meals[idDaReceita].length;
+      if (checkBoxes === comidaLocalStorage) {
+        setDisable(false);
+      } else {
+        setDisable(true);
+      }
+    }
+  }
+
   useEffect(() => {
     fetchComidasDetalhes();
+    checks();
   }, []);
 
-  // const history = useHistory();
+  useEffect(() => {
+    checks();
+  }, [ingredientesNoLocalStorage]);
+
+  const history = useHistory();
   const inProgress = JSON.parse((localStorage.getItem('inProgressRecipes')));
   let comidaLocalStorage;
   // let comidaLocalStorage = inProgress.meals[idDaReceita];
   function checkHandle(e, index) {
+    checks();
     if (e.target.checked === true) {
       document.getElementById(`${index - 1}-ingredient-check`)
         .style.textDecoration = 'line-through';
@@ -122,8 +143,8 @@ function ProgressoComida() {
             <input
               type="checkbox"
               id={ `${numero - 1}-ingredient-step` }
-              className="titulo"
-              onChange={ (e) => checkHandle(e, numero) }
+              className="titulo checkBox"
+              onChange={ (e) => { checkHandle(e, numero); } }
               checked={ (bebida[`strMeasure${numero}`] !== null)
                 ? (ingredientesNoLocalStorage.includes(
                   `${bebida[`strIngredient${numero}`]} ${bebida[`strMeasure${numero}`]}`,
@@ -235,6 +256,10 @@ function ProgressoComida() {
       </button>);
   }
 
+  function redirectFeitas() {
+    history.push('/receitas-feitas');
+  }
+
   return (
     estadoApiComidas.map((comida, index) => (
       <div key={ index }>
@@ -260,7 +285,14 @@ function ProgressoComida() {
         <h3 className="titulo">Instruções</h3>
         <p data-testid="instructions" className="intrucoes">{comida.strInstructions}</p>
 
-        <button type="button" data-testid="finish-recipe-btn">Finalizar receita</button>
+        <button
+          type="button"
+          data-testid="finish-recipe-btn"
+          disabled={ disable }
+          onClick={ redirectFeitas }
+        >
+          Finalizar receita
+        </button>
       </div>
     )));
 }
