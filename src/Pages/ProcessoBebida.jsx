@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { useParams } from 'react-router';
 
 import { detailsDrinkById } from '../services/aPI';
@@ -7,7 +8,6 @@ import Instructions from '../components/Instructions';
 import BasicInfo from '../components/BasicInfo';
 import IngredientsCheckbox from '../components/IngredientsCheckbox';
 import './ProcessoComida.css';
-import { Link } from 'react-router-dom';
 
 const ProcessoBebidas = () => {
   const [drinkDetails, setDrinkDetails] = useState();

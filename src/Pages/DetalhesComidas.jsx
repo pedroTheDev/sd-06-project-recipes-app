@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
+import { useParams } from 'react-router';
 
 import { detailsFoodById } from '../services/aPI';
 import ContextAPI from '../Context/ContextAPI';
