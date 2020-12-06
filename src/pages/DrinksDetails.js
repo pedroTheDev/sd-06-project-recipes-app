@@ -151,6 +151,15 @@ const DrinksDetails = (props) => {
         meals: {},
       };
       localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
+    } else {
+      const previousObj = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      const previousCocktails = previousObj.cocktails;
+      const newCocktails = { ...previousCocktails, [id]: [] };
+      const newObj = {
+        ...previousObj,
+        cocktails: newCocktails,
+      };
+      localStorage.setItem('inProgressRecipes', JSON.stringify(newObj));
     }
     const path = `/bebidas/${id}/in-progress`;
     setRecipesInProgress(recipesInProgress.concat(id));
