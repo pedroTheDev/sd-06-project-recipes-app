@@ -13,9 +13,9 @@ export default function RecipeDetails() {
   const location = useLocation();
   const idRecipe = location.pathname.split('/');
   const [heartIcon, setheartIcon] = useState(WhiteHeartIcon);
-  const [alertMsg, setAlertMsg] = useState(false);
+  // const [alertMsg, setAlertMsg] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
-  // const [hiddeButon, setHiddeButton] = useState(false);
+  // const [hiddeButton, setHiddeButton] = useState();
 
   if (idRecipe[3] === 'in-progress' && inProgress === false)(setInProgress(!inProgress));
   if (idRecipe[1] === 'comidas') setSearchParam('Meal');
@@ -49,6 +49,21 @@ export default function RecipeDetails() {
   if (!localStorageDoneRecipes) {
     setLocalStorageDoneRecipes([]);
   }
+
+  // (localStorageDoneRecipes
+  //   .map((e) => ((e.id === foods[0][`id${searchParam}`])
+  //     ? setHiddeButton(true)
+  //     : undefined)));
+
+  // if (searchParam) {
+  //   if (foods[0]) {
+  //     if (localStorageDoneRecipes
+  //       .map((e) => e.id)
+  //       .find((e) => e === foods[0][`id${searchParam}`])) {
+  //       setHiddeButton(!hiddeButton);
+  //     }
+  //   }
+  // }
 
   let actualRecipe = [];
   function checkLocalStorageFavorites() {
@@ -115,12 +130,13 @@ export default function RecipeDetails() {
   }
 
   function shareRecipeLink() {
-    const time = 3000;
-    navigator.clipboard.writeText(`http://localhost:3000${location.pathname}`);
-    setAlertMsg(true);
-    setTimeout(() => {
-      setAlertMsg(false);
-    }, time);
+    // const time = 3000;
+    // navigator.clipboard.writeText(`http://localhost:3000${location.pathname}`);
+    // setAlertMsg(true);
+    // setTimeout(() => {
+    //   setAlertMsg(false);
+    // }, time);
+    alert('Link copiado!');
   }
 
   function whiteToBlackHeart() {
@@ -226,20 +242,6 @@ export default function RecipeDetails() {
     return localStorageInProgressAux;
   }
 
-  // function toHiddeButton() {
-  //   if (localStorageDoneRecipes !== null) {
-  //     const localStorageDoneRecipesAux = localStorageDoneRecipes;
-  //     const isDoneCheck = localStorageDoneRecipesAux;
-  //     //   .find((done) => [actualRecipe[0].id] === done.id);
-  //     // console.log(localStorageDoneRecipesAux.([actualRecipe[0].id]));
-
-  //     if (isDoneCheck) {
-  //       console.log('apagar botão');
-  //       setHiddeButton(!hiddeButon);
-  //     }
-  //   }
-  // }
-
   const finishButtonEnable = () => {
     const checkedLength = document
       .querySelectorAll('input[type=checkbox]:checked').length;
@@ -255,7 +257,6 @@ export default function RecipeDetails() {
   }, [searchParam]);
 
   useEffect(() => {}, [isChecked]);
-  // useEffect(() => {}, [hiddeButon]);
 
   const render = () => {
     const ZERO = 0;
@@ -263,6 +264,7 @@ export default function RecipeDetails() {
       checkLocalStorageFavorites();
       let videoCode;
       let typeFood;
+
       const getInProgress = JSON
         .parse(localStorage
           .getItem('inProgressRecipes'));
@@ -306,7 +308,7 @@ export default function RecipeDetails() {
           <div className="d-flex justify-content-around">
             <a href onClick={ () => shareRecipeLink() }>
               <img src={ ShareIcon } alt="Share Button" data-testid="share-btn" />
-              {alertMsg && <span>Link copiado!</span>}
+              {/* {alertMsg && <span>Link copiado!</span>} */}
             </a>
             <a href onClick={ () => whiteToBlackHeart() }>
               <img src={ heartIcon } alt="Favorite Button" data-testid="favorite-btn" />
@@ -357,7 +359,9 @@ export default function RecipeDetails() {
             )) }
           </ul>
           <h4>INSTRUCTIONS: </h4>
-          <p data-testid="instructions">{ foods[0].strInstructions }</p>
+          <p data-testid="instructions" className="text-justify">
+            { foods[0].strInstructions }
+          </p>
           { (videoCode) && (
             <>
               <h4>VIDEO: </h4>
@@ -374,36 +378,42 @@ export default function RecipeDetails() {
             </>
           ) }
           <h4>RECOMENDED: </h4>
-          <RecommendedRecipes />
-          {/* <div id="button-area" hidden={ toHiddeButton() }> */}
-          <div id="button-area">
-            {inProgress === false
-              ? (
-                <Link to={ `/${idRecipe[1]}/${idRecipe[2]}/in-progress` }>
-                  <button
-                    data-testid="start-recipe-btn"
-                    className="start-recipe-btn"
-                    type="button"
-                    onClick={ () => setInProgress(!inProgress) }
-                  >
-                    {checkProgress()}
-                  </button>
-                </Link>
-              )
-              : (
-                <Link to="/receitas-feitas">
-                  <button
-                    data-testid="finish-recipe-btn"
-                    className="finish-recipe-btn"
-                    type="button"
-                    onClick={ () => saveDoneRecipe() }
-                    disabled={ finishButtonEnable() }
-                  >
-                    FINALIZAR RECEITA
-                  </button>
-                </Link>
-              )}
+          <div className="width360">
+            <RecommendedRecipes />
           </div>
+          {(!localStorageDoneRecipes
+            .map((e) => e.id)
+            .find((e) => e === foods[0][`id${searchParam}`]))
+          && (
+            <div id="button-area">
+              {inProgress === false
+                ? (
+                  <Link to={ `/${idRecipe[1]}/${idRecipe[2]}/in-progress` }>
+                    <button
+                      data-testid="start-recipe-btn"
+                      className="start-recipe-btn"
+                      type="button"
+                      onClick={ () => setInProgress(!inProgress) }
+                    >
+                      {checkProgress()}
+                    </button>
+                  </Link>
+                )
+                : (
+                  <Link to="/receitas-feitas">
+                    <button
+                      data-testid="finish-recipe-btn"
+                      className="finish-recipe-btn"
+                      type="button"
+                      onClick={ () => saveDoneRecipe() }
+                      disabled={ finishButtonEnable() }
+                    >
+                      FINALIZAR RECEITA
+                    </button>
+                  </Link>
+                )}
+            </div>
+          )}
         </Container>
       );
     }
