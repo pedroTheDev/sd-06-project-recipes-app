@@ -13,9 +13,8 @@ export default function RecipeDetails() {
   const location = useLocation();
   const idRecipe = location.pathname.split('/');
   const [heartIcon, setheartIcon] = useState(WhiteHeartIcon);
-  // const [alertMsg, setAlertMsg] = useState(false);
+  const [alertMsg, setAlertMsg] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
-  // const [hiddeButton, setHiddeButton] = useState();
 
   if (idRecipe[3] === 'in-progress' && inProgress === false)(setInProgress(!inProgress));
   if (idRecipe[1] === 'comidas') setSearchParam('Meal');
@@ -50,28 +49,13 @@ export default function RecipeDetails() {
     setLocalStorageDoneRecipes([]);
   }
 
-  // (localStorageDoneRecipes
-  //   .map((e) => ((e.id === foods[0][`id${searchParam}`])
-  //     ? setHiddeButton(true)
-  //     : undefined)));
-
-  // if (searchParam) {
-  //   if (foods[0]) {
-  //     if (localStorageDoneRecipes
-  //       .map((e) => e.id)
-  //       .find((e) => e === foods[0][`id${searchParam}`])) {
-  //       setHiddeButton(!hiddeButton);
-  //     }
-  //   }
-  // }
-
   let actualRecipe = [];
   function checkLocalStorageFavorites() {
     if (searchParam === 'Meal') {
       actualRecipe = ([
         {
           id: foods[0].idMeal,
-          type: 'comidas',
+          type: 'comida',
           area: foods[0].strArea,
           category: foods[0].strCategory,
           alcoholicOrNot: '',
@@ -84,7 +68,7 @@ export default function RecipeDetails() {
       actualRecipe = ([
         {
           id: foods[0].idDrink,
-          type: 'bebidas',
+          type: 'bebida',
           area: '',
           category: foods[0].strCategory,
           alcoholicOrNot: foods[0].strAlcoholic,
@@ -130,13 +114,13 @@ export default function RecipeDetails() {
   }
 
   function shareRecipeLink() {
-    // const time = 3000;
-    // navigator.clipboard.writeText(`http://localhost:3000${location.pathname}`);
-    // setAlertMsg(true);
-    // setTimeout(() => {
-    //   setAlertMsg(false);
-    // }, time);
-    alert('Link copiado!');
+    const time = 3000;
+    navigator.clipboard.writeText(`http://localhost:3000${location.pathname}`);
+    setAlertMsg(true);
+    setTimeout(() => {
+      setAlertMsg(false);
+    }, time);
+    // alert('Link copiado!');
   }
 
   function whiteToBlackHeart() {
@@ -308,7 +292,7 @@ export default function RecipeDetails() {
           <div className="d-flex justify-content-around">
             <a href onClick={ () => shareRecipeLink() }>
               <img src={ ShareIcon } alt="Share Button" data-testid="share-btn" />
-              {/* {alertMsg && <span>Link copiado!</span>} */}
+              {alertMsg && <span>Link copiado!</span>}
             </a>
             <a href onClick={ () => whiteToBlackHeart() }>
               <img src={ heartIcon } alt="Favorite Button" data-testid="favorite-btn" />
