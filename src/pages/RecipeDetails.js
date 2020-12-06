@@ -7,42 +7,6 @@ import WhiteHeartIcon from '../images/whiteHeartIcon.svg';
 import BlackHeartIcon from '../images/blackHeartIcon.svg';
 import RecommendedRecipes from '../components/RecommendedRecipes';
 
-/*
-a chave doneRecipes deve conter a seguinte estrutura:
-[{
-    id: id-da-receita,
-    type: comida-ou-bebida,
-    area: area-da-receita-ou-texto-vazio,
-    category: categoria-da-receita-ou-texto-vazio,
-    alcoholicOrNot: alcoholic-ou-non-alcoholic-ou-texto-vazio,
-    name: nome-da-receita,
-    image: imagem-da-receita,
-    doneDate: quando-a-receita-foi-concluida,
-    tags: array-de-tags-da-receita-ou-array-vazio
-}]
-a chave favoriteRecipes deve conter a seguinte estrutura:
-[{
-    id: id-da-receita,
-    type: comida-ou-bebida,
-    area: area-da-receita-ou-texto-vazio,
-    category: categoria-da-receita-ou-texto-vazio,
-    alcoholicOrNot: alcoholic-ou-non-alcoholic-ou-texto-vazio,
-    name: nome-da-receita,
-    image: imagem-da-receita
-}]
-a chave inProgressRecipes deve conter a seguinte estrutura:
-{
-    cocktails: {
-        id-da-bebida: [lista-de-ingredientes-utilizados],
-        ...
-    },
-    meals: {
-        id-da-comida: [lista-de-ingredientes-utilizados],
-        ...
-    }
-}
-*/
-
 export default function RecipeDetails() {
   const { foods, setSearchParam, inProgress, setInProgress,
     searchParam, fetchApi, isLoading } = useContext(RevenueContext);
@@ -51,6 +15,7 @@ export default function RecipeDetails() {
   const [heartIcon, setheartIcon] = useState(WhiteHeartIcon);
   const [alertMsg, setAlertMsg] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+  const [hiddeButon, setHiddeButton] = useState(false);
 
   if (idRecipe[3] === 'in-progress' && inProgress === false)(setInProgress(!inProgress));
   if (idRecipe[1] === 'comidas') setSearchParam('Meal');
@@ -71,6 +36,12 @@ export default function RecipeDetails() {
         .getItem('doneRecipes')),
   );
 
+  const [localStorageInProgress] = useState(
+    JSON
+      .parse(localStorage
+        .getItem('inProgressRecipes')),
+  );
+
   if (!localStorageFavorites) {
     setLocalStorageFavorites([]);
   }
@@ -85,14 +56,12 @@ export default function RecipeDetails() {
       actualRecipe = ([
         {
           id: foods[0].idMeal,
-          type: searchParam,
+          type: 'comidas',
           area: foods[0].strArea,
           category: foods[0].strCategory,
           alcoholicOrNot: '',
           name: foods[0].strMeal,
           image: foods[0].strMealThumb,
-          doneDate: 'fullDatte',
-          tags: foods[0].strTag ? foods[0].strTag : '',
         },
       ]);
     }
@@ -100,14 +69,12 @@ export default function RecipeDetails() {
       actualRecipe = ([
         {
           id: foods[0].idDrink,
-          type: searchParam,
+          type: 'bebidas',
           area: '',
           category: foods[0].strCategory,
           alcoholicOrNot: foods[0].strAlcoholic,
           name: foods[0].strDrink,
           image: foods[0].strDrinkThumb,
-          doneDate: 'fullDatte',
-          tags: foods[0].strTag ? foods[0].strTag : '',
         },
       ]);
     }
@@ -123,7 +90,28 @@ export default function RecipeDetails() {
     if (isFavorite === undefined && heartIcon === BlackHeartIcon) {
       setheartIcon(WhiteHeartIcon);
     }
+
     return actualRecipe;
+  }
+
+  function getDateLocaleformat() {
+    const date = new Date();
+    const actualDate = date.toLocaleDateString();
+    return actualDate;
+  }
+
+  function saveDoneRecipe() {
+    actualRecipe[0].tags = foods[0].strTag ? foods[0].strTag : '';
+    actualRecipe[0].doneDate = getDateLocaleformat();
+
+    if (localStorageDoneRecipes) {
+      const newLocalStorageDoneRecipes = localStorageDoneRecipes;
+      newLocalStorageDoneRecipes.push(actualRecipe[0]);
+      setLocalStorageFavorites(newLocalStorageDoneRecipes);
+      localStorage
+        .setItem('doneRecipes', JSON
+          .stringify(localStorageDoneRecipes));
+    }
   }
 
   function shareRecipeLink() {
@@ -133,7 +121,6 @@ export default function RecipeDetails() {
     setTimeout(() => {
       setAlertMsg(false);
     }, time);
-    // alert('Link copiado!');
   }
 
   function whiteToBlackHeart() {
@@ -182,7 +169,6 @@ export default function RecipeDetails() {
         .getItem('inProgressRecipes'));
     // Se inProgressRecipes ainda não existir grava primeiro item, bebida ou comida
     if (!localStorageInProgressAux) {
-      console.log('EXISTE');
       if (searchParam === 'Meal') {
         localStorageInProgressAux = {
           cocktails: {},
@@ -240,6 +226,20 @@ export default function RecipeDetails() {
     return localStorageInProgressAux;
   }
 
+  // function toHiddeButton() {
+  //   if (localStorageDoneRecipes !== null) {
+  //     const localStorageDoneRecipesAux = localStorageDoneRecipes;
+  //     const isDoneCheck = localStorageDoneRecipesAux;
+  //     //   .find((done) => [actualRecipe[0].id] === done.id);
+  //     // console.log(localStorageDoneRecipesAux.([actualRecipe[0].id]));
+
+  //     if (isDoneCheck) {
+  //       console.log('apagar botão');
+  //       setHiddeButton(!hiddeButon);
+  //     }
+  //   }
+  // }
+
   const finishButtonEnable = () => {
     const checkedLength = document
       .querySelectorAll('input[type=checkbox]:checked').length;
@@ -255,6 +255,7 @@ export default function RecipeDetails() {
   }, [searchParam]);
 
   useEffect(() => {}, [isChecked]);
+  // useEffect(() => {}, [hiddeButon]);
 
   const render = () => {
     const ZERO = 0;
@@ -272,12 +273,25 @@ export default function RecipeDetails() {
       } else {
         typeFood = 'cocktails';
       }
-      const checked = (index) => {
+      const check = (index) => {
         if (getInProgress) {
-          return getInProgress[typeFood][actualRecipe[0].id]
-            .includes(index);
+          const getInProgressAux = getInProgress;
+          if (getInProgressAux[typeFood][actualRecipe[0].id]) {
+            return getInProgressAux[typeFood][actualRecipe[0].id]
+              .includes(index);
+          }
         }
         return false;
+      };
+
+      const checkProgress = () => {
+        if (localStorageInProgress) {
+          const localStorageInProgressAux = localStorageInProgress;
+          if (localStorageInProgressAux[typeFood][actualRecipe[0].id]) {
+            return 'CONTINUAR RECEITA';
+          }
+          return 'INICIAR RECEITA';
+        }
       };
 
       return (
@@ -321,14 +335,13 @@ export default function RecipeDetails() {
                     data-testid={ `${index}-ingredient-step` }
                   >
                     <input
-                      checked={ checked(index) }
+                      checked={ check(index) }
                       className="lineThrough"
                       type="checkbox"
                       name={ index }
                       id={ index }
                       onChange={ (e) => {
                         handleCheckbox(e, index, pairArray, typeFood);
-                        // window.location.reload();
                       } }
                     />
                     {' '}
@@ -362,42 +375,35 @@ export default function RecipeDetails() {
           ) }
           <h4>RECOMENDED: </h4>
           <RecommendedRecipes />
-          {inProgress === false
-            ? (
-              <Link to={ `/${idRecipe[1]}/${idRecipe[2]}/in-progress` }>
-                <button
-                  style={ {
-                    postion: 'fixed',
-                    bottom: '0px',
-                  } }
-                  data-testid="start-recipe-btn"
-                  className="start-recipe-btn"
-                  type="button"
-                  onClick={ () => setInProgress(!inProgress) }
-                >
-                  INICIAR RECEITA
-                </button>
-              </Link>
-            )
-            : (
-              <Link to="/receitas-feitas">
-                <button
-                  style={ {
-                    postion: 'fixed',
-                    bottom: '0px',
-                  } }
-                  data-testid="finish-recipe-btn"
-                  className="finish-recipe-btn"
-                  id="finish-recipe-btn"
-                  type="button"
-                  onClick={ () => setInProgress(!inProgress) }
-                  name="finish"
-                  disabled={ finishButtonEnable() }
-                >
-                  FINALIZAR RECEITA
-                </button>
-              </Link>
-            )}
+          {/* <div id="button-area" hidden={ toHiddeButton() }> */}
+          <div id="button-area">
+            {inProgress === false
+              ? (
+                <Link to={ `/${idRecipe[1]}/${idRecipe[2]}/in-progress` }>
+                  <button
+                    data-testid="start-recipe-btn"
+                    className="start-recipe-btn"
+                    type="button"
+                    onClick={ () => setInProgress(!inProgress) }
+                  >
+                    {checkProgress()}
+                  </button>
+                </Link>
+              )
+              : (
+                <Link to="/receitas-feitas">
+                  <button
+                    data-testid="finish-recipe-btn"
+                    className="finish-recipe-btn"
+                    type="button"
+                    onClick={ () => saveDoneRecipe() }
+                    disabled={ finishButtonEnable() }
+                  >
+                    FINALIZAR RECEITA
+                  </button>
+                </Link>
+              )}
+          </div>
         </Container>
       );
     }
