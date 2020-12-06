@@ -32,7 +32,7 @@ function ShareButton({ datatestid, linkToCopy }) {
         src={ shareIcon }
         alt="shareIcon"
       />
-      { message ? 'Link Copiado!' : 'Copiar' }
+      { message && 'Link copiado!' }
     </button>
   );
 }
