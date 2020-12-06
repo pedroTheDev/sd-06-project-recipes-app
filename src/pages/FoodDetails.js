@@ -109,44 +109,55 @@ function FoodDetails() {
       {(isFetching) ? <div>Loading recipe...</div>
         : (
           <div className="mobile-container">
-            <header>
+            <header className="recipe-head">
               <div>
-                <h1 data-testid="recipe-title">
+                <h1
+                  className="recipe-title"
+                  data-testid="recipe-title"
+                >
                   { strMeal }
                 </h1>
               </div>
               <div>
-                <h3 data-testid="recipe-category">
+                <h3
+                  className="recipe-category"
+                  data-testid="recipe-category"
+                >
                   { strCategory }
                 </h3>
               </div>
-              <img
-                data-testid="recipe-photo"
-                className="recipe-img"
-                src={ strMealThumb }
-                alt={ `${strMeal}` }
-              />
             </header>
-            <button
-              type="button"
-              data-testid="share-btn"
-              onClick={ handleShareClick }
-            >
-              <img src={ shareIcon } alt="Compartilhar" />
-              Compartilhar
-            </button>
-            {(copied) && <span>Link copiado!</span>}
-            <button
-              type="button"
-              onClick={ handleFavoriteClick }
-            >
-              <img
-                data-testid="favorite-btn"
-                src={ isFavorite }
-                alt="Favoritar"
-              />
-              Favoritar
-            </button>
+            <img
+              data-testid="recipe-photo"
+              className="recipe-img"
+              src={ strMealThumb }
+              alt={ `${strMeal}` }
+            />
+            <div className="action-btns-div">
+              <button
+                className="share-btn"
+                type="button"
+                data-testid="share-btn"
+                onClick={ handleShareClick }
+              >
+                <img src={ shareIcon } alt="Compartilhar" />
+                Compartilhar
+              </button>
+              {(copied) && <div className="copied-span">Link copiado!</div>}
+              <button
+                className="fav-btn"
+                type="button"
+                onClick={ handleFavoriteClick }
+              >
+                <img
+                  className="share-icon"
+                  data-testid="favorite-btn"
+                  src={ isFavorite }
+                  alt="Favoritar"
+                />
+                Favoritar
+              </button>
+            </div>
             <iframe
               data-testid="video"
               src={ vidUrl }
@@ -161,11 +172,11 @@ function FoodDetails() {
                 </p>
               ))}
             </div>
-            <p data-testid="instructions">
+            <p className="recipe-instructions" data-testid="instructions">
               {strInstructions}
             </p>
             <Recommended />
-            <div className="btn-div">
+            <div className="start-btn-div">
               {(!isDone) && (
                 <Link to={ `${itemUrl}/in-progress` }>
                   <button

@@ -108,44 +108,55 @@ function DrinkDetails() {
       {(isFetching) ? <div>Loading recipe...</div>
         : (
           <div className="mobile-container">
-            <header>
+            <header className="recipe-head">
               <div>
-                <h1 data-testid="recipe-title">
+                <h1
+                  className="recipe-title"
+                  data-testid="recipe-title"
+                >
                   {strDrink}
                 </h1>
               </div>
               <div>
-                <h3 data-testid="recipe-category">
+                <h3
+                  className="recipe-category"
+                  data-testid="recipe-category"
+                >
                   {strAlcoholic}
                 </h3>
               </div>
+            </header>
               <img
                 data-testid="recipe-photo"
                 className="recipe-img"
                 src={ strDrinkThumb }
                 alt={ `${strDrink}` }
               />
-            </header>
-            <button
-              type="button"
-              data-testid="share-btn"
-              onClick={ handleShareClick }
-            >
-              <img src={ shareIcon } alt="Compartilhar" />
-              Compartilhar
-            </button>
-            {(copied) && <span>Link copiado!</span>}
-            <button
-              type="button"
-              onClick={ handleFavoriteClick }
-            >
-              <img
-                data-testid="favorite-btn"
-                src={ isFavorite }
-                alt="Favoritar"
-              />
-              Favoritar
-            </button>
+            <div className="action-btns-div">
+              <button
+                className="share-btn"
+                type="button"
+                data-testid="share-btn"
+                onClick={ handleShareClick }
+              >
+                <img src={ shareIcon } alt="Compartilhar" />
+                Compartilhar
+              </button>
+              {(copied) && <div className="copied-span">Link copiado!</div>}
+              <button
+                className="fav-btn"
+                type="button"
+                onClick={ handleFavoriteClick }
+              >
+                <img
+                  className="share-icon"
+                  data-testid="favorite-btn"
+                  src={ isFavorite }
+                  alt="Favoritar"
+                />
+                Favoritar
+              </button>
+            </div>
             <div>
               {ingredients.map((ingredient, index) => (
                 <p data-testid={ `${index}-ingredient-name-and-measure` } key={ index }>
@@ -155,7 +166,7 @@ function DrinkDetails() {
                 </p>
               ))}
             </div>
-            <p data-testid="instructions">
+            <p className="recipe-instructions" data-testid="instructions">
               {strInstructions}
             </p>
             <Recommended />

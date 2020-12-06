@@ -17,7 +17,7 @@
 	background: #e9f5ee;
 }
 
-.form-control, .btn {        
+.form-control, .btn {
 	border-radius: 2px;
 }
 
@@ -53,7 +53,7 @@
 	margin-bottom: 20px;
 	background: #fff;
 	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-	padding: 30px;		
+	padding: 30px;
 }
 
 .login-form .btn, .login-form .btn:active {
@@ -62,7 +62,7 @@
 	min-width: 120px;
 	font-weight: bold;
 	background: #4aba70 !important;
-	border: none;		
+	border: none;
 }
 
 .login-form .btn:hover, .login-form .btn:focus{
@@ -116,6 +116,7 @@
   display: flex;
   justify-content: center;
   position: fixed;
+  z-index: 99;
 }
 
 .header {
@@ -156,6 +157,11 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+}
+
+.recommended-text {
+  font-weight: 600;
+  margin: 0px 20px;
 }
 
 /* Drink page */
@@ -201,20 +207,94 @@
 
 /* Food Details */
 
+.recipe-head {
+  align-items: center;
+  background-color: #30333173;
+  color: rgb(255, 255, 255);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.recipe-title {
+  font-size: 1.9em;
+  font-weight: 900;
+  letter-spacing: 2px;
+  margin-bottom: 0px;
+}
+
+.recipe-category {
+  font-size: 1.3em;
+  font-style: italic;
+  margin: 0;
+}
+
 .recipe-img {
-  width: 100px;
+  width: 100%;
+}
+
+.start-btn-div {
+  height: 37px;
+  width: 100%;
 }
 
 .start-recipe-btn {
   background-color: rgba(255, 255, 0, 0.856);
-  font-size: 1.3em;
-  width: 360px;
+  border: none;
+  border-radius: 5px;
   bottom: 0px;
+  font-size: 1.3em;
+  height: 40px;
+  left: 15%;
   margin-bottom: 58px;
+  position: fixed;
+  width: 70%;
 }
 
-.btn-div {
-  height: 37px;
+.action-btns-div {
+  display: flex;
+  height: 40px;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.share-btn {
+  background-color: yellow;
+  border: 1px black;
+  border-radius: 5px;
+}
+
+.share-btn img {
+  width: 20%;
+}
+
+.copied-span {
+  background-color: #17181773;
+  color: white;
+  display: flex;
+  font-size: 1.3em;
+  justify-content: center;
+  position: fixed;
+  width: 40%;
+}
+
+.fav-btn {
+  background-color: yellow;
+  border: none;
+  border-radius: 5px;
+}
+
+.share-icon {
+  width: 20%;
+}
+
+.recipe-instructions {
+  margin: 5px 20px;
+  text-align: justify;
 }
 
 /* Progress */
@@ -259,12 +339,12 @@
 .mobile-container {
   width: 360px;
   background: white;
+  background-color: #c1e9ce;
   margin-top: 58px;
   margin-bottom: 58px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-
 }
 
 .btn-sub-header {

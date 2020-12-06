@@ -171,7 +171,11 @@ function InProgress() {
   function ingredientsList() {
     return (
       ingredients.map((ingredient, index) => (
-        <div key={ index } data-testid={ `${index}-ingredient-step` }>
+        <div
+          className="ingredients-div"
+          key={ index }
+          data-testid={ `${index}-ingredient-step` }
+        >
           <input
             type="checkbox"
             className="ingredient-checkbox"
@@ -220,16 +224,27 @@ function InProgress() {
   return (
     <div className="food-container">
       <Header title="Em Andamento" />
-      <div className="mobile-container">
         {(isFetching) ? <div>Loading recipe...</div>
           : (
-            <section className="body-recipe">
-              <h1 data-testid="recipe-title">
-                { title }
-              </h1>
-              <h3 data-testid="recipe-category">
-                { recCategory }
-              </h3>
+            <section className="mobile-container">
+              <header className="recipe-head">
+              <div>
+                <h1
+                  className="recipe-title"
+                  data-testid="recipe-title"
+                >
+                  { title }
+                </h1>
+              </div>
+              <div>
+                <h3
+                  className="recipe-category"
+                  data-testid="recipe-category"
+                >
+                  { recCategory }
+                </h3>
+              </div>
+            </header>
               <img
                 data-testid="recipe-photo"
                 className="recipe-img"
@@ -258,7 +273,7 @@ function InProgress() {
               </button>
               {isFood && video()}
               {ingredientsList()}
-              <p data-testid="instructions">
+              <p className="recipe-instructions" data-testid="instructions">
                 {strInstructions}
               </p>
               <Recommended />
@@ -275,7 +290,6 @@ function InProgress() {
               </Link>
             </section>
           )}
-      </div>
       <Footer />
     </div>
   );
