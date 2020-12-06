@@ -7,7 +7,7 @@ import recomendationsThunk from '../redux/actions/pageDetailsFetcher';
 import recipeDetailsProcessing from '../utils/recipeDetailsProcessing';
 import checkRecipeInProgress from '../utils/checkRecipeInProgress';
 import checkSavedRecipe from '../utils/checkSavedRecipe';
-import checkFavoriteRecipe from '../utils/checkFavoriteRecipe';
+// import checkFavoriteRecipe from '../utils/checkFavoriteRecipe';
 import DetailAndProgressBody from '../components/DetailAndProgressBody';
 
 function RecipeDetails(
@@ -27,7 +27,6 @@ function RecipeDetails(
     setIsFav,
     setWasCopied,
   };
-
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -39,7 +38,6 @@ function RecipeDetails(
   useEffect(() => {
     checkSavedRecipe(recipe, setdisableButton);
     checkRecipeInProgress(path, recipe, setWasStarted);
-    setIsFav(checkFavoriteRecipe(id));
   }, [recipe]);
 
   return (

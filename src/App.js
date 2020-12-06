@@ -5,8 +5,9 @@ import './App.css';
 import { Provider } from 'react-redux';
 import {
   Login, MainPage, Explorar, Perfil, ReceitasFavoritas,
-  ReceitasFeitas, RecipeDetails, ReceitaProgresso,
-  ComidasArea, ComidasIngredientes, Explorer,
+  RecipeDetails, BebidasIngredientes,
+  ExplorarOrigem, ComidasIngredientes,
+  Explorer, ReceitaProgresso, DoneRecipes,
 } from './pages';
 import store from './redux/store';
 import './visual_identity/styles/main.scss';
@@ -33,11 +34,12 @@ function App() {
             path="/explorar/comidas/ingredientes"
             component={ ComidasIngredientes }
           />
-          <Route exact path="/explorar/comidas/area" component={ ComidasArea } />
+          <Route exact path="/explorar/comidas/area" component={ ExplorarOrigem } />
+          <Route exact path="/explorar/bebidas/area" component={ ExplorarOrigem } />
           <Route exact path="/explorar" component={ Explorar } />
           <Route exact path="/explorar/comidas" component={ Explorer } />
           <Route exact path="/explorar/bebidas" component={ Explorer } />
-          <Route exact path="/receitas-feitas" component={ ReceitasFeitas } />
+          <Route exact path="/receitas-feitas" component={ DoneRecipes } />
           <Route exact path="/receitas-favoritas" component={ ReceitasFavoritas } />
           <Route exact path="/perfil" component={ Perfil } />
 

@@ -1,7 +1,11 @@
 @import '../0.helpers/variables';
 
-* {
+p {
   font-size: calc(10px + 0.8vw);
+}
+
+html, body, #root, #app, #app>div {
+  height: 100%;
 }
 
 h1 {
