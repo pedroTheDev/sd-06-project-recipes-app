@@ -1,17 +1,16 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
-import { detailsFoodById, showSugestedDrinks } from '../services/aPI';
-import './DetalhesComida.css';
 
+import { detailsFoodById } from '../services/aPI';
 import ContextAPI from '../Context/ContextAPI';
 import Instructions from '../components/Instructions';
 import Ingredients from '../components/Ingredients';
 import BasicInfo from '../components/BasicInfo';
+import Recomendations from '../components/Recomendations';
+import './DetalhesComida.css';
 
 const DetalhesComida = () => {
-  const [stateLocal, setStatelocal] = useState();
-  const [stateSugestions, setSugestions] = useState();
   const [foodsInProgress, setFoodsInProgress] = useState({ meals: {} });
 
   const currentFoodID = useParams().id;
@@ -20,14 +19,8 @@ const DetalhesComida = () => {
 
   const handleIdDetails = async () => {
     const food = await detailsFoodById(currentFoodID);
-    console.log(food);
-    setStatelocal({ ...stateLocal, food });
-    setDetailsInfo({ ...detailsInfo, foods: food.meals[0] });
-  };
 
-  const getSugestedDrinks = async () => {
-    const drinks = await showSugestedDrinks();
-    setSugestions(drinks);
+    setDetailsInfo({ ...detailsInfo, foods: food.meals[0] });
   };
 
   const loadRecipesInProgressFromLocalStorage = () => {
@@ -45,12 +38,11 @@ const DetalhesComida = () => {
 
   useEffect(() => {
     handleIdDetails();
-    getSugestedDrinks();
     loadRecipesInProgressFromLocalStorage();
   }, []);
 
   const getIngredientsOrMeasure = (param) => {
-    const dataObject = stateLocal.food.meals[0];
+    const dataObject = detailsInfo.foods;
 
     const dataKeys = Object.keys(dataObject)
       .filter((key) => key.includes(param)
@@ -64,7 +56,7 @@ const DetalhesComida = () => {
 
   const progressButton = () => {
     const progressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    const mealProgressID = stateLocal.food.meals[0].idMeal;
+    const mealProgressID = detailsInfo.foods.idMeal;
     const inProgressRecipes = {
       ...progressRecipes,
       meals: {
@@ -75,11 +67,9 @@ const DetalhesComida = () => {
     localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
   };
 
-  const number = 5;
-
   return (
     <div className="body-details">
-      {stateLocal ? (
+      {detailsInfo ? (
         <div className="container-main">
           <BasicInfo />
           <Ingredients />
@@ -90,52 +80,15 @@ const DetalhesComida = () => {
           <div className="container-video">
             <a
               data-testid="video"
-              href={ stateLocal.food.meals[0].strYoutube }
+              href={ detailsInfo.foods.strYoutube }
             >
               <img
-                src={ stateLocal.food.meals[0].strMealThumb }
-                alt={ stateLocal.food.meals[0].strMeal }
+                src={ detailsInfo.foods.strMealThumb }
+                alt={ detailsInfo.foods.strMeal }
               />
             </a>
           </div>
-          <span
-            className="recomendation-span"
-          >
-            Recomendadas
-          </span>
-          <div className="container-recomendations">
-            { stateSugestions && stateSugestions.drinks.map((drink, index) => {
-              if (index <= number) {
-                return (
-                  <div
-                    className="main-scroll"
-                    key={ drink.strDrink }
-                    data-testid={ `${index}-recomendation-card` }
-                  >
-                    <p data-testid={ `${index}-recomendation-title` }>
-                      {drink.strDrink}
-                    </p>
-                    <button
-                      type="button"
-                      className="button"
-                      onClick={ () => handleIdDetails(drink.idDrink) }
-                    >
-                      <Link to={ `/comidas/${drink.idDrink}` }>
-                        <img
-                          className="img-recomendations"
-                          width="200"
-                          src={ drink.strDrinkThumb }
-                          alt={ drink.strDrink }
-                          data-testid={ `${index}-card-img` }
-                        />
-                      </Link>
-                    </button>
-                  </div>
-                );
-              }
-              return '';
-            })}
-          </div>
+          <Recomendations />
           <div className="container-button">
             <button
               type="button"
@@ -144,9 +97,9 @@ const DetalhesComida = () => {
             >
               <Link
                 className="link-button"
-                to={ `/comidas/${stateLocal.food.meals[0].idMeal}/in-progress` }
+                to={ `/comidas/${detailsInfo.foods.idMeal}/in-progress` }
               >
-                {foodsInProgress.meals[stateLocal.food.meals[0].idMeal]
+                {foodsInProgress.meals[detailsInfo.foods.idMeal]
                   ? 'Continuar Receita' : 'Iniciar Receita'}
               </Link>
             </button>

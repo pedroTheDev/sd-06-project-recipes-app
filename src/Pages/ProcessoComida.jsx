@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
+
 import { detailsFoodById } from '../services/aPI';
-
-import './ProcessoComida.css';
-
 import Instructions from '../components/Instructions';
 import ContextAPI from '../Context/ContextAPI';
 import BasicInfo from '../components/BasicInfo';
 import IngredientsCheckbox from '../components/IngredientsCheckbox';
+import './ProcessoComida.css';
 
 const ReceitaProcessoComida = () => {
   const [foodDetails, setFoodDetails] = useState();
@@ -32,9 +31,11 @@ const ReceitaProcessoComida = () => {
       const doneRecipes = [];
       localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
     }
+
     const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
-    console.log(doneRecipes.some((key) => key.id === idFood));
-    if (doneRecipes.some((key) => key.id === idFood)) setIsRecipeDone(true);
+    const isCurrentRecipeDone = doneRecipes.some((key) => key.id === idFood);
+
+    if (isCurrentRecipeDone) setIsRecipeDone(true);
     else setIsRecipeDone(false);
   };
 
@@ -43,23 +44,26 @@ const ReceitaProcessoComida = () => {
     loadDoneRecipesFromStorage();
   }, []);
 
+  const removeFoodFromProgress = () => {
+    const progressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (progressRecipes !== null) {
+      const progressKeys = Object.keys(progressRecipes.meals);
+      let mealsObject = {};
+      progressKeys.forEach((key) => {
+        if (key !== idFood) {
+          mealsObject = { ...mealsObject, [key]: progressKeys[key] };
+        }
+      });
+      localStorage.setItem('inProgressRecipes', JSON.stringify({
+        ...progressRecipes,
+        meals: mealsObject,
+      }));
+    }
+  };
+
   const setDoneRecipes = () => {
     if (foodDetails) {
-      const progressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
-      if (progressRecipes !== null) {
-        const progressKeys = Object.keys(progressRecipes.meals);
-        let mealsObject = {};
-        progressKeys.forEach((key) => {
-          if (key !== idFood) {
-            mealsObject = { ...mealsObject, [key]: progressKeys[key] };
-          }
-        });
-        localStorage.setItem('inProgressRecipes', JSON.stringify({
-          ...progressRecipes,
-          meals: mealsObject,
-        }));
-      }
-
+      removeFoodFromProgress();
       setIsRecipeDone(true);
 
       const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
@@ -78,9 +82,7 @@ const ReceitaProcessoComida = () => {
       }]));
 
       window.location.href = 'http://localhost:3000/receitas-feitas';
-    } else {
-      return '';
-    }
+    } else return '';
   };
 
   const showDoneRecipeBtn = () => (
