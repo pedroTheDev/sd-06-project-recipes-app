@@ -5,7 +5,7 @@ import './App.css';
 import { Provider } from 'react-redux';
 import {
   Login, MainPage, Explorar, Perfil, ReceitasFavoritas,
-  RecipeDetails, BebidasIngredientes,
+  RecipeDetails,
   ExplorarOrigem, ComidasIngredientes,
   Explorer, ReceitaProgresso, DoneRecipes,
 } from './pages';
