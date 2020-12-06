@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Footer from '../../components/Footer';
-import Header from '../../components/Header';
+import Footer from '../../components/Footer/Footer';
+import Header from '../../components/MainHeader/Header';
 import { fetchMeal } from '../../services/mealAPI';
 
 function MainExploreFood() {

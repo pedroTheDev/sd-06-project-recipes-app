@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Footer from '../../components/Footer';
-import Header from '../../components/Header';
+import Footer from '../../components/Footer/Footer';
+import Header from '../../components/MainHeader/Header';
 import BtnSearchBar from '../../components/BtnSearchBar';
 
 import * as cocktailAPI from '../../services/cocktailAPI';
 import * as mealAPI from '../../services/mealAPI';
 import recipesAppContext from '../../context/recipesAppContext';
+import './style.css';
 
 function MealsPage() {
   const [state, changeState] = useState({
@@ -140,13 +141,12 @@ function MealsPage() {
   }
 
   return (
-    <div className="recipes-page">
+    <div className="recipes-page-container">
       <Header
-        className="header"
         pageTitle="Comidas"
         BtnSearchBar={ BtnSearchBar }
       />
-      <div className="categories">
+      <div className="categories-container">
         <div className="category-button">
           <input
             type="button"
@@ -239,7 +239,7 @@ function MealsPage() {
         })}
       </div>
       <div>
-        <Footer className="footer-container" />
+        <Footer />
       </div>
     </div>
   );

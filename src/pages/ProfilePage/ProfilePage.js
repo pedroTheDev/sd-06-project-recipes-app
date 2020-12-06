@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Footer from '../../components/Footer';
-import Header from '../../components/Header';
+import Footer from '../../components/Footer/Footer';
+import Header from '../../components/MainHeader/Header';
 
 export default function ProfilePage() {
   const emailLS = localStorage.getItem('user')

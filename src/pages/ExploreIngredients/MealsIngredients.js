@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Footer from '../../components/Footer';
-import Header from '../../components/Header';
+import Footer from '../../components/Footer/Footer';
+import Header from '../../components/MainHeader/Header';
 import MealsIngredientCard from '../../components/MealsIngredientCard';
 import { fetchMeal } from '../../services/mealAPI';
 
