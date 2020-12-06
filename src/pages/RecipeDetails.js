@@ -15,7 +15,7 @@ export default function RecipeDetails() {
   const [heartIcon, setheartIcon] = useState(WhiteHeartIcon);
   const [alertMsg, setAlertMsg] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
-  const [hiddeButon, setHiddeButton] = useState(false);
+  // const [hiddeButon, setHiddeButton] = useState(false);
 
   if (idRecipe[3] === 'in-progress' && inProgress === false)(setInProgress(!inProgress));
   if (idRecipe[1] === 'comidas') setSearchParam('Meal');
