@@ -1,17 +1,22 @@
-.btn-explore{
-  background-color: #f5f2f2;
-  border-radius: 10px;
-  padding: 10px;
-  box-shadow: 5px 5px rgba(0, 0, 0, 0.25);
-  margin-left: 50px;
-  margin-top: 20px;
-  width: 150px;
-  height: 60px;
-  border: none;
-  font-size: 18px;
-  font-weight: bold;
+.explore-container {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
 }
 
-.main{
-  background-color: #FCDCA2;
+.explore-btn-link {
+  display: flex;
+  justify-content: center;
+}
+
+.explore-btn-option {
+  background-color: #A98036;
+  border-radius: 10px;
+  color: white;
+  font-family: cursive;
+  font-size: 30px;
+  font-weight: bold;
+  height: 52px;
+  margin-top: 30px;
+  text-shadow:#000 1px -1px, #000 -1px 1px, #000 1px 1px, #000 -1px -1px;
 }

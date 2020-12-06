@@ -1,0 +1,18 @@
+.share-btn-container {
+  align-content: center;
+  display: flex;
+  font-family: cursive;
+  font-size: 18px;
+}
+
+.share-btn {
+  background: none;
+  border: none;
+}
+
+p.share-text {
+  display: flex;
+  margin-block-end: 0;
+  margin-block-start: 0;
+  margin-left: 8px;
+}

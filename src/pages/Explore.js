@@ -11,14 +11,14 @@ const Explore = () => {
   }, []);
 
   return (
-    <div className="main">
-      <Link to="/explorar/comidas">
-        <button data-testid="explore-food" type="button" className="btn-explore">
+    <div className="explore-container">
+      <Link className="explore-btn-link" to="/explorar/comidas">
+        <button data-testid="explore-food" type="button" className="explore-btn-option">
           Explorar Comidas
         </button>
       </Link>
-      <Link to="/explorar/bebidas">
-        <button data-testid="explore-drinks" type="button" className="btn-explore">
+      <Link className="explore-btn-link" to="/explorar/bebidas">
+        <button data-testid="explore-drinks" type="button" className="explore-btn-option">
           Explorar Bebidas
         </button>
       </Link>

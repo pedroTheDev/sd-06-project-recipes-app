@@ -6,7 +6,7 @@ import RecipesContext from '../context/RecipesContext';
 import likeIcon from '../images/whiteHeartIcon.svg';
 import fullLikeIcon from '../images/blackHeartIcon.svg';
 import ShareButton from '../components/ShareButton';
-import './FoodInProgress.css';
+import './RecipeInProgress.css';
 
 const FoodInProgress = ({
   match: { params: { id } },
@@ -177,6 +177,31 @@ const FoodInProgress = ({
     }
   };
 
+  const getFormattedDate = () => {
+    const monthCorrection = 1;
+    const twoDecimalPlaces = 10;
+    const date = new Date();
+    const day = date.getDate();
+    const month = date.getMonth() + monthCorrection;
+    const year = date.getFullYear();
+
+    let formatterDay;
+    if (day < twoDecimalPlaces) {
+      formatterDay = `0${day}`;
+    } else {
+      formatterDay = day;
+    }
+
+    let formatterMonth;
+    if (month < twoDecimalPlaces) {
+      formatterMonth = `0${month}`;
+    } else {
+      formatterMonth = month;
+    }
+
+    return `${formatterDay}/${formatterMonth}/${year}`;
+  };
+
   const handleDoneLocalStorage = () => {
     if (!localStorage.getItem('doneRecipes')) {
       localStorage.setItem('doneRecipes', JSON.stringify([]));
@@ -192,7 +217,7 @@ const FoodInProgress = ({
         alcoholicOrNot: '',
         name: recipeTitle,
         image: recipeImage,
-        doneDate: Date('DD-MM-YYYY'),
+        doneDate: getFormattedDate(),
         tags: recipeTags,
       },
     ];
@@ -211,25 +236,40 @@ const FoodInProgress = ({
   }, [inProgressRecipes]);
 
   return (
-    <div>
-      <img data-testid="recipe-photo" src={ recipeImage } alt={ recipeTitle } />
-      <h1 data-testid="recipe-title">{recipeTitle}</h1>
-      <div>
-        <ShareButton path={ pathname } />
-        <button type="button" onClick={ handleImage }>
+    <div className="recipe-in-progress-container">
+      <img
+        data-testid="recipe-photo"
+        className="recipe-in-progress-image"
+        src={ recipeImage }
+        alt={ recipeTitle }
+      />
+      <h1
+        data-testid="recipe-title"
+        className="recipe-in-progress-name"
+      >
+        { recipeTitle }
+      </h1>
+      <div className="favorite-and-share-btn-container">
+        <button type="button" onClick={ handleImage } className="favorite-btn">
           <img
             src={ btnImg }
             alt="like"
             data-testid="favorite-btn"
           />
         </button>
+        <ShareButton path={ pathname } />
       </div>
-      <h3 data-testid="recipe-category">{recipeCategory}</h3>
-      <ul>
+      <h3 className="recipe-in-progress-category">
+        Category-
+        <span data-testid="recipe-category">
+          { recipeCategory }
+        </span>
+      </h3>
+      <ul className="ingredients-checklist">
         { !isLoading && recipeIngredients.map((item, index) => (
           <li
-            data-testid={ `${index}-ingredient-step` }
             key={ item }
+            data-testid={ `${index}-ingredient-step` }
           >
             <label
               htmlFor={ item }
@@ -246,13 +286,15 @@ const FoodInProgress = ({
             </label>
           </li>
         ))}
-
       </ul>
-      <p data-testid="instructions">{recipeInstructions}</p>
+      <p data-testid="instructions" className="recipe-in-progress-instructions">
+        { recipeInstructions }
+      </p>
       <Link to="/receitas-feitas">
         <button
           type="button"
           data-testid="finish-recipe-btn"
+          className="finish-recipe-btn"
           disabled={ handleFinishRecipe(recipeIngredients.length) }
           onClick={ handleDoneLocalStorage }
         >

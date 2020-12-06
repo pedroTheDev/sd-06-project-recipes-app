@@ -36,17 +36,16 @@ const Login = () => {
   };
 
   return (
-    <div className="main">
-      <div className="header">
-        <img src={ wallpaper } alt="wallpaper" style={ { width: 441, height: 207 } } />
+    <div className="login-container">
+      <div className="login-image-container">
+        <img src={ wallpaper } alt="wallpaper" className="login-image pulse" />
       </div>
-      <div className="main-header">Login</div>
-      <form>
+      <form className="login-form">
         <input
           type="email"
           data-testid="email-input"
           className="email-input"
-          placeholder="email"
+          placeholder="Digite seu e-mail"
           value={ email }
           onChange={ ({ target: { value } }) => setEmail(value) }
           required
@@ -55,12 +54,12 @@ const Login = () => {
           type="password"
           data-testid="password-input"
           className="password-input"
-          placeholder="senha"
+          placeholder="Digite sua senha"
           value={ password }
           onChange={ ({ target: { value } }) => setPassword(value) }
           required
         />
-        <Link to="/comidas">
+        <Link className="login-form" to="/comidas">
           <button
             type="submit"
             data-testid="login-submit-btn"

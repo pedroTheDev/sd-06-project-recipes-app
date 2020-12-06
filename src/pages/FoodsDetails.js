@@ -5,14 +5,14 @@ import RecipesContext from '../context/RecipesContext';
 import likeIcon from '../images/whiteHeartIcon.svg';
 import fullLikeIcon from '../images/blackHeartIcon.svg';
 import ShareButton from '../components/ShareButton';
-import './FoodsDetails.css';
+import './RecipeDetails.css';
 
 const FoodsDetails = (props) => {
   const [btnTitle, setBtnTitle] = useState('Iniciar Receita');
   const [btnImg, setBtnImg] = useState('');
   const [recommendations1, setRecommendations1] = useState([]);
   const [recommendations2, setRecommendations2] = useState([]);
-  const { title, setTitle } = useContext(HeaderContext);
+  const { setTitle } = useContext(HeaderContext);
   const {
     recipeObject,
     recipesInProgress,
@@ -191,50 +191,40 @@ const FoodsDetails = (props) => {
   }, []);
 
   return (
-    <div className="main">
-      <h1 style={ { textAlign: 'center', marginTop: 20 } }>
-        {title}
-      </h1>
+    <div className="recipe-details-container">
       <img
         src={ recipeImage }
         alt={ recipeTitle }
         data-testid="recipe-photo"
-        className="image-display"
-        style={ { borderRadius: 10, marginLeft: 65 } }
+        className="recipe-details-image"
       />
-      <div>
-        <p
-          data-testid="recipe-title"
-          style={ { textAlign: 'center' } }
-        >
-          {recipeTitle}
-        </p>
-        <div>
-          <ShareButton path={ pathname } />
-          <button
-            type="button"
-            onClick={ handleImage }
-            style={ { width: 70, marginLeft: 180 } }
-          >
-            <img
-              src={ btnImg }
-              alt="like"
-              data-testid="favorite-btn"
-            />
-          </button>
-        </div>
-      </div>
       <p
-        data-testid="recipe-category"
-        style={ { fontSize: 24,
-          fontWeight: 'bold',
-          textAlign: 'center',
-          marginTop: 10 } }
+        data-testid="recipe-title"
+        className="recipe-details-name"
       >
-        {recipeCategory}
+        {recipeTitle}
       </p>
-
-      <ul>
+      <div className="favorite-and-share-btn-container">
+        <button
+          type="button"
+          onClick={ handleImage }
+          className="favorite-btn"
+        >
+          <img
+            src={ btnImg }
+            alt="like"
+            data-testid="favorite-btn"
+          />
+        </button>
+        <ShareButton path={ pathname } />
+      </div>
+      <p className="recipe-details-category">
+        Category-
+        <span data-testid="recipe-category">
+          {recipeCategory}
+        </span>
+      </p>
+      <ul className="ingredients-list">
         {recipeIngredients.map((item, index) => (
           <li
             key={ index }
@@ -244,40 +234,50 @@ const FoodsDetails = (props) => {
           </li>
         ))}
       </ul>
-
       <h3
         data-testid="instructions"
-        style={ { border: '1px solid black',
-          padding: 10,
-          marginLeft: 20,
-          marginRight: 20,
-          borderRadius: 10,
-          fontSize: 16 } }
+        className="recipe-details-instructions"
       >
         {recipeInstructions}
       </h3>
-
       <iframe
         src={ recipeVideo }
         title={ recipeTitle }
         data-testid="video"
-        style={ { marginLeft: 60, borderRadius: 10, marginTop: 20 } }
+        className="recipe-details-video"
       />
-
-      <div
-        className="carousel slide w-25"
-        data-ride="carousel"
-        id="carousel1"
-        style={ { marginLeft: 10 } }
-      >
-        <div className="carousel-inner">
-          {recommendations1.map((item, index) => {
-            if (index === carouselActiveIndex) {
+      <h3>Recommendations:</h3>
+      <div className="carousels-container">
+        <div
+          className="carousel slide w-25"
+          data-ride="carousel"
+          id="carousel1"
+        >
+          <div className="carousel-inner">
+            {recommendations1.map((item, index) => {
+              if (index === carouselActiveIndex) {
+                return (
+                  <div
+                    key={ item.strDrink }
+                    data-testid={ `${index}-recomendation-card` }
+                    className="carousel-item active"
+                  >
+                    <img
+                      src={ item.strDrinkThumb }
+                      alt={ item.strDrink }
+                      className="d-block w-100"
+                    />
+                    <h5 data-testid={ `${index}-recomendation-title` }>
+                      { item.strDrink }
+                    </h5>
+                  </div>
+                );
+              }
               return (
                 <div
-                  key={ item.strDrink }
-                  data-testid={ `${index}-recomendation-card` }
-                  className="carousel-item active"
+                  key={ item.idDrink }
+                  data-testid={ `${index + carouselActiveIndex1}-recomendation-card` }
+                  className="carousel-item"
                 >
                   <img
                     src={ item.strDrinkThumb }
@@ -289,39 +289,41 @@ const FoodsDetails = (props) => {
                   </h5>
                 </div>
               );
-            }
-            return (
-              <div
-                key={ item.idDrink }
-                data-testid={ `${index + carouselActiveIndex1}-recomendation-card` }
-                className="carousel-item"
-              >
-                <img
-                  src={ item.strDrinkThumb }
-                  alt={ item.strDrink }
-                  className="d-block w-100"
-                />
-                <h5 data-testid={ `${index}-recomendation-title` }>
-                  { item.strDrink }
-                </h5>
-              </div>
-            );
-          })}
+            })}
+          </div>
         </div>
-      </div>
-      <div
-        className="carousel slide w-25"
-        data-ride="carousel"
-        id="carousel2"
-      >
-        <div className="carousel-inner">
-          {recommendations2.map((item, index) => {
-            if (index === carouselActiveIndex) {
+        <div
+          className="carousel slide w-25"
+          data-ride="carousel"
+          id="carousel2"
+        >
+          <div className="carousel-inner">
+            {recommendations2.map((item, index) => {
+              if (index === carouselActiveIndex) {
+                return (
+                  <div
+                    key={ item.idDrink }
+                    data-testid="1-recomendation-card"
+                    className="carousel-item active"
+                  >
+                    <img
+                      src={ item.strDrinkThumb }
+                      alt={ item.strDrink }
+                      className="d-block w-100"
+                    />
+                    <h5
+                      data-testid={ `${index + carouselPartition}-recomendation-title` }
+                    >
+                      { item.strDrink }
+                    </h5>
+                  </div>
+                );
+              }
               return (
                 <div
                   key={ item.idDrink }
-                  data-testid="1-recomendation-card"
-                  className="carousel-item active"
+                  data-testid={ `${index + carouselPartition}-recomendation-card` }
+                  className="carousel-item"
                 >
                   <img
                     src={ item.strDrinkThumb }
@@ -333,24 +335,8 @@ const FoodsDetails = (props) => {
                   </h5>
                 </div>
               );
-            }
-            return (
-              <div
-                key={ item.idDrink }
-                data-testid={ `${index + carouselPartition}-recomendation-card` }
-                className="carousel-item"
-              >
-                <img
-                  src={ item.strDrinkThumb }
-                  alt={ item.strDrink }
-                  className="d-block w-100"
-                />
-                <h5 data-testid={ `${index + carouselPartition}-recomendation-title` }>
-                  { item.strDrink }
-                </h5>
-              </div>
-            );
-          })}
+            })}
+          </div>
         </div>
       </div>
       {
@@ -360,12 +346,6 @@ const FoodsDetails = (props) => {
             data-testid="start-recipe-btn"
             className="start-recipe-btn"
             onClick={ handleClick }
-            style={ { borderRadius: 10,
-              backgroundColor: '#9AAD98',
-              width: 150,
-              height: 55,
-              fontWeight: 'bold',
-              fontSize: 16 } }
           >
             {btnTitle}
           </button>

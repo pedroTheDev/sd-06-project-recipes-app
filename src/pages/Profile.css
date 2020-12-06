@@ -1,18 +1,30 @@
-.prof-btn{
-  background-color: #f5f2f2;
-  border-radius: 10px;
-  padding: 10px;
-  box-shadow: 5px 5px rgba(0, 0, 0, 0.25);
-  margin-left: 130px;
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+}
+
+h1.profile-email {
+  font-family: cursive;
+  font-size: 30px;
   margin-top: 20px;
-  width: 200px;
-  height: 60px;
-  border: none;
-  font-size: 18px;
-  font-weight: bold;
+  margin-bottom: 30px;
   text-align: center;
 }
 
-.main{
-  background-color: #FCDCA2;
+.profile-btn-link {
+  display: flex;
+  justify-content: center;
+}
+
+.profile-btn-option {
+  background-color: #A98036;
+  border-radius: 10px;
+  color: white;
+  font-family: cursive;
+  font-size: 30px;
+  font-weight: bold;
+  height: 52px;
+  margin-bottom: 20px;
+  text-shadow:#000 1px -1px, #000 -1px 1px, #000 1px 1px, #000 -1px -1px;
 }

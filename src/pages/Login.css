@@ -1,59 +1,74 @@
-.img{
-  position: absolute;
-  background-size: cover;
-  background-image: url(../images/wallpaper.jpeg);
+.login-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-form {
   align-items: center;
+  display: flex;
+  flex-direction: column;
 }
 
-.main{
-  background-color:#FCDCA2;
-  width: 441px;
-  height: 645px;
-  position: absolute;
-}
-
-.main-header{
-  text-align: center;
-  font-size:36px;
-}
-
-.email-input{
-  position: absolute;
-  width:351px;
-  height: 52px;
+.email-input, .password-input {
   background-color: #FFF9F9;
   border-radius: 10px;
-  margin-left: 40px;
-  margin-top: 70px;
-}
-
-.password-input{
-  position: absolute;
-  width:351px;
   height: 52px;
-  background-color: #FFF9F9;
-  border-radius: 10px;
-  margin-left: 40px;
-  margin-top: 130px;
+  margin-bottom: 20px;
+  text-align: center;
+  width:300px;
 }
 
-.login-submit-btn{
-  position: absolute;
+.login-submit-btn {
+  background-color: #A98036;
   border-radius: 10px;
-  background-color: #9AAD98;
-  width: 255px;
+  color: white;
+  font-family: cursive;
+  font-size: 30px;
+  font-weight: bold;
   height: 52px;
-  margin-left: 95px;
-  margin-top: 190px;
+  margin-bottom: 200px;
+  text-shadow:#000 1px -1px, #000 -1px 1px, #000 1px 1px, #000 -1px -1px;
+  width: 230px;
 }
 
-.dev{
-  font-size: 14px;
-  text-align: center;
-  margin-top: 250px;
+.login-image-container {
+  border-bottom: solid 5px #FFEBC7;
+  margin-bottom: 30px;
+  overflow: hidden;
 }
 
-.name{
-  text-align: center;
-  text-decoration: none;
+.login-image {
+  width: 350px;
+  margin-bottom: 30px;
+}
+
+.pulse {
+  animation: pulse 1.7s infinite;
+  animation-direction: alternate;
+  animation-name: pulse;
+  display: table;
+  margin: 0 auto;
+  -webkit-animation-name: pulse;
+}
+
+@-webkit-keyframes pulse {
+  0% {
+    filter: brightness(100%);
+    transform: scale(1);
+  }
+  100% {
+    filter: brightness(130%);
+    transform: scale(1.05);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    filter: brightness(100%);
+    transform: scale(1);
+  }
+  100% {
+    filter: brightness(130%);
+    transform: scale(1.05);
+  }
 }

@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import HeaderContext from '../context/HeaderContext';
 import RecipesContext from '../context/RecipesContext';
-import './IngredientDrinks.css';
+import './Ingredients.css';
 
 const IngredientDrinks = () => {
-  const { title, setTitle } = useContext(HeaderContext);
+  const { setTitle } = useContext(HeaderContext);
   const { setSearchByIngredient } = useContext(RecipesContext);
   const [ingredients, setIngredients] = useState([]);
   const [ingredientsImg, setIngredientsImg] = useState([]);
@@ -43,32 +43,33 @@ const IngredientDrinks = () => {
   }, []);
 
   return (
-    <div className="main" style={ { backgroundColor: '#FCDCA2' } }>
-      <h1 style={ { textAlign: 'center', marginTop: 20 } }>
-        { title }
-        <div className="ingredient-container" style={ { marginLeft: 10 } }>
-          {ingredients.map((item, index) => (
-            <Link to="/bebidas" key={ item }>
-              <button
-                type="button"
-                onClick={ () => handleClick({ item }) }
+    <div className="ingredient-container">
+      {ingredients.map((item, index) => (
+        <Link to="/bebidas" key={ item }>
+          <button
+            type="button"
+            onClick={ () => handleClick({ item }) }
+            className="ingredient-btn"
+          >
+            <div
+              className="ingredient-card"
+              data-testid={ `${index}-ingredient-card` }
+            >
+              <img
+                src={ ingredientsImg[index] }
+                alt={ item }
+                data-testid={ `${index}-card-img` }
+              />
+              <p
+                data-testid={ `${index}-card-name` }
+                className="ingredient-name"
               >
-                <div
-                  className="ingredient-card"
-                  data-testid={ `${index}-ingredient-card` }
-                >
-                  <img
-                    src={ ingredientsImg[index] }
-                    alt={ item }
-                    data-testid={ `${index}-card-img` }
-                  />
-                  <p data-testid={ `${index}-card-name` }>{item}</p>
-                </div>
-              </button>
-            </Link>
-          ))}
-        </div>
-      </h1>
+                { item }
+              </p>
+            </div>
+          </button>
+        </Link>
+      ))}
     </div>
   );
 };

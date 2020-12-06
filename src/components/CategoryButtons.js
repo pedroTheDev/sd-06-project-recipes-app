@@ -59,7 +59,7 @@ function CategoryButtons({ type }) {
   }, []);
 
   return (
-    <div>
+    <div className="category-btn-container">
       {
         isFetchingCategories
           ? <p>Carregando Categorias</p>
@@ -70,7 +70,7 @@ function CategoryButtons({ type }) {
               name={ category.strCategory }
               key={ category.strCategory }
               data-testid={ `${category.strCategory}-category-filter` }
-              className="category"
+              className="category-btn"
             >
               { category.strCategory }
             </button>
@@ -85,7 +85,7 @@ function CategoryButtons({ type }) {
             name="all"
             key="all"
             data-testid="All-category-filter"
-            className="category"
+            className="category-btn"
           >
             All
           </button>

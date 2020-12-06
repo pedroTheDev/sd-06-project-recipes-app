@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import HeaderContext from '../context/HeaderContext';
-import './ExploreFoods.css';
 
 const ExploreFoods = () => {
   const { setTitle } = useContext(HeaderContext);
@@ -20,19 +19,31 @@ const ExploreFoods = () => {
   }, []);
 
   return (
-    <div className="main">
-      <Link to="/explorar/comidas/ingredientes">
-        <button type="button" data-testid="explore-by-ingredient" className="btn-explore">
+    <div className="explore-container">
+      <Link className="explore-btn-link" to="/explorar/comidas/ingredientes">
+        <button
+          type="button"
+          data-testid="explore-by-ingredient"
+          className="explore-btn-option"
+        >
           Por Ingredientes
         </button>
       </Link>
-      <Link to="/explorar/comidas/area">
-        <button type="button" data-testid="explore-by-area" className="btn-explore">
+      <Link className="explore-btn-link" to="/explorar/comidas/area">
+        <button
+          type="button"
+          data-testid="explore-by-area"
+          className="explore-btn-option"
+        >
           Por Local de Origem
         </button>
       </Link>
-      <Link to={ `/comidas/${randomRecipe.idMeal}` }>
-        <button type="button" data-testid="explore-surprise" className="btn-explore">
+      <Link className="explore-btn-link" to={ `/comidas/${randomRecipe.idMeal}` }>
+        <button
+          type="button"
+          data-testid="explore-surprise"
+          className="explore-btn-option"
+        >
           Me Surpreenda!
         </button>
       </Link>

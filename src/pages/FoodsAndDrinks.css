@@ -1,20 +1,12 @@
-.origin-container {
+.recipe-page-container {
+  align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  margin-top: 5px;
+  margin-top: 20px;
 }
 
-.origin-select {
-  background-color: #A98036;
-  border-radius: 5px;
-  color: #FFF9F9;
-  font-family: cursive;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.cards-container {
+.recipes-container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -22,27 +14,26 @@
   width: 100%;
 }
 
-.origin-food-card {
+.recipe-card {
   align-items: center;
   background-color: #FFEBC7;
   border-radius: 10%;
   display: flex;
   flex-direction: column;
-  margin-top: 15px;
+  margin-bottom: 20px;
   padding: 10px;
   width: 150px;
 }
 
-.origin-food-image {
-  border-radius: 40%;
-  height: 130px;
-}
-
-.origin-food-name {
+.recipe-title {
   color: black;
   font-family: cursive;
   font-size: 18px;
-  margin-top: 10px;
   overflow: auto;
   text-align: center;
+}
+
+.recipe-img {
+  border-radius: 40%;
+  height: 130px;
 }

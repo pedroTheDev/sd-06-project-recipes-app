@@ -33,29 +33,37 @@ const Profile = () => {
   }, []);
 
   return (
-    <div className="main">
+    <div className="profile-container">
       <h1
         data-testid="profile-email"
-        style={ { textAlign: 'center', marginTop: 10, fontSize: 30 } }
+        className="profile-email"
       >
         { userEmail }
       </h1>
-      <Link to="/receitas-feitas">
-        <button type="button" data-testid="profile-done-btn" className="prof-btn">
+      <Link className="profile-btn-link" to="/receitas-feitas">
+        <button
+          type="button"
+          data-testid="profile-done-btn"
+          className="profile-btn-option"
+        >
           Receitas Feitas
         </button>
       </Link>
-      <Link to="/receitas-favoritas">
-        <button type="button" data-testid="profile-favorite-btn" className="prof-btn">
+      <Link className="profile-btn-link" to="/receitas-favoritas">
+        <button
+          type="button"
+          data-testid="profile-favorite-btn"
+          className="profile-btn-option"
+        >
           Receitas Favoritas
         </button>
       </Link>
-      <Link to="/">
+      <Link className="profile-btn-link" to="/">
         <button
           type="button"
           data-testid="profile-logout-btn"
           onClick={ logout }
-          className="prof-btn"
+          className="profile-btn-option"
         >
           Sair
         </button>
