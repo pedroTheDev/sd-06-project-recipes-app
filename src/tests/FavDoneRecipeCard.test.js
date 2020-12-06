@@ -27,19 +27,7 @@ describe('favorite and done page tests', () => {
     await expect(history.location.pathname).toBe('/');
   });
 
-  it('favorite recipes test', () => {
-    renderWithRouter(<App />);
-    fireEvent.click(screen.getByTestId('profile-favorite-btn'));
-    expect(screen.getByTestId('page-title').innerHTML).toBe('Receitas Favoritas');
-  });
-
-  it('done recipes test', () => {
-    renderWithRouter(<App />);
-    fireEvent.click(screen.getByTestId('profile-done-btn'));
-    expect(screen.getByTestId('page-title').innerHTML).toBe('Receitas Feitas');
-  });
-
-  it('shows favorite recipe', () => {
+  it('shows favorite recipe data', async () => {
     const testFavRecipe = [{
       alcoholicOrNot: '',
       area: 'Canadian',
@@ -48,6 +36,7 @@ describe('favorite and done page tests', () => {
       image: 'https://www.themealdb.com/images/media/meals/txsupu1511815755.jpg',
       name: 'Timbits',
       type: 'comida',
+      tags: ['a', 'b'],
     }];
 
     localStorage.setItem('favoriteRecipes', JSON.stringify(testFavRecipe));
@@ -56,53 +45,35 @@ describe('favorite and done page tests', () => {
     fireEvent.click(screen.getByTestId('profile-favorite-btn'));
     const recipeName = screen.getByTestId('0-horizontal-name');
     expect(recipeName.innerHTML).toBe('Timbits');
-  });
-
-  it('shows done recipe', () => {
-    const testDoneRecipe = [{
-      alcoholicOrNot: '',
-      area: 'Canadian',
-      category: 'Dessert',
-      id: '52929',
-      image: 'https://www.themealdb.com/images/media/meals/txsupu1511815755.jpg',
-      name: 'Timbits',
-      type: 'comida',
-    }];
-
-    localStorage.setItem('doneRecipes', JSON.stringify(testDoneRecipe));
-
-    renderWithRouter(<App />);
-    fireEvent.click(screen.getByTestId('profile-done-btn'));
-    const recipeName = screen.getByTestId('0-horizontal-name');
-    expect(recipeName.innerHTML).toBe('Timbits');
-  });
-
-  it('show message when share button clicked', async () => {
-    const testDoneRecipe = [{
-      alcoholicOrNot: '',
-      area: 'Canadian',
-      category: 'Dessert',
-      id: '52929',
-      image: 'https://www.themealdb.com/images/media/meals/txsupu1511815755.jpg',
-      name: 'Timbits',
-      type: 'comida',
-    }];
-
-    localStorage.setItem('doneRecipes', JSON.stringify(testDoneRecipe));
-
-    renderWithRouter(<App />);
-    fireEvent.click(screen.getByTestId('profile-favorite-btn'));
+    const favBtn = screen.getByTestId('0-horizontal-favorite-btn');
+    await expect(favBtn).toBeInTheDocument();
     const shareBtn = screen.getByTestId('0-horizontal-share-btn');
     await expect(shareBtn).toBeInTheDocument();
+    const topText = screen.getByTestId('0-horizontal-top-text');
+    await expect(topText.innerHTML).toBe('Canadian - Dessert');
+    const image = screen.getByTestId('0-horizontal-image');
+    await expect(image).toBeInTheDocument();
+    const tags = screen.getByTestId('0-a-horizontal-tag');
+    await expect(tags).toBeInTheDocument();
   });
 
-  it('unfavorite recipe', () => {
+  it('changes path on name click', async () => {
+    const testFavRecipe = [{
+      alcoholicOrNot: '',
+      area: 'Canadian',
+      category: 'Dessert',
+      id: '52929',
+      image: 'https://www.themealdb.com/images/media/meals/txsupu1511815755.jpg',
+      name: 'Timbits',
+      type: 'comida',
+      tags: ['a', 'b'],
+    }];
+
+    localStorage.setItem('favoriteRecipes', JSON.stringify(testFavRecipe));
+
     renderWithRouter(<App />);
     fireEvent.click(screen.getByTestId('profile-favorite-btn'));
-    const recipeName = screen.getByTestId('0-horizontal-name');
-    expect(recipeName.innerHTML).toBe('Timbits');
-    const heartButton = screen.getByTestId('0-horizontal-favorite-btn');
-    fireEvent.click(heartButton);
-    expect(recipeName).not.toBeInTheDocument();
+    fireEvent.click(screen.getByTestId('0-horizontal-name'));
+    await expect(screen.getByText('Ingredientes:')).toBeInTheDocument();
   });
 });
