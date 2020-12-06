@@ -33,13 +33,12 @@ function ShareButton({ datatestid, linkToCopy, page = null }) {
         setMessage(true);
       } }
     >
-      <img
+      {message ? <p>Link copiado!</p> : <img
         data-testid={ datatestid || 'share-btn' }
         type="button"
         src={ shareIcon }
         alt="shareIcon"
-      />
-      { message && 'Link copiado!' }
+      />}
     </button>
   );
 }
