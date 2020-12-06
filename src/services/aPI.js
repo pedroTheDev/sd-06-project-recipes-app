@@ -133,3 +133,12 @@ export async function ApiExploreByPlaceOfOrigin() {
 
   return json;
 }
+
+export async function searchByOrigin(origin) {
+  const URL = `https://www.themealdb.com/api/json/v1/1/filter.php?a=${origin}`;
+
+  const response = await fetch(`${URL}`);
+  const json = response.json();
+
+  return json;
+}

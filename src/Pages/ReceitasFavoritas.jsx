@@ -62,6 +62,7 @@ const ReceitasFavoritas = () => {
             data-testid="filter-by-drink-btn"
             onClick={ (e) => filterRecipes(e.target.name) }
           >
+
             Drinks
           </button>
         </div>
