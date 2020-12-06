@@ -12,6 +12,7 @@ import './DetalhesBebidas.css';
 
 const DetalhesBebidas = () => {
   const [drinksInProgress, setDrinksInProgress] = useState({ cocktails: {} });
+  const [isRecipeDone, setIsRecipeDone] = useState(false);
 
   const currentDrinkID = useParams().id;
 
@@ -36,9 +37,23 @@ const DetalhesBebidas = () => {
     setDrinksInProgress({ cocktails: progressRecipes.cocktails });
   };
 
+  const loadDoneRecipesFromStorage = () => {
+    if (localStorage.getItem('doneRecipes') === null) {
+      const doneRecipes = [];
+      localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
+    }
+
+    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+    const isCurrentRecipeDone = doneRecipes.some((key) => key.id === currentDrinkID);
+
+    if (isCurrentRecipeDone) setIsRecipeDone(true);
+    else setIsRecipeDone(false);
+  };
+
   useEffect(() => {
     handleIdDetails();
     loadRecipesInProgressFromLocalStorage();
+    loadDoneRecipesFromStorage();
   }, []);
 
   const getIngredientsOrMeasure = (param) => {
@@ -67,6 +82,24 @@ const DetalhesBebidas = () => {
     localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
   };
 
+  const getProgressButton = () => (
+    <div className="container-button">
+      <Link
+        className="link-button"
+        to={ `/bebidas/${detailsInfo.drinks.idDrink}/in-progress` }
+      >
+        <button
+          type="button"
+          data-testid="start-recipe-btn"
+          onClick={ progressButton }
+        >
+          {drinksInProgress.cocktails[detailsInfo.drinks.idDrink]
+            ? 'Continuar Receita' : 'Iniciar Receita'}
+        </button>
+      </Link>
+    </div>
+  );
+
   return (
     <div className="body-details">
       {detailsInfo ? (
@@ -75,21 +108,7 @@ const DetalhesBebidas = () => {
           <Ingredients />
           <Instructions />
           <Recomendations />
-          <div className="container-button">
-            <button
-              type="button"
-              data-testid="start-recipe-btn"
-              onClick={ progressButton }
-            >
-              <Link
-                className="link-button"
-                to={ `/bebidas/${detailsInfo.drinks.idDrink}/in-progress` }
-              >
-                {drinksInProgress.cocktails[detailsInfo.drinks.idDrink]
-                  ? 'Continuar Receita' : 'Iniciar Receita'}
-              </Link>
-            </button>
-          </div>
+          {!isRecipeDone && (getProgressButton())}
         </div>
       ) : <div>Loading...</div>}
     </div>

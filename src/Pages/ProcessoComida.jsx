@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import { detailsFoodById } from '../services/aPI';
 import Instructions from '../components/Instructions';
@@ -80,20 +80,20 @@ const ReceitaProcessoComida = () => {
           ? foodDetails.food.strTags
           : [],
       }]));
-
-      window.location.href = 'http://localhost:3000/receitas-feitas';
     } else return '';
   };
 
   const showDoneRecipeBtn = () => (
-    <button
-      type="button"
-      data-testid="finish-recipe-btn"
-      onClick={ setDoneRecipes }
-      disabled={ !(isRecipeFinished) }
-    >
-      Finalizar Receita
-    </button>
+    <Link to="/receitas-feitas">
+      <button
+        type="button"
+        data-testid="finish-recipe-btn"
+        onClick={ setDoneRecipes }
+        disabled={ !(isRecipeFinished) }
+      >
+        Finalizar Receita
+      </button>
+    </Link>
   );
 
   return (

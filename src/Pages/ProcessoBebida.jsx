@@ -7,6 +7,7 @@ import Instructions from '../components/Instructions';
 import BasicInfo from '../components/BasicInfo';
 import IngredientsCheckbox from '../components/IngredientsCheckbox';
 import './ProcessoComida.css';
+import { Link } from 'react-router-dom';
 
 const ProcessoBebidas = () => {
   const [drinkDetails, setDrinkDetails] = useState();
@@ -80,20 +81,20 @@ const ProcessoBebidas = () => {
           ? drinkDetails.drink.strTags
           : [],
       }]));
-
-      window.location.href = 'http://localhost:3000/receitas-feitas';
     } else return '';
   };
 
   const showDoneRecipeBtn = () => (
-    <button
-      type="button"
-      data-testid="finish-recipe-btn"
-      onClick={ setDoneRecipes }
-      disabled={ !(isRecipeFinished) }
-    >
-      Finalizar Receita
-    </button>
+    <Link to="/receitas-feitas">
+      <button
+        type="button"
+        data-testid="finish-recipe-btn"
+        onClick={ setDoneRecipes }
+        disabled={ !(isRecipeFinished) }
+      >
+        Finalizar Receita
+      </button>
+    </Link>
   );
 
   return (
