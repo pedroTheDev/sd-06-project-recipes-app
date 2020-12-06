@@ -1,7 +1,7 @@
 import React from 'react';
+import { fireEvent } from '@testing-library/react';
 import renderWithRouter from '../renderWithRouter';
 import App from '../App';
-import { fireEvent } from '@testing-library/react';
 
 describe('O Header deve ter as seguintes caracteristicas:', () => {
   it('Deve ter um título, ícone de perfil e busca em Comidas', () => {

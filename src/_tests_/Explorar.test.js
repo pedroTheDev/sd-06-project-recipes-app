@@ -114,7 +114,7 @@ describe('A tele de explorar deve possuir:', () => {
   });
 
   it('Redireciona ao clicar em `Me Surpreenda!`', () => {
-    const { getByTestId, getByText, history } = renderWithRouter(<App />);
+    const { getByTestId, history } = renderWithRouter(<App />);
     history.push('/explorar/comidas');
 
     const surpriseBtn = getByTestId('explore-surprise');
@@ -124,6 +124,5 @@ describe('A tele de explorar deve possuir:', () => {
 
     // const areaExplorar = getByText(/Explorar Origem/i);
     // expect(areaExplorar).toBeInTheDocument();
-  });
   });
 });
