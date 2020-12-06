@@ -1,0 +1,9 @@
+.card {
+  align-items: center;
+  background-color: chocolate;
+  display: flex;
+  margin-bottom: 25px;
+  margin-left: 25px;
+  width: 300px;
+  
+}

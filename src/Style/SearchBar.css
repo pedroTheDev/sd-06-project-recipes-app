@@ -1,0 +1,6 @@
+.search-bar-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0px 0 10px 20px;
+  width: 90%;
+}

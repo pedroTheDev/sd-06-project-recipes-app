@@ -1,0 +1,10 @@
+.btn-filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.btn-outline-dark {
+  margin-bottom: 10px;
+  width: 100px;
+}
