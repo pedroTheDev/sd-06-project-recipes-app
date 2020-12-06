@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
 import Header from '../../components/MainHeader/Header';
-import BtnSearchBar from '../../components/BtnSearchBar';
+import BtnSearchBar from '../../components/MainHeader/BtnSearchBar';
 
 import * as cocktailAPI from '../../services/cocktailAPI';
 import * as mealAPI from '../../services/mealAPI';
@@ -142,7 +142,6 @@ function DrinksPage() {
 
   return (
     <div>
-
       <div className="recipes-page-container">
         <Header
           pageTitle="Bebidas"
@@ -169,18 +168,6 @@ function DrinksPage() {
                     value={ category.strCategory }
                     onClick={ changeFilter }
                   />
-                );
-              }
-              if (type === 'meals') {
-                return (
-                  <div className="category-button" key={ index }>
-                    <input
-                      type="button"
-                      data-testid={ dataTestID }
-                      value={ category.strCategory }
-                      onClick={ changeFilter }
-                    />
-                  </div>
                 );
               }
             }

@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { fetchMeal } from '../../services/mealAPI';
-import SecondaryHeader from '../../components/SecondaryHeader';
+import SecondaryHeader from '../../components/SecondaryHeader/SecondaryHeader';
 import {
   addRecipeProgress,
   selectedIngredient,
   addDoneRecipe,
 } from '../../services/localStorage';
-import '../Detail/detail.css';
+// import '../Detail/detail.css';
 import recipesAppContext from '../../context/recipesAppContext';
 
 export default function MealInProgress() {

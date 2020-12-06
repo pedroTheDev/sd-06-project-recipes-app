@@ -10,7 +10,7 @@ export default function Header({ pageTitle, BtnSearchBar }) {
   const { searchBar } = useContext(recipesAppContext);
   return (
     <div className="header-container">
-      <header>
+      <header className="main-header">
         <Link className="link" to="/perfil">
           <button
             className="btn-header"
@@ -23,7 +23,6 @@ export default function Header({ pageTitle, BtnSearchBar }) {
         </Link>
         <h1 data-testid="page-title" className="header-title">{ pageTitle }</h1>
         { BtnSearchBar && <BtnSearchBar /> }
-
       </header>
       { searchBar && <SearchBar /> }
     </div>

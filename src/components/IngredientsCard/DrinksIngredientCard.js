@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import propTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
-import recipesAppContext from '../context/recipesAppContext';
-import '../pages/ExploreIngredients/explore-ingredients.css';
+import recipesAppContext from '../../context/recipesAppContext';
+import './style.css';
 
 function DrinksIngredientCard({ ingredient, index }) {
   const imageUrl = `https://www.thecocktaildb.com/images/ingredients/${ingredient.strIngredient1}-Small.png`;
@@ -17,24 +17,23 @@ function DrinksIngredientCard({ ingredient, index }) {
 
   return (
     <div
-      className="card"
+      className="ingredient-card"
       data-testid={ `${index}-ingredient-card` }
     >
       <input
         data-testid={ `${index}-card-img` }
-        className="card-img-top"
+        className="card-img"
         src={ imageUrl }
         type="image"
         alt={ `Filtrar por ingrediente: ${ingredient.strIngredient1}` }
         onClick={ handleIngredients }
       />
-      <div className="card-body">
-        <h5
-          data-testid={ `${index}-card-name` }
-        >
-          {ingredient.strIngredient1}
-        </h5>
-      </div>
+      <h5
+        data-testid={ `${index}-card-name` }
+        className="ingredient-name"
+      >
+        {ingredient.strIngredient1}
+      </h5>
     </div>
   );
 }

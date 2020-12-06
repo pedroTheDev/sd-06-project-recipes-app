@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Footer from '../../components/Footer/Footer';
 import Header from '../../components/MainHeader/Header';
-import DrinksIngredientCard from '../../components/DrinksIngredientCard';
+import DrinksIngredientCard from '../../components/IngredientsCard/DrinksIngredientCard';
 import { fetchDrink } from '../../services/cocktailAPI';
+import './style.css';
 
 function DrinksIngredients() {
   const [drinksIngredients, setDrinksIngredients] = useState([]);
@@ -29,23 +30,25 @@ function DrinksIngredients() {
 
   return (
     <div>
-      <Header
-        className="header"
-        pageTitle="Explorar Ingredientes"
-      />
-      {
-        drinksIngredients.slice(zero, maxCards)
-          .map((ingredient, index) => (
-            <DrinksIngredientCard
-              key={ index }
-              ingredient={ ingredient }
-              index={ index }
-            />
-          ))
-      }
-      <div className="footer">
-        <Footer />
+      <div className="ingredients-container">
+        <Header
+          className="header"
+          pageTitle="Explorar Ingredientes"
+        />
+        <div className="ingredients-card-container">
+          {
+            drinksIngredients.slice(zero, maxCards)
+              .map((ingredient, index) => (
+                <DrinksIngredientCard
+                  key={ index }
+                  ingredient={ ingredient }
+                  index={ index }
+                />
+              ))
+          }
+        </div>
       </div>
+      <Footer />
     </div>
   );
 }

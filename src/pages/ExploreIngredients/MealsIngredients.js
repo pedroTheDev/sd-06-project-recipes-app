@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Footer from '../../components/Footer/Footer';
 import Header from '../../components/MainHeader/Header';
-import MealsIngredientCard from '../../components/MealsIngredientCard';
+import MealsIngredientCard from '../../components/IngredientsCard/MealsIngredientCard';
 import { fetchMeal } from '../../services/mealAPI';
+import './style.css';
 
 function MealsIngredients() {
   const [mealsIngredients, setMealsIngredients] = useState([]);
@@ -28,24 +29,26 @@ function MealsIngredients() {
 
   return (
     <div>
-      <Header
-        className="header"
-        pageTitle="Explorar Ingredientes"
-      />
-      {
-        mealsIngredients.slice(zero, maxCards)
-          .map((ingredient, index) => (
-            <MealsIngredientCard
-              id={ ingredient.idIngredient }
-              key={ index }
-              ingredient={ ingredient }
-              index={ index }
-            />
-          ))
-      }
-      <div className="footer">
-        <Footer />
+      <div className="ingredients-container">
+        <Header
+          className="header"
+          pageTitle="Explorar Ingredientes"
+        />
+        <div className="ingredients-card-container">
+          {
+            mealsIngredients.slice(zero, maxCards)
+              .map((ingredient, index) => (
+                <MealsIngredientCard
+                  id={ ingredient.idIngredient }
+                  key={ index }
+                  ingredient={ ingredient }
+                  index={ index }
+                />
+              ))
+          }
+        </div>
       </div>
+      <Footer />
     </div>
   );
 }

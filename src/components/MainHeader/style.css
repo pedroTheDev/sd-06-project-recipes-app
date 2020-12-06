@@ -5,7 +5,7 @@
   width: 100%;
 }
 
-header {
+.main-header {
   background-color: #9b0000;
   display: flex;
   align-items: center;
