@@ -50,7 +50,7 @@ function RecipesMealsCards({ categories }) {
 }
 
 RecipesMealsCards.propTypes = {
-  categories: PropTypes.arrayOf(PropTypes.object).isRequired,
+  categories: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default RecipesMealsCards;

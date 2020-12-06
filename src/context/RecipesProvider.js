@@ -21,7 +21,6 @@ function RecipesProvider({ children }) {
   }, []);
 
   const contextState = {
-    loading: false,
     isLoading,
     data,
     setData,

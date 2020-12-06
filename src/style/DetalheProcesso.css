@@ -92,7 +92,7 @@
   font-family: 'Montserrat', sans-serif;
   font-size: 14pt !important;
   margin-left: 30px;
-  width: 80% !important;
+  width: 90% !important;
 }
 
 .container-checkbox {
@@ -277,7 +277,6 @@
 .finish-recipe {
   background-color: #272c35;
   color: #ffffff;
-  cursor: pointer;
 }
 
 /* Desabilitar para corrigir design, Habilitar para passar nos testes */
