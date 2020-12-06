@@ -7,12 +7,6 @@ import { initialRecipes } from '../services';
 function Foods({ title }) {
   const { setRecipes, isFetching, setIsFetching } = useContext(RecipesAppContext);
 
-  // const initialRecipes = async () => {
-  //   const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
-  //   const json = await response.json();
-  //   setRecipes(json.meals);
-  // };
-
   useEffect(() => {
     initialRecipes(setRecipes);
     setIsFetching(false);

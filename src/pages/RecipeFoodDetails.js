@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import copy from 'clipboard-copy';
 import StartButton from '../components/StartButton';
 import RecipesContext from '../context/RecipesAppContext';
+import FavoriteButton from '../components/FavoriteButton';
 
 function RecipeFoodDetails(props) {
   const { match } = props;
@@ -22,7 +23,6 @@ function RecipeFoodDetails(props) {
   const fetchDetailRecipeFoodByID = async () => {
     const response = await fetch(`${API}${id}`);
     const json = await response.json();
-    console.log(title);
     return setRecipes(json.meals);
   };
 
@@ -31,6 +31,7 @@ function RecipeFoodDetails(props) {
     const json = await response.json();
     return setRecomendation(json.drinks);
   };
+
   useEffect(() => {
     fetchDetailRecipeFoodByID();
     fetchRecomendationsDrinks();
@@ -86,9 +87,13 @@ function RecipeFoodDetails(props) {
           >
             Compartilhar
           </button>
+          <FavoriteButton
+            id={ id }
+            title={ title }
+            data-testid="favorite-btn"
+          />
           {share && <span>Link copiado!</span>}
         </div>
-        <button type="button" data-testid="favorite-btn">Favoritar</button>
         <p data-testid="recipe-category">{recipes[0].strCategory}</p>
         <ul>
           {arrIngredient.map((ingredient, index) => (

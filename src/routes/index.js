@@ -8,8 +8,7 @@ import RecipeFoodProcess from '../pages/RecipeFoodProcess';
 import RecipeDrinkProcess from '../pages/RecipeDrinkProcess';
 import Explore from '../pages/Explore';
 import ExploreMealsOrDrinks from '../pages/ExploreMealsOrDrinks';
-import ExploreFoodIngredients from '../pages/ExploreFoodIngredients';
-import ExploreDrinkIngredients from '../pages/ExploreDrinkIngredients';
+import ExploreIngredients from '../pages/ExploreIngredients';
 import ExploreFoodSourcePlace from '../pages/ExploreFoodSourcePlace';
 import Profile from '../pages/Profile';
 import RecipesMade from '../pages/RecipesMade';
@@ -55,12 +54,12 @@ function Routes() {
       <Route
         path="/explorar/comidas/ingredientes"
         exact
-        component={ ExploreFoodIngredients }
+        render={ () => <ExploreIngredients type="comidas" /> }
       />
       <Route
         path="/explorar/bebidas/ingredientes"
         exact
-        component={ ExploreDrinkIngredients }
+        render={ () => <ExploreIngredients type="bebidas" /> }
       />
       <Route path="/explorar/comidas/area" exact component={ ExploreFoodSourcePlace } />
       <Route path="/perfil" exact component={ Profile } />

@@ -10,6 +10,7 @@ import '../App.css';
 
 function RecipeDrinkProcess(props) {
   const ZERO = 0;
+  const DOIS = 2;
   const VINTE = 20;
   const [arrIngredient, setArrIngredient] = useState([]);
   const [share, setShare] = useState(false);
@@ -164,6 +165,38 @@ function RecipeDrinkProcess(props) {
     }
   };
 
+  const handleEndRecipe = (recipeFinalized) => {
+    console.log('o que é recipeFinaled:', recipeFinalized);
+    const finalizedDate = new Date();
+    const formatDate = `Feita em:
+      ${finalizedDate.getDate()}/
+      ${finalizedDate.getMonth()}/
+      ${finalizedDate.getFullYear()}`;
+    console.log(formatDate);
+    if (!localStorage.doneRecipes) {
+      localStorage.setItem('doneRecipes', JSON.stringify([]));
+    }
+    let tagEvaluate = '';
+    if (recipeFinalized.strTags) {
+      tagEvaluate = recipeFinalized.strTags.split(',').slice(ZERO, DOIS);
+    }
+    const recipe = {
+      id,
+      type: 'bebida',
+      area: recipeFinalized.strArea || '',
+      category: recipeFinalized.strCategory,
+      alcoholicOrNot: recipeFinalized.strAlcoholic,
+      name: recipeFinalized.strDrink,
+      image: recipeFinalized.strDrinkThumb,
+      doneDate: formatDate,
+      tags: tagEvaluate,
+    };
+    const storageRecipe = JSON.parse(localStorage.getItem('doneRecipes'));
+    const storageDoneSpread = [...storageRecipe, recipe];
+    localStorage.setItem('doneRecipes', JSON.stringify(storageDoneSpread));
+    return props.history.push('/receitas-feitas');
+  };
+
   useEffect(() => {
     settingRecipeInProgress();
     checkIfRecipeIsFavorite();
@@ -227,7 +260,7 @@ function RecipeDrinkProcess(props) {
         <button
           type="button"
           data-testid="finish-recipe-btn"
-          onClick={ () => props.history.push('/receitas-feitas') }
+          onClick={ () => handleEndRecipe(recipes[0]) }
           disabled={ !arrIngredient.every((item) => item.checked) }
         >
           Finalizar Receita
