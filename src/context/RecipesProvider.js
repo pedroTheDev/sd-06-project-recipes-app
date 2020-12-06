@@ -22,6 +22,8 @@ function RecipesProvider({ children }) {
 
   const contextState = {
     loading: false,
+    foodIngredients: ['1', '2', '3', '4', '5', '6', '7', '8'],
+    drinkIngredients: ['1', '2', '3'],
     isLoading,
     data,
     setData,

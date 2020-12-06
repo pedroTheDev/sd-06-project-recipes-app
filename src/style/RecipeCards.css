@@ -30,7 +30,7 @@
 .card-div img {
   border-radius: 25% 25% 25% 0%;
   cursor: pointer;
-  width: 90%;
+  width: 100%;
 }
 
 .card-div h1 {
@@ -58,15 +58,14 @@
   text-decoration: none !important;
 }
 
-/* @media only screen and ( min-width : 768px ) {
+@media only screen and ( min-width : 768px ) {
   .card-div div {
-    width: 360px;
+    width: 325px;
   }
   .card-div h1  {
-    width: 325px;
-} */
-
-@media only screen and (min-width: 768px) {
+    width: 295px;
+} 
+/*
   .cards-div {
     padding-top: 50px;
   }
@@ -74,4 +73,5 @@
   .card-div div {
     margin: 10px 10px;
   }
+*/
 }

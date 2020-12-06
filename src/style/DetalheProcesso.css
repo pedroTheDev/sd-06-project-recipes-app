@@ -92,7 +92,7 @@
   font-family: 'Montserrat', sans-serif;
   font-size: 14pt !important;
   margin-left: 30px;
-  width: 80% !important;
+  width: 90% !important;
 }
 
 .container-checkbox {
@@ -110,8 +110,8 @@
 /* Desabilitar para passar no teste e habilitar para arrumar o layout
 .container-checkbox input {
   display: none; 
-}  */
-
+}  
+*/
 /* Create a custom checkbox - using ::before */
 .checkmark::before {
   content: "";
@@ -279,7 +279,6 @@
 .finish-recipe {
   background-color: #272c35;
   color: #ffffff;
-  cursor: pointer;
 }
 
 /* Desabilitar para arrumar o layout e habilitar para passar no teste */
@@ -287,7 +286,6 @@
 .finish-recipe {
   position: fixed;
 }
-
 
 .start-recipe:disabled,
 .finish-recipe:disabled {
