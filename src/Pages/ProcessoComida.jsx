@@ -1,40 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router';
-import { Link } from 'react-router-dom';
-import { detailsFoodById } from '../services/aPI';
+import React, { useState, useEffect, useContext } from 'react';
+import { Link, useParams } from 'react-router-dom';
 
+import { detailsFoodById } from '../services/aPI';
+import Instructions from '../components/Instructions';
+import ContextAPI from '../Context/ContextAPI';
+import BasicInfo from '../components/BasicInfo';
+import IngredientsCheckbox from '../components/IngredientsCheckbox';
 import './ProcessoComida.css';
 
-import { FavoriteFoodButton } from '../components/FavoriteBtn';
-import ShareButton from '../components/ShareBtn';
-
 const ReceitaProcessoComida = () => {
-  const [recipeProgress, setRecipeProgress] = useState();
-  const [attributesNames, setAttributesNames] = useState();
-  const [checkedId, setCheckedId] = useState([]);
+  const [foodDetails, setFoodDetails] = useState();
+  const [isRecipeDone, setIsRecipeDone] = useState(false);
 
   const idFood = useParams().id;
 
-  const handleIdInProgress = async () => {
-    const recipeById = await detailsFoodById(idFood);
+  const { detailsInfo, setDetailsInfo, isRecipeFinished } = useContext(ContextAPI);
 
-    setRecipeProgress({
-      ...recipeProgress,
-      food: recipeById,
+  const getFoodDetails = async () => {
+    const food = await detailsFoodById(idFood);
+
+    setFoodDetails({
+      ...foodDetails,
+      food: food.meals[0],
     });
-  };
-
-  const loadCheckedIngredientsLocalStorage = () => {
-    if (localStorage.getItem('checkedIngredients') === null) {
-      const checkedIngredients = {
-        cocktails: {},
-        meals: {},
-      };
-      localStorage.setItem('checkedIngredients', JSON.stringify(checkedIngredients));
-    }
-
-    const checkedIngredients = JSON.parse(localStorage.getItem('checkedIngredients'));
-    setCheckedId(checkedIngredients.meals[idFood] || []);
+    setDetailsInfo({ ...detailsInfo, foods: food.meals[0] });
   };
 
   const loadDoneRecipesFromStorage = () => {
@@ -42,179 +31,83 @@ const ReceitaProcessoComida = () => {
       const doneRecipes = [];
       localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
     }
+
+    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+    const isCurrentRecipeDone = doneRecipes.some((key) => key.id === idFood);
+
+    if (isCurrentRecipeDone) setIsRecipeDone(true);
+    else setIsRecipeDone(false);
   };
 
   useEffect(() => {
-    handleIdInProgress();
-    loadCheckedIngredientsLocalStorage();
+    getFoodDetails();
     loadDoneRecipesFromStorage();
   }, []);
 
-  const handleAttributesNames = () => {
-    if (recipeProgress) {
-      setAttributesNames({
-        idFood: recipeProgress.food.meals[0].idMeal,
-        photoFood: recipeProgress.food.meals[0].strMealThumb,
-        area: recipeProgress.food.meals[0].strArea,
-        nameFood: recipeProgress.food.meals[0].strMeal,
-        categoryFood: recipeProgress.food.meals[0].strCategory,
-        instructionsFood: recipeProgress.food.meals[0].strInstructions,
-        doneDate: '',
-        tags: recipeProgress.food.meals[0].strTags
-          ? recipeProgress.food.meals[0].strTags
-          : [],
+  const removeFoodFromProgress = () => {
+    const progressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (progressRecipes !== null) {
+      const progressKeys = Object.keys(progressRecipes.meals);
+      let mealsObject = {};
+      progressKeys.forEach((key) => {
+        if (key !== idFood) {
+          mealsObject = { ...mealsObject, [key]: progressKeys[key] };
+        }
       });
-    } else {
-      return '';
+      localStorage.setItem('inProgressRecipes', JSON.stringify({
+        ...progressRecipes,
+        meals: mealsObject,
+      }));
     }
-  };
-
-  useEffect(() => {
-    handleAttributesNames();
-  }, [recipeProgress]);
-
-  const getIngredientsOrMeasure = (param) => {
-    const dataObject = recipeProgress.food.meals[0];
-
-    const dataKeys = Object.keys(dataObject)
-      .filter((key) => key.includes(param)
-        && dataObject[key] !== '' && dataObject[key] !== ' ' && dataObject[key] !== null);
-
-    const ingredients = dataKeys
-      .map((key) => dataObject[key]);
-
-    return ingredients;
   };
 
   const setDoneRecipes = () => {
-    if (recipeProgress) {
+    if (foodDetails) {
+      removeFoodFromProgress();
+      setIsRecipeDone(true);
+
       const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
       localStorage.setItem('doneRecipes', JSON.stringify([...doneRecipes, {
-        id: recipeProgress.food.meals[0].idMeal,
+        id: foodDetails.food.idMeal,
         type: 'comida',
-        area: recipeProgress.food.meals[0].strArea,
-        category: recipeProgress.food.meals[0].strCategory,
+        area: foodDetails.food.strArea,
+        category: foodDetails.food.strCategory,
         alcoholicOrNot: '',
-        name: recipeProgress.food.meals[0].strMeal,
-        photoFood: recipeProgress.food.meals[0].strMealThumb,
+        name: foodDetails.food.strMeal,
+        photoFood: foodDetails.food.strMealThumb,
         doneDate: '',
-        tags: recipeProgress.food.meals[0].strTags
-          ? recipeProgress.food.meals[0].strTags
+        tags: foodDetails.food.strTags
+          ? foodDetails.food.strTags
           : [],
       }]));
-    } else {
-      return '';
-    }
+    } else return '';
   };
 
-  const scratCheckbox = (target) => {
-    const checkedIngredients = JSON.parse(localStorage.getItem('checkedIngredients'));
-
-    if (target.checked === true) {
-      const ingredientsToSave = {
-        ...checkedIngredients,
-        meals: {
-          ...checkedIngredients.meals,
-          [idFood]: checkedIngredients.meals[idFood] ? [
-            ...checkedIngredients.meals[idFood],
-            target.id,
-          ] : [target.id],
-        },
-      };
-      localStorage.setItem('checkedIngredients', JSON.stringify(ingredientsToSave));
-      setCheckedId(ingredientsToSave.meals[idFood]);
-    } else {
-      const ingredientsToSave = {
-        ...checkedIngredients,
-        meals: {
-          ...checkedIngredients.meals,
-          [idFood]: [
-            ...checkedIngredients.meals[idFood].filter((id) => id !== target.id),
-          ],
-        },
-      };
-      localStorage.setItem('checkedIngredients', JSON.stringify(ingredientsToSave));
-      setCheckedId(ingredientsToSave.meals[idFood]);
-    }
-    return target.id;
-  };
+  const showDoneRecipeBtn = () => (
+    <Link to="/receitas-feitas">
+      <button
+        type="button"
+        data-testid="finish-recipe-btn"
+        onClick={ setDoneRecipes }
+        disabled={ !(isRecipeFinished) }
+      >
+        Finalizar Receita
+      </button>
+    </Link>
+  );
 
   return (
 
     <div>
-      {!attributesNames
+      {!foodDetails
         ? <div className="loading">Loading...</div>
         : (
           <div className="body-progress">
-            <div className="container-photo">
-              <img
-                data-testid="recipe-photo"
-                src={ attributesNames.photoFood }
-                alt={ attributesNames.nameFood }
-              />
-            </div>
-            <div className="container-title">
-              <div
-                className="title"
-                data-testid="recipe-title"
-              >
-                {attributesNames.nameFood}
-              </div>
-              <div className="container-icons">
-                <ShareButton />
-                <FavoriteFoodButton />
-              </div>
-            </div>
-            <div
-              className="container-cotegory"
-              data-testid="recipe-category"
-            >
-              {attributesNames.categoryFood}
-            </div>
-            <div className="span-ingredients">
-              <span>Ingredients</span>
-            </div>
-            <div className="container-checkbox">
-              {getIngredientsOrMeasure('strIngredient').map((ingred, i) => (
-                <label
-                  key={ i }
-                  htmlFor={ i }
-                  className="input-checkbox"
-                  data-testid={ `${i}-ingredient-step` }
-                >
-                  <input
-                    className="checkbox-input"
-                    type="checkbox"
-                    checked={ checkedId.includes(i.toString()) }
-                    id={ i }
-                    onChange={ (({ target }) => scratCheckbox(target)) }
-                  />
-                  {`${ingred} - ${getIngredientsOrMeasure('strMeasure')[i]}`}
-                </label>
-              ))}
-            </div>
-            <div
-              className="container-instructions"
-              data-testid="instructions"
-            >
-              <span>Instructions</span>
-              <div className="text-instructions">
-                {attributesNames.instructionsFood}
-              </div>
-            </div>
+            <BasicInfo />
+            <IngredientsCheckbox />
+            <Instructions />
             <div className="container-button">
-              <button
-                type="button"
-                data-testid="finish-recipe-btn"
-                onClick={ setDoneRecipes }
-              >
-                <Link
-                  className="link-button"
-                  to="/receitas-feitas"
-                >
-                  Finalizar Receita
-                </Link>
-              </button>
+              {!isRecipeDone && showDoneRecipeBtn()}
             </div>
           </div>
         )}

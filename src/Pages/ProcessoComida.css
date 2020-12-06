@@ -117,6 +117,7 @@
 .container-button button {
   position: fixed;
   bottom: 0;
+  left: 11px;
   background-color: chartreuse;
   font-size: 20px;
   width: 94%;
