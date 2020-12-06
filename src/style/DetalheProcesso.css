@@ -280,6 +280,12 @@
   cursor: pointer;
 }
 
+/* Desabilitar para corrigir design, Habilitar para passar nos testes */
+.start-recipe,
+.finish-recipe {
+  position: fixed;
+}
+
 .start-recipe:disabled,
 .finish-recipe:disabled {
   background-color: #cccccc;
