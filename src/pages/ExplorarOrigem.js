@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { fetchAreasThunk, fetchMealByAreaThunk } from '../redux/actions/areaAction';
 import Dropdown from '../components/Dropdown';
 import RecipeCard from '../components/RecipeCard';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const ExplorarOrigem = ({
   areasThunk,
@@ -29,19 +31,23 @@ const ExplorarOrigem = ({
 
   return (
     <div>
-      <Dropdown currentArea={ selectedArea } />
-      {
-        meals.map(({ name, id, image }, index) => (
-          <RecipeCard
-            key={ id }
-            recipeName={ name }
-            recipeImage={ image }
-            index={ index }
-            id={ id }
-            foodOrDrink={ pathname.includes('comidas') ? '/comidas' : '/bebidas' }
-          />
-        ))
-      }
+      <Header pageName="Explorar Origem" renderSearch />
+      <div className="default-page">
+        <Dropdown currentArea={ selectedArea } />
+        {
+          meals.map(({ name, id, image }, index) => (
+            <RecipeCard
+              key={ id }
+              recipeName={ name }
+              recipeImage={ image }
+              index={ index }
+              id={ id }
+              foodOrDrink={ pathname.includes('comidas') ? '/comidas' : '/bebidas' }
+            />
+          ))
+        }
+      </div>
+      <Footer />
     </div>
   );
 };

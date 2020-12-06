@@ -14,7 +14,11 @@ function Perfil() {
 
   useEffect(() => {
     const retrievedUsername = JSON.parse(localStorage.getItem('user'));
-    setUser(retrievedUsername.email);
+    if (retrievedUsername === null) {
+      setUser('You are not logged in!');
+    } else {
+      setUser(retrievedUsername.email);
+    }
   }, []);
 
   return (
