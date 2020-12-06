@@ -48,6 +48,17 @@ const FoodInProgress = ({
     setRecipeIngredients(ingredientsMeasures);
   };
 
+  const tagsMount = (jsonRecipe) => {
+    const tags = jsonRecipe.meals[0].strTags;
+    if (tags) {
+      if (tags.split(',').length === 1) {
+        setRecipeTags(tags.split(','));
+      } else {
+        setRecipeTags([tags.split(',')[0], tags.split(',')[1]]);
+      }
+    }
+  };
+
   const fetchRecipe = async () => {
     const path = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
     const getRecipe = await fetch(path);
@@ -57,9 +68,7 @@ const FoodInProgress = ({
     setRecipeImage(jsonRecipe.meals[0].strMealThumb);
     setRecipeInstructions(jsonRecipe.meals[0].strInstructions);
     setRecipeArea(jsonRecipe.meals[0].strArea);
-    const tags = jsonRecipe.meals[0].strTags.split(',');
-    const onlyTwoTags = [tags[0], tags[2]];
-    setRecipeTags(onlyTwoTags);
+    tagsMount(jsonRecipe);
     ingredientsMount(jsonRecipe);
     setIsLoading(false);
   };

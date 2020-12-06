@@ -16,7 +16,7 @@ const RecipesProvider = ({ children }) => {
   const [recipeIngredients, setRecipeIngredients] = useState([]);
   const [recipeInstructions, setRecipeInstructions] = useState('');
   const [recipeVideo, setRecipeVideo] = useState('');
-  const [recipeTags, setRecipeTags] = useState('');
+  const [recipeTags, setRecipeTags] = useState([]);
   const [recipeRecommendations, setRecipeRecommendations] = useState([]);
   const [searchByIngredient, setSearchByIngredient] = useState('');
   const recipeObject = {
