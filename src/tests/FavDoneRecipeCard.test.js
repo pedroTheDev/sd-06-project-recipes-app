@@ -76,4 +76,65 @@ describe('favorite and done page tests', () => {
     fireEvent.click(screen.getByTestId('0-horizontal-name'));
     await expect(screen.getByText('Ingredientes:')).toBeInTheDocument();
   });
+
+  it('unfavorite recipe', async () => {
+    const testFavRecipe = [{
+      alcoholicOrNot: '',
+      area: 'Canadian',
+      category: 'Dessert',
+      id: '52929',
+      image: 'https://www.themealdb.com/images/media/meals/txsupu1511815755.jpg',
+      name: 'Timbits',
+      type: 'comida',
+      tags: ['a', 'b'],
+    }];
+
+    localStorage.setItem('favoriteRecipes', JSON.stringify(testFavRecipe));
+
+    renderWithRouter(<App />);
+    fireEvent.click(screen.getByTestId('profile-favorite-btn'));
+    const recipe = screen.getByText('Timbits');
+    await expect(recipe).toBeInTheDocument();
+    fireEvent.click(screen.getByTestId('0-horizontal-favorite-btn'));
+    await expect(recipe).not.toBeInTheDocument();
+  });
+
+  it('changes path on image click', async () => {
+    const testFavRecipe = [{
+      alcoholicOrNot: '',
+      area: 'Canadian',
+      category: 'Dessert',
+      id: '52929',
+      image: 'https://www.themealdb.com/images/media/meals/txsupu1511815755.jpg',
+      name: 'Timbits',
+      type: 'comida',
+      tags: ['a', 'b'],
+    }];
+
+    localStorage.setItem('favoriteRecipes', JSON.stringify(testFavRecipe));
+
+    renderWithRouter(<App />);
+    fireEvent.click(screen.getByTestId('profile-favorite-btn'));
+    fireEvent.click(screen.getByTestId('0-horizontal-image'));
+    await expect(screen.getByText('Ingredientes:')).toBeInTheDocument();
+  });
+
+  it('copy url to clipboard', () => {
+    const testFavRecipe = [{
+      alcoholicOrNot: '',
+      area: 'Canadian',
+      category: 'Dessert',
+      id: '52929',
+      image: 'https://www.themealdb.com/images/media/meals/txsupu1511815755.jpg',
+      name: 'Timbits',
+      type: 'comida',
+      tags: ['a', 'b'],
+    }];
+
+    localStorage.setItem('favoriteRecipes', JSON.stringify(testFavRecipe));
+
+    const { history } = renderWithRouter(<App />);
+    fireEvent.click(screen.getByTestId('profile-favorite-btn'));
+    history.push('/comidas/52929');
+  });
 });
