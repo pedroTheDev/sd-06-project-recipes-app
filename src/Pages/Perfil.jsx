@@ -22,7 +22,8 @@ function Perfil() {
       <Header pageName="Perfil" />
       <div className="profile-container">
         <h3
-          data-testid="profile-email" className="explore-btn"
+          data-testid="profile-email"
+          className="explore-btn"
         >
           { JSON.parse(localStorage.user).email }
         </h3>
