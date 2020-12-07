@@ -5,6 +5,7 @@ import buttonShare from '../styles/images/shareIcon.svg';
 import '../styles/imgBig.css';
 import blackHeartIcon from '../styles/images/blackHeartIcon.svg';
 import { loadState, saveState } from '../services/localStorage';
+import '../styles/marginHederAndFooter.css';
 
 function ReceitasFavoritas() {
   const favoriteRecipes = 'favoriteRecipes';
@@ -68,7 +69,7 @@ function ReceitasFavoritas() {
   };
 
   return (
-    <div>
+    <div className="container-margin-heder">
       <Header name="Receitas Favoritas" button={ false } />
       {arrayFilterNames.map((Filter) => {
         const lowerCaseFilter = Filter.toLowerCase();

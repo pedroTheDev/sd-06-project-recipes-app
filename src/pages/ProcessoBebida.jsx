@@ -36,7 +36,6 @@ function ProcessoBebida({ match: { params: { id } }, history }) {
   }, []);
 
   useEffect(() => {
-    console.log('arrayCheckBox', arrayCheckBox)
     const loadStorage = loadState('inProgressRecipes', { cocktails: {} });
     saveState('inProgressRecipes', {
       ...loadStorage,

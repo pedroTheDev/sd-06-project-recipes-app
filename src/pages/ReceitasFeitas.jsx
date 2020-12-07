@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import { loadState } from '../services/localStorage';
 import buttonShare from '../styles/images/shareIcon.svg';
+import '../styles/marginHederAndFooter.css';
 
 function ReceitasFeitas() {
   const copyBoard = (id, type) => {
@@ -51,7 +52,7 @@ function ReceitasFeitas() {
   ];
 
   return (
-    <div>
+    <div className="container-margin-heder">
       <Header name="Receitas Feitas" button={ false } />
       {arrayFilterNames.map((Filter) => {
         const lowerCaseFilter = Filter.toLowerCase();

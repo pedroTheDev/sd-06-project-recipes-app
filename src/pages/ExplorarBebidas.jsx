@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import { requestApiDrinkSurprise } from '../services/requestDrink';
+import '../styles/marginHederAndFooter.css';
 
 function ExplorarBebidas({ history }) {
   async function handleRandomDrinkPage() {
@@ -15,7 +16,7 @@ function ExplorarBebidas({ history }) {
   }
 
   return (
-    <>
+    <div className="container-margin-heder container-margin-footer">
       <Header name="Explorar Bebidas" button={ false } />
       <div className="explore-btn">
         <Link to="/explorar/bebidas/ingredientes">
@@ -35,7 +36,7 @@ function ExplorarBebidas({ history }) {
         </button>
       </div>
       <Footer />
-    </>
+    </div>
   );
 }
 
