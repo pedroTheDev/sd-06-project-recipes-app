@@ -12,6 +12,7 @@ import {
   requestApiDrinkFilterName,
   requestApiDrinkFilterFirstLetter,
 } from '../services/requestDrink';
+import '../styles/HeaderSearch.css';
 
 function HeaderSearch({ name }) {
   const {
@@ -122,41 +123,49 @@ function HeaderSearch({ name }) {
   }
 
   return (
-    <div>
-      <input type="text" data-testid="search-input" onChange={ captureTextInput } />
-      <label htmlFor="ingredientes">
-        <input
-          data-testid="ingredient-search-radio"
-          type="radio"
-          id="ingredientes"
-          name="busca"
-          value="ingredientes"
-          onChange={ captureValue }
-        />
-        Ingredientes
-      </label>
-      <label htmlFor="nome">
-        <input
-          data-testid="name-search-radio"
-          type="radio"
-          id="nome"
-          name="busca"
-          value="nome"
-          onChange={ captureValue }
-        />
-        Nome
-      </label>
-      <label htmlFor="primeira-letra">
-        <input
-          data-testid="first-letter-search-radio"
-          type="radio"
-          id="primeira-letra"
-          name="busca"
-          value="primeira-letra"
-          onChange={ captureValue }
-        />
-        Primeira Letra
-      </label>
+    <div className="search-div">
+      <input
+        type="text"
+        data-testid="search-input"
+        onChange={ captureTextInput }
+        placeholder="Buscar Receita"
+        className="input-buscar-receita"
+      />
+      <div className="radio-div">
+        <label htmlFor="ingredientes">
+          <input
+            data-testid="ingredient-search-radio"
+            type="radio"
+            id="ingredientes"
+            name="busca"
+            value="ingredientes"
+            onChange={ captureValue }
+          />
+          Ingredientes
+        </label>
+        <label htmlFor="nome">
+          <input
+            data-testid="name-search-radio"
+            type="radio"
+            id="nome"
+            name="busca"
+            value="nome"
+            onChange={ captureValue }
+          />
+          Nome
+        </label>
+        <label htmlFor="primeira-letra">
+          <input
+            data-testid="first-letter-search-radio"
+            type="radio"
+            id="primeira-letra"
+            name="busca"
+            value="primeira-letra"
+            onChange={ captureValue }
+          />
+          Primeira Letra
+        </label>
+      </div>
       <button
         type="button"
         data-testid="exec-search-btn"

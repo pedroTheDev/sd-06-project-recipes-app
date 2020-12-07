@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import '../styles/Explorar.css';
 import { requestApiDrinkSurprise } from '../services/requestDrink';
 import '../styles/marginHederAndFooter.css';
+import '../styles/Explorar.css';
 
 function ExplorarBebidas({ history }) {
   async function handleRandomDrinkPage() {
@@ -19,11 +19,12 @@ function ExplorarBebidas({ history }) {
   return (
     <div className="container-margin-heder container-margin-footer">
       <Header name="Explorar Bebidas" button={ false } />
-      <div className="explore-btn">
+      <div className="container-big-btn">
         <Link to="/explorar/bebidas/ingredientes">
           <button
             type="button"
             data-testid="explore-by-ingredient"
+            className="big-btn globo-icon"
           >
             Por Ingredientes
           </button>
@@ -31,6 +32,7 @@ function ExplorarBebidas({ history }) {
         <button
           type="button"
           data-testid="explore-surprise"
+          className="big-btn surpresa-icon"
           onClick={ () => handleRandomDrinkPage() }
         >
           Me Surpreenda!

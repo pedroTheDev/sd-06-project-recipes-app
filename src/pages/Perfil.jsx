@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import { loadState } from '../services/localStorage';
-import '../styles/Profile.css';
 import '../styles/marginHederAndFooter.css';
 
 function Perfil({ history }) {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import whiteHeartIcon from '../styles/images/whiteHeartIcon.svg';
 import blackHeartIcon from '../styles/images/blackHeartIcon.svg';
 import { saveState, loadState } from '../services/localStorage';
-// import RecipesAppContext from '../context/RecipesAppContext';
+import '../styles/FavoriteHeart.css';
 
 function FavoriteHeart({ id, detailsDrink, detailsFood }) {
   const favoriteRecipes = 'favoriteRecipes';
@@ -70,7 +70,7 @@ function FavoriteHeart({ id, detailsDrink, detailsFood }) {
 
   return (
     favoriteButton ? (
-      <button type="button" onClick={ saveFavoriteRecipe }>
+      <button type="button" onClick={ saveFavoriteRecipe } className="favorite-btn">
         <img
           data-testid="favorite-btn"
           src={ blackHeartIcon }
@@ -78,7 +78,7 @@ function FavoriteHeart({ id, detailsDrink, detailsFood }) {
         />
       </button>
     ) : (
-      <button type="button" onClick={ saveFavoriteRecipe }>
+      <button type="button" onClick={ saveFavoriteRecipe } className="favorite-btn">
         <img
           data-testid="favorite-btn"
           src={ whiteHeartIcon }

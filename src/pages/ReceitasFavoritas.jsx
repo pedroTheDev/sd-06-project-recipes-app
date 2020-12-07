@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import buttonShare from '../styles/images/shareIcon.svg';
-import '../styles/ReceitasFavoritas.css';
 import '../styles/imgBig.css';
 import blackHeartIcon from '../styles/images/blackHeartIcon.svg';
 import { loadState, saveState } from '../services/localStorage';

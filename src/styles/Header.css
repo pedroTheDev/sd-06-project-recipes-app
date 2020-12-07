@@ -1,12 +1,24 @@
 .header {
   width: 100%;
-  background-color: #C4C4C4;
-  height: 79.875px;
-  border-bottom: 3px solid black;
+  background-color: #FFD43A;
+  height: 80px;
+  border-bottom-right-radius: 40px;
+  border-bottom-left-radius: 40px;
   position: fixed;
   top: 0;
+  z-index: 5;
 
   display: flex;
   align-items: center;
   justify-content: space-around;
+}
+
+.logo-profile-btn {
+  background-color: #FFD43A;
+  border: 0px;
+}
+
+.logo-search-btn {
+  background-color: #FFD43A;
+  border: 0px;
 }

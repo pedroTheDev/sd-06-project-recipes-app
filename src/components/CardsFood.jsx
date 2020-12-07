@@ -4,8 +4,9 @@ import RecipesAppContext from '../context/RecipesAppContext';
 import {
   requestApiFoodFilterName,
 } from '../services/requestFood';
+import '../styles/CardFood.css';
+
 import FavoriteHeart from './FavoriteHeart';
-import '../styles/imgBig.css';
 
 function CardsFood() {
   const {
@@ -38,7 +39,7 @@ function CardsFood() {
   }
 
   return (
-    <div>
+    <div className="allcardfood">
       {cardFood.slice(ofTheFirstParameter, upToParameter)
         .map((objFood, index) => {
           const {
@@ -47,33 +48,39 @@ function CardsFood() {
             strMealThumb,
           } = objFood;
           return (
-            <div key={ idMeal } data-testid={ `${index}-recipe-card` }>
+            <div
+              key={ idMeal }
+              data-testid={ `${index}-recipe-card` }
+              className="cardfood"
+            >
+              <FavoriteHeart id={ idMeal } detailsFood={ objFood } />
               <Link
                 to={ `/comidas/${idMeal}` }
               >
                 <img
-                  className="imgBig"
                   src={ strMealThumb }
                   alt={ strMeal }
                   data-testid={ `${index}-card-img` }
                 />
               </Link>
-              <Link
-                to={ `/comidas/${idMeal}` }
-              >
-                <h4
-                  data-testid={ `${index}-card-name` }
+              <div className="text-btn">
+                <Link
+                  to={ `/comidas/${idMeal}` }
                 >
-                  { strMeal }
-                </h4>
-              </Link>
-              <FavoriteHeart id={ idMeal } detailsFood={ objFood } />
+                  <h4
+                    data-testid={ `${index}-card-name` }
+                  >
+                    { strMeal }
+                  </h4>
+                </Link>
+              </div>
             </div>
           );
         })}
       <button
         type="button"
         onClick={ onClickMoreFood }
+        className="show-results"
         disabled={ upToParameter > cardFood.length ? disableButtonMoreResults : false }
       >
         Mostrar mais resultados

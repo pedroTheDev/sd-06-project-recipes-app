@@ -1,10 +1,10 @@
 .footer {
   width: 100%;
-  background-color: #C4C4C4;
+  background-color: #FFD43A;
   height: 50px;
-  border-top: 3px solid black;
   position: fixed;
   bottom: 0;
+  z-index: 5;
 
   display: flex;
   align-items: center;
