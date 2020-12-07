@@ -33,7 +33,7 @@ export default function Header({ pageName, renderSearch }) {
 
   return (
     <header>
-      <Link to="/perfil">
+      <Link to="/perfil" className={ !renderSearch && 'flex-order' }>
         <img
           className="header-icon profile-icon"
           src={ profileIcon }
@@ -41,7 +41,12 @@ export default function Header({ pageName, renderSearch }) {
           data-testid="profile-top-btn"
         />
       </Link>
-      <h2 data-testid="page-title">{ title }</h2>
+      <h2
+        data-testid="page-title"
+        className={ !renderSearch && 'flex-order' }
+      >
+        { title }
+      </h2>
       { renderSearch ? renderSearchIcon() : null }
       { showSearchBar
       && <SearchBar page={ title } setDisplay={ { setShowSearchBar, showSearchBar } } /> }

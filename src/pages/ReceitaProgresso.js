@@ -8,6 +8,7 @@ import checkSavedRecipe from '../utils/checkSavedRecipe';
 import checkFavoriteRecipe from '../utils/checkFavoriteRecipe';
 import DetailAndProgressBody from '../components/DetailAndProgressBody';
 import inProgressContext from '../contexts/inProgressContext';
+import formatDoneRecipe from '../utils/formatDoneRecipe';
 
 function ReceitaProgresso(
   { location: { pathname } },
@@ -44,6 +45,14 @@ function ReceitaProgresso(
     setDisableButton,
   };
 
+  function handleButtonClick() {
+    const savedRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+    const formattedRecipe = formatDoneRecipe(recipe, path);
+    savedRecipes.push(formattedRecipe);
+    localStorage.setItem('doneRecipes', JSON.stringify(savedRecipes));
+    setShouldRedirect(true);
+  }
+
   return (
     <div>
       { shouldRedirect && <Redirect to="/receitas-feitas" /> }
@@ -60,7 +69,7 @@ function ReceitaProgresso(
             data-testid="finish-recipe-btn"
             className="start-recipe-btn"
             disabled={ disableButton }
-            onClick={ () => setShouldRedirect(true) }
+            onClick={ () => handleButtonClick() }
           >
             Finalizar Receita
           </button>

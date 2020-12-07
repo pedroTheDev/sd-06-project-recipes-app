@@ -7,23 +7,25 @@ const Dropdown = ({ areas, isLoading, selectedArea, currentArea }) => {
   if (isLoading) return <div>Carregando</div>;
 
   return (
-    <select
-      data-testid="explore-by-area-dropdown"
-      onChange={ ({ target: { value } }) => selectedArea(value) }
-    >
-      {
-        areas.map((area) => (
-          <option
-            key={ area }
-            data-testid={ `${area}-option` }
-            value={ area }
-            selected={ area === currentArea }
-          >
-            { area }
-          </option>
-        ))
-      }
-    </select>
+    <div className="sub-header">
+      <select
+        data-testid="explore-by-area-dropdown"
+        onChange={ ({ target: { value } }) => selectedArea(value) }
+      >
+        {
+          areas.map((area) => (
+            <option
+              key={ area }
+              data-testid={ `${area}-option` }
+              value={ area }
+              selected={ area === currentArea }
+            >
+              { area }
+            </option>
+          ))
+        }
+      </select>
+    </div>
   );
 };
 

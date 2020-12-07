@@ -25,7 +25,7 @@ const DoneRecipes = () => {
               <button
                 type="button"
                 data-testid="filter-by-food-btn"
-                onClick={ () => setDoneRecipes(doneRecipes
+                onClick={ () => setDoneRecipes(recipes
                   .filter((recipe) => recipe.type === 'comida')) }
                 className="done-buttons"
               >
@@ -34,7 +34,7 @@ const DoneRecipes = () => {
               <button
                 type="button"
                 data-testid="filter-by-drink-btn"
-                onClick={ () => setDoneRecipes(doneRecipes
+                onClick={ () => setDoneRecipes(recipes
                   .filter((recipe) => recipe.type === 'bebida')) }
                 className="done-buttons"
               >
