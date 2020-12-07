@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { fetchRecommended } from '../services/api';
 
 function Recommended() {
@@ -29,7 +29,8 @@ function Recommended() {
         const visible = 2;
         if (id < visible) {
           return (
-            <div
+            <Link
+              to={ (type === 'Meal') ? `/comidas/${item.idMeal}` : `/bebidas/${item.idDrink}` }
               key={ id }
               className="recipe-card"
               data-testid={ `${id}-recomendation-card` }
@@ -43,7 +44,7 @@ function Recommended() {
                 data-testid={ `${id}-card-img` }
               />
               <h3 data-testid={ `${id}-recomendation-title` }>{item[`str${type}`]}</h3>
-            </div>
+            </Link>
           );
         }
         return (
@@ -69,8 +70,8 @@ function Recommended() {
 
   return (
     <div>
-      <h5>
-        Recomendações
+      <h5 className="recommended-text">
+        Recomendações:
       </h5>
       <div>
         {(isFetching) ? <div>Carregando</div>
