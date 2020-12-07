@@ -9,7 +9,10 @@ import RecommendedRecipes from '../components/RecommendedRecipes';
 
 export default function RecipeDetails() {
   const { foods, setSearchParam, inProgress, setInProgress,
-    searchParam, fetchApi, isLoading } = useContext(RevenueContext);
+    searchParam, fetchApi, isLoading, localStorageDoneRecipes,
+    localStorageFavorites, setLocalStorageFavorites,
+    localStorageInProgress } = useContext(RevenueContext);
+
   const location = useLocation();
   const idRecipe = location.pathname.split('/');
   const [heartIcon, setheartIcon] = useState(WhiteHeartIcon);
@@ -22,32 +25,6 @@ export default function RecipeDetails() {
   const linkRecipeAPI = (searchParam === 'Meal')
     ? `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idRecipe[2]}`
     : `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idRecipe[2]}`;
-
-  const [localStorageFavorites, setLocalStorageFavorites] = useState(
-    JSON
-      .parse(localStorage
-        .getItem('favoriteRecipes')),
-  );
-
-  const [localStorageDoneRecipes, setLocalStorageDoneRecipes] = useState(
-    JSON
-      .parse(localStorage
-        .getItem('doneRecipes')),
-  );
-
-  const [localStorageInProgress] = useState(
-    JSON
-      .parse(localStorage
-        .getItem('inProgressRecipes')),
-  );
-
-  if (!localStorageFavorites) {
-    setLocalStorageFavorites([]);
-  }
-
-  if (!localStorageDoneRecipes) {
-    setLocalStorageDoneRecipes([]);
-  }
 
   let actualRecipe = [];
   function checkLocalStorageFavorites() {
@@ -276,8 +253,8 @@ export default function RecipeDetails() {
           if (localStorageInProgressAux[typeFood][actualRecipe[0].id]) {
             return 'CONTINUAR RECEITA';
           }
-          return 'INICIAR RECEITA';
         }
+        return 'INICIAR RECEITA';
       };
 
       return (
