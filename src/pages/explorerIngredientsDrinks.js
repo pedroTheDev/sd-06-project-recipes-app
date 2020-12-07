@@ -23,14 +23,9 @@ class ExplorerIngredientsDrinks extends Component {
   async getIngredients() {
     const endPoint = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list';
     const { drinks } = await theIngredientsAndAreaApi(endPoint);
-    // this.renderIngredients(drinks);
     this.setState({
       ingredients: drinks,
     });
-    // console.log("ings", this.state.ingredients);
-    // console.log("z", drinks[1].strIngredient1);
-    // console.log("tudo", drinks);
-    // link
   }
 
   renderIngredients() {
