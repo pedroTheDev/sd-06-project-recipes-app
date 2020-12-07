@@ -2,6 +2,7 @@ import {
   LOADING_INGREDIENTS,
   SUCCESS_INGREDIENTS,
   RESET_ID,
+  SUCCESS_RANDOM_MEAL,
 } from '../actions/exploreActions';
 
 const INITIAL_STATE = {
@@ -14,6 +15,8 @@ function exploreReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
   case LOADING_INGREDIENTS:
     return { ...state, isLoading: true };
+  case SUCCESS_RANDOM_MEAL:
+    return { ...state, isLoading: false, id: action.id };
   case SUCCESS_INGREDIENTS:
   {
     if (action.ingredients.length === 1) {
