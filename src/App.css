@@ -194,7 +194,7 @@
 
 .fav-cards-container {
   display: grid;
-  gap: 0.4rem;
+  gap: 0.6rem;
 }
 
 .fav-card {
@@ -210,7 +210,6 @@
 
 .fav-img {
   border-radius: 5px;
-
   width: 100%;
 }
 
@@ -224,7 +223,7 @@
   padding: 0;
   position: relative;
   width: fit-content;
-  z-index: 99;
+  z-index: 98;
 }
 
 .favorite-filters {
@@ -263,7 +262,7 @@
   padding: 0;
   position: relative;
   width: fit-content;
-  z-index: 99;
+  z-index: 98;
 }
 
 /* Food Details */
