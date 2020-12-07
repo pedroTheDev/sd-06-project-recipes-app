@@ -105,7 +105,7 @@ function RecipesInProgress() {
       allCheckedIngredients.push(ingredientMade.innerHTML);
       localStorage.setItem('checkedIngredients', JSON.stringify(allCheckedIngredients));
     }
-    const allCheckBoxs = document.querySelectorAll('#checkbox');
+    const allCheckBoxs = document.querySelectorAll('.checkbox');
     let count = zero;
     allCheckBoxs.forEach((checkbox) => {
       if (checkbox.checked === true) {
@@ -243,6 +243,7 @@ function RecipesInProgress() {
             <input
               type="checkbox"
               // id="checkbox"
+              className="checkbox"
               id={ `checkbox ${index}` }
               onChange={ () => handleIngredients(index) }
             />
@@ -320,6 +321,7 @@ function RecipesInProgress() {
             <input
               type="checkbox"
               // id="checkbox"
+              className="checkbox"
               id={ `checkbox ${index}` }
               onChange={ () => handleIngredients(index) }
             />

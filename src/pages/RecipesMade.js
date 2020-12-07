@@ -83,13 +83,15 @@ function RecipesMade() {
           <div className="tags-card">
             {renderTags(recipe.tags, index)}
           </div>
-          <img
-            data-testid={ `${index}-horizontal-share-btn` }
-            src={ shareIcon }
-            alt="share icon"
-            onClick={ () => handleShareIcon(recipe.id, 'comidas') }
-            aria-hidden="true"
-          />
+          <div className="buttons">
+            <img
+              data-testid={ `${index}-horizontal-share-btn` }
+              src={ shareIcon }
+              alt="share icon"
+              onClick={ () => handleShareIcon(recipe.id, 'comidas') }
+              aria-hidden="true"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -134,13 +136,15 @@ function RecipesMade() {
           >
             {recipe.doneDate}
           </h6>
-          <img
-            data-testid={ `${index}-horizontal-share-btn` }
-            src={ shareIcon }
-            alt="share icon"
-            onClick={ () => handleShareIcon(recipe.id, 'bebidas') }
-            aria-hidden="true"
-          />
+          <div className="buttons">
+            <img
+              data-testid={ `${index}-horizontal-share-btn` }
+              src={ shareIcon }
+              alt="share icon"
+              onClick={ () => handleShareIcon(recipe.id, 'bebidas') }
+              aria-hidden="true"
+            />
+          </div>
         </div>
       </div>
     </div>
