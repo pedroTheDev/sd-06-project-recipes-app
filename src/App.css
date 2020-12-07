@@ -204,8 +204,8 @@
   display: grid;
   gap: 1rem;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  margin-left: 10px;
-  width: 90%;
+  margin-left: 15px;
+  width: 88%;
 }
 
 .fav-img {

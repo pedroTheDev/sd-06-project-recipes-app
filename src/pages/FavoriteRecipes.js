@@ -6,7 +6,7 @@ import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 export default function FavoriteRecipes() {
-  const favorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
+  const favorites = (JSON.parse(localStorage.getItem('favoriteRecipes')) === null) ? [] : JSON.parse(localStorage.getItem('favoriteRecipes'));
   const alcoholic = favorites.map((e) => e.alcoholicOrNot);
   const [copied, setCopied] = useState(false);
 
@@ -50,6 +50,7 @@ export default function FavoriteRecipes() {
             Drinks
           </button>
         </div>
+        {(favorites === []) && <h1>Você ainda não favoritou receitas!</h1>}
         <div className="fav-cards-container">
           {favorites.map((e, index) => (
             <div key={ index } className="fav-card">
