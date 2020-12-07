@@ -28,6 +28,8 @@
 
 .input-buscar-receita {
   border-radius: 10px;
-  width: 80%;
+  width: 76%;
   margin-left: 10%;
+  padding: 7px;
+  margin-top: -5px;
 }
