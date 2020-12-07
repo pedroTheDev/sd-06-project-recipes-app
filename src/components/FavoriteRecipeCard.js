@@ -8,8 +8,8 @@ const FavoriteRecipeCard = ({ recipe, index, onClick }) => {
   const { image, name, category, area, type, id, alcoholicOrNot } = recipe;
 
   return (
-    <div>
-      <div>
+    <div className="done-recipe-card-container">
+      <div className="done-recipe-card">
         <Link to={ type === 'comida' ? `/comidas/${id}` : `/bebidas/${id}` }>
           <img
             className="smallIMG"
@@ -17,15 +17,22 @@ const FavoriteRecipeCard = ({ recipe, index, onClick }) => {
             src={ image }
             alt="Imagem da receita"
           />
-          <p data-testid={ `${index}-horizontal-name` }>
-            Nome:
-            { name }
-          </p>
+          <div className="done-recipe-card-tag">
+            <p data-testid={ `${index}-horizontal-name` }>
+              Nome:
+              { name }
+            </p>
+          </div>
         </Link>
+      </div>
+
+      <div className="done-card-details">
         <h1>{type}</h1>
         <p data-testid={ `${index}-horizontal-top-text` }>
           {`${area || alcoholicOrNot} - ${category}`}
         </p>
+      </div>
+      <div>
         <ShareButton
           datatestid={ `${index}-horizontal-share-btn` }
           linkToCopy={ type === 'comida' ? `/comidas/${id}` : `/bebidas/${id}` }

@@ -38,3 +38,4 @@ RecipeCard.propTypes = {
 };
 
 export default connect(null, mapDispatchToProps)(RecipeCard);
+

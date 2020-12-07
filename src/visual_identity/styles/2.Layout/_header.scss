@@ -11,6 +11,7 @@ header {
   text-align: center;
   @include flexBox(row, space-around);
   color: white;
+  z-index: 1;
 
   & .header-icon {
     cursor: pointer;
@@ -30,5 +31,13 @@ header {
       background-color: transparent;
       filter: opacity(0.6)
     }
+  }
+
+  & a.flex-order {
+    order: 2;
+  }
+
+  & h2.flex-order {
+    order: 1;
   }
 }

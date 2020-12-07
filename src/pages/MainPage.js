@@ -25,17 +25,18 @@ const MainPage = (props) => {
       );
     } else {
       return (
-        recipesToRender.map(({ name, image, id }, index) => (
-          <RecipeCard
-            datatestId="recipe"
-            key={ id }
-            recipeName={ name }
-            recipeImage={ image }
-            id={ id }
-            foodOrDrink={ pathname }
-            index={ index }
-          />
-        ))
+        <main className="recipes-display">
+          { recipesToRender.map(({ name, image, id }, index) => (
+            <RecipeCard
+              key={ id }
+              recipeName={ name }
+              recipeImage={ image }
+              id={ id }
+              foodOrDrink={ pathname }
+              index={ index }
+            />
+          ))}
+        </main>
       );
     }
   };
@@ -44,9 +45,7 @@ const MainPage = (props) => {
 
   useEffect(
     () => {
-      console.log(shouldFetch);
       if (recipeList.length < 1 && shouldFetch) {
-        console.log('entrou');
         dispatch(fetcherThunk(pathname));
       }
     }, [pathname, dispatch, recipeList, shouldFetch],
