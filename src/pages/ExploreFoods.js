@@ -23,17 +23,21 @@ function ExploreFoods() {
     <div>
       <Header />
       <Link to="/explorar/comidas/ingredientes">
-        <button data-testid="explore-by-ingredient" type="button">
+        <button
+          className="categ-buttons"
+          data-testid="explore-by-ingredient"
+          type="button"
+        >
           Por Ingredientes
         </button>
       </Link>
       <Link to="/explorar/comidas/area">
-        <button data-testid="explore-by-area" type="button">
+        <button className="categ-buttons" data-testid="explore-by-area" type="button">
           Por Local de Origem
         </button>
       </Link>
       <Link to={ `/comidas/${randomId}` }>
-        <button data-testid="explore-surprise" type="button">
+        <button className="categ-buttons" data-testid="explore-surprise" type="button">
           Me Surpreenda!
         </button>
       </Link>

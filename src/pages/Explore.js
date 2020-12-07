@@ -14,10 +14,22 @@ function Explore() {
     <div>
       <Header />
       <Link to="/explorar/comidas">
-        <button data-testid="explore-food" type="button">Explorar Comidas</button>
+        <button
+          className="categ-buttons"
+          data-testid="explore-food"
+          type="button"
+        >
+          Explorar Comidas
+        </button>
       </Link>
       <Link to="explorar/bebidas">
-        <button data-testid="explore-drinks" type="button">Explorar Bebidas</button>
+        <button
+          className="categ-buttons"
+          data-testid="explore-drinks"
+          type="button"
+        >
+          Explorar Bebidas
+        </button>
       </Link>
       <Footer />
     </div>

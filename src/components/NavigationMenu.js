@@ -36,6 +36,7 @@ function NavigationMenu(props) {
   return (
     <div className="categories">
       <button
+        className="categ-buttons"
         type="button"
         data-testid="All-category-filter"
         onClick={ () => goToCategory('') }

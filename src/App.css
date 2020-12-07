@@ -1,7 +1,7 @@
 #meals {
   height: 100vh;
   width: 100%;
-  background: #0fa36b;
+  background: #F5FFFA;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -38,6 +38,9 @@
   outline:none;
 }
 
+.pageBodie, .food-details {
+  background-color: #F5FFFA;
+}
 .bodier p {
   color: black;
 }
@@ -49,7 +52,7 @@
 .header {
   display: flex;
   justify-content: space-between;
-  background-color: rgb(204, 203, 203);
+  background-color: #ffba08;
   padding: 10px;
   font-size: 1.8em;
 }
@@ -57,7 +60,7 @@
 .footer {
   display: flex;
   justify-content: space-between;
-  background-color: rgb(204, 203, 203);
+  background-color: #ffba08;
   padding: 10px;
   font-size: 1.8em;
   position: fixed;
@@ -86,7 +89,7 @@
 }
 
 #meals > span {
-  color: aliceblue;
+  color: #03071e;
   font-weight: 900;
   font-family: 'Montserrat', sans-serif;
   font-size: 3em;
@@ -115,4 +118,15 @@
   100% {
     transform: rotate(-10deg);
   }
+}
+.text {
+  background-color: #03071e;
+}
+
+.categ-buttons {
+  background-color: #03071e;
+}
+
+#All-category-filter {
+  
 }

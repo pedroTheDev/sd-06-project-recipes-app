@@ -24,12 +24,16 @@ function ExploreDrinks() {
     <div>
       <Header />
       <Link to="/explorar/bebidas/ingredientes">
-        <button data-testid="explore-by-ingredient" type="button">
+        <button
+          className="categ-buttons"
+          data-testid="explore-by-ingredient"
+          type="button"
+        >
           Por Ingredientes
         </button>
       </Link>
       <Link to={ `/bebidas/${randomId}` }>
-        <button data-testid="explore-surprise" type="button">
+        <button className="categ-buttons" data-testid="explore-surprise" type="button">
           Me Surpreenda!
         </button>
       </Link>
