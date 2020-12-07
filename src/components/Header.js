@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import SearchBar from './SearchBar';
 import profileIcon from '../images/profileIcon.svg';
-import './Header.css';
+import '../Css/Header.css';
 
 function Header() {
   const location = useLocation();
@@ -38,21 +38,26 @@ function Header() {
 
   return (
     <div className="header-container">
-      <Link to="/perfil">
-        <button
-          type="button"
-        >
-          <img
-            src={ profileIcon }
-            alt="Profile"
-            data-testid="profile-top-btn"
-          />
-        </button>
-      </Link>
-      <h2 data-testid="page-title">
-        {verifyTitle()}
-      </h2>
-      <SearchBar />
+      <div className="header-page-title">
+        <Link to="/perfil">
+          <button
+            type="button"
+            className="app-button-transparent"
+          >
+            <img
+              src={ profileIcon }
+              alt="Profile"
+              data-testid="profile-top-btn"
+            />
+          </button>
+        </Link>
+        <h2 data-testid="page-title">
+          {verifyTitle()}
+        </h2>
+      </div>
+      <div>
+        <SearchBar />
+      </div>
     </div>
   );
 }

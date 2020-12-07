@@ -20,7 +20,7 @@ export async function getFilteredDrinksApi(type, value) {
   }
   if (type === 'name') {
     try {
-      const response = await fetch(`${URL_BASE}filter.php?i=${value}`);
+      const response = await fetch(`${URL_BASE}search.php?s=${value}`);
       const result = await response.json();
       return result.drinks;
     } catch (error) {
@@ -29,7 +29,7 @@ export async function getFilteredDrinksApi(type, value) {
   }
   if (type === 'first') {
     try {
-      const response = await fetch(`${URL_BASE}filter.php?i=${value}`);
+      const response = await fetch(`${URL_BASE}search.php?f=${value}`);
       const result = await response.json();
       return result.drinks;
     } catch (error) {
@@ -60,8 +60,22 @@ export async function getRecipeDrinkByIdApi(id) {
   return result.drinks;
 }
 
+// Lista uma uma receita aleatória
 export async function getRecipeDrinksByRandom() {
   const response = await fetch(`${URL_BASE}random.php`);
+  const result = await response.json();
+  return result.drinks;
+}
+
+// Lista de Ingredientes de Bebidas
+export async function getIngredientsDrinks() {
+  const response = await fetch(`${URL_BASE}list.php?i=list`);
+  const result = await response.json();
+  return result.drinks;
+}
+// Lista todas as bebidas alcoólicas
+export async function getDrinksAlcoholic() {
+  const response = await fetch(`${URL_BASE}filter.php?a=Alcoholic`);
   const result = await response.json();
   return result.drinks;
 }
@@ -73,4 +87,6 @@ export default {
   getRecipeDrinkByIdApi,
   getFilteredDrinksApi,
   getRecipeDrinksByRandom,
+  getIngredientsDrinks,
+  getDrinksAlcoholic,
 };

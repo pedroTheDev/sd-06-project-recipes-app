@@ -4,14 +4,13 @@ import { getRecipesMealsApi, getRecipesMealsByCategoryApi } from '../services/me
 import { getRecipeDrinksApi, getRecipeDrinksByCategoryApi } from '../services/drinksAPI';
 import MealsContext from '../context/MealsContext';
 import RecipeCard from './RecipeCard';
-import './RecipeList.css';
+import '../Css/RecipeList.css';
 
 function RecipeList() {
   const { drinkCategories,
     cardsRecipe,
     setCardsRecipe,
     categories } = useContext(MealsContext);
-  // const [cardsRecipe, setCardsRecipe] = useState([]);
   const [cardCategories, setCardCategories] = useState([]);
   const [categorySelected, setcategorySelected] = useState([]);
 
@@ -71,7 +70,7 @@ function RecipeList() {
   const numberTwo = 2;
   const numberFive = 5;
   return (
-    <div>
+    <div className="recipe-list-container">
       <div>
         <div className="container-button">
           <button

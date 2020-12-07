@@ -65,14 +65,13 @@ function SearchBar() {
       return '';
     }
   };
-
   const handleButton = async () => {
-    if (inputValue.length !== 1 && inputValue === '#' && radioValue === 'first') {
+    if (inputValue.length !== 1 && radioValue === 'first') {
       console.log('first');
       alert('Sua busca deve conter somente 1 (um) caracter');
     } else if (pathname === '/comidas') {
       const recipes = await getFilteredRecipesApi(radioValue, inputValue);
-      console.log(recipes);
+      console.log('comidas', recipes);
       if (recipes === null || recipes === undefined) {
         alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
       } else if (recipes.length === 1) {
@@ -104,7 +103,6 @@ function SearchBar() {
       }
     }
   };
-
   return (
     <div>
       {showIcon ? <img
@@ -116,55 +114,56 @@ function SearchBar() {
       /> : null}
       {showSearchBar
         ? (
-          <input
-            type="text"
-            data-testid="search-input"
-            id="search-input"
-            name="search"
-            onChange={ handleChange }
-          />)
+          <div>
+            <input
+              type="text"
+              data-testid="search-input"
+              id="search-input"
+              name="search"
+              onChange={ handleChange }
+            />
+            <div>
+              <label htmlFor="filter">
+                <input
+                  type="radio"
+                  value="ingredients"
+                  name="filter"
+                  data-testid="ingredient-search-radio"
+                  onChange={ handleRadio }
+                />
+                Ingredients
+              </label>
+              <label htmlFor="filter">
+                <input
+                  type="radio"
+                  value="name"
+                  name="filter"
+                  data-testid="name-search-radio"
+                  onChange={ handleRadio }
+                />
+                Nome
+              </label>
+              <label htmlFor="filter">
+                <input
+                  type="radio"
+                  value="first"
+                  name="filter"
+                  data-testid="first-letter-search-radio"
+                  onChange={ handleRadio }
+                />
+                Primeira letra
+              </label>
+              <button
+                type="button"
+                data-testid="exec-search-btn"
+                onClick={ handleButton }
+              >
+                Buscar
+              </button>
+            </div>
+          </div>)
         : null}
-      <div>
-        <label htmlFor="filter">
-          <input
-            type="radio"
-            value="ingredients"
-            name="filter"
-            data-testid="ingredient-search-radio"
-            onChange={ handleRadio }
-          />
-          Ingredients
-        </label>
-        <label htmlFor="filter">
-          <input
-            type="radio"
-            value="name"
-            name="filter"
-            data-testid="name-search-radio"
-            onChange={ handleRadio }
-          />
-          Nome
-        </label>
-        <label htmlFor="filter">
-          <input
-            type="radio"
-            value="first"
-            name="filter"
-            data-testid="first-letter-search-radio"
-            onChange={ handleRadio }
-          />
-          Primeira letra
-        </label>
-      </div>
-      <button
-        type="button"
-        data-testid="exec-search-btn"
-        onClick={ handleButton }
-      >
-        Buscar
-      </button>
     </div>
   );
 }
-
 export default SearchBar;
