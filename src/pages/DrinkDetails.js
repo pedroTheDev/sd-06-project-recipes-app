@@ -41,7 +41,7 @@ function DrinkDetails() {
     const magickNumber = 9;
     const RecipeID = location.slice(magickNumber, location.length);
     FetchApiDrink('drinkDetail', setDrinkDetail, RecipeID);
-    FetchApiFood('foodName', setRecomendedFood, drinkDetail.strMeal);
+    FetchApiFood('name', setRecomendedFood, drinkDetail.strMeal);
     isFavorited();
   }, []);
 
