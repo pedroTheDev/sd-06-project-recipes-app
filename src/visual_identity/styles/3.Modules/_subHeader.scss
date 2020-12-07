@@ -2,10 +2,13 @@
 @import '../0.helpers/variables';
 
 .sub-header {
-  @include flexBox(row, space-around);
+  @include flexBox(row, space-around, center, wrap);
   padding: 3% 0;
 
   & button {
-    margin: 0;
-    
+    margin: 10px;
+    width: 25%;
   }
+}
+
+

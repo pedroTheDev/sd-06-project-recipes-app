@@ -1,6 +1,6 @@
 @import '../0.helpers/variables';
 
-input {
+input, select {
   border: none;
   background-color: transparent;
   border-bottom: 2px solid $darkBlue2;

@@ -9,42 +9,48 @@ function ReceitasFavoritas() {
   return (
     <main>
       <Header pageName="Receitas Favoritas" renderSearch={ false } />
-      <div style={ { marginTop: '10%' } }>
-        <button
-          type="button"
-          data-testid="filter-by-all-btn"
-          onClick={ () => setRecipes(allFavorites) }
-        >
-          All
-        </button>
-        <button
-          type="button"
-          data-testid="filter-by-food-btn"
-          onClick={ () => setRecipes(allFavorites
-            .filter(({ type }) => type === 'comida')) }
-        >
-          Foods
-        </button>
-        <button
-          type="button"
-          data-testid="filter-by-drink-btn"
-          onClick={ () => setRecipes(allFavorites
-            .filter(({ type }) => type === 'bebida')) }
-        >
-          Drinks
-        </button>
+      <div className="default-page">
+        <div className="sub-header">
+          <button
+            type="button"
+            data-testid="filter-by-all-btn"
+            onClick={ () => setRecipes(allFavorites) }
+          >
+            All
+          </button>
+          <button
+            type="button"
+            data-testid="filter-by-food-btn"
+            onClick={ () => setRecipes(allFavorites
+              .filter(({ type }) => type === 'comida')) }
+          >
+            Foods
+          </button>
+          <button
+            type="button"
+            data-testid="filter-by-drink-btn"
+            onClick={ () => setRecipes(allFavorites
+              .filter(({ type }) => type === 'bebida')) }
+          >
+            Drinks
+          </button>
+        </div>
+        <div className="done-recipes-display">
+          {
+            recipes.length > zero ? recipes.map((recipe, index) => (
+              <FavoriteRecipeCard
+                onClick={ () => {
+                  setRecipes(JSON.parse(localStorage.getItem('favoriteRecipes'))
+                || []);
+                } }
+                key={ recipe.id }
+                recipe={ recipe }
+                index={ index }
+              />
+            )) : <div>Nenhuma receita encontrada</div>
+          }
+        </div>
       </div>
-      {
-        recipes.length > zero ? recipes.map((recipe, index) => (
-          <FavoriteRecipeCard
-            onClick={ () => setRecipes(JSON.parse(localStorage.getItem('favoriteRecipes'))
-            || []) }
-            key={ recipe.id }
-            recipe={ recipe }
-            index={ index }
-          />
-        )) : <div>Nenhuma receita encontrada</div>
-      }
     </main>
   );
 }
