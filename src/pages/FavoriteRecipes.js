@@ -47,10 +47,6 @@ function FavoriteRecipes() {
     checkRecipeIsfavorite();
   }, [isFavorite]);
 
-  const divStyle = {
-    width: '10rem',
-  };
-
   return (
     <div>
       <Header title="Receitas Favoritas" />
@@ -67,7 +63,6 @@ function FavoriteRecipes() {
               src={ recipe.image }
               alt="Imagem da receita"
               data-testid={ `${index}-horizontal-image` }
-              // style={ divStyle }
               className="image-favorite"
             />
           </Link>
