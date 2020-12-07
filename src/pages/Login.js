@@ -55,13 +55,18 @@ function Login() {
             data-testid="password-input"
             onChange={ handleChangeWithValidation }
           />
-          <Link to="/comidas">
+          <Link
+            to="/comidas"
+            className="link-button"
+          >
             <Button
               variant={ disable ? 'secondary' : 'success' }
               type="button"
               data-testid="login-submit-btn"
               disabled={ disable }
               onClick={ handleClick }
+              size="lg"
+              block
             >
               ENTRAR
             </Button>

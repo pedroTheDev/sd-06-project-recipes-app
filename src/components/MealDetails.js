@@ -111,7 +111,8 @@ function MealDetails() {
     const fim = 20;
     let ingredients = [];
     for (let i = inicio; i <= fim; i += 1) {
-      if (recipeMeal[`strIngredient${i}`] !== '') {
+      if (recipeMeal[`strIngredient${i}`] !== ''
+        && recipeMeal[`strIngredient${i}`] !== null) {
         ingredients = [...ingredients,
           { ingredient: recipeMeal[`strIngredient${i}`],
             measure: recipeMeal[`strMeasure${i}`],
@@ -135,11 +136,11 @@ function MealDetails() {
     return idYoutube;
   }
 
-  function updateRecipeInProgress() {
-    const recipesInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    recipesInProgress.meals[id] = getIngredients();
-    localStorage.setItem('inProgressRecipes', JSON.stringify(recipesInProgress));
-  }
+  // function updateRecipeInProgress() {
+  //   const recipesInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+  //   recipesInProgress.meals[id] = [];
+  //   localStorage.setItem('inProgressRecipes', JSON.stringify(recipesInProgress));
+  // }
 
   function copyToClipboard() {
     navigator.clipboard.writeText(window.location.href);
@@ -295,7 +296,7 @@ function MealDetails() {
               variant="success"
               size="lg"
               block
-              onClick={ updateRecipeInProgress }
+              // onClick={ updateRecipeInProgress }
             >
               { btnDoneRecipe }
             </Button>

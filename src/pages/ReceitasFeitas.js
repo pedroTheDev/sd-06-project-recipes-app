@@ -5,7 +5,6 @@ import shareIcon from '../images/shareIcon.svg';
 import useCopyToClipboard from '../services/clipboard-copy';
 
 function ReceitasFeitas() {
-  // const doneRecipes = JSON.parse(localStorage.doneRecipes);
   const [doneRecipes, setDoneRecipes] = useState([]);
   const timeoutTextCopy = 2000;
   const [isCopied, handleCopy] = useCopyToClipboard(timeoutTextCopy);
@@ -78,23 +77,23 @@ function ReceitasFeitas() {
             doneDate,
             tags,
           },
-          index,
+          indexRecipe,
         ) => (
           <span
-            key={ index }
+            key={ indexRecipe }
           >
             <Link to={ `/${type}s/${id}` }>
               <img
                 className="receipe-img"
                 src={ image }
                 alt={ name }
-                data-testid={ `${index}-horizontal-image` }
+                data-testid={ `${indexRecipe}-horizontal-image` }
               />
             </Link>
             <div>
               <Link to={ `/${type}s/${id}` }>
                 <h1
-                  data-testid={ `${index}-horizontal-name` }
+                  data-testid={ `${indexRecipe}-horizontal-name` }
                 >
                   {name}
                 </h1>
@@ -103,17 +102,17 @@ function ReceitasFeitas() {
                 (type === 'comida')
                   ? (
                     <p
-                      data-testid={ `${index}-horizontal-top-text` }
+                      data-testid={ `${indexRecipe}-horizontal-top-text` }
                     >
                       { `${area} - ${category}`}
                     </p>)
                   : (
-                    <p data-testid={ `${index}-horizontal-top-text` }>
+                    <p data-testid={ `${indexRecipe}-horizontal-top-text` }>
                       { alcoholicOrNot }
                     </p>)
               }
               <p
-                data-testid={ `${index}-horizontal-done-date` }
+                data-testid={ `${indexRecipe}-horizontal-done-date` }
               >
                 {doneDate}
               </p>
@@ -126,14 +125,14 @@ function ReceitasFeitas() {
               <img
                 src={ shareIcon }
                 alt="Compatilhar Receita"
-                data-testid={ `${index}-horizontal-share-btn` }
+                data-testid={ `${indexRecipe}-horizontal-share-btn` }
               />
             </button>
             {isCopied ? <p>Link copiado!</p> : true}
-            {tags.map((tag) => (
+            {tags.map((tag, indexTag) => (
               <p
-                key={ tag }
-                data-testid={ `${index}-horizontal-done-date` }
+                key={ indexTag }
+                data-testid={ `${indexRecipe}-${tags[indexTag]}-horizontal-tag` }
               >
                 { tag }
               </p>
