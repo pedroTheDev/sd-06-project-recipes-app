@@ -8,7 +8,7 @@ import mealIcon from '../images/mealIcon.svg';
 import { resetShouldFetch, clearState } from '../redux/actions/mainPageFetcher';
 
 const Footer = ({ clear, clearAndDontUpdate }) => (
-  <div data-testid="footer" className="position-fixed-bottom">
+  <footer data-testid="footer" className="position-fixed-bottom">
     <Link to="/bebidas" onClick={ () => clear() }>
       <button
         type="button"
@@ -30,7 +30,7 @@ const Footer = ({ clear, clearAndDontUpdate }) => (
         <img data-testid="food-bottom-btn" src={ mealIcon } alt="" />
       </button>
     </Link>
-  </div>
+  </footer>
 );
 
 const mapDispatchToProps = (dispatch) => ({

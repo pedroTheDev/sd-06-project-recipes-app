@@ -7,10 +7,7 @@ import { clearState } from '../redux/actions/mainPageFetcher';
 
 const RecipeCard = ({ recipeName, recipeImage, id, foodOrDrink, index, limpar }) => (
   <Link to={ `${foodOrDrink}/${id}` } onClick={ () => limpar() }>
-    <div data-testid={ `${index}-recipe-card` }>
-      {
-        console.log(recipeImage)
-      }
+    <div className="recipe-card" data-testid={ `${index}-recipe-card` }>
       <img
         data-testid={ `${index}-card-img` }
         className="smallIMG"
