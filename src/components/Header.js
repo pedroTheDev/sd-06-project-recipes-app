@@ -8,7 +8,7 @@ function HeaderFood() {
   const [showBar, setShowBar] = useState(false);
   const path = window.location.pathname;
   let title = '';
-  let searchIconShow;
+  let searchIconShow = true;
   if (path === '/comidas') {
     title = 'Comidas'; searchIconShow = true;
   } else if (path === '/bebidas') {

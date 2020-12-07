@@ -18,7 +18,7 @@ export default function RecipesProvider({ children }) {
   const [FoodBtn, setFoodBtn] = useState([]);
   const [filterFood, setFilterFood] = useState([]);
   const [filterDrink, setFilterDrink] = useState([]);
-  const [radioValue, setRadioValue] = useState('');
+  const [selectEndpoint, setselectEndpoint] = useState('');
   const [searchBar, setSearchBar] = useState('');
 
   // state para foodDetails
@@ -83,8 +83,8 @@ export default function RecipesProvider({ children }) {
     filterDrink,
     setFilterFood,
     setFilterDrink,
-    radioValue,
-    setRadioValue,
+    selectEndpoint,
+    setselectEndpoint,
     searchBar,
     setSearchBar,
     foodDetail,

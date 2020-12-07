@@ -40,8 +40,8 @@ function DrinkDetails() {
     const location = window.location.pathname;
     const magickNumber = 9;
     const RecipeID = location.slice(magickNumber, location.length);
-    FetchApiDrink('6', setDrinkDetail, RecipeID);
-    FetchApiFood('2', setRecomendedFood, drinkDetail.strMeal);
+    FetchApiDrink('drinkDetail', setDrinkDetail, RecipeID);
+    FetchApiFood('foodName', setRecomendedFood, drinkDetail.strMeal);
     isFavorited();
   }, []);
 

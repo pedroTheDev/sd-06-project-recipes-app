@@ -14,12 +14,12 @@ function ExploreDrinkIngredients() {
   } = useContext(RecipesContext);
 
   useEffect(() => {
-    FetchApiDrink('7', setListIngredients);
+    FetchApiDrink('ingredientsCategory', setListIngredients);
     setEffectOnLoad(false);
   }, []);
 
   async function handleCLick(ingredient) {
-    await FetchApiDrink('1', setFetchDrink, ingredient);
+    await FetchApiDrink('ingredients', setFetchDrink, ingredient);
   }
 
   const inicio = 0;

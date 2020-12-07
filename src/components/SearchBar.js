@@ -4,16 +4,16 @@ import fetchApiFood from '../services/FetchApiFood';
 import fetchApiDrink from '../services/FetchApiDrink';
 
 export default function SearchBar() {
-  const { setRadioValue,
+  const { setselectEndpoint,
     setSearchBar,
-    radioValue,
+    selectEndpoint,
     searchBar,
     setFetchDrink,
     setFetchFood,
   } = useContext(RecipesContext);
 
   const radioClick = ({ target }) => {
-    setRadioValue(target.value);
+    setselectEndpoint(target.value);
   };
 
   const handleSearchBar = ({ target }) => {
@@ -21,15 +21,15 @@ export default function SearchBar() {
   };
 
   const handleSearchButton = async () => {
-    if (radioValue === '3' && searchBar.length > 1) {
+    if (selectEndpoint === '3' && searchBar.length > 1) {
       // eslint-disable-next-line no-alert
       alert('Sua busca deve conter somente 1 (um) caracter');
     }
     const path = window.location.pathname;
     if (path.includes('comidas')) {
-      await fetchApiFood(radioValue, setFetchFood, searchBar);
+      await fetchApiFood(selectEndpoint, setFetchFood, searchBar);
     } else {
-      await fetchApiDrink(radioValue, setFetchDrink, searchBar);
+      await fetchApiDrink(selectEndpoint, setFetchDrink, searchBar);
     }
   };
 
@@ -52,7 +52,7 @@ export default function SearchBar() {
             onClick={ radioClick }
             name="select"
             type="radio"
-            value="1"
+            value="ingredients"
             id="ingrediente"
             data-testid="ingredient-search-radio"
           />
@@ -63,7 +63,7 @@ export default function SearchBar() {
             onClick={ radioClick }
             id="nome"
             type="radio"
-            value="2"
+            value="name"
             data-testid="name-search-radio"
             name="select"
           />
@@ -74,7 +74,7 @@ export default function SearchBar() {
             onClick={ radioClick }
             id="primeira-letra"
             type="radio"
-            value="3"
+            value="firstLetter"
             data-testid="first-letter-search-radio"
             name="select"
           />

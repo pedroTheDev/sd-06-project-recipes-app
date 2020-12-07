@@ -15,8 +15,8 @@ function MainFoodCard() {
 
   useEffect(() => {
     if (effectOnLoad) {
-      FetchApiFood('2', setFetchFood);
-      FetchApiFood('4', setFoodBtn);
+      FetchApiFood('name', setFetchFood);
+      FetchApiFood('categoryList', setFoodBtn);
     }
   }, []);
 
@@ -31,7 +31,7 @@ function MainFoodCard() {
       setFilterFood([]);
     }
     if (targetName !== filter) {
-      FetchApiFood('5', setFilterFood, filter);
+      FetchApiFood('filterCategory', setFilterFood, filter);
       setTargetName(filter);
     }
   };

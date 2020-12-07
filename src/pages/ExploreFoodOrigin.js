@@ -15,8 +15,8 @@ function ExploreFoodOrigin() {
   const fim = 12;
 
   useEffect(() => {
-    FetchApiFood('7', setAreaDropdown);
-    FetchApiFood('2', setFetchFood);
+    FetchApiFood('foodOrigin', setAreaDropdown);
+    FetchApiFood('foodName', setFetchFood);
   }, []);
 
   useEffect(() => {
@@ -25,9 +25,9 @@ function ExploreFoodOrigin() {
 
   const handleChange = (value) => {
     if (value === 'All') {
-      FetchApiFood('2', setFetchFood);
+      FetchApiFood('foodName', setFetchFood);
     } else if (value !== 'All') {
-      FetchApiFood('8', setFetchFood, value);
+      FetchApiFood('filterOrigin', setFetchFood, value);
     }
   };
 

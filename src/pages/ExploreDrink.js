@@ -12,7 +12,7 @@ function ExploreDrink() {
   } = useContext(RecipesContext);
 
   useEffect(() => {
-    FetchApiDrink('8', setDrinkDetail);
+    FetchApiDrink('randomDrink', setDrinkDetail);
   }, []);
 
   function randomRecipe() {

@@ -15,8 +15,8 @@ function MainDrinkCard() {
 
   useEffect(() => {
     if (effectOnLoad) {
-      FetchApiDrink('2', setFetchDrink);
-      FetchApiDrink('4', setDrinkBtn);
+      FetchApiDrink('name', setFetchDrink);
+      FetchApiDrink('categoryList', setDrinkBtn);
     }
   }, []);
 
@@ -31,7 +31,7 @@ function MainDrinkCard() {
       setFilterDrink([]);
     }
     if (targetName !== filter) {
-      FetchApiDrink('5', setFilterDrink, filter);
+      FetchApiDrink('filterCategory', setFilterDrink, filter);
       setTargetName(filter);
     }
   };
