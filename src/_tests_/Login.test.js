@@ -1,10 +1,17 @@
 import React from 'react';
-import { fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import renderWithRouter from '../renderWithRouter';
 import App from '../App';
 
 describe('Possui uma página inicial de login:', () => {
+  it('Possui um logotipo', () => {
+    const { getByAltText } = renderWithRouter(<App />);
+    const logo = getByAltText('logo');
+
+    expect(logo).toBeInTheDocument();
+    expect(logo).toHaveAttribute('src', 'logo.png');
+  });
+
   it('Possui um campo para usuário inserir o email', () => {
     const { getByTestId } = renderWithRouter(<App />);
     const inputEmail = getByTestId('email-input');
@@ -67,11 +74,12 @@ describe('Possui uma página inicial de login:', () => {
     const loginButton = getByRole('button');
     const inputEmail = getByTestId('email-input');
     const inputPassword = getByTestId('password-input');
+    const { pathname } = history.location;
 
     userEvent.type(inputEmail, 'email@email.com');
     userEvent.type(inputPassword, '1234567');
-    fireEvent.click(loginButton);
+    userEvent.click(loginButton);
 
-    expect(history.location.pathname).toBe('/comidas');
+    expect(pathname).toBe('/comidas');
   });
 });
