@@ -7,6 +7,7 @@ import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import '../App.css';
+import '../Style/Process.css';
 
 function RecipeDrinkProcess(props) {
   const ZERO = 0;
@@ -271,6 +272,7 @@ function RecipeDrinkProcess(props) {
           data-testid="finish-recipe-btn"
           onClick={ () => handleEndRecipe(recipes[0]) }
           disabled={ !arrIngredient.every((item) => item.checked) }
+          className="btn btn-process"
         >
           Finalizar Receita
         </button>

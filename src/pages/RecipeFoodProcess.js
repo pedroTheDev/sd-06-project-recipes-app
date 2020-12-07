@@ -276,6 +276,7 @@ function RecipeFoodProcess(props) {
             data-testid="finish-recipe-btn"
             onClick={ () => handleEndRecipe(recipes[0]) }
             disabled={ !arrIngredient.every((item) => item.checked) }
+            className="btn btn-process"
           >
             Finalizar Receita
           </button>

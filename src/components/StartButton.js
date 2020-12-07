@@ -35,7 +35,7 @@ function StartButton({ id, title }) {
       to={ `/${setRoute}/${id}/in-progress` }
     >
       <button
-        className="container-button"
+        className="btn container-button"
         type="button"
         data-testid="start-recipe-btn"
       >

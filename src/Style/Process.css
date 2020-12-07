@@ -27,3 +27,12 @@
   width: 100%;
   text-align: justify;
 }
+
+.btn-process {
+  border: solid 1px black;
+}
+
+[class*=btn-process]:hover {
+  background-color: rgb(46, 45, 45);
+  color: white;
+}

@@ -4,6 +4,7 @@ import Header from '../components/header';
 import Footer from '../components/Footer';
 import ExploreCard from '../components/explore/ExploreCard';
 import { fetchMealIngredients, fetchDrinkIngredients } from '../services';
+import '../components/explore/Explore.css';
 
 const ZERO = 0;
 const TWELVE = 12;
@@ -30,7 +31,7 @@ function ExploreFoodIngredients({ type }) {
   return (
     <>
       <Header title="Explorar Ingredientes" />
-      <section>
+      <section className="container-ingredientes">
         {
           ingredients.map((el, index) => (
             <ExploreCard

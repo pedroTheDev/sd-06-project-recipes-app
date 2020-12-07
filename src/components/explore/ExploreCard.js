@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import RecipesAppContext from '../../context/RecipesAppContext';
 import { fetchMealAPIByIngredient, fetchDrinkAPIByIngredient } from '../../services';
-// import { Link } from 'react-router-dom';
+import './Explore.css';
 
 function ExploreCard({ name, index, type }) {
   const { setFilteredRecipes } = useContext(RecipesAppContext);
@@ -23,7 +23,11 @@ function ExploreCard({ name, index, type }) {
   };
 
   return (
-    <button type="button" onClick={ () => handleClick() }>
+    <button
+      type="button"
+      onClick={ () => handleClick() }
+      className="btn button-ingredientes"
+    >
       <div data-testid={ `${index}-ingredient-card` }>
         <img
           src={ imgURL }
