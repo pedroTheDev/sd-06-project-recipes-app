@@ -28,7 +28,6 @@ function ProcessoReceita({ match: { params: { id } }, history }) {
 
   const [arrayCheckBox, setArrayCheckBox] = useState(initialValueArrayCheckBox());
 
-
   useEffect(() => {
     requestApiFoodDetails(id)
       .then((response) => {

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import './styles/App.css';
 import Home from './pages/Home';
 import Comidas from './pages/Comidas';
 import Bebidas from './pages/Bebidas';
@@ -19,6 +18,7 @@ import DetalhesBebida from './pages/DetalhesBebida';
 import NotFound from './components/NotFound';
 import ProcessoReceita from './pages/ProcessoReceita';
 import ProcessoBebida from './pages/ProcessoBebida';
+import './styles/App.css';
 
 function App() {
   return (

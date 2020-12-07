@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import profileIcon from '../styles/images/profileIcon.svg';
 import searchIcon from '../styles/images/searchIcon.svg';
 import HeaderSearch from './HeaderSearch';
-// import './components.css';
+import '../styles/Header.css';
 
 function Header({ name, button }) {
   const [searchHeader, setSearchHeader] = useState(false);
@@ -21,7 +21,7 @@ function Header({ name, button }) {
     <div data-testid="header">
       <header className="header">
         <Link to="/perfil">
-          <button type="button" className="logo-profile">
+          <button type="button" className="logo-profile-btn">
             <img src={ profileIcon } alt="profile icon" data-testid="profile-top-btn" />
           </button>
         </Link>
@@ -29,7 +29,7 @@ function Header({ name, button }) {
         { button && (
           <button
             type="button"
-            className="logo-search"
+            className="logo-search-btn"
             onClick={ isClick }
           >
             <img src={ searchIcon } alt="search icon" data-testid="search-top-btn" />

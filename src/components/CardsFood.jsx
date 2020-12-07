@@ -4,7 +4,7 @@ import RecipesAppContext from '../context/RecipesAppContext';
 import {
   requestApiFoodFilterName,
 } from '../services/requestFood';
-import '../styles/imgBig.css';
+import '../styles/CardFood.css';
 
 function CardsFood() {
   const {
@@ -26,7 +26,7 @@ function CardsFood() {
   const upToParameter12 = 12;
 
   return (
-    <div>
+    <div className="allcardfood">
       {(cardFood.length === arrayVoid) ? <span>Loading...</span> : cardFood
         .slice(ofTheFirstParameter, upToParameter12).map(({
           idMeal,
@@ -37,9 +37,8 @@ function CardsFood() {
             key={ idMeal }
             to={ `/comidas/${idMeal}` }
           >
-            <div data-testid={ `${index}-recipe-card` }>
+            <div data-testid={ `${index}-recipe-card` } className="cardfood">
               <img
-                className="imgBig"
                 src={ strMealThumb }
                 alt={ strMeal }
                 data-testid={ `${index}-card-img` }

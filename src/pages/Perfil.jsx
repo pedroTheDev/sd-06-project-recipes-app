@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import '../styles/Profile.css';
 import { loadState } from '../services/localStorage';
 
 function Perfil({ history }) {
