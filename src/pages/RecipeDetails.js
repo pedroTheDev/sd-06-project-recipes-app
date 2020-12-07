@@ -92,7 +92,8 @@ export default function RecipeDetails() {
 
   function shareRecipeLink() {
     const time = 3000;
-    navigator.clipboard.writeText(`http://localhost:3000${location.pathname}`);
+    const URL = `http://localhost:3000${location.pathname}`;
+    navigator.clipboard.writeText(URL);
     setAlertMsg(true);
     setTimeout(() => {
       setAlertMsg(false);
@@ -251,10 +252,10 @@ export default function RecipeDetails() {
         if (localStorageInProgress) {
           const localStorageInProgressAux = localStorageInProgress;
           if (localStorageInProgressAux[typeFood][actualRecipe[0].id]) {
-            return 'CONTINUAR RECEITA';
+            return 'Continuar Receita';
           }
         }
-        return 'INICIAR RECEITA';
+        return 'Iniciar Receita';
       };
 
       return (
@@ -369,7 +370,7 @@ export default function RecipeDetails() {
                       onClick={ () => saveDoneRecipe() }
                       disabled={ finishButtonEnable() }
                     >
-                      FINALIZAR RECEITA
+                      Finalizar Receita
                     </button>
                   </Link>
                 )}
