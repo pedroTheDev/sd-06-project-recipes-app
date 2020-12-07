@@ -16,6 +16,12 @@ function Provider({ children }) {
   });
   const [filteredList, setFilteredList] = useState(null);
   const [activeFilter, setActiveFilter] = useState('');
+  const [favoriteFilter, setFavoriteFilter] = useState('all');
+  const [doneFilter, setDoneFilter] = useState('all');
+  const [
+    favoriteList,
+    setFavoriteList,
+  ] = useState(JSON.parse(localStorage.getItem('favoriteRecipes')));
 
   const sliceStart = 0;
 
@@ -95,6 +101,12 @@ function Provider({ children }) {
     filteredList,
     activeFilter,
     setActiveFilter,
+    favoriteFilter,
+    setFavoriteFilter,
+    doneFilter,
+    setDoneFilter,
+    favoriteList,
+    setFavoriteList,
   };
 
   return (

@@ -14,7 +14,11 @@ function FoodDetail() {
     drinkData,
     getDrinkAPI,
   } = useContext(RecipesContext);
-  const currentRecipe = foodData[0];
+
+  let currentRecipe = {};
+  if (foodData) {
+    [currentRecipe] = foodData;
+  }
   const [ingredients, setIngredients] = useState([]);
   const [measures, setMeasures] = useState([]);
   const { id } = useParams();
@@ -46,7 +50,7 @@ function FoodDetail() {
   }, [foodData]);
 
   function handleUrl(url) {
-    if (foodData.length === 1) {
+    if (foodData && foodData.length === 1) {
       if (url && url !== '' && url !== null) {
         const videoId = url.split('=')[1];
         return (
@@ -120,7 +124,7 @@ function FoodDetail() {
   };
 
   const handleDetails = () => {
-    if (foodData.length === 1) {
+    if (foodData && foodData.length === 1) {
       return (
         <div
           className="detail-container"

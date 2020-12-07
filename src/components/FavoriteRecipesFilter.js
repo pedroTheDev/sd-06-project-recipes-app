@@ -2,13 +2,13 @@ import React, { useContext } from 'react';
 import RecipesContext from '../context/RecipesContext';
 import '../css/CategoryFilters.css';
 
-function DoneRecipesFilter() {
-  const { setDoneFilter } = useContext(RecipesContext);
+function FavoriteRecipesFilter() {
+  const { setFavoriteFilter } = useContext(RecipesContext);
 
   const onClick = ({ target }) => {
     const { value } = target;
 
-    setDoneFilter(value);
+    setFavoriteFilter(value);
   };
 
   return (
@@ -41,4 +41,4 @@ function DoneRecipesFilter() {
   );
 }
 
-export default DoneRecipesFilter;
+export default FavoriteRecipesFilter;

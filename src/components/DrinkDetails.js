@@ -16,7 +16,10 @@ function DrinkDetail() {
     getFoodAPI,
   } = useContext(RecipesContext);
 
-  const currentRecipe = drinkData[0];
+  let currentRecipe = {};
+  if (drinkData) {
+    [currentRecipe] = drinkData;
+  }
   const [ingredients, setIngredients] = useState([]);
   const [measures, setMeasures] = useState([]);
   const [showMessage, setShowMessage] = useState(false);
@@ -55,7 +58,7 @@ function DrinkDetail() {
   };
 
   const handleIngredients = () => {
-    if (drinkData.length === 1) {
+    if (drinkData && drinkData.length === 1) {
       const filteredKeys = Object.keys(currentRecipe);
       const filteredMeasurements = [];
       const filteredIngredients = [];
@@ -207,7 +210,7 @@ function DrinkDetail() {
   };
 
   const handleDetails = () => {
-    if (drinkData.length === 1) {
+    if (drinkData && drinkData.length === 1) {
       return (
         <div
           className="detail-container"

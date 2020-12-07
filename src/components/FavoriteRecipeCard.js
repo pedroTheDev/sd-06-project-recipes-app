@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import copy from 'clipboard-copy';
 import shareIcon from '../images/shareIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import RecipesContext from '../context/RecipesContext';
 import '../css/Cards.css';
 
 function DoneRecipeCard({ recipe, index }) {
@@ -14,9 +16,9 @@ function DoneRecipeCard({ recipe, index }) {
     alcoholicOrNot,
     name,
     image,
-    doneDate,
-    tags,
   } = recipe;
+
+  const { setFavoriteList } = useContext(RecipesContext);
 
   const [showMessage, setShowMessage] = useState(false);
 
@@ -42,8 +44,13 @@ function DoneRecipeCard({ recipe, index }) {
     setTimeout(() => setShowMessage(false), timeToShow);
   };
 
-  const minTag = 0;
-  const maxTag = 2;
+  const removeFavorite = () => {
+    const currentFavorite = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const newFavorite = currentFavorite.filter((item) => item.id !== id);
+
+    localStorage.setItem('favoriteRecipes', JSON.stringify(newFavorite));
+    setFavoriteList(newFavorite);
+  };
 
   return (
     <div className="done-recipe-card-container">
@@ -62,15 +69,6 @@ function DoneRecipeCard({ recipe, index }) {
         <Link to={ `/${type}s/${id}` }>
           <h4 data-testid={ `${index}-horizontal-name` }>{ name }</h4>
         </Link>
-        <p data-testid={ `${index}-horizontal-done-date` }>{ `Feita em: ${doneDate}` }</p>
-        { tags.slice(minTag, maxTag).map((tag, i) => (
-          <span
-            key={ `${i}-tag` }
-            data-testid={ `${index}-${tag}-horizontal-tag` }
-          >
-            { tag }
-          </span>
-        )) }
       </div>
       <div>
         <button type="button" onClick={ () => shareClick() }>
@@ -78,6 +76,13 @@ function DoneRecipeCard({ recipe, index }) {
             alt="share button"
             data-testid={ `${index}-horizontal-share-btn` }
             src={ shareIcon }
+          />
+        </button>
+        <button type="button" onClick={ () => removeFavorite() }>
+          <img
+            alt="favorite button"
+            data-testid={ `${index}-horizontal-favorite-btn` }
+            src={ blackHeartIcon }
           />
         </button>
       </div>
@@ -96,8 +101,6 @@ DoneRecipeCard.propTypes = {
     alcoholicOrNot: PropTypes.string,
     name: PropTypes.string,
     image: PropTypes.string,
-    doneDate: PropTypes.string,
-    tags: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
   index: PropTypes.number.isRequired,
 };

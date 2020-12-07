@@ -21,6 +21,7 @@ function DrinkList() {
 
   useEffect(() => {
     const { readyToSearch } = searchInput;
+
     if (!readyToSearch) {
       getDrinkAPI('name-filter', '');
     }
