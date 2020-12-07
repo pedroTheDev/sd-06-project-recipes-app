@@ -152,7 +152,7 @@ function RecipesInProgress() {
     document.body.removeChild(tempElement);
     const linkCopy = document.createElement('p');
     linkCopy.innerHTML = 'Link copiado!';
-    document.querySelector('.buttons').appendChild(linkCopy);
+    document.querySelector('.icons-area').appendChild(linkCopy);
   };
 
   const handleFavoriteRecipes = () => {

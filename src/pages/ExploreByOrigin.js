@@ -80,7 +80,12 @@ function ExploreByOrigin() {
                 tabIndex="0"
                 className="unit-card"
               >
-                <h5 data-testid={ `${index}-card-name` }>{ recipe.strMeal }</h5>
+                <h5
+                  data-testid={ `${index}-card-name` }
+                  className="title-card-done"
+                >
+                  { recipe.strMeal }
+                </h5>
                 <img
                   data-testid={ `${index}-card-img` }
                   src={ recipe.strMealThumb }

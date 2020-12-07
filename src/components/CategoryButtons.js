@@ -65,7 +65,7 @@ function CategoryButtons(props) {
       </button>
       {categories.map((category, index) => (
         <button
-          className="btn btn-light btn-sm btn-border"
+          className="btn btn-light btn-sm btn-border category-btn-text"
           key={ index }
           type="button"
           data-testid={ `${category.strCategory}-category-filter` }

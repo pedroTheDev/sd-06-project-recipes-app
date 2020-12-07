@@ -17,6 +17,7 @@ function RecipeDetails() {
   const [singleRecipe, setSingleRecipe] = useState([]);
   const [isFetching, setFetching] = useState(true);
   const [favoriteRecipe, setFavoriteRecipe] = useState(false);
+  const [urlVideo, setUrlVideo] = useState('=');
   const location = useLocation().pathname;
   const history = useHistory();
   const { idRecipe } = useParams();
@@ -46,6 +47,10 @@ function RecipeDetails() {
           }
         });
       }
+
+      const video = mealRecipe[0].strYoutube.split('=')[1];
+      setUrlVideo(video);
+
     } else {
       const data = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idRecipe}`);
       const responseJSON = await data.json();
@@ -263,14 +268,25 @@ function RecipeDetails() {
                   { singleRecipe.strInstructions }
 
                 </p>
-                <video data-testid="video" width="320" height="240">
+                {/* <video data-testid="video" width="320" height="240">
                   <track
                     default
                     kind="captions"
                     srcLang="pt-br"
                   />
                   <source src={ singleRecipe.strYoutube } />
-                </video>
+                </video> */}
+                <div className="video-div">
+                  <iframe
+                    data-testid="video"
+                    title="recipe-video"
+                    src={ `https://www.youtube.com/embed/${urlVideo}` }
+                    frameBorder="0"
+                    allow="accelerometer;autoplay;
+                    clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
                 <section>
                   <h5 className="section-title"> Recomendações: </h5>
                   <div className="container-card">
