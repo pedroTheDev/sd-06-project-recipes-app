@@ -91,7 +91,6 @@ export default function RecipeDetails() {
   }
 
   function shareRecipeLink() {
-    console.log(location.pathname);
     const URL = `http://localhost:3000/${idRecipe[1]}/${idRecipe[2]}`;
     navigator.clipboard.writeText(URL);
     const time = 10000;
