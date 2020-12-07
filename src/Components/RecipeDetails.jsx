@@ -133,8 +133,6 @@ const RecipeDetails = () => {
   };
 
   const renderRecipe = () => {
-    const px = 'px';
-    const THIRTY = 30;
     if (pathname === `/comidas/${ids}` && recipeDetailFood.length >= 1) {
       return recipeDetailFood.map((food, index) => (
         <div key={ index } className="details-container">
@@ -150,7 +148,6 @@ const RecipeDetails = () => {
             <div className="name-category">
               <p
                 data-testid="recipe-title"
-                style={ { fontSize: THIRTY + px } }
               >
                 { food.strMeal }
               </p>
@@ -255,7 +252,6 @@ const RecipeDetails = () => {
             <div className="name-category">
               <p
                 data-testid="recipe-title"
-                style={ { fontSize: THIRTY + px } }
               >
                 { drink.strDrink }
               </p>

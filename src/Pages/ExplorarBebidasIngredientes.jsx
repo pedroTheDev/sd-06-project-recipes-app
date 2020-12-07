@@ -5,9 +5,7 @@ import ExploreDrinkIngredients from '../Components/ExploreDrinkIngredients';
 function ExplorarBebidasIngredientes() {
   return (
     <div>
-      <Header pageName="Explorar Ingredientes" />
       <ExploreDrinkIngredients />
-      <Footer />
     </div>
   );
 }

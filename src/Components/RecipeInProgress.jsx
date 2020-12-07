@@ -296,8 +296,6 @@ const RecipeInProgress = () => {
   };
 
   if (pathname === `/comidas/${id}/in-progress`) {
-    const THIRTY = 30;
-    const px = 'px';
     return recipeDetailFood.map((food) => (
       <div key="1" className="details-container">
         <img
@@ -315,7 +313,6 @@ const RecipeInProgress = () => {
           <div className="name-category">
             <p
               data-testid="recipe-title"
-              style={ { fontSize: THIRTY + px }}
             >
               { food.strMeal }
             </p>
@@ -361,39 +358,52 @@ const RecipeInProgress = () => {
     ));
   }
   return recipeDetailDrink.map((drink) => (
-    <div key="2">
+    <div key="2" className="details-container">
       <img
         alt="product"
         data-testid="recipe-photo"
         src={ drink.strDrinkThumb }
       />
-      <h1 data-testid="recipe-title">{ drink.strDrink }</h1>
-      <div>
+      <div className="details-nav">
+        <button
+          onClick={ () => handleLikes(recipeDetailFood, recipeDetailDrink[0]) }
+          type="button"
+        >
+          <img data-testid="favorite-btn" src={ liked } alt="favorite logo" />
+        </button>
+        <div className="name-category">
+          <p data-testid="recipe-title">
+            { drink.strDrink }
+          </p>
+          <p data-testid="recipe-category">
+            {drink.strAlcoholic}
+          </p>
+        </div>
         <button
           onClick={ handleCopy }
           type="button"
           data-testid="share-btn"
         >
-          Share
-
+          <img src={ shareIcon } alt="share" />
         </button>
+        {copied}
       </div>
-
-      {copied}
-      <button
-        onClick={ () => handleLikes(recipeDetailFood, recipeDetailDrink[0]) }
-        type="button"
-      >
-        <img data-testid="favorite-btn" src={ liked } alt="favorite logo" />
-      </button>
-      <p data-testid="recipe-category">{drink.strAlcoholic}</p>
-      {
-        handleIngredients(drink, TWENTY_ONE, THIRTY_SIX, FIFTY_ONE)
-      }
-      <p data-testid="instructions">{ drink.strInstructions }</p>
+      <div className="ing-inst">
+        <div className="recipe-ingredients">
+          <h5>INGREDIENTS</h5>
+          {
+            handleIngredients(drink, TWENTY_ONE, THIRTY_SIX, FIFTY_ONE)
+          }
+        </div>
+        <div className="recipe-instructions">
+          <h5>INSTRUCTIONS</h5>
+          <p data-testid="instructions">{ drink.strInstructions }</p>
+        </div>
+      </div>
       <Link to="/receitas-feitas">
         <button
           data-testid="finish-recipe-btn"
+          className="start-continue-recipe-btn"
           type="button"
           disabled={ disable }
           onClick={ handleFinishRecipe }
