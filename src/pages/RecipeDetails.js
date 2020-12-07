@@ -7,45 +7,12 @@ import WhiteHeartIcon from '../images/whiteHeartIcon.svg';
 import BlackHeartIcon from '../images/blackHeartIcon.svg';
 import RecommendedRecipes from '../components/RecommendedRecipes';
 
-/*
-a chave doneRecipes deve conter a seguinte estrutura:
-[{
-    id: id-da-receita,
-    type: comida-ou-bebida,
-    area: area-da-receita-ou-texto-vazio,
-    category: categoria-da-receita-ou-texto-vazio,
-    alcoholicOrNot: alcoholic-ou-non-alcoholic-ou-texto-vazio,
-    name: nome-da-receita,
-    image: imagem-da-receita,
-    doneDate: quando-a-receita-foi-concluida,
-    tags: array-de-tags-da-receita-ou-array-vazio
-}]
-a chave favoriteRecipes deve conter a seguinte estrutura:
-[{
-    id: id-da-receita,
-    type: comida-ou-bebida,
-    area: area-da-receita-ou-texto-vazio,
-    category: categoria-da-receita-ou-texto-vazio,
-    alcoholicOrNot: alcoholic-ou-non-alcoholic-ou-texto-vazio,
-    name: nome-da-receita,
-    image: imagem-da-receita
-}]
-a chave inProgressRecipes deve conter a seguinte estrutura:
-{
-    cocktails: {
-        id-da-bebida: [lista-de-ingredientes-utilizados],
-        ...
-    },
-    meals: {
-        id-da-comida: [lista-de-ingredientes-utilizados],
-        ...
-    }
-}
-*/
-
 export default function RecipeDetails() {
   const { foods, setSearchParam, inProgress, setInProgress,
-    searchParam, fetchApi, isLoading } = useContext(RevenueContext);
+    searchParam, fetchApi, isLoading, localStorageDoneRecipes,
+    localStorageFavorites, setLocalStorageFavorites,
+    localStorageInProgress } = useContext(RevenueContext);
+
   const location = useLocation();
   const idRecipe = location.pathname.split('/');
   const [heartIcon, setheartIcon] = useState(WhiteHeartIcon);
@@ -59,40 +26,18 @@ export default function RecipeDetails() {
     ? `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idRecipe[2]}`
     : `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idRecipe[2]}`;
 
-  const [localStorageFavorites, setLocalStorageFavorites] = useState(
-    JSON
-      .parse(localStorage
-        .getItem('favoriteRecipes')),
-  );
-
-  const [localStorageDoneRecipes, setLocalStorageDoneRecipes] = useState(
-    JSON
-      .parse(localStorage
-        .getItem('doneRecipes')),
-  );
-
-  if (!localStorageFavorites) {
-    setLocalStorageFavorites([]);
-  }
-
-  if (!localStorageDoneRecipes) {
-    setLocalStorageDoneRecipes([]);
-  }
-
   let actualRecipe = [];
   function checkLocalStorageFavorites() {
     if (searchParam === 'Meal') {
       actualRecipe = ([
         {
           id: foods[0].idMeal,
-          type: searchParam,
+          type: 'comida',
           area: foods[0].strArea,
           category: foods[0].strCategory,
           alcoholicOrNot: '',
           name: foods[0].strMeal,
           image: foods[0].strMealThumb,
-          doneDate: 'fullDatte',
-          tags: foods[0].strTag ? foods[0].strTag : '',
         },
       ]);
     }
@@ -100,14 +45,12 @@ export default function RecipeDetails() {
       actualRecipe = ([
         {
           id: foods[0].idDrink,
-          type: searchParam,
+          type: 'bebida',
           area: '',
           category: foods[0].strCategory,
           alcoholicOrNot: foods[0].strAlcoholic,
           name: foods[0].strDrink,
           image: foods[0].strDrinkThumb,
-          doneDate: 'fullDatte',
-          tags: foods[0].strTag ? foods[0].strTag : '',
         },
       ]);
     }
@@ -123,12 +66,34 @@ export default function RecipeDetails() {
     if (isFavorite === undefined && heartIcon === BlackHeartIcon) {
       setheartIcon(WhiteHeartIcon);
     }
+
     return actualRecipe;
   }
 
+  function getDateLocaleformat() {
+    const date = new Date();
+    const actualDate = date.toLocaleDateString();
+    return actualDate;
+  }
+
+  function saveDoneRecipe() {
+    actualRecipe[0].tags = foods[0].strTag ? foods[0].strTag : '';
+    actualRecipe[0].doneDate = getDateLocaleformat();
+
+    if (localStorageDoneRecipes) {
+      const newLocalStorageDoneRecipes = localStorageDoneRecipes;
+      newLocalStorageDoneRecipes.push(actualRecipe[0]);
+      setLocalStorageFavorites(newLocalStorageDoneRecipes);
+      localStorage
+        .setItem('doneRecipes', JSON
+          .stringify(localStorageDoneRecipes));
+    }
+  }
+
   function shareRecipeLink() {
+    const URL = `http://localhost:3000/${idRecipe[1]}/${idRecipe[2]}`;
+    navigator.clipboard.writeText(URL);
     const time = 3000;
-    navigator.clipboard.writeText(`http://localhost:3000${location.pathname}`);
     setAlertMsg(true);
     setTimeout(() => {
       setAlertMsg(false);
@@ -182,7 +147,6 @@ export default function RecipeDetails() {
         .getItem('inProgressRecipes'));
     // Se inProgressRecipes ainda não existir grava primeiro item, bebida ou comida
     if (!localStorageInProgressAux) {
-      console.log('EXISTE');
       if (searchParam === 'Meal') {
         localStorageInProgressAux = {
           cocktails: {},
@@ -262,6 +226,7 @@ export default function RecipeDetails() {
       checkLocalStorageFavorites();
       let videoCode;
       let typeFood;
+
       const getInProgress = JSON
         .parse(localStorage
           .getItem('inProgressRecipes'));
@@ -272,12 +237,25 @@ export default function RecipeDetails() {
       } else {
         typeFood = 'cocktails';
       }
-      const checked = (index) => {
+      const check = (index) => {
         if (getInProgress) {
-          return getInProgress[typeFood][actualRecipe[0].id]
-            .includes(index);
+          const getInProgressAux = getInProgress;
+          if (getInProgressAux[typeFood][actualRecipe[0].id]) {
+            return getInProgressAux[typeFood][actualRecipe[0].id]
+              .includes(index);
+          }
         }
         return false;
+      };
+
+      const checkProgress = () => {
+        if (localStorageInProgress) {
+          const localStorageInProgressAux = localStorageInProgress;
+          if (localStorageInProgressAux[typeFood][actualRecipe[0].id]) {
+            return 'Continuar Receita';
+          }
+        }
+        return 'Iniciar Receita';
       };
 
       return (
@@ -321,14 +299,13 @@ export default function RecipeDetails() {
                     data-testid={ `${index}-ingredient-step` }
                   >
                     <input
-                      checked={ checked(index) }
+                      checked={ check(index) }
                       className="lineThrough"
                       type="checkbox"
                       name={ index }
                       id={ index }
                       onChange={ (e) => {
                         handleCheckbox(e, index, pairArray, typeFood);
-                        // window.location.reload();
                       } }
                     />
                     {' '}
@@ -344,7 +321,9 @@ export default function RecipeDetails() {
             )) }
           </ul>
           <h4>INSTRUCTIONS: </h4>
-          <p data-testid="instructions">{ foods[0].strInstructions }</p>
+          <p data-testid="instructions" className="text-justify">
+            { foods[0].strInstructions }
+          </p>
           { (videoCode) && (
             <>
               <h4>VIDEO: </h4>
@@ -361,43 +340,42 @@ export default function RecipeDetails() {
             </>
           ) }
           <h4>RECOMENDED: </h4>
-          <RecommendedRecipes />
-          {inProgress === false
-            ? (
-              <Link to={ `/${idRecipe[1]}/${idRecipe[2]}/in-progress` }>
-                <button
-                  style={ {
-                    postion: 'fixed',
-                    bottom: '0px',
-                  } }
-                  data-testid="start-recipe-btn"
-                  className="start-recipe-btn"
-                  type="button"
-                  onClick={ () => setInProgress(!inProgress) }
-                >
-                  INICIAR RECEITA
-                </button>
-              </Link>
-            )
-            : (
-              <Link to="/receitas-feitas">
-                <button
-                  style={ {
-                    postion: 'fixed',
-                    bottom: '0px',
-                  } }
-                  data-testid="finish-recipe-btn"
-                  className="finish-recipe-btn"
-                  id="finish-recipe-btn"
-                  type="button"
-                  onClick={ () => setInProgress(!inProgress) }
-                  name="finish"
-                  disabled={ finishButtonEnable() }
-                >
-                  FINALIZAR RECEITA
-                </button>
-              </Link>
-            )}
+          <div className="width360">
+            <RecommendedRecipes />
+          </div>
+          {(!localStorageDoneRecipes
+            .map((e) => e.id)
+            .find((e) => e === foods[0][`id${searchParam}`]))
+          && (
+            <div id="button-area">
+              {inProgress === false
+                ? (
+                  <Link to={ `/${idRecipe[1]}/${idRecipe[2]}/in-progress` }>
+                    <button
+                      data-testid="start-recipe-btn"
+                      className="start-recipe-btn"
+                      type="button"
+                      onClick={ () => setInProgress(!inProgress) }
+                    >
+                      {checkProgress()}
+                    </button>
+                  </Link>
+                )
+                : (
+                  <Link to="/receitas-feitas">
+                    <button
+                      data-testid="finish-recipe-btn"
+                      className="finish-recipe-btn"
+                      type="button"
+                      onClick={ () => saveDoneRecipe() }
+                      disabled={ finishButtonEnable() }
+                    >
+                      Finalizar Receita
+                    </button>
+                  </Link>
+                )}
+            </div>
+          )}
         </Container>
       );
     }
