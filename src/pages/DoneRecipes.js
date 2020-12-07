@@ -63,7 +63,7 @@ export default function DoneRecipes() {
               </h3>
             </Link>
             <p data-testid={ `${index}-horizontal-done-date` }>{item.doneDate}</p>
-            {item.tags.map((tagName, i) => (
+            {(item.tags.length > 0) && item.tags.map((tagName, i) => (
               <div
                 key={ i }
                 className="tagRecipe"
