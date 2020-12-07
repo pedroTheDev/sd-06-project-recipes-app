@@ -4,7 +4,6 @@ import copy from 'clipboard-copy';
 import shareIcon from '../images/shareIcon.svg';
 
 function ShareBtn({ id }) {
-  console.log(typeof id);
   const [showMessage, setShowMessage] = useState(false);
 
   const CopiedLinkMessage = (
