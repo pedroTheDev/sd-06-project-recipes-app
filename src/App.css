@@ -150,6 +150,23 @@
   visibility: hidden;
 }
 
+/* SearchBar Component */
+
+.search-container {
+  margin-bottom: 10px;
+}
+
+.input-search {
+  width: 355px;
+  margin: 3px;
+}
+
+.options {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px;
+}
+
 /* Recommended Component */
 
 .cards-container {

@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import SearchBar from './SearchBar';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 
 export default function Header(props) {
-  const [ssBar, setssBar] = useState(false);
-  const searchBar = ((ssBar === true) ? <SearchBar /> : (null));
+  const [Sbar, setSbar] = useState(false);
 
   function handleSearch() {
-    setssBar(!ssBar);
+    setSbar(!Sbar);
+    localStorage.setItem('sbar', Sbar);
   }
 
   const { title } = props;
@@ -57,7 +56,6 @@ export default function Header(props) {
         </Link>
         <h2 className="header-title" data-testid="page-title">{ title }</h2>
         {searchButton}
-        {searchBar}
       </div>
     </div>
   );
