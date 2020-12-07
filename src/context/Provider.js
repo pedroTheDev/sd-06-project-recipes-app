@@ -15,6 +15,45 @@ const Provider = ({ children }) => {
   const [externFetchLink, setexternFetchLink] = useState();
   const [inProgress, setInProgress] = useState(false);
 
+  const [localStorageFavorites, setLocalStorageFavorites] = useState(
+    JSON
+      .parse(localStorage
+        .getItem('favoriteRecipes')),
+  );
+
+  const [localStorageDoneRecipes, setLocalStorageDoneRecipes] = useState(
+    JSON
+      .parse(localStorage
+        .getItem('doneRecipes')),
+  );
+
+  const [localStorageInProgress, setLocalStorageInProgress] = useState(
+    JSON
+      .parse(localStorage
+        .getItem('inProgressRecipes')),
+  );
+
+  if (!localStorageInProgress) {
+    setLocalStorageInProgress({ cocktails: {}, meals: {} });
+    localStorage
+      .setItem('inProgressRecipes', JSON
+        .stringify({ cocktails: {}, meals: {} }));
+  }
+
+  if (!localStorageFavorites) {
+    setLocalStorageFavorites([]);
+    localStorage
+      .setItem('favoriteRecipes', JSON
+        .stringify([]));
+  }
+
+  if (!localStorageDoneRecipes) {
+    setLocalStorageDoneRecipes([]);
+    localStorage
+      .setItem('doneRecipes', JSON
+        .stringify([]));
+  }
+
   const fetchApi = async (URL) => {
     setisLoading(true);
     const response = await fetch(URL);
@@ -88,6 +127,12 @@ const Provider = ({ children }) => {
     setexternFetchLink,
     inProgress,
     setInProgress,
+    localStorageFavorites,
+    setLocalStorageFavorites,
+    localStorageDoneRecipes,
+    setLocalStorageDoneRecipes,
+    localStorageInProgress,
+    setLocalStorageInProgress,
   };
 
   return (

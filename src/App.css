@@ -94,6 +94,10 @@ footer, .start-recipe-btn, .finish-recipe-btn {
   bottom: 0px;
 }
 
+Container {
+padding: 20px;
+}
+
 .category-buttons {
   width: 30%;
   margin: 5px;
