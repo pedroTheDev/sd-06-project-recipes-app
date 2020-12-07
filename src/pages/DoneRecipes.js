@@ -4,6 +4,7 @@ import RecipesButtons from '../components/RecipesButtons';
 import ShareButton from '../components/ShareButton';
 
 export default function DoneRecipes() {
+  const ZERO = 0;
   const doneRecipesStorage = localStorage.getItem('doneRecipes'); // TROCAR favoriteRecipes POR doneRecipes
   const doneList = JSON.parse(doneRecipesStorage);
   const [selectedFilter, setselectedFilter] = useState('All');
@@ -63,7 +64,7 @@ export default function DoneRecipes() {
               </h3>
             </Link>
             <p data-testid={ `${index}-horizontal-done-date` }>{item.doneDate}</p>
-            {(item.tags.length > 0) && item.tags.map((tagName, i) => (
+            {(item.tags.length > ZERO) && item.tags.map((tagName, i) => (
               <div
                 key={ i }
                 className="tagRecipe"
