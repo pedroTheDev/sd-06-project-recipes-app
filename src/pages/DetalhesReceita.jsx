@@ -17,7 +17,7 @@ function DetalhesReceita({ match: { params: { id } } }) {
   const zero = 0;
   const vinte = 20;
   const seis = 6;
-  const [detailsFood, setDetailsFood] = useState([]);
+  const [detailsFood, setDetailsFood] = useState({});
   const [arrayIngredients, setArrayIngredients] = useState([]);
   const [embed, setEmbed] = useState('');
   const [recommendFood, setRecommendFood] = useState([]);
@@ -57,7 +57,7 @@ function DetalhesReceita({ match: { params: { id } } }) {
   const recommendFoodFunction = async () => {
     if (detailsFood.length !== zero) {
       const response = await requestApiDrinkFilterName();
-      setRecommendFood(response.drinks.slice(zero, seis));
+      setRecommendFood(response.slice(zero, seis));
     }
   };
 

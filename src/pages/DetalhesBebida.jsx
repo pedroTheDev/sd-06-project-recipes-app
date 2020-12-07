@@ -70,7 +70,7 @@ function DetalhesBebida({ match: { params: { id } } }) {
   const recommendDrinkFunction = async () => {
     if (detailsDrink.length !== zero) {
       const response = await requestApiFoodFilterName();
-      setRecommendDrink(response.meals.slice(zero, seis));
+      setRecommendDrink(response.slice(zero, seis));
     }
   };
 
