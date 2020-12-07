@@ -17,40 +17,51 @@ export default function DoneRecipes() {
     if (filter === 'All') setRecipesArray(recipes);
   }, [filter]);
 
+  useEffect(() => {
+    if (JSON.parse(localStorage.getItem('doneRecipes')) === null) {
+      setRecipesArray([]);
+    }
+  }, []);
+
   function handleFilterClick({ target }) {
     setFilter(target.innerHTML);
   }
 
   return (
-    <div>
+    <div className="food-container">
       <Header title="Receitas Feitas" />
-      <button
-        type="button"
-        onClick={ handleFilterClick }
-        data-testid="filter-by-all-btn"
-      >
-        All
-      </button>
-      <button
-        type="button"
-        onClick={ handleFilterClick }
-        data-testid="filter-by-drink-btn"
-      >
-        Drinks
-      </button>
-      <button
-        type="button"
-        onClick={ handleFilterClick }
-        data-testid="filter-by-food-btn"
-      >
-        Food
-      </button>
-      <div className="cards-container">
-        {recipesArray.map((recipe, index) => (
-          <div key={ index } className="recipe-card">
-            <DoneCard recipe={ recipe } index={ index } />
-          </div>
-        ))}
+      <div className="mobile-container">
+        <div>
+          <button
+            className="btn-sub-header"
+            type="button"
+            onClick={ handleFilterClick }
+            data-testid="filter-by-all-btn"
+          >
+            All
+          </button>
+          <button
+            className="btn-sub-header"
+            type="button"
+            onClick={ handleFilterClick }
+            data-testid="filter-by-drink-btn"
+          >
+            Drinks
+          </button>
+          <button
+            className="btn-sub-header"
+            type="button"
+            onClick={ handleFilterClick }
+            data-testid="filter-by-food-btn"
+          >
+            Food
+          </button>
+        </div>
+        <div className="done-cards-container">
+          {recipesArray.map((recipe, index) => (
+            <DoneCard recipe={ recipe } key={ index } index={ index } />
+          ))}
+        </div>
       </div>
     </div>
   );

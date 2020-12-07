@@ -132,6 +132,7 @@
 .header-title {
   margin: 10px;
   font-size: 29px;
+  white-space: nowrap;
 }
 
 .perfil-icon {
@@ -174,7 +175,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 200px;
+  height: auto;
   margin: 10px;
   width: 150px;
 }
@@ -191,18 +192,78 @@
 
 /* Favorite Recipes */
 
+.fav-cards-container {
+  display: grid;
+  gap: 0.4rem;
+}
+
 .fav-card {
-  border: solid 1px;
-  width: 360px;
+  border: 1px solid rgba(0, 0, 0, 0.329);
+  border-radius: 10px;
+  box-shadow: black 5px 4px 14px -4px;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  margin-left: 10px;
+  width: 90%;
 }
 
 .fav-img {
-  height: 50px;
-  width: 50px;
+  border-radius: 5px;
+
+  width: 100%;
+}
+
+.fav-title {
+  border-radius: 5px;
+  color: rgb(0, 0, 0);
+  display: flex;
+  flex-direction: column;
+  left: 5%;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  width: fit-content;
+  z-index: 99;
 }
 
 .favorite-filters {
   margin-left: 130px;
+}
+
+/* Done Recipes */
+.done-cards-container {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.done-card {
+  border: 1px solid rgba(0, 0, 0, 0.329);
+  border-radius: 10px;
+  box-shadow: black 5px 4px 14px -4px;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  margin-left: 10px;
+  width: 90%;
+}
+
+.done-card-img {
+  border-radius: 5px;
+  width: 70%;
+}
+
+.done-card-title {
+  border-radius: 5px;
+  color: rgb(0, 0, 0);
+  display: flex;
+  flex-direction: column;
+  left: 5%;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  width: fit-content;
+  z-index: 99;
 }
 
 /* Food Details */
@@ -274,11 +335,13 @@
 
 .copied-span {
   background-color: #17181773;
+  bottom: 10%;
   color: white;
   display: flex;
   font-size: 1.3em;
   justify-content: center;
   position: fixed;
+  right: 30%;
   width: 40%;
 }
 
@@ -307,7 +370,7 @@
 }
 
 .recipe-img {
-  width: 360px;
+  width: auto-fit;
 }
 
 .ingredient-checkbox:checked + label {
@@ -339,7 +402,7 @@
 .mobile-container {
   width: 360px;
   background: white;
-  background-color: #c1e9ce;
+  /* background-color: #c1e9ce; */
   margin-top: 58px;
   margin-bottom: 58px;
   display: flex;
@@ -352,5 +415,5 @@
 }
 
 .card-img {
-  width: 120px;
+  width: 80%;
 }

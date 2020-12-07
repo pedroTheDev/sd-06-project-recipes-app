@@ -31,51 +31,59 @@ function DoneCard({ recipe, index }) {
   }
 
   return (
-    <div className="recipe-card">
+    <div className="done-card">
       <Link to={ `/${type}s/${id}` }>
         <img
-          className="card-img"
+          className="done-card-img"
           data-testid={ `${index}-horizontal-image` }
           src={ image }
           alt={ name }
         />
-        <h4 data-testid={ `${index}-horizontal-name` }>{name}</h4>
+        <h4
+          className="done-card-title"
+          data-testid={ `${index}-horizontal-name` }
+        >
+          {name}
+        </h4>
       </Link>
-      {(isFood) && (
-        <p
-          data-testid={ `${index}-horizontal-top-text` }
+      <div className="done-details">
+        {(isFood) && (
+          <p
+            data-testid={ `${index}-horizontal-top-text` }
+          >
+            {`${area} - ${category}`}
+          </p>
+        )}
+        {(!isFood) && (
+          <p
+            data-testid={ `${index}-horizontal-top-text` }
+          >
+            {alcoholicOrNot}
+          </p>
+        )}
+        <p data-testid={ `${index}-horizontal-done-date` }>{doneDate}</p>
+        {(isFood) && tags.map((tag, idx) => (
+          <div
+            key={ `${idx}-tag` }
+            data-testid={ `${index}-${tag}-horizontal-tag` }
+          >
+            {tag}
+          </div>
+        ))}
+        <button
+          className="share-btn"
+          type="button"
+          onClick={ () => handleShareClick(id) }
         >
-          {`${area} - ${category}`}
-        </p>
-      )}
-      {(!isFood) && (
-        <p
-          data-testid={ `${index}-horizontal-top-text` }
-        >
-          {alcoholicOrNot}
-        </p>
-      )}
-      <p data-testid={ `${index}-horizontal-done-date` }>{doneDate}</p>
-      {(isFood) && tags.map((tag, idx) => (
-        <div
-          key={ `${idx}-tag` }
-          data-testid={ `${index}-${tag}-horizontal-tag` }
-        >
-          {tag}
-        </div>
-      ))}
-      <button
-        type="button"
-        onClick={ () => handleShareClick(id) }
-      >
-        <img
-          data-testid={ `${index}-horizontal-share-btn` }
-          src={ shareIcon }
-          alt="Compartilhar"
-        />
-        Compartilhar
-      </button>
-      {(copied) && <span>Link copiado!</span>}
+          <img
+            data-testid={ `${index}-horizontal-share-btn` }
+            src={ shareIcon }
+            alt="Compartilhar"
+          />
+          Compartilhar
+        </button>
+        {(copied) && <span className="copied-span">Link copiado!</span>}
+      </div>
     </div>
   );
 }

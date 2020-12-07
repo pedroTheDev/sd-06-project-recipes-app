@@ -27,70 +27,80 @@ export default function FavoriteRecipes() {
   }
 
   return (
-    <div>
+    <div className="food-container">
       <Header title="Receitas Favoritas" />
-      <div className="favorite-filters">
-        <button
-          type="button"
-          data-testid="filter-by-all-btn"
-        >
-          All
-        </button>
-        <button
-          type="button"
-          data-testid="filter-by-food-btn"
-        >
-          Food
-        </button>
-        <button
-          type="button"
-          data-testid="filter-by-drink-btn"
-        >
-          Drinks
-        </button>
-      </div>
-      {favorites.map((e, index) => (
-        <div key={ index } className="fav-card">
-          <Link to={ `/${e.type}s/${e.id}` }>
-            <p data-testid={ `${index}-horizontal-name` }>
-              { `${e.name}`}
-            </p>
-
-            <img
-              src={ e.image }
-              alt="foto"
-              className="fav-img"
-              data-testid={ `${index}-horizontal-image` }
-            />
-          </Link>
-
-          <p data-testid={ `${index}-horizontal-top-text` }>
-            { `${e.area} - ${e.category}` }
-            {alcoholic[index]}
-          </p>
-
+      <div className="mobile-container">
+        <div className="favorite-filters">
           <button
             type="button"
-            data-testid={ `${index}-horizontal-share-btn` }
-            onClick={ () => handleShareClick(e.id) }
-            src={ shareIcon }
+            data-testid="filter-by-all-btn"
           >
-            <img src={ shareIcon } alt="share" />
-            Share
+            All
           </button>
-          {(copied) && <span>Link copiado!</span>}
-
           <button
             type="button"
-            onClick={ () => handleRemove(index) }
-            data-testid={ `${index}-horizontal-favorite-btn` }
-            src={ blackHeartIcon }
+            data-testid="filter-by-food-btn"
           >
-            <img src={ blackHeartIcon } alt="blackHeart" />
-            Remove Favorite
+            Food
+          </button>
+          <button
+            type="button"
+            data-testid="filter-by-drink-btn"
+          >
+            Drinks
           </button>
         </div>
-      ))}
+        <div className="fav-cards-container">
+          {favorites.map((e, index) => (
+            <div key={ index } className="fav-card">
+              <Link to={ `/${e.type}s/${e.id}` }>
+                <h4
+                  className="fav-title"
+                  data-testid={ `${index}-horizontal-name` }
+                >
+                  { `${e.name}`}
+                </h4>
+                <img
+                  src={ e.image }
+                  alt="foto"
+                  className="fav-img"
+                  data-testid={ `${index}-horizontal-image` }
+                />
+              </Link>
+
+              <p data-testid={ `${index}-horizontal-top-text` }>
+                { `${e.area} - ${e.category}` }
+                {alcoholic[index]}
+              </p>
+
+              <div className="action-btns-div">
+                <button
+                className="share-btn"
+                  type="button"
+                  data-testid={ `${index}-horizontal-share-btn` }
+                  onClick={ () => handleShareClick(e.id) }
+                  src={ shareIcon }
+                >
+                  <img src={ shareIcon } alt="share" />
+                  Compartilhar
+                </button>
+                {(copied) && <span className="copied-span">Link copiado!</span>}
+
+                <button
+                  className="fav-btn"
+                  type="button"
+                  onClick={ () => handleRemove(index) }
+                  data-testid={ `${index}-horizontal-favorite-btn` }
+                  src={ blackHeartIcon }
+                >
+                  <img src={ blackHeartIcon } alt="blackHeart" />
+                  Remover Favorito
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
