@@ -28,8 +28,8 @@ const Explore = () => {
     if (pathname === '/explorar/comidas') {
       return (
         <div>
-          <Link 
-            to="/explorar/comidas/ingredientes" 
+          <Link
+            to="/explorar/comidas/ingredientes"
             data-testid="explore-by-ingredient"
             className="explore-btn"
           >
@@ -41,7 +41,7 @@ const Explore = () => {
             data-testid="explore-by-area"
             className="explore-btn"
           >
-            <img src={ exploreOrigin } atl="Explore by Origin Place" />
+            <img src={ exploreOrigin } alt="Explore by Origin Place" />
             Por Local de Origem
           </Link>
 
@@ -59,7 +59,7 @@ const Explore = () => {
     if (pathname === '/explorar/bebidas') {
       return (
         <div>
-          <Link 
+          <Link
             to="/explorar/bebidas/ingredientes"
             data-testid="explore-by-ingredient"
             className="explore-btn"

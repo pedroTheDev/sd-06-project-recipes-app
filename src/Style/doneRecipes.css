@@ -3,15 +3,6 @@
   justify-content: center;
 }
 
-.filter-done button {
-  background-color: #292929;
-  border: 2px solid #D3494E;
-  border-radius: 15px;
-  color: white;
-  font-family: 'Cinzel Decorative', cursive;
-  margin: 5px 10px;
-}
-
 .done-recipes-card {
   margin: 15px;
   height: 92px;

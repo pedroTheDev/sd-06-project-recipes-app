@@ -327,7 +327,7 @@ const RecipeInProgress = () => {
           >
             <img src={ shareIcon } alt="share" />
           </button>
-          {copied}          
+          {copied}   
         </div>
         <div className="ing-inst">
           <div className="recipe-ingredients">

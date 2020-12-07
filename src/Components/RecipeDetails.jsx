@@ -314,6 +314,7 @@ const RecipeDetails = () => {
               style={ { position: 'fixed', bottom: 0 } }
               data-testid="start-recipe-btn"
               onClick={ () => history.push(`${pathname}/in-progress`) }
+              className="start-continue-recipe-btn"
             >
               Continuar Receita
             </button>
@@ -323,6 +324,7 @@ const RecipeDetails = () => {
               data-testid="start-recipe-btn"
               style={ { position: 'fixed', bottom: 0 } }
               onClick={ () => history.push(`${pathname}/in-progress`) }
+              className="start-continue-recipe-btn"
             >
               Start Recipe
             </button>)}

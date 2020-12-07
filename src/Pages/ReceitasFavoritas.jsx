@@ -46,6 +46,7 @@ function ReceitasFavoritas() {
           type="button"
           id=""
           data-testid="filter-by-all-btn"
+          className="filter-button"
         >
           All
         </button>
@@ -54,6 +55,7 @@ function ReceitasFavoritas() {
           type="button"
           id="comida"
           data-testid="filter-by-food-btn"
+          className="filter-button"
         >
           Food
         </button>
@@ -62,6 +64,7 @@ function ReceitasFavoritas() {
           type="button"
           id="bebida"
           data-testid="filter-by-drink-btn"
+          className="filter-button"
         >
           Drinks
         </button>

@@ -75,7 +75,7 @@ function ReceitasFeitas() {
                     </p>
                     <p
                       data-testid={ `${index}-horizontal-name` }
-                      style={{ fontSize: '14px', color: '#FFE5AD' } }
+                      style={ { fontSize: '14px', color: '#FFE5AD' } }
                     >
                       { food.name }
                     </p>

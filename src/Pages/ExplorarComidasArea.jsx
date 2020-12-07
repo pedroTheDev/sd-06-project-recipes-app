@@ -50,12 +50,12 @@ function ExplorarComidasArea() {
           {foodsArea.length >= 1 && foodsArea
             .filter((_, index) => index < TEN)
             .map((food, indexs) => (
-              <div className="card-container">
+              <div key={ index } className="card-container">
                 <Link
-                data-testid={ `${indexs}-recipe-card` }
-                key={ indexs }
-                to={ `/comidas/${food.idMeal}` }
-                className="details-link"
+                  data-testid={ `${indexs}-recipe-card` }
+                  key={ indexs }
+                  to={ `/comidas/${food.idMeal}` }
+                  className="details-link"
                 >
                   <img
                     data-testid={ `${indexs}-card-img` }

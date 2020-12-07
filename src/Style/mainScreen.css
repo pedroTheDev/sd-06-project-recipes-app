@@ -3,15 +3,18 @@
   justify-content: center;
   flex-wrap: wrap;
   width: 360px;
-  height: 80px;
-  margin-top: 70px;
+  height: auto;
+  margin-top: 80px;
   align-items: center;
   background-color: rgba(41, 41, 41, 1);
 }
 
 .filter-button {
-  height: 27px;
-  border-radius: 13.5px;
+  background-color: #292929;
+  border: 2px solid #D3494E;
+  border-radius: 15px;
+  color: white;
+  font-family: 'Cinzel Decorative', cursive;
   margin: 5px;
 }
 

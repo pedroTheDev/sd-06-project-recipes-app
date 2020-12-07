@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
@@ -8,20 +8,18 @@ import SearchBar from './SearchBar';
 
 function Header({ pageName }) {
   const [divShow, setDivShow] = useState('hide');
-  
+
   function handleClick() {
     if (divShow === 'hide') {
       const header = document.getElementsByClassName('header');
       const filters = document.getElementsByClassName('filter-container');
       const ZERO = 0;
-      console.log('entrou no handleClick div = HIDE', header);
       header[0].style.borderRadius = ZERO;
-        filters[0].style.marginTop = '150px';
+      filters[0].style.marginTop = '150px';
       setDivShow('show');
     } else {
       const header = document.getElementsByClassName('header');
       const filters = document.getElementsByClassName('filter-container');
-      console.log('entrou no handleClick div = SHOW', header, filters)
       header[0].style = '';
       filters[0].style = '';
       setDivShow('hide');

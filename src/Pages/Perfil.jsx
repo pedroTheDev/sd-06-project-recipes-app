@@ -21,13 +21,25 @@ function Perfil() {
     <div>
       <Header pageName="Perfil" />
       <div className="profile-container">
-        <h3 data-testid="profile-email" className="explore-btn">{ JSON.parse(localStorage.user).email }</h3>
+        <h3
+          data-testid="profile-email" className="explore-btn"
+        >
+          { JSON.parse(localStorage.user).email }
+        </h3>
         <div>
-          <Link to="/receitas-feitas" data-testid="profile-done-btn" className="profile-btn">
+          <Link
+            to="/receitas-feitas"
+            data-testid="profile-done-btn"
+            className="profile-btn"
+          >
             <img src={ doneIcon } alt="Done Recipes" />
             Receitas Feitas
           </Link>
-          <Link to="/receitas-favoritas" data-testid="profile-favorite-btn" className="profile-btn">
+          <Link
+            to="/receitas-favoritas"
+            data-testid="profile-favorite-btn"
+            className="profile-btn"
+          >
             <img src={ favoriteIcon } alt="Favorite Recipes" />
             Receitas Favoritas
           </Link>
