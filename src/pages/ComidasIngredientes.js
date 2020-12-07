@@ -26,19 +26,21 @@ function ComidasIngredientes(props) {
   return (
     <main>
       <Header pageName="Explorar Ingredientes" renderSearch={ false } />
-      {
-        ingredients.map((ingredient, index) => (
-          <IngredientCard
-            key={ ingredient }
-            ingredientName={ ingredient }
-            ingredientImage={ pathname === '/explorar/bebidas/ingredientes'
-              ? `https://www.thecocktaildb.com/images/ingredients/${ingredient}-Small.png`
-              : `https://www.themealdb.com/images/ingredients/${ingredient}-Small.png` }
-            foodOrDrink={ pathname.includes('comidas') ? '/comidas' : '/bebidas' }
-            index={ index }
-          />
-        ))
-      }
+      <div className="done-recipes-display default-page">
+        {
+          ingredients.map((ingredient, index) => (
+            <IngredientCard
+              key={ ingredient }
+              ingredientName={ ingredient }
+              ingredientImage={ pathname === '/explorar/bebidas/ingredientes'
+                ? `https://www.thecocktaildb.com/images/ingredients/${ingredient}-Small.png`
+                : `https://www.themealdb.com/images/ingredients/${ingredient}-Small.png` }
+              foodOrDrink={ pathname.includes('comidas') ? '/comidas' : '/bebidas' }
+              index={ index }
+            />
+          ))
+        }
+      </div>
       <Footer />
     </main>
   );

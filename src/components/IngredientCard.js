@@ -13,19 +13,22 @@ const IngredientCard = (props) => {
   return (
     <Link
       to={ foodOrDrink }
+      className="done-recipe-card-container"
       onClick={ () => {
         clear();
         dispatchRequestedIngredient(ingredientName, foodOrDrink);
       } }
     >
-      <div data-testid={ `${index}-ingredient-card` }>
+      <div data-testid={ `${index}-ingredient-card` } className="done-recipe-card">
         <img
           data-testid={ `${index}-card-img` }
           className="smallIMG"
           src={ ingredientImage }
           alt="Foto da receita"
         />
-        <h5 data-testid={ `${index}-card-name` }>{ingredientName}</h5>
+        <div className="done-recipe-card-tag">
+          <h5 data-testid={ `${index}-card-name` }>{ingredientName}</h5>
+        </div>
       </div>
     </Link>
   );
