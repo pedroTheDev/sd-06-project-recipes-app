@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import copy from 'clipboard-copy';
-import Header from '../../components/Header';
+import Header from '../../components/MainHeader/Header';
 import { shareIcon, whiteHeartIcon, blackHeartIcon } from '../../images';
 import {
   getFavoriteRecipes,
@@ -44,9 +44,7 @@ function FavoritesRecipes() {
     paragraph.appendChild(span);
     span.innerHTML = 'Link copiado!';
   };
-
   const zero = 0;
-
   return (
     <div>
       <Header

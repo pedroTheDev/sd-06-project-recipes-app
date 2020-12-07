@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import copy from 'clipboard-copy';
 import { Link } from 'react-router-dom';
-import Header from '../../components/Header';
+import Header from '../../components/MainHeader/Header';
 import { shareIcon } from '../../images';
 import { getDoneRecipes } from '../../services/localStorage';
 

@@ -1,4 +1,17 @@
-.button-container {
+.detail-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.cover {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* .button-container {
   display: flex;
   position: fixed;
   bottom: 0;
@@ -23,4 +36,4 @@
   min-height: 200px;
   scroll-snap-align: center;
   margin: 2px;
-}
+} */
