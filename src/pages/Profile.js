@@ -5,7 +5,6 @@ import Footer from '../components/Footer';
 import '../Style/Profile.css';
 
 function Profile() {
-
   if (!JSON.parse(localStorage.getItem('user'))) {
     return (
       <>
