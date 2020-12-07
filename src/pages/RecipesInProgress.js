@@ -3,6 +3,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import '../styles/details.css';
 
 function RecipesInProgress() {
   const location = useLocation().pathname;
@@ -104,7 +105,7 @@ function RecipesInProgress() {
       allCheckedIngredients.push(ingredientMade.innerHTML);
       localStorage.setItem('checkedIngredients', JSON.stringify(allCheckedIngredients));
     }
-    const allCheckBoxs = document.querySelectorAll('#checkbox');
+    const allCheckBoxs = document.querySelectorAll('.checkbox');
     let count = zero;
     allCheckBoxs.forEach((checkbox) => {
       if (checkbox.checked === true) {
@@ -151,7 +152,7 @@ function RecipesInProgress() {
     document.body.removeChild(tempElement);
     const linkCopy = document.createElement('p');
     linkCopy.innerHTML = 'Link copiado!';
-    document.querySelector('.buttons').appendChild(linkCopy);
+    document.querySelector('.icons-area').appendChild(linkCopy);
   };
 
   const handleFavoriteRecipes = () => {
@@ -197,51 +198,74 @@ function RecipesInProgress() {
   };
 
   const renderFood = () => (
-    <div>
+    <div className="details-container">
       <img
         data-testid="recipe-photo"
         src={ recipeInProgress.strMealThumb }
         alt="recipe-meal"
-        width="200px"
+        className="img-card-details"
+        // width="200px"
       />
-      <h2 data-testid="recipe-title">{ recipeInProgress.strMeal }</h2>
-      <div className="buttons">
-        <img
-          data-testid="share-btn"
-          src={ shareIcon }
-          alt="share icon"
-          onClick={ () => handleShareIcon(recipeInProgress.idMeal, 'comidas') }
-          aria-hidden="true"
-        />
-        <img
-          data-testid="favorite-btn"
-          src={ favoriteRecipe ? blackHeartIcon : whiteHeartIcon }
-          alt="favorite icon"
-          onClick={ handleFavoriteRecipes }
-          aria-hidden="true"
-        />
-      </div>
-      <h3 data-testid="recipe-category">{ recipeInProgress.strCategory }</h3>
-      {allIngredients.map((ingredient, index) => (
-        <div
-          key={ index }
-          data-testid={ `${index}-ingredient-step` }
-        >
-          <input
-            type="checkbox"
-            id="checkbox"
-            onChange={ () => handleIngredients(index) }
+      <h3
+        data-testid="recipe-title"
+        className="title"
+      >
+        { recipeInProgress.strMeal }
+
+      </h3>
+      <div className="sub-title">
+        <h4 data-testid="recipe-category">{ recipeInProgress.strCategory }</h4>
+        <div className="icons-area">
+          <img
+            data-testid="share-btn"
+            src={ shareIcon }
+            alt="share icon"
+            onClick={ () => handleShareIcon(recipeInProgress.idMeal, 'comidas') }
+            aria-hidden="true"
+            className="share-btn"
           />
-          <p id={ `${index}-ingredient` }>
-            {`${ingredient.ingredient}: ${(ingredient.measure === null)
-              ? 'a gosto'
-              : ingredient.measure}`}
-          </p>
+          <img
+            data-testid="favorite-btn"
+            src={ favoriteRecipe ? blackHeartIcon : whiteHeartIcon }
+            alt="favorite icon"
+            onClick={ handleFavoriteRecipes }
+            aria-hidden="true"
+          />
         </div>
-      ))}
-      <span data-testid="instructions">{ recipeInProgress.strInstructions }</span>
+      </div>
+      <h5 className="section-title"> Ingredients </h5>
+      <section className="ingredients-area">
+        {allIngredients.map((ingredient, index) => (
+          <div
+            key={ index }
+            data-testid={ `${index}-ingredient-step` }
+          >
+            <input
+              type="checkbox"
+              // id="checkbox"
+              className="checkbox"
+              id={ `checkbox ${index}` }
+              onChange={ () => handleIngredients(index) }
+            />
+            <label id={ `${index}-ingredient` } htmlFor={ `checkbox ${index}` }>
+              {`${ingredient.ingredient}: ${(ingredient.measure === null)
+                ? 'a gosto'
+                : ingredient.measure}`}
+            </label>
+          </div>
+        ))}
+      </section>
+      <h5 className="section-title"> Instructions </h5>
+      <span
+        data-testid="instructions"
+        className="ingredients-area"
+      >
+        { recipeInProgress.strInstructions }
+
+      </span>
       <button
         type="button"
+        className="btn btn-light btn-lg btn-block btn-init"
         data-testid="finish-recipe-btn"
         onClick={ handleClick }
         disabled={ isDisabled }
@@ -252,51 +276,74 @@ function RecipesInProgress() {
   );
 
   const renderDrink = () => (
-    <div>
+    <div className="details-container">
       <img
         data-testid="recipe-photo"
         src={ recipeInProgress.strDrinkThumb }
         alt="recipe-drink"
-        width="200px"
+        className="img-card-details"
+        // width="200px"
       />
-      <h2 data-testid="recipe-title">{ recipeInProgress.strDrink }</h2>
-      <div className="buttons">
-        <img
-          data-testid="share-btn"
-          src={ shareIcon }
-          alt="share icon"
-          onClick={ () => handleShareIcon(recipeInProgress.idDrink, 'bebidas') }
-          aria-hidden="true"
-        />
-        <img
-          data-testid="favorite-btn"
-          src={ favoriteRecipe ? blackHeartIcon : whiteHeartIcon }
-          alt="favorite icon"
-          onClick={ handleFavoriteRecipes }
-          aria-hidden="true"
-        />
-      </div>
-      <h3 data-testid="recipe-category">{ recipeInProgress.strAlcoholic }</h3>
-      {allIngredients.map((ingredient, index) => (
-        <div
-          key={ index }
-          data-testid={ `${index}-ingredient-step` }
-        >
-          <input
-            type="checkbox"
-            id="checkbox"
-            onChange={ () => handleIngredients(index) }
+      <h3
+        data-testid="recipe-title"
+        className="title"
+      >
+        { recipeInProgress.strDrink }
+
+      </h3>
+      <div className="sub-title">
+        <h4 data-testid="recipe-category">{ recipeInProgress.strAlcoholic }</h4>
+        <div className="icons-area">
+          <img
+            data-testid="share-btn"
+            src={ shareIcon }
+            alt="share icon"
+            onClick={ () => handleShareIcon(recipeInProgress.idDrink, 'bebidas') }
+            aria-hidden="true"
+            className="share-btn"
           />
-          <p id={ `${index}-ingredient` }>
-            {`${ingredient.ingredient}: ${(ingredient.measure === null)
-              ? 'a gosto'
-              : ingredient.measure}`}
-          </p>
+          <img
+            data-testid="favorite-btn"
+            src={ favoriteRecipe ? blackHeartIcon : whiteHeartIcon }
+            alt="favorite icon"
+            onClick={ handleFavoriteRecipes }
+            aria-hidden="true"
+          />
         </div>
-      ))}
-      <span data-testid="instructions">{ recipeInProgress.strInstructions }</span>
+      </div>
+      <h5 className="section-title"> Ingredients </h5>
+      <section className="ingredients-area">
+        {allIngredients.map((ingredient, index) => (
+          <div
+            key={ index }
+            data-testid={ `${index}-ingredient-step` }
+          >
+            <input
+              type="checkbox"
+              // id="checkbox"
+              className="checkbox"
+              id={ `checkbox ${index}` }
+              onChange={ () => handleIngredients(index) }
+            />
+            <label id={ `${index}-ingredient` } htmlFor={ `checkbox ${index}` }>
+              {`${ingredient.ingredient}: ${(ingredient.measure === null)
+                ? 'a gosto'
+                : ingredient.measure}`}
+            </label>
+          </div>
+        ))}
+      </section>
+      <h5 className="section-title"> Instructions </h5>
+      <span
+        data-testid="instructions"
+        className="ingredients-area"
+      >
+        { recipeInProgress.strInstructions }
+
+      </span>
       <button
         type="button"
+        className="btn btn-light btn-lg btn-block btn-init"
         data-testid="finish-recipe-btn"
         onClick={ handleClick }
         disabled={ isDisabled }
@@ -311,7 +358,7 @@ function RecipesInProgress() {
   );
 
   return (
-    <div>
+    <div className="details-card">
       {isFetching ? renderLoading() : renderRecipes() }
     </div>
   );

@@ -1,7 +1,9 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import ContextRecipes from '../context/ContextRecipes';
+import panela from '../images/panela.jpeg';
 import '../styles/login.css';
+import '../App.css';
 
 function Login() {
   const {
@@ -31,17 +33,17 @@ function Login() {
   };
 
   return (
-    <div clssName="container">
+    <div className="main-container">
       <div>
-        <div className="name-login">
-          <h2>Recipes Group 15</h2>
-        </div>
-        <div className="login-box">
-          <h1>Login</h1>
-          <label htmlFor="email-input" className="textbox">
-            <i className="fas fa-user" />
+        <img src={ panela } alt="panela" width="220px" />
+      </div>
+      <br />
+      <form className="login-form">
+        <div className="form-group">
+          <label htmlFor="email-input">
             Email:
             <input
+              className="form-control"
               type="email"
               data-testid="email-input"
               name="email-input"
@@ -49,10 +51,12 @@ function Login() {
               onChange={ validateInputs }
             />
           </label>
-          <label htmlFor="password-input" className="textbox">
-            <i className="fas fa-user" />
+        </div>
+        <div className="form-group">
+          <label htmlFor="password-input">
             Password:
             <input
+              className="form-control"
               type="password"
               data-testid="password-input"
               name="password-input"
@@ -60,21 +64,19 @@ function Login() {
               onChange={ validateInputs }
             />
           </label>
-          <Link to="/comidas">
-            <button
-              type="button"
-              className="btn"
-              data-testid="login-submit-btn"
-              disabled={ btnDisable }
-              onClick={ handleClick }
-            >
-              Entrar
-            </button>
-          </Link>
-
         </div>
-
-      </div>
+        <Link to="/comidas">
+          <button
+            type="button"
+            className="btn btn-secondary"
+            data-testid="login-submit-btn"
+            disabled={ btnDisable }
+            onClick={ handleClick }
+          >
+            Entrar
+          </button>
+        </Link>
+      </form>
     </div>
   );
 }

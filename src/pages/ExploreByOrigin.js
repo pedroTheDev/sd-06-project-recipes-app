@@ -54,6 +54,7 @@ function ExploreByOrigin() {
               data-testid="explore-by-area-dropdown"
               onChange={ handleFetchRecipes }
               id="area-dropdown"
+              className="form-control drop-origin"
             >
               <option value="all" data-testid="All-option">All</option>
               { data.map((foodsArea, index) => (
@@ -67,26 +68,34 @@ function ExploreByOrigin() {
               ))}
             </select>
           </div>
-          { recipes.map((recipe, index) => (
-            <div
-              key={ index }
-              id={ recipe.idMeal }
-              data-testid={ `${index}-recipe-card` }
-              onClick={ () => history.push(`/comidas/${recipe.idMeal}`) }
-              onKeyPress={ () => history.push(`/comidas/${recipe.idMeal}`) }
-              role="button"
-              tabIndex="0"
-            >
-              <p data-testid={ `${index}-card-name` }>{ recipe.strMeal }</p>
-              <img
-                data-testid={ `${index}-card-img` }
-                src={ recipe.strMealThumb }
-                alt={ `${index}-food` }
-                aria-hidden="true"
-                width="100px"
-              />
-            </div>
-          )).filter((_, index) => index < MAX_NUMBER_OF_CARDS) }
+          <div className="container-card">
+            { recipes.map((recipe, index) => (
+              <div
+                key={ index }
+                id={ recipe.idMeal }
+                data-testid={ `${index}-recipe-card` }
+                onClick={ () => history.push(`/comidas/${recipe.idMeal}`) }
+                onKeyPress={ () => history.push(`/comidas/${recipe.idMeal}`) }
+                role="button"
+                tabIndex="0"
+                className="unit-card"
+              >
+                <h5
+                  data-testid={ `${index}-card-name` }
+                  className="title-card-done"
+                >
+                  { recipe.strMeal }
+                </h5>
+                <img
+                  data-testid={ `${index}-card-img` }
+                  src={ recipe.strMealThumb }
+                  alt={ `${index}-food` }
+                  aria-hidden="true"
+                  width="100%"
+                />
+              </div>
+            )).filter((_, index) => index < MAX_NUMBER_OF_CARDS) }
+          </div>
           <Footer />
         </div>
       ) : (
