@@ -93,7 +93,7 @@ export default function RecipeDetails() {
   function shareRecipeLink() {
     const URL = `http://localhost:3000/${idRecipe[1]}/${idRecipe[2]}`;
     navigator.clipboard.writeText(URL);
-    const time = 10000;
+    const time = 3000;
     setAlertMsg(true);
     setTimeout(() => {
       setAlertMsg(false);
