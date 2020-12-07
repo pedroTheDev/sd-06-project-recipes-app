@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Header, Footer } from '../Components';
+import { Header, Footer } from './Components';
 import favoriteIcon from '../images/favoriteIcon.png';
 import doneIcon from '../images/doneIcon.png';
 import '../Style/perfil.css';
