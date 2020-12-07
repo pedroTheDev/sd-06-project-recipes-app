@@ -83,7 +83,7 @@ describe('Comidas test', () => {
     expect(getByTestId('1-card-img').src).toEqual('https://www.themealdb.com/images/ingredients/Salmon-Small.png');
   });
 
-  it('have the footer', async () => {
+  it('aqui o erro', async () => {
     const { getByText, history } = renderWithRouter(<ComidasPorIngredientes />);
 
     await waitForElement(() => getByText('Chicken'));
