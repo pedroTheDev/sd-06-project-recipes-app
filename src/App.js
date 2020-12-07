@@ -14,6 +14,7 @@ import ReceitasFeitas from './pages/ReceitasFeitas';
 import MealsPerIngredients from './pages/MealsPerIngredients';
 import MealsPerArea from './pages/MealsPerArea';
 import DrinksPerIngredients from './pages/DrinksPerIngredients';
+import ReceitasEmProgresso from './pages/ReceitaEmProgresso';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <Route exact path="/perfil" component={ Perfil } />
           <Route exact path="/comidas/:id" component={ MenuDetails } />
           <Route exact path="/bebidas/:id" component={ MenuDetails } />
+          <Route exact path="/receitas-em-progresso" component={ ReceitasEmProgresso } />
           <Route exact path="/receitas-feitas" component={ ReceitasFeitas } />
           <Route exact path="/receitas-favoritas" component={ ReceitasFavoritas } />
           <Route exact path="/" component={ Login } />
