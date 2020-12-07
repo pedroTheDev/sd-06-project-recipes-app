@@ -18,12 +18,15 @@ function SearchBar({ verification, onClick }) {
       <div
         onChange={ (e) => verification(e) }
       >
-        <label htmlFor="ingredient-search-radio">
+        <label
+          htmlFor="ingredient-search-radio"
+        >
           <input
             type="radio"
             name="inputRadio"
             data-testid="ingredient-search-radio"
             id="ingredient-search-radio"
+            className="label"
           />
           Ingredientes
         </label>
@@ -34,6 +37,7 @@ function SearchBar({ verification, onClick }) {
             name="inputRadio"
             data-testid="first-letter-search-radio"
             id="first-letter-search-radio"
+            className="label"
           />
           Primeira letra
         </label>
@@ -44,6 +48,7 @@ function SearchBar({ verification, onClick }) {
             name="inputRadio"
             data-testid="name-search-radio"
             id="name-search-radio"
+            className="label"
           />
           Nome
         </label>

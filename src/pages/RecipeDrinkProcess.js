@@ -214,32 +214,24 @@ function RecipeDrinkProcess(props) {
 
   if (recipes.length > ZERO) {
     return (
-      <div>
+      <div className="process-container">
+        <h1
+          data-testid="recipe-title"
+          className="title-process"
+        >
+          { recipes[0].strDrink }
+        </h1>
         <img
           data-testid="recipe-photo"
           src={ recipes[0].strDrinkThumb }
           alt="imagem"
+          className="image-process"
         />
-        <h4
-          data-testid="recipe-title"
-        >
-          { recipes[0].strDrink }
-        </h4>
-        <button
-          type="button"
-          onClick={ () => copyClip() }
-          data-testid="share-btn"
-        >
-          <img
-            src={ shareIcon }
-            alt="compartilhar"
-          />
-        </button>
-        {share && <span>Link copiado!</span>}
         <div>
           <button
             type="button"
             onClick={ handleFavorites }
+            className="btn btn-outline-dark-process"
           >
             <img
               data-testid="favorite-btn"
@@ -247,6 +239,18 @@ function RecipeDrinkProcess(props) {
               src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
             />
           </button>
+          <button
+            type="button"
+            onClick={ () => copyClip() }
+            data-testid="share-btn"
+            className="btn btn-outline-dark-process"
+          >
+            <img
+              src={ shareIcon }
+              alt="compartilhar"
+            />
+          </button>
+          {share && <span>Link copiado!</span>}
         </div>
         <h5
           data-testid="recipe-category"
@@ -256,7 +260,12 @@ function RecipeDrinkProcess(props) {
         <div className="checkbox">
           { createCheckBoxes() }
         </div>
-        <p data-testid="instructions">{ recipes[0].strInstructions }</p>
+        <p
+          data-testid="instructions"
+          className="description"
+        >
+          { recipes[0].strInstructions }
+        </p>
         <button
           type="button"
           data-testid="finish-recipe-btn"

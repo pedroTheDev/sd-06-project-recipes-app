@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import RecipesAppContext from '../context/RecipesAppContext';
+import '../Style/Favorites.css';
 
 function FavoriteFilters() {
   const { setRenderFavoriteRecipes } = useContext(RecipesAppContext);
@@ -14,11 +15,12 @@ function FavoriteFilters() {
   };
 
   return (
-    <div>
+    <div className="container-favorites">
       <button
         type="button"
         onClick={ () => handleClick('all') }
         data-testid="filter-by-all-btn"
+        className="btn btn-favorites"
       >
         All
       </button>
@@ -26,6 +28,7 @@ function FavoriteFilters() {
         type="button"
         onClick={ () => handleClick('comida') }
         data-testid="filter-by-food-btn"
+        className="btn btn-favorites"
       >
         Food
       </button>
@@ -33,6 +36,7 @@ function FavoriteFilters() {
         type="button"
         onClick={ () => handleClick('bebida') }
         data-testid="filter-by-drink-btn"
+        className="btn btn-favorites"
       >
         Drinks
       </button>
