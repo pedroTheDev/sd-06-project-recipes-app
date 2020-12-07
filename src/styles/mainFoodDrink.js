@@ -57,6 +57,6 @@ export const Cards = styled.section`
 
   img {
     margin: 1%;
-    width: 98%;
+    width: 96%;
   }
 `;

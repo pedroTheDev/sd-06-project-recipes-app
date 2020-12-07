@@ -17,14 +17,14 @@ function Footer() {
       <div>
         <FooterIconStyle>
           <a
-            href="/explorar"
-          >
-            <FontAwesomeIcon icon={ faCompass } size="3x" />
-          </a>
-          <a
             href="/bebidas"
           >
             <FontAwesomeIcon icon={ faGlassMartiniAlt } size="3x" />
+          </a>
+          <a
+            href="/explorar"
+          >
+            <FontAwesomeIcon icon={ faCompass } size="3x" />
           </a>
           <a
             href="/comidas"

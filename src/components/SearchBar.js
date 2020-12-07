@@ -3,8 +3,13 @@ import RecipesContext from '../context/RecipesContext';
 import fetchApiFood from '../services/FetchApiFood';
 import fetchApiDrink from '../services/FetchApiDrink';
 
-// CSS
-import '../styles/searchBar.css';
+// Styled components
+import {
+  SearchBarContainer,
+  CustomRadioContainer,
+  CustomSearchInput,
+  CheckMarkRadio,
+  ButtonSearch } from '../styles/searchBarStyle';
 
 export default function SearchBar() {
   const { setRadioValue,
@@ -37,19 +42,19 @@ export default function SearchBar() {
   };
 
   return (
-    <div className="SearchBar">
+    <SearchBarContainer>
       <form>
-        <label htmlFor="Busca">
-          Barra de Busca:
-          <input
+        <div>
+          <CustomSearchInput
             onChange={ handleSearchBar }
             id="Busca"
             type="text"
             data-testid="search-input"
+            placeholder="Busque aqui"
           />
-        </label>
-        <br />
-        <label htmlFor="ingrediente">
+        </div>
+
+        <CustomRadioContainer>
           Ingrediente
           <input
             onClick={ radioClick }
@@ -59,8 +64,10 @@ export default function SearchBar() {
             id="ingrediente"
             data-testid="ingredient-search-radio"
           />
-        </label>
-        <label htmlFor="nome">
+          <CheckMarkRadio />
+        </CustomRadioContainer>
+
+        <CustomRadioContainer>
           Nome
           <input
             onClick={ radioClick }
@@ -70,9 +77,11 @@ export default function SearchBar() {
             data-testid="name-search-radio"
             name="select"
           />
-        </label>
-        <label htmlFor="primeira-letra">
-          Primeira Letra
+          <CheckMarkRadio />
+        </CustomRadioContainer>
+
+        <CustomRadioContainer>
+          Primeira letra
           <input
             onClick={ radioClick }
             id="primeira-letra"
@@ -81,15 +90,17 @@ export default function SearchBar() {
             data-testid="first-letter-search-radio"
             name="select"
           />
-        </label>
+          <CheckMarkRadio />
+        </CustomRadioContainer>
+
       </form>
-      <button
+      <ButtonSearch
         type="button"
         data-testid="exec-search-btn"
         onClick={ handleSearchButton }
       >
         Buscar
-      </button>
-    </div>
+      </ButtonSearch>
+    </SearchBarContainer>
   );
 }
