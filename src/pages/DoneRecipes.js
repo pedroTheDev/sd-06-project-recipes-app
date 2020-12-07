@@ -9,7 +9,7 @@ export default function DoneRecipes() {
   const [selectedFilter, setselectedFilter] = useState('All');
 
   let filteredResults;
-  if (selectedFilter === 'All') filteredResults = [...doneList];
+  if (selectedFilter === 'All') filteredResults = (doneList) ? [...doneList] : [];
   if (selectedFilter === 'Meal') {
     filteredResults = doneList
       .filter((item) => item.type === selectedFilter || item.type === 'comida');

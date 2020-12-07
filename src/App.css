@@ -117,7 +117,7 @@ padding: 20px;
 }
 
 .cardIngredients {
-  width: 40%;
+  width: 140px;
   border: 1px solid rgb(154, 177, 190);
   border-radius: 5px;
   text-align: center;
@@ -207,4 +207,14 @@ padding: 20px;
 input[type=checkbox]:checked + label {
   text-decoration: line-through;
   color: red;
+}
+
+.select-explore-origin {
+  margin: 10px auto;
+  width: 300px;
+  padding: 10px 20px;
+}
+
+.content-select-explore {
+  text-align: center;
 }

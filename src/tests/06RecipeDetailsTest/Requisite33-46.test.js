@@ -1,6 +1,12 @@
 import React from 'react';
+import { fireEvent } from '@testing-library/react';
 import renderWithRouter from '../renderWithRouter/renderWithRouter';
 import App from '../../App';
+
+beforeEach(() => {
+  // According to the documentation: "values stored in tests will also be available in other tests unless you run"
+  localStorage.clear();
+});
 
 describe('33 - Implemente os elementos da tela de detalhes '
   + 'de uma receita de COMIDAS respeitando os atributos descritos no protótipo', () => {
@@ -228,5 +234,173 @@ describe('33.1 - Implemente os elementos da tela de detalhes '
     const startRecipeButton = await findByTestId('start-recipe-btn');
 
     expect(startRecipeButton).toBeInTheDocument();
+  });
+});
+
+describe('41 - Redirecione a pessoa usuário caso o botão '
+  + '"Iniciar Receita" seja clicado, a rota '
+  + 'deve mudar para a tela de receita em processo', () => {
+  it('Redireciona para tela de receita da comida em processo', async () => {
+    const { findByTestId, history } = renderWithRouter(<App />);
+    history.push('comidas/53026');
+
+    await expect(history.location.pathname).toBe('/comidas/53026');
+    const startRecipeButton = await findByTestId('start-recipe-btn');
+    fireEvent.click(startRecipeButton);
+
+    await expect(history.location.pathname).toBe('/comidas/53026/in-progress');
+  });
+  it('Redireciona para tela de receita da bebida em processo', async () => {
+    const { findByTestId, history } = renderWithRouter(<App />);
+    history.push('bebidas/13501');
+
+    await expect(history.location.pathname).toBe('/bebidas/13501');
+    const startRecipeButton = await findByTestId('start-recipe-btn');
+    fireEvent.click(startRecipeButton);
+
+    await expect(history.location.pathname).toBe('/bebidas/13501/in-progress');
+  });
+});
+
+describe('42 - Implemente um botão de compartilhar '
+  + 'e um de favoritar a receita', () => {
+  it('Verifica se os botões estão disponíveis '
+  + 'na tela de detalhes de uma comida', async () => {
+    const { findByTestId, history } = renderWithRouter(<App />);
+    history.push('comidas/53026');
+
+    await expect(history.location.pathname).toBe('/comidas/53026');
+    const shareButton = await findByTestId('share-btn');
+    const favoriteButton = await findByTestId('favorite-btn');
+    // console.log(shareButton);
+    expect(shareButton).toBeInTheDocument();
+    expect(favoriteButton).toBeInTheDocument();
+  });
+
+  it('Verifica se os botões estão disponíveis na '
+  + 'tela de detalhes de uma bebida.', async () => {
+    const { findByTestId, history } = renderWithRouter(<App />);
+    history.push('bebidas/13501');
+
+    await expect(history.location.pathname).toBe('/bebidas/13501');
+    const shareButton = await findByTestId('share-btn');
+    const favoriteButton = await findByTestId('favorite-btn');
+    // console.log(shareButton);
+    expect(shareButton).toBeInTheDocument();
+    expect(favoriteButton).toBeInTheDocument();
+  });
+});
+
+// describe.only('43 - Implemente a solução de forma que, ao clicar '
+// + 'no botão de compartilhar, o link da receita '
+// + 'dentro do app deve ser copiado para o clipboard '
+// + 'e uma mensagem avisando que o link foi copiado deve aparecer', () => {
+//   it('Verifica a mensagem "Link copiado!" e se o '
+//   + 'link da receita da comida foi copiado para o clipboard', async () => {
+//     const { findByTestId, history, findByText } = renderWithRouter(<App />);
+//     history.push('comidas/53026');
+
+//     await expect(history.location.pathname).toBe('/comidas/53026');
+//     const shareButton = await findByTestId('share-btn');
+//     fireEvent.click(shareButton);
+
+//     console.log(shareButton);
+//     const copiedMessage = await findByText('Link copiado!');
+//     console.log(copiedMessage);
+//     expect(copiedMessage).toBeInTheDocument();
+//   });
+
+// it('Verifica a mensagem "Link copiado!" e se o '
+// + 'link da receita da bebida foi copiado para o clipboard.', async () => {
+//   const { findByTestId, history, findByText } = renderWithRouter(<App />);
+//   history.push('bebidas/13501');
+
+//   await expect(history.location.pathname).toBe('/bebidas/13501');
+//   const shareButton = await findByTestId('share-btn');
+//   fireEvent.click(shareButton);
+
+//   const copiedMessage = await findByText('Link copiado!');
+//   expect(copiedMessage).toBeInTheDocument();
+// });
+// });
+
+describe('44 - Implemente o ícone do coração (favorito) de maneira '
+  + 'que, deve vir preenchido caso a receita esteja favoritada '
+  + 'e "despreenchido" caso contrário', () => {
+  it('Verifica se a comida não favoritada vem com o coração "despreenchido"'
+    + 'e depois Verifica se a comida favoritada vem '
+    + 'com o coração preenchido', async () => {
+    const { findByTestId, history } = renderWithRouter(<App />);
+    history.push('comidas/53026');
+
+    const favoriteWhiteHeart = await findByTestId('favorite-btn');
+    // console.log(favoriteWhiteHeart.src);
+    expect(favoriteWhiteHeart.src).toBe('http://localhost/whiteHeartIcon.svg');
+
+    fireEvent.click(favoriteWhiteHeart);
+
+    const favoriteBlackHeart = await findByTestId('favorite-btn');
+    // console.log(favoriteBlackHeart.src);
+
+    expect(favoriteBlackHeart.src).toBe('http://localhost/blackHeartIcon.svg');
+  });
+
+  it('Verifica se a bebida não favoritada vem com '
+    + 'o coração "despreenchido" e depois Verifica '
+    + 'se a bebida favoritada vem com o coração '
+    + 'preenchido', async () => {
+    const { findByTestId, history } = renderWithRouter(<App />);
+    history.push('bebidas/13501');
+
+    const favoriteWhiteHeart = await findByTestId('favorite-btn');
+    // console.log(favoriteWhiteHeart.src);
+    expect(favoriteWhiteHeart.src).toBe('http://localhost/whiteHeartIcon.svg');
+
+    fireEvent.click(favoriteWhiteHeart);
+
+    const favoriteBlackHeart = await findByTestId('favorite-btn');
+    // console.log(favoriteBlackHeart.src);
+
+    expect(favoriteBlackHeart.src).toBe('http://localhost/blackHeartIcon.svg');
+  });
+});
+
+describe('46 - Salve as receitas favoritas no localStorage '
+  + 'na chave favoriteRecipes', () => {
+  it('Verifica se após favoritar receita de uma comida, '
+    + 'ela é salva corretamente no localStorage', async () => {
+    const { findByTestId, history } = renderWithRouter(<App />);
+    history.push('comidas/52844');
+
+    const favoriteWhiteHeart = await findByTestId('favorite-btn');
+    // console.log(favoriteWhiteHeart.src);
+    expect(favoriteWhiteHeart.src).toBe('http://localhost/whiteHeartIcon.svg');
+
+    fireEvent.click(favoriteWhiteHeart);
+
+    const favoriteRecipes = localStorage.getItem('favoriteRecipes');
+    // console.log(favoriteRecipes);
+    // console.log(favoriteRecipes.findByText('id: "52844"'));
+    expect(favoriteRecipes).toBe(
+      '[{"id":"52844","type":"Meal","area":"Italian","category":"Pasta","alcoholicOrNot":"","name":"Lasagne","image":"https://www.themealdb.com/images/media/meals/wtsvxx1511296896.jpg","doneDate":"fullDatte","tags":""}]',
+    );
+  });
+
+  it('Verifica se após favoritar receita de uma bebida, '
+    + 'ela é salva corretamente no localStorage.', async () => {
+    const { findByTestId, history } = renderWithRouter(<App />);
+    history.push('bebidas/15288');
+
+    const favoriteWhiteHeart = await findByTestId('favorite-btn');
+    // console.log(favoriteWhiteHeart.src);
+    expect(favoriteWhiteHeart.src).toBe('http://localhost/whiteHeartIcon.svg');
+
+    fireEvent.click(favoriteWhiteHeart);
+
+    const favoriteRecipes = localStorage.getItem('favoriteRecipes');
+    // console.log(favoriteRecipes);
+    expect(favoriteRecipes).toBe(
+      '[{"id":"15288","type":"Drink","area":"","category":"Shot","alcoholicOrNot":"Alcoholic","name":"252","image":"https://www.thecocktaildb.com/images/media/drink/rtpxqw1468877562.jpg","doneDate":"fullDatte","tags":""}]',
+    );
   });
 });

@@ -11,7 +11,7 @@ export default function FavoriteRecipes() {
   const [update, setupdate] = useState(true);
 
   let filteredResults;
-  if (selectedFilter === 'All') filteredResults = [...favoriteList];
+  if (selectedFilter === 'All') filteredResults = (favoriteList) ? [...favoriteList] : [];
   if (selectedFilter === 'Meal') {
     filteredResults = favoriteList
       .filter((item) => item.type === selectedFilter || item.type === 'comida');
@@ -27,7 +27,7 @@ export default function FavoriteRecipes() {
   };
 
   useEffect(() => {
-    console.log('update');
+    // console.log('update');
   }, [update]);
 
   function handleLocalStorage(id) {
