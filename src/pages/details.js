@@ -28,6 +28,8 @@ class Details extends Component {
     this.handleShare = this.handleShare.bind(this);
     this.handleFavorite = this.handleFavorite.bind(this);
     this.checkIsFavorite = this.checkIsFavorite.bind(this);
+    this.checkIsDone = this.checkIsDone.bind(this);
+    this.parseIngredientsAndMeasures = this.parseIngredientsAndMeasures.bind(this);
   }
 
   componentDidMount() {
@@ -136,7 +138,8 @@ class Details extends Component {
       if (isMeal) {
         endPointMeal = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
         endPointDrink = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
-      } else {
+      }
+      if (isDrink) {
         endPointDrink = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
         endPointMeal = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
       }
@@ -146,6 +149,7 @@ class Details extends Component {
       const { drinks } = await drinksApi.json();
       const zero = 0;
       const six = 6;
+
       if (isDrink) {
         this.setState({
           details: drinks,
@@ -171,6 +175,7 @@ class Details extends Component {
   parseIngredientsAndMeasures(details) {
     const ZERO = 0;
     let index = ZERO;
+    // console.log(details[0]);
     const ingredients = Object.entries(details[0])
       .filter(([key, value]) => {
         if (key === `strIngredient${index + 1}` && value !== ' ') {
@@ -197,7 +202,14 @@ class Details extends Component {
 
   renderCardDetails() {
     const { match: { url }, history } = this.props;
-    const { details, recomendations, isMeal, clipboard, isFavorite, isDone } = this.state;
+    const { details,
+      recomendations,
+      isMeal,
+      clipboard,
+      isFavorite,
+      isDone,
+    } = this.state;
+
     const ingredientsAndMeasures = this.parseIngredientsAndMeasures(details);
     const zero = 0;
 

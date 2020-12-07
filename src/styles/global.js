@@ -32,4 +32,8 @@ export default createGlobalStyle`
   button {
     cursor: pointer;
   }
+
+  #root {
+    margin: 30px 0;
+  }
 `;

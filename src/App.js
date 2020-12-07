@@ -19,8 +19,6 @@ import {
 import './App.css';
 import GlobalStyle from './styles/global';
 
-// mudar componentes de rotas com parametros
-
 function App() {
   return (
     <div>

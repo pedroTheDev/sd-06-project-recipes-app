@@ -7,7 +7,7 @@ import {
   MealsAndDrinksContainer,
   MainContainer,
   ButtonContainer,
-} from './style/mealsAdnDrinks';
+} from './style/mealsAndDrinks';
 
 class RecipesCardMeals extends Component {
   constructor() {
