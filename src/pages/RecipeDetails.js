@@ -50,7 +50,6 @@ function RecipeDetails() {
 
       const video = mealRecipe[0].strYoutube.split('=')[1];
       setUrlVideo(video);
-
     } else {
       const data = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idRecipe}`);
       const responseJSON = await data.json();
