@@ -6,6 +6,7 @@
   border-bottom-left-radius: 40px;
   position: fixed;
   top: 0;
+  z-index: 5;
 
   display: flex;
   align-items: center;

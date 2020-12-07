@@ -11,7 +11,7 @@
 }
 
 .text-btn h4 {
-  font-size: small;
+  font-size: large;
   color: #000;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -19,7 +19,7 @@
 
 .cardfood {
   background-color: #F8F8F8;
-  width: 120px;
+  width: 178px;
   box-shadow: #000 4px 4px 3px;
   margin: 3px 10px 10px 10px;
   display: flex;

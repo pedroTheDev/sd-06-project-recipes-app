@@ -1,4 +1,8 @@
 .favorite-btn {
-  background-color: #F8F8F8;
+  position: absolute;
+  background-color: transparent;
   border: 0px;
+  padding-left: 115px;
+  padding-top: 10px;
+  z-index: 1;
 }

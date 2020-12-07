@@ -53,6 +53,7 @@ function CardsFood() {
               data-testid={ `${index}-recipe-card` }
               className="cardfood"
             >
+              <FavoriteHeart id={ idMeal } detailsFood={ objFood } />
               <Link
                 to={ `/comidas/${idMeal}` }
               >
@@ -72,7 +73,6 @@ function CardsFood() {
                     { strMeal }
                   </h4>
                 </Link>
-                <FavoriteHeart id={ idMeal } detailsFood={ objFood } />
               </div>
             </div>
           );
