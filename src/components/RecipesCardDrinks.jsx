@@ -5,8 +5,6 @@ import { connect } from 'react-redux';
 
 import './style/recipesCard.css';
 
-import { ButtonBases, MealsAndDrinksContainer } from './style/teste';
-
 class RecipesCardDrinks extends Component {
   constructor() {
     super();
@@ -76,15 +74,18 @@ class RecipesCardDrinks extends Component {
 
     return drinksArray.map((item, index) => {
       const { strDrinkThumb, strDrink, idDrink } = item;
-      const tileData = [
-        {
-          url: strDrinkThumb,
-          title: strDrink,
-          width: '30%',
-        }
-      ];
       return (
-        <ButtonBases tileData={ tileData } />
+        <div key={ index }>
+          <Link data-testid={ `${index}-recipe-card` } to={ `/bebidas/${idDrink}` }>
+            <img
+              className="recipe-thumb"
+              data-testid={ `${index}-card-img` }
+              alt={ strDrink }
+              src={ strDrinkThumb }
+            />
+            <p data-testid={ `${index}-card-name` }>{ strDrink }</p>
+          </Link>
+        </div>
       );
     });
   }
@@ -109,9 +110,9 @@ class RecipesCardDrinks extends Component {
         <div>
           { drinksCategories && this.renderFilterButtons(drinksCategories) }
         </div>
-        <MealsAndDrinksContainer>
+        <div>
           { drinksState && this.renderDrinks(drinksState) }
-        </MealsAndDrinksContainer>
+        </div>
       </div>
     );
   }
