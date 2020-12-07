@@ -17,7 +17,6 @@ function ProgressoComida() {
 
   const [
     ingredientesNoLocalStorage, setIngredientesNoLocalStorage] = useState(ingredientes);
-  const [disable, setDisable] = useState(true);
 
   console.log(receitasSalvas);
   console.log('teste', estadoApiComidas);
@@ -27,35 +26,14 @@ function ProgressoComida() {
     setEstadoApiComidas(response);
   };
 
-  function checks() {
-    const checkBoxes = document.getElementsByClassName('checkBox').length;
-    // const ingredientesSalvos = ingredientesNoLocalStorage.length;
-    if (localStorage.getItem('inProgressRecipes')) {
-      const progress = JSON.parse((localStorage.getItem('inProgressRecipes')));
-      const comidaLocalStorage = progress.meals[idDaReceita].length;
-      if (checkBoxes === comidaLocalStorage) {
-        setDisable(false);
-      } else {
-        setDisable(true);
-      }
-    }
-  }
-
   useEffect(() => {
     fetchComidasDetalhes();
-    checks();
   }, []);
-
-  useEffect(() => {
-    checks();
-  }, [ingredientesNoLocalStorage]);
 
   const history = useHistory();
   const inProgress = JSON.parse((localStorage.getItem('inProgressRecipes')));
   let comidaLocalStorage;
-  // let comidaLocalStorage = inProgress.meals[idDaReceita];
   function checkHandle(e, index) {
-    checks();
     if (e.target.checked === true) {
       document.getElementById(`${index - 1}-ingredient-check`)
         .style.textDecoration = 'line-through';
@@ -119,15 +97,8 @@ function ProgressoComida() {
         localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
       }
     }
-    // const newStorage = {
-    //   ...inProgress,
-    //   meals: {
-    //     ...inProgress.meals,
-    //     [idDaReceita]: comidaLocalStorage,
-    //   },
-    // };
-    // localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
   }
+
   const vinte = 20;
   function renderIngrediente(bebida) {
     const array = [];
@@ -177,8 +148,6 @@ function ProgressoComida() {
       alert('erro');
     });
   }
-  console.log(window.location.href);
-  // onClick={() => {navigator.clipboard.writeText(window.location.href)}}
 
   function favoritarReceita() {
     const favoritos = localStorage.getItem('favoriteRecipes');
@@ -256,7 +225,60 @@ function ProgressoComida() {
       </button>);
   }
 
+  function checkDisable() {
+    const arrayDeIngredientes = [];
+    const quinze = 15;
+    // pega todos os ingredientes da receita e joga no arrayDeIngredientes
+    for (let i = 1; i <= quinze; i += 1) {
+      const ing = `strIngredient${i}`;
+      const ingName = estadoApiComidas[0][ing];
+      if (ingName !== null && ingName !== '') {
+        arrayDeIngredientes.push(ingName);
+      }
+    }
+    // ingredientes é a variável com os itens checked
+    if (ingredientes.length === arrayDeIngredientes.length) {
+      return false;
+    }
+    return true;
+  }
+
   function redirectFeitas() {
+    if (localStorage.getItem('doneRecipes')) {
+      const feitasStorage = JSON.parse(localStorage.getItem('doneRecipes'));
+      console.log('feitasStorage', feitasStorage);
+      const receitaFeita = {
+        id: idDaReceita,
+        type: 'comida',
+        area: estadoApiComidas[0].strArea,
+        category: estadoApiComidas[0].strCategory,
+        alcoholicOrNot: '',
+        name: estadoApiComidas[0].strMeal,
+        image: estadoApiComidas[0].strMealThumb,
+        doneDate: new Date().toDateString(),
+        tags: estadoApiComidas[0].strTags.split(','),
+      };
+      console.log('feita', receitaFeita);
+      const newDoneRecipes = [
+        ...feitasStorage,
+        receitaFeita,
+      ];
+      localStorage.setItem('doneRecipes', JSON.stringify(newDoneRecipes));
+    } else {
+      const receitaFeita = [{
+        id: idDaReceita,
+        type: 'comida',
+        area: estadoApiComidas[0].strArea,
+        category: estadoApiComidas[0].strCategory,
+        alcoholicOrNot: '',
+        name: estadoApiComidas[0].strMeal,
+        image: estadoApiComidas[0].strMealThumb,
+        doneDate: new Date().toDateString(),
+        tags: estadoApiComidas[0].strTags.split(','),
+      }];
+      localStorage.setItem('doneRecipes', JSON.stringify(receitaFeita));
+      console.log('feita', receitaFeita);
+    }
     history.push('/receitas-feitas');
   }
 
@@ -288,7 +310,7 @@ function ProgressoComida() {
         <button
           type="button"
           data-testid="finish-recipe-btn"
-          disabled={ disable }
+          disabled={ checkDisable() }
           onClick={ redirectFeitas }
         >
           Finalizar receita

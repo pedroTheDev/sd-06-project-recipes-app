@@ -18,7 +18,6 @@ function DetalhesBebida() {
   const [
     ingredientesNoLocalStorage, setIngredientesNoLocalStorage] = useState(ingredientes);
   console.log(receitasSalvas);
-  const [disable, setDisable] = useState(true);
 
   const fetchBebidasDetalhes = async () => {
     const response = await fetchApiBebidasDetalhes(idDaReceita);
@@ -29,24 +28,8 @@ function DetalhesBebida() {
 
   const inProgress = JSON.parse((localStorage.getItem('inProgressRecipes')));
   let bebidaLocalStorage;
-  // let bebidaLocalStorage = inProgress.cocktails[idDaReceita];
-
-  function checks() {
-    const checkBoxes = document.getElementsByClassName('checkBox').length;
-    // const ingredientesSalvos = ingredientesNoLocalStorage.length;
-    if (localStorage.getItem('inProgressRecipes')) {
-      const progress = JSON.parse((localStorage.getItem('inProgressRecipes')));
-      bebidaLocalStorage = progress.cocktails[idDaReceita].length;
-      if (checkBoxes === bebidaLocalStorage) {
-        setDisable(false);
-      } else {
-        setDisable(true);
-      }
-    }
-  }
 
   function checkHandle(e, index) {
-    checks();
     if (e.target.checked === true) {
       document.getElementById(`${index - 1}-ingredient-check`)
         .style.textDecoration = 'line-through';
@@ -117,12 +100,7 @@ function DetalhesBebida() {
 
   useEffect(() => {
     fetchBebidasDetalhes();
-    checks();
   }, []);
-
-  useEffect(() => {
-    checks();
-  }, [ingredientesNoLocalStorage]);
 
   const quinze = 15;
   function renderIngrediente(bebida) {
@@ -249,13 +227,57 @@ function DetalhesBebida() {
       </button>);
   }
 
-  // function checkDisable() {
-  //   const checkBoxesHtml = document.getElementsByClassName('checkBox');
-  //   console.log(checkBoxesHtml);
-  //   return true;
-  // }
+  function checkDisable() {
+    const arrayDeIngredientes = [];
+    // pega todos os ingredientes da receita e joga no arrayDeIngredientes
+    for (let i = 1; i <= quinze; i += 1) {
+      const ing = `strIngredient${i}`;
+      const ingName = estadoApiBebidas[0][ing];
+      if (ingName !== null && ingName !== '') {
+        arrayDeIngredientes.push(ingName);
+      }
+    }
+    // ingredientes é a variável com os itens checked
+    if (ingredientes.length === arrayDeIngredientes.length) {
+      return false;
+    }
+    return true;
+  }
 
   function redirectFeitas() {
+    if (localStorage.getItem('doneRecipes')) {
+      const feitasStorage = JSON.parse(localStorage.getItem('doneRecipes'));
+      console.log('feitasStorage', feitasStorage);
+      const receitaFeita = {
+        id: idDaReceita,
+        type: 'bebida',
+        area: '',
+        category: estadoApiBebidas[0].strCategory,
+        alcoholicOrNot: estadoApiBebidas[0].strAlcoholic,
+        name: estadoApiBebidas[0].strDrink,
+        image: estadoApiBebidas[0].strDrinkThumb,
+        doneDate: new Date().toDateString(),
+        tags: [],
+      };
+      const newDoneRecipes = [
+        ...feitasStorage,
+        receitaFeita,
+      ];
+      localStorage.setItem('doneRecipes', JSON.stringify(newDoneRecipes));
+    } else {
+      const receitaFeita = [{
+        id: idDaReceita,
+        type: 'bebida',
+        area: '',
+        category: estadoApiBebidas[0].strCategory,
+        alcoholicOrNot: estadoApiBebidas[0].strAlcoholic,
+        name: estadoApiBebidas[0].strDrink,
+        image: estadoApiBebidas[0].strDrinkThumb,
+        doneDate: new Date().toDateString(),
+        tags: [],
+      }];
+      localStorage.setItem('doneRecipes', JSON.stringify(receitaFeita));
+    }
     history.push('/receitas-feitas');
   }
 
@@ -288,7 +310,7 @@ function DetalhesBebida() {
           <button
             type="button"
             data-testid="finish-recipe-btn"
-            disabled={ disable }
+            disabled={ checkDisable() }
             onClick={ redirectFeitas }
           >
             Finalizar receita
