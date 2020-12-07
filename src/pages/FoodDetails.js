@@ -163,7 +163,7 @@ function FoodDetails() {
               src={ vidUrl }
               title={ strMeal }
             />
-            <div>
+            <div className="ingredients-list">
               {ingredients.map((ingredient, index) => (
                 <p data-testid={ `${index}-ingredient-name-and-measure` } key={ index }>
                   {`${ingredient.ingredient} - ${(ingredient.quantity === null)

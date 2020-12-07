@@ -297,6 +297,15 @@
   width: 100%;
 }
 
+.ingredients-list {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  line-height: 1.7em;
+  margin-top: 15px;
+}
+
 .start-btn-div {
   height: 37px;
   width: 100%;

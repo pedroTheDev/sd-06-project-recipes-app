@@ -251,28 +251,34 @@ function InProgress() {
                 src={ thumbnail }
                 alt={ `${title}` }
               />
-              <button
-                type="button"
-                data-testid="share-btn"
-                onClick={ handleShareClick }
-              >
-                <img src={ shareIcon } alt="Compartilhar" />
-                Compartilhar
-              </button>
-              {(copied) && <span>Link copiado!</span>}
-              <button
-                type="button"
-                onClick={ handleFavoriteClick }
-              >
-                <img
-                  data-testid="favorite-btn"
-                  src={ isFavorite }
-                  alt="Favoritar"
-                />
-                Favoritar
-              </button>
+              <div className="action-btns-div">
+                <button
+                  className="share-btn"
+                  type="button"
+                  data-testid="share-btn"
+                  onClick={ handleShareClick }
+                >
+                  <img src={ shareIcon } alt="Compartilhar" />
+                  Compartilhar
+                </button>
+                {(copied) && <span className="copied-span">Link copiado!</span>}
+                <button
+                  className="fav-btn"
+                  type="button"
+                  onClick={ handleFavoriteClick }
+                >
+                  <img
+                    data-testid="favorite-btn"
+                    src={ isFavorite }
+                    alt="Favoritar"
+                  />
+                  Favoritar
+                </button>
+              </div>
               {isFood && video()}
-              {ingredientsList()}
+              <div className="ingredients-list">
+                {ingredientsList()}
+              </div>
               <p className="recipe-instructions" data-testid="instructions">
                 {strInstructions}
               </p>
