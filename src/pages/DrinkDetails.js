@@ -176,7 +176,10 @@ export default function DrinkDetails(props) {
           </p>
           {renderIngredients()}
           <p data-testid="video">{item.strYoutube}</p>
-          <Link to={ `/bebidas/${id}/in-progress` }>
+          <Link
+            className="button-start-container"
+            to={ `/bebidas/${id}/in-progress` }
+          >
             { (!disabled)
               ? (
                 <button
@@ -185,7 +188,9 @@ export default function DrinkDetails(props) {
                   className="btnStart"
                   disabled={ disabled }
                 >
-                  {btnStartValue}
+                  <div>
+                    {btnStartValue}
+                  </div>
                 </button>
               )
               : null }

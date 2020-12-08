@@ -180,13 +180,16 @@ export default function FoodsDetails(props) {
           </video>
           {
             (!concluded) ? (
-              <Link to={ `/comidas/${id}/in-progress` }>
+              <Link
+                className="button-start-container"
+                to={ `/comidas/${id}/in-progress` }
+              >
                 <button
                   type="button"
                   data-testid="start-recipe-btn"
                   className="btnStart"
                 >
-                  <div>
+                  <div className="btn-title">
                     {btnStartValue}
                   </div>
 

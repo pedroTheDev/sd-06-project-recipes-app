@@ -14,12 +14,31 @@
   background-color: #f8f3e3; /* For demo */
 }
 
-.btnStart {
-  background: white;
-  position: fixed;
-  bottom: 0;
-  left: 10%;
+.button-start-container {
   display: flex;
-  width: 200px;
+  justify-content: center;
+}
 
+.btnStart {
+  background-image: linear-gradient(to right, #200122 0%, #6f0000  51%, #200122  100%);
+  background-size: 200% auto;
+  border-radius: 5px;
+  border: 0;
+  color: white;            
+  margin: 4px 6px;
+  padding: 8px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  width: 120px !important;
+  display: flex;
+  flex-flow: wrap;
+  align-content: center;
+  justify-content: center;
+}
+
+.btnStart:hover {
+  background-position: right center;
+  color: #fff;
+  text-decoration: none;
 }
