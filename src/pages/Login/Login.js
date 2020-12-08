@@ -70,7 +70,7 @@ function Login() {
               />
             </label>
           </div>
-          <div className="form-group">
+          <div className="div-Button">
             <button
               type="button"
               data-testid="login-submit-btn"
