@@ -10,7 +10,7 @@ function Explorar() {
     <div className="explore">
       <Header pageName="Explore" />
       <Link to="/explorar/comidas" data-testid="explore-food" className="explore-btn">
-        Explore Food
+        Explore Foods
         <img src={ exploreFood } alt="Explore food icon" />
       </Link>
       <Link to="/explorar/bebidas" data-testid="explore-drinks" className="explore-btn">
