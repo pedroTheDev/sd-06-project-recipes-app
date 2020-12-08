@@ -125,10 +125,7 @@ padding: 20px;
   color: #9c5e5e;
 } */
 
-.selected-category {
-  background-color: #b12310;
-  color: white;
-}
+
 
 .cardRecipe {
   width: 320px;
@@ -281,7 +278,8 @@ input[type=checkbox]:checked + label {
   font-size: 35px;
 }
 
-.form-login label input {
+.form-login label input,
+.input-field {
   text-align: center;
   border-radius: 5px;
   border: none;
@@ -426,4 +424,29 @@ a:hover {
   color: #b12310;
   font-family: 'Satisfy', cursive;
   font-size: 25px;
+}
+
+.selected-category {
+  background-color: white;
+  color: #b12310;
+}
+
+.filter-radios {
+  color:white;
+  background-color: rgba(0, 0, 0, 0.185);
+  margin: 0;
+  border-radius: 5px;
+}
+
+.shadow {
+  text-shadow: 0 0 5px 5px black;
+}
+
+.bottom15px {
+  margin-bottom: 15px;
+}
+
+.name-recipe-item {
+  color: #b12310;
+  font-family: 'Satisfy', cursive;
 }

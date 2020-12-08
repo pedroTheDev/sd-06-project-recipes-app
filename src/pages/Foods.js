@@ -7,7 +7,6 @@ export default function Foods() {
   const { foods, fetchApi, searchParam,
     isLoading, externFetchLink, setexternFetchLink } = useContext(RevenueContext);
   const TWELVE = 12;
-  const TWO = 2;
   const ZERO = 0;
 
   useEffect(() => {
@@ -32,7 +31,10 @@ export default function Foods() {
     : null;
   const renderFoodOrDrink = () => (
     <>
-      {(foods && foods.length === 1 && !foods[0][`str${searchParam}`].match(/Goat/))
+      {(foods
+        && foods.length === 1
+        && foods[0]
+        && !foods[0][`str${searchParam}`].match(/Goat/))
         ? <Redirect to={ `/${foodOrDrink}/${idFirstPosition}` } /> : null}
       {foods && foods.map((food, index) => {
         const id = food[`id${searchParam}`];
