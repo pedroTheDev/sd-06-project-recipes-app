@@ -25,7 +25,7 @@ function Perfil({ history }) {
         </span>
         <Link to="/receitas-feitas">
           <button
-            className="big-btn"
+            className="big-btn done-btn"
             type="button"
             data-testid="profile-done-btn"
           >
@@ -34,7 +34,7 @@ function Perfil({ history }) {
         </Link>
         <Link to="/receitas-favoritas">
           <button
-            className="big-btn"
+            className="big-btn favorite-btn-login"
             type="button"
             data-testid="profile-favorite-btn"
           >
@@ -42,7 +42,7 @@ function Perfil({ history }) {
           </button>
         </Link>
         <button
-          className="big-btn"
+          className="big-btn logout-btn"
           type="button"
           data-testid="profile-logout-btn"
           onClick={ () => handleLogout() }
