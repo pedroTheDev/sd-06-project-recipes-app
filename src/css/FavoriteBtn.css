@@ -1,0 +1,9 @@
+.btn-favorite {
+  border: none;
+  background-color: none;
+  outline: none;
+}
+
+.btn-favorite-img {
+  width: 35px;
+}

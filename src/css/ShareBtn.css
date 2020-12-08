@@ -1,0 +1,9 @@
+.btn-share {
+  border: none;
+  background-color: none;
+  outline: none;
+}
+
+.btn-share-img {
+  width: 35px;
+}
