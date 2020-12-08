@@ -112,7 +112,6 @@ function RecipeDetails(props) {
 
   return (
     <div>
-      <h1>Página de Details</h1>
       {!details ? <p>LOADING...</p>
         : details.map((recipe) => (
           <div key={ recipe }>
