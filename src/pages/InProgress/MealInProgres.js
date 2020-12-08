@@ -7,7 +7,7 @@ import {
   selectedIngredient,
   addDoneRecipe,
 } from '../../services/localStorage';
-// import '../Detail/detail.css';
+import './style.css';
 import recipesAppContext from '../../context/recipesAppContext';
 
 export default function MealInProgress() {

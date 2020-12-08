@@ -11,8 +11,8 @@
   display: flex;
   align-items: center;
   height: 12vh;
-  width: 100%;
   justify-content: space-around;
+  width: 100%;
   margin: 0;
 }
 
