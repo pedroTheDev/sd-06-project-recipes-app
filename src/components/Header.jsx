@@ -18,7 +18,7 @@ function Header({ name, button }) {
   };
 
   return (
-    <div data-testid="header">
+    <div data-testid="header" className="div-body">
       <header className="header">
         <Link to="/perfil">
           <button type="button" className="logo-profile-btn">
