@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 50px;
   width: 100vw;
   flex-direction: column;
 }
@@ -15,6 +16,8 @@
 }
 
 .category-button {
+  align-items: center;
+  justify-content: center;
   background-color: #ff5131;
   width: 180px;
   font-size: 18px;
