@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { setValueUser, cocktailsToken, mealsToken } from '../../services/localStorage';
+import { logo } from '../../images';
 import './style.css';
 
 function Login() {
@@ -29,8 +30,11 @@ function Login() {
 
   return (
     <div className="login-container">
-      <aside className="login-aside">
-        <h1 className="page-title">Bem-vindo chef!</h1>
+      <div className="login-aside">
+        <div className="logo">
+          <img alt="Logo" height="100%" width="300px" src={ logo } />
+        </div>
+        {/* <h3 className="page-title">Bem-vindo Chef!</h3> */}
         <form>
           <div className="form-group">
             <label
@@ -66,17 +70,19 @@ function Login() {
               />
             </label>
           </div>
-          <button
-            type="button"
-            data-testid="login-submit-btn"
-            className="button"
-            disabled={ isDisabled }
-            onClick={ () => handleRedirect() }
-          >
-            Entrar no aplicativo
-          </button>
+          <div className="div-Button">
+            <button
+              type="button"
+              data-testid="login-submit-btn"
+              className="button"
+              disabled={ isDisabled }
+              onClick={ () => handleRedirect() }
+            >
+              Entrar no aplicativo
+            </button>
+          </div>
         </form>
-      </aside>
+      </div>
     </div>
   );
 }

@@ -1,22 +1,29 @@
 .login-container {
-  background-image: url('../../images/loginCover.jpg');
+  align-items: center;
+  background: url('../../images/loginCover.jpg');
   background-size: cover;
   display: flex;
+  height: 100vh;
   justify-content: center;
-  align-items: center;
-  width: 100%;
+  width: 100vw;
 }
 
 .login-aside {
+  align-items: center;
   background-color: rgb(255,255,255, 0.4);
-  width: 35vw;
-  height: 60vw;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  padding: 3%;
-  align-items: center;
-  border-radius: 10px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  width: 30%;
+}
+
+.logo {
+  justify-content: center;
+  display: flex;
+  height: auto;
+  width: 100%;
 }
 
 .page-title {
@@ -34,6 +41,11 @@
 
 label {
   font-size: 1.2rem;
+}
+
+.div-Button {
+  align-items: center;
+  justify-content: center;
 }
 
 .button{
