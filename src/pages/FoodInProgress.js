@@ -126,25 +126,31 @@ export default function FoodInProgress(props) {
     if (recipeDetails.length > empty) {
       return (
         <div>
-          { recipeDetails.filter((ingredient) => ingredient !== '' && ingredient !== null)
-            .map((ingredient, index) => (
-              <label
-                htmlFor={ `${ingredient[0]}-{${index}` }
-                key={ ingredient[0] }
-                data-testid={ `${index}-ingredient-step` }
-                className={ checkedIngredients.includes(ingredient[0])
-                  ? 'strike-text' : '' }
-              >
-                <input
-                  type="checkbox"
-                  id={ `${ingredient[0]}-{${index}` }
-                  onClick={ ({ target }) => strikeIngredientText(target) }
-                />
-                { (ingredient[1] === null)
-                  ? ingredient[0]
-                  : `${ingredient[0]}: ${(ingredient[1]) && ingredient[1]}` }
-              </label>
-            )) }
+          <p className="ingredients-title">Ingredients</p>
+          <div
+            className="ingredients-list"
+          >
+            { recipeDetails
+              .filter((ingredient) => ingredient !== '' && ingredient !== null)
+              .map((ingredient, index) => (
+                <label
+                  htmlFor={ `${ingredient[0]}-{${index}` }
+                  key={ ingredient[0] }
+                  data-testid={ `${index}-ingredient-step` }
+                  className={ checkedIngredients.includes(ingredient[0])
+                    ? 'strike-text' : '' }
+                >
+                  <input
+                    type="checkbox"
+                    id={ `${ingredient[0]}-{${index}` }
+                    onClick={ ({ target }) => strikeIngredientText(target) }
+                  />
+                  { (ingredient[1] === null)
+                    ? ingredient[0]
+                    : `${ingredient[0]}: ${(ingredient[1]) && ingredient[1]}` }
+                </label>
+              )) }
+          </div>
         </div>
       );
     }
@@ -175,7 +181,7 @@ export default function FoodInProgress(props) {
     const item = recipe.meals[0];
     console.log(item);
     return (
-      <div>
+      <div className="content-details">
         <div key={ item }>
           <img
             data-testid="recipe-photo"
@@ -183,37 +189,53 @@ export default function FoodInProgress(props) {
             src={ item.strMealThumb }
             className="item-img"
           />
-          <p data-testid="recipe-title">{item.strMeal}</p>
-          <button
-            type="button"
-            data-testid="share-btn"
-            value="Share"
-            onClick={ () => handleCopy() }
+          <div className="buttons-container">
+            <button
+              className="btn-details"
+              type="button"
+              data-testid="share-btn"
+              value="Share"
+              onClick={ () => handleCopy() }
+            >
+              <img alt="Share" src={ shareIcon } />
+            </button>
+            <span>{copy}</span>
+            <button
+              className="btn-details"
+              type="button"
+              data-testid="favorite-btn"
+              src={ fav }
+              onClick={ () => handleFav(item) }
+            >
+              <img alt="fav" src={ fav } />
+            </button>
+          </div>
+          <p className="recipe-title" data-testid="recipe-title">{item.strMeal}</p>
+          <p
+            className="recipe-category"
+            data-testid="recipe-category"
           >
-            <img alt="Share" src={ shareIcon } />
-          </button>
-          <span>{copy}</span>
-          <button
-            type="button"
-            data-testid="favorite-btn"
-            src={ fav }
-            onClick={ () => handleFav(item) }
+            {item.strCategory}
+          </p>
+          <p className="instructions-title">Instructions</p>
+          <p
+            className="instructions"
+            data-testid="instructions"
           >
-            <img alt="fav" src={ fav } />
-          </button>
-          <p data-testid="recipe-category">{item.strCategory}</p>
-          <p data-testid="instructions">{item.strInstructions}</p>
+            {item.strInstructions}
+          </p>
           {renderIngredients()}
-
-          <button
-            type="button"
-            data-testid="finish-recipe-btn"
-            className="btnStart"
-            disabled={ disabled }
-            onClick={ () => endRecipe(item) }
-          >
-            Finalizar receita
-          </button>
+          <div className="button-start-container">
+            <button
+              type="button"
+              data-testid="finish-recipe-btn"
+              className="btnStart"
+              disabled={ disabled }
+              onClick={ () => endRecipe(item) }
+            >
+              Finalizar receita
+            </button>
+          </div>
         </div>
       </div>
     );

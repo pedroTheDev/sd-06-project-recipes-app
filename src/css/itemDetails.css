@@ -88,6 +88,8 @@
 
 .ingredients-list {
   background-color: #f8f3e3;
+  flex-flow: column;
+  display: flex;
 }
 
 .recommendation {
