@@ -1,5 +1,23 @@
+.header-detalhes {
+  background-color: #FFD43A;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 5px 10px 15px;
+  border-radius: 0 0 20px 20px;
+  position: relative;
+  top: -5px;
+  font-family: 'Epilogue';
+}
+
 .titulo {
-  font-size: large;
+  font-size: xx-large;
+  font-family: 'Hammersmith One', sans-serif;
+  /* color: white;  */
+}
+
+.titulo-2 {
+  font-size: medium;
+  color: white; 
 }
 
 iframe {
@@ -35,16 +53,6 @@ iframe {
   outline: thin dotted;
   outline: 0px auto -webkit-focus-ring-color;
   outline-offset: 0px;
-}
-
-.header-detalhes {
-  background-color: #FFD43A;
-  display: flex;
-  justify-content: space-between;
-  padding: 5px 5px 10px 15px;
-  border-radius: 0 0 20px 20px;
-  position: relative;
-  top: -5px;
 }
 
 .container-conteudo {

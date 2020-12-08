@@ -39,7 +39,7 @@ function CardsFood() {
   }
 
   return (
-    <div className="allcardfood">
+    <div className="all-card-food">
       {cardFood.slice(ofTheFirstParameter, upToParameter)
         .map((objFood, index) => {
           const {
@@ -51,7 +51,7 @@ function CardsFood() {
             <div
               key={ idMeal }
               data-testid={ `${index}-recipe-card` }
-              className="cardfood"
+              className="card-food"
             >
               <FavoriteHeart id={ idMeal } detailsFood={ objFood } card />
               <Link

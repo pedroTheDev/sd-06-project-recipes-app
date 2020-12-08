@@ -4,6 +4,8 @@ import { requestApiDrinkDetails } from '../services/requestDrink';
 import buttonShare from '../styles/images/shareIcon.svg';
 import FavoriteHeart from '../components/FavoriteHeart';
 import { loadState, saveState } from '../services/localStorage';
+import '../styles/Processos.css';
+import '../styles/Detalhes.css';
 
 function ProcessoBebida({ match: { params: { id } }, history }) {
   const zero = 0;
@@ -132,42 +134,72 @@ function ProcessoBebida({ match: { params: { id } }, history }) {
         data-testid="recipe-photo"
         src={ detailsDrink.strDrinkThumb }
         alt="food-thumb"
+        className="detalhes-img"
       />
-      <h2 data-testid="recipe-title">{detailsDrink.strDrink}</h2>
-      <h3 data-testid="recipe-category">{detailsDrink.strCategory}</h3>
-      <div id="btns">
-        <button type="button" data-testid="share-btn" onClick={ copyBoard }>
-          <img src={ buttonShare } alt="img-button-share" />
-        </button>
-        <FavoriteHeart id={ id } detailsDrink={ detailsDrink } />
-      </div>
-      {arrayIngredients.map((element, index) => {
-        const checked = arrayCheckBox.some((checkElement) => checkElement === element);
-        return (
-          <label
-            htmlFor={ index }
-            key={ index }
-            data-testid={ `${index}-ingredient-step` }
-            name={ index }
-            className={ checked ? 'riscado' : 'non-riscado' }
+      <div className="header-detalhes">
+        <div>
+          <span
+            className="titulo"
+            data-testid="recipe-title"
           >
-            <input
-              type="checkbox"
-              id={ index }
-              name="scales"
-              checked={ checked }
-              onChange={ (event) => riskCheckBox(event, element) }
-            />
-            { element }
-          </label>
-        );
-      })}
-      <h4 data-testid="instructions">{detailsDrink.strInstructions}</h4>
+            {detailsDrink.strDrink}
+          </span>
+          <br />
+          <span data-testid="recipe-category">{detailsDrink.strCategory}</span>
+        </div>
+        <div id="btns">
+          <button
+            type="button"
+            data-testid="share-btn"
+            onClick={ copyBoard }
+            className="btn-copy-link"
+          >
+            <img src={ buttonShare } alt="img-button-share" />
+          </button>
+          <FavoriteHeart id={ id } detailsDrink={ detailsDrink } />
+        </div>
+      </div>
+      <div className="container-conteudo">
+        <p className="titulo-2">Ingredients list</p>
+        <div className="opitions-processo container-conteudo-text">
+          {arrayIngredients.map((element, index) => {
+            const checked = arrayCheckBox.some((checkElement) => checkElement === element);
+            return (
+              <label
+                htmlFor={ index }
+                key={ index }
+                data-testid={ `${index}-ingredient-step` }
+                name={ index }
+                className={ checked ? 'riscado' : 'non-riscado' }
+              >
+                <input
+                  type="checkbox"
+                  id={ index }
+                  name="scales"
+                  checked={ checked }
+                  onChange={ (event) => riskCheckBox(event, element) }
+                />
+                { element }
+              </label>
+            );
+          })}
+        </div>
+        <p className="titulo-2">Instructions</p>
+        <div className="container-conteudo-text">
+          <p
+            className="instructions-text"
+            data-testid="instructions"
+          >
+            {detailsDrink.strInstructions}
+          </p>
+        </div>
+      </div>
       <button
         type="button"
         data-testid="finish-recipe-btn"
         disabled={ arrayIngredients.length !== countCheck }
         onClick={ () => onClickDone() }
+        className="btn-finalizar"
       >
         Finalizar receita
       </button>

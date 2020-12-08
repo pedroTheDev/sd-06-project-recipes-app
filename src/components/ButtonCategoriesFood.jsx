@@ -54,11 +54,11 @@ function ButtonCategoriesFood() {
       <div className="all-btns">
         {categoriesButtonFood.map((category) => (
           <button
-            className="category-food-btn"
             key={ category }
             type="button"
             data-testid={ `${category}-category-filter` }
             onClick={ () => onClickCategory(category) }
+            className="category-food-btn"
           >
             { category }
           </button>

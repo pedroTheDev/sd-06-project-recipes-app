@@ -106,6 +106,7 @@ function DetalhesReceita({ match: { params: { id } } }) {
   if (detailsFood.length === zero) {
     return <div>Loading...</div>;
   }
+
   return (
     <div className="container-detalhes">
       <img
@@ -118,7 +119,12 @@ function DetalhesReceita({ match: { params: { id } } }) {
         <div>
           <span className="titulo" data-testid="recipe-title">{detailsFood.strMeal}</span>
           <br />
-          <span data-testid="recipe-category">{detailsFood.strCategory}</span>
+          <span
+            data-testid="recipe-category"
+            className="txt-category"
+          >
+            {detailsFood.strCategory}
+          </span>
         </div>
         <div>
           <button
@@ -135,7 +141,7 @@ function DetalhesReceita({ match: { params: { id } } }) {
         </div>
       </div>
       <div className="container-conteudo">
-        <p>Ingredients</p>
+        <p className="titulo-2">Ingredients</p>
         <div className="container-conteudo-text">
           {arrayIngredients.map((element, index) => (
             <p
@@ -147,13 +153,13 @@ function DetalhesReceita({ match: { params: { id } } }) {
             </p>
           ))}
         </div>
-        <p>Instructions</p>
+        <p className="titulo-2">Instructions</p>
         <div className="container-conteudo-text">
           <p
             data-testid="instructions"
             className="instructions-text"
           >
-            {detailsFood.strInstructions}
+            { detailsFood.strInstructions }
           </p>
         </div>
       </div>
@@ -178,7 +184,7 @@ function DetalhesReceita({ match: { params: { id } } }) {
             key={ index }
             data-testid={ `${index}-recomendation-card` }
           >
-            <div className="cardfood">
+            <div className="card-food">
               <img src={ drink.strDrinkThumb } alt="drink-thumb" />
               <h3 data-testid={ `${index}-recomendation-title` }>{drink.strDrink}</h3>
             </div>

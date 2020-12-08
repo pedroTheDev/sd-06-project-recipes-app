@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { requestApiFoodDetails } from '../services/requestFood';
 import buttonShare from '../styles/images/shareIcon.svg';
 import FavoriteHeart from '../components/FavoriteHeart';
-import '../styles/Processos.css';
 import { loadState, saveState } from '../services/localStorage';
+import '../styles/Processos.css';
+import '../styles/Detalhes.css';
 
 function ProcessoReceita({ match: { params: { id } }, history }) {
   const zero = 0;
@@ -128,41 +129,76 @@ function ProcessoReceita({ match: { params: { id } }, history }) {
 
   return (
     <div>
-      <img data-testid="recipe-photo" src={ detailsFood.strMealThumb } alt="food-thumb" />
-      <h2 data-testid="recipe-title">{ detailsFood.strMeal }</h2>
-      <h3 data-testid="recipe-category">{ detailsFood.strCategory }</h3>
-      <div id="btns">
-        <button type="button" data-testid="share-btn" onClick={ copyBoard }>
-          <img src={ buttonShare } alt="button-share" />
-        </button>
-        <FavoriteHeart id={ id } detailsFood={ detailsFood } />
-      </div>
-      {arrayIngredients.map((element, index) => {
-        const checked = arrayCheckBox.some((checkElement) => checkElement === element);
-        return (
-          <label
-            htmlFor={ index }
-            key={ index }
-            data-testid={ `${index}-ingredient-step` }
-            name={ index }
+      <img
+        data-testid="recipe-photo"
+        src={ detailsFood.strMealThumb }
+        alt="food-thumb"
+        className="detalhes-img"
+      />
+      <div className="header-detalhes">
+        <div>
+          <span
+            className="titulo"
+            data-testid="recipe-title"
           >
-            <input
-              type="checkbox"
-              id={ index }
-              name="scales"
-              checked={ checked }
-              onChange={ (event) => riskCheckBox(event, element) }
-            />
-            { element}
-          </label>
-        );
-      })}
-      <h4 data-testid="instructions">{detailsFood.strInstructions}</h4>
+            { detailsFood.strMeal }
+          </span>
+          <br />
+          <span data-testid="recipe-category">{ detailsFood.strCategory }</span>
+        </div>
+        <div id="btns">
+          <button
+            type="button"
+            data-testid="share-btn"
+            onClick={ copyBoard }
+            className="btn-copy-link"
+          >
+            <img src={ buttonShare } alt="button-share" />
+          </button>
+          <FavoriteHeart id={ id } detailsFood={ detailsFood } />
+        </div>
+      </div>
+      <div className="container-conteudo">
+        <p className="titulo-2">Ingredients list</p>
+        <div className="opitions-processo container-conteudo-text">
+          {arrayIngredients.map((element, index) => {
+            const checked = arrayCheckBox.some((checkElement) => checkElement === element);
+            return (
+              <label
+                htmlFor={ index }
+                key={ index }
+                data-testid={ `${index}-ingredient-step` }
+                name={ index }
+                className="item-list"
+              >
+                <input
+                  type="checkbox"
+                  id={ index }
+                  name="scales"
+                  checked={ checked }
+                  onChange={ (event) => riskCheckBox(event, element) }
+                />
+                { element}
+              </label>
+            );
+          })}
+        </div>
+        <p className="titulo-2">Instructions</p>
+        <div className="container-conteudo-text">
+          <p
+            data-testid="instructions"
+            className="instructions-text"
+          >
+            {detailsFood.strInstructions}
+          </p>
+        </div>
+      </div>
       <button
         type="button"
         data-testid="finish-recipe-btn"
         disabled={ arrayIngredients.length !== countCheck }
         onClick={ () => onClickDone() }
+        className="btn-finalizar"
       >
         Finalizar receita
       </button>
