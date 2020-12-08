@@ -68,6 +68,8 @@ function ProcessoReceita({ match: { params: { id } }, history }) {
       setCountCheck(countCheck + 1);
       setArrayCheckBox([...arrayCheckBox, element]);
     } else {
+      const labelBox = document.getElementsByName(`${event.target.id}`);
+      labelBox[0].className = 'non-riscado';
       setCountCheck(countCheck - 1);
       const filterArrayCheckBox = arrayCheckBox
         .filter((ingredient) => ingredient !== element);
