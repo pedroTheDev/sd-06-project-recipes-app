@@ -77,7 +77,7 @@ function FoodDetail() {
         ...currentStorage,
         meals: {
           ...currentStorage.meals,
-          [id]: [],
+          [id]: currentStorage.meals[`${id}`] ? [...currentStorage.meals[`${id}`]] : [],
         },
       };
       localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));

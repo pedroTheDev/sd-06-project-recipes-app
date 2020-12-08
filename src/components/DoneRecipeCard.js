@@ -63,14 +63,22 @@ function DoneRecipeCard({ recipe, index }) {
           <h4 data-testid={ `${index}-horizontal-name` }>{ name }</h4>
         </Link>
         <p data-testid={ `${index}-horizontal-done-date` }>{ `Feita em: ${doneDate}` }</p>
-        { tags.slice(minTag, maxTag).map((tag, i) => (
-          <span
-            key={ `${i}-tag` }
-            data-testid={ `${index}-${tag}-horizontal-tag` }
-          >
-            { tag }
-          </span>
-        )) }
+        { tags !== null && tags.length >= maxTag
+          ? tags.slice(minTag, maxTag).map((tag, i) => (
+            <span
+              key={ `${i}-tag` }
+              data-testid={ `${index}-${tag}-horizontal-tag` }
+            >
+              { tag }
+            </span>
+          ))
+          : tags !== null && tags.map((tag, i) => (
+            <span
+              key={ `${i}-tag` }
+              data-testid={ `${index}-${tag}-horizontal-tag` }
+            >
+              { tag }
+            </span>)) }
       </div>
       <div>
         <button type="button" onClick={ () => shareClick() }>

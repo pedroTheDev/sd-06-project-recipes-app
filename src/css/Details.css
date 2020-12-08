@@ -78,6 +78,17 @@
 
 .detail-ingredients li {
   list-style-type: none;
+}
+
+input[type=checkbox]:checked + span {
+text-decoration-line: line-through;
+} 
+
+input[type=checkbox]:checked + span + span {
+  text-decoration-line: line-through;
+} 
+
+.detail-ingredients label {
   display: flex;
   justify-content: space-between;
 }

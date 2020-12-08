@@ -26,6 +26,8 @@ function Login() {
       .setItem('inProgressRecipes', JSON.stringify({ meals: {}, cocktails: {} }));
     localStorage
       .setItem('favoriteRecipes', JSON.stringify([]));
+    localStorage
+      .setItem('doneRecipes', JSON.stringify([]));
   };
 
   const validateLoginInfo = () => {
