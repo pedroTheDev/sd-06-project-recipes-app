@@ -214,48 +214,54 @@ function RecipeDrinkProcess(props) {
 
   if (recipes.length > ZERO) {
     return (
-      <div>
-        <img
-          data-testid="recipe-photo"
-          src={ recipes[0].strDrinkThumb }
-          alt="imagem"
-        />
+      <div className="food-detail-container">
+        <div className="image-detail-container">
+          <img
+            data-testid="recipe-photo"
+            src={ recipes[0].strDrinkThumb }
+            alt="imagem"
+          />
+        </div>
         <h4
           data-testid="recipe-title"
         >
           { recipes[0].strDrink }
         </h4>
-        <button
-          type="button"
-          onClick={ () => copyClip() }
-          data-testid="share-btn"
-        >
-          <img
-            src={ shareIcon }
-            alt="compartilhar"
-          />
-        </button>
-        {share && <span>Link copiado!</span>}
-        <div>
+        <div className="interactive-buttons">
           <button
             type="button"
-            onClick={ handleFavorites }
+            onClick={ () => copyClip() }
+            data-testid="share-btn"
           >
             <img
-              data-testid="favorite-btn"
-              alt="Favoritar"
-              src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+              src={ shareIcon }
+              alt="compartilhar"
             />
           </button>
+          {share && <span>Link copiado!</span>}
+          <div>
+            <button
+              type="button"
+              onClick={ handleFavorites }
+            >
+              <img
+                data-testid="favorite-btn"
+                alt="Favoritar"
+                src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+              />
+            </button>
+          </div>
         </div>
         <h5
           data-testid="recipe-category"
+          className="paragraph-side"
         >
           {recipes[0].strCategory}
         </h5>
         <div className="checkbox">
           { createCheckBoxes() }
         </div>
+        <div className="instruction-title">Instruções</div>
         <p data-testid="instructions">{ recipes[0].strInstructions }</p>
         <button
           type="button"
