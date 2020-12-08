@@ -190,7 +190,7 @@ function DrinkDetail() {
   };
 
   return (
-    <div>
+    <div className="in-progress-btn-container">
       { handleDetails() }
     </div>
 

@@ -130,6 +130,18 @@ input[type=checkbox]:checked + span + span {
   margin: 0 0 50px 0;
 }
 
+.in-progress-btn-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.in-progress-btn-container a {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 .details-in-progress-btn{
   position: fixed;
   bottom: 0;

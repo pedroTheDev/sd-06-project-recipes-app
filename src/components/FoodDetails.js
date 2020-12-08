@@ -201,7 +201,7 @@ function FoodDetail() {
           <div className="detail-recomendation-container">
             {handleRecomendations()}
           </div>
-          <div>
+          <div className="in-progress-btn-container">
             { handleBtnRender() }
           </div>
         </div>

@@ -237,7 +237,7 @@ function InProgress() {
 
           </div>
 
-          <div>
+          <div className="in-progress-btn-container">
             <Link to="/receitas-feitas">
               <button
                 data-testid="finish-recipe-btn"
