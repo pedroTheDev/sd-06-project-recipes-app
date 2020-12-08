@@ -65,7 +65,7 @@ function CardsDrink() {
                   { strDrink }
                 </h4>
               </Link>
-              <FavoriteHeart id={ idDrink } detailsDrink={ objDrink } />
+              <FavoriteHeart id={ idDrink } detailsDrink={ objDrink } card />
             </div>
           );
         })}

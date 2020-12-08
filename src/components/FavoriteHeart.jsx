@@ -5,7 +5,7 @@ import blackHeartIcon from '../styles/images/blackHeartIcon.svg';
 import { saveState, loadState } from '../services/localStorage';
 import '../styles/FavoriteHeart.css';
 
-function FavoriteHeart({ id, detailsDrink, detailsFood }) {
+function FavoriteHeart({ id, detailsDrink, detailsFood, card }) {
   const favoriteRecipes = 'favoriteRecipes';
   const responseFavoriteStorage = loadState(favoriteRecipes, [])
     .some((element) => element.id === id);
@@ -70,7 +70,7 @@ function FavoriteHeart({ id, detailsDrink, detailsFood }) {
 
   return (
     favoriteButton ? (
-      <button type="button" onClick={ saveFavoriteRecipe } className="favorite-btn">
+      <button type="button" onClick={ saveFavoriteRecipe } className={ `favorite-btn ${card ? 'card' : ''}` }>
         <img
           data-testid="favorite-btn"
           src={ blackHeartIcon }
@@ -78,7 +78,7 @@ function FavoriteHeart({ id, detailsDrink, detailsFood }) {
         />
       </button>
     ) : (
-      <button type="button" onClick={ saveFavoriteRecipe } className="favorite-btn">
+      <button type="button" onClick={ saveFavoriteRecipe } className={ `favorite-btn ${card ? 'card' : ''}` }>
         <img
           data-testid="favorite-btn"
           src={ whiteHeartIcon }

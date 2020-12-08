@@ -17,6 +17,10 @@
   margin-bottom: 10px;
 }
 
+a:link  {
+  text-decoration: none;
+}
+
 .cardfood {
   background-color: #F8F8F8;
   width: 10em;
