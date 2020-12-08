@@ -2,7 +2,7 @@
   background-color: #3F3F3F;
 }
 
-.allcardfood {
+.all-card-food {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -21,7 +21,11 @@
   margin-bottom: 10px;
 }
 
-.cardfood {
+a:link  {
+  text-decoration: none;
+}
+
+.card-food {
   background-color: #F8F8F8;
   width: 10em;
   box-shadow: black 2px 2px 2px;
@@ -32,7 +36,7 @@
   border-radius: 10px;
 }
 
-.cardfood img {
+.card-food img {
   width: 100%;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;

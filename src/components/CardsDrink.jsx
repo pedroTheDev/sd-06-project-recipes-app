@@ -71,7 +71,7 @@ function CardsDrink() {
                   </h4>
                 </Link>
               </div>
-              <FavoriteHeart id={ idDrink } detailsDrink={ objDrink } />
+              <FavoriteHeart id={ idDrink } detailsDrink={ objDrink } card />
             </div>
           );
         })}

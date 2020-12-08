@@ -11,7 +11,7 @@ import '../styles/Detalhes.css';
 import buttonShare from '../styles/images/shareIcon.svg';
 import FavoriteHeart from '../components/FavoriteHeart';
 import { loadState } from '../services/localStorage';
-import '../styles/imgBig.css';
+import '../styles/CardFood.css';
 
 function DetalhesBebida({ match: { params: { id } } }) {
   const zero = 0;
@@ -88,9 +88,7 @@ function DetalhesBebida({ match: { params: { id } } }) {
     document.execCommand('copy');
     input.parentNode.removeChild(input);
     const divBtns = document.getElementById('btns');
-    const newSpan = document.createElement('span');
-    newSpan.innerHTML = 'Link copiado!';
-    divBtns.appendChild(newSpan);
+    divBtns.innerHTML = 'Link copiado!';
   };
 
   if (detailsDrink.length === zero) {
@@ -98,33 +96,60 @@ function DetalhesBebida({ match: { params: { id } } }) {
   }
 
   return (
-    <div>
+    <div className="container-detalhes">
       <img
-        className="imgBig"
+        className="detalhes-img"
         data-testid="recipe-photo"
         src={ detailsDrink.strDrinkThumb }
         alt="dk aspo"
       />
-      <h2 data-testid="recipe-title">{detailsDrink.strDrink}</h2>
-      <div data-testid="recipe-category">
-        <h3>{detailsDrink.strAlcoholic}</h3>
-        <h3>{detailsDrink.strCategory}</h3>
+      <div className="header-detalhes">
+        <div>
+          <span className="titulo" data-testid="recipe-title">{detailsDrink.strDrink}</span>
+          <div data-testid="recipe-category">
+            <span>{detailsDrink.strAlcoholic}</span>
+            <br />
+            <span>{detailsDrink.strCategory}</span>
+          </div>
+        </div>
+        <div>
+          <button
+            type="button"
+            data-testid="share-btn"
+            onClick={ copyBoard }
+            className="btn-copy-link"
+          >
+            <img src={ buttonShare } alt="img-button-share" />
+          </button>
+          <FavoriteHeart id={ id } detailsDrink={ detailsDrink } />
+          <br />
+          <span id="btns" />
+        </div>
       </div>
-      <h4 data-testid="instructions">{detailsDrink.strInstructions}</h4>
-      <div id="btns">
-        <button type="button" data-testid="share-btn" onClick={ copyBoard }>
-          <img src={ buttonShare } alt="img-button-share" />
-        </button>
-        <FavoriteHeart id={ id } detailsDrink={ detailsDrink } />
+      <div className="container-conteudo">
+        <p className="titulo-2">Ingredients</p>
+        <div className="container-conteudo-text">
+          {arrayIngredients.map((element, index) => (
+            <p
+              data-testid={ `${index}-ingredient-name-and-measure` }
+              key={ index }
+              className="item-list"
+            >
+              { element }
+            </p>
+          ))}
+        </div>
+        <p className="titulo-2">Instructions</p>
+        <div className="container-conteudo-text">
+          <p
+            data-testid="instructions"
+            className="instructions-text"
+          >
+            {detailsDrink.strInstructions}
+          </p>
+        </div>
       </div>
-      {arrayIngredients.map((element, index) => (
-        <h5
-          data-testid={ `${index}-ingredient-name-and-measure` }
-          key={ index }
-        >
-          {element}
-        </h5>
-      ))}
+      <br />
       <div className="carrossel">
         {recommendDrink.map((drink, index) => (
           <div
@@ -132,21 +157,25 @@ function DetalhesBebida({ match: { params: { id } } }) {
             key={ index }
             data-testid={ `${index}-recomendation-card` }
           >
-            <img src={ drink.strMealThumb } alt="drink-thumb" />
-            <h3 data-testid={ `${index}-recomendation-title` }>{drink.strMeal}</h3>
+            <div className="card-food">
+              <img src={ drink.strMealThumb } alt="drink-thumb" />
+              <h3 data-testid={ `${index}-recomendation-title` }>{drink.strMeal}</h3>
+            </div>
           </div>
         ))}
       </div>
-      <Link to={ `/bebidas/${id}/in-progress` }>
-        <button
-          id="inprogress-btn"
-          type="button"
-          data-testid="start-recipe-btn"
-          className="btn-footer"
-        >
-          { startRecipe }
-        </button>
-      </Link>
+      <div className="center-btn-footer">
+        <Link to={ `/bebidas/${id}/in-progress` }>
+          <button
+            id="inprogress-btn"
+            type="button"
+            data-testid="start-recipe-btn"
+            className="btn-footer"
+          >
+            { startRecipe }
+          </button>
+        </Link>
+      </div>
     </div>
   );
 }

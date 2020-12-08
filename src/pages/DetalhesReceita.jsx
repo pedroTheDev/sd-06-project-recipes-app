@@ -11,7 +11,7 @@ import '../styles/Detalhes.css';
 import buttonShare from '../styles/images/shareIcon.svg';
 import FavoriteHeart from '../components/FavoriteHeart';
 import { loadState } from '../services/localStorage';
-import '../styles/imgBig.css';
+import '../styles/CardFood.css';
 
 function DetalhesReceita({ match: { params: { id } } }) {
   const zero = 0;
@@ -92,9 +92,9 @@ function DetalhesReceita({ match: { params: { id } } }) {
     document.execCommand('copy');
     input.parentNode.removeChild(input);
     const divBtns = document.getElementById('btns');
-    const newSpan = document.createElement('span');
-    newSpan.innerHTML = 'Link copiado!';
-    divBtns.appendChild(newSpan);
+    // const newSpan = document.createElement('span');
+    // newSpan.innerHTML = 'Link copiado!';
+    divBtns.innerHTML = 'Link copiado!';
   };
 
   useEffect(() => {
@@ -106,31 +106,68 @@ function DetalhesReceita({ match: { params: { id } } }) {
   if (detailsFood.length === zero) {
     return <div>Loading...</div>;
   }
+
   return (
-    <div>
-      <img data-testid="recipe-photo" src={ detailsFood.strMealThumb } alt="food-thumb" />
-      <h2 data-testid="recipe-title">{detailsFood.strMeal}</h2>
-      <h3 data-testid="recipe-category">{detailsFood.strCategory}</h3>
-      <h4 data-testid="instructions">{detailsFood.strInstructions}</h4>
-      <div id="btns">
-        <button type="button" data-testid="share-btn" onClick={ copyBoard }>
-          <img src={ buttonShare } alt="button-share" />
-        </button>
-        <FavoriteHeart id={ id } detailsFood={ detailsFood } />
+    <div className="container-detalhes">
+      <img
+        className="detalhes-img"
+        data-testid="recipe-photo"
+        src={ detailsFood.strMealThumb }
+        alt="food-thumb"
+      />
+      <div className="header-detalhes">
+        <div>
+          <span className="titulo" data-testid="recipe-title">{detailsFood.strMeal}</span>
+          <br />
+          <span
+            data-testid="recipe-category"
+            className="txt-category"
+          >
+            {detailsFood.strCategory}
+          </span>
+        </div>
+        <div>
+          <button
+            type="button"
+            data-testid="share-btn"
+            onClick={ copyBoard }
+            className="btn-copy-link"
+          >
+            <img src={ buttonShare } alt="button-share" />
+          </button>
+          <FavoriteHeart id={ id } detailsFood={ detailsFood } />
+          <br />
+          <span id="btns" />
+        </div>
       </div>
-      {arrayIngredients.map((element, index) => (
-        <h5
-          data-testid={ `${index}-ingredient-name-and-measure` }
-          key={ index }
-        >
-          { element }
-        </h5>
-      ))}
+      <div className="container-conteudo">
+        <p className="titulo-2">Ingredients</p>
+        <div className="container-conteudo-text">
+          {arrayIngredients.map((element, index) => (
+            <p
+              data-testid={ `${index}-ingredient-name-and-measure` }
+              key={ index }
+              className="item-list"
+            >
+              { element }
+            </p>
+          ))}
+        </div>
+        <p className="titulo-2">Instructions</p>
+        <div className="container-conteudo-text">
+          <p
+            data-testid="instructions"
+            className="instructions-text"
+          >
+            { detailsFood.strInstructions }
+          </p>
+        </div>
+      </div>
       <iframe
         data-testid="video"
         title="video"
-        width="1042"
-        height="586"
+        width="100%"
+        height="360"
         src={ `https://www.youtube.com/embed/${embed}` }
         allow="accelerometer;
         autoplay;
@@ -138,6 +175,7 @@ function DetalhesReceita({ match: { params: { id } } }) {
         encrypted-media;
         gyroscope;
         picture-in-picture"
+        fs="1"
       />
       <div className="carrossel">
         {recommendFood.map((drink, index) => (
@@ -146,21 +184,25 @@ function DetalhesReceita({ match: { params: { id } } }) {
             key={ index }
             data-testid={ `${index}-recomendation-card` }
           >
-            <img src={ drink.strDrinkThumb } alt="drink-thumb" />
-            <h3 data-testid={ `${index}-recomendation-title` }>{drink.strDrink}</h3>
+            <div className="card-food">
+              <img src={ drink.strDrinkThumb } alt="drink-thumb" />
+              <h3 data-testid={ `${index}-recomendation-title` }>{drink.strDrink}</h3>
+            </div>
           </div>
         ))}
       </div>
-      <Link to={ `/comidas/${id}/in-progress` }>
-        <button
-          id="inprogress-btn"
-          type="button"
-          data-testid="start-recipe-btn"
-          className="btn-footer"
-        >
-          { startRecipe }
-        </button>
-      </Link>
+      <div className="center-btn-footer">
+        <Link to={ `/comidas/${id}/in-progress` }>
+          <button
+            id="inprogress-btn"
+            type="button"
+            data-testid="start-recipe-btn"
+            className="btn-footer"
+          >
+            { startRecipe }
+          </button>
+        </Link>
+      </div>
     </div>
   );
 }
