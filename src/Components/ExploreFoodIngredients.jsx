@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import RecipeContext from '../hooks/RecipeContext';
 import recipeRequest from '../services/recipeRequest';
-import { Header, Footer } from '../Components';
+import { Header, Footer } from '.';
 import '../Style/mainScreen.css';
 
 function ExploreFoodIngredients() {

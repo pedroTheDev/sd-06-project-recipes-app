@@ -30,7 +30,7 @@ function ExplorarComidasArea() {
 
   return (
     <div>
-      <Header pageName="Explorar por Origem " />
+      <Header pageName="Explorar Origem " />
       <div className="filter-container">
         <select
           name="areas"
@@ -50,7 +50,7 @@ function ExplorarComidasArea() {
           {foodsArea.length >= 1 && foodsArea
             .filter((_, index) => index < TEN)
             .map((food, indexs) => (
-              <div key={ index } className="card-container">
+              <div key={ indexs } className="card-container">
                 <Link
                   data-testid={ `${indexs}-recipe-card` }
                   key={ indexs }
