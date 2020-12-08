@@ -70,7 +70,11 @@ function FavoriteHeart({ id, detailsDrink, detailsFood, card }) {
 
   return (
     favoriteButton ? (
-      <button type="button" onClick={ saveFavoriteRecipe } className={ `favorite-btn ${card ? 'card' : ''}` }>
+      <button
+        type="button"
+        onClick={ saveFavoriteRecipe }
+        className={ `favorite-btn ${card ? 'card' : ''}` }
+      >
         <img
           data-testid="favorite-btn"
           src={ blackHeartIcon }
@@ -78,7 +82,11 @@ function FavoriteHeart({ id, detailsDrink, detailsFood, card }) {
         />
       </button>
     ) : (
-      <button type="button" onClick={ saveFavoriteRecipe } className={ `favorite-btn ${card ? 'card' : ''}` }>
+      <button
+        type="button"
+        onClick={ saveFavoriteRecipe }
+        className={ `favorite-btn ${card ? 'card' : ''}` }
+      >
         <img
           data-testid="favorite-btn"
           src={ whiteHeartIcon }
@@ -105,6 +113,7 @@ FavoriteHeart.propTypes = {
     strMeal: PropTypes.string.isRequired,
     strMealThumb: PropTypes.string.isRequired,
   }).isRequired,
+  card: PropTypes.bool.isRequired,
 };
 
 export default FavoriteHeart;
