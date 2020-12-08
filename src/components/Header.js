@@ -35,13 +35,15 @@ function Header(props) {
           />
         }
       </div>
-      {(hide === true) ? (
-        <FilterButtons
-          show={ hide }
-          shouldRenderButtons={ showFilterButtons }
-          type={ type }
-        />
-      ) : <SearchBar title={ title } />}
+      <div className="filter">
+        {(hide === true) ? (
+          <FilterButtons
+            show={ hide }
+            shouldRenderButtons={ showFilterButtons }
+            type={ type }
+          />
+        ) : <SearchBar title={ title } />}
+      </div>
     </header>
   );
 }
