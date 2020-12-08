@@ -45,27 +45,29 @@ function ReceitasFeitas() {
   return (
     <div>
       <Header2 title="Receitas Feitas" />
-      <button
-        type="button"
-        data-testid="filter-by-all-btn"
-        onClick={ () => setFiltro('all') }
-      >
-        All
-      </button>
-      <button
-        type="button"
-        data-testid="filter-by-drink-btn"
-        onClick={ () => setFiltro('drinks') }
-      >
-        Drinks
-      </button>
-      <button
-        type="button"
-        data-testid="filter-by-food-btn"
-        onClick={ () => setFiltro('foods') }
-      >
-        Food
-      </button>
+      <div className="container">
+        <button
+          type="button"
+          data-testid="filter-by-all-btn"
+          onClick={ () => setFiltro('all') }
+        >
+          All
+        </button>
+        <button
+          type="button"
+          data-testid="filter-by-drink-btn"
+          onClick={ () => setFiltro('drinks') }
+        >
+          Drinks
+        </button>
+        <button
+          type="button"
+          data-testid="filter-by-food-btn"
+          onClick={ () => setFiltro('foods') }
+        >
+          Food
+        </button>
+      </div>
       {
         filtraFeitas() && filtraFeitas().map((receita, index) => (
           receita.type === 'comida' ? (
@@ -80,7 +82,7 @@ function ReceitasFeitas() {
                   src={ receita.image }
                   alt="foto-ilustrativa"
                 />
-                <h1 data-testid={ `${index}-horizontal-name` }>
+                <h1 className="feitas-name" data-testid={ `${index}-horizontal-name` }>
                   {receita.name}
                 </h1>
               </button>

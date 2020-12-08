@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import RecipeContext from '../context/RecipeContext';
+import './login.css';
 
 export default function Login() {
   const {
@@ -43,27 +44,30 @@ export default function Login() {
   }
 
   return (
-    <div>
-      <input
-        type="email"
-        data-testid="email-input"
-        id="login-email"
-        onChange={ handleChange }
-      />
-      <input
-        type="password"
-        data-testid="password-input"
-        id="login-password"
-        onChange={ handleChange }
-      />
-      <button
-        type="button"
-        data-testid="login-submit-btn"
-        disabled={ enableButton }
-        onClick={ handleClick }
-      >
-        Entrar
-      </button>
+    <div className="login-body">
+      <div className="login">
+        <span>LOGIN</span>
+        <input
+          type="email"
+          data-testid="email-input"
+          id="login-email"
+          onChange={ handleChange }
+        />
+        <input
+          type="password"
+          data-testid="password-input"
+          id="login-password"
+          onChange={ handleChange }
+        />
+        <button
+          type="button"
+          data-testid="login-submit-btn"
+          disabled={ enableButton }
+          onClick={ handleClick }
+        >
+          Entrar
+        </button>
+      </div>
     </div>
   );
 }

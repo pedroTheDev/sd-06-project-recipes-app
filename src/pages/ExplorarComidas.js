@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import Header2 from '../components/Header2';
 import MenuInferior from '../components/MenuInferior';
 import { fetchApiComidasExplorar } from '../services/FetchApiComidas';
+import './explorar.css';
 
 function ExplorarComidas() {
   const history = useHistory();
@@ -24,29 +25,31 @@ function ExplorarComidas() {
   return (
     <div>
       <Header2 title="Explorar Comidas" />
-      <button
-        type="button"
-        data-testid="explore-by-ingredient"
-        onClick={ redirectExplorarIngredientes }
-      >
-        Por Ingredientes
-      </button>
+      <div className="explorar">
+        <button
+          type="button"
+          data-testid="explore-by-ingredient"
+          onClick={ redirectExplorarIngredientes }
+        >
+          Por Ingredientes
+        </button>
 
-      <button
-        type="button"
-        data-testid="explore-by-area"
-        onClick={ redirectExplorarOrigem }
-      >
-        Por Local de Origem
-      </button>
+        <button
+          type="button"
+          data-testid="explore-by-area"
+          onClick={ redirectExplorarOrigem }
+        >
+          Por Local de Origem
+        </button>
 
-      <button
-        type="button"
-        data-testid="explore-surprise"
-        onClick={ redirectExplorarSurpresa }
-      >
-        Me Surpreenda!
-      </button>
+        <button
+          type="button"
+          data-testid="explore-surprise"
+          onClick={ redirectExplorarSurpresa }
+        >
+          Me Surpreenda!
+        </button>
+      </div>
       <MenuInferior />
     </div>
   );

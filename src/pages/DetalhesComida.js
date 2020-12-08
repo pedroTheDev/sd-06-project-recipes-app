@@ -137,7 +137,8 @@ function DetalhesComidas() {
   function renderIngrediente(bebida) {
     const array = [];
     for (let numero = 1; numero <= vinte; numero += 1) {
-      if (bebida[`strIngredient${numero}`] !== '') {
+      if (bebida[`strIngredient${numero}`] !== ''
+      && bebida[`strIngredient${numero}`] !== null) {
         array.push(
           <li
             data-testid={ `${numero - 1}-ingredient-name-and-measure` }
@@ -161,6 +162,9 @@ function DetalhesComidas() {
       const link = document.createElement('span');
       link.innerHTML = 'Link copiado!';
       document.getElementById('link-compartilhar').appendChild(link);
+      setTimeout(() => {
+        document.getElementById('link-compartilhar').removeChild(link);
+      }, 1000);
     }, () => {
       // eslint-disable-next-line
       alert('erro');

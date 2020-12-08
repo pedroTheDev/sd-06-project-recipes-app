@@ -6,6 +6,7 @@ import '../components/detalhes.css';
 import share from '../images/shareIcon.svg';
 import coracaoBranco from '../images/whiteHeartIcon.svg';
 import coracaoPreto from '../images/blackHeartIcon.svg';
+import './progresso.css';
 
 function ProgressoComida() {
   const { idDaReceita } = useParams();
@@ -108,7 +109,7 @@ function ProgressoComida() {
         array.push(
           <label
             id={ `${numero - 1}-ingredient-check` }
-            htmlFor={ `${numero - 1}-ingredient` }
+            htmlFor={ `${numero - 1}-ingredient-step` }
             data-testid={ `${numero - 1}-ingredient-step` }
           >
             <input
@@ -125,7 +126,8 @@ function ProgressoComida() {
                 )) }
             />
             {`${bebida[`strIngredient${numero}`]} `}
-            {(bebida[`strMeasure${numero}`] !== '')
+            {(bebida[`strMeasure${numero}`] !== ''
+            && bebida[`strMeasure${numero}`] !== null)
               ? <span>{`${bebida[`strMeasure${numero}`]}`}</span>
               : ''}
           </label>,
@@ -138,11 +140,15 @@ function ProgressoComida() {
   console.log(receitasSalvas);
 
   function copiaLink() {
+    const thousand = 1000;
     const copiado = window.location.href.replace('/in-progress', '');
     navigator.clipboard.writeText(copiado).then(() => {
       const link = document.createElement('span');
       link.innerHTML = 'Link copiado!';
       document.getElementById('link-compartilhar').appendChild(link);
+      setTimeout(() => {
+        document.getElementById('link-compartilhar').removeChild(link);
+      }, thousand);
     }, () => {
       // eslint-disable-next-line
       alert('erro');
@@ -300,14 +306,15 @@ function ProgressoComida() {
         <h4 data-testid="recipe-category" className="category titulo">
           {comida.strCategory}
         </h4>
-        <div>
+        <div className="ingredientes-check">
           <h3 className="titulo">Ingredientes</h3>
           {renderIngrediente(comida)}
         </div>
         <h3 className="titulo">Instruções</h3>
-        <p data-testid="instructions" className="intrucoes">{comida.strInstructions}</p>
+        <p data-testid="instructions" className="instrucoes">{comida.strInstructions}</p>
 
         <button
+          className="finalizar"
           type="button"
           data-testid="finish-recipe-btn"
           disabled={ checkDisable() }

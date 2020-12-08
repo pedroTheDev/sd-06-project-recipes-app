@@ -6,6 +6,7 @@ import '../components/detalhes.css';
 import share from '../images/shareIcon.svg';
 import coracaoBranco from '../images/whiteHeartIcon.svg';
 import coracaoPreto from '../images/blackHeartIcon.svg';
+import './progresso.css';
 
 function DetalhesBebida() {
   const { idDaReceita } = useParams();
@@ -17,7 +18,7 @@ function DetalhesBebida() {
 
   const [
     ingredientesNoLocalStorage, setIngredientesNoLocalStorage] = useState(ingredientes);
-  console.log(receitasSalvas);
+  // console.log(receitasSalvas);
 
   const fetchBebidasDetalhes = async () => {
     const response = await fetchApiBebidasDetalhes(idDaReceita);
@@ -79,9 +80,9 @@ function DetalhesBebida() {
         .style.textDecoration = 'none';
       const progress = JSON.parse((localStorage.getItem('inProgressRecipes')));
       if (progress) {
-        console.log('inprogress');
+        // console.log('inprogress');
         if (progress.cocktails) {
-          console.log('cocktails');
+          // console.log('cocktails');
           bebidaLocalStorage = progress.cocktails[idDaReceita]
             .filter((comidaLocal) => comidaLocal !== document
               .getElementById(`${index - 1}-ingredient-check`).innerText);
@@ -108,6 +109,8 @@ function DetalhesBebida() {
     for (let numero = 1; numero <= quinze; numero += 1) {
       if (bebida[`strIngredient${numero}`] !== null
       && bebida[`strIngredient${numero}`] !== '') {
+        console.log(`${bebida[`strIngredient${numero}`]} ${bebida[`strMeasure${numero}`]}`);
+
         array.push(
           <label
             id={ `${numero - 1}-ingredient-check` }
@@ -139,11 +142,15 @@ function DetalhesBebida() {
     return array;
   }
   function copiaLink() {
+    const thousand = 1000;
     const copiado = window.location.href.replace('/in-progress', '');
     navigator.clipboard.writeText(copiado).then(() => {
       const link = document.createElement('span');
       link.innerHTML = 'Link copiado!';
       document.getElementById('link-compartilhar').appendChild(link);
+      setTimeout(() => {
+        document.getElementById('link-compartilhar').removeChild(link);
+      }, thousand);
     }, () => {
       // eslint-disable-next-line
       alert('erro');
@@ -194,9 +201,9 @@ function DetalhesBebida() {
     if (favoritos) {
       const idsFavoritos = [];
       JSON.parse(favoritos).map((favorito) => idsFavoritos.push(favorito.id));
-      console.log('testando', idsFavoritos);
+      // console.log('testando', idsFavoritos);
       if (idsFavoritos.includes(idDaReceita)) {
-        console.log('receita existe');
+        // console.log('receita existe');
         return (
           <button
             type="button"
@@ -247,7 +254,7 @@ function DetalhesBebida() {
   function redirectFeitas() {
     if (localStorage.getItem('doneRecipes')) {
       const feitasStorage = JSON.parse(localStorage.getItem('doneRecipes'));
-      console.log('feitasStorage', feitasStorage);
+      // console.log('feitasStorage', feitasStorage);
       const receitaFeita = {
         id: idDaReceita,
         type: 'bebida',
@@ -301,13 +308,16 @@ function DetalhesBebida() {
           <h4 data-testid="recipe-category" className="category titulo">
             {bebida.strAlcoholic}
           </h4>
-          <div>
+          <div className="ingredientes-check">
             <h3 className="titulo">Ingredientes</h3>
             {renderIngrediente(bebida)}
           </div>
           <h3 className="titulo">Instruções</h3>
-          <p data-testid="instructions" className="intrucoes">{bebida.strInstructions}</p>
+          <p data-testid="instructions" className="instrucoes">
+            {bebida.strInstructions}
+          </p>
           <button
+            className="finalizar"
             type="button"
             data-testid="finish-recipe-btn"
             disabled={ checkDisable() }

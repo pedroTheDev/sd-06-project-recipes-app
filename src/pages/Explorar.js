@@ -2,6 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Header2 from '../components/Header2';
 import MenuInferior from '../components/MenuInferior';
+import './explorar.css';
 
 function Explorar() {
   const history = useHistory();
@@ -15,20 +16,22 @@ function Explorar() {
   return (
     <div>
       <Header2 title="Explorar" />
-      <button
-        type="button"
-        data-testid="explore-food"
-        onClick={ redirectExplorarComidas }
-      >
-        Explorar Comidas
-      </button>
-      <button
-        type="button"
-        data-testid="explore-drinks"
-        onClick={ redirectExplorarBebidas }
-      >
-        Explorar Bebidas
-      </button>
+      <div className="explorar">
+        <button
+          type="button"
+          data-testid="explore-food"
+          onClick={ redirectExplorarComidas }
+        >
+          Explorar Comidas
+        </button>
+        <button
+          type="button"
+          data-testid="explore-drinks"
+          onClick={ redirectExplorarBebidas }
+        >
+          Explorar Bebidas
+        </button>
+      </div>
       <MenuInferior />
     </div>
   );
