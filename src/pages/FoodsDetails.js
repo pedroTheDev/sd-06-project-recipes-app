@@ -180,6 +180,7 @@ export default function FoodsDetails(props) {
             allow="encrypted-media"
             title="video"
             width="360"
+            data-testid="video"
           />
 
           {
