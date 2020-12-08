@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import FoodImage from '../images/mealIcon.svg';
 import DrinkImage from '../images/drinkIcon.svg';
 import ExploreImage from '../images/exploreIcon.svg';
+import Mais from '../images/mais.png';
 import './MenuInferior.css';
 
 function MenuInferior() {
@@ -15,6 +16,9 @@ function MenuInferior() {
   }
   function redirectExplorar() {
     history.push('/explorar');
+  }
+  function redirectNovaReceita() {
+    history.push('/nova-receita');
   }
   return (
     <div data-testid="footer" className="MenuInferior">
@@ -50,6 +54,16 @@ function MenuInferior() {
       >
         <img src={ FoodImage } alt="food-img" />
         Comidas
+      </button>
+
+      <button
+        className="buttonFooter"
+        type="button"
+        onClick={ redirectNovaReceita }
+        src={ Mais }
+      >
+        <img src={ Mais } alt="plus-img" />
+        Nova Receita
       </button>
     </div>
   );

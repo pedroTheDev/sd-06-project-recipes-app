@@ -17,6 +17,8 @@ import DetalhesComidas from './pages/DetalhesComida';
 import DetalhesBebida from './pages/DetalhesBebida';
 import ProgressoComida from './pages/ProgressoComida';
 import ProgressoBebida from './pages/ProgressoBebida';
+import NovaReceita from './pages/NovaReceita';
+import NovasReceitasSalvas from './pages/NovasReceitasSalvas';
 
 function App() {
   return (
@@ -54,6 +56,8 @@ function App() {
           path="/bebidas/:idDaReceita/in-progress"
           component={ ProgressoBebida }
         />
+        <Route exact path="/nova-receita" component={ NovaReceita } />
+        <Route exact path="/novas-receitas-salvas" component={ NovasReceitasSalvas } />
       </Switch>
     </div>
   );
