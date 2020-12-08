@@ -12,7 +12,9 @@ export default createGlobalStyle`
     --input-color: #36a4fe;
     --background-color: #fef9f6;
     --blue-color: #365efe;
-    --light-blue: #afc8f3;
+    --light-blue: #cdd3ed;
+    --blue-header: #7288f1;
+    --button-background: #548cf5;
   }
 
   body {
@@ -31,9 +33,5 @@ export default createGlobalStyle`
 
   button {
     cursor: pointer;
-  }
-
-  #root {
-    margin: 30px 0;
   }
 `;

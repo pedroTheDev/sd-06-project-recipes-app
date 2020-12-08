@@ -7,6 +7,7 @@ import {
   MealsAndDrinksContainer,
   MainContainer,
   ButtonContainer,
+  FilterButtons,
 } from './style/mealsAndDrinks';
 
 class RecipesCardMeals extends Component {
@@ -59,7 +60,7 @@ class RecipesCardMeals extends Component {
 
   filter(index, strCategory) {
     return (
-      <div key={ index }>
+      <FilterButtons key={ index }>
         <button
           id={ strCategory }
           type="button"
@@ -68,7 +69,7 @@ class RecipesCardMeals extends Component {
         >
           {strCategory}
         </button>
-      </div>
+      </FilterButtons>
     );
   }
 

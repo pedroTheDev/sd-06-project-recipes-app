@@ -4,19 +4,21 @@ const FooterContainer = styled.div`
   margin-top: 10px;
   display: flex;
   justify-content: center;
+
   div {
-    background-color: white;
+    background-color: var(--blue-header);
     position: fixed;
     bottom: 0;
-    padding: 8px 0;
+    padding: 5px 0;
     display: flex;
     justify-content: space-between;
     margin: auto;
-    width: 90%;
+    width: 100%;
     align-items: center;
 
     a {
       align-self: flex-start;
+      margin: 0 15px;
     }
 
     button {
