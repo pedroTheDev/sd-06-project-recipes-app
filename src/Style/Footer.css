@@ -1,6 +1,10 @@
 .container-footer {
-  background-color: darkgrey;
+  background-color: rgb(245, 245, 245);
   display: flex;
   justify-content: space-between;
   width: 100%;
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: 0px 1px 4px 1px rgba(0, 0, 0, 0.39);
+ 
 }

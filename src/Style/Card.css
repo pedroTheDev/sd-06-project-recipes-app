@@ -1,9 +1,11 @@
 .card {
   align-items: center;
-  background-color: chocolate;
+  background-color: rgb(72,115,166);
   display: flex;
-  margin-bottom: 25px;
-  margin-left: 25px;
-  width: 300px;
-  
+  margin: 0 auto 24px;
+  width: 85%;
+}
+
+.card:last-child {
+  /* margin-bottom: 84px; */
 }

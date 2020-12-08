@@ -1,17 +1,55 @@
 div.scrollmenu {
-  background-color: #333;
-  height: 400px;
+  width: 360px;
   overflow: scroll;
   white-space: nowrap;
-  width: 800px;
+  margin-bottom: 32px;
+  /* border: 1px solid purple; */
 }
 
 .scrollmenu-child {
+  border-radius: 4px;
+  background-color: #333;
   color: white;
   display: inline-block;
-  height: 100px;
-  padding: 14px;
   text-align: center;
   text-decoration: none;
-  width: 400px;
+  width: 140px;
+  margin: 0 20px;
+}
+
+.scrollmenu-child img {
+  width: 100%;
+  border-radius: 4px;
+}
+
+.isAlcohol {
+  text-align: center;
+}
+
+.scroll-paragraph {
+  font-weight: 700;
+  margin: 0;
+  padding: 4px 0;
+}
+
+.scroll-title {
+  width: 90%;
+  margin: auto;
+  margin-bottom: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 1.5px;
+
+}
+.scroll-title2 {
+  width: 90%;
+  margin: auto;
+  margin-bottom: 8px;
+  margin-top: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 1.5px;
+
 }

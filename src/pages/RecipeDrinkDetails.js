@@ -69,19 +69,26 @@ function RecipeDrinkDetails(props) {
     renderIngredients();
 
     return recipes && recipes[0] && (
-      <div>
-        <img
-          data-testid="recipe-photo"
-          src={ recipes[0].strDrinkThumb }
-          alt={ recipes[0].strDrink }
-        />
+      <div className="food-detail-container">
+        <div className="image-detail-container">
+          <img
+            data-testid="recipe-photo"
+            src={ recipes[0].strDrinkThumb }
+            alt={ recipes[0].strDrink }
+          />
+        </div>
         <h4 data-testid="recipe-title">
           {' '}
           { recipes[0].strDrink }
           {' '}
         </h4>
-        <p data-testid="recipe-category">{recipes[0].strAlcoholic}</p>
-        <div>
+        <p
+          data-testid="recipe-category"
+          className="isAlcohol"
+        >
+          {recipes[0].strAlcoholic}
+        </p>
+        <div className="interactive-buttons">
           <button
             type="button"
             onClick={ () => copyClip() }
@@ -90,14 +97,19 @@ function RecipeDrinkDetails(props) {
             Compartilhar
           </button>
           {share && <span>Link copiado!</span>}
+          <FavoriteButton
+            id={ id }
+            title={ title }
+            data-testid="favorite-btn"
+          />
         </div>
-        <FavoriteButton
-          id={ id }
-          title={ title }
-          data-testid="favorite-btn"
-        />
-        <p data-testid="recipe-category">{recipes[0].strCategory}</p>
-        <ul>
+        <p
+          data-testid="recipe-category"
+          className="paragraph-side"
+        >
+          {recipes[0].strCategory}
+        </p>
+        <ul className="side-container">
           {arrIngredient.map((ingredient, index) => (
             <li
               key={ index }
@@ -107,7 +119,7 @@ function RecipeDrinkDetails(props) {
             </li>
           ))}
         </ul>
-        <ul>
+        <ul className="side-container">
           {arrMeasure.map((measure, index) => (
             <li
               key={ index }
@@ -117,7 +129,14 @@ function RecipeDrinkDetails(props) {
             </li>
           ))}
         </ul>
-        <p data-testid="instructions">{recipes[0].strInstructions}</p>
+        <div className="instruction-title">Instruções</div>
+        <p
+          data-testid="instructions"
+          className="instructons-container"
+        >
+          {recipes[0].strInstructions}
+        </p>
+        <div className="scroll-title2">Outras sugestões:</div>
         <div className="scrollmenu">
           <div>
             {recomendation.slice(ZERO, SEIS).map((element, index) => (

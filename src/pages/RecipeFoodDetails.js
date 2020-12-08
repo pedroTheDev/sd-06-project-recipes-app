@@ -50,7 +50,7 @@ function RecipeFoodDetails(props) {
 
     const renderMeasure = () => {
       for (let i = 1; i <= TWENTY; i += 1) {
-        if (recipes[0][`strMeasure${i}`]) {
+        if (recipes[0][`strMeasure${i}`].length > 1) {
           arrMeasure = arrMeasure.concat(recipes[0][`strMeasure${i}`]);
         } else {
           break;
@@ -68,18 +68,20 @@ function RecipeFoodDetails(props) {
     renderIngredients();
 
     return (
-      <div>
-        <img
-          data-testid="recipe-photo"
-          src={ recipes[0].strMealThumb }
-          alt={ recipes[0].strMeal }
-        />
+      <div className="food-detail-container">
+        <div className="image-detail-container">
+          <img
+            data-testid="recipe-photo"
+            src={ recipes[0].strMealThumb }
+            alt={ recipes[0].strMeal }
+          />
+        </div>
         <h4 data-testid="recipe-title">
           {' '}
           { recipes[0].strMeal }
           {' '}
         </h4>
-        <div>
+        <div className="interactive-buttons">
           <button
             type="button"
             onClick={ () => copyClip() }
@@ -87,15 +89,20 @@ function RecipeFoodDetails(props) {
           >
             Compartilhar
           </button>
+          {share && <span>Link copiado!</span>}
           <FavoriteButton
             id={ id }
             title={ title }
             data-testid="favorite-btn"
           />
-          {share && <span>Link copiado!</span>}
         </div>
-        <p data-testid="recipe-category">{recipes[0].strCategory}</p>
-        <ul>
+        <p
+          data-testid="recipe-category"
+          className="paragraph-side"
+        >
+          {recipes[0].strCategory}
+        </p>
+        <ul className="side-container">
           {arrIngredient.map((ingredient, index) => (
             <li
               key={ index }
@@ -105,7 +112,7 @@ function RecipeFoodDetails(props) {
             </li>
           ))}
         </ul>
-        <ul>
+        <ul className="side-container">
           {arrMeasure.map((measure, index) => (
             <li
               key={ index }
@@ -115,18 +122,26 @@ function RecipeFoodDetails(props) {
             </li>
           ))}
         </ul>
-        <p data-testid="instructions">{recipes[0].strInstructions}</p>
-        <iframe
-          title="Este é um titulo unico"
-          data-testid="video"
-          width="280"
-          height="150"
-          src={ recipes[0].strYoutube }
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media"
-          allowFullScreen
-        />
-
+        <div className="instruction-title">Instruções</div>
+        <p
+          data-testid="instructions"
+          className="instructons-container"
+        >
+          {recipes[0].strInstructions}
+        </p>
+        <div className="iframe-container">
+          <iframe
+            title="Este é um titulo unico"
+            data-testid="video"
+            width="280"
+            height="150"
+            src={ recipes[0].strYoutube }
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media"
+            allowFullScreen
+          />
+        </div>
+        <div className="scroll-title">Outras sugestões:</div>
         <div className="scrollmenu">
           <div>
             {recomendation.slice(ZERO, SEIS).map((element, index) => (
@@ -136,7 +151,12 @@ function RecipeFoodDetails(props) {
                   src={ element.strDrinkThumb }
                   alt={ element.strDrink }
                 />
-                <p data-testid={ `${index}-recomendation-title` }>{ element.strDrink }</p>
+                <p
+                  data-testid={ `${index}-recomendation-title` }
+                  className="scroll-paragraph"
+                >
+                  { element.strDrink }
+                </p>
               </div>
             ))}
           </div>

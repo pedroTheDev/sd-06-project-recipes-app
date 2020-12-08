@@ -24,7 +24,9 @@ function Drinks({ title }) {
   }
 
   return (
-    <Card title={ title } />
+    <div className="cards-container">
+      <Card title={ title } />
+    </div>
   );
 }
 

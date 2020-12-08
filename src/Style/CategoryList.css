@@ -2,9 +2,10 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+  margin: 22px 0;
 }
 
 .btn-outline-dark {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   width: 100px;
 }

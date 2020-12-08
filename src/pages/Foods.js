@@ -17,7 +17,7 @@ function Foods({ title }) {
   }
 
   return (
-    <div>
+    <div className="cards-container">
       <Card title={ title } />
     </div>
   );
