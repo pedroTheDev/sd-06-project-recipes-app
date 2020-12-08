@@ -378,14 +378,14 @@ header {
 }
 
 .img-recipe-thumb {
-  width: 170px;
-  height: 150px;
+  width: 180px;
+  height: 160px;
   border-bottom: 3px solid rgba(189, 138, 0, 0.295);
   border-top: 3px solid rgba(189, 138, 0, 0.295);
 }
 
 .name-recipe-thumb {
-  width: 170px;
+  width: 180px;
   color: #b12310;
   font-family: 'Satisfy', cursive;
   font-size: 25px;
@@ -469,4 +469,54 @@ a:hover {
 
 .padd20 {
   padding: 10px 20px;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 0;
+}
+
+/* Track */
+/* ::-webkit-scrollbar-track {
+  background: #000000;
+} */
+
+/* Handle */
+/* ::-webkit-scrollbar-thumb {
+  background: rgb(146, 10, 10);
+  background: rgb(0, 0, 0);
+} */
+
+/* Handle on hover */
+/* ::-webkit-scrollbar-thumb:hover {
+  background: rgb(255, 196, 0);
+  background: rgb(223, 12, 12);
+} */
+
+input[type="radio"] {
+  /* remove standard background appearance */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* create custom radiobutton appearance */
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  padding: 2px;
+  /* background-color only for content */
+  background-clip: content-box;
+  border: 1px solid #bbbbbb;
+  /* background-color: #3b9400; */
+  background-color: transparent;
+  border-radius: 50%;
+  outline: none;
+}
+
+input[type="radio"]:checked {
+  background-color: #93e026;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: rgb(202, 202, 202);
+  opacity: 1; /* Firefox */
 }
