@@ -34,7 +34,7 @@ const Explore = () => {
             className="explore-btn"
           >
             <img src={ exploreIngredients } alt="Explore by ingredients" />
-            Por Ingredientes
+            By ingredients
           </Link>
           <Link
             to="/explorar/comidas/area"
@@ -42,7 +42,7 @@ const Explore = () => {
             className="explore-btn"
           >
             <img src={ exploreOrigin } alt="Explore by Origin Place" />
-            Por Local de Origem
+            By Origin Place
           </Link>
 
           <Link
@@ -51,7 +51,7 @@ const Explore = () => {
             className="explore-btn"
           >
             <img src={ exploreSurprise } alt="Surprise me" />
-            Me Surpreenda!
+            Surprise me!
           </Link>
         </div>);
     }
@@ -65,7 +65,7 @@ const Explore = () => {
             className="explore-btn"
           >
             <img src={ exploreIngredients } alt="Explore by Ingredients" />
-            Por Ingredientes
+            By Ingredients
           </Link>
           <Link
             to={ `/bebidas/${randomDrink.idDrink}` }
@@ -73,7 +73,7 @@ const Explore = () => {
             className="explore-btn"
           >
             <img src={ exploreSurprise } alt="Surprise me" />
-            Me Surpreenda!
+            Surprise me!
           </Link>
         </div>);
     }

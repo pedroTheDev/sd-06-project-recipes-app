@@ -19,7 +19,7 @@ function Perfil() {
   };
   return (
     <div>
-      <Header pageName="Perfil" />
+      <Header pageName="Profile" />
       <div className="profile-container">
         <h3
           data-testid="profile-email"
@@ -34,7 +34,7 @@ function Perfil() {
             className="profile-btn"
           >
             <img src={ doneIcon } alt="Done Recipes" />
-            Receitas Feitas
+            Done Recipes
           </Link>
           <Link
             to="/receitas-favoritas"
@@ -42,7 +42,7 @@ function Perfil() {
             className="profile-btn"
           >
             <img src={ favoriteIcon } alt="Favorite Recipes" />
-            Receitas Favoritas
+            Favorite Recipes
           </Link>
         </div>
         <div className="signout-container">

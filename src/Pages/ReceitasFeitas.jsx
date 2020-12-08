@@ -25,7 +25,7 @@ function ReceitasFeitas() {
   };
   return (
     <div style={ { marginTop: '80px' } }>
-      <Header pageName="Receitas Feitas" />
+      <Header pageName="Recipes Done" />
       <div className="filter-done">
         <button
           onClick={ handleFilters }

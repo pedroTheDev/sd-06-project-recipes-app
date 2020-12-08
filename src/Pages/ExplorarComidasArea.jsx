@@ -30,7 +30,7 @@ function ExplorarComidasArea() {
 
   return (
     <div>
-      <Header pageName="Explorar Origem " />
+      <Header pageName="Explore Origin" />
       <div className="filter-container">
         <select
           name="areas"

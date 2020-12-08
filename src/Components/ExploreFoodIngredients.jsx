@@ -63,7 +63,7 @@ function ExploreFoodIngredients() {
 
   return (
     <div>
-      <Header pageName="Explorar Ingredientes" />
+      <Header pageName="Explore Ingredients" />
       {!foodIngredientsCategory ? 'Loading' : renderCards()}
       <Footer />
     </div>

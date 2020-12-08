@@ -349,7 +349,7 @@ const RecipeInProgress = () => {
             disabled={ disable }
             onClick={ handleFinishRecipe }
           >
-            Finalizar
+            Finish
           </button>
         </Link>
       </div>
@@ -406,7 +406,7 @@ const RecipeInProgress = () => {
           disabled={ disable }
           onClick={ handleFinishRecipe }
         >
-          Finalizar
+          Finish
         </button>
       </Link>
     </div>

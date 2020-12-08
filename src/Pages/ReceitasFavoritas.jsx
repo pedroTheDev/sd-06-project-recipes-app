@@ -39,7 +39,7 @@ function ReceitasFavoritas() {
   };
   return (
     <div style={ { marginTop: '80px' } }>
-      <Header pageName="Receitas Favoritas" />
+      <Header pageName="Favorite Recipes" />
       <div className="filter-done">
         <button
           onClick={ handleFilters }

@@ -36,10 +36,10 @@ function Header({ pageName }) {
         />
       </Link>
       <p data-testid="page-title" className="page-title">{pageName}</p>
-      { (pageName !== 'Receitas Feitas' && pageName !== 'Receitas Favoritas'
-      && pageName !== 'Explorar' && pageName !== 'Explorar Comidas'
-      && pageName !== 'Explorar Bebidas' && pageName !== 'Explorar Ingredientes'
-      && pageName !== 'Perfil')
+      { (pageName !== 'Favorite Recipes' && pageName !== 'Recipes Done'
+      && pageName !== 'Explore' && pageName !== 'Explore Foods'
+      && pageName !== 'Explore Drinks' && pageName !== 'Explore Ingredients'
+      && pageName !== 'Profile')
         && (
           <button className="button-search" type="button" onClick={ handleClick }>
             <img

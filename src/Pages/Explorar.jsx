@@ -8,13 +8,13 @@ import exploreDrinks from '../images/exploreDrinks.png';
 function Explorar() {
   return (
     <div className="explore">
-      <Header pageName="Explorar" />
+      <Header pageName="Explore" />
       <Link to="/explorar/comidas" data-testid="explore-food" className="explore-btn">
-        Explorar Comidas
+        Explore Food
         <img src={ exploreFood } alt="Explore food icon" />
       </Link>
       <Link to="/explorar/bebidas" data-testid="explore-drinks" className="explore-btn">
-        Explorar Bebidas
+        Explore Drinks
         <img src={ exploreDrinks } alt="Explore drinks icon" />
       </Link>
       <Footer />

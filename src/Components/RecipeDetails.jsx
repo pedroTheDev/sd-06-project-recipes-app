@@ -220,7 +220,7 @@ const RecipeDetails = () => {
               data-testid="start-recipe-btn"
               onClick={ () => history.push(`${pathname}/in-progress`) }
             >
-              Continuar Receita
+              Continue Recipe
             </button>
           ) : (
             <button
@@ -316,7 +316,7 @@ const RecipeDetails = () => {
               onClick={ () => history.push(`${pathname}/in-progress`) }
               className="start-continue-recipe-btn"
             >
-              Continuar Receita
+              Continue Recipe
             </button>
           ) : (
             <button

@@ -59,7 +59,7 @@ function ExploreDrinkIngredients() {
 
   return (
     <div>
-      <Header pageName="Explorar Ingredientes" />
+      <Header pageName="Explore Ingredients" />
       {!drinkIngredientsCategory ? 'Loading' : renderCards()}
       <Footer />
     </div>
