@@ -1,10 +1,10 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
-import renderWithRouter from '../renderWithRouter/renderWithRouter';
-import renderWithRouter2 from '../renderWithRouter/renderWithRouter2';
 import App from '../../App';
 import RevenueContext from '../../context/RevenueContext';
 import MainPage from '../../pages/MainPage';
+import renderWithRouter from '../renderWithRouter/renderWithRouter';
+import renderWithRouter2 from '../renderWithRouter/renderWithRouter2';
 
 describe('54 - Implemente os elementos da tela de receitas '
   + 'feitas respeitando os atributos descritos no protótipo', () => {
