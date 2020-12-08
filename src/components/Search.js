@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Container, Row } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import RevenueContext from '../context/RevenueContext';
 
 export default function SearchBar(props) {
