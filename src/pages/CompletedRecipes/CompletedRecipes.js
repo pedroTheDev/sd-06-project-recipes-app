@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Header from '../../components/MainHeader/Header';
 import { shareIcon } from '../../images';
 import { getDoneRecipes } from '../../services/localStorage';
+import './style.css';
 
 function CompletedRecipes() {
   const [type, setType] = useState('');
@@ -28,35 +29,35 @@ function CompletedRecipes() {
   };
 
   return (
-    <div>
+    <div className="container">
       <Header
         className="header"
         pageTitle="Receitas Feitas"
       />
-      <div>
+      <div className="categories">
         <input
-          className="btn btn-secondary"
+          className="category-button"
           data-testid="filter-by-all-btn"
           onClick={ () => setType('') }
           type="button"
           value="All"
         />
         <input
-          className="btn btn-secondary"
+          className="category-button"
           data-testid="filter-by-food-btn"
           onClick={ () => setType('comida') }
           type="button"
           value="Comidas"
         />
         <input
-          className="btn btn-secondary"
+          className="category-button"
           data-testid="filter-by-drink-btn"
           onClick={ () => setType('bebida') }
           type="button"
           value="Bebidas"
         />
       </div>
-      <div>
+      <div className="header-container">
         {doneRecipes.map((recipe, index) => {
           if (recipe.type === type || type === '') {
             let urlLinkDetail = '';
@@ -66,24 +67,29 @@ function CompletedRecipes() {
               urlLinkDetail = `/bebidas/${recipe.id}`;
             }
             return (
-              <div>
+              <div className="recipe-card">
                 <Link to={ urlLinkDetail }>
                   <img
+                    className="recipe-thumb"
                     data-testid={ `${index}-horizontal-image` }
                     src={ recipe.image }
                     alt={ recipe.name }
                   />
                 </Link>
                 <p data-testid={ `${index}-horizontal-top-text` }>
-                  { recipe.category }
+                  {
+                    recipe.type === 'comida'
+                      ? `${recipe.area} - ${recipe.category}`
+                      : recipe.alcoholicOrNot
+                  }
                 </p>
                 <Link to={ urlLinkDetail }>
-                  <h2 data-testid={ `${index}-horizontal-name` }>
+                  <h2 className="recipe-name" data-testid={ `${index}-horizontal-name` }>
                     { recipe.name }
                   </h2>
                 </Link>
                 <p data-testid={ `${index}-horizontal-done-date` }>
-                  { recipe.doneDate }
+                  { `Feita em: ${recipe.doneDate}` }
                 </p>
                 <input
                   id={ `${recipe.id},${recipe.type}` }
