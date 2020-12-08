@@ -22,7 +22,7 @@
 .logo {
   justify-content: center;
   display: flex;
-  height: auto;
+  height: 100;
   width: 100%;
 }
 
@@ -66,3 +66,4 @@ button:disabled {
   opacity: 0.3;
   transition: opacity 0.4;
 }
+
