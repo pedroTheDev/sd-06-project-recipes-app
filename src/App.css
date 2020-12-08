@@ -514,6 +514,7 @@ input[type="radio"] {
 
 input[type="radio"]:checked {
   background-color: #93e026;
+  background-color: #d9ff00;
 }
 
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
