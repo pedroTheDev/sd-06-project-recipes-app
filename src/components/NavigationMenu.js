@@ -36,7 +36,6 @@ function NavigationMenu(props) {
   return (
     <div className="categories">
       <button
-        className="categ-buttons"
         type="button"
         data-testid="All-category-filter"
         onClick={ () => goToCategory('') }
@@ -48,7 +47,6 @@ function NavigationMenu(props) {
         .map((meal, index) => (
           <button
             data-testid={ `${meal.strCategory}-category-filter` }
-            className="categ-buttons"
             type="button"
             key={ index }
             onClick={ () => goToCategory(meal.strCategory) }

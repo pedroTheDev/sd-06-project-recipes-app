@@ -102,7 +102,7 @@ function Login() {
           />
         </g>
       </svg>
-      <form onSubmit={ handleSignUp }>
+      <form className="login-container" onSubmit={ handleSignUp }>
         <input
           type="text"
           placeholder="email"
