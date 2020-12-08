@@ -63,7 +63,9 @@ function MenuInferior() {
         src={ Mais }
       >
         <img src={ Mais } alt="plus-img" />
-        Nova Receita
+        Nova
+        <br />
+        Receita
       </button>
     </div>
   );

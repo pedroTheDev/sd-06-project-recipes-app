@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@500&display=swap');
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.receita-salvas {
+  border: 3px solid red;
+  text-align: center;
+  font-family: 'Fira Sans', sans-serif;
+  font-size: 20px;
+  padding: 10px;
+  border: 1px solid;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.receita-add {
+  font-size: 20px;
+}
+
+.receita-add h3 {
+  text-align: left;
+  margin-left: 10px;
+  color: #827977;
+}
+
+.receita-add p {
+  border: 1px solid #827977;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 10px;
+}
+
+.receita-add img {
+  width: 100vw;
+}
+
+.receita-add h1 {
+  color: white;
+}
+
+.receita-salvas button {
+  flex-grow: 1;
+  border: 1px solid;
+  font-family: 'Fira Sans', sans-serif;
+  font-size: 25px;
+  background-color: #4CAF50;
+  color: white;
+  padding: 5px 0;
+  cursor: pointer;
+}

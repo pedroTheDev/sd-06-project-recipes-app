@@ -76,4 +76,9 @@
     width: 80%;
     margin: 20px 10%;
   }
+  
+  h1 {
+    /* border: 3px solid red; */
+    color: white;
+  }
 }

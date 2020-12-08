@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@500&display=swap');
+
 .email-localStorage {
   font-size: 20px;
   text-align: center;
@@ -12,4 +14,12 @@
   margin-left: 18px;
   padding: 10px;
   width: 90%;
+}
+
+.email-localStorage {
+  /* border: 1px solid; */
+  margin: auto;
+  margin-top: 10px;
+  text-align: center;
+  font-family: 'Fira Sans', sans-serif;
 }

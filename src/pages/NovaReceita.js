@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Header2 from '../components/Header2';
+import './nova-receita.css';
 
 function NovaReceita() {
   const [count, setCount] = useState(1);
@@ -139,20 +140,22 @@ function NovaReceita() {
   return (
     <div>
       <Header2 title="Nova Receita" />
-      <form>
-        <label htmlFor="nome-receita">
-          {'Nome da Receita: '}
-          <input
-            id="nome-receita"
-            type="text"
-            onChange={ (e) => setNomeReceita(e.target.value) }
-          />
-        </label>
-        <br />
-        <br />
-        <div id="div-tipo">
-          <label>
-            {'Tipo: '}
+      <div className="nova-receita">
+        <form>
+          <label htmlFor="nome-receita">
+            {'Nome da Receita: '}
+            <input
+              id="nome-receita"
+              type="text"
+              onChange={ (e) => setNomeReceita(e.target.value) }
+            />
+          </label>
+
+          <div id="div-tipo">
+            <label>
+              {/* {'Tipo: '} */}
+            </label>
+            <br />
             <input
               id="comida"
               type="radio"
@@ -174,52 +177,51 @@ function NovaReceita() {
               Bebida
             </label>
             <br />
+          </div>
+          <br />
+          <fieldset id="fieldset-ingredientes">
+            {/* <legend>Ingredientes</legend> */}
+            <label>{'Ingrediente 1: '}</label>
+            <input
+              className="ingrediente"
+              type="text"
+              onChange={ (e) => setIngredientes([e.target.value]) }
+            />
             <br />
+          </fieldset>
+          <button
+            type="button"
+            onClick={ () => { novoIngrediente(); setCount(count + 1); } }
+          >
+            Novo Ingrediente
+          </button>
+          <br />
+          <br />
+          <fieldset>
+            <legend>Modo de Preparo</legend>
+            <textarea
+              cols="20"
+              rows="5"
+              onChange={ (e) => setModoPreparo(e.target.value) }
+            />
+          </fieldset>
+          <label htmlFor="imagem">
+            {'Imagem da Receita: '}
           </label>
-        </div>
-        <br />
-        <fieldset id="fieldset-ingredientes">
-          <legend>Ingredientes</legend>
-          <label>{'Ingrediente 1: '}</label>
           <input
-            className="ingrediente"
-            type="text"
-            onChange={ (e) => setIngredientes([e.target.value]) }
+            id="imagem"
+            type="img"
+            alt="foto da receita"
+            onChange={ (e) => setImagem(e.target.value) }
           />
           <br />
-        </fieldset>
-        <button
-          type="button"
-          onClick={ () => { novoIngrediente(); setCount(count + 1); } }
-        >
-          Novo Ingrediente
+          <br />
+        </form>
+        <button type="submit" onClick={ () => salvaReceita() }>Salvar Receita</button>
+        <button type="button">
+          <a href="/novas-receitas-salvas">Ver Minhas Receitas</a>
         </button>
-        <br />
-        <br />
-        <fieldset>
-          <legend>Modo de Preparo</legend>
-          <textarea
-            cols="30"
-            rows="5"
-            onChange={ (e) => setModoPreparo(e.target.value) }
-          />
-        </fieldset>
-        <br />
-        <br />
-        <label htmlFor="imagem">
-          {'Imagem da Receita: '}
-        </label>
-        <input
-          id="imagem"
-          type="img"
-          alt="foto da receita"
-          onChange={ (e) => setImagem(e.target.value) }
-        />
-      </form>
-      <button type="submit" onClick={ () => salvaReceita() }>Salvar Receita</button>
-      <br />
-      <br />
-      <a href="/novas-receitas-salvas">Ver Minhas Receitas</a>
+      </div>
     </div>
   );
 }

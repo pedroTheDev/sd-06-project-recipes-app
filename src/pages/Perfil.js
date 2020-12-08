@@ -29,34 +29,36 @@ function Perfil() {
   return (
     <div>
       <Header2 title="Perfil" />
-      <p className="email-localStorage" data-testid="profile-email">
-        {'Email: '}
-        { emailLocalStorage }
-      </p>
-      <button
-        className="botoes"
-        data-testid="profile-done-btn"
-        type="button"
-        onClick={ redirectFeitas }
-      >
-        Receitas Feitas
-      </button>
-      <button
-        className="botoes"
-        data-testid="profile-favorite-btn"
-        type="button"
-        onClick={ redirectFavoritas }
-      >
-        Receitas Favoritas
-      </button>
-      <button
-        className="botoes"
-        data-testid="profile-logout-btn"
-        type="button"
-        onClick={ redirectSair }
-      >
-        Sair
-      </button>
+      <div className="container">
+        <p className="email-localStorage" data-testid="profile-email">
+          {'Email: '}
+          { emailLocalStorage }
+        </p>
+        <button
+          className="botoes"
+          data-testid="profile-done-btn"
+          type="button"
+          onClick={ redirectFeitas }
+        >
+          Receitas Feitas
+        </button>
+        <button
+          className="botoes"
+          data-testid="profile-favorite-btn"
+          type="button"
+          onClick={ redirectFavoritas }
+        >
+          Receitas Favoritas
+        </button>
+        <button
+          className="botoes"
+          data-testid="profile-logout-btn"
+          type="button"
+          onClick={ redirectSair }
+        >
+          Sair
+        </button>
+      </div>
       <MenuInferior />
     </div>
   );

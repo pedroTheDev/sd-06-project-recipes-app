@@ -54,27 +54,29 @@ function ReceitasFavoritas() {
   return (
     <div>
       <Header2 title="Receitas Favoritas" />
-      <button
-        type="button"
-        data-testid="filter-by-all-btn"
-        onClick={ () => setFiltro('all') }
-      >
-        All
-      </button>
-      <button
-        type="button"
-        data-testid="filter-by-drink-btn"
-        onClick={ () => setFiltro('drinks') }
-      >
-        Drinks
-      </button>
-      <button
-        type="button"
-        data-testid="filter-by-food-btn"
-        onClick={ () => setFiltro('foods') }
-      >
-        Food
-      </button>
+      <div className="container">
+        <button
+          type="button"
+          data-testid="filter-by-all-btn"
+          onClick={ () => setFiltro('all') }
+        >
+          All
+        </button>
+        <button
+          type="button"
+          data-testid="filter-by-drink-btn"
+          onClick={ () => setFiltro('drinks') }
+        >
+          Drinks
+        </button>
+        <button
+          type="button"
+          data-testid="filter-by-food-btn"
+          onClick={ () => setFiltro('foods') }
+        >
+          Food
+        </button>
+      </div>
 
       {
         filtraFavoritos() && filtraFavoritos().map((receita, index) => (
