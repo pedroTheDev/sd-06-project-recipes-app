@@ -179,7 +179,7 @@ function DrinkDetail() {
             {handleRecomendations()}
           </div>
 
-          <div>
+          <div className="in-progress-btn-container">
             { handleBtnRender() }
           </div>
 
@@ -190,7 +190,7 @@ function DrinkDetail() {
   };
 
   return (
-    <div className="in-progress-btn-container">
+    <div>
       { handleDetails() }
     </div>
 
