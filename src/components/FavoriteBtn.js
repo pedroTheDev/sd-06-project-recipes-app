@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 function FavoriteBtn({ id, type, recipe }) {
   const [isFavorite, setIsFavorite] = useState(false);
+  const { pathname } = useLocation();
+
+  const isDrink = pathname.includes('bebidas');
 
   useEffect(() => {
     const favorite = JSON.parse(localStorage.getItem('favoriteRecipes'));
@@ -16,7 +20,7 @@ function FavoriteBtn({ id, type, recipe }) {
 
   const addFavorite = () => {
     const currentFavorite = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    const favoriteData = {
+    let favoriteData = {
       id: recipe.idMeal,
       type,
       area: recipe.strArea,
@@ -25,6 +29,18 @@ function FavoriteBtn({ id, type, recipe }) {
       name: recipe.strMeal,
       image: recipe.strMealThumb,
     };
+    if (isDrink) {
+      favoriteData = {
+        id: recipe.idDrink,
+        type,
+        area: '',
+        category: recipe.strCategory,
+        alcoholicOrNot: recipe.strAlcoholic,
+        name: recipe.strDrink,
+        image: recipe.strDrinkThumb,
+      };
+    }
+
     if (currentFavorite !== null) {
       localStorage
         .setItem('favoriteRecipes', JSON.stringify([...currentFavorite, favoriteData]));

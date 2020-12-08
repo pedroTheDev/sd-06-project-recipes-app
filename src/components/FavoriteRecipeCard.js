@@ -7,7 +7,7 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 import RecipesContext from '../context/RecipesContext';
 import '../css/Cards.css';
 
-function DoneRecipeCard({ recipe, index }) {
+function FavoriteRecipeCard({ recipe, index }) {
   const {
     id,
     type,
@@ -90,9 +90,9 @@ function DoneRecipeCard({ recipe, index }) {
   );
 }
 
-export default DoneRecipeCard;
+export default FavoriteRecipeCard;
 
-DoneRecipeCard.propTypes = {
+FavoriteRecipeCard.propTypes = {
   recipe: PropTypes.shape({
     id: PropTypes.number,
     type: PropTypes.string,
