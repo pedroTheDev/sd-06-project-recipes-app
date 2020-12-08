@@ -116,7 +116,7 @@ function DetalhesReceita({ match: { params: { id } } }) {
       />
       <div className="header-detalhes">
         <div>
-          <span data-testid="recipe-title">{detailsFood.strMeal}</span>
+          <span className="titulo" data-testid="recipe-title">{detailsFood.strMeal}</span>
           <br />
           <span data-testid="recipe-category">{detailsFood.strCategory}</span>
         </div>
