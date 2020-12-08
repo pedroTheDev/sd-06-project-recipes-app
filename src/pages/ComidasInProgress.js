@@ -337,7 +337,11 @@ function ComidasInProgress(props) {
               data-testid="instructions"
               className="text-justify"
             >
-              { meal.strInstructions }
+              <div>
+                {meal.strInstructions.split(/[1-9]+\./i).map((inst, i) => (
+                  <p key={ `${i}-description` }>{`${i + 1} - ${inst}`}</p>
+                ))}
+              </div>
             </p>
             {!doneRecipes.includes(meal.idMeal) && (
               <Link to="/receitas-feitas">

@@ -21,7 +21,7 @@ function Footer() {
           src={ exploreIcon }
         />
       </Link>
-      <Link to="comidas">
+      <Link to="/comidas">
         <img alt="Comidas" data-testid="food-bottom-btn" src={ mealIcon } />
       </Link>
     </div>

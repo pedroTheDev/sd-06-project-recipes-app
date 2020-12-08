@@ -14,7 +14,7 @@ const Login = () => {
   const inputValues = () => {
     const email = document.getElementById('email-input').value;
     const password = document.getElementById('password-input').value;
-    const regexp = /^[a-zA-Z0-9.!#$%&_-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    const regexp = /^[a-zA-Z0-9.!#$%&_-]+@[A-Z0-9.-]+\.[A-Z]{3,}$/i;
     const six = 6;
 
     if (regexp.test(email) && password.length > six) {

@@ -49,7 +49,6 @@ function DetalhesComida(props) {
       const favoriteRecipes = JSON.parse(
         localStorage.getItem('favoriteRecipes'),
       );
-      console.log(favoriteRecipes);
 
       if (!favoriteRecipes || !favoriteRecipes.length) {
         setIsFavorite(false);
@@ -249,12 +248,14 @@ function DetalhesComida(props) {
                   }) }
                 </div>
                 <h5 className="mt-3">Instructions</h5>
-                <p
+                <div
                   className="text-justify"
                   data-testid="instructions"
                 >
-                  { meal.strInstructions }
-                </p>
+                  {meal.strInstructions.split(/[1-9]+\./i).map((inst, i) => (
+                    <p key={ i }>{`${i + 1} - ${inst}`}</p>
+                  ))}
+                </div>
                 <iframe
                   data-testid="video"
                   src={ meal.strYoutube.replace('watch?v=', 'embed/') }
