@@ -19,3 +19,7 @@ test('60 - Implemente os elementos da tela de '
   expect(drinksFilterButton).toBeInTheDocument();
 });
 
+// describe('65 - Implemente 2 botões que filtram as receitas por comida '
+//   + 'ou bebida e um terceiro que remove todos os filtros', () => {
+
+// });
