@@ -55,7 +55,7 @@ function FavoriteRecipeCard({ recipe, index }) {
   return (
     <div className="done-recipe-card-container">
       <div className="done-recipe-img-container">
-        <Link to={ `/${type}s/${id}` }>
+        <Link className="Link" to={ `/${type}s/${id}` }>
           <img
             alt="prato já feito"
             src={ image }
@@ -66,20 +66,30 @@ function FavoriteRecipeCard({ recipe, index }) {
       { showMessage && CopiedLinkMessage }
       <div className="done-recipe-info-container">
         <h3 data-testid={ `${index}-horizontal-top-text` }>{ preTitle() }</h3>
-        <Link to={ `/${type}s/${id}` }>
+        <Link className="Link" to={ `/${type}s/${id}` }>
           <h4 data-testid={ `${index}-horizontal-name` }>{ name }</h4>
         </Link>
       </div>
       <div>
-        <button type="button" onClick={ () => shareClick() }>
+        <button
+          className="btn-favorite"
+          type="button"
+          onClick={ () => shareClick() }
+        >
           <img
+            className="btn-favorite-img"
             alt="share button"
             data-testid={ `${index}-horizontal-share-btn` }
             src={ shareIcon }
           />
         </button>
-        <button type="button" onClick={ () => removeFavorite() }>
+        <button
+          className="btn-favorite"
+          type="button"
+          onClick={ () => removeFavorite() }
+        >
           <img
+            className="btn-favorite-img"
             alt="favorite button"
             data-testid={ `${index}-horizontal-favorite-btn` }
             src={ blackHeartIcon }

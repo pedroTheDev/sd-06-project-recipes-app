@@ -141,11 +141,11 @@ function DrinkDetail() {
           </div>
 
           <div className="detail-ingredients-container">
-            <div className="datail-ingredients-title">
+            <div className="detail-ingredients-title">
               <h3>Ingredients</h3>
             </div>
 
-            <div className="datail-ingredients">
+            <div className="detail-ingredients">
               <ul>
                 {ingredients.length && ingredients.map((ingredient, i) => (
                   <li
@@ -163,16 +163,16 @@ function DrinkDetail() {
           </div>
 
           <div className="detail-instructions-container">
-            <div className="datail-instructions-title">
+            <div className="detail-instructions-title">
               <h3>Instructions</h3>
             </div>
 
-            <div className="datail-instructions">
+            <div className="detail-instructions">
               <p data-testid="instructions">
                 { currentRecipe.strInstructions }
               </p>
             </div>
-
+            <hr />
           </div>
 
           <div className="detail-recomendation-container">
