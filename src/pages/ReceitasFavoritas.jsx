@@ -7,6 +7,7 @@ import blackHeartIcon from '../styles/images/blackHeartIcon.svg';
 import { loadState, saveState } from '../services/localStorage';
 import '../styles/marginHederAndFooter.css';
 import '../styles/ReceitasFinalizadas.css';
+import '../styles/FavoriteHeart.css';
 
 function ReceitasFavoritas() {
   const favoriteRecipes = 'favoriteRecipes';
@@ -27,9 +28,7 @@ function ReceitasFavoritas() {
     input.select();
     document.execCommand('copy');
     input.parentNode.removeChild(input);
-    const divBtns = document.getElementById('btns');
-    // const newSpan = document.createElement('span');
-    // newSpan.innerHTML = 'Link copiado!';
+    const divBtns = document.getElementById(id);
     divBtns.innerHTML = 'Link copiado!';
   };
 
@@ -134,6 +133,7 @@ function ReceitasFavoritas() {
                 <button
                   type="button"
                   onClick={ () => copyBoard(id, type) }
+                  className="btn-copy-link"
                 >
                   <img
                     src={ buttonShare }
@@ -141,9 +141,13 @@ function ReceitasFavoritas() {
                     alt="img-button-share"
                   />
                 </button>
-                <span id="btns" />
+                <span id={ id } />
                 <br />
-                <button type="button" onClick={ () => disfavorRecipe(id) }>
+                <button
+                  type="button"
+                  onClick={ () => disfavorRecipe(id) }
+                  className="favorite-btn"
+                >
                   <img
                     data-testid={ `${index}-horizontal-favorite-btn` }
                     src={ blackHeartIcon }

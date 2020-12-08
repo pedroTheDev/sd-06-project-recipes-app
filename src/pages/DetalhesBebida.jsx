@@ -105,7 +105,12 @@ function DetalhesBebida({ match: { params: { id } } }) {
       />
       <div className="header-detalhes">
         <div>
-          <span className="titulo" data-testid="recipe-title">{detailsDrink.strDrink}</span>
+          <span
+            className="titulo"
+            data-testid="recipe-title"
+          >
+            {detailsDrink.strDrink}
+          </span>
           <div data-testid="recipe-category">
             <span>{detailsDrink.strAlcoholic}</span>
             <br />
