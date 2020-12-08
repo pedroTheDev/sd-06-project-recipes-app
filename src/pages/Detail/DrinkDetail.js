@@ -67,7 +67,7 @@ function DrinkDetail() {
         category={ recipesDrinks.strAlcoholic }
         className="cover"
       />
-      <div>
+      <div className="main-container">
         <div className="ingredients-container">
           <h3>Ingredientes</h3>
           {setIngredientAndMeasure().map((ingredient, index) => {

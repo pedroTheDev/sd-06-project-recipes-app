@@ -54,15 +54,17 @@ function SecondaryHeader({ name, img, category }) {
   return (
     <div className="header-container">
       <header className="secondary-header">
-        <img
-          className="image-secondary-header"
-          data-testid="recipe-photo"
-          alt={ `Receita: ${name}` }
-          src={ img }
-        />
-        <div className="main-info">
-          <h1 data-testid="recipe-title" className="header-title">{ name }</h1>
-          <p data-testid="recipe-category" className="category">{ category }</p>
+        <div className="top-Header">
+          <img
+            className="image-secondary-header"
+            data-testid="recipe-photo"
+            alt={ `Receita: ${name}` }
+            src={ img }
+          />
+          <div className="main-info">
+            <h1 data-testid="recipe-title" className="header-title">{ name }</h1>
+            <p data-testid="recipe-category" className="category">{ category }</p>
+          </div>
         </div>
         <div className="header-icons">
           <input
