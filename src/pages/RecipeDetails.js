@@ -103,6 +103,7 @@ function RecipeDetails(props) {
                     index={ index }
                     measure={ measure }
                     item={ item }
+                    id={params.id}
                     url={ url }
                   />
                 );

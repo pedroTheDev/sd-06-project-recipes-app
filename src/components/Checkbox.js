@@ -1,66 +1,89 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-class Checkbox extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      check: '',
-    };
-  }
-  // const isChecked = () => {
-  //   const local = !localStorage.getItem('checkeds') ? ''
-  //     : JSON.parse(localStorage.getItem('checkeds'));
-  //   local.forEach((item, index) => {
-  //     if (url.includes(Object.keys(item))) {
-  //       const id = url.replace(/\D/g, '');
-  //       console.log(item[id][0])
-  //       item[id].map((recipe, index) => {
-  //         const i = `step-2`;
-  //         //console.log(document.getElementById(recipe).checked );
-  //         console.log(recipe[i])
-  //       })
-  //     }
-  //   });
-  // };
-  // useEffect(() => isChecked(), []);
+function Checkbox({ recipe, index, measure, item, url, id }) {
+  const [usedIngredients, setUsedIngredients] = useState([]);
+  const isFood = url.includes('comidas');
+  console.log(usedIngredients)
+  console.log(JSON.parse(localStorage.getItem('inProgressRecipes')).meals[`${id}`])
 
-  render() {
-    const { recipe, index, measure, item, url } = this.props;
-    // const { check } = this.state;
-    console.log(recipe);
-    const setChecked = (id, target) => {
-      // const local = !localStorage.getItem('checkeds') ? ''
-      //   : JSON.parse(localStorage.getItem('checkeds'));
+  useEffect(() => {
+    if (isFood) {
+      setUsedIngredients(
+        JSON.parse(localStorage.getItem('inProgressRecipes')).meals[`${id}`]
+      );
+    } else {
+      setUsedIngredients(
+        JSON.parse(localStorage.getItem('inProgressRecipes')).cocktails[`${id}`]
+      );
+    }
+  }, []);
 
-      this.setState((prev) => ({
-        ...prev,
-        [target.id]: target.checked,
-      }));
-      // const ingredient = {
-      //   ...local,
-      //   [id]: {
-      //     ...check,
-      //   }
-      // };
-      // localStorage.setItem('checkeds', JSON.stringify(ingredient));
-    };
+  const handleClick = (isChecked, ingredient) => {
+    if (isChecked) {
+      setUsedIngredients([...usedIngredients, ingredient]);
+    } else {
+      setUsedIngredients(usedIngredients.filter((item) => item !== ingredient));
+    }
+  };
 
-    return (
-      <div data-testid="ingredient-step">
+  const handleUsedIngredient = () => {
+    const inProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (isFood) {
+      const newInProgress = {
+        ...inProgress,
+        meals: {
+          ...inProgress.meals,
+          [id]: [...usedIngredients],
+        },
+      };
+      localStorage.setItem('inProgressRecipes', JSON.stringify(newInProgress));
+    } else {
+      const newInProgress = {
+        ...inProgress,
+        cocktails: {
+          ...inProgress.meals,
+          [id]: [...usedIngredients],
+        },
+      };
+      localStorage.setItem('inProgressRecipes', JSON.stringify(newInProgress));
+    }
+  };
+
+  useEffect(() => {
+    handleUsedIngredient();
+  }, [usedIngredients]);
+
+  
+  return (
+    <div data-testid="ingredient-step">
+      {usedIngredients.some((ingredient) => item === ingredient) ?
         <input
           type="checkbox"
           key={ index }
-          onChange={ ({ target }) => setChecked(url.replace(/\D/g, ''), target) }
+          checked
+          onClick={ ({ target }) => (
+            handleClick(target.checked, item)
+          ) }
           id={ `step-${index}` }
           data-testid={ `${index}-ingredient-name-and-measure` }
         />
-        <label htmlFor={ `step-${index}` }>
-          {`- ${item} - ${measure[index]} `}
-        </label>
-      </div>
-    );
-  }
+        : (
+          <input
+          type="checkbox"
+          key={ index }
+          onClick={ ({ target }) => (
+            handleClick(target.checked, item)
+          ) }
+          id={ `step-${index}` }
+          data-testid={ `${index}-ingredient-name-and-measure` }
+        />
+        )}
+      <label htmlFor={ `step-${index}` }>
+        {`- ${item} - ${measure[index]} `}
+      </label>
+    </div>
+  );
 }
 
 Checkbox.propTypes = {
