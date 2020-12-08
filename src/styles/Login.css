@@ -2,6 +2,13 @@
   background-image: linear-gradient(to bottom, #000000 , gray);
 } */
 
+.icons-login-container {
+  margin-top: 50px;
+  width: 68%;
+  display: flex;
+  justify-content: space-between;
+}
+
 .total-login {
   display: flex;
   flex-direction: column;
@@ -10,15 +17,21 @@
 
 .total-login h1 {
   color: #FFD43A;
-  font-size: 45px;
+  font-family: 'Hammersmith One', sans-serif;
+  font-size: 50px;
+  font-weight: 400;
+  margin-top: 15px;
+
+
 }
 
 .div-form {
   width: 84%;
-  height: 400px;
+  height: 300px;
   background-color: #f8f8f8;
   border-radius: 20px;
   margin-bottom: 50px;
+  margin-top: -10px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -79,7 +92,7 @@ button:enabled {
 .login-button {
   width: 150px;
   height: 35px;
-  margin-top: 160px;
+  margin-top: 55px;
   margin-bottom: 10px;
   font-weight: bold;
   margin-left: auto;
