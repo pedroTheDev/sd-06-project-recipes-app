@@ -11,7 +11,7 @@ import './progresso.css';
 function DetalhesBebida() {
   const { idDaReceita } = useParams();
   const [estadoApiBebidas, setEstadoApiBebidas] = useState([]);
-  const [receitasSalvas, setReceitasSalvas] = useState([]);
+  const [setReceitasSalvas] = useState([]);
   const ingredientes = localStorage
     .getItem('inProgressRecipes') ? JSON
       .parse((localStorage.getItem('inProgressRecipes'))).cocktails[idDaReceita] : [];
@@ -109,8 +109,6 @@ function DetalhesBebida() {
     for (let numero = 1; numero <= quinze; numero += 1) {
       if (bebida[`strIngredient${numero}`] !== null
       && bebida[`strIngredient${numero}`] !== '') {
-        console.log(`${bebida[`strIngredient${numero}`]} ${bebida[`strMeasure${numero}`]}`);
-
         array.push(
           <label
             id={ `${numero - 1}-ingredient-check` }

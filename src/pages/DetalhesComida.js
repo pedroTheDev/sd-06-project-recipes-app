@@ -158,13 +158,14 @@ function DetalhesComidas() {
   console.log(receitasSalvas);
 
   function copiaLink() {
+    const thousand = 1000;
     navigator.clipboard.writeText(window.location.href).then(() => {
       const link = document.createElement('span');
       link.innerHTML = 'Link copiado!';
       document.getElementById('link-compartilhar').appendChild(link);
       setTimeout(() => {
         document.getElementById('link-compartilhar').removeChild(link);
-      }, 1000);
+      }, thousand);
     }, () => {
       // eslint-disable-next-line
       alert('erro');
