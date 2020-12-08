@@ -99,7 +99,7 @@ margin-bottom: 20px;
 align-content: center;
 }
 
-footer {
+footer, .start-recipe-btn, .finish-recipe-btn {
   position: fixed;
   top: 590px;
   padding: 5px 0;
@@ -449,4 +449,24 @@ a:hover {
 .name-recipe-item {
   color: #b12310;
   font-family: 'Satisfy', cursive;
+}
+
+.recipe-details {
+  padding: 0;
+}
+
+.title-details {
+  color: #b12310;
+  font-family: 'Satisfy', cursive;
+  padding: 10px 20px;
+}
+
+.subtitle-details {
+  color: #b12310;
+  /* font-family: 'Satisfy', cursive; */
+  padding: 10px 20px;
+}
+
+.padd20 {
+  padding: 10px 20px;
 }

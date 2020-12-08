@@ -33,7 +33,6 @@ export default function Foods() {
     <>
       {(foods
         && foods.length === 1
-        && foods[0]
         && !foods[0][`str${searchParam}`].match(/Goat/))
         ? <Redirect to={ `/${foodOrDrink}/${idFirstPosition}` } /> : null}
       {foods && foods.map((food, index) => {
@@ -61,8 +60,7 @@ export default function Foods() {
         }
         return null;
       })}
-    </>
-  );
+    </>);
 
   const renderIngredients = () => (
     <>

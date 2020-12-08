@@ -14,7 +14,7 @@ export default function Login() {
 
   const inputValidate = () => {
     const validEmail = (/\S+@\S+\.\S+/).test(email);
-    const validPassword = (/.{6,}/).test(password);
+    const validPassword = (password && (/.{5}/).test(password));
 
     if (validEmail && validPassword === true) {
       return setDisable(false);
