@@ -122,7 +122,7 @@ export default function FoodsDetails(props) {
   if (recipe.meals) {
     const item = recipe.meals[0];
     return (
-      <div>
+      <div className="content-details">
         <div key={ item }>
           <img
             data-testid="recipe-photo"
@@ -130,29 +130,33 @@ export default function FoodsDetails(props) {
             src={ item.strMealThumb }
             className="item-img"
           />
-          <p data-testid="recipe-title">{item.strMeal}</p>
-          <button
-            type="button"
-            data-testid="share-btn"
-            value="Share"
-            onClick={ () => handleCopy() }
-          >
-            <img alt="Share" src={ shareIcon } />
-          </button>
-          <span>{copy}</span>
-          <button
-            type="button"
-            data-testid="favorite-btn"
-            src={ fav }
-            onClick={ () => handleFav(item) }
-          >
-            <img alt="fav" src={ fav } />
-          </button>
-          <p data-testid="recipe-category">{item.strCategory}</p>
+          <div className="buttons-container">
+            <button
+              className="btn-details"
+              type="button"
+              data-testid="share-btn"
+              value="Share"
+              onClick={ () => handleCopy() }
+            >
+              <img alt="Share" src={ shareIcon } />
+            </button>
+            <span>{copy}</span>
+            <button
+              className="btn-details"
+              type="button"
+              data-testid="favorite-btn"
+              src={ fav }
+              onClick={ () => handleFav(item) }
+            >
+              <img alt="fav" src={ fav } />
+            </button>
+          </div>
+          <p className="recipe-title" data-testid="recipe-title">{item.strMeal}</p>
+          <p className="recipe-category" data-testid="recipe-category">{item.strCategory}</p>
           <p data-testid="instructions">{item.strInstructions}</p>
           {renderIngredients()}
 
-          <video data-testid="video" width="340" controls>
+          <video className="video-recipe" data-testid="video" width="340" controls>
             <source src={ decodeURI(item.strYoutube) } type="video/mp4" />
             <track src="" kind="captions" />
           </video>
