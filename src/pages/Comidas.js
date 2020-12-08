@@ -5,6 +5,7 @@ import RecipeContext from '../context/RecipeContext';
 import CardComida from '../components/CardComida';
 import FetchApiComidas, { fetchApiComidasByCategory } from '../services/FetchApiComidas';
 import '../components/Card.css';
+import './comidas-bebidas.css';
 
 function Comidas() {
   const [categoriaAtual, setCategoriaAtual] = useState('');
@@ -44,7 +45,7 @@ function Comidas() {
   return (
     <div>
       <Header title="Comidas" />
-      <div>
+      <div className="container">
         <button
           className="Buttons"
           type="button"

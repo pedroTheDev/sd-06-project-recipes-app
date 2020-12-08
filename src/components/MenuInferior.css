@@ -1,20 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@500&display=swap');
+
 .MenuInferior {
+  /* border: 1px solid; */
+  display: flex;
+  justify-content: center;
   position: fixed;
   bottom: 0;
-  width: 100%;
-  display: flex;
+  width: 99%;
+  margin: auto;
+  
 }
 
 .buttonFooter {
   border-radius: 10px;
   overflow: hidden;
-  border: 3px solid;
+  border: none;
+  border-color: #1C351D;
   margin: 10px;
   display: flex;
   flex-direction: column;
-  min-width: 20%;
-  max-width: 30%;
+  /* min-width: 20%;
+  max-width: 30%; */
+  padding: 10px;
   height: auto;
+  align-items: center;
+  background-color: #4CAF50;
+  font-family: 'Fira Sans', sans-serif;
+  font-size: 20px;
+  color: white;
 }
 
 .IniciarReceita {
@@ -40,4 +53,19 @@
 
 .img-recomendacao {
   width: 52vw;
+}
+
+@media only screen and (max-width: 600px) {
+  .buttonFooter {
+    border-radius: 10px;
+    border: 0px solid;
+    margin: 10px;
+    padding: 10px 15px;
+    height: auto;
+    align-items: center;
+    background-color: #4CAF50;
+    font-family: 'Fira Sans', sans-serif;
+    font-size: 20px;
+    color: white;
+  }
 }

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { fetchApiComidasDetalhes } from '../services/FetchApiComidas';
 import '../components/MenuInferior.css';
 import '../components/detalhes.css';
 import share from '../images/shareIcon.svg';
 import coracaoBranco from '../images/whiteHeartIcon.svg';
 import coracaoPreto from '../images/blackHeartIcon.svg';
+import './progresso.css';
 
 function ProgressoComida() {
   const { idDaReceita } = useParams();
@@ -30,10 +31,9 @@ function ProgressoComida() {
     fetchComidasDetalhes();
   }, []);
 
-  // const history = useHistory();
+  const history = useHistory();
   const inProgress = JSON.parse((localStorage.getItem('inProgressRecipes')));
   let comidaLocalStorage;
-  // let comidaLocalStorage = inProgress.meals[idDaReceita];
   function checkHandle(e, index) {
     if (e.target.checked === true) {
       document.getElementById(`${index - 1}-ingredient-check`)
@@ -98,15 +98,8 @@ function ProgressoComida() {
         localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
       }
     }
-    // const newStorage = {
-    //   ...inProgress,
-    //   meals: {
-    //     ...inProgress.meals,
-    //     [idDaReceita]: comidaLocalStorage,
-    //   },
-    // };
-    // localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
   }
+
   const vinte = 20;
   function renderIngrediente(bebida) {
     const array = [];
@@ -116,14 +109,14 @@ function ProgressoComida() {
         array.push(
           <label
             id={ `${numero - 1}-ingredient-check` }
-            htmlFor={ `${numero - 1}-ingredient` }
+            htmlFor={ `${numero - 1}-ingredient-step` }
             data-testid={ `${numero - 1}-ingredient-step` }
           >
             <input
               type="checkbox"
               id={ `${numero - 1}-ingredient-step` }
-              className="titulo"
-              onChange={ (e) => checkHandle(e, numero) }
+              className="titulo checkBox"
+              onChange={ (e) => { checkHandle(e, numero); } }
               checked={ (bebida[`strMeasure${numero}`] !== null)
                 ? (ingredientesNoLocalStorage.includes(
                   `${bebida[`strIngredient${numero}`]} ${bebida[`strMeasure${numero}`]}`,
@@ -133,7 +126,8 @@ function ProgressoComida() {
                 )) }
             />
             {`${bebida[`strIngredient${numero}`]} `}
-            {(bebida[`strMeasure${numero}`] !== '')
+            {(bebida[`strMeasure${numero}`] !== ''
+            && bebida[`strMeasure${numero}`] !== null)
               ? <span>{`${bebida[`strMeasure${numero}`]}`}</span>
               : ''}
           </label>,
@@ -146,18 +140,20 @@ function ProgressoComida() {
   console.log(receitasSalvas);
 
   function copiaLink() {
+    const thousand = 1000;
     const copiado = window.location.href.replace('/in-progress', '');
     navigator.clipboard.writeText(copiado).then(() => {
       const link = document.createElement('span');
       link.innerHTML = 'Link copiado!';
       document.getElementById('link-compartilhar').appendChild(link);
+      setTimeout(() => {
+        document.getElementById('link-compartilhar').removeChild(link);
+      }, thousand);
     }, () => {
       // eslint-disable-next-line
       alert('erro');
     });
   }
-  console.log(window.location.href);
-  // onClick={() => {navigator.clipboard.writeText(window.location.href)}}
 
   function favoritarReceita() {
     const favoritos = localStorage.getItem('favoriteRecipes');
@@ -235,6 +231,63 @@ function ProgressoComida() {
       </button>);
   }
 
+  function checkDisable() {
+    const arrayDeIngredientes = [];
+    const quinze = 15;
+    // pega todos os ingredientes da receita e joga no arrayDeIngredientes
+    for (let i = 1; i <= quinze; i += 1) {
+      const ing = `strIngredient${i}`;
+      const ingName = estadoApiComidas[0][ing];
+      if (ingName !== null && ingName !== '') {
+        arrayDeIngredientes.push(ingName);
+      }
+    }
+    // ingredientes é a variável com os itens checked
+    if (ingredientes.length === arrayDeIngredientes.length) {
+      return false;
+    }
+    return true;
+  }
+
+  function redirectFeitas() {
+    if (localStorage.getItem('doneRecipes')) {
+      const feitasStorage = JSON.parse(localStorage.getItem('doneRecipes'));
+      console.log('feitasStorage', feitasStorage);
+      const receitaFeita = {
+        id: idDaReceita,
+        type: 'comida',
+        area: estadoApiComidas[0].strArea,
+        category: estadoApiComidas[0].strCategory,
+        alcoholicOrNot: '',
+        name: estadoApiComidas[0].strMeal,
+        image: estadoApiComidas[0].strMealThumb,
+        doneDate: new Date().toDateString(),
+        tags: estadoApiComidas[0].strTags.split(','),
+      };
+      console.log('feita', receitaFeita);
+      const newDoneRecipes = [
+        ...feitasStorage,
+        receitaFeita,
+      ];
+      localStorage.setItem('doneRecipes', JSON.stringify(newDoneRecipes));
+    } else {
+      const receitaFeita = [{
+        id: idDaReceita,
+        type: 'comida',
+        area: estadoApiComidas[0].strArea,
+        category: estadoApiComidas[0].strCategory,
+        alcoholicOrNot: '',
+        name: estadoApiComidas[0].strMeal,
+        image: estadoApiComidas[0].strMealThumb,
+        doneDate: new Date().toDateString(),
+        tags: estadoApiComidas[0].strTags.split(','),
+      }];
+      localStorage.setItem('doneRecipes', JSON.stringify(receitaFeita));
+      console.log('feita', receitaFeita);
+    }
+    history.push('/receitas-feitas');
+  }
+
   return (
     estadoApiComidas.map((comida, index) => (
       <div key={ index }>
@@ -253,14 +306,22 @@ function ProgressoComida() {
         <h4 data-testid="recipe-category" className="category titulo">
           {comida.strCategory}
         </h4>
-        <div>
+        <div className="ingredientes-check">
           <h3 className="titulo">Ingredientes</h3>
           {renderIngrediente(comida)}
         </div>
         <h3 className="titulo">Instruções</h3>
-        <p data-testid="instructions" className="intrucoes">{comida.strInstructions}</p>
+        <p data-testid="instructions" className="instrucoes">{comida.strInstructions}</p>
 
-        <button type="button" data-testid="finish-recipe-btn">Finalizar receita</button>
+        <button
+          className="finalizar"
+          type="button"
+          data-testid="finish-recipe-btn"
+          disabled={ checkDisable() }
+          onClick={ redirectFeitas }
+        >
+          Finalizar receita
+        </button>
       </div>
     )));
 }
