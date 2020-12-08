@@ -339,7 +339,7 @@ function ComidasInProgress(props) {
             >
               <div>
                 {meal.strInstructions.split(/[1-9]+\./i).map((inst, i) => (
-                  <p key={ i }>{`${i + 1} - ${inst}`}</p>
+                  <p key={ `${i}-description` }>{`${i + 1} - ${inst}`}</p>
                 ))}
               </div>
             </p>
