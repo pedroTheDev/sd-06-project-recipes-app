@@ -63,7 +63,7 @@ function InProgress() {
         alcoholicOrNot: '',
         name: currentRecipe.strMeal,
         image: currentRecipe.strMealThumb,
-        doneDate: new Date(),
+        doneDate: new Date().toLocaleDateString('pt-PT'),
         tags: typeof currentRecipe.strTags === 'string'
           ? [currentRecipe.strTags]
           : currentRecipe.strTags,
@@ -85,7 +85,7 @@ function InProgress() {
         alcoholicOrNot: currentRecipe.strAlcoholic,
         name: currentRecipe.strDrink,
         image: currentRecipe.strDrinkThumb,
-        doneDate: new Date(),
+        doneDate: new Date().toLocaleDateString('pt-PT'),
         tags: typeof currentRecipe.strTags === 'string'
           ? [currentRecipe.strTags]
           : currentRecipe.strTags,
