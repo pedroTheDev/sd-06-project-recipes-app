@@ -24,7 +24,7 @@ function HeaderExplorePages(props) {
             className="header-profile-button"
           />
         </Link>
-        <div className="header-text">
+        <div className="header-explorePages-text">
           <h2 data-testid="page-title">
             {pageName}
           </h2>

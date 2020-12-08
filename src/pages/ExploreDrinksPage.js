@@ -24,12 +24,17 @@ function ExploreDrinksPage() {
       <br />
       <div>
         <Link to="/explorar/bebidas/ingredientes">
-          <button type="button" data-testid="explore-by-ingredient">
+          <button
+            className="category-button"
+            type="button"
+            data-testid="explore-by-ingredient"
+          >
             Por Ingredientes
           </button>
         </Link>
 
         <button
+          className="category-button"
           type="button"
           data-testid="explore-surprise"
           onClick={ handleClick }

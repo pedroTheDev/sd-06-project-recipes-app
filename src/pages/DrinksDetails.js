@@ -14,7 +14,7 @@ function DrinkDetails() {
   const { drinkDetails, setDrinkDetails } = useContext(RecipesContext);
   const [ingredients, setIngredients] = useState('');
   const [apiResult, setApiResult] = useState([]);
-  const [buttonText] = useState('Iniciar Receita');
+  const [buttonText, setButtonText] = useState('Iniciar Receita');
   const [spanHidden, setSpanHidden] = useState(true);
   const [favoriteDrink, setFavoriteDrink] = useState(false);
   const zero = 0;
@@ -66,11 +66,19 @@ function DrinkDetails() {
     localStorage.setItem('hiddenButtonFood', true);
   }
 
-  // function ttt() {
-  //   if (localStorage.getItem('hiddenButtonDrink') === true) {
-  //     setButtonText('Iniciar Receita');
-  //   } setButtonText('Continuar Receita');
-  // }
+  useEffect(() => {
+    const meuLocal = localStorage.getItem('inProgressRecipes');
+    console.log(meuLocal);
+    const meuLocalArray = JSON.parse(meuLocal);
+    if (meuLocalArray !== null) {
+      console.log(meuLocalArray.cocktails);
+      const { cocktails } = meuLocalArray;
+      const cocktailsIdKeys = (Object.keys(cocktails));
+      if (cocktailsIdKeys.find((element) => element === actualId)) {
+        setButtonText('Continuar Receita');
+      }
+    }
+  });
 
   function copyToClipBoard(text) {
     navigator.clipboard.writeText(text);
@@ -193,10 +201,10 @@ function DrinkDetails() {
           type="button"
           className="start-btn"
           data-testid="start-recipe-btn"
-          hidden={ localStorage.getItem('hiddenButtonDrink') }
+          // hidden={ localStorage.getItem('hiddenButtonDrink') }
           onClick={ handleClick }
         >
-          {buttonText}
+          { buttonText }
         </button>
       </Link>
 

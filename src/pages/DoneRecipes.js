@@ -47,7 +47,7 @@ function DoneRecipes() {
       <br />
       <br />
       <br />
-      <h2 data-testid="page-title">Receitas Feitas</h2>
+      {/* <h2 data-testid="page-title">Receitas Feitas</h2> */}
       <div className="done-recipes-buttons-div">
         <button
           type="button"
@@ -113,7 +113,7 @@ function DoneRecipes() {
               >
                 { item.doneDate }
               </p>
-              {
+              {/* {
                 item.tags
               && item.tags.map(
                 (tag, idx) => (
@@ -126,7 +126,7 @@ function DoneRecipes() {
                   </p>
                 ),
               )
-              }
+              } */}
               <button
                 className="done-card-share-button"
                 data-testid={ `${index}-horizontal-share-btn` }
@@ -174,7 +174,7 @@ function DoneRecipes() {
                 >
                   { item.doneDate }
                 </p>
-                {
+                {/* {
                   item.tags
                 && item.tags.map(
                   (tag, idx) => (
@@ -187,7 +187,7 @@ function DoneRecipes() {
                     </p>
                   ),
                 )
-                }
+                } */}
                 <button
                   className="done-card-share-button"
                   data-testid={ `${index}-horizontal-share-btn` }
@@ -234,7 +234,7 @@ function DoneRecipes() {
               >
                 { item.doneDate }
               </p>
-              {
+              {/* {
                 item.tags
               && item.tags.map(
                 (tag, idx) => (
@@ -247,7 +247,7 @@ function DoneRecipes() {
                   </p>
                 ),
               )
-              }
+              } */}
               <button
                 className="done-card-share-button"
                 data-testid={ `${index}-horizontal-share-btn` }

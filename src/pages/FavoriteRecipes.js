@@ -60,7 +60,8 @@ function FavoriteRecipes() {
       <br />
       <br />
       <br />
-      <h2 data-testid="page-title">Receitas Favoritas</h2>
+      <br />
+      {/* <h2 data-testid="page-title">Receitas Favoritas</h2> */}
       <div className="favorite-recipes-button">
         <button
           type="button"
@@ -68,6 +69,7 @@ function FavoriteRecipes() {
           name="all"
           value="all"
           onClick={ (e) => handleMealsAndDrinks(e) }
+          className="done-recipes-buttons"
         >
           All
         </button>
@@ -77,6 +79,7 @@ function FavoriteRecipes() {
           name="comida"
           value="comida"
           onClick={ (e) => handleMealsAndDrinks(e) }
+          className="done-recipes-buttons"
         >
           Food
         </button>
@@ -86,6 +89,7 @@ function FavoriteRecipes() {
           name="bebida"
           value="bebida"
           onClick={ (e) => handleMealsAndDrinks(e) }
+          className="done-recipes-buttons"
         >
           Drinks
         </button>
@@ -93,24 +97,36 @@ function FavoriteRecipes() {
       <div className="favorite-recipes-div">
         { allState && favoriteRecipe
           ? localSt && localSt.map((item, index) => (
-            <div key={ index }>
-              <Link to={ `/${item.type}s/${item.id}` }>
+            <div key={ index } className="card">
+              <Link to={ `/${item.type}s/${item.id}` } className="foodCard-link">
                 <img
                   height="150px"
                   src={ item.image }
                   alt="element img"
                   data-testid={ `${index}-horizontal-image` }
+                  className="done-card-img"
                 />
-                <h2 data-testid={ `${index}-horizontal-name` }>{ item.name }</h2>
+                <h2
+                  data-testid={ `${index}-horizontal-name` }
+                  className="done-card-title"
+                >
+                  { item.name }
+                </h2>
               </Link>
               <p
+                className="done-card-text"
                 data-testid={ `${index}-horizontal-top-text` }
               >
                 { item.type === 'comida'
                   ? `${item.area} - ${item.category}`
                   : `${item.alcoholicOrNot} - ${item.category}` }
               </p>
-              <p data-testid={ `${index}-horizontal-done-date` }>{ item.doneDate }</p>
+              <p
+                className="done-card-done-date"
+                data-testid={ `${index}-horizontal-done-date` }
+              >
+                { item.doneDate }
+              </p>
               {
                 item.tags
               && item.tags.map(
@@ -124,22 +140,26 @@ function FavoriteRecipes() {
                 ),
               )
               }
-              <button
-                data-testid={ `${index}-horizontal-share-btn` }
-                type="button"
-                src={ shareIcon }
-                onClick={ () => copyToClipBoard(item.type, item.id, document.URL) }
-              >
-                <img src={ shareIcon } alt="Share Icon" />
-              </button>
-              <button
-                type="button"
-                data-testid={ `${index}-horizontal-favorite-btn` }
-                src={ blackHeartIcon }
-                onClick={ () => handleClick(item.id) }
-              >
-                <img alt="bla" src={ blackHeartIcon } />
-              </button>
+              <div className="fav-recipes-buttons-div">
+                <button
+                  className="fav-card-share-button"
+                  data-testid={ `${index}-horizontal-share-btn` }
+                  type="button"
+                  src={ shareIcon }
+                  onClick={ () => copyToClipBoard(item.type, item.id, document.URL) }
+                >
+                  <img src={ shareIcon } alt="Share Icon" />
+                </button>
+                <button
+                  className="fav-card-share-button"
+                  type="button"
+                  data-testid={ `${index}-horizontal-favorite-btn` }
+                  src={ blackHeartIcon }
+                  onClick={ () => handleClick(item.id) }
+                >
+                  <img alt="bla" src={ blackHeartIcon } />
+                </button>
+              </div>
             </div>
           ))
           : null }
@@ -147,16 +167,23 @@ function FavoriteRecipes() {
           mealsState && favoriteRecipe
             ? localSt
             && localSt.filter((el) => el.type === 'comida').map((item, index) => (
-              <div key={ index }>
-                <Link to={ `/${item.type}s/${item.id}` }>
+              <div key={ index } className="card">
+                <Link to={ `/${item.type}s/${item.id}` } className="foodCard-link">
                   <img
                     src={ item.image }
+                    className="done-card-img"
                     alt="element img"
                     data-testid={ `${index}-horizontal-image` }
                   />
-                  <h2 data-testid={ `${index}-horizontal-name` }>{ item.name }</h2>
+                  <h2
+                    className="done-card-title"
+                    data-testid={ `${index}-horizontal-name` }
+                  >
+                    { item.name }
+                  </h2>
                 </Link>
                 <p
+                  className="done-card-text"
                   data-testid={ `${index}-horizontal-top-text` }
                 >
                   {
@@ -165,7 +192,12 @@ function FavoriteRecipes() {
                       : `${item.alcoholicOrNot} - ${item.category}`
                   }
                 </p>
-                <p data-testid={ `${index}-horizontal-done-date` }>{ item.doneDate }</p>
+                <p
+                  className="done-card-done-date"
+                  data-testid={ `${index}-horizontal-done-date` }
+                >
+                  { item.doneDate }
+                </p>
                 {
                   item.tags
                 && item.tags.map(
@@ -179,38 +211,49 @@ function FavoriteRecipes() {
                   ),
                 )
                 }
-                <button
-                  data-testid={ `${index}-horizontal-share-btn` }
-                  type="button"
-                  src={ shareIcon }
-                  onClick={ () => copyToClipBoard(item.type, item.id, document.URL) }
-                >
-                  <img src={ shareIcon } alt="Share Icon" />
-                </button>
-                <button
-                  type="button"
-                  data-testid={ `${index}-horizontal-favorite-btn` }
-                  src={ blackHeartIcon }
-                  onClick={ () => handleClick(item.id) }
-                >
-                  <img alt="bla" src={ blackHeartIcon } />
-                </button>
+                <div className="fav-recipes-buttons-div">
+                  <button
+                    className="fav-card-share-button"
+                    data-testid={ `${index}-horizontal-share-btn` }
+                    type="button"
+                    src={ shareIcon }
+                    onClick={ () => copyToClipBoard(item.type, item.id, document.URL) }
+                  >
+                    <img src={ shareIcon } alt="Share Icon" />
+                  </button>
+                  <button
+                    className="fav-card-share-button"
+                    type="button"
+                    data-testid={ `${index}-horizontal-favorite-btn` }
+                    src={ blackHeartIcon }
+                    onClick={ () => handleClick(item.id) }
+                  >
+                    <img alt="bla" src={ blackHeartIcon } />
+                  </button>
+                </div>
               </div>
             ))
             : null
         }
         { drinkState && favoriteRecipe
           ? localSt && localSt.filter((el) => el.type === 'bebida').map((item, index) => (
-            <div key={ index }>
-              <Link to={ `/${item.type}s/${item.id}` }>
+            <div key={ index } className="card">
+              <Link to={ `/${item.type}s/${item.id}` } className="foodCard-link">
                 <img
                   src={ item.image }
+                  className="done-card-img"
                   alt="element img"
                   data-testid={ `${index}-horizontal-image` }
                 />
-                <h2 data-testid={ `${index}-horizontal-name` }>{ item.name }</h2>
+                <h2
+                  className="done-card-title"
+                  data-testid={ `${index}-horizontal-name` }
+                >
+                  { item.name }
+                </h2>
               </Link>
               <p
+                className="done-card-text"
                 data-testid={ `${index}-horizontal-top-text` }
               >
                 {
@@ -219,7 +262,12 @@ function FavoriteRecipes() {
                     : `${item.alcoholicOrNot} - ${item.category}`
                 }
               </p>
-              <p data-testid={ `${index}-horizontal-done-date` }>{ item.doneDate }</p>
+              <p
+                className="done-card-done-date"
+                data-testid={ `${index}-horizontal-done-date` }
+              >
+                { item.doneDate }
+              </p>
               {
                 item.tags
               && item.tags.map(
@@ -233,22 +281,26 @@ function FavoriteRecipes() {
                 ),
               )
               }
-              <button
-                data-testid={ `${index}-horizontal-share-btn` }
-                type="button"
-                src={ shareIcon }
-                onClick={ () => copyToClipBoard(item.type, item.id, document.URL) }
-              >
-                <img src={ shareIcon } alt="Share Icon" />
-              </button>
-              <button
-                type="button"
-                data-testid={ `${index}-horizontal-favorite-btn` }
-                src={ blackHeartIcon }
-                onClick={ () => handleClick(item.id) }
-              >
-                <img alt="bla" src={ blackHeartIcon } />
-              </button>
+              <div className="fav-recipes-buttons-div">
+                <button
+                  className="fav-card-share-button"
+                  data-testid={ `${index}-horizontal-share-btn` }
+                  type="button"
+                  src={ shareIcon }
+                  onClick={ () => copyToClipBoard(item.type, item.id, document.URL) }
+                >
+                  <img src={ shareIcon } alt="Share Icon" />
+                </button>
+                <button
+                  className="fav-card-share-button"
+                  type="button"
+                  data-testid={ `${index}-horizontal-favorite-btn` }
+                  src={ blackHeartIcon }
+                  onClick={ () => handleClick(item.id) }
+                >
+                  <img alt="bla" src={ blackHeartIcon } />
+                </button>
+              </div>
             </div>
           ))
           : null }

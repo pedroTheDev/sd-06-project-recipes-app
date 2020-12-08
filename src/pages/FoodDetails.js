@@ -13,6 +13,7 @@ function FoodDetails() {
   const [foodDetails, setFoodDetails] = useState([]);
   const [ingredients, setIngredients] = useState('');
   const [apiResult, setApiResult] = useState([]);
+  const [buttonText, setButtonText] = useState('Iniciar Receita');
   const [spanHidden, setSpanHidden] = useState(true);
   const [favoriteFood, setFavoriteFood] = useState(false);
   const zero = 0;
@@ -64,6 +65,19 @@ function FoodDetails() {
       }
     }
   }, []);
+
+  useEffect(() => {
+    const meuLocal = localStorage.getItem('inProgressRecipes');
+    console.log(meuLocal);
+    const meuLocalArray = JSON.parse(meuLocal);
+    if (meuLocalArray !== null) {
+      const { meals } = meuLocalArray;
+      const mealsKeys = (Object.keys(meals));
+      if (mealsKeys.find((element) => element === actualId)) {
+        setButtonText('Continuar Receita');
+      }
+    }
+  });
 
   function handleClick() {
     localStorage.setItem('hiddenButtonFood', true);
@@ -191,10 +205,10 @@ function FoodDetails() {
           type="button"
           className="start-btn"
           data-testid="start-recipe-btn"
-          hidden={ localStorage.getItem('hiddenButtonFood') }
+          // hidden={ localStorage.getItem('hiddenButtonFood') }
           onClick={ handleClick }
         >
-          Iniciar Receita
+          { buttonText }
         </button>
       </Link>
       <br />
