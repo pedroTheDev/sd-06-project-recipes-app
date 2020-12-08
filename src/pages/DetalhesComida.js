@@ -253,7 +253,7 @@ function DetalhesComida(props) {
                   data-testid="instructions"
                 >
                   {meal.strInstructions.split(/[1-9]+\./i).map((inst, i) => (
-                    <p>{`${i + 1} - ${inst}`}</p>
+                    <p key={ i }>{`${i + 1} - ${inst}`}</p>
                   ))}
                 </div>
                 <iframe

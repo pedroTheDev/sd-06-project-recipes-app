@@ -4,7 +4,7 @@ import { foodByCategoryApi, foodAPI, foodCategoryApi } from '../services/foodAPI
 
 function FoodFilters() {
   const {
-    filtersData, setMeals, selectedFilter, setSelectedFilter, setFiltersData, 
+    filtersData, setMeals, selectedFilter, setSelectedFilter, setFiltersData,
   } = useContext(ReceitasContext);
 
   useEffect(() => {
@@ -12,10 +12,10 @@ function FoodFilters() {
       const data = await foodCategoryApi();
 
       setFiltersData(data);
-    };
+    }
 
     fetchMeal();
-  }, [])
+  }, []);
 
   async function fetchFood() {
     const responseFoodApi = await foodAPI();

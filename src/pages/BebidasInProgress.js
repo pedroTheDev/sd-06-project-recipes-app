@@ -341,7 +341,7 @@ function BebidasInProgress(props) {
                   Finalizar Receita!
                 </button>
               </Link>
-            ) }
+            )}
           </div>
         </div>
       ))}
