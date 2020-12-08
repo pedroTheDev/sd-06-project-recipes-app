@@ -1,10 +1,10 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import '../App.css';
 import Context from '../context/Context';
 import Cards from '../components/Cards';
-import Checkbox from '../components/Checkbox';
+// import Checkbox from '../components/Checkbox';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
@@ -40,6 +40,19 @@ function RecipeDetails(props) {
     }
     isFavorite(params.id);
   }, [params.id]);
+
+  const [checked, setChecked] = useState([]);
+
+  const handleChecked = (ingredient) => {
+    const notChecked = checked.indexOf(ingredient) < ZERO;
+    let newChecked = [];
+
+    if (notChecked) newChecked = [...checked, ingredient];
+    else newChecked = checked.filter((check) => check !== ingredient);
+
+    setChecked(newChecked);
+    localStorage.setItem('inProgressRecipe', newChecked);
+  };
 
   const getIngredients = (obj, filter) => {
     const keys = [];
@@ -98,13 +111,19 @@ function RecipeDetails(props) {
               const measure = getIngredients(recipe, /strMeasure/);
               if (path.includes('in-progress')) {
                 return (
-                  <Checkbox
-                    recipe={ recipe }
-                    index={ index }
-                    measure={ measure }
-                    item={ item }
-                    url={ url }
-                  />
+                  <div data-testid="ingredient-step">
+                    <input
+                      type="checkbox"
+                      key={ index }
+                      name={ item }
+                      onChange={ ({ target }) => handleChecked(target.name) }
+                      id={ `step-${index}` }
+                      data-testid={ `${index}-ingredient-name-and-measure` }
+                    />
+                    <label htmlFor={ `step-${index}` }>
+                      {`- ${item} - ${measure[index]} `}
+                    </label>
+                  </div>
                 );
               }
               return (
