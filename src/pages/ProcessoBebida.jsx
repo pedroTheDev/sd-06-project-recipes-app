@@ -89,9 +89,7 @@ function ProcessoBebida({ match: { params: { id } }, history }) {
     document.execCommand('copy');
     input.parentNode.removeChild(input);
     const divBtns = document.getElementById('btns');
-    const newSpan = document.createElement('span');
-    newSpan.innerHTML = 'Link copiado!';
-    divBtns.appendChild(newSpan);
+    divBtns.innerHTML = 'Link copiado!';
   };
 
   const onClickDone = () => {
@@ -147,7 +145,7 @@ function ProcessoBebida({ match: { params: { id } }, history }) {
           <br />
           <span data-testid="recipe-category">{detailsDrink.strCategory}</span>
         </div>
-        <div id="btns">
+        <div>
           <button
             type="button"
             data-testid="share-btn"
@@ -157,6 +155,8 @@ function ProcessoBebida({ match: { params: { id } }, history }) {
             <img src={ buttonShare } alt="img-button-share" />
           </button>
           <FavoriteHeart id={ id } detailsDrink={ detailsDrink } />
+          <br />
+          <span id="btns" />
         </div>
       </div>
       <div className="container-conteudo">

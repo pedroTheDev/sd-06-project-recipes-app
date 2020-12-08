@@ -84,9 +84,7 @@ function ProcessoReceita({ match: { params: { id } }, history }) {
     document.execCommand('copy');
     input.parentNode.removeChild(input);
     const divBtns = document.getElementById('btns');
-    const newSpan = document.createElement('span');
-    newSpan.innerHTML = 'Link copiado!';
-    divBtns.appendChild(newSpan);
+    divBtns.innerHTML = 'Link copiado!';
   };
 
   useEffect(() => {
@@ -146,7 +144,7 @@ function ProcessoReceita({ match: { params: { id } }, history }) {
           <br />
           <span data-testid="recipe-category">{ detailsFood.strCategory }</span>
         </div>
-        <div id="btns">
+        <div>
           <button
             type="button"
             data-testid="share-btn"
@@ -156,6 +154,8 @@ function ProcessoReceita({ match: { params: { id } }, history }) {
             <img src={ buttonShare } alt="button-share" />
           </button>
           <FavoriteHeart id={ id } detailsFood={ detailsFood } />
+          <br />
+          <span id="btns" />
         </div>
       </div>
       <div className="container-conteudo">
