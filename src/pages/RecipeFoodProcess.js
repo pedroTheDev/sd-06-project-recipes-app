@@ -218,18 +218,20 @@ function RecipeFoodProcess(props) {
   return (
     recipes.length > ZERO
       && (
-        <div>
-          <img
-            data-testid="recipe-photo"
-            src={ recipes[0].strMealThumb }
-            alt="imagem"
-          />
+        <div className="food-detail-container">
+          <div className="image-detail-container">
+            <img
+              data-testid="recipe-photo"
+              src={ recipes[0].strMealThumb }
+              alt="imagem"
+            />
+          </div>
           <h4
             data-testid="recipe-title"
           >
             { recipes[0].strMeal }
           </h4>
-          <div>
+          <div className="interactive-buttons">
             <button
               type="button"
               data-testid="share-btn"
@@ -241,8 +243,6 @@ function RecipeFoodProcess(props) {
               />
             </button>
             {share && <span>Link copiado!</span>}
-          </div>
-          <div>
             <button
               type="button"
               onClick={ handleFavorites }
@@ -256,13 +256,20 @@ function RecipeFoodProcess(props) {
           </div>
           <h5
             data-testid="recipe-category"
+            className="paragraph-side"
           >
             {recipes[0].strCategory}
           </h5>
           <div className="checkbox">
             { createCheckBoxes() }
           </div>
-          <p data-testid="instructions">{ recipes[0].strInstructions }</p>
+          <div className="instruction-title">Instruções</div>
+          <p
+            data-testid="instructions"
+            className="instructons-container"
+          >
+            { recipes[0].strInstructions }
+          </p>
           <button
             type="button"
             data-testid="finish-recipe-btn"
