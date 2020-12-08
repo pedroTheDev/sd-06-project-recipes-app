@@ -4,6 +4,8 @@ import copy from 'clipboard-copy';
 import StartButton from '../components/StartButton';
 import RecipesContext from '../context/RecipesAppContext';
 import FavoriteButton from '../components/FavoriteButton';
+import shareIcon from '../images/shareIcon.svg';
+import '../Style/Details.css';
 
 function RecipeFoodDetails(props) {
   const { match } = props;
@@ -50,7 +52,9 @@ function RecipeFoodDetails(props) {
 
     const renderMeasure = () => {
       for (let i = 1; i <= TWENTY; i += 1) {
-        if (recipes[0][`strMeasure${i}`]) {
+        if ((recipes[0][`strMeasure${i}`]).length > 1) {
+          console.log(recipes[0][`strMeasure${i}`]);
+          console.log((recipes[0][`strMeasure${i}`]).length);
           arrMeasure = arrMeasure.concat(recipes[0][`strMeasure${i}`]);
         } else {
           break;
@@ -68,30 +72,38 @@ function RecipeFoodDetails(props) {
     renderIngredients();
 
     return (
-      <div>
+      <div className="container-detail">
+        <h1
+          data-testid="recipe-title"
+          className="title-detail"
+        >
+          {' '}
+          { recipes[0].strMeal }
+          {' '}
+        </h1>
         <img
           data-testid="recipe-photo"
           src={ recipes[0].strMealThumb }
           alt={ recipes[0].strMeal }
+          className="image-detail"
         />
-        <h4 data-testid="recipe-title">
-          {' '}
-          { recipes[0].strMeal }
-          {' '}
-        </h4>
-        <div>
-          <button
-            type="button"
-            onClick={ () => copyClip() }
-            data-testid="share-btn"
-          >
-            Compartilhar
-          </button>
+        <div className="details-container">
           <FavoriteButton
             id={ id }
             title={ title }
             data-testid="favorite-btn"
           />
+          <button
+            type="button"
+            className="btn btn-outline-dark-detail"
+            onClick={ () => copyClip() }
+            data-testid="share-btn"
+          >
+            <img
+              src={ shareIcon }
+              alt="Compartilhar"
+            />
+          </button>
           {share && <span>Link copiado!</span>}
         </div>
         <p data-testid="recipe-category">{recipes[0].strCategory}</p>
@@ -115,7 +127,12 @@ function RecipeFoodDetails(props) {
             </li>
           ))}
         </ul>
-        <p data-testid="instructions">{recipes[0].strInstructions}</p>
+        <p
+          data-testid="instructions"
+          className="description"
+        >
+          { recipes[0].strInstructions }
+        </p>
         <iframe
           title="Este é um titulo unico"
           data-testid="video"

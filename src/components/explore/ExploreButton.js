@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import './Explore.css';
 
 function ExploreButton({ title, url, testId }) {
   return (
@@ -9,7 +10,12 @@ function ExploreButton({ title, url, testId }) {
       data-testid={ testId }
       className="button-explore"
     >
-      { title }
+      <button
+        className="btn btn-outline-dark-explore"
+        type="button"
+      >
+        { title }
+      </button>
     </Link>
   );
 }

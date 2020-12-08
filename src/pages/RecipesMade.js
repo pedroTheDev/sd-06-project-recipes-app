@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import copy from 'clipboard-copy';
 import ShareIcon from '../images/shareIcon.svg';
 import Header from '../components/header';
+import '../Style/Feitas.css';
 
 function RecipesMade() {
   const recipesFinalized = JSON.parse(localStorage.getItem('doneRecipes'));
@@ -48,33 +49,39 @@ function RecipesMade() {
   return (
     <div>
       <Header title="Receitas Feitas" />
-      <button
-        type="button"
-        value="all"
-        data-testid="filter-by-all-btn"
-        onClick={ ({ target }) => filterRecipeDone(target.value) }
-      >
-        All
-      </button>
-      <button
-        type="button"
-        value="food"
-        data-testid="filter-by-food-btn"
-        onClick={ ({ target }) => filterRecipeDone(target.value) }
-      >
-        Food
-      </button>
-      <button
-        type="button"
-        value="drinks"
-        data-testid="filter-by-drink-btn"
-        onClick={ ({ target }) => filterRecipeDone(target.value) }
-      >
-        Drinks
-      </button>
+      <div className="container-feitas">
+        <button
+          type="button"
+          value="all"
+          data-testid="filter-by-all-btn"
+          onClick={ ({ target }) => filterRecipeDone(target.value) }
+          className="btn btn-feitas"
+        >
+          All
+        </button>
+        <button
+          type="button"
+          value="food"
+          data-testid="filter-by-food-btn"
+          onClick={ ({ target }) => filterRecipeDone(target.value) }
+          className="btn btn-feitas"
+        >
+          Food
+        </button>
+        <button
+          type="button"
+          value="drinks"
+          data-testid="filter-by-drink-btn"
+          onClick={ ({ target }) => filterRecipeDone(target.value) }
+          className="btn btn-feitas"
+        >
+          Drinks
+        </button>
+      </div>
       { updateRecipes.map((recipe, index) => (
         <div
           key={ recipe.id }
+          className="card-feitas"
         >
           <Link
             to={ `/${recipe.type}s/${recipe.id}` }
@@ -86,7 +93,12 @@ function RecipesMade() {
               src={ recipe.image }
               alt="recipe alredy finalized"
             />
-            <span data-testid={ `${index}-horizontal-name` }>{recipe.name}</span>
+            <h1
+              data-testid={ `${index}-horizontal-name` }
+              className="title-feitas"
+            >
+              { recipe.name }
+            </h1>
           </Link>
           {recipe.type === 'comida' && (
             <span
@@ -111,6 +123,7 @@ function RecipesMade() {
           <button
             type="button"
             onClick={ () => copiedClipBoard(recipe.id, recipe.type) }
+            className="btn "
           >
             <img
               data-testid={ `${index}-horizontal-share-btn` }

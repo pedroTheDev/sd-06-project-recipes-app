@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesAppContext';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+import '../Style/Details.css';
 
 function FavoriteButton({ id, title }) {
   const { recipes, isFavorite, setIsFavorite } = useContext(RecipesContext);
@@ -79,6 +80,7 @@ function FavoriteButton({ id, title }) {
     <div>
       <button
         type="button"
+        className="btn btn-outline-dark-detail"
         onClick={ handleFavorites }
       >
         <img

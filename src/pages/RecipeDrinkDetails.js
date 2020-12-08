@@ -4,7 +4,9 @@ import copy from 'clipboard-copy';
 import StartButton from '../components/StartButton';
 import RecipesContext from '../context/RecipesAppContext';
 import FavoriteButton from '../components/FavoriteButton';
+import shareIcon from '../images/shareIcon.svg';
 import '../Style/scroll.css';
+import '../Style/Details.css';
 
 function RecipeDrinkDetails(props) {
   const { match } = props;
@@ -69,33 +71,41 @@ function RecipeDrinkDetails(props) {
     renderIngredients();
 
     return recipes && recipes[0] && (
-      <div>
+      <div className="container-detail">
+        <h1
+          data-testid="recipe-title"
+          className="title-detail"
+        >
+          {' '}
+          { recipes[0].strDrink }
+          {' '}
+        </h1>
         <img
           data-testid="recipe-photo"
           src={ recipes[0].strDrinkThumb }
           alt={ recipes[0].strDrink }
+          className="image-detail"
         />
-        <h4 data-testid="recipe-title">
-          {' '}
-          { recipes[0].strDrink }
-          {' '}
-        </h4>
         <p data-testid="recipe-category">{recipes[0].strAlcoholic}</p>
-        <div>
+        <div className="details-container">
+          <FavoriteButton
+            id={ id }
+            title={ title }
+            data-testid="favorite-btn"
+          />
           <button
             type="button"
             onClick={ () => copyClip() }
             data-testid="share-btn"
+            className="btn btn-outline-dark-detail"
           >
-            Compartilhar
+            <img
+              src={ shareIcon }
+              alt="Compartilhar"
+            />
           </button>
           {share && <span>Link copiado!</span>}
         </div>
-        <FavoriteButton
-          id={ id }
-          title={ title }
-          data-testid="favorite-btn"
-        />
         <p data-testid="recipe-category">{recipes[0].strCategory}</p>
         <ul>
           {arrIngredient.map((ingredient, index) => (
@@ -117,7 +127,12 @@ function RecipeDrinkDetails(props) {
             </li>
           ))}
         </ul>
-        <p data-testid="instructions">{recipes[0].strInstructions}</p>
+        <p
+          data-testid="instructions"
+          className="description"
+        >
+          { recipes[0].strInstructions }
+        </p>
         <div className="scrollmenu">
           <div>
             {recomendation.slice(ZERO, SEIS).map((element, index) => (

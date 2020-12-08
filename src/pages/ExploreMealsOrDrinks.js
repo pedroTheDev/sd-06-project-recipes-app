@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import ExploreButton from '../components/explore/ExploreButton';
 import { fetchRandomMealId, fetchRandomDrinkId } from '../services';
 import capitalizeFirstLetter from '../libs/capitilizeFirstLetter';
+import '../components/explore/Explore.css';
 
 function ExploreMealsOrDrinks({ type }) {
   const [randomRecipeId, setRandomRecipeId] = useState();
@@ -25,7 +26,7 @@ function ExploreMealsOrDrinks({ type }) {
       <Header
         title={ `Explorar ${capitalizeFirstLetter(type)}` }
       />
-      <nav>
+      <nav className="buttons">
         <ExploreButton
           title="Por Ingredientes"
           url={ `/explorar/${type}/ingredientes` }

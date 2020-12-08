@@ -1,9 +1,9 @@
 .card {
   align-items: center;
-  background-color: chocolate;
+  background-color: darkgrey;
   display: flex;
   margin-bottom: 25px;
-  margin-left: 25px;
+  margin-left: 80px;
   width: 300px;
   
 }

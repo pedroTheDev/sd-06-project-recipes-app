@@ -59,6 +59,7 @@ function CategoryList({ title }) {
   };
 
   useEffect(() => {
+    console.log(categoryList);
     setBase();
   }, []);
 

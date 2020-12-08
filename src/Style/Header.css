@@ -2,5 +2,7 @@
   background-color: darkgrey;
   display: flex;
   justify-content: space-between;
+  margin-left: 50px;
   margin-bottom: 10px;
+  width: 100%;
 }

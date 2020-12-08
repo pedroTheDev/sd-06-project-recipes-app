@@ -7,6 +7,7 @@ import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import '../App.css';
+import '../Style/Process.css';
 
 function RecipeFoodProcess(props) {
   const { match } = props;
@@ -183,8 +184,8 @@ function RecipeFoodProcess(props) {
     console.log('o que é recipeFinaled:', recipeFinalized);
     const finalizedDate = new Date();
     const formatDate = `Finalizada em:
-      ${finalizedDate.getDate()}/
-      ${finalizedDate.getMonth()}/
+      ${finalizedDate.getDate()} /
+      ${finalizedDate.getMonth() + 1} /
       ${finalizedDate.getFullYear()}`;
 
     if (!localStorage.doneRecipes) {
@@ -218,34 +219,24 @@ function RecipeFoodProcess(props) {
   return (
     recipes.length > ZERO
       && (
-        <div>
+        <div className="process-container">
+          <h1
+            data-testid="recipe-title"
+            className="title-process"
+          >
+            { recipes[0].strMeal }
+          </h1>
           <img
             data-testid="recipe-photo"
             src={ recipes[0].strMealThumb }
             alt="imagem"
+            className="image-process"
           />
-          <h4
-            data-testid="recipe-title"
-          >
-            { recipes[0].strMeal }
-          </h4>
-          <div>
-            <button
-              type="button"
-              data-testid="share-btn"
-              onClick={ () => copyClip() }
-            >
-              <img
-                src={ shareIcon }
-                alt="compartilhar"
-              />
-            </button>
-            {share && <span>Link copiado!</span>}
-          </div>
           <div>
             <button
               type="button"
               onClick={ handleFavorites }
+              className="btn btn-outline-dark-process"
             >
               <img
                 data-testid="favorite-btn"
@@ -253,6 +244,18 @@ function RecipeFoodProcess(props) {
                 src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
               />
             </button>
+            <button
+              type="button"
+              data-testid="share-btn"
+              onClick={ () => copyClip() }
+              className="btn btn-outline-dark-process"
+            >
+              <img
+                src={ shareIcon }
+                alt="compartilhar"
+              />
+            </button>
+            {share && <span>Link copiado!</span>}
           </div>
           <h5
             data-testid="recipe-category"
@@ -262,12 +265,18 @@ function RecipeFoodProcess(props) {
           <div className="checkbox">
             { createCheckBoxes() }
           </div>
-          <p data-testid="instructions">{ recipes[0].strInstructions }</p>
+          <p
+            data-testid="instructions"
+            className="description"
+          >
+            { recipes[0].strInstructions }
+          </p>
           <button
             type="button"
             data-testid="finish-recipe-btn"
             onClick={ () => handleEndRecipe(recipes[0]) }
             disabled={ !arrIngredient.every((item) => item.checked) }
+            className="btn btn-process"
           >
             Finalizar Receita
           </button>

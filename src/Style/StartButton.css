@@ -1,5 +1,11 @@
 .container-button{
-    background-color: red;
+    background-color: white;
+    border: solid 1px black;
     position: fixed;
     bottom: 0px;
+}
+
+[class*=container-button]:hover {
+  background-color: rgb(46, 45, 45);
+  color: white;
 }

@@ -2,5 +2,6 @@
   background-color: darkgrey;
   display: flex;
   justify-content: space-between;
-  width: 100%;
+  margin-left: 50px;
+  width: 80%;
 }
