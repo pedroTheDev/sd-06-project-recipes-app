@@ -152,7 +152,12 @@ export default function FoodsDetails(props) {
             </button>
           </div>
           <p className="recipe-title" data-testid="recipe-title">{item.strMeal}</p>
-          <p className="recipe-category" data-testid="recipe-category">{item.strCategory}</p>
+          <p
+            className="recipe-category"
+            data-testid="recipe-category"
+          >
+            {item.strCategory}
+          </p>
           <p data-testid="instructions">{item.strInstructions}</p>
           {renderIngredients()}
 

@@ -125,7 +125,7 @@ export default function DrinkDetails(props) {
   if (recipe.drinks && recommendation) {
     const item = recipe.drinks[0];
     return (
-      <div>
+      <div className="content-details">
         <div key={ item }>
           <img
             data-testid="recipe-photo"
@@ -133,25 +133,34 @@ export default function DrinkDetails(props) {
             src={ item.strDrinkThumb }
             className="item-img"
           />
-          <p data-testid="recipe-title">{item.strDrink}</p>
-          <button
-            type="button"
-            data-testid="share-btn"
-            value="Share"
-            onClick={ () => handleCopy() }
+          <div className="buttons-container">
+            <button
+              className="btn-details"
+              type="button"
+              data-testid="share-btn"
+              value="Share"
+              onClick={ () => handleCopy() }
+            >
+              <img alt="Share" src={ shareIcon } />
+            </button>
+            <span>{copy}</span>
+            <button
+              className="btn-details"
+              type="button"
+              data-testid="favorite-btn"
+              src={ fav }
+              onClick={ () => handleFav(item) }
+            >
+              <img alt="fav" src={ fav } />
+            </button>
+          </div>
+          <p className="recipe-title" data-testid="recipe-title">{item.strDrink}</p>
+          <p
+            className="recipe-category"
+            data-testid="recipe-category"
           >
-            <img alt="Share" src={ shareIcon } />
-          </button>
-          <span>{copy}</span>
-          <button
-            type="button"
-            data-testid="favorite-btn"
-            src={ fav }
-            onClick={ () => handleFav(item) }
-          >
-            <img alt="fav" src={ fav } />
-          </button>
-          <p data-testid="recipe-category">{item.strAlcoholic}</p>
+            {item.strAlcoholic}
+          </p>
           <p data-testid="instructions">{item.strInstructions}</p>
           {renderIngredients()}
           <p data-testid="video">{item.strYoutube}</p>
