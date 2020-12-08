@@ -6,4 +6,4 @@ export { default as profileIcon } from './profileIcon.svg';
 export { default as searchIcon } from './searchIcon.svg';
 export { default as shareIcon } from './shareIcon.svg';
 export { default as whiteHeartIcon } from './whiteHeartIcon.svg';
-export {default as logo } from './logo.png';
+export { default as logo } from './logoPrototype_orangeNoBG.png';
