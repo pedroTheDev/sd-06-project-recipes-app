@@ -42,18 +42,21 @@ class Header extends Component {
     const { title, noSearchBar } = this.props;
     const { showSearchBar, searchInput } = this.state;
     return (
-      <HeaderContainer>
-        <div>
-          <Link to="/perfil">
-            <img data-testid="profile-top-btn" src={ profileIcon } alt="Profile" />
-          </Link>
-          <h4 data-testid="page-title">{title}</h4>
-          { !noSearchBar && (
-            <button type="button" onClick={ this.handleSearchBarButton }>
-              <img data-testid="search-top-btn" src={ searchIcon } alt="Search" />
-            </button>
-          ) }
-        </div>
+      <div>
+        <HeaderContainer>
+          <div>
+            <Link to="/perfil">
+              <img data-testid="profile-top-btn" src={ profileIcon } alt="Profile" />
+            </Link>
+            <h4 data-testid="page-title">{title}</h4>
+            { !noSearchBar && (
+              <button type="button" onClick={ this.handleSearchBarButton }>
+                <img data-testid="search-top-btn" src={ searchIcon } alt="Search" />
+              </button>
+            ) }
+          </div>
+        </HeaderContainer>
+
         {showSearchBar && (
           <SearchBarContainer>
             <input
@@ -66,7 +69,7 @@ class Header extends Component {
             <SearchBar title={ title } searchInput={ searchInput } />
           </SearchBarContainer>
         )}
-      </HeaderContainer>
+      </div>
     );
   }
 }

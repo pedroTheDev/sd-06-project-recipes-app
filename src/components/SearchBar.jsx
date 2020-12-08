@@ -70,20 +70,20 @@ class SearchRadio extends Component {
     return (
       <div>
         <button
-            type="button"
-            onClick={ this.requestFromApi }
-            data-testid="exec-search-btn"
+          type="button"
+          onClick={ this.requestFromApi }
+          data-testid="exec-search-btn"
         >
           <img width="50%" src={ searchIcon } />
         </button>
         <div className="input-container">
           <label htmlFor="ingrediente">
             <input
-                name="inputRadio"
-                id="ingrediente"
-                type="radio"
-                data-testid="ingredient-search-radio"
-                onChange={ this.handleInput }
+              name="inputRadio"
+              id="ingrediente"
+              type="radio"
+              data-testid="ingredient-search-radio"
+              onChange={ this.handleInput }
             />
             Ingrediente
           </label>

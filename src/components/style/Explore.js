@@ -6,7 +6,7 @@ const ButtonsContainer = styled.div`
   width: 90%;
   margin: 30px auto;
   
-  a {
+  a, button {
     margin: 0 10px;
     width: fit-content;
     padding: 8px;

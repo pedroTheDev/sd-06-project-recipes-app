@@ -66,6 +66,7 @@ export const InstructionsContainer = styled.div`
   margin-top: 20px;
   margin-left: 50px;
   text-align: justify;
+  margin-bottom: 48px;
 `;
 
 export const FooterContainer = styled.div`

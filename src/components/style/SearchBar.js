@@ -1,14 +1,19 @@
 import styled from 'styled-components';
 
 export const SearchBarContainer = styled.div`
+input {
+      width: 80%;
+      justify-content: center;
+    }
   div {
     display: flex;    
     flex-wrap: wrap;
     justify-content: space-between;
-    margin: auto;
+    margin: 10px auto;
     width: 90%;
     align-items: center;
 
+    
     a {
       align-self: flex-start;
     }
