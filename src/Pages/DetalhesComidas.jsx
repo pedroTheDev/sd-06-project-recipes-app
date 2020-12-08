@@ -101,6 +101,25 @@ const DetalhesComida = () => {
     </div>
   );
 
+  const getVideo = () => (
+    <div>
+      <div className="container-span-video">
+        <span>Video</span>
+      </div>
+      <div className="container-video">
+        <a
+          data-testid="video"
+          href={ detailsInfo.foods.strYoutube }
+        >
+          <img
+            src={ detailsInfo.foods.strMealThumb }
+            alt={ detailsInfo.foods.strMeal }
+          />
+        </a>
+      </div>
+    </div>
+  );
+
   return (
     <div className="body-details">
       {detailsInfo ? (
@@ -108,20 +127,7 @@ const DetalhesComida = () => {
           <BasicInfo />
           <Ingredients />
           <Instructions />
-          <div className="container-span-video">
-            <span>Video</span>
-          </div>
-          <div className="container-video">
-            <a
-              data-testid="video"
-              href={ detailsInfo.foods.strYoutube }
-            >
-              <img
-                src={ detailsInfo.foods.strMealThumb }
-                alt={ detailsInfo.foods.strMeal }
-              />
-            </a>
-          </div>
+          {getVideo()}
           <Recomendations />
           {!isRecipeDone && (getProgressButton())}
         </div>
