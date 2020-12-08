@@ -6,13 +6,13 @@ import Footer from '../components/Footer';
 import ReceitasContext from '../context/ReceitasContext';
 import DrinksCard from '../components/DrinksCard';
 import DrinkFilters from '../components/DrinkFilters';
-import { drinkAPI, drinkCategoryApi } from '../services/drinkAPI';
+import { drinkAPI } from '../services/drinkAPI';
 import load from '../images/load.png';
 import '../style/Loading.css';
 
 function Bebidas() {
   const {
-    searchBox, drinks, setDrinks, setFiltersDrinkData,
+    searchBox, drinks, setDrinks,
   } = useContext(ReceitasContext);
 
   const location = useLocation();
@@ -20,10 +20,8 @@ function Bebidas() {
 
   useEffect(() => {
     async function fetchDrink() {
-      const data = await drinkCategoryApi();
       const responseDrinksAPI = await drinkAPI();
 
-      setFiltersDrinkData(data);
       setDrinks(responseDrinksAPI);
     }
 

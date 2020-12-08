@@ -1,11 +1,18 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import ReceitasContext from '../context/ReceitasContext';
-import { drinkByCategoryApi, drinkAPI } from '../services/drinkAPI';
+import { drinkByCategoryApi, drinkAPI, drinkCategoryApi } from '../services/drinkAPI';
 
 function DrinkFilters() {
   const {
-    filtersDrinkData, setDrinks, selectedFilter, setSelectedFilter,
+    filtersData, setDrinks, selectedFilter, setSelectedFilter, setFiltersData,
   } = useContext(ReceitasContext);
+  useEffect(() => {
+    async function fetchMeal() {
+      const data = await drinkCategoryApi();
+      setFiltersData(data);
+    }
+    fetchMeal();
+  }, []);
 
   async function fetchDrink() {
     const responseDrinksAPI = await drinkAPI();
@@ -34,7 +41,7 @@ function DrinkFilters() {
 
   return (
     <div className="row justify-content-center mb-2">
-      {filtersDrinkData.map((filter) => (
+      {filtersData.map((filter) => (
         <button
           key={ filter }
           type="button"
