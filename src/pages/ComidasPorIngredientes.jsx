@@ -8,6 +8,7 @@ import {
   requestApiFoodListIngredients,
 } from '../services/requestFood';
 import '../styles/marginHederAndFooter.css';
+import '../styles/PorComidas.css';
 
 function ComidaPorIngredientes({ history }) {
   const {
@@ -37,27 +38,31 @@ function ComidaPorIngredientes({ history }) {
   const upToParameter12 = 12;
 
   return (
-    <div className="container-margin-heder container-margin-footer">
-      <Header name="Explorar Ingredientes" button={ false } />
+    <div className="container-margin-heder container-margin-footer allcardingredients">
+      <Header name="Por Ingredientes" button={ false } />
       {nameIngredientsFood.slice(ofTheFirstParameter, upToParameter12)
         .map((ingredient, index) => (
-          <button
+          <div
             key={ index }
-            type="button"
-            data-testid={ `${index}-ingredient-card` }
-            onClick={ () => onClickIngredient(ingredient) }
+            className="cardingredients"
           >
-            <img
-              src={ `https://www.themealdb.com/images/ingredients/${ingredient}-Small.png` }
-              alt={ ingredient }
-              data-testid={ `${index}-card-img` }
-            />
-            <p
-              data-testid={ `${index}-card-name` }
+            <button
+              type="button"
+              data-testid={ `${index}-ingredient-card` }
+              onClick={ () => onClickIngredient(ingredient) }
             >
-              { ingredient }
-            </p>
-          </button>
+              <img
+                src={ `https://www.themealdb.com/images/ingredients/${ingredient}-Small.png` }
+                alt={ ingredient }
+                data-testid={ `${index}-card-img` }
+              />
+              <p
+                data-testid={ `${index}-card-name` }
+              >
+                { ingredient }
+              </p>
+            </button>
+          </div>
         ))}
       <Footer />
     </div>

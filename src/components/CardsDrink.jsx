@@ -36,7 +36,7 @@ function CardsDrink() {
   }
 
   return (
-    <div>
+    <div className="allcardfood">
       {cardDrink.slice(ofTheFirstParameter, upToParameter)
         .map((objDrink, index) => {
           const {
@@ -45,7 +45,11 @@ function CardsDrink() {
             strDrinkThumb,
           } = objDrink;
           return (
-            <div key={ idDrink } data-testid={ `${index}-recipe-card` }>
+            <div
+              key={ idDrink }
+              data-testid={ `${index}-recipe-card` }
+              className="cardfood"
+            >
               <Link
                 to={ `/bebidas/${idDrink}` }
               >
@@ -56,21 +60,24 @@ function CardsDrink() {
                   data-testid={ `${index}-card-img` }
                 />
               </Link>
-              <Link
-                to={ `/bebidas/${idDrink}` }
-              >
-                <h4
-                  data-testid={ `${index}-card-name` }
+              <div className="text-btn">
+                <Link
+                  to={ `/bebidas/${idDrink}` }
                 >
-                  { strDrink }
-                </h4>
-              </Link>
+                  <h4
+                    data-testid={ `${index}-card-name` }
+                  >
+                    { strDrink }
+                  </h4>
+                </Link>
+              </div>
               <FavoriteHeart id={ idDrink } detailsDrink={ objDrink } />
             </div>
           );
         })}
       <button
         type="button"
+        className="show-results"
         onClick={ onClickMoreDrink }
         disabled={ upToParameter > cardDrink.length ? disableButtonMoreResults : false }
       >

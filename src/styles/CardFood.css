@@ -1,3 +1,7 @@
+.div-body {
+  background-color: #3F3F3F;
+}
+
 .allcardfood {
   display: flex;
   flex-wrap: wrap;
@@ -20,7 +24,7 @@
 .cardfood {
   background-color: #F8F8F8;
   width: 10em;
-  box-shadow: #000 4px 4px 3px;
+  box-shadow: black 2px 2px 2px;
   margin: 3px 10px 10px 10px;
   display: flex;
   flex-direction: column;
