@@ -34,13 +34,20 @@ function BebidasPorIngredientes({ history }) {
     history.push('/bebidas');
   };
 
-  const ofTheFirstParameter = 0;
   const upToParameter12 = 12;
+  const [upToParameter, setUpToParameter] = useState(upToParameter12);
+
+  const onClickMoreFood = () => {
+    setUpToParameter(upToParameter + upToParameter12);
+  };
+
+  const ofTheFirstParameter = 0;
+  const disableButtonMoreResults = true;
 
   return (
     <div className="container-margin-heder container-margin-footer allcardingredients">
       <Header name="Por Ingredientes" button={ false } />
-      {nameIngredientsDrink.slice(ofTheFirstParameter, upToParameter12)
+      {nameIngredientsDrink.slice(ofTheFirstParameter, upToParameter)
         .map((ingredient, index) => (
           <div
             className="cardingredients"
@@ -64,6 +71,14 @@ function BebidasPorIngredientes({ history }) {
             </button>
           </div>
         ))}
+      <button
+        type="button"
+        onClick={ onClickMoreFood }
+        className="show-results"
+        disabled={ upToParameter > nameIngredientsDrink.length ? disableButtonMoreResults : false }
+      >
+        Mostrar mais resultados
+      </button>
       <Footer />
     </div>
   );
