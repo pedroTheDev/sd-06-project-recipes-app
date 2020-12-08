@@ -22,7 +22,9 @@ const ReceitasFeitas = () => {
 
     copy(`http://localhost:3000/${name}s/${id}`);
 
-    div.appendChild(copied).innerText = 'Link copiado!';
+    if (div.children.length === 1) {
+      div.appendChild(copied).innerText = 'Link copiado!';
+    }
   };
 
   return ((!recipes)
