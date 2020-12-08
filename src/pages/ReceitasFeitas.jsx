@@ -4,6 +4,7 @@ import Header from '../components/Header';
 import { loadState } from '../services/localStorage';
 import buttonShare from '../styles/images/shareIcon.svg';
 import '../styles/marginHederAndFooter.css';
+import '../styles/ReceitasFinalizadas.css';
 
 function ReceitasFeitas() {
   const copyBoard = (id, type) => {
@@ -19,9 +20,9 @@ function ReceitasFeitas() {
     document.execCommand('copy');
     input.parentNode.removeChild(input);
     const divBtns = document.getElementById('btns');
-    const newSpan = document.createElement('span');
-    newSpan.innerHTML = 'Link copiado!';
-    divBtns.appendChild(newSpan);
+    // const newSpan = document.createElement('span');
+    // newSpan.innerHTML = 'Link copiado!';
+    divBtns.innerHTML = 'Link copiado!';
   };
 
   const All = 'All';
@@ -58,6 +59,7 @@ function ReceitasFeitas() {
         const lowerCaseFilter = Filter.toLowerCase();
         return (
           <button
+            className="category-food-btn-receitas"
             key={ Filter }
             type="button"
             data-testid={ `filter-by-${lowerCaseFilter}-btn` }
@@ -80,6 +82,7 @@ function ReceitasFeitas() {
           tags,
         }, index) => (
           <div
+            className="container-card-food"
             key={ index }
           >
             <Link to={ `/${type}s/${id}` }>
@@ -90,55 +93,60 @@ function ReceitasFeitas() {
                 data-testid={ `${index}-horizontal-image` }
               />
             </Link>
-            {(type === 'comida') && (
-              <p
-                data-testid={ `${index}-horizontal-top-text` }
-              >
-                { `${area} - ${category}` }
-              </p>
-            )}
-            {(type === 'bebida') && (
-              <p
-                data-testid={ `${index}-horizontal-top-text` }
-              >
-                { alcoholicOrNot }
-              </p>
-            )}
-            <Link to={ `/${type}s/${id}` }>
-              <h2
-                data-testid={ `${index}-horizontal-name` }
-              >
-                { name }
-              </h2>
-            </Link>
-            <div id="btns">
-              <button
-                type="button"
-                onClick={ () => copyBoard(id, type) }
-              >
-                <img
-                  src={ buttonShare }
-                  data-testid={ `${index}-horizontal-share-btn` }
-                  alt="img-button-share"
-                />
-              </button>
-            </div>
-            <span
-              data-testid={ `${index}-horizontal-done-date` }
-            >
-              {doneDate}
-            </span>
-            {console.log(typeof tags)}
-            {(type === 'comida' && tags) && (
-              tags.map((sdes) => (
-                <p
-                  key={ sdes }
-                  data-testid={ `${index}-${sdes}-horizontal-tag` }
+            <div className="conteudo-card">
+              {(type === 'comida') && (
+                <span
+                  data-testid={ `${index}-horizontal-top-text` }
                 >
-                  {sdes}
-                </p>
-              ))
-            )}
+                  { `${area} - ${category}` }
+                </span>
+              )}
+              {(type === 'bebida') && (
+                <span
+                  data-testid={ `${index}-horizontal-top-text` }
+                >
+                  { alcoholicOrNot }
+                </span>
+              )}
+              <Link to={ `/${type}s/${id}` }>
+                <span
+                  className="food-title"
+                  data-testid={ `${index}-horizontal-name` }
+                >
+                  { name }
+                </span>
+              </Link>
+              <span
+                data-testid={ `${index}-horizontal-done-date` }
+              >
+                {`Feita em : ${doneDate}`}
+              </span>
+              {console.log(typeof tags)}
+              {(type === 'comida' && tags) && (
+                tags.map((sdes) => (
+                  <span
+                    key={ sdes }
+                    data-testid={ `${index}-${sdes}-horizontal-tag` }
+                  >
+                    {sdes}
+                  </span>
+                ))
+              )}
+              <div>
+                <button
+                  className="btn-copy-link"
+                  type="button"
+                  onClick={ () => copyBoard(id, type) }
+                >
+                  <img
+                    src={ buttonShare }
+                    data-testid={ `${index}-horizontal-share-btn` }
+                    alt="img-button-share"
+                  />
+                </button>
+                <span id="btns" />
+              </div>
+            </div>
           </div>
         ))}
       </div>

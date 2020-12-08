@@ -9,6 +9,7 @@ import {
   requestApiFoodListArea,
 } from '../services/requestFood';
 import '../styles/marginHederAndFooter.css';
+import '../styles/PorOrigem.css';
 
 function ComidasPorOrigem() {
   const verdadeiro = true;
@@ -41,8 +42,9 @@ function ComidasPorOrigem() {
 
   return (
     <div className="container-margin-heder container-margin-footer">
-      <Header name="Explorar Origem" button={ verdadeiro } />
+      <Header name="Por Origem" button={ verdadeiro } />
       <select
+        className="select-por-origem"
         data-testid="explore-by-area-dropdown"
         onChange={ onChangeDropdown }
       >

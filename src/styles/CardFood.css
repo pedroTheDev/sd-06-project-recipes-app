@@ -1,3 +1,7 @@
+.div-body {
+  background-color: #3F3F3F;
+}
+
 .all-card-food {
   display: flex;
   flex-wrap: wrap;
@@ -24,7 +28,7 @@ a:link  {
 .card-food {
   background-color: #F8F8F8;
   width: 10em;
-  box-shadow: #000 4px 4px 3px;
+  box-shadow: black 2px 2px 2px;
   margin: 3px 10px 10px 10px;
   display: flex;
   flex-direction: column;

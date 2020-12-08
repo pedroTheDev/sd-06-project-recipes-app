@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import { loadState } from '../services/localStorage';
 import '../styles/marginHederAndFooter.css';
+import '../styles/Perfil.css';
 
 function Perfil({ history }) {
   const user = loadState('user', { email: '' });
@@ -18,12 +19,13 @@ function Perfil({ history }) {
   return (
     <div className="container-margin-heder container-margin-footer">
       <Header name="Perfil" button={ false } />
-      <div className="profile">
-        <span data-testid="profile-email">
+      <div className="profile container-big-btn">
+        <span data-testid="profile-email" className="name-email">
           {user.email}
         </span>
         <Link to="/receitas-feitas">
           <button
+            className="big-btn done-btn"
             type="button"
             data-testid="profile-done-btn"
           >
@@ -32,6 +34,7 @@ function Perfil({ history }) {
         </Link>
         <Link to="/receitas-favoritas">
           <button
+            className="big-btn favorite-btn-login"
             type="button"
             data-testid="profile-favorite-btn"
           >
@@ -39,6 +42,7 @@ function Perfil({ history }) {
           </button>
         </Link>
         <button
+          className="big-btn logout-btn"
           type="button"
           data-testid="profile-logout-btn"
           onClick={ () => handleLogout() }
