@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+import RecipesContext from '../context/RecipesContext';
 import '../css/FavoriteBtn.css';
 
 function FavoriteBtn({ id, type, recipe }) {
   const [isFavorite, setIsFavorite] = useState(false);
+  const { setFavoriteList } = useContext(RecipesContext);
   const { pathname } = useLocation();
 
   const isDrink = pathname.includes('bebidas');
@@ -58,6 +60,7 @@ function FavoriteBtn({ id, type, recipe }) {
     const newFavorite = currentFavorite.filter((item) => item.id !== id);
 
     localStorage.setItem('favoriteRecipes', JSON.stringify(newFavorite));
+    setFavoriteList(newFavorite);
 
     setIsFavorite(false);
   };
