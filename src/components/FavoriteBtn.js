@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+import '../css/FavoriteBtn.css';
 
 function FavoriteBtn({ id, type, recipe }) {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -47,9 +48,14 @@ function FavoriteBtn({ id, type, recipe }) {
 
   if (isFavorite) {
     return (
-      <button type="button" onClick={ () => removeFavorite() }>
+      <button
+        type="button"
+        onClick={ () => removeFavorite() }
+        className="btn-favorite"
+      >
         <img
           alt="Set this recipe as favorite"
+          className="btn-favorite-img"
           data-testid="favorite-btn"
           src={ blackHeartIcon }
         />
@@ -58,9 +64,14 @@ function FavoriteBtn({ id, type, recipe }) {
   }
 
   return (
-    <button type="button" onClick={ () => addFavorite() }>
+    <button
+      type="button"
+      onClick={ () => addFavorite() }
+      className="btn-favorite"
+    >
       <img
         alt="Set this recipe as favorite"
+        className="btn-favorite-img"
         data-testid="favorite-btn"
         src={ whiteHeartIcon }
       />

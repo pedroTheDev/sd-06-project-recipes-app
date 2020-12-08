@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import copy from 'clipboard-copy';
 import shareIcon from '../images/shareIcon.svg';
+import '../css/ShareBtn.css';
 
 function ShareBtn({ id }) {
   const [showMessage, setShowMessage] = useState(false);
@@ -23,9 +24,14 @@ function ShareBtn({ id }) {
 
   return (
     <div>
-      <button type="button" onClick={ shareClick }>
+      <button
+        type="button"
+        onClick={ shareClick }
+        className="btn-share"
+      >
         <img
           alt="share data"
+          className="btn-share-img"
           data-testid="share-btn"
           src={ shareIcon }
         />
