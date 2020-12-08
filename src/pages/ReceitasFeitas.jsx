@@ -19,9 +19,7 @@ function ReceitasFeitas() {
     input.select();
     document.execCommand('copy');
     input.parentNode.removeChild(input);
-    const divBtns = document.getElementById('btns');
-    // const newSpan = document.createElement('span');
-    // newSpan.innerHTML = 'Link copiado!';
+    const divBtns = document.getElementById(id);
     divBtns.innerHTML = 'Link copiado!';
   };
 
@@ -144,7 +142,7 @@ function ReceitasFeitas() {
                     alt="img-button-share"
                   />
                 </button>
-                <span id="btns" />
+                <span id={ id } />
               </div>
             </div>
           </div>

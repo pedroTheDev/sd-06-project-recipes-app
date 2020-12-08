@@ -8,6 +8,7 @@ import {
   requestApiDrinkListIngredients,
 } from '../services/requestDrink';
 import '../styles/marginHederAndFooter.css';
+import '../styles/PorComidas.css';
 
 function BebidasPorIngredientes({ history }) {
   const {
@@ -37,27 +38,31 @@ function BebidasPorIngredientes({ history }) {
   const upToParameter12 = 12;
 
   return (
-    <div className="container-margin-heder container-margin-footer">
-      <Header name="Explorar Ingredientes" button={ false } />
+    <div className="container-margin-heder container-margin-footer allcardingredients">
+      <Header name="Por Ingredientes" button={ false } />
       {nameIngredientsDrink.slice(ofTheFirstParameter, upToParameter12)
         .map((ingredient, index) => (
-          <button
+          <div
+            className="cardingredients"
             key={ index }
-            type="button"
-            data-testid={ `${index}-ingredient-card` }
-            onClick={ () => onClickIngredient(ingredient) }
           >
-            <img
-              src={ `https://www.thecocktaildb.com/images/ingredients/${ingredient}-Small.png` }
-              alt={ ingredient }
-              data-testid={ `${index}-card-img` }
-            />
-            <p
-              data-testid={ `${index}-card-name` }
+            <button
+              type="button"
+              data-testid={ `${index}-ingredient-card` }
+              onClick={ () => onClickIngredient(ingredient) }
             >
-              { ingredient }
-            </p>
-          </button>
+              <img
+                src={ `https://www.thecocktaildb.com/images/ingredients/${ingredient}-Small.png` }
+                alt={ ingredient }
+                data-testid={ `${index}-card-img` }
+              />
+              <p
+                data-testid={ `${index}-card-name` }
+              >
+                { ingredient }
+              </p>
+            </button>
+          </div>
         ))}
       <Footer />
     </div>

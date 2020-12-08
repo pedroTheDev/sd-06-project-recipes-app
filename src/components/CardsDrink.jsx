@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import RecipesAppContext from '../context/RecipesAppContext';
 import { requestApiDrinkFilterName } from '../services/requestDrink';
 import FavoriteHeart from './FavoriteHeart';
-import '../styles/imgBig.css';
+import '../styles/CardFood.css';
 
 function CardsDrink() {
   const {
@@ -36,7 +36,7 @@ function CardsDrink() {
   }
 
   return (
-    <div className="allcardfood">
+    <div className="all-card-food">
       {cardDrink.slice(ofTheFirstParameter, upToParameter)
         .map((objDrink, index) => {
           const {
@@ -48,8 +48,9 @@ function CardsDrink() {
             <div
               key={ idDrink }
               data-testid={ `${index}-recipe-card` }
-              className="cardfood"
+              className="card-food"
             >
+              <FavoriteHeart id={ idDrink } detailsDrink={ objDrink } card />
               <Link
                 to={ `/bebidas/${idDrink}` }
               >
@@ -71,7 +72,6 @@ function CardsDrink() {
                   </h4>
                 </Link>
               </div>
-              <FavoriteHeart id={ idDrink } detailsDrink={ objDrink } card />
             </div>
           );
         })}
