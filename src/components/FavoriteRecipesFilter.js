@@ -5,7 +5,7 @@ import '../css/DoneRecipes.css';
 function FavoriteRecipesFilter() {
   const { setFavoriteFilter } = useContext(RecipesContext);
 
-  const onClick = ({ target }) => {
+  const onClick = (target) => {
     const { value } = target;
 
     setFavoriteFilter(value);
@@ -16,7 +16,7 @@ function FavoriteRecipesFilter() {
       <button
         className="btn-filter-profile"
         data-testid="filter-by-all-btn"
-        onClick={ onClick }
+        onClick={ ({ target }) => onClick(target) }
         type="button"
         value="all"
       >
@@ -25,7 +25,7 @@ function FavoriteRecipesFilter() {
       <button
         className="btn-filter-profile"
         data-testid="filter-by-food-btn"
-        onClick={ onClick }
+        onClick={ ({ target }) => onClick(target) }
         type="button"
         value="comida"
       >
@@ -34,7 +34,7 @@ function FavoriteRecipesFilter() {
       <button
         className="btn-filter-profile"
         data-testid="filter-by-drink-btn"
-        onClick={ onClick }
+        onClick={ ({ target }) => onClick(target) }
         type="button"
         value="bebida"
       >

@@ -90,7 +90,7 @@ function DoneRecipeCard({ recipe, index }) {
         >
           <img
             alt="share button"
-            classNam="btn-share-img"
+            className="btn-share-img"
             data-testid={ `${index}-horizontal-share-btn` }
             src={ shareIcon }
           />
