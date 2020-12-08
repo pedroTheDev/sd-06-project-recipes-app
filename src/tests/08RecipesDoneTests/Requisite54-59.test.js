@@ -74,7 +74,10 @@ describe('Done Recipes', () => {
     const filterByAllBtn = getByTestId('filter-by-all-btn');
     fireEvent.click(filterByAllBtn);
 
-    for (let index = 0; index < 2; index += 1) {
+    const ZERO = 0;
+    const TWO = 2;
+
+    for (let index = ZERO; index < TWO; index += 1) {
       expect(getByTestId(`${index}-horizontal-done-date`)).toBeInTheDocument();
     }
   });
