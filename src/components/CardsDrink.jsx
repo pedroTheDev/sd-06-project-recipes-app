@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import RecipesAppContext from '../context/RecipesAppContext';
 import { requestApiDrinkFilterName } from '../services/requestDrink';
 import FavoriteHeart from './FavoriteHeart';
-import '../styles/CardFood.css';
+import '../styles/imgBig.css';
 
 function CardsDrink() {
   const {
@@ -36,7 +36,7 @@ function CardsDrink() {
   }
 
   return (
-    <div className="all-card-food">
+    <div>
       {cardDrink.slice(ofTheFirstParameter, upToParameter)
         .map((objDrink, index) => {
           const {
@@ -45,12 +45,7 @@ function CardsDrink() {
             strDrinkThumb,
           } = objDrink;
           return (
-            <div
-              key={ idDrink }
-              data-testid={ `${index}-recipe-card` }
-              className="card-food"
-            >
-              <FavoriteHeart id={ idDrink } detailsDrink={ objDrink } card />
+            <div key={ idDrink } data-testid={ `${index}-recipe-card` }>
               <Link
                 to={ `/bebidas/${idDrink}` }
               >
@@ -70,6 +65,7 @@ function CardsDrink() {
                   { strDrink }
                 </h4>
               </Link>
+              <FavoriteHeart id={ idDrink } detailsDrink={ objDrink } card />
             </div>
           );
         })}
@@ -77,7 +73,6 @@ function CardsDrink() {
         type="button"
         onClick={ onClickMoreDrink }
         disabled={ upToParameter > cardDrink.length ? disableButtonMoreResults : false }
-        className="show-results"
       >
         Mostrar mais resultados
       </button>

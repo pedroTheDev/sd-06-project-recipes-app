@@ -5,7 +5,6 @@ import {
   requestApiDrinkFilterCategories,
   requestApiDrinkFilterName,
 } from '../services/requestDrink';
-import '../styles/ButtonCategoriesFood.css';
 
 function ButtonCategoriesDrink() {
   const {
@@ -50,14 +49,13 @@ function ButtonCategoriesDrink() {
 
   return (
     (categoriesButtonDrink.length === arrayVoid) ? <span>Loading...</span> : (
-      <div className="all-btns">
+      <div>
         {categoriesButtonDrink.map((category) => (
           <button
             key={ category }
             type="button"
             data-testid={ `${category}-category-filter` }
             onClick={ () => onClickCategory(category) }
-            className="category-food-btn"
           >
             { category }
           </button>
