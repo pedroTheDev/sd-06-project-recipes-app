@@ -186,7 +186,10 @@ export default function FoodsDetails(props) {
                   data-testid="start-recipe-btn"
                   className="btnStart"
                 >
-                  {btnStartValue}
+                  <div>
+                    {btnStartValue}
+                  </div>
+
                 </button>
               </Link>
             ) : null
