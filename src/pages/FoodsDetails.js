@@ -105,15 +105,21 @@ export default function FoodsDetails(props) {
     if (recipeDetails.length > empty) {
       return (
         <div>
-          { recipeDetails.filter((ingredient) => ingredient !== '' && ingredient !== null)
-            .map((ingredient, index) => (
-              <p
-                key={ ingredient[0] }
-                data-testid={ `${index}-ingredient-name-and-measure` }
-              >
-                {`${ingredient[0]}: ${ingredient[1]}`}
-              </p>
-            )) }
+          <p className="ingredients-title">Ingredients</p>
+          <div
+            className="ingredients-list"
+          >
+            { recipeDetails
+              .filter((ingredient) => ingredient !== '' && ingredient !== null)
+              .map((ingredient, index) => (
+                <p
+                  key={ ingredient[0] }
+                  data-testid={ `${index}-ingredient-name-and-measure` }
+                >
+                  {`${ingredient[0]}: ${ingredient[1]}`}
+                </p>
+              )) }
+          </div>
         </div>
       );
     }
@@ -158,7 +164,14 @@ export default function FoodsDetails(props) {
           >
             {item.strCategory}
           </p>
-          <p data-testid="instructions">{item.strInstructions}</p>
+          <p className="instructions-title">Instructions</p>
+          <p
+            className="instructions"
+            data-testid="instructions"
+          >
+            {item.strInstructions}
+          </p>
+
           {renderIngredients()}
 
           <video className="video-recipe" data-testid="video" width="340" controls>
@@ -180,6 +193,7 @@ export default function FoodsDetails(props) {
           }
         </div>
         <div className="testimonials">
+          <p className="recommendation">Recommendation</p>
           <div className="scroller">
             {recommendation.map((rec, index) => (
               <div

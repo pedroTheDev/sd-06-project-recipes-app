@@ -106,17 +106,23 @@ export default function DrinkDetails(props) {
     if (recipeDetails.length > empty) {
       return (
         <div>
-          { recipeDetails.filter((ingredient) => ingredient !== '' && ingredient !== null)
-            .map((ingredient, index) => (
-              <p
-                data-testid={ `${index}-ingredient-name-and-measure` }
-                key={ ingredient[0] }
-              >
-                { (ingredient[1] === null)
-                  ? `${ingredient[0]}`
-                  : `${ingredient[0]}: ${(ingredient[1]) && ingredient[1]}` }
-              </p>
-            )) }
+          <p className="ingredients-title">Ingredients</p>
+          <div
+            className="ingredients-list"
+          >
+            { recipeDetails
+              .filter((ingredient) => ingredient !== '' && ingredient !== null)
+              .map((ingredient, index) => (
+                <p
+                  data-testid={ `${index}-ingredient-name-and-measure` }
+                  key={ ingredient[0] }
+                >
+                  { (ingredient[1] === null)
+                    ? `${ingredient[0]}`
+                    : `${ingredient[0]}: ${(ingredient[1]) && ingredient[1]}` }
+                </p>
+              )) }
+          </div>
         </div>
       );
     }
@@ -161,7 +167,13 @@ export default function DrinkDetails(props) {
           >
             {item.strAlcoholic}
           </p>
-          <p data-testid="instructions">{item.strInstructions}</p>
+          <p className="instructions-title">Instructions</p>
+          <p
+            className="instructions"
+            data-testid="instructions"
+          >
+            {item.strInstructions}
+          </p>
           {renderIngredients()}
           <p data-testid="video">{item.strYoutube}</p>
           <Link to={ `/bebidas/${id}/in-progress` }>
@@ -180,6 +192,7 @@ export default function DrinkDetails(props) {
           </Link>
         </div>
         <div className="testimonials">
+          <p className="recommendation">Recommendation</p>
           <div className="scroller">
             {recommendation.map((rec, index) => (
               <div

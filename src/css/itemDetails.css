@@ -62,11 +62,35 @@
 }
 
 .video-recipe {
-  width: 356px;
   display: flex;
   margin:0 2px;
+  width: 356px;
 }
 
 .recipe-category {
+  font-weight: 700;
+}
+
+.instructions-title {
+  color: #522500;
+  font-weight: 700;
+}
+
+.instructions {
+  background-color: #f8f3e3;
+  padding: 8px 0 8px 0;
+}
+
+.ingredients-title {
+  color: #522500;
+  font-weight: 700;
+}
+
+.ingredients-list {
+  background-color: #f8f3e3;
+}
+
+.recommendation {
+  color: #522500;
   font-weight: 700;
 }
