@@ -29,91 +29,92 @@ function CompletedRecipes() {
   };
 
   return (
-    <div className="container">
-      <Header
-        className="header"
-        pageTitle="Receitas Feitas"
-      />
-      <div className="categories">
-        <input
-          className="category-button"
-          data-testid="filter-by-all-btn"
-          onClick={ () => setType('') }
-          type="button"
-          value="All"
+    <div>
+      <div className="recipes-page-container">
+        <Header
+          pageTitle="Receitas Feitas"
         />
-        <input
-          className="category-button"
-          data-testid="filter-by-food-btn"
-          onClick={ () => setType('comida') }
-          type="button"
-          value="Comidas"
-        />
-        <input
-          className="category-button"
-          data-testid="filter-by-drink-btn"
-          onClick={ () => setType('bebida') }
-          type="button"
-          value="Bebidas"
-        />
-      </div>
-      <div className="header-container">
-        {doneRecipes.map((recipe, index) => {
-          if (recipe.type === type || type === '') {
-            let urlLinkDetail = '';
-            if (recipe.type === 'comida') {
-              urlLinkDetail = `/comidas/${recipe.id}`;
-            } else if (recipe.type === 'bebida') {
-              urlLinkDetail = `/bebidas/${recipe.id}`;
-            }
-            return (
-              <div className="recipe-card">
-                <Link to={ urlLinkDetail }>
-                  <img
-                    className="recipe-thumb"
-                    data-testid={ `${index}-horizontal-image` }
-                    src={ recipe.image }
-                    alt={ recipe.name }
-                  />
-                </Link>
-                <p data-testid={ `${index}-horizontal-top-text` }>
-                  {
-                    recipe.type === 'comida'
-                      ? `${recipe.area} - ${recipe.category}`
-                      : recipe.alcoholicOrNot
-                  }
-                </p>
-                <Link to={ urlLinkDetail }>
-                  <h2 className="recipe-name" data-testid={ `${index}-horizontal-name` }>
-                    { recipe.name }
-                  </h2>
-                </Link>
-                <p data-testid={ `${index}-horizontal-done-date` }>
-                  { `Feita em: ${recipe.doneDate}` }
-                </p>
-                <input
-                  id={ `${recipe.id},${recipe.type}` }
-                  type="image"
-                  data-testid={ `${index}-horizontal-share-btn` }
-                  className="share-btn"
-                  src={ shareIcon }
-                  alt="Share recipe"
-                  onClick={ ({ target }) => handleShareIcon(target) }
-                />
-                <p className={ `copied-link-${recipe.id}` } />
-                {recipe.tags.split(',').map((tagName) => (
-                  <p
-                    data-testid={ `${index}-${tagName}-horizontal-tag` }
-                    key={ tagName }
-                  >
-                    { tagName }
+        <div className="categories">
+          <input
+            className="category-button"
+            data-testid="filter-by-all-btn"
+            onClick={ () => setType('') }
+            type="button"
+            value="All"
+          />
+          <input
+            className="category-button"
+            data-testid="filter-by-food-btn"
+            onClick={ () => setType('comida') }
+            type="button"
+            value="Comidas"
+          />
+          <input
+            className="category-button"
+            data-testid="filter-by-drink-btn"
+            onClick={ () => setType('bebida') }
+            type="button"
+            value="Bebidas"
+          />
+        </div>
+        <div className="header-container">
+          {doneRecipes.map((recipe, index) => {
+            if (recipe.type === type || type === '') {
+              let urlLinkDetail = '';
+              if (recipe.type === 'comida') {
+                urlLinkDetail = `/comidas/${recipe.id}`;
+              } else if (recipe.type === 'bebida') {
+                urlLinkDetail = `/bebidas/${recipe.id}`;
+              }
+              return (
+                <div className="recipe-card">
+                  <Link to={ urlLinkDetail }>
+                    <img
+                      className="recipe-thumb"
+                      data-testid={ `${index}-horizontal-image` }
+                      src={ recipe.image }
+                      alt={ recipe.name }
+                    />
+                  </Link>
+                  <p data-testid={ `${index}-horizontal-top-text` }>
+                    {
+                      recipe.type === 'comida'
+                        ? `${recipe.area} - ${recipe.category}`
+                        : recipe.alcoholicOrNot
+                    }
                   </p>
-                ))}
-              </div>
-            );
-          }
-          return null;
-        })}
+                  <Link to={ urlLinkDetail }>
+                    <h2 className="recipe-name" data-testid={ `${index}-horizontal-name` }>
+                      { recipe.name }
+                    </h2>
+                  </Link>
+                  <p data-testid={ `${index}-horizontal-done-date` }>
+                    { `Feita em: ${recipe.doneDate}` }
+                  </p>
+                  <input
+                    id={ `${recipe.id},${recipe.type}` }
+                    type="image"
+                    data-testid={ `${index}-horizontal-share-btn` }
+                    className="share-btn"
+                    src={ shareIcon }
+                    alt="Share recipe"
+                    onClick={ ({ target }) => handleShareIcon(target) }
+                  />
+                  <p className={ `copied-link-${recipe.id}` } />
+                  {recipe.tags.split(',').map((tagName) => (
+                    <p
+                      data-testid={ `${index}-${tagName}-horizontal-tag` }
+                      key={ tagName }
+                    >
+                      { tagName }
+                    </p>
+                  ))}
+                </div>
+              );
+            }
+            return null;
+          })}
+        </div>
       </div>
     </div>
   );

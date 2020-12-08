@@ -21,7 +21,9 @@ export default function Header({ pageTitle, BtnSearchBar }) {
             <img className="icon" alt="Ícone de Perfil" src={ profileIcon } />
           </button>
         </Link>
-        <h1 data-testid="page-title" className="header-title">{ pageTitle }</h1>
+        <div className="div-titulo">
+          <h1 data-testid="page-title" className="header-title">{ pageTitle }</h1>
+        </div>
         { BtnSearchBar && <BtnSearchBar /> }
       </header>
       { searchBar && <SearchBar /> }
