@@ -13,6 +13,7 @@ function Login() {
     localStorage.setItem('user', JSON.stringify(objEmail));
     localStorage.setItem('mealsToken', 1);
     localStorage.setItem('cocktailsToken', 1);
+    localStorage.setItem('inProgressRecipe', JSON.stringify({ food: {}, drink: {} }));
   };
 
   return (

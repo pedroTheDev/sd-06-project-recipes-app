@@ -1,10 +1,10 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import '../App.css';
 import Context from '../context/Context';
 import Cards from '../components/Cards';
-import Checkbox from '../components/Checkbox';
+// import Checkbox from '../components/Checkbox';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
@@ -25,6 +25,8 @@ function RecipeDetails(props) {
     recommended,
   } = useContext(Context);
   const { match: { path, params, url } } = props;
+  const [checked, setChecked] = useState([]);
+  const isFood = url.includes('comidas');
 
   const ZERO = 0;
   const SIX = 6;
@@ -39,7 +41,57 @@ function RecipeDetails(props) {
       getRecommendedMeal();
     }
     isFavorite(params.id);
+    const local = JSON.parse(localStorage.getItem('inProgressRecipe'))
+    if (isFood) {
+      !local.food[params.id] ?
+        localStorage.setItem('inProgressRecipe',
+          JSON.stringify({ ...local, food: { ...local.food, [params.id] : [] } }))
+        : setChecked(local.food[params.id]);
+    } else {
+      !local.drink[params.id] ?
+        localStorage.setItem('inProgressRecipe',
+          JSON.stringify({ ...local, drink: { ...local.drink, [params.id] : [] } }))
+        : setChecked(local.drink[params.id]);
+    }
   }, [params.id]);
+
+  const isChecked = () => {
+    const inProgress = JSON.parse(localStorage.getItem('inProgressRecipe'));
+    //console.log(inProgress[params.id])
+    let newRecipe = {};
+    isFood ?
+    newRecipe = {
+      ...inProgress,
+      food: {
+        ...inProgress.food,
+        [params.id]: [...checked],
+      }
+    } :
+    newRecipe = {
+      ...inProgress,
+      drink: {
+        ...inProgress.drink,
+        [params.id]: [...checked],
+      }
+      
+    };
+    localStorage.setItem('inProgressRecipe', JSON.stringify(newRecipe));
+  };
+
+  useEffect(() => {
+    isChecked();
+  }, [checked]);
+
+  const handleChecked = (ingredient) => {
+    const notChecked = checked.indexOf(ingredient) < ZERO;
+    let newChecked = [];
+
+    if (notChecked) newChecked = [...checked, ingredient];
+    else newChecked = checked.filter((check) => check !== ingredient);
+
+    setChecked(newChecked);
+    //localStorage.setItem('inProgressRecipe', newChecked);
+  };
 
   const getIngredients = (obj, filter) => {
     const keys = [];
@@ -98,14 +150,20 @@ function RecipeDetails(props) {
               const measure = getIngredients(recipe, /strMeasure/);
               if (path.includes('in-progress')) {
                 return (
-                  <Checkbox
-                    recipe={ recipe }
-                    index={ index }
-                    measure={ measure }
-                    item={ item }
-                    id={params.id}
-                    url={ url }
-                  />
+                  <div data-testid="ingredient-step">
+                    <label htmlFor={ `step-${index}` }>
+                      <input
+                        type="checkbox"
+                        key={ index }
+                        name={ item }
+                        checked={ checked.some((ingredient) => ingredient === item) }
+                        onChange={ ({ target }) => handleChecked(target.name) }
+                        id={ `step-${index}` }
+                        data-testid={ `${index}-ingredient-name-and-measure` }
+                      />
+                      {`- ${item} - ${measure[index]} `}
+                    </label>
+                  </div>
                 );
               }
               return (
