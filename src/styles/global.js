@@ -13,7 +13,7 @@ export default createGlobalStyle`
     --background-color: #fef9f6;
     --blue-color: #365efe;
     --light-blue: #cdd3ed;
-    --blue-header: #7288f1;
+    --blue-header: #90a1f3;
     --button-background: #548cf5;
   }
 
