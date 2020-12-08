@@ -3,7 +3,7 @@ import propTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import recipesAppContext from '../../context/recipesAppContext';
 import SearchBar from './SearchBar';
-import { profileIcon } from '../../images';
+import { logoBlack, profileIcon } from '../../images';
 import './style.css';
 
 export default function Header({ pageTitle, BtnSearchBar }) {
@@ -11,6 +11,7 @@ export default function Header({ pageTitle, BtnSearchBar }) {
   return (
     <div className="header-container">
       <header className="main-header">
+        <img alt="logo" src={ logoBlack } className="logo-header" />
         <Link className="link" to="/perfil">
           <button
             className="btn-header"

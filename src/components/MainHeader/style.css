@@ -16,6 +16,11 @@
   margin: 0;
 }
 
+.logo-header {
+  height: 12vh;
+  width: 12vh;
+}
+
 .link {
   border: 0;
   cursor: pointer;
