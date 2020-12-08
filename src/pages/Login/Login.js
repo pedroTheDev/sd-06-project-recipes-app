@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { setValueUser, cocktailsToken, mealsToken } from '../../services/localStorage';
 import { logo } from '../../images';
+import '../../fonts/font-awesome-4.7.0/css/font-awesome.min.css';
 import './style.css';
 
 function Login() {
@@ -36,41 +37,37 @@ function Login() {
         </div>
         {/* <h3 className="page-title">Bem-vindo Chef!</h3> */}
         <form className="form-login">
-          <div className="form-group">
-            <label
-              htmlFor="email"
-              style={ { width: '100%' } }
-            >
-              Email
-              <input
-                className="form-control"
-                type="email"
-                data-testid="email-input"
-                placeholder="Digite seu email"
-                id="email"
-                onChange={ ({ target }) => setEmail(target.value) }
-                required="required"
-                value={ email }
-              />
-            </label>
+          <div className="input-wrap">
+            <input
+              className="form-input"
+              type="email"
+              data-testid="email-input"
+              placeholder="Email"
+              id="email"
+              onChange={ ({ target }) => setEmail(target.value) }
+              required="required"
+              value={ email }
+            />
+            <span className="focus-input100" />
+            <span className="symbol-input100">
+              <i className="fa fa-envelope" aria-hidden="true" />
+            </span>
           </div>
-          <div className="form-group">
-            <label
-              htmlFor="senha"
-              style={ { width: '100%' } }
-            >
-              Senha
-              <input
-                className="form-control"
-                type="password"
-                data-testid="password-input"
-                placeholder="Digite sua senha"
-                id="senha"
-                value={ password }
-                onChange={ ({ target }) => setPassword(target.value) }
-                required="required"
-              />
-            </label>
+          <div className="input-wrap">
+            <input
+              className="form-input"
+              type="password"
+              data-testid="password-input"
+              placeholder="Digite sua senha"
+              id="senha"
+              value={ password }
+              onChange={ ({ target }) => setPassword(target.value) }
+              required="required"
+            />
+            <span className="focus-input100" />
+            <span className="symbol-input100">
+              <i className="fa fa-lock" aria-hidden="true" />
+            </span>
           </div>
           <div className="div-Button">
             <button
