@@ -213,7 +213,7 @@ const RecipeDetails = () => {
                 ))
             }
           </div>
-          {(JSON.parse(localStorage.inProgressRecipes).meals[ids] !== ['null']) ? (
+          {(JSON.parse(localStorage.inProgressRecipes).meals[ids].length > 1) ? (
             <button
               type="button"
               className="start-continue-recipe-btn"
@@ -308,7 +308,7 @@ const RecipeDetails = () => {
                 ))
             }
           </div>
-          {(JSON.parse(localStorage.inProgressRecipes).cocktails[ids] !== '') ? (
+          {(JSON.parse(localStorage.inProgressRecipes).cocktails[ids].length > 1) ? (
             <button
               type="button"
               style={ { position: 'fixed', bottom: 0 } }

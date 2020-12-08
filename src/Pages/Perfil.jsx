@@ -53,7 +53,7 @@ function Perfil() {
               data-testid="profile-logout-btn"
               className="signout-btn"
             >
-              Sair
+              Exit
             </button>
           </Link>
         </div>
