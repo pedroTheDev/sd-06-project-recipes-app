@@ -6,6 +6,7 @@ import '../styles/imgBig.css';
 import blackHeartIcon from '../styles/images/blackHeartIcon.svg';
 import { loadState, saveState } from '../services/localStorage';
 import '../styles/marginHederAndFooter.css';
+import '../styles/ReceitasFinalizadas.css';
 
 function ReceitasFavoritas() {
   const favoriteRecipes = 'favoriteRecipes';
@@ -27,9 +28,9 @@ function ReceitasFavoritas() {
     document.execCommand('copy');
     input.parentNode.removeChild(input);
     const divBtns = document.getElementById('btns');
-    const newSpan = document.createElement('span');
-    newSpan.innerHTML = 'Link copiado!';
-    divBtns.appendChild(newSpan);
+    // const newSpan = document.createElement('span');
+    // newSpan.innerHTML = 'Link copiado!';
+    divBtns.innerHTML = 'Link copiado!';
   };
 
   const All = 'All';
@@ -69,12 +70,13 @@ function ReceitasFavoritas() {
   };
 
   return (
-    <div className="container-margin-heder">
+    <div className="container-margin-heder ">
       <Header name="Receitas Favoritas" button={ false } />
       {arrayFilterNames.map((Filter) => {
         const lowerCaseFilter = Filter.toLowerCase();
         return (
           <button
+            className="category-food-btn-receitas"
             key={ Filter }
             type="button"
             data-testid={ `filter-by-${lowerCaseFilter}-btn` }
@@ -84,7 +86,7 @@ function ReceitasFavoritas() {
           </button>
         );
       })}
-      <div className="container-favoritas">
+      <div>
         {filterFavorites().map(({
           id,
           type,
@@ -95,6 +97,7 @@ function ReceitasFavoritas() {
           image,
         }, index) => (
           <div
+            className="container-card-food"
             key={ index }
           >
             <Link to={ `/${type}s/${id}` }>
@@ -105,45 +108,49 @@ function ReceitasFavoritas() {
                 data-testid={ `${index}-horizontal-image` }
               />
             </Link>
-            {(type === 'comida') && (
-              <p
-                data-testid={ `${index}-horizontal-top-text` }
-              >
-                { `${area} - ${category}` }
-              </p>
-            )}
-            {(type === 'bebida') && (
-              <p
-                data-testid={ `${index}-horizontal-top-text` }
-              >
-                { alcoholicOrNot }
-              </p>
-            )}
-            <Link to={ `/${type}s/${id}` }>
-              <h2
-                data-testid={ `${index}-horizontal-name` }
-              >
-                { name }
-              </h2>
-            </Link>
-            <div id="btns">
-              <button
-                type="button"
-                onClick={ () => copyBoard(id, type) }
-              >
-                <img
-                  src={ buttonShare }
-                  data-testid={ `${index}-horizontal-share-btn` }
-                  alt="img-button-share"
-                />
-              </button>
-              <button type="button" onClick={ () => disfavorRecipe(id) }>
-                <img
-                  data-testid={ `${index}-horizontal-favorite-btn` }
-                  src={ blackHeartIcon }
-                  alt="img-button-fav"
-                />
-              </button>
+            <div className="conteudo-card">
+              {(type === 'comida') && (
+                <span
+                  data-testid={ `${index}-horizontal-top-text` }
+                >
+                  { `${area} - ${category}` }
+                </span>
+              )}
+              {(type === 'bebida') && (
+                <span
+                  data-testid={ `${index}-horizontal-top-text` }
+                >
+                  { alcoholicOrNot }
+                </span>
+              )}
+              <Link to={ `/${type}s/${id}` }>
+                <span
+                  data-testid={ `${index}-horizontal-name` }
+                >
+                  { name }
+                </span>
+              </Link>
+              <div>
+                <button
+                  type="button"
+                  onClick={ () => copyBoard(id, type) }
+                >
+                  <img
+                    src={ buttonShare }
+                    data-testid={ `${index}-horizontal-share-btn` }
+                    alt="img-button-share"
+                  />
+                </button>
+                <span id="btns" />
+                <br />
+                <button type="button" onClick={ () => disfavorRecipe(id) }>
+                  <img
+                    data-testid={ `${index}-horizontal-favorite-btn` }
+                    src={ blackHeartIcon }
+                    alt="img-button-fav"
+                  />
+                </button>
+              </div>
             </div>
           </div>
         ))}
