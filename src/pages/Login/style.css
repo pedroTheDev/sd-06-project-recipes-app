@@ -23,6 +23,7 @@
   justify-content: center;
   display: flex;
   height: 100;
+  margin-top: 10px;
   width: 100%;
 }
 
@@ -44,12 +45,10 @@ label {
 }
 
 .div-Button {
-  align-items: center;
-  justify-content: center;
-  transform: translateX(-7%);
+  margin-bottom: 3vh;
 }
 
-.button {
+.button-login {
   background-color: #9c0000;
   color: #ffffff;
   font-size: 1.5em;
@@ -67,4 +66,3 @@ button:disabled {
   opacity: 0.3;
   transition: opacity 0.4;
 }
-

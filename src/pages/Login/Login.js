@@ -35,10 +35,11 @@ function Login() {
           <img alt="Logo" height="100%" width="300px" src={ logo } />
         </div>
         {/* <h3 className="page-title">Bem-vindo Chef!</h3> */}
-        <form>
+        <form className="form-login">
           <div className="form-group">
             <label
               htmlFor="email"
+              style={ { width: '100%' } }
             >
               Email
               <input
@@ -56,6 +57,7 @@ function Login() {
           <div className="form-group">
             <label
               htmlFor="senha"
+              style={ { width: '100%' } }
             >
               Senha
               <input
@@ -74,7 +76,7 @@ function Login() {
             <button
               type="button"
               data-testid="login-submit-btn"
-              className="button"
+              className="button-login"
               disabled={ isDisabled }
               onClick={ () => handleRedirect() }
             >
