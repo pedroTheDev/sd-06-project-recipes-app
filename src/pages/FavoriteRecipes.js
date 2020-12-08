@@ -82,6 +82,7 @@ export default function FavoriteRecipes() {
             <button
               className="button-standard"
               type="button"
+              data-testid="handle-local-storage-btn"
               onClick={ () => handleLocalStorage(item.id) }
             >
               <img
