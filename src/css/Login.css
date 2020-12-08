@@ -35,7 +35,7 @@
   background-size: 200% auto;
   border-radius: 10px;
   box-shadow: 0 0 20px #eee;
-  color: white;            
+  color: white;
   display: block;
   font-size: 1.35em;
   font-weight: 700;
@@ -47,7 +47,7 @@
 }
 
 .content-login button:hover {
-  background-position: right center; 
+  background-position: right center;
   color: #fff;
   text-decoration: none;
 }

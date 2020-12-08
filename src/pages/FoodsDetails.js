@@ -174,10 +174,14 @@ export default function FoodsDetails(props) {
 
           {renderIngredients()}
 
-          <video className="video-recipe" data-testid="video" width="340" controls>
-            <source src={ decodeURI(item.strYoutube) } type="video/mp4" />
-            <track src="" kind="captions" />
-          </video>
+          <iframe
+            src={ `https://youtube.com/embed/${item.strYoutube.substring(item.strYoutube.indexOf('=') + 1)}?autoplay=0` }
+            frameBorder="0"
+            allow="encrypted-media"
+            title="video"
+            width="360"
+          />
+
           {
             (!concluded) ? (
               <Link
