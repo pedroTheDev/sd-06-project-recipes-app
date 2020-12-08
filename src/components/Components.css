@@ -10,6 +10,10 @@
   justify-content: space-around;
 }
 
+.filter {
+ margin-top: 55px;
+}
+
 .search {
   display: flex;
   justify-content: center;
