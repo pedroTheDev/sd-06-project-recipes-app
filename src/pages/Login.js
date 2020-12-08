@@ -16,9 +16,10 @@ function Login() {
   };
 
   return (
-    <form>
-      <h1>Login</h1>
-      <label htmlFor="email">
+    <form className="form-login">
+      <h1 className="form-title">Minhas receitas</h1>
+      <h2>Login</h2>
+      <label htmlFor="email" className="form-input">
         Email:
         <input
           type="email"
@@ -28,7 +29,7 @@ function Login() {
           onChange={ ({ target }) => setEmail(target.value) }
         />
       </label>
-      <label htmlFor="password">
+      <label htmlFor="password" className="form-input">
         Senha:
         <input
           type="password"
@@ -39,6 +40,7 @@ function Login() {
       </label>
       <Link to="/comidas">
         <button
+          className="button"
           type="submit"
           disabled={ !emailIsValid || !passIsValid }
           data-testid="login-submit-btn"
