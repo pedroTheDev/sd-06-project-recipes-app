@@ -16,7 +16,7 @@ import NotFound from './pages/NotFound';
 import Perfil from './pages/Perfil';
 import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
-
+// teste
 function App() {
   return (
     <div className="App">
