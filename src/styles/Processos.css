@@ -1,8 +1,10 @@
 .riscado {
+  margin: 10px;
   text-decoration: line-through;
 }
 
 .non-riscado {
+  margin: 10px;
   text-decoration: none;
 }
 
