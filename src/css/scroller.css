@@ -37,6 +37,24 @@
   justify-content: center;
 }
 
+.btnStart:disabled {
+  background-image: linear-gradient(to right, #4b4b4b 0%, #7e7b7b  51%, #a7a1a7  100%);
+  background-size: 200% auto;
+  border-radius: 5px;
+  border: 0;
+  color: white;            
+  margin: 4px 6px;
+  padding: 8px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  width: 120px !important;
+  display: flex;
+  flex-flow: wrap;
+  align-content: center;
+  justify-content: center;
+}
+
 .btnStart:hover {
   background-position: right center;
   color: #fff;

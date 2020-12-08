@@ -44,6 +44,12 @@
   margin: 0 2px;
 }
 
+.buttons-container span {
+  color: #522500;
+  margin: 0 12px;
+  align-self: center;
+}
+
 .btn-details img {
   width: 40px;
 }
