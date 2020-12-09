@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import AppRouter from './router/appRouter';
 import Provider from './context/Provider';
 // import history from './helpers/History';
-import './App.css';
+import './css/App.css';
 
 function App() {
   return (

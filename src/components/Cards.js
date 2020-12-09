@@ -29,7 +29,12 @@ export default function Cards({ id }) {
                   data-testid={ `${index}-card-img` }
                   alt="imagem de drink"
                 />
-                <p data-testid={ `${index}-card-name` }>{item.strDrink}</p>
+                <p
+                  className="recipe-name"
+                  data-testid={ `${index}-card-name` }
+                >
+                  {item.strDrink}
+                </p>
               </div>
             </Link>
           ))}
@@ -53,7 +58,12 @@ export default function Cards({ id }) {
                   data-testid={ `${index}-card-img` }
                   alt="imagem de comida"
                 />
-                <p data-testid={ `${index}-card-name` }>{item.strMeal}</p>
+                <p
+                  className="recipe-name"
+                  data-testid={ `${index}-card-name` }
+                >
+                  {item.strMeal}
+                </p>
               </div>
             </Link>
           ))}

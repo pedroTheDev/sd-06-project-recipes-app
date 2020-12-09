@@ -9,36 +9,40 @@ export default function Header({ id, ingredient }) {
   const [search, setSearch] = useState(false);
 
   return (
-    <div>
-      <div>
-        <Link to="/perfil">
-          <button type="button" src={ perfil }>
+    <div className="header">
+      <div className="content">
+        <div className="btn-header">
+          <Link to="/perfil">
+            <button type="button" src={ perfil }>
+              <img
+                src={ perfil }
+                alt="perfil"
+                data-testid="profile-top-btn"
+              />
+            </button>
+          </Link>
+        </div>
+        <div className="page-title">
+          <span data-testid="page-title">{ document.title }</span>
+        </div>
+        <div className="btn-header">
+          <button
+            type="button"
+            src={ busca }
+            data-testid="search-top-btn"
+            onClick={ () => { setSearch(!search); } }
+          >
             <img
-              src={ perfil }
-              alt="perfil"
-              data-testid="profile-top-btn"
+              src={ busca }
+              alt="busca"
             />
           </button>
-        </Link>
+        </div>
       </div>
       <div>
-        <span data-testid="page-title">{ document.title }</span>
+        {(search || ingredient !== '')
+          ? <SearchBar id={ id } ingredient={ ingredient } class="searchbar" /> : '' }
       </div>
-      <div>
-        <button
-          type="button"
-          src={ busca }
-          data-testid="search-top-btn"
-          onClick={ () => { setSearch(!search); } }
-        >
-          <img
-            src={ busca }
-            alt="busca"
-          />
-        </button>
-      </div>
-      {(search || ingredient !== '')
-        ? <SearchBar id={ id } ingredient={ ingredient } /> : '' }
     </div>
   );
 }

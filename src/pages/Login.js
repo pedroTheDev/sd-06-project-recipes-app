@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 import Context from '../context/Context';
+import Logo from '../images/logo.svg';
+import '../css/Login.css';
 
 export default function Login() {
   const {
@@ -34,10 +36,11 @@ export default function Login() {
     setLogin({ ...login, redirect: true });
   };
   return (
-    <div>
+    <div className="content-login">
       {login.redirect ? <Redirect to="/comidas" /> : null}
+      <img src={ Logo } alt="Logo" />
       <label htmlFor="email">
-        E-mail
+        E-mail:
         <input
           type="email"
           name="email"
@@ -47,7 +50,7 @@ export default function Login() {
         />
       </label>
       <label htmlFor="senha">
-        Senha
+        Senha:
         <input
           type="password"
           name="password"

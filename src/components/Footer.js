@@ -4,6 +4,7 @@ import RecipesContext from '../context/Context';
 import drinkIcon from '../images/drinkIcon.svg';
 import exploreIcon from '../images/exploreIcon.svg';
 import mealIcon from '../images/mealIcon.svg';
+import '../css/Footer.css';
 
 export default function Footer() {
   const { setFilters } = useContext(RecipesContext);
@@ -14,7 +15,7 @@ export default function Footer() {
   };
 
   return (
-    <footer data-testid="footer" style={ footerStyle }>
+    <footer data-testid="footer" style={ footerStyle } className="footer-container">
       <Link
         to="/bebidas"
         onClick={ () => setFilters({

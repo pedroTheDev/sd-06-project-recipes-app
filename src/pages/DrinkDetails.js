@@ -106,17 +106,23 @@ export default function DrinkDetails(props) {
     if (recipeDetails.length > empty) {
       return (
         <div>
-          { recipeDetails.filter((ingredient) => ingredient !== '' && ingredient !== null)
-            .map((ingredient, index) => (
-              <p
-                data-testid={ `${index}-ingredient-name-and-measure` }
-                key={ ingredient[0] }
-              >
-                { (ingredient[1] === null)
-                  ? `${ingredient[0]}`
-                  : `${ingredient[0]}: ${(ingredient[1]) && ingredient[1]}` }
-              </p>
-            )) }
+          <p className="ingredients-title">Ingredients</p>
+          <div
+            className="ingredients-list"
+          >
+            { recipeDetails
+              .filter((ingredient) => ingredient !== '' && ingredient !== null)
+              .map((ingredient, index) => (
+                <p
+                  data-testid={ `${index}-ingredient-name-and-measure` }
+                  key={ ingredient[0] }
+                >
+                  { (ingredient[1] === null)
+                    ? `${ingredient[0]}`
+                    : `${ingredient[0]}: ${(ingredient[1]) && ingredient[1]}` }
+                </p>
+              )) }
+          </div>
         </div>
       );
     }
@@ -125,7 +131,7 @@ export default function DrinkDetails(props) {
   if (recipe.drinks && recommendation) {
     const item = recipe.drinks[0];
     return (
-      <div>
+      <div className="content-details">
         <div key={ item }>
           <img
             data-testid="recipe-photo"
@@ -133,29 +139,47 @@ export default function DrinkDetails(props) {
             src={ item.strDrinkThumb }
             className="item-img"
           />
-          <p data-testid="recipe-title">{item.strDrink}</p>
-          <button
-            type="button"
-            data-testid="share-btn"
-            value="Share"
-            onClick={ () => handleCopy() }
+          <div className="buttons-container">
+            <button
+              className="btn-details"
+              type="button"
+              data-testid="share-btn"
+              value="Share"
+              onClick={ () => handleCopy() }
+            >
+              <img alt="Share" src={ shareIcon } />
+            </button>
+            <span>{copy}</span>
+            <button
+              className="btn-details"
+              type="button"
+              data-testid="favorite-btn"
+              src={ fav }
+              onClick={ () => handleFav(item) }
+            >
+              <img alt="fav" src={ fav } />
+            </button>
+          </div>
+          <p className="recipe-title" data-testid="recipe-title">{item.strDrink}</p>
+          <p
+            className="recipe-category"
+            data-testid="recipe-category"
           >
-            <img alt="Share" src={ shareIcon } />
-          </button>
-          <span>{copy}</span>
-          <button
-            type="button"
-            data-testid="favorite-btn"
-            src={ fav }
-            onClick={ () => handleFav(item) }
+            {item.strAlcoholic}
+          </p>
+          <p className="instructions-title">Instructions</p>
+          <p
+            className="instructions"
+            data-testid="instructions"
           >
-            <img alt="fav" src={ fav } />
-          </button>
-          <p data-testid="recipe-category">{item.strAlcoholic}</p>
-          <p data-testid="instructions">{item.strInstructions}</p>
+            {item.strInstructions}
+          </p>
           {renderIngredients()}
           <p data-testid="video">{item.strYoutube}</p>
-          <Link to={ `/bebidas/${id}/in-progress` }>
+          <Link
+            className="button-start-container"
+            to={ `/bebidas/${id}/in-progress` }
+          >
             { (!disabled)
               ? (
                 <button
@@ -164,13 +188,16 @@ export default function DrinkDetails(props) {
                   className="btnStart"
                   disabled={ disabled }
                 >
-                  {btnStartValue}
+                  <div>
+                    {btnStartValue}
+                  </div>
                 </button>
               )
               : null }
           </Link>
         </div>
         <div className="testimonials">
+          <p className="recommendation">Recommendation</p>
           <div className="scroller">
             {recommendation.map((rec, index) => (
               <div

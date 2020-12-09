@@ -105,15 +105,21 @@ export default function FoodsDetails(props) {
     if (recipeDetails.length > empty) {
       return (
         <div>
-          { recipeDetails.filter((ingredient) => ingredient !== '' && ingredient !== null)
-            .map((ingredient, index) => (
-              <p
-                key={ ingredient[0] }
-                data-testid={ `${index}-ingredient-name-and-measure` }
-              >
-                {`${ingredient[0]}: ${ingredient[1]}`}
-              </p>
-            )) }
+          <p className="ingredients-title">Ingredients</p>
+          <div
+            className="ingredients-list"
+          >
+            { recipeDetails
+              .filter((ingredient) => ingredient !== '' && ingredient !== null)
+              .map((ingredient, index) => (
+                <p
+                  key={ ingredient[0] }
+                  data-testid={ `${index}-ingredient-name-and-measure` }
+                >
+                  {`${ingredient[0]}: ${ingredient[1]}`}
+                </p>
+              )) }
+          </div>
         </div>
       );
     }
@@ -122,7 +128,7 @@ export default function FoodsDetails(props) {
   if (recipe.meals) {
     const item = recipe.meals[0];
     return (
-      <div>
+      <div className="content-details">
         <div key={ item }>
           <img
             data-testid="recipe-photo"
@@ -130,47 +136,75 @@ export default function FoodsDetails(props) {
             src={ item.strMealThumb }
             className="item-img"
           />
-          <p data-testid="recipe-title">{item.strMeal}</p>
-          <button
-            type="button"
-            data-testid="share-btn"
-            value="Share"
-            onClick={ () => handleCopy() }
+          <div className="buttons-container">
+            <button
+              className="btn-details"
+              type="button"
+              data-testid="share-btn"
+              value="Share"
+              onClick={ () => handleCopy() }
+            >
+              <img alt="Share" src={ shareIcon } />
+            </button>
+            <span>{copy}</span>
+            <button
+              className="btn-details"
+              type="button"
+              data-testid="favorite-btn"
+              src={ fav }
+              onClick={ () => handleFav(item) }
+            >
+              <img alt="fav" src={ fav } />
+            </button>
+          </div>
+          <p className="recipe-title" data-testid="recipe-title">{item.strMeal}</p>
+          <p
+            className="recipe-category"
+            data-testid="recipe-category"
           >
-            <img alt="Share" src={ shareIcon } />
-          </button>
-          <span>{copy}</span>
-          <button
-            type="button"
-            data-testid="favorite-btn"
-            src={ fav }
-            onClick={ () => handleFav(item) }
+            {item.strCategory}
+          </p>
+          <p className="instructions-title">Instructions</p>
+          <p
+            className="instructions"
+            data-testid="instructions"
           >
-            <img alt="fav" src={ fav } />
-          </button>
-          <p data-testid="recipe-category">{item.strCategory}</p>
-          <p data-testid="instructions">{item.strInstructions}</p>
+            {item.strInstructions}
+          </p>
+
           {renderIngredients()}
 
-          <video data-testid="video" width="340" controls>
-            <source src={ decodeURI(item.strYoutube) } type="video/mp4" />
-            <track src="" kind="captions" />
-          </video>
+          <iframe
+            src={ `https://youtube.com/embed/${item.strYoutube.substring(item.strYoutube.indexOf('=') + 1)}?autoplay=0` }
+            frameBorder="0"
+            allow="encrypted-media"
+            title="video"
+            width="360"
+            data-testid="video"
+          />
+
           {
             (!concluded) ? (
-              <Link to={ `/comidas/${id}/in-progress` }>
+              <Link
+                className="button-start-container"
+                to={ `/comidas/${id}/in-progress` }
+              >
                 <button
                   type="button"
                   data-testid="start-recipe-btn"
                   className="btnStart"
                 >
-                  {btnStartValue}
+                  <div className="btn-title">
+                    {btnStartValue}
+                  </div>
+
                 </button>
               </Link>
             ) : null
           }
         </div>
         <div className="testimonials">
+          <p className="recommendation">Recommendation</p>
           <div className="scroller">
             {recommendation.map((rec, index) => (
               <div
