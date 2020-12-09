@@ -157,3 +157,9 @@
 .checked {
   text-decoration: line-through;
 }
+.show {
+  display: block;
+}
+.hide {
+  display: none;
+}

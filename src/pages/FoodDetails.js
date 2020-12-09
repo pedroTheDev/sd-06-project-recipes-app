@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import FetchApiFood from '../services/FetchApiFood';
 import FetchApiDrink from '../services/FetchApiDrink';
@@ -23,16 +24,10 @@ function FoodDetails() {
 
   const maxRecomended = 6;
   const minRecomended = 0;
+  const params = useParams();
 
   function isFavorited() {
-    const location = window.location.pathname;
-    const magickNumber = 9;
-    const RecipeID = location.slice(magickNumber, location.length);
-    const getFavoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    if (getFavoriteRecipes) {
-      getFavoriteRecipes.find((recipe) => recipe.id === RecipeID);
-      setFavorite(true);
-    }
+    setFavorite(true);
   }
 
   useEffect(() => {
@@ -42,7 +37,15 @@ function FoodDetails() {
     const RecipeID = location.slice(magickNumber, location.length);
     FetchApiFood('6', setFoodDetail, RecipeID);
     FetchApiDrink('2', setRecomendedDrink, foodDetail.strMeal);
-    isFavorited();
+    if (localStorage.favoriteRecipes) {
+      const getFavoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      const start = 0;
+      for (let i = start; i < getFavoriteRecipes.length; i += 1) {
+        if (getFavoriteRecipes[i].id === params.id) {
+          setFavorite(true);
+        }
+      }
+    }
   }, []);
 
   function renderIngredients() {

@@ -1,35 +1,58 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+//  import { CopyToClipboard } from 'react-copy-to-clipboard';
 import RecipesContext from '../context/RecipesContext';
 import fetchApiFood from '../services/FetchApiFood';
 import ShareIcon from '../images/shareIcon.svg';
-//  import desFavorite from '../images/whiteHeartIcon.svg';
-//  import favorite from '../images/blackHeartIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 import '../App.css';
 
+// const arrayClick = []; // popular com id dos clicks.
 export default function FoodInProgress() {
   const { state, setState } = useContext(RecipesContext);
   const params = useParams();
-  const arrayClick = []; // popular com id dos clicks.
   const [clickIngred, setClickIngred] = useState([]);// estado controle checked.
   const [isfavorite, setIsFavorite] = useState(false); // estado controlar favoritar.
   const [inputMark, setInputMark] = useState('');// estado controlar className.
-
+  const [isShared, setIsShared] = useState(false);// estado controlar class compartilhar.
+  const [isDesible, setDesible] = useState(true);// estado controlar diseble do btn finalizar.
+  const numMagic = 1;
+  const [count, setCount] = useState(numMagic);
   // função clipboard
   const handleShareButton = () => {
-    const copyText = window.location.href;
-    window.navigator.clipboard.writeText(copyText);
-    // eslint-disable-next-line no-alert
-    alert('Link copiado!');
+    try {
+      const copyText = window.location.href.replace('/in-progress', '');
+      console.log('copyText', copyText);
+      window.navigator.clipboard.writeText(copyText);
+      window.navigator.clipboard.writeText(copyText);
+      setIsShared(!isShared);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // função controlar o componente ingrediente.
   const checked = (even) => {
+    setCount(count + 1);
+    if (localStorage.ingredients) {
+      const ingredClicks = JSON.parse(
+        localStorage
+          .getItem('ingredients'),
+      );
+      console.log('count', count);
+      console.log('diseble', ingredClicks);
+      if (count === ingredClicks) {
+        setDesible(false);
+      }
+    }
     const click = (Number(even.target.id));
-    arrayClick.push(click);
     setInputMark(click);
-    setClickIngred(arrayClick);
+    // controlar o componente checkbox
+    const currentItem = (clickIngred.includes(click))
+      ? clickIngred.filter((el) => el !== click) : [...clickIngred, click];
+    setClickIngred(currentItem);
     // salvar no localStorage.
     const { idMeal } = state[0];
     const initial = {
@@ -43,7 +66,7 @@ export default function FoodInProgress() {
       ...currentStorage,
       meals: {
         ...currentStorage.meals,
-        ...{ [idMeal]: arrayClick },
+        ...{ [idMeal]: currentItem },
       },
     };
     localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
@@ -59,6 +82,7 @@ export default function FoodInProgress() {
       }
       ingredientsArray.push(state[0][`strIngredient${i}`]);
     }
+    localStorage.setItem('ingredients', JSON.stringify(ingredientsArray.length));
     return ingredientsArray.map((el, idx) => (
       <label
         key={ idx }
@@ -89,15 +113,84 @@ export default function FoodInProgress() {
         setClickIngred(getStorage.meals[params.id]);
       }
     }
+    if (localStorage.favoriteRecipes) {
+      const getFavorite = JSON.parse(
+        localStorage
+          .getItem('favoriteRecipes'),
+      );
+      const start = 0;
+      for (let i = start; i < getFavorite.length; i += 1) {
+        if (getFavorite[i].id === params.id) {
+          setIsFavorite(!isfavorite);
+        }
+      }
+    }
   }, []);
 
   // função para favoritar
   const favoritar = () => {
-    if (isfavorite === false) {
-      setIsFavorite(true);
+    if (localStorage.favoriteRecipes) {
+      const favObj = {
+        favoriteRecipes: [{
+          id: state[0].idMeal,
+          type: 'comida',
+          area: state[0].strArea,
+          category: state[0].strCategory,
+          alcoholicOrNot: '',
+          name: state[0].strMeal,
+          image: state[0].strMealThumb,
+        }],
+      };
+      const currentFavoriteRecipes = JSON.parse(
+        localStorage.getItem('favoriteRecipes'),
+      ) || [];
+      currentFavoriteRecipes.push(favObj.favoriteRecipes[0]);
+      currentFavoriteRecipes.concat(JSON.parse(localStorage.getItem('favoriteRecipes')));
+      localStorage.setItem('favoriteRecipes', JSON.stringify(currentFavoriteRecipes));
     } else {
-      setIsFavorite(false);
+      const favObj = {
+        favoriteRecipes: [{
+          id: state[0].idMeal,
+          type: 'comida',
+          area: state[0].strArea,
+          category: state[0].strCategory,
+          alcoholicOrNot: '',
+          name: state[0].strMeal,
+          image: state[0].strMealThumb,
+        }],
+      };
+      console.log('fav', favObj.favoriteRecipes[0]);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(favObj.favoriteRecipes));
     }
+    setIsFavorite(!isfavorite);
+  };
+
+  // funçaõ pegar dados e passar para localStorage.
+  const getFoodData = () => {
+    const recipeData = {
+      id: state[0].idMeal,
+      type: 'comida',
+      area: state[0].strArea,
+      category: state[0].strCategory,
+      alcoholicOrNot: '',
+      name: state[0].strMeal,
+      image: state[0].strMealThumb,
+    };
+    const initail = {
+      cocktailsDone: {},
+    };
+    const currentRecipe = JSON.parse(
+      localStorage
+        .getItem('recipesDone'),
+    ) || initail;
+    const newRecipeDone = {
+      ...currentRecipe,
+      mealDone: {
+        ...currentRecipe.mealDone,
+        ...{ [state[0].idMeal]: recipeData },
+      },
+    };
+    localStorage.setItem('recipesDone', JSON.stringify(newRecipeDone));
   };
 
   return (
@@ -119,6 +212,7 @@ export default function FoodInProgress() {
             <h2>Instructions</h2>
             <p data-testid="instructions">{el.strInstructions}</p>
           </content>
+          <span className={ isShared ? 'show' : 'hide' }>Link copiado!</span>
         </div>
       )) }
       <input
@@ -128,21 +222,27 @@ export default function FoodInProgress() {
         alt="foto-compratilhar"
         data-testid="share-btn"
       />
-      <input
+      { isfavorite ? <input
         type="image"
-        src={ isfavorite === true
-          ? '/static/media/blackHeartIcon.b8913346.svg'
-          : '/static/media/whiteHeartIcon.ea3b6ba8.svg' }
+        src={ blackHeartIcon }
         alt="foto=favorito"
         data-testid="favorite-btn"
         onClick={ () => favoritar() }
-      />
+      /> : <input
+        type="image"
+        src={ whiteHeartIcon }
+        alt="foto=favorito"
+        data-testid="favorite-btn"
+        onClick={ () => favoritar() }
+      /> }
       <a
         href="/receitas-feitas"
       >
         <button
           type="button"
           data-testid="finish-recipe-btn"
+          disabled={ isDesible }
+          onClick={ getFoodData }
         >
           Finalizar
         </button>
